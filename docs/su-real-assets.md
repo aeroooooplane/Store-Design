@@ -22,6 +22,8 @@
 
 ## 当前依赖与可执行交接
 
+2026-09-24 更新：用户确认另一台电脑为 Windows 11 / RTX 4070，已安装 SketchUp，具体版本、显存和驱动待查。先采用文件往返方式完成首张体验桌导出，无需先部署远程服务。便携包位于 `素材库/04_assets/handoff/Insta360-SU-kit-v1.zip`，导出目录改为脚本旁边的 `exports`，返回文件放入 `素材库/04_assets/incoming`。脚本仍未在真实 SketchUp 环境验证。
+
 需要一个兼容的 SketchUp 桌面环境，或者已获授权的官方 Desktop SDK。官方 C API 支持独立读取 SKP，不必依赖桌面交互，但本机尚无该运行库：
 
 - [SketchUp C API](https://extensions.sketchup.com/developers/sketchup_c_api/sketchup/index.html)

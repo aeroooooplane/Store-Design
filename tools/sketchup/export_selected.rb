@@ -3,7 +3,8 @@
 require 'json'
 require 'fileutils'
 module InstaAssetExport
-  ROOT = 'D:/text demo/素材库/04_assets'
+  # Portable: output travels with this script; no fixed drive letter required.
+  ROOT = File.join(File.dirname(__FILE__), 'exports')
   def self.inventory
     model = Sketchup.active_model
     FileUtils.mkdir_p(ROOT)
@@ -13,8 +14,11 @@ module InstaAssetExport
        local_bounds_m: [b.width, b.height, b.depth].map { |v| v.to_f * 0.0254 },
        axis_note: 'SketchUp X/Y/Z; bounds in definition coordinates, instance scaling excluded'}
     end
-    File.write(File.join(ROOT, 'component-inventory.json'), JSON.pretty_generate(rows))
-    puts "Indexed #{rows.length} component definitions."
+    inventory_path = File.join(ROOT, "component-inventory-#{Time.now.strftime('%Y%m%d-%H%M%S')}-#{Process.pid}.json")
+    raise 'Inventory output already exists; retry after one second.' if File.exist?(inventory_path)
+    File.write(inventory_path, JSON.pretty_generate({source_model: model.path, sketchup_version: Sketchup.version,
+      definitions: rows, note: 'Definition entries are not a list of complete props. Nested parts and unused definitions may be included.'}))
+    puts "Indexed #{rows.length} component definitions: #{inventory_path}"
   end
   def self.export_selected
     model = Sketchup.active_model
@@ -31,11 +35,14 @@ module InstaAssetExport
     ok = model.export(File.join(folder, 'prop.dae'), {selectionset_only: true, triangulated_faces: true, texture_maps: true, edges: false, hidden_geometry: false, preserve_instancing: true})
     raise 'DAE export failed.' unless ok
     b = entity.bounds
-    metadata = {source_model: model.path, definition: entity.definition.name, guid: entity.definition.guid,
+    local = entity.definition.bounds
+    metadata = {source_model: model.path, sketchup_version: Sketchup.version, definition: entity.definition.name, guid: entity.definition.guid,
+      instance_name: entity.name, instance_material: entity.material ? entity.material.display_name : nil,
+      definition_bounds_m: [local.width,local.height,local.depth].map { |v| v.to_f * 0.0254 },
       world_bounds_m: [b.width,b.height,b.depth].map { |v| v.to_f * 0.0254 },
       transform: entity.transformation.to_a, style: nil,
       status: 'exported; scale/orientation/materials require visual verification',
-      note: 'World axis-aligned bounds include rotation. DAE may retain world placement. Normalize before GLB conversion.'}
+      note: 'Bounds arrays are SketchUp X/Y/Z in metres, not labelled product width/depth/height. World bounds include rotation. Transform translations are inches. prop.skp is the definition without the selected instance transform; DAE may retain world placement. Normalize before GLB conversion.'}
     File.write(File.join(folder,'metadata.json'),JSON.pretty_generate(metadata))
     puts "Exported to #{folder}"
   end
