@@ -1,0 +1,64 @@
+{
+  "id": "PDF-051",
+  "file": "北京三里屯太古里授权体验店.pdf",
+  "tag": "SI1.0 中岛店",
+  "recordId": "recvvyql5IfFeR",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IfFeR",
+  "sourceSha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": 16,
+  "areaSource": "图纸文字标注；非实测",
+  "observation": "狭长中岛；两张体验桌沿长边展开，背侧低柜与灯箱；周边柱体需独立建模。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 1,
+      "file": "plan-p1-crop.png",
+      "fullPage": "plan-p1-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        0.87,
+        1
+      ],
+      "fullWidth": 2600,
+      "fullHeight": 1839
+    },
+    {
+      "role": "render",
+      "page": 2,
+      "file": "render-p2-full.png",
+      "fullPage": "render-p2-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 900
+    },
+    {
+      "role": "render",
+      "page": 3,
+      "file": "render-p3-full.png",
+      "fullPage": "render-p3-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 900
+    }
+  ],
+  "trainingEligible": false,
+  "status": "已视觉选页，待几何标注及版本核验",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

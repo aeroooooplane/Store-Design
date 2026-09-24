@@ -1,0 +1,64 @@
+{
+  "id": "PDF-160",
+  "file": "德国汉堡市Saturn店.pdf",
+  "tag": "SI1.0 边厅店",
+  "recordId": "recvvyql5IJK7E",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IJK7E",
+  "sourceSha256": "5f542eb1d069fa1da17993d65a10436c3942ef65202e05c44eb58e17dcd68bc1",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": 20.3,
+  "areaSource": "图纸文字标注；非实测",
+  "observation": "小型边厅；中央单体验桌，沿墙配件陈列，侧边独立仓储。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 1,
+      "file": "plan-p1-crop.png",
+      "fullPage": "plan-p1-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        0.87,
+        1
+      ],
+      "fullWidth": 2600,
+      "fullHeight": 1839
+    },
+    {
+      "role": "render",
+      "page": 2,
+      "file": "render-p2-full.png",
+      "fullPage": "render-p2-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1601,
+      "fullHeight": 844
+    },
+    {
+      "role": "render",
+      "page": 3,
+      "file": "render-p3-full.png",
+      "fullPage": "render-p3-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1048
+    }
+  ],
+  "trainingEligible": false,
+  "status": "已视觉选页，待几何标注及版本核验",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

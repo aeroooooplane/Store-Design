@@ -1,0 +1,47 @@
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / frontend dependencies and build output
+node_modules/
+dist/
+build/
+.cache/
+coverage/
+*.map
+
+# Native binaries and generated training/runtime artifacts
+*.exe
+*.dll
+*.lib
+*.pyd
+*.so
+*.dylib
+tools/training/runtime/
+
+# Large source assets staged for later upload
+各门店图纸/
+道具模型/
+*.pdf
+*.skp
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key

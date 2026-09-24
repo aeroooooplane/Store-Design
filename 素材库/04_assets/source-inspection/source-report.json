@@ -1,0 +1,12 @@
+{
+  "source": "道具模型\\影石通用模型.skp",
+  "sourceBytes": 1163262594,
+  "sourceVersion": "26.1.189",
+  "archiveEntries": 1266,
+  "geometryBytes": 2794858834,
+  "geometryCompressedBytes": 676383346,
+  "geometryStatus": "not-decoded",
+  "embeddedPreviewCount": 40,
+  "materialCount": 671,
+  "caveat": "材质条目与缩略图数量不是道具数量；无组件层级、实例变换、精确尺寸或可加载网格。"
+}

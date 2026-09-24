@@ -1,0 +1,240 @@
+{
+  "method": "leave-one-store-out; standardization fit inside each fold; lambda fixed before evaluation",
+  "folds": [
+    {
+      "testId": "PDF-159",
+      "trainIds": [
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 3,
+      "predicted": 2.6592440364394507,
+      "baseline": 2.1,
+      "absoluteError": 0.34075596356054927,
+      "baselineError": 0.8999999999999999,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-160",
+      "trainIds": [
+        "PDF-159",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 1,
+      "predicted": 1.9581143508777208,
+      "baseline": 2.3,
+      "absoluteError": 0.9581143508777208,
+      "baselineError": 1.2999999999999998,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-194",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 2,
+      "predicted": 1.8454179421668035,
+      "baseline": 2.2,
+      "absoluteError": 0.15458205783319645,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-051",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 2,
+      "predicted": 1.7405601243275033,
+      "baseline": 2.2,
+      "absoluteError": 0.2594398756724967,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-171",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 1,
+      "predicted": 1.943985454978703,
+      "baseline": 2.3,
+      "absoluteError": 0.943985454978703,
+      "baselineError": 1.2999999999999998,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-239",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 2,
+      "predicted": 1.8060677923693427,
+      "baseline": 2.2,
+      "absoluteError": 0.19393220763065733,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-079",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 4,
+      "predicted": 4.807690321835547,
+      "baseline": 2,
+      "absoluteError": 0.8076903218355467,
+      "baselineError": 2,
+      "outsideFoldRange": true
+    },
+    {
+      "testId": "PDF-083",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-071",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 3,
+      "predicted": 2.2745578200968515,
+      "baseline": 2.1,
+      "absoluteError": 0.7254421799031485,
+      "baselineError": 0.8999999999999999,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-071",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-293",
+        "PDF-296"
+      ],
+      "actual": 2,
+      "predicted": 2.1827324406687403,
+      "baseline": 2.2,
+      "absoluteError": 0.18273244066874028,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": false
+    },
+    {
+      "testId": "PDF-293",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-296"
+      ],
+      "actual": 2,
+      "predicted": 1.6531280382950646,
+      "baseline": 2.2,
+      "absoluteError": 0.3468719617049354,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": true
+    },
+    {
+      "testId": "PDF-296",
+      "trainIds": [
+        "PDF-159",
+        "PDF-160",
+        "PDF-194",
+        "PDF-051",
+        "PDF-171",
+        "PDF-239",
+        "PDF-079",
+        "PDF-083",
+        "PDF-071",
+        "PDF-293"
+      ],
+      "actual": 2,
+      "predicted": 1.9065309266821977,
+      "baseline": 2.2,
+      "absoluteError": 0.0934690733178023,
+      "baselineError": 0.20000000000000018,
+      "outsideFoldRange": false
+    }
+  ],
+  "mae": 0.45518326254395425,
+  "meanBaselineMAE": 0.6909090909090909,
+  "roundedAccuracy": 0.6363636363636364,
+  "warning": "Very small sample; no independent final test set; not a generalization guarantee"
+}

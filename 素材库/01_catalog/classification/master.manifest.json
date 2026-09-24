@@ -1,0 +1,92 @@
+{
+  "manifest_version": "v1",
+  "format": "ndjson",
+  "base_token": "X6rGbycEEaCpais1ty7cELpGnvc",
+  "table_id": "tbl394Uo6M3FuGaN",
+  "rev": 249,
+  "timezone": "Asia/Shanghai",
+  "query_context": {
+    "field_scope": "selected_fields",
+    "record_scope": "all_records"
+  },
+  "requested_limit": 2000,
+  "records_count": 925,
+  "page_count": 2,
+  "has_more": false,
+  "record_file": "D:\\text demo\\素材库\\01_catalog\\classification\\master.ndjson",
+  "record_file_size_bytes": 268084,
+  "manifest_file": "D:\\text demo\\素材库\\01_catalog\\classification\\master.manifest.json",
+  "columns": {
+    "SI形象": {
+      "field_id": "fldyEmsIyb",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 295,
+        "max_length": 1,
+        "avg_length": 0.6810810810810811
+      },
+      "example": [
+        "si2.0"
+      ]
+    },
+    "record_id": {
+      "physical_type": "string",
+      "stats": {
+        "max_length": 14
+      },
+      "example": "recvvyql5IttwP"
+    },
+    "启动设计时间": {
+      "field_id": "fld9iyaayk",
+      "field_type": "datetime",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 537,
+        "min": "2024-07-31T00:00:00.000+08:00",
+        "max": "2026-08-25T00:00:00.000+08:00"
+      },
+      "example": "2026-06-29T00:00:00.000+08:00"
+    },
+    "图纸pdf(效果图+施工图)": {
+      "field_id": "fldac7ygqr",
+      "field_type": "attachment",
+      "physical_type": "array<struct<file_token string, size number, name string>>",
+      "stats": {
+        "empty_count": 420,
+        "max_length": 5,
+        "avg_length": 0.8043243243243243
+      },
+      "example": [
+        {
+          "file_token": "JmxsbwELho0OWZxtXX4c6B6jnyb",
+          "name": "7.19南京景枫店施工图.pdf",
+          "size": 8649006
+        }
+      ]
+    },
+    "铺型": {
+      "field_id": "fldvmz5rhA",
+      "field_type": "select",
+      "physical_type": "array<string>",
+      "stats": {
+        "empty_count": 192,
+        "max_length": 1,
+        "avg_length": 0.7924324324324324
+      },
+      "example": [
+        "边厅"
+      ]
+    },
+    "项目名称": {
+      "field_id": "fldeFxi1Em",
+      "field_type": "text",
+      "physical_type": "string|null",
+      "stats": {
+        "null_count": 0,
+        "max_length": 36
+      },
+      "example": "乌镇"
+    }
+  }
+}

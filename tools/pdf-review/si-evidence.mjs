@@ -1,0 +1,1 @@
+import fs from 'node:fs/promises';const dir='../../素材库/01_catalog/classification/page-index';for(const f of await fs.readdir(dir)){const d=JSON.parse(await fs.readFile(dir+'/'+f,'utf8'));for(const p of d.pages){const m=p.text.match(/.{0,45}SI\s*[12][.．]\s*0.{0,90}/ig);if(m)console.log(JSON.stringify({file:f,page:p.page,evidence:m}))}}

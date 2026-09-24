@@ -1,0 +1,64 @@
+{
+  "id": "PDF-194",
+  "file": "新疆宏景数码广场二店.pdf",
+  "tag": "SI1.0 边厅店",
+  "recordId": "recvvyql5IUZVu",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IUZVu",
+  "sourceSha256": "c3a3dc756e660076e839275cb1f988f324127382637234da8ffc1e92a45b099a",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": 21,
+  "areaSource": "图纸文字标注；非实测",
+  "observation": "小型边厅；两张体验桌平行布置，侧墙配件柜；保留既有玻璃及局部高度条件。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 1,
+      "file": "plan-p1-crop.png",
+      "fullPage": "plan-p1-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        0.87,
+        1
+      ],
+      "fullWidth": 2600,
+      "fullHeight": 1839
+    },
+    {
+      "role": "render",
+      "page": 2,
+      "file": "render-p2-full.png",
+      "fullPage": "render-p2-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1000
+    },
+    {
+      "role": "render",
+      "page": 4,
+      "file": "render-p4-full.png",
+      "fullPage": "render-p4-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1000
+    }
+  ],
+  "trainingEligible": false,
+  "status": "已视觉选页，待几何标注及版本核验",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

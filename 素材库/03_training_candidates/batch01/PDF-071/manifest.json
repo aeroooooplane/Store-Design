@@ -1,0 +1,36 @@
+{
+  "id": "PDF-071",
+  "file": "北京首都机场T3授权体验店.pdf",
+  "tag": "SI2.0 边厅店",
+  "recordId": "recvvyql5I9xqt",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5I9xqt",
+  "sourceSha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": 38,
+  "areaSource": "图纸文字标注；非实测",
+  "observation": "机场边厅；体验桌沿纵深排列，后侧保留设备/储物空间；效果图未确认。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 7,
+      "file": "plan-p7-crop.png",
+      "fullPage": "plan-p7-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        0.87,
+        1
+      ],
+      "fullWidth": 2600,
+      "fullHeight": 1839
+    }
+  ],
+  "trainingEligible": false,
+  "status": "仅平面；效果图待补充",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

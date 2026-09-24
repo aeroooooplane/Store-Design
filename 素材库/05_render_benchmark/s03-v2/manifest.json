@@ -1,0 +1,178 @@
+{
+  "case": "s03-v2",
+  "scope": "geometry preservation pilot, not validated reconstruction",
+  "source": {
+    "file": "上海星光摄影城照材专卖店.pdf",
+    "page": 1,
+    "drawing": "PL-03",
+    "date": "2025.06",
+    "style": "灰白表现，SI版本待品牌确认",
+    "statedArea": 23.7,
+    "notes": "图纸边界尺寸4.8×5.15m，包络面积24.72㎡与标注23.7㎡不同，不等同净面积。层高3.2m为演示假设；中岛深度1m、边柜深度0.5m待道具模型核对。体验桌底座参考效果图可见形态；开箱桌四腿、配件柜层板和板厚均为演示假设。结构占位为图纸重建，尚未接入真实SKP。"
+  },
+  "layoutSha256": "c7838507715a7b06d03fb9576e9927bdf2e0013763123a0bfaddb82297350001",
+  "objects": [
+    {
+      "id": "s03-accessory-1",
+      "name": "1.8米边桌配件柜",
+      "type": "display",
+      "x": 0.95,
+      "z": 0.1,
+      "w": 1.8,
+      "d": 0.5,
+      "h": 0.9
+    },
+    {
+      "id": "s03-accessory-2",
+      "name": "1.8米边桌配件柜",
+      "type": "display",
+      "x": 2.75,
+      "z": 0.1,
+      "w": 1.8,
+      "d": 0.5,
+      "h": 0.9
+    },
+    {
+      "id": "s03-cashier",
+      "name": "1.8米边收银台",
+      "type": "counter",
+      "x": 0.13,
+      "z": 0.8,
+      "w": 0.5,
+      "d": 1.8,
+      "h": 0.9
+    },
+    {
+      "id": "s03-unbox",
+      "name": "1.8米开箱桌",
+      "type": "table",
+      "x": 0.13,
+      "z": 2.6,
+      "w": 0.5,
+      "d": 1.8,
+      "h": 0.9
+    },
+    {
+      "id": "s03-go",
+      "name": "1.8米go系列中岛桌",
+      "type": "table",
+      "profile": "pedestal-table",
+      "x": 1.77,
+      "z": 1.61,
+      "w": 1.8,
+      "d": 1,
+      "h": 0.9
+    },
+    {
+      "id": "s03-x",
+      "name": "1.8米X系列中岛桌",
+      "type": "table",
+      "profile": "pedestal-table",
+      "x": 1.77,
+      "z": 3.56,
+      "w": 1.8,
+      "d": 1,
+      "h": 0.9
+    },
+    {
+      "id": "s03-block-back",
+      "name": "后侧结构占位",
+      "type": "structure",
+      "x": 0,
+      "z": 0,
+      "w": 0.9,
+      "d": 0.39,
+      "h": 3.2
+    },
+    {
+      "id": "s03-block-front",
+      "name": "入口结构占位",
+      "type": "structure",
+      "x": 0,
+      "z": 4.47,
+      "w": 1,
+      "d": 0.68,
+      "h": 3.2
+    }
+  ],
+  "cameraViews": [
+    {
+      "index": 0,
+      "name": "front elevated",
+      "relative": [
+        0.5,
+        1.15,
+        1.8
+      ]
+    },
+    {
+      "index": 2,
+      "name": "right-front elevated",
+      "relative": [
+        1.7,
+        1,
+        1.4
+      ]
+    }
+  ],
+  "baselineRenderer": "demo/src/scene.js",
+  "aiStatus": "two-SI1.0-concepts-generated-not-geometry-approved",
+  "assets": [
+    {
+      "kind": "baseline",
+      "style": "white",
+      "view": 0,
+      "file": "white-view0.png",
+      "sha256": "29f074a7e041dfc1968fd02e221165e953205a057da1d88047c944bbc0b3c29e"
+    },
+    {
+      "kind": "baseline",
+      "style": "white",
+      "view": 2,
+      "file": "white-view2.png",
+      "sha256": "93ced38c39d733f14ba9509b4fdbfe9df6dd17d00a86742c5c9a6f370c53dafb"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI1.0",
+      "view": 0,
+      "file": "SI1.0-view0.png",
+      "sha256": "726e90174a27be65600c8d2b256aba116a467951d62fdeb372cfa75145f9b35d"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI1.0",
+      "view": 2,
+      "file": "SI1.0-view2.png",
+      "sha256": "31c1314c8291dbd4220da5924ff5d0ac0b6917e641c45209eef33f11f7ee4a19"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI2.0",
+      "view": 0,
+      "file": "SI2.0-view0.png",
+      "sha256": "aa3287d574c25066874904842790ee9d61b25cc03ec683d9ae597dce018708da"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI2.0",
+      "view": 2,
+      "file": "SI2.0-view2.png",
+      "sha256": "2e9b36ab965137af3e954b79c96831ea60c4e85e52f4dd9e188a3bb14407a238"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI1.0",
+      "view": 0,
+      "file": "AI-SI1.0-view0.png",
+      "sha256": "89757a56491d51c85fb54cd6fb4c37b05eb656c47307d2af62879aeacdd0f452"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI1.0",
+      "view": 2,
+      "file": "AI-SI1.0-view2.png",
+      "sha256": "5ea85035afe0b531e1a2b058097f63065e45dd61d47063e48cb449d2d14efc3e"
+    }
+  ]
+}

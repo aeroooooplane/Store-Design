@@ -1,0 +1,36 @@
+{
+  "state": "completed",
+  "mode": "smoke",
+  "style": "SI2.0",
+  "base_model": "hf-internal-testing/tiny-stable-diffusion-pipe",
+  "base_revision": "3ee6c9f225f088ad5d35b624b6514b091e6a4849",
+  "device": "cpu",
+  "seed": 73,
+  "steps": 80,
+  "resolution": 64,
+  "trainable_parameters": 23040,
+  "train_stores": [
+    "PDF-079",
+    "PDF-083",
+    "PDF-293",
+    "PDF-417"
+  ],
+  "validation_stores": [
+    "PDF-296"
+  ],
+  "train_images": 8,
+  "validation_images": 2,
+  "dataset_sha256": "3bcf6101771dc5f12db5b86c3637b63fcbf74d14b7642e2a41eed8453edc5ad5",
+  "initial_validation_noise_mse": 1.0782377123832703,
+  "final_validation_noise_mse": 1.052337884902954,
+  "adapter_absolute_delta": 521.1532975435257,
+  "reload_max_pixel_difference": 0,
+  "before_after_mean_pixel_difference": 4.66943359375,
+  "elapsed_seconds": 8.437180280685425,
+  "usable_for_production": false,
+  "interpretation": "tiny model tests gradient/save/reload only; output is not a useful store render",
+  "crop_policy": "center crop to square; source rectangles and crop manifests retained",
+  "versions": {
+    "torch": "2.6.0+cpu"
+  }
+}
