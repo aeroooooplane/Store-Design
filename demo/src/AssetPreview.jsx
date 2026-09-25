@@ -1,9 +1,8 @@
 import React,{useEffect,useRef,useState} from 'react'
 import {createAssetViewer} from './asset-viewer.js'
+import {realAssets} from './real-assets.js'
 
-export const firstRealAsset={id:'asset-408124',name:'体验桌 · asset-408124',category:'table',
-  url:'/assets/su/asset-408124/model.glb',unit:'m',upAxis:'Y',origin:'bottom-center',siVersion:null,
-  dimensions:{w:1.0000000076293938,h:1.3268852203432526,d:1.8000000137329106}}
+export const firstRealAsset=realAssets[0]
 
 function Preview(){
   const canvas=useRef(),viewer=useRef()
@@ -37,7 +36,7 @@ export function AssetPreview(){
   return <section className="source-panel" aria-label="真实道具检查">
     <h3>真实 SU 道具 · 接入检查</h3>
     <p>体验桌 asset-408124 · 1.000 × 1.800 × 1.327 m；总高含桌面物件。SI 和正面方向待确认，材质尚待视觉验收。</p>
-    <p>此处查看原模型转换结果；当前平面方案仍使用参数化道具，尚未自动替换。</p>
+    <p>此处查看原模型转换结果；进入平面编辑后可手动加入四类真实道具，旧方案不会自动替换。</p>
     <button type="button" onClick={()=>setOpen(!open)}>{open?'关闭道具预览':'预览真实 SU 体验桌'}</button>
     {open&&<Preview/>}
   </section>

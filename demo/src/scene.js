@@ -1,8 +1,15 @@
 import * as THREE from 'three'
 import { furnitureParts } from './furniture.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import {findRealAsset} from './real-assets.js'
+import {assetPose} from './asset-contract.js'
+import {loadVerifiedAsset,neutralMaterial,release} from './asset-viewer.js'
 
 export function createScene(canvas, layout, style='white', interactive=false) {
+  // Reject corrupt/unknown asset references before allocating a WebGL context.
+  const realItems=layout.items.filter(i=>i.assetId).map(item=>{const asset=findRealAsset(item.assetId);return {item,asset,pose:assetPose(item,asset)}})
+  let disposed=false,loaded=realItems.length===0,failed=null
+  const abort=new AbortController(),assetGeometry=[]
   const renderer = new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true})
   renderer.setSize(960,640,false)
   renderer.shadowMap.enabled=true
@@ -25,6 +32,7 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   }
   const furnitureGeometry=[]
   layout.items.forEach(item=>{
+    if(item.assetId)return
     for(const part of furnitureParts(item)){
       const {role,x,y,z,w:pw,h:ph,d:pd}=part
       furnitureGeometry.push({itemId:item.id,...part,x:item.x+x,z:item.z+z})
@@ -50,5 +58,24 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   view(0)
   let controls,raf
   if(interactive){controls=new OrbitControls(camera,canvas);controls.target.copy(target);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.49; const tick=()=>{controls.update();renderer.render(scene,camera);raf=requestAnimationFrame(tick)};tick()}
-  return {view, furnitureGeometry, image:()=>renderer.domElement.toDataURL('image/png'),dispose:()=>{cancelAnimationFrame(raf);controls?.dispose();scene.traverse(o=>{o.geometry?.dispose();if(o.material){o.material.map?.dispose();o.material.dispose()}});renderer.dispose();renderer.forceContextLoss()}}
+  const ready=Promise.all(realItems.map(async({item,asset,pose})=>{
+    const model=await loadVerifiedAsset(asset,abort.signal)
+    if(disposed||failed){release(model);throw Error('场景加载已取消')}
+    model.traverse(o=>{
+      if(!o.isMesh)return
+      o.castShadow=true;o.receiveShadow=true;o.userData.itemId=item.id
+      if(white){
+        const old=[].concat(o.material),neutral=old.map(neutralMaterial)
+        o.material=Array.isArray(o.material)?neutral:neutral[0]
+        for(const material of old)material.dispose()
+      }
+    })
+    // Wrapper preserves the normalized model's internal translation and transforms.
+    const placed=new THREE.Group();placed.add(model);placed.position.fromArray(pose.position);placed.rotation.y=pose.rotationY;scene.add(placed)
+    assetGeometry.push({itemId:item.id,assetId:asset.id,...pose})
+  })).then(()=>{if(disposed)throw Error('场景已关闭');loaded=true;renderer.render(scene,camera)}).catch(error=>{failed=error;abort.abort();throw error})
+  ready.catch(()=>{}) // Consumer awaits ready; avoid an unhandled rejection on early unmount.
+  return {view,ready,assetGeometry,furnitureGeometry,
+    image:()=>{if(disposed||failed||!loaded)throw failed||Error('真实模型尚未载入完成');return renderer.domElement.toDataURL('image/png')},
+    dispose:()=>{if(disposed)return;disposed=true;abort.abort();cancelAnimationFrame(raf);controls?.dispose();release(scene);renderer.dispose();renderer.forceContextLoss()}}
 }
