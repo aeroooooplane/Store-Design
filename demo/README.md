@@ -1,5 +1,11 @@
 # 影石门店 Demo v2
 
+## 真实 SU 接入进度（2026-09-26）
+
+首页下方“真实 SU 道具 · 接入检查”可按需加载首张体验桌，旋转缩放、切换白模/原材质并下载 PNG。需本机存在转换后的 GLB，见 [本地转换说明](public/assets/su/README.md)；缺文件会报错，不以参数化模型冒充。首张约 32.5 MB，SI/正面方向未确认，材质只做初步检查。平面方案仍使用旧参数化道具，尚未自动替换。
+
+本地真实资产专项验证：设置环境变量 REAL_ASSET_QA=1 后运行 `npx.cmd playwright test tests/asset-viewer.spec.js -g "local real asset" --workers=1`。常规测试不依赖未上传的大文件。
+
 ## 运行
 
 在本目录执行 `npm.cmd install`、`npm.cmd run dev`，打开终端显示的本地地址。生产构建：`npm.cmd run build`。浏览器验证：`npx.cmd playwright test --workers=1`（测试配置使用本机 Edge）。
