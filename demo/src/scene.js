@@ -5,8 +5,11 @@ import {findRealAsset} from './real-assets.js'
 import {assetPose} from './asset-contract.js'
 import {loadVerifiedAsset,neutralMaterial,release} from './asset-viewer.js'
 import {cameraFor} from './camera-presets.js'
+import {heightIssues} from './layout.js'
 
 export function createScene(canvas, layout, style='white', interactive=false) {
+  const clearanceWarnings=heightIssues(layout)
+  if(clearanceWarnings.length)throw Error('请先返回平面核对：'+clearanceWarnings.join('；'))
   // Reject corrupt/unknown asset references before allocating a WebGL context.
   const realItems=layout.items.filter(i=>i.assetId).map(item=>{const asset=findRealAsset(item.assetId);return {item,asset,pose:assetPose(item,asset)}})
   let disposed=false,loaded=realItems.length===0,failed=null

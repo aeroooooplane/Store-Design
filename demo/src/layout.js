@@ -35,8 +35,11 @@ function applyCountModel(plan,variant){
  if(!placed)return {...plan,modelAdvice:{...advice,status:'placement-fallback',requested,predicted,placed:plan.items.filter(i=>i.type==='table').length}};
  return {...plan,items,modelAdvice:{...advice,predicted,requested,placed,status:placed<requested?'capacity-limited':'experimental'}}
 }
+export function heightIssues({room,items}) {
+  return items.filter(item=>item.h>room.h+.001).map(item=>`${item.name}高度超过层高`)
+}
 export function issues(layout) {
-  const {room,items}=layout; const result=[]
+  const {room,items}=layout; const result=heightIssues(layout)
   items.forEach((a,i)=>{
     if(a.x<0||a.z<0||a.x+a.w>room.w+.001||a.z+a.d>room.d+.001) result.push(`${a.name}超出门店边界`)
     items.slice(i+1).forEach(b=>{if(a.x<b.x+b.w&&b.x<a.x+a.w&&a.z<b.z+b.d&&b.z<a.z+a.d) result.push(`${a.name}与${b.name}重叠`)})
