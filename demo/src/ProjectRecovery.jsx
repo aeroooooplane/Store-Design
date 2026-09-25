@@ -6,14 +6,14 @@ function restore(){
   let raw=null
   try{
     raw=localStorage.getItem(PROJECT_KEY)
-    return {project:raw===null?{nodes:[]}:parseProject(raw,{allowEmpty:true})}
+    return {raw,project:raw===null?{nodes:[]}:parseProject(raw,{allowEmpty:true})}
   }catch(error){return {raw,error:error.message}}
 }
 
 // Mount the editor only after validation: its autosave must never see corrupt input.
 export function ProjectRecovery({children}){
   const [state,setState]=useState(restore),[failure,setFailure]=useState('')
-  if(state.project)return children(state.project)
+  if(state.project)return children(state.project,state.raw)
   function download(){
     const url=URL.createObjectURL(new Blob([state.raw],{type:'application/json'}))
     const link=document.createElement('a');link.href=url;link.download='store-project-recovery.json';link.click()
@@ -25,7 +25,7 @@ export function ProjectRecovery({children}){
       const key=PROJECT_KEY+'-recovery-'+crypto.randomUUID()
       localStorage.setItem(key,state.raw)
       if(localStorage.getItem(key)!==state.raw)throw Error('备份校验失败')
-      setState({project:{nodes:[]}})
+      setState({raw:state.raw,project:{nodes:[]}})
     }catch(error){setFailure('备份失败：'+error.message+'；原始数据仍保留。')}
   }
   return <main className="project-transfer"><h1>项目恢复保护</h1>

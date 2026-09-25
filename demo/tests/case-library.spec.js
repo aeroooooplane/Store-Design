@@ -2,6 +2,7 @@ import {test,expect} from '@playwright/test'
 
 test('case library separates reference purposes and SI evidence without changing the project',async({page})=>{
   await page.goto('/')
+  await expect.poll(()=>page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).not.toBeNull()
   const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
   await page.getByRole('button',{name:'查看五店案例证据'}).click({timeout:5000})
   await expect(page.locator('.case-card')).toHaveCount(5)

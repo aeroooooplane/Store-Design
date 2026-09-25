@@ -14,6 +14,7 @@ import {parseProject,mergeProject,MAX_IMPORT_BYTES} from './project-import.js'
 const clone=v=>structuredClone(v), uid=()=>crypto.randomUUID(), KEY='insta-studio-v2'
 import {ProjectRecovery} from './ProjectRecovery.jsx'
 import {captureProject} from './project-draft.js'
+import {createProjectPersistence} from './project-persistence.js'
 function Plan({layout,onChange,selected,onSelect}){
  const svg=useRef(),drag=useRef();const {room,items}=layout
  const point=e=>new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.current.getScreenCTM().inverse())
@@ -44,7 +45,8 @@ function Model({layout,onReady}) {
  },[layout,onReady])
  return <div className="model">{error&&<p role="alert">{error}</p>}{loading&&<p role="status">正在载入场景，完成前不可渲染…</p>}<canvas ref={canvas}/><small>拖动旋转 · 滚轮缩放 · 剖切展示</small></div>
 }
-function App({initialProject}){
+function App({initialProject,initialRaw}){
+ const [persistence]=useState(()=>createProjectPersistence(KEY,initialRaw)),[saveError,setSaveError]=useState('')
  const [modelReady,setModelReady]=useState(false)
  const [historyOpen,setHistoryOpen]=useState(false)
  const [CasePanel,setCasePanel]=useState(null),[casesOpen,setCasesOpen]=useState(false),[casesLoading,setCasesLoading]=useState(false)
@@ -52,7 +54,8 @@ function App({initialProject}){
  const [mode,setMode]=useState('dimensions'),[width,setWidth]=useState(8),[depth,setDepth]=useState(6),[area,setArea]=useState(48),[ratio,setRatio]=useState(1),[height,setHeight]=useState(3.2)
  const [learned,setLearned]=useState(false),[shopType,setShopType]=useState('边厅店')
  const [draft,setDraft]=useState(initialProject.editorDraft?.layout||null),[selected,setSelected]=useState(null),[style,setStyle]=useState('SI1.0'),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[lightbox,setLightbox]=useState(null),[images,setImages]=useState({})
- useEffect(()=>{try{localStorage.setItem(KEY,JSON.stringify(captureProject(project,active,draft,stage)))}catch{setNotice('浏览器存储不足，请导出项目备份。')}},[project,active,draft,stage])
+ useEffect(()=>{persistence.save(captureProject(project,active,draft,stage)).then(()=>setSaveError('')).catch(e=>setSaveError('自动保存失败：'+e.message+'。当前内容仍可导出，请勿直接关闭。'))},[project,active,draft,stage,persistence])
+ useEffect(()=>{if(!saveError)return;const warn=e=>{e.preventDefault();e.returnValue=''};window.addEventListener('beforeunload',warn);return()=>window.removeEventListener('beforeunload',warn)},[saveError])
  const node=project.nodes.find(n=>n.id===active),layout=draft||node?.layout,warnings=layout?issues(layout):[]
  const importContext=useRef();importContext.current={project,draft,stage,node,active}
  async function importBackup(file){
@@ -64,7 +67,7 @@ function App({initialProject}){
    if(current.stage==='editor'&&current.draft&&current.node&&JSON.stringify(current.draft)!==JSON.stringify(current.node.layout))base={...base,nodes:[...base.nodes,{id:uid(),parent:current.active,kind:'edit',name:'导入前保留的调整',layout:clone(current.draft)}]}
    const merged=mergeProject(base,incoming)
    // setItem is atomic: quota failure leaves the previous saved project intact.
-   localStorage.setItem(KEY,JSON.stringify(merged))
+   await persistence.save(merged)
    setProject(merged);setActive(merged.nodes.filter(n=>n.kind==='root').at(-1)?.id);setDraft(null);setSelected(null);setStage('gallery')
    setNotice(`已导入 ${incoming.nodes.length} 个节点，作为独立分支保留；原项目未覆盖。真实模型需本机 GLB，效果图可重新渲染。`)
   }catch(e){setNotice('导入失败，当前项目保持不变：'+e.message)}finally{setBusy(false)}
@@ -94,7 +97,8 @@ function App({initialProject}){
  <div className="case-entry"><button disabled={casesLoading} onClick={async()=>{if(casesOpen){setCasesOpen(false);return}setCasesLoading(true);try{if(!CasePanel){const loaded=await import('./CaseLibrary.jsx');setCasePanel(()=>loaded.default)}setCasesOpen(true)}catch(e){setNotice('案例索引加载失败：'+e.message)}finally{setCasesLoading(false)}}}>{casesOpen?'关闭案例证据':'查看五店案例证据'}</button>{casesLoading&&<small>正在加载证据索引…</small>}</div>
  {casesOpen&&CasePanel&&<CasePanel/>}
  {stage==='setup'&&<AssetPreview/>}
+ {saveError&&<div className="notice warning" role="alert">{saveError}</div>}
  {notice&&<div className="notice" role="status">{notice}</div>}</main></div>
  {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</>
 }
-createRoot(document.getElementById('root')).render(<ProjectRecovery>{project=><App initialProject={project}/>}</ProjectRecovery>)
+createRoot(document.getElementById('root')).render(<ProjectRecovery>{(project,raw)=><App initialProject={project} initialRaw={raw}/>}</ProjectRecovery>)
