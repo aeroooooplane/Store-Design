@@ -6,6 +6,11 @@
 .project-transfer{margin-top:28px;padding:18px;border:1px solid #465449;border-radius:12px;background:#1d271f}.project-transfer small{display:block;margin-top:12px;color:#aab6a4;line-height:1.6}.project-transfer input{font-size:13px}
 
 .history-toggle{display:none}
+.project-tools{margin-top:28px;padding-top:20px;border-top:1px solid #465449}
+.project-tools h2{font-size:17px;margin:0}
+.project-tools .project-transfer{margin-top:12px}
+.project-transfer summary{cursor:pointer;font-size:13px}
+.backup-export{margin:16px 0}
 .evidence-file{margin:12px 0}
 .evidence-file a{display:inline-block;padding:10px;color:#d5ef76}
 .evidence-file img{display:block;width:100%;height:auto;margin-top:12px}
