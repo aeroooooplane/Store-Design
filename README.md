@@ -1,47 +1,32 @@
-# 影石门店智能空间设计工作台
+# 影石门店空间设计工作台
 
-真实 SU 道具接入：[原始模型预检目录](素材库/04_assets/source-inspection/index.html) · [接入方案与当前依赖](docs/su-real-assets.md)。已读取 40 张嵌入组件预览及 671 个材质条目；真实网格尚待 SketchUp / SDK 读取，未替换白膜道具。
+当前范围：**平面图、多角度效果图、网页三维查看**。暖通、水电等施工图不在本阶段范围内。
 
-新版 AI 验证：[SI1.0 两机位增强与叠加检查](素材库/05_render_benchmark/s03-v2/ai.html)。开箱桌空隙、体验桌底座与后柜层板的可见形态保留较好，细节和遮挡处仍未通过几何验收；准确多视角继续以三维场景为依据。
+## 从这里开始
 
-道具结构深化：[v2 双机位白膜与材质对照](素材库/05_render_benchmark/s03-v2/index.html)。Demo 可选择四类道具结构并保存快照；三种风格共用道具几何。仍是参数化示意，真实 SKP 尚未导入。[实现与限制](docs/furniture-geometry-v2.md)。
+- [运行网页](demo/README.md)：二维调整、分支保存、三维预览与多机位渲染。
+- [文件位置与用途](docs/README.md)：原始资料、正式成果、历史实验和工具的统一导航。
+- [本轮开发进度](docs/web-8h-progress.md)：整理 → 真实资产接入 → 网页测试与优化。
 
-首轮大模型渲染实验：[同一场景双机位、双SI对比](素材库/05_render_benchmark/s03-v1/index.html)。已实际生成4张AI增强图并尝试1次局部修正；视觉表现改善，但几何尚未验收。输入、提示词、原图与检查记录均保留。
+## 已有成果与边界
 
-最新进展：已完成11家门店的体验桌数量模型训练并接入Demo实验开关；SI1.0/2.0各完成一次本地tiny LoRA训练流程验证。正式效果图风格模型尚未训练。[查看实验报告](素材库/04_training/index.html) · [结果与限制](docs/training-results.md) · [复现训练](tools/training/README.md)。
+| 成果 | 入口 | 当前边界 |
+|---|---|---|
+| 90 项真实 SU 道具拆分 | [资产目录](素材库/04_assets/incoming/split-20260925-v2/index.html)、[验证记录](素材库/04_assets/incoming/split-20260925-v2/validation-summary.json) | 对应 111 个源实例，原件哈希保持；网页 GLB 接入尚待实现，SI 未确认 |
+| 五家门店双用途案例包 | [最终交接](docs/case-pack-4h-handoff.md) | 212 页索引、79 页整页审核、15 条平面参考、18 张独立效果参考；不等于完整几何标注 |
+| 网页原型 | [功能与限制](demo/README.md) | 当前仍为参数化道具和示意材质；尚非真实资产写实输出 |
+| 历史试训与渲染实验 | [实验导航](docs/README.md#其余文档分组) | 验证过流程，不代表正式模型或几何交付通过 |
 
-这是一个面向影石门店设计的智能空间设计项目。用户输入门店尺寸和基础条件，系统生成多个软装平面方案；用户在网页中调整方案后，系统生成标准平面图、白膜模型、不同风格的效果图，并将最终成果整理为 PDF 交付包。
+## 工作方式
 
-## 当前已确定的产品方向
+尺寸及铺型 → 候选平面 → 人工调整与校核 → 同一三维场景 → 固定多角度效果图。
 
-- 生成 4 个候选平面方案，供用户选择。
-- 平面方案支持网页端软装调整。
-- 平面确认后生成标准化平面图。
-- 风格选择位于标准平面图之后、白膜和效果图之前。
-- 当前支持两种影石门店风格：
-  - SI1.0：灰色调，默认生成。
-  - SI2.0：黑色调。
-- 用户可以选择只生成 SI1.0、只生成 SI2.0，或同时生成两种风格。
-- 所有方案、调整和渲染结果通过树状分支保存，用户可以回到历史节点继续生成。
-- 最终输出平面图、软装物料清单、效果图和白膜预览组成的 PDF。
+平面和三维必须引用同一份布局与真实尺寸。材质切换不能暗中改变几何。SI 以门店、版本和证据确定；主体装修黑色可作为 SI2 线索，不从未见黑色推断 SI1，也不把 SI 简化为全灰或全黑。
 
-## 文档
+资料保留在本机。网页当前使用浏览器本地保存，不具备跨电脑项目同步；关键节点按用户授权推送代码和说明，不批量上传原始资产、训练权重或清洗输出。
 
-- [项目需求说明](docs/project-brief.md)
-- [产品流程与分支树](docs/product-flow.md)
-- [技术架构建议](docs/architecture.md)
-- [第一阶段执行计划](docs/roadmap.md)
-- [待收集资料清单](docs/input-materials.md)
-- [当前素材盘点](docs/asset-inventory.md)
-- [大型素材分批处理方案](docs/asset-ingestion-plan.md)
-- [第一批候选样本索引](<素材库/01_catalog/sample-set.csv>)
-- [GitHub 相关项目调研](docs/github-research.md)
-- [Demo 使用说明](demo/README.md)
-- [真实样本内容核验与接入进度](docs/real-sample-review.md)
-- [布局规则库：标签与训练样本规范](docs/layout-library.md)
-- [门店标签与页面检索表](素材库/01_catalog/classification/index.html)
-- [SketchUp 单道具导出说明](tools/sketchup/README.md)
+## 开发与维护
 
-## 当前第一步
+[真实 SU 接入约束](docs/su-real-assets.md) · [PDF 清洗](docs/pdf-cleaning.md) · [SI 来源](docs/si-source-recovery.md) · [本轮文件整理记录](docs/file-organization-20260926.md)
 
-先收集并整理一套完整的历史门店样本，至少包括：一张平面图、对应效果图、门店尺寸、软装清单，以及它属于 SI1.0 还是 SI2.0。第一阶段先用一个规则明确的矩形门店做闭环验证，再扩展复杂户型。
+历史研究已归档到 [docs/archive/research](docs/archive/research/)。各目录职责以 [目录指南](docs/README.md) 为准，新文档优先更新对应主题，避免不断堆叠新的“最新进展”入口。
