@@ -3,3 +3,4 @@
 
 .sample-button{margin:20px 0 0 12px}.source-panel{padding:18px;background:#273326;border:1px solid #50604a;border-radius:12px;margin-bottom:20px}.source-panel p{font-size:12px;color:#b6c3ac}.source-images{display:grid;grid-template-columns:1fr 1fr;gap:16px}.source-images img{width:100%;height:210px;object-fit:contain;background:#e9ebe6}
 .model-toggle{flex-direction:row;align-items:center;margin-top:24px;font-size:14px}.model-toggle input{width:18px;height:18px;accent-color:#d5ef76}
+.project-transfer{margin-top:28px;padding:18px;border:1px solid #465449;border-radius:12px;background:#1d271f}.project-transfer small{display:block;margin-top:12px;color:#aab6a4;line-height:1.6}.project-transfer input{font-size:13px}

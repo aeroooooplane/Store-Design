@@ -11,6 +11,7 @@ import {AssetPreview} from './AssetPreview'
 import {realAssets} from './real-assets.js'
 import {createAssetItem,rotateItem} from './asset-contract.js'
 import {downloadPlan} from './plan-export.js'
+import {parseProject,mergeProject,MAX_IMPORT_BYTES} from './project-import.js'
 const clone=v=>structuredClone(v), uid=()=>crypto.randomUUID(), KEY='insta-studio-v2'
 function initial(){try{const saved=JSON.parse(localStorage.getItem(KEY));if(!Array.isArray(saved?.nodes))return {nodes:[]};return {...saved,nodes:saved.nodes.map(n=>({...n,...(n.room?{room:{shopType:'边厅店',...n.room}}:{}),...(n.layout?{layout:{...n.layout,room:{shopType:'边厅店',...n.layout.room}}}:{})}))}}catch{return {nodes:[]}}}
 function Plan({layout,onChange,selected,onSelect}){
@@ -45,6 +46,21 @@ function App(){
  const [draft,setDraft]=useState(null),[selected,setSelected]=useState(null),[style,setStyle]=useState('SI1.0'),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[lightbox,setLightbox]=useState(null),[images,setImages]=useState({})
  useEffect(()=>{try{localStorage.setItem(KEY,JSON.stringify(project))}catch{setNotice('浏览器存储不足，请导出项目备份。')}},[project])
  const node=project.nodes.find(n=>n.id===active),layout=draft||node?.layout,warnings=layout?issues(layout):[]
+ const importContext=useRef();importContext.current={project,draft,stage,node,active}
+ async function importBackup(file){
+  setBusy(true)
+  try{
+   if(file.size>MAX_IMPORT_BYTES)throw Error('项目文件大小不能超过 5 MB')
+   const incoming=parseProject(await file.text()),current=importContext.current
+   let base=current.project
+   if(current.stage==='editor'&&current.draft&&current.node&&JSON.stringify(current.draft)!==JSON.stringify(current.node.layout))base={...base,nodes:[...base.nodes,{id:uid(),parent:current.active,kind:'edit',name:'导入前保留的调整',layout:clone(current.draft)}]}
+   const merged=mergeProject(base,incoming)
+   // setItem is atomic: quota failure leaves the previous saved project intact.
+   localStorage.setItem(KEY,JSON.stringify(merged))
+   setProject(merged);setActive(merged.nodes.filter(n=>n.kind==='root').at(-1)?.id);setDraft(null);setSelected(null);setStage('gallery')
+   setNotice(`已导入 ${incoming.nodes.length} 个节点，作为独立分支保留；原项目未覆盖。真实模型需本机 GLB，效果图可重新渲染。`)
+  }catch(e){setNotice('导入失败，当前项目保持不变：'+e.message)}finally{setBusy(false)}
+ }
  function append(nodes){setProject(p=>({...p,nodes:[...p.nodes,...nodes]}))}
  function loadSample(){const root={id:uid(),kind:"root",name:"真实样本 · 上海星光",room:clone(realSample.room)};const n={id:uid(),parent:root.id,kind:"plan",name:realSample.name,layout:clone(realSample)};append([root,n]);open(n)}
  function generate(e){e.preventDefault();try{const room={...dimensions(mode,width,depth,area,ratio,height),shopType};const root={id:uid(),kind:'root',name:`${shopType} ${room.w.toFixed(1)} × ${room.d.toFixed(1)} m`,room};append([root,...generatePlans(room,{learned}).map(p=>({id:uid(),parent:root.id,kind:'plan',name:p.name,layout:p}))]);setActive(root.id);setDraft(null);setStage('gallery');setNotice(learned?'四套方案已生成：实验模型建议体验桌数量，位置由规则安排；超出训练面积时回退。':'四套规则示例已生成，请选择一个方案细化。')}catch(e){setNotice(e.message)}}
@@ -66,6 +82,7 @@ function App(){
  {stage==='render'&&layout&&<><p className="hint">{node.style} · 实时光照预览 · 8 个固定相对机位，点击查看大图。</p>{images[active]?<div className="renders">{images[active].map((src,i)=><button key={i} onClick={()=>setLightbox({src,i})}><img src={src} alt={`视角 ${i+1}`}/><span>{['正面鸟瞰','左前方','右前方','右后方','左后方','背面鸟瞰','顶部俯视','入口方向'][i]}</span></button>)}</div>:<div className="empty"><p>布局已保存，点击重新渲染恢复八视角图片。</p><button className="primary" disabled={busy} onClick={render}>重新渲染</button></div>}</>}
  {stage==='render'&&images[active]&&<button disabled={busy} onClick={async()=>{setBusy(true);try{const {downloadRenderBundle}=await import('./render-export.js');await downloadRenderBundle(node,images[active]);setNotice('八视角、布局、平面 SVG 和机位清单已打包。')}catch(e){setNotice('打包失败：'+e.message)}finally{setBusy(false)}}}>下载八视角完整包 ZIP</button>}
  {stage==='editor'&&layout&&<button onClick={()=>{try{downloadPlan(layout);setNotice('平面 SVG 已导出，含尺寸与资产编号；非施工图。')}catch(e){setNotice(e.message)}}}>导出平面 SVG</button>}
+ <section className="project-transfer"><label>导入项目 JSON<input aria-label="导入项目 JSON" type="file" accept=".json,application/json" disabled={busy} onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)importBackup(file)}}/></label><small>最多 5 MB / 500 节点；合并为独立分支，不覆盖当前项目。模型文件不随 JSON 同步。</small></section>
  {stage==='setup'&&<AssetPreview/>}
  {notice&&<div className="notice" role="status">{notice}</div>}</main></div>
  {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</>
