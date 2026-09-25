@@ -63,6 +63,10 @@ Remove-Item Env:PRODUCTION_QA
 
 ## 代码
 
+同一场景内重复摆放相同真实资产只加载/解析一次，实例共享静态网格和材质，各自保留位置、旋转、编号；关闭场景统一释放，不留跨场景缓存。目前只用于这四类静态道具，不包含骨骼动画。数量上限 200 是数据校验上限，不是承诺 200 个复杂道具都流畅。
+
+本机性能复测：在 PowerShell 设置 `$env:ASSET_PERF_QA='1'`，执行 `npx.cmd playwright test tests/asset-performance.spec.js --workers=1` 后移除该环境变量。它测量 1/4/4 个体验桌的加载、请求数和显式 GC 后 JS 堆，报告写入 `output/web-qa/asset-performance-*.json`。不覆盖 GPU/原生内存或长时间泄漏，不用单次秒数作为性能保证。
+
 - `src/layout.js`：米制尺寸校验、四方案和碰撞检测。
 - `src/main.jsx`：步骤页面、SVG 编辑器、快照及分支。
 - `src/scene.js`：白膜、材质、灯光、八机位、PNG 导出和资源释放。

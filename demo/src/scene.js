@@ -58,21 +58,31 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   view(0)
   let controls,raf
   if(interactive){controls=new OrbitControls(camera,canvas);controls.target.copy(target);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.49; const tick=()=>{controls.update();renderer.render(scene,camera);raf=requestAnimationFrame(tick)};tick()}
-  const ready=Promise.all(realItems.map(async({item,asset,pose})=>{
+  // Scene-local reuse: clones share verified geometry/materials, not placement or identity.
+  // All current catalog assets are static furniture. No cross-scene cache survives disposal.
+  const groups=new Map()
+  for(const entry of realItems){if(!groups.has(entry.asset.id))groups.set(entry.asset.id,[]);groups.get(entry.asset.id).push(entry)}
+  const ready=Promise.all([...groups.values()].map(async entries=>{
+    const {asset}=entries[0]
     const model=await loadVerifiedAsset(asset,abort.signal)
     if(disposed||failed){release(model);throw Error('场景加载已取消')}
+    const originals=new Set(),neutrals=new Map()
     model.traverse(o=>{
       if(!o.isMesh)return
-      o.castShadow=true;o.receiveShadow=true;o.userData.itemId=item.id
+      o.castShadow=true;o.receiveShadow=true
       if(white){
-        const old=[].concat(o.material),neutral=old.map(neutralMaterial)
+        const old=[].concat(o.material),neutral=old.map(m=>{originals.add(m);if(!neutrals.has(m))neutrals.set(m,neutralMaterial(m));return neutrals.get(m)})
         o.material=Array.isArray(o.material)?neutral:neutral[0]
-        for(const material of old)material.dispose()
       }
     })
-    // Wrapper preserves the normalized model's internal translation and transforms.
-    const placed=new THREE.Group();placed.add(model);placed.position.fromArray(pose.position);placed.rotation.y=pose.rotationY;scene.add(placed)
-    assetGeometry.push({itemId:item.id,assetId:asset.id,...pose})
+    for(const material of originals)material.dispose()
+    for(const {item,pose} of entries){
+      const instance=model.clone(true)
+      instance.traverse(o=>{if(o.isMesh)o.userData.itemId=item.id})
+      // Wrapper preserves the normalized model's internal translation and transforms.
+      const placed=new THREE.Group();placed.add(instance);placed.position.fromArray(pose.position);placed.rotation.y=pose.rotationY;scene.add(placed)
+      assetGeometry.push({itemId:item.id,assetId:asset.id,...pose})
+    }
   })).then(()=>{if(disposed)throw Error('场景已关闭');loaded=true;renderer.render(scene,camera)}).catch(error=>{failed=error;abort.abort();throw error})
   ready.catch(()=>{}) // Consumer awaits ready; avoid an unhandled rejection on early unmount.
   return {view,ready,assetGeometry,furnitureGeometry,

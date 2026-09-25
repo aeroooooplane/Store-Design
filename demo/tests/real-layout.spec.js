@@ -85,3 +85,36 @@ test('local four-asset scene visual QA',async({page})=>{
     await page.evaluate(()=>{window.qaScene.dispose();document.getElementById('real-scene-qa').remove()})
   }
 })
+
+test('repeated asset loads once per scene and keeps independent transforms across styles',async({page})=>{
+  await page.goto('/')
+  const bytes=await page.evaluate(async()=>{
+    const T=await import('/node_modules/three/build/three.module.js'),{GLTFExporter}=await import('/node_modules/three/examples/jsm/exporters/GLTFExporter.js')
+    const m=new T.Mesh(new T.BoxGeometry(1,1.32688522,1.8),new T.MeshStandardMaterial({color:'#cc3311'}));m.position.y=1.32688522/2
+    return Array.from(new Uint8Array(await new GLTFExporter().parseAsync(m,{binary:true})))
+  })
+  let requests=0
+  await page.route('**/assets/su/asset-408124/model.glb',r=>{requests++;return r.fulfill({contentType:'model/gltf-binary',body:Buffer.from(bytes)})})
+  const results=await page.evaluate(async()=>{
+    const {createScene}=await import('/src/scene.js'),{realAssets}=await import('/src/real-assets.js'),{createAssetItem,rotateItem}=await import('/src/asset-contract.js')
+    const items=[createAssetItem(realAssets[0],'first',1,1),rotateItem(createAssetItem(realAssets[0],'second',4,3))],results=[]
+    for(const style of ['white','SI1.0']){
+      const scene=createScene(document.createElement('canvas'),{room:{w:8,d:6,h:3},items},style)
+      await scene.ready
+      results.push({placed:scene.assetGeometry,meshes:scene.geometryManifest().filter(m=>m.itemId),image:scene.image().slice(0,22)})
+      scene.dispose();scene.dispose()
+    }
+    return results
+  })
+  expect(requests).toBe(2) // One fetch in each scene, never a cross-scene stale cache.
+  for(const result of results){
+    expect(result.placed.map(p=>p.itemId)).toEqual(['first','second'])
+    expect(result.placed[0].position[0]).toBeCloseTo(1.5)
+    expect(result.placed[1].position[0]).toBeCloseTo(4.5)
+    expect(result.placed[1].rotationY).toBeCloseTo(-Math.PI/2)
+    expect(result.meshes).toHaveLength(2)
+    expect(result.meshes[0].matrix).not.toEqual(result.meshes[1].matrix)
+    expect(result.image).toBe('data:image/png;base64,')
+  }
+  expect(results[0].meshes).toEqual(results[1].meshes)
+})
