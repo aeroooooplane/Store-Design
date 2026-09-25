@@ -159,3 +159,11 @@ e3fe3d2：fix(editor): guard node and object limits before creating changes，�
 04:32 接续：Important 3 复现 RED（持写锁时导入，仍能把道具 5→6），修复为从读取文件到持久化结束冻结操作区，同步 ref 防重入、inert 阻止交互、事件捕获防排队修改，finally 成功/失败都解锁。保留导入前 5 件草稿；新增 setup 提交/样本阻止及存储冲突后解锁回归。首轮完整回归 65 通过/2 失败/3 跳过：一项是 inert 的 role locator 假设错误，改测真实点击；一项是新旧 status 同时存在，已隐藏导入期间旧通知。重跑完整 demo 67 通过/3 本地专项默认跳过（49.3 秒），build 成功，入口 447.85 kB / gzip145.82 kB；三维块体积警告仍在。
 
 审查三个 Important 均已通过针对性修复测试，无需再派相同范围审查。下一轮优先生产 preview 的本机证据与四真实资产验证，然后更新操作说明/README 陈旧状态；仍不宣称写实效果、完整门店几何或 SI 验收。原始资料不变。
+
+57c7573：fix(import): freeze project interactions during asynchronous merge，已成功推送 93854b4..57c7573 到 origin/main。4 个明确代码/测试/进度文件，原始资产未加入；所有测试/提交/推送会话结束。后续注意既有 four-asset QA 通过 /src 模块入口，仅能开发模式；生产 preview 真资产检查须走实际网页按钮，不直接照搬此测试。证据专项只用公开 UI/白名单端点，可复用生产服务。
+
+04:40 接续：新增独立 playwright.preview.config.js / production-preview.spec.js，本机 5184 启动已构建 preview，通过实际页面而非 /src 导入模块验证。PRODUCTION_QA=1 专项 2 项通过（12.1 秒）：上海原始拆分 PDF 哈希一致、效果原图浏览器解码；导入四资产非重叠布局，四 GLB 均 200 加载，白模就绪后渲染八视角并下载 ZIP，包内四对象与输入一致、布局和八图哈希吻合、无 pageerror，未加载 Vite/src 脚本。截图 output/web-qa/production-evidence.png、production-four-assets-white.png、production-four-assets-eight-views.png；已查看后两张，几何可见，仍是概念灯光而非写实交付。测试允许软件 WebGL，不据此宣称 RTX4070 性能。
+
+默认完整 demo 67 通过、5 本机专项跳过（49.1 秒；新增两项需单独 preview 配置），无产品源码修改，沿用 57c7573 同一构建输出。README 修正“四类真实道具未接入”的过时描述，demo/README 整合备份/异常恢复/多窗口冲突/换电脑/五店证据/生产专项操作和限制，不新建重复说明。原件不上传，浏览器日常数据未触及。
+
+下一批：先量测重复真实资产/切换场景的加载与资源表现，审查提出的大场景内存风险尚未测量；依据实测再选择复用/预算限制，勿直接宣称200真实道具都可顺畅使用。也可核对平面编辑易用性和导出视图，保持平面+多角度+三维范围。截止时间仍为09:27:53，不提前宣称八小时完成。
