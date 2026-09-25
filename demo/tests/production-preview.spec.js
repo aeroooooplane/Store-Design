@@ -14,6 +14,41 @@ async function downloadBytes(page,name){
 
 test.skip(process.env.PRODUCTION_QA!=='1','Requires a fresh build and original local assets; use playwright.preview.config.js')
 
+for(const width of [390,1440])test(`built preview ${width}px history search resumes and exports a recoverable edit`,async({page})=>{
+  await page.setViewportSize({width,height:1000})
+  const room={w:8,d:6,h:3,shopType:'边厅店'}
+  const layout={room,items:[{id:'table',name:'体验桌',type:'table',x:1,z:1,w:1,d:1,h:1}]}
+  const project={nodes:[{id:'r',kind:'root',name:'生产操作验证',room},{id:'s',kind:'render',parent:'r',name:'Alpha 效果快照',style:'SI2.0',layout}]}
+  const errors=[],scripts=[]
+  page.on('pageerror',e=>errors.push(e.message))
+  page.on('request',r=>{if(r.resourceType()==='script')scripts.push(r.url())})
+  await page.goto('/')
+  await page.getByLabel('导入项目 JSON').setInputFiles({name:'resume.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(project))})
+  await expect(page.getByRole('status')).toContainText('已导入')
+  if(width<900)await page.getByRole('button',{name:'历史与备份'}).click()
+  await page.getByRole('searchbox',{name:'搜索历史名称'}).fill(' alpha ')
+  await expect(page.locator('.branch-list button')).toHaveCount(1)
+  await page.locator('.branch-list button').click()
+  await page.getByRole('button',{name:'复制当前布局继续编辑',exact:true}).click()
+  await page.locator('.drawing .plan g').first().click()
+  await page.getByLabel('横向位置 / m').fill('2.345')
+  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).editorDraft?.layout.items[0].x)).toBe(2.345)
+  await page.reload()
+  await page.locator('.drawing .plan g').first().click()
+  await expect(page.getByLabel('横向位置 / m')).toHaveValue('2.345')
+  await page.getByRole('button',{name:'保存平面快照',exact:true}).click()
+  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')))
+  expect(saved.nodes.find(n=>n.kind==='render').layout).toEqual(layout)
+  expect(saved.nodes.at(-1).layout.items[0].x).toBe(2.345)
+  const svg=await downloadBytes(page,'导出平面 SVG')
+  const exported=await page.evaluate(xml=>JSON.parse(new DOMParser().parseFromString(xml,'image/svg+xml').querySelector('metadata').textContent).layout,svg.toString())
+  expect(exported).toEqual(saved.nodes.at(-1).layout)
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(errors).toEqual([])
+  expect(scripts.some(url=>url.includes('/src/')||url.includes('/@vite/'))).toBe(false)
+  await page.screenshot({path:`../output/web-qa/production-resume-${width}.png`,fullPage:true})
+})
+
 test('built preview opens verified local PDF and image without source modules',async({page,request})=>{
   const manifest=JSON.parse(await readFile(new URL('../src/data/case-library.json',import.meta.url)))
   const store=manifest.stores[0],ref=store.layouts[0],scripts=[]
