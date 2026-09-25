@@ -63,12 +63,22 @@ export function parseProject(raw,{allowEmpty=false}={}){
     visiting.delete(node.id);done.add(node.id);sorted.push(node)
   }
   for(const node of parsed.nodes)visit(node)
+  if(parsed.editorDraft!=null){
+    const draft=parsed.editorDraft,parent=byId.get(draft.parent)
+    if(!parent||!['plan','edit'].includes(parent.kind))throw Error('草稿的原方案无效')
+    parsed.editorDraft={parent:parent.id,layout:layout(draft.layout)}
+  }
   return {...parsed,nodes:sorted}
 }
 
 export function mergeProject(existing,incoming,makeId=()=>crypto.randomUUID()){
   // Validate again at the public merge boundary; never modify either argument.
   const validated=parseProject(JSON.stringify(incoming)),used=new Set(existing.nodes.map(n=>n.id)),mapping=new Map()
+  if(validated.editorDraft){
+    let id='imported-draft'
+    while(validated.nodes.some(n=>n.id===id))id+='-'
+    validated.nodes.push({id,parent:validated.editorDraft.parent,kind:'edit',name:'导入的未定稿调整',layout:validated.editorDraft.layout})
+  }
   if(existing.nodes.length+validated.nodes.length>500)throw Error('合并后超过 500 个节点，请先导出备份并分项目管理')
   for(const node of validated.nodes){
     let id,attempt=0
