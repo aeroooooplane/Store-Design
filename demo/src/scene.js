@@ -41,11 +41,11 @@ export function createScene(canvas, layout, style='white', interactive=false) {
       mesh.userData={itemId:item.id,role}
     }
   })
-  if(!white&&!island){
+  if(!island){
     const label=document.createElement('canvas');label.width=1024;label.height=256
     const ctx=label.getContext('2d');ctx.fillStyle=dark?'#24282c':'#bfc2c4';ctx.fillRect(0,0,1024,256);ctx.fillStyle='#fff';ctx.font='bold 100px Arial';ctx.textAlign='center';ctx.fillText('Insta360',512,165)
     const texture=new THREE.CanvasTexture(label)
-    const sign=new THREE.Mesh(new THREE.PlaneGeometry(Math.min(3,w*.5),.75),new THREE.MeshBasicMaterial({map:texture}));sign.position.set(w/2,h*.76,.012);scene.add(sign)
+    const sign=new THREE.Mesh(new THREE.PlaneGeometry(Math.min(3,w*.5),.75),new THREE.MeshBasicMaterial({map:white?null:texture,color:0xffffff}));if(white)texture.dispose();sign.position.set(w/2,h*.76,.012);scene.add(sign)
     box(w/2,h-.15,.18,w*.85,.025,.06,'#fff5db')
   }
   scene.add(new THREE.HemisphereLight('#ffffff','#808894',2))
@@ -54,7 +54,7 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   const camera=new THREE.PerspectiveCamera(48,1.5,.05,300)
   const target=new THREE.Vector3(w/2,h*.25,d/2)
   const views=[[.5,1.15,1.8],[-.7,1,1.4],[1.7,1,1.4],[1.7,1,-.4],[-.7,1,-.4],[.5,1.3,-.85],[.5,2.4,.501],[.5,.55,1.7]]
-  function view(index){ const [x,y,z]=views[index];camera.position.set(w*x,span*y,d*z);camera.lookAt(target);renderer.render(scene,camera) }
+  function view(index){ if(disposed)throw Error('场景已关闭');const [x,y,z]=views[index];camera.position.set(w*x,span*y,d*z);camera.lookAt(target);renderer.render(scene,camera) }
   view(0)
   let controls,raf
   if(interactive){controls=new OrbitControls(camera,canvas);controls.target.copy(target);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.49; const tick=()=>{controls.update();renderer.render(scene,camera);raf=requestAnimationFrame(tick)};tick()}
@@ -76,6 +76,7 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   })).then(()=>{if(disposed)throw Error('场景已关闭');loaded=true;renderer.render(scene,camera)}).catch(error=>{failed=error;abort.abort();throw error})
   ready.catch(()=>{}) // Consumer awaits ready; avoid an unhandled rejection on early unmount.
   return {view,ready,assetGeometry,furnitureGeometry,
+    geometryManifest:()=>{scene.updateMatrixWorld(true);const meshes=[];scene.traverseVisible(o=>{if(o.isMesh)meshes.push({itemId:o.userData.itemId??null,type:o.geometry.type,vertices:o.geometry.attributes.position.count,indices:o.geometry.index?.count??0,parameters:o.geometry.parameters??null,matrix:o.matrixWorld.toArray()})});return meshes},
     image:()=>{if(disposed||failed||!loaded)throw failed||Error('真实模型尚未载入完成');return renderer.domElement.toDataURL('image/png')},
     dispose:()=>{if(disposed)return;disposed=true;abort.abort();cancelAnimationFrame(raf);controls?.dispose();release(scene);renderer.dispose();renderer.forceContextLoss()}}
 }
