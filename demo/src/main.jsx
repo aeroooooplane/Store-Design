@@ -47,6 +47,7 @@ function Model({layout,onReady}) {
 function App({initialProject}){
  const [modelReady,setModelReady]=useState(false)
  const [historyOpen,setHistoryOpen]=useState(false)
+ const [CasePanel,setCasePanel]=useState(null),[casesOpen,setCasesOpen]=useState(false),[casesLoading,setCasesLoading]=useState(false)
  const [project,setProject]=useState(()=>{const {editorDraft,...saved}=initialProject;return saved}),[active,setActive]=useState(initialProject.editorDraft?.parent||null),[stage,setStage]=useState(initialProject.editorDraft?'editor':project.nodes.length?'gallery':'setup')
  const [mode,setMode]=useState('dimensions'),[width,setWidth]=useState(8),[depth,setDepth]=useState(6),[area,setArea]=useState(48),[ratio,setRatio]=useState(1),[height,setHeight]=useState(3.2)
  const [learned,setLearned]=useState(false),[shopType,setShopType]=useState('边厅店')
@@ -90,6 +91,8 @@ function App({initialProject}){
  {stage==='render'&&images[active]&&<button disabled={busy} onClick={async()=>{setBusy(true);try{const {downloadRenderBundle}=await import('./render-export.js');await downloadRenderBundle(node,images[active]);setNotice('八视角、布局、平面 SVG 和机位清单已打包。')}catch(e){setNotice('打包失败：'+e.message)}finally{setBusy(false)}}}>下载八视角完整包 ZIP</button>}
  {stage==='editor'&&layout&&<button onClick={()=>{try{downloadPlan(layout);setNotice('平面 SVG 已导出，含尺寸与资产编号；非施工图。')}catch(e){setNotice(e.message)}}}>导出平面 SVG</button>}
  <section className="project-transfer"><label>导入项目 JSON<input aria-label="导入项目 JSON" type="file" accept=".json,application/json" disabled={busy} onChange={e=>{const file=e.target.files?.[0];e.target.value='';if(file)importBackup(file)}}/></label><small>最多 5 MB / 500 节点；合并为独立分支，不覆盖当前项目。模型文件不随 JSON 同步。</small></section>
+ <div className="case-entry"><button disabled={casesLoading} onClick={async()=>{if(casesOpen){setCasesOpen(false);return}setCasesLoading(true);try{if(!CasePanel){const loaded=await import('./CaseLibrary.jsx');setCasePanel(()=>loaded.default)}setCasesOpen(true)}catch(e){setNotice('案例索引加载失败：'+e.message)}finally{setCasesLoading(false)}}}>{casesOpen?'关闭案例证据':'查看五店案例证据'}</button>{casesLoading&&<small>正在加载证据索引…</small>}</div>
+ {casesOpen&&CasePanel&&<CasePanel/>}
  {stage==='setup'&&<AssetPreview/>}
  {notice&&<div className="notice" role="status">{notice}</div>}</main></div>
  {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</>

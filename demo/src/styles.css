@@ -6,6 +6,17 @@
 .project-transfer{margin-top:28px;padding:18px;border:1px solid #465449;border-radius:12px;background:#1d271f}.project-transfer small{display:block;margin-top:12px;color:#aab6a4;line-height:1.6}.project-transfer input{font-size:13px}
 
 .history-toggle{display:none}
+.case-entry{margin-top:24px;display:flex;gap:12px;align-items:center}
+.case-library{margin-top:18px;padding:20px;background:#1d271f;border:1px solid #465449;border-radius:12px}
+.case-library p,.case-library li{font-size:13px;line-height:1.7}
+.case-library code{overflow-wrap:anywhere;font-size:12px}
+.case-filters{display:flex;flex-wrap:wrap;gap:16px}
+.case-filters label{flex:1 1 180px}
+.case-card{margin-top:20px;border-top:1px solid #465449;padding-top:12px;overflow-wrap:anywhere}
+.case-card h3 small{font-size:11px;color:#aab6a4}
+.case-card ul{padding-left:20px;color:#c6cdbf}
+.case-reference{padding:12px;margin-top:8px;background:#263029;border-radius:8px}
+.case-reference summary{cursor:pointer;font-size:13px;line-height:1.7}
 .fields{grid-template-columns:repeat(3,minmax(0,1fr))}
 .properties p,.project-transfer small,.source-panel p{overflow-wrap:anywhere}
 .actions{flex-wrap:wrap}
