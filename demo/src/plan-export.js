@@ -23,15 +23,18 @@ export function exportLayoutSvg(layout){
     for(let i=0;i<chars.length;i+=maxChars)parts.push(chars.slice(i,i+maxChars).join(''))
     return parts
   })
-  const height=d+1.6+lines.length*.22
+  const titleChars=Array.from(title),titleWidth=Math.max(1,Math.floor(w/.21)),titleLines=[]
+  for(let i=0;i<titleChars.length;i+=titleWidth)titleLines.push(titleChars.slice(i,i+titleWidth).join(''))
+  const titleExtra=Math.max(0,titleLines.length-1)*.26,top=-.8-titleExtra
+  const height=d+1.6+lines.length*.22+titleExtra
   const text=(x,y,value,size=.14)=>`<text x="${number(x)}" y="${number(y)}" font-size="${size}">${escape(value)}</text>`
   const footprints=items.map((i,n)=>`<rect data-item-id="${escape(i.id)}" data-asset-id="${escape(i.assetId||'')}" x="${number(i.x)}" y="${number(i.z)}" width="${number(i.w)}" height="${number(i.d)}" fill="${i.assetId?'#dce8e4':'#eee8d8'}" stroke="#394d45" stroke-width="0.018"/><text x="${number(i.x+i.w/2)}" y="${number(i.z+i.d/2)}" text-anchor="middle" dominant-baseline="middle" font-size="0.16">${n+1}</text>`).join('\n')
   return `<?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" data-unit="m" width="${number((w+1.6)*20)}mm" height="${number(height*20)}mm" viewBox="-0.8 -0.8 ${number(w+1.6)} ${number(height)}" font-family="Arial,Microsoft YaHei,sans-serif" fill="#182d25">
+<svg xmlns="http://www.w3.org/2000/svg" data-unit="m" width="${number((w+1.6)*20)}mm" height="${number(height*20)}mm" viewBox="-0.8 ${number(top)} ${number(w+1.6)} ${number(height)}" font-family="Arial,Microsoft YaHei,sans-serif" fill="#182d25">
 <title>${escape(title)}</title>
 <metadata>${escape(JSON.stringify({format:'store-plan-v1',unit:'m',scale:50,layout}))}</metadata>
-<rect x="-0.8" y="-0.8" width="${number(w+1.6)}" height="${number(height)}" fill="white"/>
-${text(0,-.53,Array.from(title).slice(0,maxChars).join(''),.2)}
+<rect x="-0.8" y="${number(top)}" width="${number(w+1.6)}" height="${number(height)}" fill="white"/>
+${titleLines.map((line,n)=>text(0,-.53-titleExtra+n*.26,line,.2)).join('\n')}
 <rect x="0" y="0" width="${number(w)}" height="${number(d)}" fill="#fafbf8" stroke="#223d32" stroke-width="0.035"/>
 <path d="M 0 -0.1 V -0.3 H ${number(w)} V -0.1" fill="none" stroke="#59685f" stroke-width="0.01"/>
 ${text(w/2-.3,-.34,`${number(w)} m`)}
