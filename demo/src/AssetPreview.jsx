@@ -1,5 +1,4 @@
 import React,{useEffect,useRef,useState} from 'react'
-import {createAssetViewer} from './asset-viewer.js'
 import {realAssets} from './real-assets.js'
 
 export const firstRealAsset=realAssets[0]
@@ -9,10 +8,16 @@ function Preview(){
   const [status,setStatus]=useState('loading'),[error,setError]=useState(''),[white,setWhite]=useState(false)
   useEffect(()=>{
     let active=true,instance
-    try{
-      instance=createAssetViewer(canvas.current,firstRealAsset);viewer.current=instance
-      instance.ready.then(()=>{if(active)setStatus('ready')}).catch(e=>{if(active){setError(e.message);setStatus('error')}})
-    }catch(e){setError(e.message);setStatus('error')}
+    async function start(){
+      try{
+        const {createAssetViewer}=await import('./asset-viewer.js')
+        if(!active)return
+        instance=createAssetViewer(canvas.current,firstRealAsset);viewer.current=instance
+        await instance.ready
+        if(active)setStatus('ready')
+      }catch(e){if(active){setError(e.message);setStatus('error')}}
+    }
+    start()
     return()=>{active=false;instance?.dispose();viewer.current=null}
   },[])
   function download(){

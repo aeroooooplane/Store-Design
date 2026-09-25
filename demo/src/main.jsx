@@ -3,7 +3,6 @@ import {createRoot} from 'react-dom/client'
 import {ReactFlow,Background,Controls} from '@xyflow/react'
 import '@xyflow/react/dist/style.css'
 import {catalog,dimensions,generatePlans,issues} from './layout'
-import {createScene} from './scene'
 import './styles.css'
 import {profiles,profileFor} from './furniture'
 import {realSample} from './sample'
@@ -31,10 +30,16 @@ function Model({layout,onReady}) {
  useEffect(()=>{
   let scene,active=true
   setError('');setLoading(true);onReady(false)
-  try {
-   scene=createScene(canvas.current,layout,'white',true)
-   scene.ready.then(()=>{if(active){setLoading(false);onReady(true)}}).catch(e=>{if(active){setError('模型加载失败：'+e.message);setLoading(false)}})
-  }catch(e){setError('无法启动三维：'+e.message);setLoading(false)}
+  async function start(){
+   try{
+    const {createScene}=await import('./scene.js')
+    if(!active)return
+    scene=createScene(canvas.current,layout,'white',true)
+    await scene.ready
+    if(active){setLoading(false);onReady(true)}
+   }catch(e){if(active){setError('无法启动三维：'+e.message);setLoading(false)}}
+  }
+  start()
   return()=>{active=false;scene?.dispose()}
  },[layout,onReady])
  return <div className="model">{error&&<p role="alert">{error}</p>}{loading&&<p role="status">正在载入场景，完成前不可渲染…</p>}<canvas ref={canvas}/><small>拖动旋转 · 滚轮缩放 · 剖切展示</small></div>
@@ -70,7 +75,7 @@ function App({initialProject}){
  function save(){const n={id:uid(),parent:active,kind:'edit',name:'平面快照 '+new Date().toLocaleTimeString(),layout:clone(layout)};append([n]);open(n,false);setNotice('快照已保存，可从历史节点创建独立分支。')}
  function white(){if(warnings.length)return;const snapshot={id:uid(),parent:active,kind:'edit',name:'已确认平面',layout:clone(layout)},n={id:uid(),parent:snapshot.id,kind:'white',name:'三维白膜',layout:clone(layout)};append([snapshot,n]);open(n,false)}
  async function render(){setBusy(true);const styles=style==='both'?['SI1.0','SI2.0']:[style];let last
- try{for(const s of styles){const n=node.kind==='render'?node:{id:uid(),parent:active,kind:'render',name:`${s} · 8 视角`,style:s,layout:clone(layout)};let scene;const results=[];try{scene=createScene(document.createElement('canvas'),n.layout,s);await scene.ready;for(let i=0;i<8;i++){scene.view(i);results.push(scene.image());setNotice(`${s}：${i+1}/8`);await new Promise(r=>setTimeout(r,40))}}finally{scene?.dispose()}setImages(prev=>({...prev,[n.id]:results}));if(node.kind!=='render')append([n]);last=n}if(last){setActive(last.id);setDraft(clone(last.layout));setStyle(last.style);setStage('render')}setNotice('八视角预览已生成，可点击放大并下载。')}catch(e){setNotice('渲染失败，可重试：'+e.message)}finally{setBusy(false)}}
+ try{const {createScene}=await import('./scene.js');for(const s of styles){const n=node.kind==='render'?node:{id:uid(),parent:active,kind:'render',name:`${s} · 8 视角`,style:s,layout:clone(layout)};let scene;const results=[];try{scene=createScene(document.createElement('canvas'),n.layout,s);await scene.ready;for(let i=0;i<8;i++){scene.view(i);results.push(scene.image());setNotice(`${s}：${i+1}/8`);await new Promise(r=>setTimeout(r,40))}}finally{scene?.dispose()}setImages(prev=>({...prev,[n.id]:results}));if(node.kind!=='render')append([n]);last=n}if(last){setActive(last.id);setDraft(clone(last.layout));setStyle(last.style);setStage('render')}setNotice('八视角预览已生成，可点击放大并下载。')}catch(e){setNotice('渲染失败，可重试：'+e.message)}finally{setBusy(false)}}
  const change=items=>setDraft({...layout,items}),selectedItem=layout?.items.find(i=>i.id===selected)
  let root=node;while(root?.parent)root=project.nodes.find(n=>n.id===root.parent);const rootId=root?.id||project.nodes.filter(n=>n.kind==='root').at(-1)?.id,candidates=project.nodes.filter(n=>n.kind==='plan'&&n.parent===rootId)
  const levels={},counts={},flowNodes=project.nodes.map(n=>{const level=n.parent?(levels[n.parent]||0)+1:0;levels[n.id]=level;const row=counts[level]||0;counts[level]=row+1;return {id:n.id,position:{x:level*185,y:row*90},data:{label:n.name},style:{borderColor:active===n.id?'#d5ef76':'#46504c'}}})
