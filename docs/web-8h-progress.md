@@ -34,7 +34,9 @@ Ruling: 用户后续明确要求关键节点推送，取代先前禁止 commit/p
 - 本地四资产同场景 QA 1/1 通过（6.4 秒），白模与原材质截图在 output/web-qa/four-assets-{white,SI1.0}.png。已看图，四件完整道具及贴图可见；SI1.0 此处仅表示示意环境，不确认资产 SI。仍为概念预览、光照偏平，不是写实效果验收。
 - 节点 2D（02:12—02:19）：修复边厅白模缺少标识板/灯条的几何差异，新增完整场景网格描述 geometryManifest；三模式环境几何测试先检测到 4/6 件差异再通过。关闭场景后禁止 view/image；新增加载中取消的回归通过。资源预算、冷启动及材质优化待后续。
 - 节点 3A：编辑器可导出米制 SVG 平面，包含空间尺寸、编号占地、道具规格/旋转/资产编号，XML 转义用户文本，附完整布局元数据。按原尺寸打印比例 1:50，图上明确非施工图与入口假设；重叠、越界、非法数值阻止导出。未修改历史快照。SVG 看图检查通过（output/web-qa/plan-export.png）；并非 CAD 或施工级平面。
-- 待办 3B：多角度批量下载、项目恢复/导入、布局导出进一步优化。
+- 节点 3B（02:22—02:30）：效果页新增当前分支八视角 ZIP 整包，含 8 PNG、layout.json、plan.svg、manifest.json 与说明。每图/布局记录 SHA256，机位与 scene 共用 camera-presets.js；缺图、非法 PNG、非渲染节点拒绝。打包代码按需分包，不新增依赖、不上传二进制。双风格为各分支分别打包。
+- 冷启动排错：第一次 ZIP 下载导致 Vite 新依赖优化后刷新回方案库，丢失内存图像；同一服务器暖启动下载成功。新增 vite.config.js 提前优化 lazy 依赖，使用全新 node_modules/.vite-cold-export-20260926 缓存后首次下载测试通过且主页面零导航。未删除旧缓存。
+- 待办 3C：项目备份导入/恢复，布局导出进一步优化。
 - 待办 4：接入案例证据、风险提示，回归测试与实际页面检查。
 
 ## 下一次接续
@@ -51,6 +53,7 @@ Ruling: 当前用户要求直接完善本机网页并保留未入 Git 的大量�
 - 用户要求在 VS Code 可见的 Git 历史中按关键节点清楚命名；后续采用 feat(viewer)、feat(editor)、fix(...) 等提交名。不必另做一份 VS Code 专有提交。
 - 3cc257b：feat(viewer): add verified SU preview with white mode and export guards，已成功推送 67909a2..3cc257b。只含 6 个网页代码/测试/说明文件。
 - 9cad28d：feat(editor): place and persist real SU assets with async render readiness，已成功推送 3cc257b..9cad28d。最终重跑 build 通过，25 项常规通过、2 本地专项默认跳过（14.5 秒）；四资产专项此前独立通过。Git 自动维护提示 unreachable loose objects，本任务未执行 prune/gc 删除操作。
+- 448e587：feat(export): add metric SVG plans and consistent scene geometry，成功推送 9cad28d..448e587；31 常规通过、2 专项默认跳过，build 成功。本批 shell 已结束，无运行中的提交或测试。
 - 推送后发现 cached 计数为 0，而先前为 188；当前工作区有 368 项未暂存修改。抽查上海 TPY PDF：索引与 HEAD 相同，工作文件仍为 1 行指针差异；9eebcb4..HEAD 的路径清单无 PDF/SKP。说明原暂存状态发生变化，但本批没有提交或删除这些原件，原因未确认；不要擅自批量重新暂存或重置原件，后续仅用明确路径提交。
 - 01:59 其余三类本地 GLB 转换成功并重载尺寸通过：asset-323015 配件柜 8,136,948 字节；asset-752992 柜台 17,296,456 字节；asset-666964 桌椅组合 11,655,824 字节。转换报告与二进制均在各自 demo/public/assets/su/<id>/，未上传；这三项尚未看图验收。
 
@@ -59,3 +62,5 @@ Ruling: 当前用户要求直接完善本机网页并保留未入 Git 的大量�
 02:09 接续更新（优先于上段旧顺序）：三类转换和布局集成都已完成，不重做。真实资产注册表 real-assets.js，通用 loadVerifiedAsset/neutralMaterial/release 在 asset-viewer.js 被 viewer 和 scene 共用。scene.ready 完成后方可 image；App 的三维确认页加载期间禁用八视角按钮，渲染分支也 await ready。全套 25 通过、2 本地专项默认跳过（15.4 秒）；四资产专项另行通过。下一批先补取消和异步边界测试，再修复标识/灯条白模与效果模式几何不一致，随后布局 SVG 导出及效果图批量导出。
 
 02:19 接续更新（最新）：取消测试、场景几何修复、平面 SVG 导出已完成，不重做。新文件 plan-export.js、plan-export.spec.js、scene-consistency.spec.js。构建成功，31 常规测试通过、2 本地资产专项默认跳过（17.0 秒），SVG 已实际下载、解析并截图检查。下一批优先批量效果图导出（同一布局/机位清单与图像），不要再用八个独立文件逐一保存；随后项目 JSON 导入/校验，避免只能导出不能恢复。
+
+02:30 最新接续：八视角 ZIP 已完成；测试实际浏览器下载并解包，核对全部 960×640 图像及独立 SHA256。下一批做项目 JSON 安全导入，必须校验节点引用/循环、尺寸/坐标/真实资产参数、上限和格式，保护现有项目，默认合并为独立分支而非覆盖；再处理页面布局/交互可用性与资源体积。

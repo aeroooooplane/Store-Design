@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import {findRealAsset} from './real-assets.js'
 import {assetPose} from './asset-contract.js'
 import {loadVerifiedAsset,neutralMaterial,release} from './asset-viewer.js'
+import {cameraFor} from './camera-presets.js'
 
 export function createScene(canvas, layout, style='white', interactive=false) {
   // Reject corrupt/unknown asset references before allocating a WebGL context.
@@ -53,8 +54,7 @@ export function createScene(canvas, layout, style='white', interactive=false) {
   light.shadow.mapSize.set(2048,2048); const span=Math.max(w,d); Object.assign(light.shadow.camera,{left:-span,right:span,top:span,bottom:-span,far:span*8});scene.add(light)
   const camera=new THREE.PerspectiveCamera(48,1.5,.05,300)
   const target=new THREE.Vector3(w/2,h*.25,d/2)
-  const views=[[.5,1.15,1.8],[-.7,1,1.4],[1.7,1,1.4],[1.7,1,-.4],[-.7,1,-.4],[.5,1.3,-.85],[.5,2.4,.501],[.5,.55,1.7]]
-  function view(index){ if(disposed)throw Error('场景已关闭');const [x,y,z]=views[index];camera.position.set(w*x,span*y,d*z);camera.lookAt(target);renderer.render(scene,camera) }
+  function view(index){ if(disposed)throw Error('场景已关闭');const preset=cameraFor(layout.room,index);camera.position.fromArray(preset.position);camera.lookAt(target);renderer.render(scene,camera) }
   view(0)
   let controls,raf
   if(interactive){controls=new OrbitControls(camera,canvas);controls.target.copy(target);controls.enableDamping=true;controls.maxPolarAngle=Math.PI*.49; const tick=()=>{controls.update();renderer.render(scene,camera);raf=requestAnimationFrame(tick)};tick()}
