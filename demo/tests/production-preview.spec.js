@@ -14,6 +14,31 @@ async function downloadBytes(page,name){
 
 test.skip(process.env.PRODUCTION_QA!=='1','Requires a fresh build and original local assets; use playwright.preview.config.js')
 
+test('built asset directory loads only on demand and distinguishes source dimensions from web readiness',async({page})=>{
+  await page.setViewportSize({width:390,height:844})
+  const requests=[],errors=[]
+  page.on('request',r=>requests.push(r.url()))
+  page.on('pageerror',e=>errors.push(e.message))
+  await page.goto('/')
+  await expect(page.getByRole('button',{name:'查看90项资产目录',exact:true})).toBeVisible()
+  expect(requests.some(url=>url.includes('/assets/AssetLibrary-'))).toBe(false)
+  await page.getByRole('button',{name:'查看90项资产目录',exact:true}).click()
+  const panel=page.getByRole('region',{name:'SU资产目录',exact:true})
+  await expect(panel.locator('article')).toHaveCount(90)
+  await page.getByLabel('资产编号或名称').fill('asset-316267')
+  await expect(panel.locator('article')).toHaveCount(1)
+  await expect(panel).toContainText('1690.0 × 50.0 × 958.0 mm')
+  await expect(panel).toContainText('未接入网页')
+  await expect(panel).toContainText('SI 未确认')
+  await panel.getByText('索引来源与校验',{exact:true}).click()
+  await expect(panel).toContainText('7de855a6bdc4c8ff3493fc587ef4994c4dcf089858735dfebccff0d906584d1b')
+  expect(requests.some(url=>url.includes('/assets/AssetLibrary-'))).toBe(true)
+  expect(requests.some(url=>/\.glb|\.skp|\.dae|\/src\//.test(url))).toBe(false)
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(errors).toEqual([])
+  await panel.screenshot({path:'../output/web-qa/production-asset-directory.png'})
+})
+
 for(const width of [390,1440])test(`built preview ${width}px history search resumes and exports a recoverable edit`,async({page})=>{
   await page.setViewportSize({width,height:1000})
   const room={w:8,d:6,h:3,shopType:'边厅店'}
