@@ -4,6 +4,13 @@ import {createHash} from 'node:crypto'
 import {unzipSync,strFromU8} from 'three/addons/libs/fflate.module.js'
 import {realAssets} from '../src/real-assets.js'
 import {createAssetItem} from '../src/asset-contract.js'
+import {parseProject} from '../src/project-import.js'
+
+async function downloadBytes(page,name){
+  const downloading=page.waitForEvent('download')
+  await page.getByRole('button',{name,exact:true}).click()
+  return readFile(await(await downloading).path())
+}
 
 test.skip(process.env.PRODUCTION_QA!=='1','Requires a fresh build and original local assets; use playwright.preview.config.js')
 
@@ -40,6 +47,13 @@ test('built preview loads four real assets and exports the same layout in eight 
   await expect(page.getByRole('status')).toContainText('已导入')
   await page.locator('.plan-card').first().click()
   await expect(page.locator('.properties')).toContainText('道具 4 / 200')
+  const svgBytes=await downloadBytes(page,'导出平面 SVG')
+  const svgLayout=await page.evaluate(xml=>JSON.parse(new DOMParser().parseFromString(xml,'image/svg+xml').querySelector('metadata').textContent).layout,svgBytes.toString())
+  expect(svgLayout.items).toEqual(items)
+  const png=await downloadBytes(page,'导出平面 PNG')
+  expect([...png.subarray(0,8)]).toEqual([137,80,78,71,13,10,26,10])
+  expect(png.readUInt32BE(16)*png.readUInt32BE(20)).toBeLessThanOrEqual(8000000)
+  await expect(page.getByRole('status')).toContainText('不保证打印比例')
   await page.getByRole('button',{name:'确认平面并生成白膜'}).click()
   await expect(page.getByRole('button',{name:'确认白膜，渲染八视角'})).toBeEnabled({timeout:90000})
   expect([...loaded].sort()).toEqual(realAssets.map(a=>a.url).sort())
@@ -52,9 +66,20 @@ test('built preview loads four real assets and exports the same layout in eight 
   const files=unzipSync(await readFile(await(await downloading).path()))
   const manifest=JSON.parse(strFromU8(files['manifest.json'])),layout=JSON.parse(strFromU8(files['layout.json']))
   expect(layout.items).toEqual(items)
+  expect(layout).toEqual(svgLayout)
   expect(manifest.views).toHaveLength(8)
   expect(manifest.layoutSha256).toBe(createHash('sha256').update(files['layout.json']).digest('hex'))
   for(const view of manifest.views)expect(view.sha256).toBe(createHash('sha256').update(files[view.file]).digest('hex'))
+  const backupBytes=await downloadBytes(page,'导出项目快照')
+  const backup=parseProject(backupBytes.toString())
+  expect(backup.nodes.at(-1).layout).toEqual(layout)
+  await page.reload()
+  await page.getByLabel('导入项目 JSON').setInputFiles({name:'round-trip.json',mimeType:'application/json',buffer:backupBytes})
+  await expect(page.getByRole('status')).toContainText('已导入')
+  const recovered=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')))
+  expect(recovered.nodes).toHaveLength(backup.nodes.length*2)
+  expect(new Set(recovered.nodes.map(n=>n.id)).size).toBe(recovered.nodes.length)
+  expect(recovered.nodes.at(-1).layout).toEqual(layout)
   expect(errors).toEqual([])
   expect(scripts.some(url=>url.includes('/src/')||url.includes('/@vite/'))).toBe(false)
 })
