@@ -6,6 +6,9 @@
 .project-transfer{margin-top:28px;padding:18px;border:1px solid #465449;border-radius:12px;background:#1d271f}.project-transfer small{display:block;margin-top:12px;color:#aab6a4;line-height:1.6}.project-transfer input{font-size:13px}
 
 .history-toggle{display:none}
+.evidence-file{margin:12px 0}
+.evidence-file a{display:inline-block;padding:10px;color:#d5ef76}
+.evidence-file img{display:block;width:100%;height:auto;margin-top:12px}
 .case-entry{margin-top:24px;display:flex;gap:12px;align-items:center}
 .case-library{margin-top:18px;padding:20px;background:#1d271f;border:1px solid #465449;border-radius:12px}
 .case-library p,.case-library li{font-size:13px;line-height:1.7}
