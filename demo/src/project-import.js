@@ -47,6 +47,7 @@ export function parseProject(raw,{allowEmpty=false}={}){
     if(node.style!==undefined&&!['SI1.0','SI2.0','both'].includes(node.style))throw Error('节点风格无效')
     if(node.kind==='root'){
       if(node.parent!=null)throw Error('项目根节点不能有父节点')
+      if(node.layout!=null)throw Error('项目根节点不能包含方案布局')
       node.room=room(node.room)
     }else{
       text(node.parent,'父节点编号',128);node.layout=layout(node.layout)

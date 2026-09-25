@@ -73,7 +73,7 @@ function App({initialProject,initialRaw}){
    setNotice(`已导入 ${incoming.nodes.length} 个节点，作为独立分支保留；原项目未覆盖。真实模型需本机 GLB，效果图可重新渲染。`)
   }catch(e){setNotice('导入失败，当前项目保持不变：'+e.message)}finally{setBusy(false)}
  }
- function exportBackup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(captureProject(project,active,draft,stage),null,2)],{type:'application/json'}));a.download='store-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+ function exportBackup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(captureProject(project,active,draft,stage))],{type:'application/json'}));a.download='store-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
  function append(nodes){setProject(p=>({...p,nodes:[...p.nodes,...nodes]}))}
  function loadSample(){if(slots<2)return;const root={id:uid(),kind:"root",name:"真实样本 · 上海星光",room:clone(realSample.room)};const n={id:uid(),parent:root.id,kind:"plan",name:realSample.name,layout:clone(realSample)};append([root,n]);open(n)}
  function generate(e){e.preventDefault();if(slots<5)return;try{const room={...dimensions(mode,width,depth,area,ratio,height),shopType};const root={id:uid(),kind:'root',name:`${shopType} ${room.w.toFixed(1)} × ${room.d.toFixed(1)} m`,room};append([root,...generatePlans(room,{learned}).map(p=>({id:uid(),parent:root.id,kind:'plan',name:p.name,layout:p}))]);setActive(root.id);setDraft(null);setStage('gallery');setNotice(learned?'四套方案已生成：实验模型建议体验桌数量，位置由规则安排；超出训练面积时回退。':'四套规则示例已生成，请选择一个方案细化。')}catch(e){setNotice(e.message)}}

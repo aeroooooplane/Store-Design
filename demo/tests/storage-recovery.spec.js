@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test'
 
-for(const raw of ['{broken',JSON.stringify({nodes:[{id:'bad',kind:'root',name:'坏项目',room:{w:-1,d:6,h:3}}]})]){
-  test(`invalid saved project is isolated without overwriting: ${raw.slice(0,15)}`,async({page})=>{
+for(const raw of ['{broken',JSON.stringify({nodes:[{id:'bad',kind:'root',name:'坏项目',room:{w:-1,d:6,h:3}}]}),JSON.stringify({nodes:[{id:'bad-layout',kind:'root',name:'坏布局',room:{w:8,d:6,h:3},layout:{}}]})]){
+  test(`invalid saved project is isolated without overwriting: ${raw.slice(0,40)}`,async({page})=>{
     await page.addInitScript(raw=>localStorage.setItem('insta-studio-v2',raw),raw)
     await page.goto('/')
     await expect(page.getByRole('alert')).toContainText('原始数据未覆盖')

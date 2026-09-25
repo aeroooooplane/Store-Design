@@ -61,3 +61,36 @@ test('storage quota rejection keeps the previous project and does not report imp
   expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
   await expect(page.locator('.plan-card')).toHaveCount(4)
 })
+
+test('root layout injection is rejected before replacing the visible or saved project',async({page})=>{
+  await page.goto('/')
+  await page.getByRole('button',{name:'生成四个平面方案'}).click()
+  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes.length)).toBe(5)
+  const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
+  const invalid=structuredClone(backup);invalid.nodes[0].layout={}
+  await page.getByLabel('导入项目 JSON').setInputFiles({name:'bad-root.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(invalid))})
+  await expect(page.getByRole('status')).toContainText('导入失败')
+  await expect(page.locator('.plan-card')).toHaveCount(4)
+  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+})
+
+test('large valid project downloads a backup that can be imported again',async({page})=>{
+  const room={w:100,d:100,h:3,shopType:'边厅店'}
+  const items=Array.from({length:200},(_,i)=>({id:`item-${i}`,type:'table',name:'桌',x:1+(i%20)*2,z:1+Math.floor(i/20)*2,w:1,d:1,h:1}))
+  const project={nodes:[{id:'r',kind:'root',name:'大项目',room},...Array.from({length:130},(_,i)=>({id:`p-${i}`,parent:'r',kind:'plan',name:`方案${i}`,layout:{room,items}}))]}
+  const raw=JSON.stringify(project)
+  expect(Buffer.byteLength(raw)).toBeLessThan(5*1024*1024)
+  expect(Buffer.byteLength(JSON.stringify(project,null,2))).toBeGreaterThan(5*1024*1024)
+  await page.addInitScript(raw=>localStorage.setItem('insta-studio-v2',raw),raw)
+  await page.goto('/')
+  const downloading=page.waitForEvent('download')
+  await page.getByRole('button',{name:'导出项目快照',exact:true}).click()
+  const stream=await(await downloading).createReadStream(),chunks=[]
+  for await(const chunk of stream)chunks.push(chunk)
+  const downloaded=Buffer.concat(chunks).toString()
+  expect(Buffer.byteLength(downloaded)).toBeLessThanOrEqual(5*1024*1024)
+  const restored=parseProject(downloaded)
+  expect(restored.nodes).toHaveLength(131)
+  expect(restored.nodes[130].layout.items).toHaveLength(200)
+  expect(restored.nodes[130].layout.items[199]).toEqual(items[199])
+})
