@@ -59,7 +59,11 @@ function App({initialProject,initialRaw}){
  const node=project.nodes.find(n=>n.id===active),layout=draft||node?.layout,warnings=layout?issues(layout):[]
  const slots=500-project.nodes.length,dirty=stage==='editor'&&draft&&node&&JSON.stringify(draft)!==JSON.stringify(node.layout)
  const importContext=useRef();importContext.current={project,draft,stage,node,active}
+ const [importing,setImporting]=useState(false),importLock=useRef(false)
+ const blockImportEvent=e=>{if(importLock.current){e.preventDefault();e.stopPropagation()}}
  async function importBackup(file){
+  if(importLock.current||busy)return
+  importLock.current=true;setImporting(true)
   setBusy(true)
   try{
    if(file.size>MAX_IMPORT_BYTES)throw Error('项目文件大小不能超过 5 MB')
@@ -71,7 +75,7 @@ function App({initialProject,initialRaw}){
    await persistence.save(merged)
    setProject(merged);setActive(merged.nodes.filter(n=>n.kind==='root').at(-1)?.id);setDraft(null);setSelected(null);setStage('gallery')
    setNotice(`已导入 ${incoming.nodes.length} 个节点，作为独立分支保留；原项目未覆盖。真实模型需本机 GLB，效果图可重新渲染。`)
-  }catch(e){setNotice('导入失败，当前项目保持不变：'+e.message)}finally{setBusy(false)}
+  }catch(e){setNotice('导入失败，当前项目保持不变：'+e.message)}finally{importLock.current=false;setImporting(false);setBusy(false)}
  }
  function exportBackup(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(captureProject(project,active,draft,stage))],{type:'application/json'}));a.download='store-project.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
  function append(nodes){setProject(p=>({...p,nodes:[...p.nodes,...nodes]}))}
@@ -85,7 +89,7 @@ function App({initialProject,initialRaw}){
  const change=items=>setDraft({...layout,items}),selectedItem=layout?.items.find(i=>i.id===selected)
  let root=node;while(root?.parent)root=project.nodes.find(n=>n.id===root.parent);const rootId=root?.id||project.nodes.filter(n=>n.kind==='root').at(-1)?.id,candidates=project.nodes.filter(n=>n.kind==='plan'&&n.parent===rootId)
  const levels={},counts={},flowNodes=project.nodes.map(n=>{const level=n.parent?(levels[n.parent]||0)+1:0;levels[n.id]=level;const row=counts[level]||0;counts[level]=row+1;return {id:n.id,position:{x:level*185,y:row*90},data:{label:n.name},style:{borderColor:active===n.id?'#d5ef76':'#46504c'}}})
- return <><header><div><b className="brand">Insta360 <span>SPACE STUDIO</span></b><p>门店空间设计工作台</p></div><span className="badge">DEMO / 规则布局 · 概念渲染</span><button disabled={busy||(dirty&&slots<1)} onClick={()=>{const saved=captureProject(project,active,draft,stage);if(saved.editorDraft)append([{id:uid(),parent:active,kind:'edit',name:'新建前保留的调整',layout:clone(draft)}]);setDraft(null);setSelected(null);setStage('setup');setNotice('')}}>＋ 新建尺寸方案</button></header><div className="steps">{['01 空间输入','02 四方案比较','03 平面细化','04 白膜确认','05 风格渲染'].map((s,i)=><span key={s} className={['setup','gallery','editor','white','render'][i]===stage?'current':''}>{s}</span>)}</div>
+ return <>{importing&&<p role="status" className="notice">正在导入并等待安全保存，暂时锁定编辑；请勿关闭页面。</p>}<div inert={importing?true:undefined} onClickCapture={blockImportEvent} onChangeCapture={blockImportEvent} onInputCapture={blockImportEvent} onSubmitCapture={blockImportEvent} onPointerDownCapture={blockImportEvent} onPointerMoveCapture={blockImportEvent} onPointerUpCapture={blockImportEvent} onKeyDownCapture={blockImportEvent}><header><div><b className="brand">Insta360 <span>SPACE STUDIO</span></b><p>门店空间设计工作台</p></div><span className="badge">DEMO / 规则布局 · 概念渲染</span><button disabled={busy||(dirty&&slots<1)} onClick={()=>{const saved=captureProject(project,active,draft,stage);if(saved.editorDraft)append([{id:uid(),parent:active,kind:'edit',name:'新建前保留的调整',layout:clone(draft)}]);setDraft(null);setSelected(null);setStage('setup');setNotice('')}}>＋ 新建尺寸方案</button></header><div className="steps">{['01 空间输入','02 四方案比较','03 平面细化','04 白膜确认','05 风格渲染'].map((s,i)=><span key={s} className={['setup','gallery','editor','white','render'][i]===stage?'current':''}>{s}</span>)}</div>
  <button className="history-toggle" aria-expanded={historyOpen} aria-controls="project-history" onClick={()=>setHistoryOpen(v=>!v)}>历史与备份</button><div className="workspace"><aside id="project-history" className={historyOpen?'history-open':''}><h3>设计分支 <small>{project.nodes.length}</small></h3><p>点击历史节点继续设计</p><div className="tree"><ReactFlow key={project.nodes.length} nodes={flowNodes} edges={project.nodes.filter(n=>n.parent).map(n=>({id:n.id,source:n.parent,target:n.id}))} nodesDraggable={false} nodesConnectable={false} deleteKeyCode={null} fitView minZoom={.1} onNodeClick={(_,n)=>open(project.nodes.find(x=>x.id===n.id))}><Background/><Controls showInteractive={false}/></ReactFlow></div><nav className="branch-list">{project.nodes.map(n=><button key={n.id} disabled={busy} className={active===n.id?"active":""} onClick={()=>open(n)}>{n.kind==="root"?"▣ ":"↳ "}{n.name}</button>)}</nav><button onClick={exportBackup}>导出项目快照</button><small>方案与当前草稿自动保存；图片刷新后可重新渲染。</small></aside>
  <main><div className="heading"><div><div className="eyebrow">DESIGN YOUR NEXT SPACE</div><h1>{({setup:'从空间开始',gallery:'四种布局，一起比较',editor:node?.name,white:'检查你的三维白膜',render:node?.name})[stage]}</h1></div>{stage==='editor'&&<button disabled={slots<1} onClick={()=>{save();setStage('gallery')}}>保存并返回四方案</button>}</div>
  {slots<5&&<p className="warning">剩余 {slots} 个节点（上限 500）。四方案生成需 5 个，白模确认需 2 个，快照需 1 个；请先导出备份并分项目管理。</p>}
@@ -99,7 +103,7 @@ function App({initialProject,initialRaw}){
  <ProjectTools busy={busy} onImport={importBackup} onExport={exportBackup} onError={setNotice}/>
  {stage==='setup'&&<AssetPreview/>}
  {saveError&&<div className="notice warning" role="alert">{saveError}</div>}
- {notice&&<div className="notice" role="status">{notice}</div>}</main></div>
- {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</>
+ {notice&&!importing&&<div className="notice" role="status">{notice}</div>}</main></div>
+ {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</div></>
 }
 createRoot(document.getElementById('root')).render(<ProjectRecovery>{(project,raw)=><App initialProject={project} initialRaw={raw}/>}</ProjectRecovery>)
