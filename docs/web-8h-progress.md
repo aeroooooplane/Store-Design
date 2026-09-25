@@ -191,3 +191,11 @@ da98680：feat(editor): recover recent deletions within the current editing sess
 完整demo72通过/6本机专项默认跳过（约1.1分钟），build成功，入口448.75kB/gzip146.09kB；三维块警告保留。八视角ZIP内部共用SVG导出，现有ZIP哈希及布局测试通过，无原资料变化。
 
 下一轮可完善交付易用性：从同一SVG派生有明确像素/比例说明的平面PNG，便于直接预览分享，保留SVG作为矢量原件；先明确像素上限及长幅图处理、验证失败不导出空白图，再TDD。不需要另起渲染/训练路线，也不要伪称PNG为施工比例图。若先做审查，只查新增小改动和未覆盖边界，不重审全部历史。
+
+21a76bc：fix(export): wrap full plan titles without changing metric scale，已成功推送 da98680..21a76bc 到 origin/main。3 个明确代码/测试/进度文件；测试和Git会话均已结束，截图本机保留、原始资产未上传。
+
+05:20 接续：新增按需加载的平面PNG分享导出，plan-raster.js复用同一exportLayoutSvg并使用专用“不保证打印比例”可见说明，SVG原件仍为1:50。取点击时布局快照，不修改历史；最长边4096、总量800万像素，按比例整体缩放，解码/编码失败抛错不下载，finally释放源Blob URL及画布。页面与README说明长图文字会缩小，应保留SVG精确查看。没有上传或服务端渲染。
+
+两个新用例先RED（入口/模块缺失）后GREEN；真实浏览器下载验证PNG签名/像素/原保存不变，100×100米大图限制、decode故障拒绝及比例警示有覆盖。已查看实际下载 output/web-qa/plan-export-preview.png，编号/图例/尺寸/警示清楚。完整demo74通过/6本机专项默认跳过（52.4秒），build成功；PNG异步块1.23kB，入口449.53kB/gzip146.38kB；三维块警告不变。
+
+下一轮优先检查交付链的易用性与真实错误状态：确认平面导出在生产preview也可用、渲染ZIP/备份入口的状态一致；如改动先写行为测试。可整理一份本机演示路径/验收清单到现有demo/README，不复制多份文档。长期目标依旧平面+多角度+三维，不扩到施工图或重新训练；当前不能承诺完整店型几何与写实质量。

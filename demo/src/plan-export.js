@@ -3,7 +3,7 @@ import {issues} from './layout.js'
 const escape=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]))
 const number=value=>String(Number(value.toFixed(6)))
 
-export function exportLayoutSvg(layout){
+export function exportLayoutSvg(layout,{forRaster=false}={}){
   const room=layout?.room,items=layout?.items
   if(!room||!['w','d','h'].every(k=>Number.isFinite(room[k])&&room[k]>0)||!Array.isArray(items))throw Error('平面尺寸或道具列表无效')
   for(const item of items){
@@ -13,7 +13,7 @@ export function exportLayoutSvg(layout){
   if(warnings.length)throw Error('导出前请处理：'+warnings.join('；'))
   const title=layout.name||'门店平面方案',w=room.w,d=room.d
   const notes=[
-    '概念布局 · 非施工图 · 米制坐标；按原尺寸打印为 1:50。',
+    forRaster?'PNG 分享预览 · 非施工图 · 不保证打印比例；尺寸以标注和 SVG 为准。':'概念布局 · 非施工图 · 米制坐标；按原尺寸打印为 1:50。',
     room.shopType==='中岛店'?'中岛：四周开放为方案假设。':'边厅：入口按正面假设；实际门墙柱尚需核对。',
     '不含通道、消防、暖通水电校验；SI/正面未知不作推断。',
     ...items.map((i,n)=>`${n+1}. ${i.name||'道具'} · ${number(i.w)}×${number(i.d)}×${number(i.h)} m · ${i.rotation??0}° · ${i.assetId||'参数化示意'}`)
