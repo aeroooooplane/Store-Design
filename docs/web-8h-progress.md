@@ -56,6 +56,8 @@ Ruling: 当前用户要求直接完善本机网页并保留未入 Git 的大量�
 - 9cad28d：feat(editor): place and persist real SU assets with async render readiness，已成功推送 3cc257b..9cad28d。最终重跑 build 通过，25 项常规通过、2 本地专项默认跳过（14.5 秒）；四资产专项此前独立通过。Git 自动维护提示 unreachable loose objects，本任务未执行 prune/gc 删除操作。
 - 448e587：feat(export): add metric SVG plans and consistent scene geometry，成功推送 9cad28d..448e587；31 常规通过、2 专项默认跳过，build 成功。本批 shell 已结束，无运行中的提交或测试。
 - 37e16b9：feat(export): bundle eight views with layout hashes and camera metadata；build 成功，34 常规测试通过、2 本地专项默认跳过（19.6 秒）。首次 push 网络连接重置，正在重试；未确认前不称推送成功。
+- f6a00c7：feat(project): safely import backups as independent branches；38 常规通过、2 专项默认跳过，build 成功。首次 push 再遇连接重置，正在单次 HTTP/1.1 配置重试（未修改永久配置），会话 50855；下一轮先确认结果，不并发再推。
+- 会话 50855 已成功结束：37e16b9..f6a00c7 → origin/main。当前无运行中的测试或 push，下一批直接开始页面/存储健壮性巡检。
 - push 重试会话 70828 已结束并成功：448e587..37e16b9 → origin/main。下一轮直接执行项目导入批次，无遗留 push 进程。
 - 推送后发现 cached 计数为 0，而先前为 188；当前工作区有 368 项未暂存修改。抽查上海 TPY PDF：索引与 HEAD 相同，工作文件仍为 1 行指针差异；9eebcb4..HEAD 的路径清单无 PDF/SKP。说明原暂存状态发生变化，但本批没有提交或删除这些原件，原因未确认；不要擅自批量重新暂存或重置原件，后续仅用明确路径提交。
 - 01:59 其余三类本地 GLB 转换成功并重载尺寸通过：asset-323015 配件柜 8,136,948 字节；asset-752992 柜台 17,296,456 字节；asset-666964 桌椅组合 11,655,824 字节。转换报告与二进制均在各自 demo/public/assets/su/<id>/，未上传；这三项尚未看图验收。
@@ -71,3 +73,7 @@ Ruling: 当前用户要求直接完善本机网页并保留未入 Git 的大量�
 02:40 最新接续：project-import.js 与 project-import.spec.js 完成；三项初始测试 RED→GREEN，补充元数据注入案例先失败再修复，存储配额故障回归通过。下一批优先做实际页面巡检与界面梳理（当前 main.jsx 长行过多、工具面板变长、上传控件占据每页底部），保留已有端到端测试；再做资源预算/加载性能和案例证据入口。首次 localStorage 恢复仍沿用旧 initial()，需后续审查畸形本地数据处理，不把导入校验等同于全部存储恢复已加固。
 
 本批完整回归发现导入区误复用 source-panel 标识，导致旧样本来源测试定位到两块内容；已将导入区独立为 project-transfer，未弱化样本测试。最终 build 成功，38 常规测试通过、2 本地专项默认跳过（21.1 秒）。
+
+02:53 最新接续：已新增 ProjectRecovery 启动保护，先验证保存数据再挂载带自动保存的编辑器；坏 JSON、非法几何/图关系不会被空项目覆盖。允许下载原始文本，显式选择“隔离备份后新建”才写独立 recovery UUID 键并打开空项目；备份写入失败时保持锁定。旧项目补默认铺型，合法空项目正常启动。未删除任何旧存储。隔离备份只在当前浏览器，清理浏览器会丢失，界面明确提示下载。两个核心测试先观察到缺少保护而失败；实现后四项专项通过，完整 demo 回归 42 通过、2 本地真实资产专项默认跳过（22.8 秒），build 通过。包体积约 1,090.88 kB 警告仍在，未声称完成性能优化。
+
+下一批：实际界面梳理/移动端工具与历史入口、脏草稿离开保护，再做加载性能与五店证据入口。本轮没有新训练/生成图/部署。当前验证仅针对 demo，不代表旧训练脚本全仓测试通过。

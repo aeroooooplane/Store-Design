@@ -13,7 +13,7 @@ import {createAssetItem,rotateItem} from './asset-contract.js'
 import {downloadPlan} from './plan-export.js'
 import {parseProject,mergeProject,MAX_IMPORT_BYTES} from './project-import.js'
 const clone=v=>structuredClone(v), uid=()=>crypto.randomUUID(), KEY='insta-studio-v2'
-function initial(){try{const saved=JSON.parse(localStorage.getItem(KEY));if(!Array.isArray(saved?.nodes))return {nodes:[]};return {...saved,nodes:saved.nodes.map(n=>({...n,...(n.room?{room:{shopType:'边厅店',...n.room}}:{}),...(n.layout?{layout:{...n.layout,room:{shopType:'边厅店',...n.layout.room}}}:{})}))}}catch{return {nodes:[]}}}
+import {ProjectRecovery} from './ProjectRecovery.jsx'
 function Plan({layout,onChange,selected,onSelect}){
  const svg=useRef(),drag=useRef();const {room,items}=layout
  const point=e=>new DOMPoint(e.clientX,e.clientY).matrixTransform(svg.current.getScreenCTM().inverse())
@@ -38,9 +38,9 @@ function Model({layout,onReady}) {
  },[layout,onReady])
  return <div className="model">{error&&<p role="alert">{error}</p>}{loading&&<p role="status">正在载入场景，完成前不可渲染…</p>}<canvas ref={canvas}/><small>拖动旋转 · 滚轮缩放 · 剖切展示</small></div>
 }
-function App(){
+function App({initialProject}){
  const [modelReady,setModelReady]=useState(false)
- const [project,setProject]=useState(initial),[active,setActive]=useState(null),[stage,setStage]=useState(project.nodes.length?'gallery':'setup')
+ const [project,setProject]=useState(initialProject),[active,setActive]=useState(null),[stage,setStage]=useState(project.nodes.length?'gallery':'setup')
  const [mode,setMode]=useState('dimensions'),[width,setWidth]=useState(8),[depth,setDepth]=useState(6),[area,setArea]=useState(48),[ratio,setRatio]=useState(1),[height,setHeight]=useState(3.2)
  const [learned,setLearned]=useState(false),[shopType,setShopType]=useState('边厅店')
  const [draft,setDraft]=useState(null),[selected,setSelected]=useState(null),[style,setStyle]=useState('SI1.0'),[notice,setNotice]=useState(''),[busy,setBusy]=useState(false),[lightbox,setLightbox]=useState(null),[images,setImages]=useState({})
@@ -87,4 +87,4 @@ function App(){
  {notice&&<div className="notice" role="status">{notice}</div>}</main></div>
  {lightbox&&<div className="lightbox" onClick={()=>setLightbox(null)}><div onClick={e=>e.stopPropagation()}><img src={lightbox.src} alt="效果预览大图"/><div className="actions"><a download={`store-view-${lightbox.i+1}.png`} href={lightbox.src}>下载 PNG</a><button onClick={()=>setLightbox(null)}>关闭</button></div></div></div>}</>
 }
-createRoot(document.getElementById('root')).render(<App/> )
+createRoot(document.getElementById('root')).render(<ProjectRecovery>{project=><App initialProject={project}/>}</ProjectRecovery>)

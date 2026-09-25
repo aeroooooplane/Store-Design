@@ -34,11 +34,11 @@ function layout(value){
   return {...value,room:room(value.room)}
 }
 
-export function parseProject(raw){
+export function parseProject(raw,{allowEmpty=false}={}){
   if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_IMPORT_BYTES)throw Error('项目文件大小不能超过 5 MB')
   let parsed
   try{parsed=JSON.parse(raw,(key,value)=>{if(['__proto__','constructor','prototype'].includes(key))throw Error('保留字段');return value})}catch{throw Error('项目 JSON 格式无效或包含保留字段')}
-  if(!parsed||!Array.isArray(parsed.nodes)||!parsed.nodes.length||parsed.nodes.length>500)throw Error('项目需包含 1–500 个节点')
+  if(!parsed||!Array.isArray(parsed.nodes)||(!allowEmpty&&!parsed.nodes.length)||parsed.nodes.length>500)throw Error('项目需包含 1–500 个节点')
   const byId=new Map()
   for(const node of parsed.nodes){
     text(node?.id,'节点编号',128);text(node.name,'节点名称')
@@ -63,7 +63,7 @@ export function parseProject(raw){
     visiting.delete(node.id);done.add(node.id);sorted.push(node)
   }
   for(const node of parsed.nodes)visit(node)
-  return {nodes:sorted}
+  return {...parsed,nodes:sorted}
 }
 
 export function mergeProject(existing,incoming,makeId=()=>crypto.randomUUID()){
