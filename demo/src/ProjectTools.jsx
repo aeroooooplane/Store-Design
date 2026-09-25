@@ -2,6 +2,15 @@ import React,{useState} from 'react'
 
 export function ProjectTools({busy,onImport,onExport,onError}){
   const [CasePanel,setCasePanel]=useState(null),[open,setOpen]=useState(false),[loading,setLoading]=useState(false)
+  const [AssetPanel,setAssetPanel]=useState(null),[assetsOpen,setAssetsOpen]=useState(false),[assetsLoading,setAssetsLoading]=useState(false)
+  async function toggleAssets(){
+    if(assetsOpen){setAssetsOpen(false);return}
+    setAssetsLoading(true)
+    try{
+      if(!AssetPanel){const loaded=await import('./AssetLibrary.jsx');setAssetPanel(()=>loaded.default)}
+      setAssetsOpen(true)
+    }catch(e){onError('资产索引加载失败：'+e.message)}finally{setAssetsLoading(false)}
+  }
   async function toggleCases(){
     if(open){setOpen(false);return}
     setLoading(true)
@@ -21,5 +30,7 @@ export function ProjectTools({busy,onImport,onExport,onError}){
     </details>
     <div className="case-entry"><button disabled={loading} onClick={toggleCases}>{open?'关闭案例证据':'查看五店案例证据'}</button>{loading&&<small>正在加载证据索引…</small>}</div>
     {open&&CasePanel&&<CasePanel/>}
+    <div className="case-entry"><button disabled={assetsLoading} onClick={toggleAssets}>{assetsOpen?'关闭资产目录':'查看90项资产目录'}</button>{assetsLoading&&<small>正在加载资产索引…</small>}</div>
+    {assetsOpen&&AssetPanel&&<AssetPanel/>}
   </section>
 }

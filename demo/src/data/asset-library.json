@@ -1,0 +1,1270 @@
+{
+  "schemaVersion": 1,
+  "sourceDirectory": "素材库/04_assets/incoming/split-20260925-v2/",
+  "sourceHashes": {
+    "manifest.json": "7de855a6bdc4c8ff3493fc587ef4994c4dcf089858735dfebccff0d906584d1b",
+    "validation-summary.json": "b1b93d1e67df46b1503c79f6df176625291be1e7d25341bc4736106e8c50fc84"
+  },
+  "assets": [
+    {
+      "id": "asset-316267",
+      "category": "屏幕灯箱",
+      "sourceName": "组#645",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.6900000000252309,
+        "d": 0.050000000081488624,
+        "h": 0.958000000048744
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-323015",
+      "category": "配件柜",
+      "sourceName": "配件柜1.6",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.6000000000000003,
+        "d": 0.45000000000001594,
+        "h": 2.4
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": true
+    },
+    {
+      "id": "asset-408124",
+      "category": "体验桌",
+      "sourceName": "组件#4",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.0000000000000064,
+        "d": 1.8000000000000003,
+        "h": 1.326885311200472
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": true
+    },
+    {
+      "id": "asset-408125",
+      "category": "体验桌",
+      "sourceName": "组#13",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.0000000000000064,
+        "d": 1.8,
+        "h": 1.23209877543332
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-568756",
+      "category": "展示立牌",
+      "sourceName": "组#31",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.20000000000001228,
+        "d": 0.7306947655007423,
+        "h": 0.6
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-569180",
+      "category": "座椅组合",
+      "sourceName": "凳子",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.2500000000089302,
+        "d": 1.2610000000229473,
+        "h": 0.35000000000000014
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-569211",
+      "category": "宣传画板",
+      "sourceName": "组#4",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.2000000000000044,
+        "d": 2.656334026369222e-7,
+        "h": 1.5
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-666964",
+      "category": "开箱洽谈桌椅组合",
+      "sourceName": "组#50",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.0688764984805577,
+        "d": 1.7999999969209728,
+        "h": 0.9020000000726915
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": true
+    },
+    {
+      "id": "asset-752992",
+      "category": "柜台",
+      "sourceName": "组件#28",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5000002780902949,
+        "d": 1.7999999969744152,
+        "h": 1.2136677454859477
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": true
+    },
+    {
+      "id": "asset-754006",
+      "category": "宣传画板",
+      "sourceName": "组#3",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.6999999999999484,
+        "d": 0.9800000000000002,
+        "h": 1.4360261957335751e-11
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-754909",
+      "category": "灯具组合",
+      "sourceName": "组件#1",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.20000010799999932,
+        "d": 0.20000010799999932,
+        "h": 0.24400010799999142
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-775543",
+      "category": "灯具组合",
+      "sourceName": "组#14",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.20000010799999932,
+        "d": 1.4999999999999996,
+        "h": 0.4265247098674986
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-957634",
+      "category": "屏幕灯箱",
+      "sourceName": "组#71",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.05000000008148377,
+        "d": 1.6900000000252304,
+        "h": 0.958000000048744
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-958185",
+      "category": "展示立牌",
+      "sourceName": "组#294",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 0.6380779256059232,
+        "d": 0.5357775134501906,
+        "h": 1.6500006042048307
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1129848",
+      "category": "品牌标识",
+      "sourceName": "组#67",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.2665000000002273,
+        "d": 0.035912222881347045,
+        "h": 0.6079083571346843
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1156409",
+      "category": "宣传画板",
+      "sourceName": "组#96",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.9330000000003595,
+        "d": 0.0300000000111366,
+        "h": 1.670023640661946
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1567211",
+      "category": "装饰展品",
+      "sourceName": "组#99",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.4987817860713233,
+        "d": 0.273263216458206,
+        "h": 0.4458324213272012
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1688589",
+      "category": "装饰展品",
+      "sourceName": "组#100",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.4671432504687262,
+        "d": 0.5129805496157092,
+        "h": 1.7643150164742891
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1688590",
+      "category": "品牌标识",
+      "sourceName": "Editable 3D Text#2",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.4122594110135039,
+        "d": 0.41225941101258995,
+        "h": 0.3593621166566953
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1691382",
+      "category": "装饰展品",
+      "sourceName": "X3#1",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.30213210522028655,
+        "d": 0.3213468717742185,
+        "h": 0.7671630000000014
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-1788391",
+      "category": "开箱洽谈桌椅组合",
+      "sourceName": "组#115",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000000000007,
+        "d": 2.199400263093335,
+        "h": 0.9075000000000047
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2245165",
+      "category": "屏幕灯箱",
+      "sourceName": "组#104",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.6900000000252309,
+        "d": 0.050000000081488624,
+        "h": 0.958000000048744
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2360478",
+      "category": "柜台",
+      "sourceName": "组#182",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5000002780728304,
+        "d": 1.7999999436969272,
+        "h": 1.2367749615736159
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2463847",
+      "category": "屏幕灯箱",
+      "sourceName": "组#188",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 6.999640414414501,
+        "d": 0.43451382392981736,
+        "h": 0.7544999999999998
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2500908",
+      "category": "屏幕灯箱",
+      "sourceName": "组#69",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 2.1900001521067622,
+        "d": 0.20000000001278,
+        "h": 1.3000000000001837
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2587203",
+      "category": "宣传画板",
+      "sourceName": "组#243",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.2000000000000712,
+        "d": 0.12000000000190454,
+        "h": 1.2500000000000002
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2587726",
+      "category": "展示立牌",
+      "sourceName": "组#5",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 0.5499999979510932,
+        "d": 0.3499999986961484,
+        "h": 1.6500006042048307
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2595839",
+      "category": "屏幕灯箱",
+      "sourceName": "组#244",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 0.9580000000451004,
+        "d": 0.05000000017474168,
+        "h": 1.6900000000300561
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2595882",
+      "category": "配件柜",
+      "sourceName": "组#248",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.2,
+        "d": 0.4500000000000041,
+        "h": 2.4000000000000004
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2597250",
+      "category": "屏幕灯箱",
+      "sourceName": "组#249",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 0.7170000000006592,
+        "d": 0.07100000000666623,
+        "h": 1.2349999999999999
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2908609",
+      "category": "灯具组合",
+      "sourceName": "组#280",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.20000010799999932,
+        "d": 0.7499999999999998,
+        "h": 0.4265247098674986
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2932358",
+      "category": "灯具组合",
+      "sourceName": "组#292",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 4.400000000201458,
+        "d": 4.0159855466829955,
+        "h": 0.37058806159100377
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-2932497",
+      "category": "屏幕灯箱",
+      "sourceName": "组#293",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.9300000000010396,
+        "d": 0.19436000000016054,
+        "h": 1.104
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-3021147",
+      "category": "屏幕灯箱",
+      "sourceName": "组#295",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.4650000000033299,
+        "d": 0.11645958457965148,
+        "h": 0.8460000000484529
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-3147733",
+      "category": "品牌标识",
+      "sourceName": "组#296",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.4999999999999989,
+        "d": 1.0106759873451664e-14,
+        "h": 0.1
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-3356837",
+      "category": "沙发",
+      "sourceName": "组#299",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.000000000000007,
+        "d": 0.9709999999999999,
+        "h": 0.8289999999999998
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-3356988",
+      "category": "陈列配件",
+      "sourceName": "组#298",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 0.9000000000000032,
+        "d": 0.38999999999999996,
+        "h": 0.8
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-6799167",
+      "category": "配件柜",
+      "sourceName": "组#338",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.4000000000000203,
+        "d": 0.54000000000001,
+        "h": 2.4000000000000052
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-6952129",
+      "category": "品牌标识",
+      "sourceName": "组#903",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.2665000000002289,
+        "d": 0.020912222880923807,
+        "h": 0.3110345071099112
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11478950",
+      "category": "宣传画板",
+      "sourceName": "组#386",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.9330000000002672,
+        "d": 0.030000000008153664,
+        "h": 2.3000000000001366
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11479197",
+      "category": "屏幕灯箱",
+      "sourceName": "组#391",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.6900000000257893,
+        "d": 0.05000000010504695,
+        "h": 0.9580000000484294
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11479198",
+      "category": "屏幕灯箱",
+      "sourceName": "组#390",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.6900000000257893,
+        "d": 0.05000000010504695,
+        "h": 0.9580000000484298
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11483499",
+      "category": "品牌标识",
+      "sourceName": "33ddas",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.1553998067838087,
+        "d": 0.05000000000000018,
+        "h": 0.20000081354494706
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11511980",
+      "category": "屏幕灯箱",
+      "sourceName": "组#400",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.8208463809608987,
+        "d": 3.398000000000001,
+        "h": 0.597999999999999
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11525433",
+      "category": "屏幕灯箱",
+      "sourceName": "组#387",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.9300000000040312,
+        "d": 0.19436000002856543,
+        "h": 1.1040000000004502
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11525436",
+      "category": "宣传画板",
+      "sourceName": "组#401",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.9330000000011681,
+        "d": 0.030000000033969215,
+        "h": 2.300000000000227
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-11525629",
+      "category": "屏幕灯箱",
+      "sourceName": "组#403",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 4.614000000321455,
+        "d": 0.16008049842777727,
+        "h": 0.6400000006237978
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-15903179",
+      "category": "配件柜",
+      "sourceName": "组#407",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.600000000000013,
+        "d": 0.4399999999992935,
+        "h": 2.4000000000000354
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-15903874",
+      "category": "座椅组合",
+      "sourceName": "组#383",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.3008508543865342,
+        "d": 1.100400152310423,
+        "h": 0.45
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-16469753",
+      "category": "开箱洽谈桌椅组合",
+      "sourceName": "组#417",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000000108294,
+        "d": 1.6299885461274335,
+        "h": 0.902000000001267
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-16510684",
+      "category": "展台",
+      "sourceName": "组#429",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.799950674103562,
+        "d": 0.7989299623438569,
+        "h": 0.9209999999999985
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-20533337",
+      "category": "品牌标识",
+      "sourceName": "组#642",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.4529230127797628,
+        "d": 0.05002456276932371,
+        "h": 0.4533063629323265
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24312623",
+      "category": "体验桌",
+      "sourceName": "组#494",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000000000065,
+        "d": 0.8039999999999904,
+        "h": 1.2143900701349453
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24432224",
+      "category": "柜台",
+      "sourceName": "组#505",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000000109102,
+        "d": 0.6034900409444836,
+        "h": 1.204544469416416
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24482600",
+      "category": "配件柜",
+      "sourceName": "组#524",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.2015105784805729,
+        "d": 0.543365214080944,
+        "h": 2.4000000000000075
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24488049",
+      "category": "消防箱",
+      "sourceName": "组#526",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.7289100000000021,
+        "d": 0.22136063983040347,
+        "h": 0.8764798108790952
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24488377",
+      "category": "柜台",
+      "sourceName": "组#527",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.9418000000044948,
+        "d": 0.6479000000164344,
+        "h": 1.204544469415773
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-24498456",
+      "category": "柜台",
+      "sourceName": "组#297",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.7999999436969263,
+        "d": 0.5000002780728295,
+        "h": 1.2367749615736146
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-28034994",
+      "category": "多柜组合",
+      "sourceName": "组#639",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.002712922235784,
+        "d": 1.806769801413859,
+        "h": 1.4320692854567223
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-28104668",
+      "category": "屏幕灯箱",
+      "sourceName": "组#353",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.07857714533750058,
+        "d": 1.1420000000000001,
+        "h": 0.6450000000000042
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-28115483",
+      "category": "屏幕灯箱",
+      "sourceName": "组#245",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.6900000000252349,
+        "d": 0.05000000008148954,
+        "h": 0.958000000048744
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-28192911",
+      "category": "配件柜",
+      "sourceName": "组#673",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000000000065,
+        "d": 0.7212996316647909,
+        "h": 1.2999999999999996
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33660153",
+      "category": "配件柜",
+      "sourceName": "组#719",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.800000000000018,
+        "d": 0.5312996316648515,
+        "h": 1.2143900701349377
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33819654",
+      "category": "柜台",
+      "sourceName": "组#823",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.800000000000018,
+        "d": 0.5021426121514819,
+        "h": 0.903
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33868332",
+      "category": "品牌标识",
+      "sourceName": "组#119",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 4.673277041974614,
+        "d": 0.050000000000005956,
+        "h": 0.40451950581880053
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33868330",
+      "category": "品牌标识",
+      "sourceName": "组#36",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.2662950574349137,
+        "d": 0.021825000013722184,
+        "h": 0.3123555026162315
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33908345",
+      "category": "品牌标识",
+      "sourceName": "组#291",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.6900004264083153,
+        "d": 0.20598554537392214,
+        "h": 0.370588061591002
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33917980",
+      "category": "品牌标识",
+      "sourceName": "组#732",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8667721736705591,
+        "d": 0.06418103492854589,
+        "h": 0.49961228664631874
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-33937175",
+      "category": "品牌标识",
+      "sourceName": "组#740",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.777821596593018,
+        "d": 0.12420993928757684,
+        "h": 1.5963381731265558
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-34276510",
+      "category": "体验桌",
+      "sourceName": "组#746",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.7999999999999797,
+        "d": 1.8007500000000252,
+        "h": 1.2143900701349453
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-34293910",
+      "category": "品牌标识",
+      "sourceName": "组#750",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 1.0918093351649854,
+        "d": 0.02000000000000123,
+        "h": 0.381572450828404
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-34320268",
+      "category": "柜台",
+      "sourceName": "组#754",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5000002780902963,
+        "d": 1.7999999969744152,
+        "h": 1.2136677454859477
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-34327615",
+      "category": "配件柜",
+      "sourceName": "组#763",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.2000187872100212,
+        "d": 0.540125252581987,
+        "h": 2.4000000000000314
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36857093",
+      "category": "配件柜",
+      "sourceName": "组#811",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.6000187857574053,
+        "d": 0.5500774999044614,
+        "h": 2.4000000000000314
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36882381",
+      "category": "展台",
+      "sourceName": "组#816",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.6000000000000022,
+        "d": 0.5999999999999849,
+        "h": 0.9000000000000004
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36887885",
+      "category": "配件柜",
+      "sourceName": "组#819",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.4000187864837135,
+        "d": 0.550077499904473,
+        "h": 2.4250000000000274
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36890994",
+      "category": "配件柜",
+      "sourceName": "组#820",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.4000187864837135,
+        "d": 0.5401252525819812,
+        "h": 2.425000000000025
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36929122",
+      "category": "配件柜",
+      "sourceName": "组#821",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.4000187864837135,
+        "d": 0.5500774999044614,
+        "h": 2.4185000000000265
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-36929204",
+      "category": "宣传画板",
+      "sourceName": "组#822",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 3.489384424677888,
+        "d": 0.016416350474290766,
+        "h": 1.508132739020099
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-37747693",
+      "category": "展台",
+      "sourceName": "组#886",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5999999999999907,
+        "d": 0.6007500000000439,
+        "h": 1.1574030382144258
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-37747692",
+      "category": "展台",
+      "sourceName": "组#887",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5999999999999907,
+        "d": 0.6007500000000439,
+        "h": 1.279867371930347
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-37747691",
+      "category": "展台",
+      "sourceName": "组#888",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.5999999999999907,
+        "d": 0.6028500000000059,
+        "h": 1.16253183924966
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-37760531",
+      "category": "品牌标识",
+      "sourceName": "组#897",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.619173641124541,
+        "d": 0.05000000000000018,
+        "h": 0.1841248792408877
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-40808068",
+      "category": "装饰展品",
+      "sourceName": "组#898",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.8724674490514891,
+        "d": 1.9104746619138862,
+        "h": 1.890907682846952
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-40888228",
+      "category": "装饰展品",
+      "sourceName": "组#902",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 2.573667928828101,
+        "d": 2.687984555573859,
+        "h": 0.798662931918197
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-40896298",
+      "category": "品牌标识",
+      "sourceName": "111111111111.dwg",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 2.9303228329912674,
+        "d": 0.05000000000000018,
+        "h": 0.40118205629994946
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-40910342",
+      "category": "品牌标识",
+      "sourceName": "组#49",
+      "instanceCount": 2,
+      "dimensions": {
+        "w": 2.0268481935556837,
+        "d": 0.05000000000000018,
+        "h": 0.38513212671232167
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-41053706",
+      "category": "体验桌",
+      "sourceName": "组#904",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 0.8040000109650972,
+        "d": 1.8000000046027635,
+        "h": 1.1642262351738804
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-41277543",
+      "category": "开箱洽谈桌椅组合",
+      "sourceName": "组#918",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.8000000052796508,
+        "d": 1.6299885461274335,
+        "h": 0.9000001687059872
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    },
+    {
+      "id": "asset-37758059",
+      "category": "屏幕灯箱",
+      "sourceName": "组#104",
+      "instanceCount": 1,
+      "dimensions": {
+        "w": 1.6910000000000023,
+        "d": 0.05000000008148954,
+        "h": 0.9580000000487705
+      },
+      "siVersion": null,
+      "facing": null,
+      "webReady": false
+    }
+  ]
+}
