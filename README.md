@@ -12,7 +12,7 @@
 
 | 成果 | 入口 | 当前边界 |
 |---|---|---|
-| 90 项真实 SU 道具拆分 | [资产目录](素材库/04_assets/incoming/split-20260925-v2/index.html)、[验证记录](素材库/04_assets/incoming/split-20260925-v2/validation-summary.json) | 对应 111 个源实例；网页已接入四类本机 GLB，非全部 90 项；SI/正面未确认 |
+| 90 项真实 SU 道具拆分 | [资产目录](素材库/04_assets/incoming/split-20260925-v2/index.html)、[验证记录](素材库/04_assets/incoming/split-20260925-v2/validation-summary.json) | 对应111个源实例；网页可检索90项文字索引，仅4项可放置本机GLB；SI/正面未确认 |
 | 五家门店双用途案例包 | [最终交接](docs/case-pack-4h-handoff.md) | 212 页索引、79 页整页审核、15 条平面参考、18 张独立效果参考；不等于完整几何标注 |
 | 网页工作台 | [功能与限制](demo/README.md) | 参数化与四类真实道具共存；SVG/PNG 平面、八视角 ZIP、备份恢复、五店证据入口已接入；仍为概念渲染 |
 | 历史试训与渲染实验 | [实验导航](docs/README.md#其余文档分组) | 验证过流程，不代表正式模型或几何交付通过 |
