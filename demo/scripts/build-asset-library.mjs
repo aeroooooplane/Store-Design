@@ -15,6 +15,9 @@ const checks=new Map(validation.results.map(row=>[row.asset_id,row]))
 if(checks.size!==validation.results.length)throw Error('Duplicate validation IDs')
 const ids=new Set()
 const assets=manifest.assets.map(entry=>{
+  if(!['category','definition'].every(key=>typeof entry[key]==='string'&&entry[key].trim()))throw Error('Invalid source label')
+  if(entry.si_version!=null&&(typeof entry.si_version!=='string'||!entry.si_version.trim()))throw Error('Invalid source SI field')
+  if(!Array.isArray(entry.instances)||entry.instances.length===0)throw Error('Missing source instances')
   if(!/^asset-\d+$/.test(entry.asset_id)||ids.has(entry.asset_id))throw Error('Invalid or duplicate asset ID')
   ids.add(entry.asset_id)
   const check=checks.get(entry.asset_id),bounds=check?.source_tight_face_bounds_m
