@@ -16,7 +16,7 @@ test('a full layout cannot add an unsavable 201st object',async({page})=>{
   await page.goto('/')
   await page.locator('.plan-card').first().click()
   await expect(page.getByRole('button',{name:'＋ 收银台',exact:true})).toBeDisabled()
-  await expect(page.getByRole('button',{name:'＋ 真实体验桌',exact:true})).toBeDisabled()
+  await expect(page.getByRole('button',{name:'＋ 1800mm普通中岛桌 · 产品陈列A',exact:true})).toBeDisabled()
   await expect(page.locator('.properties')).toContainText('200 / 200')
 })
 
@@ -35,5 +35,5 @@ test('last snapshot slot cannot be spent twice and a full history keeps dirty ed
   await page.locator('.branch-list button').filter({hasText:'容量方案'}).click()
   await expect(page.getByRole('status')).toContainText('未丢弃当前草稿')
   await expect(page.locator('.drawing svg g')).toHaveCount(1)
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).editorDraft?.layout.items.length)).toBe(1)
+  await expect.poll(()=>page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).editorDraft?.layout.items.length)).toBe(1)
 })

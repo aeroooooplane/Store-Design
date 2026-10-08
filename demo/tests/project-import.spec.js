@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test'
-import {parseProject,mergeProject} from '../src/project-import.js'
+import {parseProject,mergeProject,MAX_IMPORT_BYTES} from '../src/project-import.js'
 
 const backup={nodes:[{id:'r',kind:'root',name:'备份门店',room:{w:8,d:6,h:3}},
   {id:'p',parent:'r',kind:'plan',name:'备份方案',layout:{room:{w:8,d:6,h:3},items:[{id:'a',type:'table',name:'桌',x:2,z:2,w:1.8,d:.8,h:.9}]}}]}
@@ -30,19 +30,20 @@ test('broken graphs, invalid numbers and tampered real-asset dimensions are reje
   ]){const p=structuredClone(backup);edit(p);expect(()=>parseProject(JSON.stringify(p))).toThrow()}
   expect(()=>parseProject('{')).toThrow()
   expect(()=>parseProject(JSON.stringify({nodes:[],__proto__:null}))).toThrow()
-  expect(()=>parseProject(' '.repeat(5*1024*1024+1))).toThrow(/大小/)
+  expect(()=>parseProject(' '.repeat(MAX_IMPORT_BYTES+1))).toThrow(/大小/)
 })
 
 test('file import adds independent branches and preserves unsaved editor changes',async({page})=>{
   await page.goto('/')
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
   await page.locator('.plan-card').first().click()
+  const original=await page.locator('.drawing svg g').count()
   await page.getByRole('button',{name:'＋ 收银台',exact:true}).click()
   await page.getByLabel('导入项目 JSON').setInputFiles({name:'backup.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(backup))},{timeout:5000})
   await expect(page.getByRole('status')).toContainText('已导入')
-  const nodes=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes)
+  const nodes=await page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).nodes)
   expect(nodes).toHaveLength(8) // Original root + four plans, unsaved edit, two imported nodes.
-  expect(nodes.find(n=>n.name==='导入前保留的调整').layout.items).toHaveLength(5)
+  expect(nodes.find(n=>n.name==='导入前保留的调整').layout.items).toHaveLength(original+1)
   expect(new Set(nodes.map(n=>n.id)).size).toBe(8)
   await page.reload()
   await expect(page.locator('.plan-card')).toHaveCount(1)
@@ -51,27 +52,27 @@ test('file import adds independent branches and preserves unsaved editor changes
 test('storage quota rejection keeps the previous project and does not report import success',async({page})=>{
   await page.goto('/')
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
-  const before=await page.evaluate(()=>{
-    const saved=localStorage.getItem('insta-studio-v2'),original=Storage.prototype.setItem
-    Storage.prototype.setItem=function(key,value){if(key==='insta-studio-v2'&&value.includes('importedFrom'))throw new DOMException('quota','QuotaExceededError');return original.call(this,key,value)}
+  const before=await page.evaluate(async()=>{
+    const saved=(await (await import('/src/project-db.js')).readProjectRaw()),original=IDBObjectStore.prototype.put
+    IDBObjectStore.prototype.put=function(value,...args){if(this.name==='projects'&&value.raw?.includes('importedFrom'))throw new DOMException('quota','QuotaExceededError');return original.call(this,value,...args)}
     return saved
   })
   await page.getByLabel('导入项目 JSON').setInputFiles({name:'backup.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(backup))})
   await expect(page.getByRole('status')).toContainText('导入失败')
-  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+  expect(await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).toBe(before)
   await expect(page.locator('.plan-card')).toHaveCount(4)
 })
 
 test('root layout injection is rejected before replacing the visible or saved project',async({page})=>{
   await page.goto('/')
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes.length)).toBe(5)
-  const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
+  await expect.poll(()=>page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).nodes.length)).toBe(5)
+  const before=await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))
   const invalid=structuredClone(backup);invalid.nodes[0].layout={}
   await page.getByLabel('导入项目 JSON').setInputFiles({name:'bad-root.json',mimeType:'application/json',buffer:Buffer.from(JSON.stringify(invalid))})
   await expect(page.getByRole('status')).toContainText('导入失败')
   await expect(page.locator('.plan-card')).toHaveCount(4)
-  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+  expect(await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).toBe(before)
 })
 
 test('large valid project downloads a backup that can be imported again',async({page})=>{

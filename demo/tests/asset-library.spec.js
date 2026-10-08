@@ -1,11 +1,12 @@
 import {test,expect} from '@playwright/test'
+import {realAssets} from '../src/real-assets.js'
 
 test('asset directory searches source inventory without changing the project or loading models',async({page})=>{
   const requests=[]
   page.on('request',r=>requests.push(r.url()))
   await page.goto('/')
-  await expect.poll(()=>page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).not.toBeNull()
-  const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
+  await expect.poll(()=>page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).not.toBeNull()
+  const before=await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))
   const entry=page.getByRole('button',{name:'查看90项资产目录',exact:true})
   await expect(entry).toBeVisible()
   await entry.click()
@@ -13,15 +14,15 @@ test('asset directory searches source inventory without changing the project or 
   await expect(panel).toContainText('90 项资产')
   await expect(panel.locator('article')).toHaveCount(90)
   await page.getByLabel('资产接入状态').selectOption('ready')
-  await expect(panel.locator('article')).toHaveCount(4)
+  await expect(panel.locator('article')).toHaveCount(realAssets.length)
   await page.getByLabel('资产接入状态').selectOption('pending')
-  await expect(panel.locator('article')).toHaveCount(86)
+  await expect(panel.locator('article')).toHaveCount(90-realAssets.length)
   await page.getByLabel('资产编号或名称').fill(' ASSET-316267 ')
   await expect(panel.locator('article')).toHaveCount(1)
   await expect(panel).toContainText('SI 未确认')
   await expect(panel).toContainText('未接入网页')
   await expect(panel.getByRole('button',{name:/加入|放置/})).toHaveCount(0)
-  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+  expect(await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).toBe(before)
   expect(requests.some(url=>/\.glb|\.skp|\.dae/.test(url))).toBe(false)
   await page.getByLabel('资产编号或名称').fill('不存在')
   await expect(panel).toContainText('没有匹配资产')
@@ -37,5 +38,5 @@ test('asset directory category filter fits narrow screens',async({page})=>{
   await page.getByLabel('资产类别').selectOption('体验桌')
   const panel=page.getByRole('region',{name:'SU资产目录',exact:true})
   await expect(panel.locator('article')).toHaveCount(5)
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(await page.evaluate(async()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
 })

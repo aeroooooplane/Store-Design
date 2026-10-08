@@ -1,0 +1,1082 @@
+[
+  {
+    "n": 1,
+    "asset_id": "asset-316267",
+    "category": "屏幕灯箱",
+    "definition": "组#645",
+    "folder": "asset-316267/selected-20260925-212106",
+    "dimensions_mm": [
+      1690.0,
+      100.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 2,
+    "asset_id": "asset-323015",
+    "category": "配件柜",
+    "definition": "配件柜1.6",
+    "folder": "asset-323015/selected-20260925-212110",
+    "dimensions_mm": [
+      1600.0,
+      450.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 3,
+    "asset_id": "asset-408124",
+    "category": "体验桌",
+    "definition": "组件#4",
+    "folder": "asset-408124/selected-20260925-212112",
+    "dimensions_mm": [
+      1000.0,
+      1800.0,
+      1326.9
+    ]
+  },
+  {
+    "n": 4,
+    "asset_id": "asset-408125",
+    "category": "体验桌",
+    "definition": "组#13",
+    "folder": "asset-408125/selected-20260925-212116",
+    "dimensions_mm": [
+      1000.0,
+      1800.0,
+      1232.1
+    ]
+  },
+  {
+    "n": 5,
+    "asset_id": "asset-568756",
+    "category": "展示立牌",
+    "definition": "组#31",
+    "folder": "asset-568756/selected-20260925-212119",
+    "dimensions_mm": [
+      200.0,
+      730.7,
+      600.0
+    ]
+  },
+  {
+    "n": 6,
+    "asset_id": "asset-569180",
+    "category": "座椅组合",
+    "definition": "凳子",
+    "folder": "asset-569180/selected-20260925-212134",
+    "dimensions_mm": [
+      1250.0,
+      1261.0,
+      350.0
+    ]
+  },
+  {
+    "n": 7,
+    "asset_id": "asset-569211",
+    "category": "宣传画板",
+    "definition": "组#4",
+    "folder": "asset-569211/selected-20260925-212135",
+    "dimensions_mm": [
+      1200.0,
+      0.0,
+      1500.0
+    ]
+  },
+  {
+    "n": 8,
+    "asset_id": "asset-666964",
+    "category": "开箱洽谈桌椅组合",
+    "definition": "组#50",
+    "folder": "asset-666964/selected-20260925-212137",
+    "dimensions_mm": [
+      1071.2,
+      1800.0,
+      902.0
+    ]
+  },
+  {
+    "n": 9,
+    "asset_id": "asset-752992",
+    "category": "柜台",
+    "definition": "组件#28",
+    "folder": "asset-752992/selected-20260925-212142",
+    "dimensions_mm": [
+      500.0,
+      1800.0,
+      1213.7
+    ]
+  },
+  {
+    "n": 10,
+    "asset_id": "asset-754006",
+    "category": "宣传画板",
+    "definition": "组#3",
+    "folder": "asset-754006/selected-20260925-212146",
+    "dimensions_mm": [
+      1700.0,
+      980.0,
+      0.0
+    ]
+  },
+  {
+    "n": 11,
+    "asset_id": "asset-754909",
+    "category": "灯具组合",
+    "definition": "组件#1",
+    "folder": "asset-754909/selected-20260925-212148",
+    "dimensions_mm": [
+      200.0,
+      200.0,
+      244.0
+    ]
+  },
+  {
+    "n": 12,
+    "asset_id": "asset-775543",
+    "category": "灯具组合",
+    "definition": "组#14",
+    "folder": "asset-775543/selected-20260925-212149",
+    "dimensions_mm": [
+      200.0,
+      1500.0,
+      426.5
+    ]
+  },
+  {
+    "n": 13,
+    "asset_id": "asset-957634",
+    "category": "屏幕灯箱",
+    "definition": "组#71",
+    "folder": "asset-957634/selected-20260925-212151",
+    "dimensions_mm": [
+      50.0,
+      1690.0,
+      958.0
+    ]
+  },
+  {
+    "n": 14,
+    "asset_id": "asset-958185",
+    "category": "展示立牌",
+    "definition": "组#294",
+    "folder": "asset-958185/selected-20260925-212154",
+    "dimensions_mm": [
+      644.5,
+      542.2,
+      1650.0
+    ]
+  },
+  {
+    "n": 15,
+    "asset_id": "asset-1129848",
+    "category": "品牌标识",
+    "definition": "组#67",
+    "folder": "asset-1129848/selected-20260925-212155",
+    "dimensions_mm": [
+      1266.5,
+      35.9,
+      607.9
+    ]
+  },
+  {
+    "n": 16,
+    "asset_id": "asset-1156409",
+    "category": "宣传画板",
+    "definition": "组#96",
+    "folder": "asset-1156409/selected-20260925-212157",
+    "dimensions_mm": [
+      933.0,
+      30.0,
+      1670.0
+    ]
+  },
+  {
+    "n": 17,
+    "asset_id": "asset-1567211",
+    "category": "装饰展品",
+    "definition": "组#99",
+    "folder": "asset-1567211/selected-20260925-212200",
+    "dimensions_mm": [
+      632.8,
+      636.7,
+      449.8
+    ]
+  },
+  {
+    "n": 18,
+    "asset_id": "asset-1688589",
+    "category": "装饰展品",
+    "definition": "组#100",
+    "folder": "asset-1688589/selected-20260925-212213",
+    "dimensions_mm": [
+      873.3,
+      876.7,
+      1764.3
+    ]
+  },
+  {
+    "n": 19,
+    "asset_id": "asset-1688590",
+    "category": "品牌标识",
+    "definition": "Editable 3D Text#2",
+    "folder": "asset-1688590/selected-20260925-212218",
+    "dimensions_mm": [
+      412.3,
+      412.3,
+      359.4
+    ]
+  },
+  {
+    "n": 20,
+    "asset_id": "asset-1691382",
+    "category": "装饰展品",
+    "definition": "X3#1",
+    "folder": "asset-1691382/selected-20260925-212219",
+    "dimensions_mm": [
+      310.7,
+      329.6,
+      767.2
+    ]
+  },
+  {
+    "n": 21,
+    "asset_id": "asset-1788391",
+    "category": "开箱洽谈桌椅组合",
+    "definition": "组#115",
+    "folder": "asset-1788391/selected-20260925-212221",
+    "dimensions_mm": [
+      1800.0,
+      2202.6,
+      907.5
+    ]
+  },
+  {
+    "n": 22,
+    "asset_id": "asset-2245165",
+    "category": "屏幕灯箱",
+    "definition": "组#104",
+    "folder": "asset-2245165/selected-20260925-212227",
+    "dimensions_mm": [
+      1690.0,
+      100.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 23,
+    "asset_id": "asset-2360478",
+    "category": "柜台",
+    "definition": "组#182",
+    "folder": "asset-2360478/selected-20260925-212229",
+    "dimensions_mm": [
+      500.0,
+      1800.0,
+      1236.8
+    ]
+  },
+  {
+    "n": 24,
+    "asset_id": "asset-2463847",
+    "category": "屏幕灯箱",
+    "definition": "组#188",
+    "folder": "asset-2463847/selected-20260925-212233",
+    "dimensions_mm": [
+      6999.6,
+      434.5,
+      754.5
+    ]
+  },
+  {
+    "n": 25,
+    "asset_id": "asset-2500908",
+    "category": "屏幕灯箱",
+    "definition": "组#69",
+    "folder": "asset-2500908/selected-20260925-212235",
+    "dimensions_mm": [
+      2190.0,
+      200.0,
+      1300.0
+    ]
+  },
+  {
+    "n": 26,
+    "asset_id": "asset-2587203",
+    "category": "宣传画板",
+    "definition": "组#243",
+    "folder": "asset-2587203/selected-20260925-212237",
+    "dimensions_mm": [
+      2200.0,
+      120.0,
+      1250.0
+    ]
+  },
+  {
+    "n": 27,
+    "asset_id": "asset-2587726",
+    "category": "展示立牌",
+    "definition": "组#5",
+    "folder": "asset-2587726/selected-20260925-212239",
+    "dimensions_mm": [
+      550.0,
+      350.0,
+      1650.0
+    ]
+  },
+  {
+    "n": 28,
+    "asset_id": "asset-2595839",
+    "category": "屏幕灯箱",
+    "definition": "组#244",
+    "folder": "asset-2595839/selected-20260925-212240",
+    "dimensions_mm": [
+      958.0,
+      50.0,
+      1690.0
+    ]
+  },
+  {
+    "n": 29,
+    "asset_id": "asset-2595882",
+    "category": "配件柜",
+    "definition": "组#248",
+    "folder": "asset-2595882/selected-20260925-212243",
+    "dimensions_mm": [
+      1200.0,
+      450.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 30,
+    "asset_id": "asset-2597250",
+    "category": "屏幕灯箱",
+    "definition": "组#249",
+    "folder": "asset-2597250/selected-20260925-212244",
+    "dimensions_mm": [
+      717.0,
+      71.0,
+      1235.0
+    ]
+  },
+  {
+    "n": 31,
+    "asset_id": "asset-2908609",
+    "category": "灯具组合",
+    "definition": "组#280",
+    "folder": "asset-2908609/selected-20260925-212246",
+    "dimensions_mm": [
+      200.0,
+      750.0,
+      426.5
+    ]
+  },
+  {
+    "n": 32,
+    "asset_id": "asset-2932358",
+    "category": "灯具组合",
+    "definition": "组#292",
+    "folder": "asset-2932358/selected-20260925-212248",
+    "dimensions_mm": [
+      4400.0,
+      4016.0,
+      370.6
+    ]
+  },
+  {
+    "n": 33,
+    "asset_id": "asset-2932497",
+    "category": "屏幕灯箱",
+    "definition": "组#293",
+    "folder": "asset-2932497/selected-20260925-212251",
+    "dimensions_mm": [
+      1930.0,
+      194.4,
+      1104.0
+    ]
+  },
+  {
+    "n": 34,
+    "asset_id": "asset-3021147",
+    "category": "屏幕灯箱",
+    "definition": "组#295",
+    "folder": "asset-3021147/selected-20260925-212253",
+    "dimensions_mm": [
+      1465.0,
+      232.9,
+      2400.0
+    ]
+  },
+  {
+    "n": 35,
+    "asset_id": "asset-3147733",
+    "category": "品牌标识",
+    "definition": "组#296",
+    "folder": "asset-3147733/selected-20260925-212255",
+    "dimensions_mm": [
+      500.0,
+      0.0,
+      100.0
+    ]
+  },
+  {
+    "n": 36,
+    "asset_id": "asset-3356837",
+    "category": "沙发",
+    "definition": "组#299",
+    "folder": "asset-3356837/selected-20260925-212257",
+    "dimensions_mm": [
+      2000.0,
+      971.0,
+      829.0
+    ]
+  },
+  {
+    "n": 37,
+    "asset_id": "asset-3356988",
+    "category": "陈列配件",
+    "definition": "组#298",
+    "folder": "asset-3356988/selected-20260925-212258",
+    "dimensions_mm": [
+      900.0,
+      390.0,
+      800.0
+    ]
+  },
+  {
+    "n": 38,
+    "asset_id": "asset-6799167",
+    "category": "配件柜",
+    "definition": "组#338",
+    "folder": "asset-6799167/selected-20260925-212300",
+    "dimensions_mm": [
+      2400.0,
+      540.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 39,
+    "asset_id": "asset-6952129",
+    "category": "品牌标识",
+    "definition": "组#903",
+    "folder": "asset-6952129/selected-20260925-212404",
+    "dimensions_mm": [
+      1266.5,
+      20.9,
+      311.0
+    ]
+  },
+  {
+    "n": 40,
+    "asset_id": "asset-11478950",
+    "category": "宣传画板",
+    "definition": "组#386",
+    "folder": "asset-11478950/selected-20260925-212406",
+    "dimensions_mm": [
+      933.0,
+      30.0,
+      2300.0
+    ]
+  },
+  {
+    "n": 41,
+    "asset_id": "asset-11479197",
+    "category": "屏幕灯箱",
+    "definition": "组#391",
+    "folder": "asset-11479197/selected-20260925-212408",
+    "dimensions_mm": [
+      1690.0,
+      100.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 42,
+    "asset_id": "asset-11479198",
+    "category": "屏幕灯箱",
+    "definition": "组#390",
+    "folder": "asset-11479198/selected-20260925-212410",
+    "dimensions_mm": [
+      1690.0,
+      100.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 43,
+    "asset_id": "asset-11483499",
+    "category": "品牌标识",
+    "definition": "33ddas",
+    "folder": "asset-11483499/selected-20260925-212413",
+    "dimensions_mm": [
+      3155.4,
+      50.0,
+      200.0
+    ]
+  },
+  {
+    "n": 44,
+    "asset_id": "asset-11511980",
+    "category": "屏幕灯箱",
+    "definition": "组#400",
+    "folder": "asset-11511980/selected-20260925-212414",
+    "dimensions_mm": [
+      820.8,
+      3398.0,
+      598.0
+    ]
+  },
+  {
+    "n": 45,
+    "asset_id": "asset-11525433",
+    "category": "屏幕灯箱",
+    "definition": "组#387",
+    "folder": "asset-11525433/selected-20260925-212418",
+    "dimensions_mm": [
+      1930.0,
+      194.4,
+      1104.0
+    ]
+  },
+  {
+    "n": 46,
+    "asset_id": "asset-11525436",
+    "category": "宣传画板",
+    "definition": "组#401",
+    "folder": "asset-11525436/selected-20260925-212420",
+    "dimensions_mm": [
+      933.0,
+      30.0,
+      2300.0
+    ]
+  },
+  {
+    "n": 47,
+    "asset_id": "asset-11525629",
+    "category": "屏幕灯箱",
+    "definition": "组#403",
+    "folder": "asset-11525629/selected-20260925-212421",
+    "dimensions_mm": [
+      4614.0,
+      160.1,
+      640.0
+    ]
+  },
+  {
+    "n": 48,
+    "asset_id": "asset-15903179",
+    "category": "配件柜",
+    "definition": "组#407",
+    "folder": "asset-15903179/selected-20260925-212423",
+    "dimensions_mm": [
+      3600.0,
+      440.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 49,
+    "asset_id": "asset-15903874",
+    "category": "座椅组合",
+    "definition": "组#383",
+    "folder": "asset-15903874/selected-20260925-212558",
+    "dimensions_mm": [
+      1300.9,
+      1100.4,
+      480.0
+    ]
+  },
+  {
+    "n": 50,
+    "asset_id": "asset-16469753",
+    "category": "开箱洽谈桌椅组合",
+    "definition": "组#417",
+    "folder": "asset-16469753/selected-20260925-212600",
+    "dimensions_mm": [
+      1800.0,
+      1630.0,
+      902.0
+    ]
+  },
+  {
+    "n": 51,
+    "asset_id": "asset-16510684",
+    "category": "展台",
+    "definition": "组#429",
+    "folder": "asset-16510684/selected-20260925-215230",
+    "dimensions_mm": [
+      1131.1,
+      1131.1,
+      921.0
+    ]
+  },
+  {
+    "n": 52,
+    "asset_id": "asset-20533337",
+    "category": "品牌标识",
+    "definition": "组#642",
+    "folder": "asset-20533337/selected-20260925-215231",
+    "dimensions_mm": [
+      3455.5,
+      50.0,
+      476.3
+    ]
+  },
+  {
+    "n": 53,
+    "asset_id": "asset-24312623",
+    "category": "体验桌",
+    "definition": "组#494",
+    "folder": "asset-24312623/selected-20260925-215233",
+    "dimensions_mm": [
+      1800.0,
+      804.0,
+      1214.4
+    ]
+  },
+  {
+    "n": 54,
+    "asset_id": "asset-24432224",
+    "category": "柜台",
+    "definition": "组#505",
+    "folder": "asset-24432224/selected-20260925-215241",
+    "dimensions_mm": [
+      1800.0,
+      603.5,
+      1204.5
+    ]
+  },
+  {
+    "n": 55,
+    "asset_id": "asset-24482600",
+    "category": "配件柜",
+    "definition": "组#524",
+    "folder": "asset-24482600/selected-20260925-215245",
+    "dimensions_mm": [
+      1201.5,
+      543.4,
+      2400.0
+    ]
+  },
+  {
+    "n": 56,
+    "asset_id": "asset-24488049",
+    "category": "消防箱",
+    "definition": "组#526",
+    "folder": "asset-24488049/selected-20260925-215248",
+    "dimensions_mm": [
+      728.9,
+      221.4,
+      876.5
+    ]
+  },
+  {
+    "n": 57,
+    "asset_id": "asset-24488377",
+    "category": "柜台",
+    "definition": "组#527",
+    "folder": "asset-24488377/selected-20260925-215250",
+    "dimensions_mm": [
+      1941.8,
+      647.9,
+      1204.5
+    ]
+  },
+  {
+    "n": 58,
+    "asset_id": "asset-24498456",
+    "category": "柜台",
+    "definition": "组#297",
+    "folder": "asset-24498456/selected-20260925-215254",
+    "dimensions_mm": [
+      1800.0,
+      500.0,
+      1236.8
+    ]
+  },
+  {
+    "n": 59,
+    "asset_id": "asset-28034994",
+    "category": "多柜组合",
+    "definition": "组#639",
+    "folder": "asset-28034994/selected-20260925-215258",
+    "dimensions_mm": [
+      1002.7,
+      1806.8,
+      1432.1
+    ]
+  },
+  {
+    "n": 60,
+    "asset_id": "asset-28104668",
+    "category": "屏幕灯箱",
+    "definition": "组#353",
+    "folder": "asset-28104668/selected-20260925-215445",
+    "dimensions_mm": [
+      78.6,
+      1142.0,
+      645.0
+    ]
+  },
+  {
+    "n": 61,
+    "asset_id": "asset-28115483",
+    "category": "屏幕灯箱",
+    "definition": "组#245",
+    "folder": "asset-28115483/selected-20260925-215447",
+    "dimensions_mm": [
+      1690.0,
+      100.0,
+      2400.0
+    ]
+  },
+  {
+    "n": 62,
+    "asset_id": "asset-28192911",
+    "category": "配件柜",
+    "definition": "组#673",
+    "folder": "asset-28192911/selected-20260925-215450",
+    "dimensions_mm": [
+      1800.0,
+      721.3,
+      1300.0
+    ]
+  },
+  {
+    "n": 63,
+    "asset_id": "asset-33660153",
+    "category": "配件柜",
+    "definition": "组#719",
+    "folder": "asset-33660153/selected-20260925-215453",
+    "dimensions_mm": [
+      1800.0,
+      531.3,
+      1214.4
+    ]
+  },
+  {
+    "n": 64,
+    "asset_id": "asset-33819654",
+    "category": "柜台",
+    "definition": "组#823",
+    "folder": "asset-33819654/selected-20260925-215458",
+    "dimensions_mm": [
+      1800.0,
+      502.1,
+      903.0
+    ]
+  },
+  {
+    "n": 65,
+    "asset_id": "asset-33868332",
+    "category": "品牌标识",
+    "definition": "组#119",
+    "folder": "asset-33868332/selected-20260925-215503",
+    "dimensions_mm": [
+      4673.3,
+      50.0,
+      404.5
+    ]
+  },
+  {
+    "n": 66,
+    "asset_id": "asset-33868330",
+    "category": "品牌标识",
+    "definition": "组#36",
+    "folder": "asset-33868330/selected-20260925-215505",
+    "dimensions_mm": [
+      1266.3,
+      21.8,
+      312.4
+    ]
+  },
+  {
+    "n": 67,
+    "asset_id": "asset-33908345",
+    "category": "品牌标识",
+    "definition": "组#291",
+    "folder": "asset-33908345/selected-20260925-215507",
+    "dimensions_mm": [
+      3690.0,
+      206.0,
+      370.6
+    ]
+  },
+  {
+    "n": 68,
+    "asset_id": "asset-33917980",
+    "category": "品牌标识",
+    "definition": "组#732",
+    "folder": "asset-33917980/selected-20260925-215509",
+    "dimensions_mm": [
+      1870.4,
+      74.2,
+      509.1
+    ]
+  },
+  {
+    "n": 69,
+    "asset_id": "asset-33937175",
+    "category": "品牌标识",
+    "definition": "组#740",
+    "folder": "asset-33937175/selected-20260925-215511",
+    "dimensions_mm": [
+      1777.8,
+      124.2,
+      1596.3
+    ]
+  },
+  {
+    "n": 70,
+    "asset_id": "asset-34276510",
+    "category": "体验桌",
+    "definition": "组#746",
+    "folder": "asset-34276510/selected-20260925-215513",
+    "dimensions_mm": [
+      800.0,
+      1800.8,
+      1214.4
+    ]
+  },
+  {
+    "n": 71,
+    "asset_id": "asset-34293910",
+    "category": "品牌标识",
+    "definition": "组#750",
+    "folder": "asset-34293910/selected-20260925-215520",
+    "dimensions_mm": [
+      1091.8,
+      20.0,
+      381.6
+    ]
+  },
+  {
+    "n": 72,
+    "asset_id": "asset-34320268",
+    "category": "柜台",
+    "definition": "组#754",
+    "folder": "asset-34320268/selected-20260925-215522",
+    "dimensions_mm": [
+      500.0,
+      1800.0,
+      1213.7
+    ]
+  },
+  {
+    "n": 73,
+    "asset_id": "asset-34327615",
+    "category": "配件柜",
+    "definition": "组#763",
+    "folder": "asset-34327615/selected-20260925-215526",
+    "dimensions_mm": [
+      1200.0,
+      1854.4,
+      2400.0
+    ]
+  },
+  {
+    "n": 74,
+    "asset_id": "asset-36857093",
+    "category": "配件柜",
+    "definition": "组#811",
+    "folder": "asset-36857093/selected-20260925-215529",
+    "dimensions_mm": [
+      3619.0,
+      1854.5,
+      2400.0
+    ]
+  },
+  {
+    "n": 75,
+    "asset_id": "asset-36882381",
+    "category": "展台",
+    "definition": "组#816",
+    "folder": "asset-36882381/selected-20260925-215555",
+    "dimensions_mm": [
+      600.0,
+      600.0,
+      900.0
+    ]
+  },
+  {
+    "n": 76,
+    "asset_id": "asset-36887885",
+    "category": "配件柜",
+    "definition": "组#819",
+    "folder": "asset-36887885/selected-20260925-215556",
+    "dimensions_mm": [
+      2400.0,
+      550.2,
+      2425.0
+    ]
+  },
+  {
+    "n": 77,
+    "asset_id": "asset-36890994",
+    "category": "配件柜",
+    "definition": "组#820",
+    "folder": "asset-36890994/selected-20260925-215601",
+    "dimensions_mm": [
+      2799.8,
+      1854.5,
+      2425.0
+    ]
+  },
+  {
+    "n": 78,
+    "asset_id": "asset-36929122",
+    "category": "配件柜",
+    "definition": "组#821",
+    "folder": "asset-36929122/selected-20260925-215629",
+    "dimensions_mm": [
+      2400.0,
+      1854.5,
+      2418.5
+    ]
+  },
+  {
+    "n": 79,
+    "asset_id": "asset-36929204",
+    "category": "宣传画板",
+    "definition": "组#822",
+    "folder": "asset-36929204/selected-20260925-215634",
+    "dimensions_mm": [
+      3489.4,
+      16.4,
+      1508.1
+    ]
+  },
+  {
+    "n": 80,
+    "asset_id": "asset-37747693",
+    "category": "展台",
+    "definition": "组#886",
+    "folder": "asset-37747693/selected-20260925-215637",
+    "dimensions_mm": [
+      600.0,
+      600.8,
+      1157.4
+    ]
+  },
+  {
+    "n": 81,
+    "asset_id": "asset-37747692",
+    "category": "展台",
+    "definition": "组#887",
+    "folder": "asset-37747692/selected-20260925-215646",
+    "dimensions_mm": [
+      600.0,
+      600.8,
+      1279.9
+    ]
+  },
+  {
+    "n": 82,
+    "asset_id": "asset-37747691",
+    "category": "展台",
+    "definition": "组#888",
+    "folder": "asset-37747691/selected-20260925-215700",
+    "dimensions_mm": [
+      600.0,
+      602.9,
+      1162.5
+    ]
+  },
+  {
+    "n": 83,
+    "asset_id": "asset-37760531",
+    "category": "品牌标识",
+    "definition": "组#897",
+    "folder": "asset-37760531/selected-20260925-215704",
+    "dimensions_mm": [
+      2619.2,
+      50.0,
+      184.1
+    ]
+  },
+  {
+    "n": 84,
+    "asset_id": "asset-40808068",
+    "category": "装饰展品",
+    "definition": "组#898",
+    "folder": "asset-40808068/selected-20260925-215705",
+    "dimensions_mm": [
+      1779.7,
+      2255.9,
+      1967.8
+    ]
+  },
+  {
+    "n": 85,
+    "asset_id": "asset-40888228",
+    "category": "装饰展品",
+    "definition": "组#902",
+    "folder": "asset-40888228/selected-20260925-215802",
+    "dimensions_mm": [
+      3138.5,
+      3302.1,
+      798.7
+    ]
+  },
+  {
+    "n": 86,
+    "asset_id": "asset-40896298",
+    "category": "品牌标识",
+    "definition": "111111111111.dwg",
+    "folder": "asset-40896298/selected-20260925-215806",
+    "dimensions_mm": [
+      2930.3,
+      50.0,
+      401.2
+    ]
+  },
+  {
+    "n": 87,
+    "asset_id": "asset-40910342",
+    "category": "品牌标识",
+    "definition": "组#49",
+    "folder": "asset-40910342/selected-20260925-215808",
+    "dimensions_mm": [
+      2026.8,
+      50.0,
+      385.1
+    ]
+  },
+  {
+    "n": 88,
+    "asset_id": "asset-41053706",
+    "category": "体验桌",
+    "definition": "组#904",
+    "folder": "asset-41053706/selected-20260925-215809",
+    "dimensions_mm": [
+      804.0,
+      1800.0,
+      1164.2
+    ]
+  },
+  {
+    "n": 89,
+    "asset_id": "asset-41277543",
+    "category": "开箱洽谈桌椅组合",
+    "definition": "组#918",
+    "folder": "asset-41277543/selected-20260925-215818",
+    "dimensions_mm": [
+      1800.0,
+      1630.0,
+      900.0
+    ]
+  },
+  {
+    "n": 90,
+    "asset_id": "asset-37758059",
+    "category": "屏幕灯箱",
+    "definition": "组#104",
+    "folder": "asset-37758059/selected-20260925-222728",
+    "dimensions_mm": [
+      1691.0,
+      100.0,
+      2400.0
+    ]
+  }
+]

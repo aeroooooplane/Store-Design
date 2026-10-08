@@ -1,43 +1,38 @@
-# 技术架构建议
+# 当前技术架构
 
-## 前端
+更新：2026-10-04。这里描述实际代码；早期设想见 [归档架构草案](archive/20261004-before-refresh/architecture.md)。
 
-- 项目创建表单
-- 平面编辑器和软装素材库
-- 节点树和版本浏览器
-- 风格选择卡片
-- 白膜和效果图查看器
-- PDF 导出和下载页面
+## 运行关系
 
-平面编辑器需要同时展示元素位置、尺寸、碰撞和通道提示。三维预览可在后续阶段接入，第一版先保证二维编辑闭环。
+浏览器运行 React 工作台，使用 Three.js 做三维与概念渲染。Vite 的开发／预览进程同时挂载本机只读文件服务。Python、Ruby 等工具离线生成模型目录、图例和索引。
 
-## 后端服务
+前端与服务端职责已分目录，当前仍由同一个 Vite 进程提供页面和文件。没有独立项目数据库、认证服务、渲染任务队列或云端同步。
 
-1. 项目服务：管理项目信息和权限。
-2. 布局服务：根据空间参数生成候选平面并执行几何规则校验。
-3. 资产服务：管理软装模型、缩略图、尺寸、编号、材质和版本。
-4. 分支服务：保存节点快照、父子关系、状态和生成任务。
-5. 渲染服务：生成白膜和风格效果图。
-6. 文档服务：生成物料清单和 PDF。
+| 位置 | 职责 |
+|---|---|
+| `demo/src/main.jsx` | 加载样式、启动 React、挂接项目恢复保护 |
+| `demo/src/app/App.jsx` | 工作流程、当前阶段、分支与编辑状态的协调 |
+| `demo/src/app/stages/` | Setup / Gallery / Editor / White / Render 五阶段视图 |
+| `demo/src/app/components/` | 历史树、项目导入备份、平面与渲染导出工具条 |
+| `demo/src/components/Plan.jsx` | 平面 SVG、选择与拖动 |
+| `demo/src/components/Model.jsx` | 三维预览生命周期、加载与释放 |
+| `demo/src/styles/` | 共用主题变量、工作台样式、模型目录样式 |
+| `demo/src/layout.js`、`space-planner.js`、`asset-contract.js` | 布局、尺寸、碰撞与资产契约 |
+| `demo/src/scene.js`、`store-materials.js`、`camera-presets.js` | 三维场景、门店材质与机位；独立于网页配色 |
+| `demo/src/project-*.js`、`ProjectRecovery.jsx` | 导入校验、草稿、并发保存保护与恢复 |
+| `demo/server/` | 本机证据和模型白名单文件服务 |
+| `demo/scripts/` | 数据索引生成、转换与网页检查工具 |
+| `tools/sketchup/` | SU 拆分、图例生成、模型目录发布 |
+| `tools/pdf-review/`、`tools/training/` | 文档审核与历史实验；网页启动不执行训练 |
 
-## 数据模型草案
+## 数据和接口
 
-### Project
+浏览器项目仍保存在 `insta-studio-v2`，分支及草稿可导出 JSON。刷新后渲染图片需要重新生成。导入采用校验后合并，损坏项目先进入恢复保护。
 
-`id`、`name`、`store_type`、`width`、`length`、`height`、`constraints`、`created_at`
+`/__local-evidence/` 根据案例索引读取已核验文件；`/model-library/` 从模型 manifest 提供预览、图例和下载；`/si-standards/` 提供已发布标准页面；`/si-guide/` 提供阅读记录。文件服务只允许本机和显式白名单，不把整个项目目录开放给网页。
 
-### Node
+模型库 HTML 同时支持本机浏览器和离线文件打开。生成器读取 `demo/src/styles/tokens.css` 与 `model-library.css` 后内嵌样式，避免另维护一套颜色和按钮规则。修改后需重新生成目录。
 
-`id`、`project_id`、`parent_id`、`node_type`、`status`、`input_snapshot`、`layout_snapshot`、`style`、`asset_versions`、`outputs`
+## 演进原则
 
-### Asset
-
-`id`、`name`、`category`、`model_file`、`thumbnail`、`width`、`depth`、`height`、`material_variants`、`version`
-
-### RenderJob
-
-`id`、`node_id`、`style`、`camera_set`、`status`、`progress`、`result_files`、`error`
-
-## 关键工程判断
-
-精确尺寸、碰撞、动线和标准图纸应由参数化规则处理；AI 更适合用于候选方案组合、风格描述、软装推荐和视觉表现。这样可以同时兼顾设计效率和施工可用性。
+按功能抽取组件，保留稳定的数据契约；纯几何、持久化和渲染逻辑保持独立。需要跨电脑项目保存或后台任务时再新增独立服务与迁移方案，不能把当前目录拆分称为已经完成数据库与云端架构。

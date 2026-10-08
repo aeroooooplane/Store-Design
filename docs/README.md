@@ -1,48 +1,51 @@
-# 项目目录指南
+# 文档与目录导航
 
-更新：2026-09-26。日常只需从根目录 README 和本页进入；其余文件按用途查找，不必逐份阅读。
+更新：2026-10-04。日常以本页和根目录README为入口；按主题更新现有文档，历史进度不再充当“当前状态”。
 
-## 当前主线
+## 当前说明
 
-| 要做什么 | 入口 | 定位 |
-|---|---|---|
-| 运行和开发网页 | [demo/README](../demo/README.md) | 源码在 demo/src，测试在 demo/tests |
-| 查看正式 SU 拆分 | [90 项目录](../素材库/04_assets/incoming/split-20260925-v2/index.html) | v2 为当前交付；原定义版与实例版不是重复文件 |
-| 理解真实道具接入 | [su-real-assets](su-real-assets.md) | 尺寸、变换、材质与验证约束 |
-| 查看五店案例包 | [四小时交接](case-pack-4h-handoff.md) | 平面/效果参考与未解决证据，不是完整几何训练集 |
-| 继续本轮开发 | [八小时进度](web-8h-progress.md) | 节点、验证、截止时间与接续位置 |
-| 查看 PDF 清洗方法 | [pdf-cleaning](pdf-cleaning.md) | 派生页面与原件追溯 |
-| 查 SI 依据和缺件 | [si-source-recovery](si-source-recovery.md)、[github-missing-assets](github-missing-assets.md) | 未确认保留空值和冲突 |
+| 需要了解什么 | 入口 |
+|---|---|
+| 启动、操作、备份和验证 | [工作台指南](../demo/README.md) |
+| 当前产品范围 | [项目范围](project-brief.md)、[使用流程](product-flow.md) |
+| 实际代码与服务职责 | [架构](architecture.md) |
+| 极简黑白界面 | [视觉规范](design-system.md) |
+| 已做与下一步 | [后续工作](roadmap.md) |
+| 本轮整理、删除与恢复 | [整理记录](maintenance-20261004.md) |
+| SI标准阅读、命名及图例依据 | [SI阅读记录](si-standards-review-20261001.md)、[模型库使用指引](../素材库/04_assets/按SI标准命名-20261001/使用指引.md) |
+| 真实模型接入与限制 | [SU接入说明](su-real-assets.md)、[GLB转换指引](../demo/public/assets/su/README.md) |
+| 五店案例和证据 | [案例交接](case-pack-4h-handoff.md) |
+| PDF处理和来源 | [清洗说明](pdf-cleaning.md)、[SI来源](si-source-recovery.md) |
 
-## 目录分工
+## 本机目录职责
 
-| 路径（项目根目录下） | 内容 | 保留及新增规则 |
-|---|---|---|
-| 各门店图纸/ | 原始 PDF，含未就绪的 LFS 路径 | 不重命名、不删除；不视为全部已核实 |
-| 道具模型/ | 原始 SU 总模型 | 保留原件及哈希 |
-| 素材库/01_catalog/ | 总目录、门店标签与来源 | 元数据入口，不等于全部标签已确认 |
-| 素材库/02_previews/ | 浏览用预览 | 保留被引用的预览 |
-| 素材库/03_training_candidates/ | 早期候选样本 | 历史候选，不直接当正式训练集 |
-| 素材库/04_assets/incoming/split-20260925-v2/ | 正式 90 项拆分及验证 | 网页转换从此读取，原件不改 |
-| 素材库/04_assets/incoming/ 其他批次 | 初次导出、旧拆分 | 历史追溯，不与 v2 混用 |
-| 素材库/04_training/ | 清洗索引、实验数据、旧权重 | 保留，暂不自动训练 |
-| 素材库/05_render_benchmark/ | S03 白模和 AI 对比 | 参数化实验；AI 图未经几何交付批准 |
-| 素材库/06_case_packs/20260925-four-hour/ | 五店证据、双用途参考、检查结果 | 当前案例包主入口，按店/版本关联 |
-| output/pdf/cleaned-v2/ | 拆分页、原生图、文本等 | 被案例引用的派生源，不是可直接删的缓存 |
-| output/pdf/ 其他批次 | 旧清洗/诊断结果 | 先核引用再归档，不凭目录名删除 |
-| tools/pdf-review/、render-benchmark/、sketchup/、training/ | 可复现脚本 | 按处理阶段维护，运行环境不搬移 |
-| tmp/ | SU 拆分临时脚本及诊断记录等 | 当前包含有效复现材料，不可整目录清空；新增长期脚本放 tools |
-| demo/ | 当前网页 | 新功能只在此开发；发布资源与原始大文件分开 |
-| docs/archive/research/ | 历史外部路线调研 | 不当作当前产品承诺 |
-| docs/superpowers/ | 设计及实施记录 | 活跃计划由进度页指定 |
+| 目录 | 内容和保留规则 |
+|---|---|
+| `各门店图纸/`、`道具模型/`、`设计标准/` | 原始资料，保留来源与校验值 |
+| `素材库/04_assets/按SI标准命名-20261001/` | 当前90件命名SU、预览、图例、清单和指引，网站直接引用 |
+| `素材库/04_assets/incoming/split-20260925-v2/` | 正式拆分及验证；定义版、实例版、纹理和DAE用途不同 |
+| `素材库/06_case_packs/` | 案例、人工审核和证据 |
+| `素材库/01_catalog/`、`02_previews/` | 资料索引与预览 |
+| `素材库/03_training_candidates/`、`04_training/`、`05_render_benchmark/` | 历史候选、训练实验和渲染对照，保留独有成果 |
+| `demo/src/`、`demo/server/` | 前端与本机文件服务 |
+| `demo/scripts/`、`tools/` | 长期可复用工具；不要把正式工具只放在tmp |
+| `output/si-standards-review-20261001/` | 360页标准阅读入口及交付检查，网站正在使用 |
+| `output/pdf/cleaned-v2/` | PDF派生页面、原图与审核索引，部分被案例和网页服务直接引用 |
+| `output/maintenance/` | 本轮变更备份、删除清单及检查结果 |
+| `tmp/` | 当前仍有复现脚本、几何记录和中间件，按明确清单清理，不能整目录删除 |
 
-## 其余文档分组
+## 历史记录
 
-- 产品与规则：project-brief、product-flow、architecture、roadmap、layout-library。旧方案中的施工/完整交付设想，以当前“平面图 + 多角度效果图 + 网页三维”的用户范围为准。
-- 资料及样本：input-materials、asset-inventory、asset-ingestion-plan、real-sample-review、layout-observations-batch01、sample-case-template、data-preparation-next-steps。
-- 历史实验：training-design、training-results、rtx4070-training-plan、rtx4070-pilot-results、rtx4070-clean-pilot-results、furniture-geometry-v2、render-benchmark。保留日期上下文，早期“无 GPU”和“SKP 未拆分”不是当前状态。
-- 审核过程：case-pack-4h-progress 保留逐批记录；日常看 case-pack-4h-handoff，不再重复维护第二份四小时总结。
+[早期范围与架构](archive/20261004-before-refresh/)保留当时设想；其中PDF整包、后台任务和完整施工图等内容不是当前能力。
 
-## 整理原则
+- 开发过程：[八小时记录](web-8h-progress.md)、[开发审核](web-review-20260926.md)、[原整理记录](file-organization-20260926.md)。
+- 案例过程：[逐批记录](case-pack-4h-progress.md)、[资料准备](data-preparation-next-steps.md)、[布局观察](layout-observations-batch01.md)。
+- 实验资料：[训练设计](training-design.md)、[训练结果](training-results.md)、[4070计划](rtx4070-training-plan.md)、[首次试训](rtx4070-pilot-results.md)、[清洗后试训](rtx4070-clean-pilot-results.md)、[渲染对照](render-benchmark.md)。
+- 专项交付：[布局升级](layout-render-upgrade-20260927.md)、[比例估算验证](fuzzy-layout-validation-20260928.md)、[几何实验](furniture-geometry-v2.md)。
+- 原始盘点：[存储盘点](storage-audit-20260927.md)、[Git整理](source-control-cleanup-20260927.md)、[缺件](github-missing-assets.md)。旧盘点数字以当时日期为准。
+- 早期研究见 `archive/research/`；旧实施计划见 `superpowers/plans/`，不是当前自动执行指令。
 
-只保留一个当前导航；技术证据不压成不可追溯的大文件。现有资料路径有大量 JSON/脚本引用，先归位入口和历史研究，避免为了目录整齐打断证据链。新增浏览器资产应有 asset_id、原始来源、单位与尺寸，不混入原始 SU 目录。清理详情见 [本轮整理记录](file-organization-20260926.md)。
+文件保留看实际引用、唯一性和可恢复性，不按目录名称或最后修改时间直接判断。本文档列出主入口，其余样本模板、导入规范和盘点保留在原路径，避免断开已有记录。
+
+- [可摆放资产清单与再生成](asset-placement.md)
+- [可交付推进记录](delivery-log-20261004.md)

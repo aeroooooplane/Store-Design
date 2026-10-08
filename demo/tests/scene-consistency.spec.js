@@ -11,7 +11,7 @@ test('white and styled edge-shop exports include identical enclosure, sign and l
     }
     return results
   })
-  expect(manifests[0]).toHaveLength(6) // Floor, three cutaway walls, sign plane, light bar.
+  expect(manifests[0].length).toBeGreaterThan(6) // Enclosure, panel joints, canopy and luminaires.
   expect(manifests[0]).toEqual(manifests[1])
   expect(manifests[1]).toEqual(manifests[2])
 })

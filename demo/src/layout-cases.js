@@ -1,0 +1,17 @@
+// Coarse visual review of full plan pages on 2026-09-28. Units are table LENGTHS,
+// not surveyed coordinates. Size intervals include visual/outline uncertainty.
+// Counts refer only to experience islands, not cashier/unboxing/side tables.
+export const layoutCases = [
+  {id:'PDF-051',name:'北京三里屯',file:'北京三里屯太古里授权体验店.pdf',page:1,shopType:'中岛店',span:[3.7,1.35],tableLength:1.8,tableDepth:1,tableCount:2,pattern:'cross-row',blocked:false,shape:'宽浅',functions:'背侧配件/收银/开箱连续服务带',note:'6700×2400标注；两张长边横向桌，前沿开放'},
+  {id:'PDF-071',name:'首都机场T3',file:'北京首都机场T3授权体验店.pdf',page:7,shopType:'边厅店',span:[2.3,2.5],tableLength:2.6,tableDepth:null,tableCount:2,pattern:'serial',blocked:false,shape:'近方形',functions:'左右配件柜、后部收银开箱与设备储物',note:'2.6米长桌不可按1.8米桌读取；深度未确认'},
+  {id:'PDF-079',name:'南京德基',file:'南京德基广场直营店.pdf',page:2,shopType:'边厅店',span:[4.2,10],tableLength:1.8,tableDepth:.8,tableCount:4,pattern:'grid',blocked:true,shape:'狭长带后场',functions:'场景展示、零售双列、开箱/workshop、后场储物',note:'比例取整店外包络；后场和体验装置不能全算摆桌面积'},
+  {id:'PDF-083',name:'南宁万象城',file:'南宁万象城.pdf',page:3,shopType:'边厅店',span:[2.9,5.2],tableLength:1.8,tableDepth:null,tableCount:3,pattern:'serial',blocked:true,shape:'狭长斜前沿',functions:'侧墙配件/广告、后部收银开箱、仓库',note:'原页48㎡；三张横桌纵向串列；右侧柱与斜入口待实测'},
+  {id:'PDF-159',name:'徐州苏宁',file:'徐州苏宁授权体验店.pdf',page:1,shopType:'边厅店',span:[4,6],tableLength:1.8,tableDepth:1,tableCount:3,pattern:'grid',blocked:true,shape:'异形',functions:'3体验桌+1开箱桌，后部收银/培训/仓库',note:'第四张长桌是开箱桌，不计为体验桌；斜墙和柱体占位'},
+  {id:'PDF-160',name:'德国汉堡Saturn',file:'德国汉堡市Saturn店.pdf',page:1,shopType:'边厅店',span:[2.9,2.2],tableLength:1.8,tableDepth:1,tableCount:1,pattern:'single',blocked:true,shape:'近方形带侧仓',functions:'侧仓约5.1㎡，单桌、背侧配件陈列，右侧入口',note:'比例含仓库；不能将整店20.3㎡当作净体验区'},
+  {id:'PDF-171',name:'成都恒驰',file:'成都数码广场恒驰照材专卖店.pdf',page:1,shopType:'中岛店',span:[4.4,1.7],tableLength:1.8,tableDepth:1,tableCount:1,pattern:'single',blocked:true,shape:'异形带大柱',functions:'绕柱配件/储物/收银开箱，右侧单桌',note:'扶梯斜边和大柱明显压缩可用空间'},
+  {id:'PDF-194',name:'新疆宏景二店',file:'新疆宏景数码广场二店.pdf',page:1,shopType:'边厅店',span:[2.6,2.8],tableLength:1.8,tableDepth:1,tableCount:2,pattern:'parallel',blocked:false,shape:'近方形',functions:'双桌并列、背侧储物、右墙配件，前方玻璃入口',note:'两桌长边沿纵深，不是横桌串列'},
+  {id:'PDF-239',name:'百脑汇（店名冲突）',file:'沈阳百脑汇照材专卖店.pdf',page:1,shopType:'中岛店',span:[3.3,1.9],tableLength:1.8,tableDepth:1,tableCount:2,pattern:'parallel',blocked:true,shape:'带柱',functions:'柱侧配件、背侧服务、前区双桌',eligible:false,note:'文件名沈阳，原页图签深圳；隔离自动检索，不替换旧标签'},
+  {id:'PDF-293',name:'澳门威尼斯人',file:'澳门威尼斯人.pdf',page:2,shopType:'中岛店',span:[2.65,1.7],tableLength:1.8,tableDepth:.8,tableCount:2,pattern:'parallel',blocked:true,shape:'弧形',functions:'沿弧配件与侧收银、双桌前沿开放',note:'外包络不是可用矩形；柜长中英文冲突不用于尺寸标定'},
+  {id:'PDF-296',name:'珠海华发商都',file:'珠海华发商都授权体验店.pdf',page:2,shopType:'中岛店',span:[3.3,2.2],tableLength:1.8,tableDepth:.8,tableCount:2,pattern:'serial',blocked:false,shape:'宽矩形',functions:'左侧两横桌串列，右侧配件与收银开箱',note:'6000×4000；不是统一背排高柜模板'},
+  {id:'PDF-417',name:'Pavilion Damansara Heights',file:'马来西亚Pavilion Damansara Heights.pdf',page:3,shopType:'中岛店',span:[3.35,2.15],tableLength:1.8,tableDepth:.8,tableCount:3,pattern:'parallel',blocked:false,shape:'宽矩形',functions:'前侧三桌并列，背侧低配件边柜与收银',note:'6030×3835标注；门架边角需独立复核'},
+].map(c=>({...c,serviceSide:c.id==='PDF-296'?'right':c.id==='PDF-293'?'left':'rear',eligible:c.eligible!==false&&c.tableLength===1.8,standardTable:c.tableLength===1.8,spanRange:c.span.map(n=>[Math.round(n*.9*100)/100,Math.round(n*1.1*100)/100]),source:`各门店图纸/${c.file}`,siStatus:'not-used-for-layout',review:'visual-coarse-not-surveyed'}))

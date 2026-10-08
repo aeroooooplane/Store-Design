@@ -1,0 +1,111 @@
+{
+  "date": "2026-10-02",
+  "rule": {
+    "普通": "整体底座",
+    "亮脚": "四条独立桌腿",
+    "authority": "用户2026-10-02明确命名要求",
+    "manual_name": "保留手册原名，项目展示名称使用四个品类"
+  },
+  "counts": {
+    "普通中岛桌": 4,
+    "普通开箱桌": 2,
+    "亮脚中岛桌": 1,
+    "亮脚开箱桌": 1
+  },
+  "changes": [
+    {
+      "asset_id": "asset-408124",
+      "category": "普通中岛桌",
+      "old_name": "1800mm中岛桌",
+      "new_name": "1800mm普通中岛桌",
+      "old_variant": "产品陈列A",
+      "new_variant": "产品陈列A",
+      "old_file": "SI1.0/SI1.0_1800mm中岛桌_产品陈列A__asset-408124.skp",
+      "new_file": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列A__asset-408124.skp",
+      "judgment": "白色圆角围边，台面1800×1000；总高包含产品；2026-10-02按用户术语归类为普通中岛桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-408125",
+      "category": "普通中岛桌",
+      "old_name": "1800mm中岛桌",
+      "new_name": "1800mm普通中岛桌",
+      "old_variant": "产品陈列B",
+      "new_variant": "产品陈列B",
+      "old_file": "SI1.0/SI1.0_1800mm中岛桌_产品陈列B__asset-408125.skp",
+      "new_file": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列B__asset-408125.skp",
+      "judgment": "同款白色圆角桌，保留不同产品陈列组合；2026-10-02按用户术语归类为普通中岛桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-1788391",
+      "category": "普通开箱桌",
+      "old_name": "1800mm开箱桌",
+      "new_name": "1800mm普通开箱桌",
+      "old_variant": "含4把白色高脚凳",
+      "new_variant": "含4把白色高脚凳",
+      "old_file": "SI1.0/SI1.0_1800mm开箱桌_含4把白色高脚凳__asset-1788391.skp",
+      "new_file": "SI1.0/SI1.0_1800mm普通开箱桌_含4把白色高脚凳__asset-1788391.skp",
+      "judgment": "白色圆角桌、四操作垫及4把白色高脚凳；2026-10-02按用户术语归类为普通开箱桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-16469753",
+      "category": "普通开箱桌",
+      "old_name": "1.8米开箱桌",
+      "new_name": "1.8米普通开箱桌",
+      "old_variant": "含4把黑色高脚凳",
+      "new_variant": "含4把黑色高脚凳",
+      "old_file": "SI2.0/SI2.0_1.8米开箱桌_含4把黑色高脚凳__asset-16469753.skp",
+      "new_file": "SI2.0/SI2.0_1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753.skp",
+      "judgment": "深灰围边、白台面、四操作垫和黑色圆座高凳；2026-10-02按用户术语归类为普通开箱桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-24312623",
+      "category": "普通中岛桌",
+      "old_name": "1.8米中岛桌",
+      "new_name": "1.8米普通中岛桌",
+      "old_variant": "产品陈列A",
+      "new_variant": "产品陈列A",
+      "old_file": "SI2.0/SI2.0_1.8米中岛桌_产品陈列A__asset-24312623.skp",
+      "new_file": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列A__asset-24312623.skp",
+      "judgment": "1800×800台体、深灰围边及中心底座；高度包含产品；2026-10-02按用户术语归类为普通中岛桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-34276510",
+      "category": "普通中岛桌",
+      "old_name": "1.8米中岛桌",
+      "new_name": "1.8米普通中岛桌",
+      "old_variant": "产品陈列B_旋转实例",
+      "new_variant": "产品陈列B_旋转实例",
+      "old_file": "SI2.0/SI2.0_1.8米中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
+      "new_file": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
+      "judgment": "1800×800台体深灰围边，世界坐标XY交换不改变标准桌型；2026-10-02按用户术语归类为普通中岛桌（整体底座）"
+    },
+    {
+      "asset_id": "asset-41053706",
+      "category": "亮脚中岛桌",
+      "old_name": "1.8米中岛桌",
+      "new_name": "1.8米亮脚中岛桌",
+      "old_variant": "四脚变体_带产品托盘",
+      "new_variant": "带产品托盘",
+      "old_file": "SI2.0/SI2.0_1.8米中岛桌_四脚变体_带产品托盘__asset-41053706.skp",
+      "new_file": "SI2.0/SI2.0_1.8米亮脚中岛桌_带产品托盘__asset-41053706.skp",
+      "judgment": "色彩材质属于SI2家族，四脚结构不同于117页中央底座标准款；2026-10-02按用户术语归类为亮脚中岛桌（四条独立桌腿）"
+    },
+    {
+      "asset_id": "asset-41277543",
+      "category": "亮脚开箱桌",
+      "old_name": "1.8米开箱桌",
+      "new_name": "1.8米亮脚开箱桌",
+      "old_variant": "四脚变体_含4把黑色高脚凳",
+      "new_variant": "含4把黑色高脚凳",
+      "old_file": "SI2.0/SI2.0_1.8米开箱桌_四脚变体_含4把黑色高脚凳__asset-41277543.skp",
+      "new_file": "SI2.0/SI2.0_1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543.skp",
+      "judgment": "桌腿为四脚框架，区别于118页中央底座款；2026-10-02按用户术语归类为亮脚开箱桌（四条独立桌腿）"
+    }
+  ],
+  "verification": {
+    "renamed_files": 8,
+    "hash_identical": 8,
+    "all_library_files": 90,
+    "catalogue_links_valid": 370
+  }
+}

@@ -1,0 +1,452 @@
+[
+  {
+    "asset_id": "asset-316267",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-323015",
+    "ink_pixels": 6629,
+    "ink_bounds": [
+      81,
+      253,
+      1118,
+      546
+    ]
+  },
+  {
+    "asset_id": "asset-408124",
+    "ink_pixels": 24465,
+    "ink_bounds": [
+      81,
+      111,
+      1118,
+      688
+    ]
+  },
+  {
+    "asset_id": "asset-408125",
+    "ink_pixels": 22358,
+    "ink_bounds": [
+      81,
+      111,
+      1118,
+      688
+    ]
+  },
+  {
+    "asset_id": "asset-569180",
+    "ink_pixels": 8378,
+    "ink_bounds": [
+      257,
+      54,
+      942,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-666964",
+    "ink_pixels": 18716,
+    "ink_bounds": [
+      81,
+      91,
+      1118,
+      708
+    ]
+  },
+  {
+    "asset_id": "asset-752992",
+    "ink_pixels": 14884,
+    "ink_bounds": [
+      81,
+      255,
+      1118,
+      544
+    ]
+  },
+  {
+    "asset_id": "asset-957634",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-958185",
+    "ink_pixels": 17503,
+    "ink_bounds": [
+      81,
+      69,
+      1118,
+      730
+    ]
+  },
+  {
+    "asset_id": "asset-1788391",
+    "ink_pixels": 13966,
+    "ink_bounds": [
+      316,
+      54,
+      883,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-2245165",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-2360478",
+    "ink_pixels": 7543,
+    "ink_bounds": [
+      81,
+      255,
+      1118,
+      544
+    ]
+  },
+  {
+    "asset_id": "asset-2500908",
+    "ink_pixels": 5744,
+    "ink_bounds": [
+      81,
+      351,
+      1118,
+      448
+    ]
+  },
+  {
+    "asset_id": "asset-2587726",
+    "ink_pixels": 17503,
+    "ink_bounds": [
+      81,
+      69,
+      1118,
+      730
+    ]
+  },
+  {
+    "asset_id": "asset-2595839",
+    "ink_pixels": 3376,
+    "ink_bounds": [
+      81,
+      372,
+      1118,
+      427
+    ]
+  },
+  {
+    "asset_id": "asset-2595882",
+    "ink_pixels": 6462,
+    "ink_bounds": [
+      81,
+      205,
+      1118,
+      594
+    ]
+  },
+  {
+    "asset_id": "asset-2597250",
+    "ink_pixels": 6724,
+    "ink_bounds": [
+      81,
+      347,
+      1118,
+      452
+    ]
+  },
+  {
+    "asset_id": "asset-2932497",
+    "ink_pixels": 5800,
+    "ink_bounds": [
+      81,
+      346,
+      1118,
+      453
+    ]
+  },
+  {
+    "asset_id": "asset-3021147",
+    "ink_pixels": 5587,
+    "ink_bounds": [
+      81,
+      357,
+      1118,
+      442
+    ]
+  },
+  {
+    "asset_id": "asset-6799167",
+    "ink_pixels": 6803,
+    "ink_bounds": [
+      81,
+      282,
+      1118,
+      517
+    ]
+  },
+  {
+    "asset_id": "asset-11479197",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-11479198",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-11525433",
+    "ink_pixels": 5697,
+    "ink_bounds": [
+      81,
+      346,
+      1118,
+      453
+    ]
+  },
+  {
+    "asset_id": "asset-15903179",
+    "ink_pixels": 6389,
+    "ink_bounds": [
+      81,
+      335,
+      1118,
+      464
+    ]
+  },
+  {
+    "asset_id": "asset-15903874",
+    "ink_pixels": 12392,
+    "ink_bounds": [
+      191,
+      54,
+      1008,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-16469753",
+    "ink_pixels": 25385,
+    "ink_bounds": [
+      218,
+      54,
+      981,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-16510684",
+    "ink_pixels": 8414,
+    "ink_bounds": [
+      253,
+      54,
+      946,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-24312623",
+    "ink_pixels": 25938,
+    "ink_bounds": [
+      81,
+      168,
+      1118,
+      631
+    ]
+  },
+  {
+    "asset_id": "asset-24432224",
+    "ink_pixels": 22130,
+    "ink_bounds": [
+      81,
+      225,
+      1118,
+      574
+    ]
+  },
+  {
+    "asset_id": "asset-24482600",
+    "ink_pixels": 6468,
+    "ink_bounds": [
+      81,
+      166,
+      1118,
+      633
+    ]
+  },
+  {
+    "asset_id": "asset-24498456",
+    "ink_pixels": 7541,
+    "ink_bounds": [
+      81,
+      255,
+      1118,
+      544
+    ]
+  },
+  {
+    "asset_id": "asset-28115483",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  },
+  {
+    "asset_id": "asset-33660153",
+    "ink_pixels": 15675,
+    "ink_bounds": [
+      81,
+      246,
+      1118,
+      535
+    ]
+  },
+  {
+    "asset_id": "asset-33819654",
+    "ink_pixels": 11336,
+    "ink_bounds": [
+      81,
+      254,
+      1118,
+      544
+    ]
+  },
+  {
+    "asset_id": "asset-34276510",
+    "ink_pixels": 23834,
+    "ink_bounds": [
+      81,
+      169,
+      1118,
+      630
+    ]
+  },
+  {
+    "asset_id": "asset-34320268",
+    "ink_pixels": 14885,
+    "ink_bounds": [
+      81,
+      255,
+      1118,
+      544
+    ]
+  },
+  {
+    "asset_id": "asset-34327615",
+    "ink_pixels": 6468,
+    "ink_bounds": [
+      81,
+      166,
+      1118,
+      633
+    ]
+  },
+  {
+    "asset_id": "asset-36857093",
+    "ink_pixels": 5570,
+    "ink_bounds": [
+      81,
+      320,
+      1118,
+      479
+    ]
+  },
+  {
+    "asset_id": "asset-36887885",
+    "ink_pixels": 5861,
+    "ink_bounds": [
+      81,
+      280,
+      1118,
+      519
+    ]
+  },
+  {
+    "asset_id": "asset-36890994",
+    "ink_pixels": 6803,
+    "ink_bounds": [
+      81,
+      282,
+      1118,
+      517
+    ]
+  },
+  {
+    "asset_id": "asset-36929122",
+    "ink_pixels": 5861,
+    "ink_bounds": [
+      81,
+      280,
+      1118,
+      519
+    ]
+  },
+  {
+    "asset_id": "asset-36929204",
+    "ink_pixels": 5085,
+    "ink_bounds": [
+      81,
+      396,
+      1118,
+      403
+    ]
+  },
+  {
+    "asset_id": "asset-41053706",
+    "ink_pixels": 20195,
+    "ink_bounds": [
+      81,
+      170,
+      1118,
+      631
+    ]
+  },
+  {
+    "asset_id": "asset-41277543",
+    "ink_pixels": 14839,
+    "ink_bounds": [
+      218,
+      54,
+      981,
+      745
+    ]
+  },
+  {
+    "asset_id": "asset-37758059",
+    "ink_pixels": 5331,
+    "ink_bounds": [
+      81,
+      383,
+      1118,
+      416
+    ]
+  }
+]

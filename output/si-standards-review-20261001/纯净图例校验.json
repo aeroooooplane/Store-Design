@@ -1,0 +1,17 @@
+{
+  "clean_model_legends": 45,
+  "unique_images": 45,
+  "original_crops_retained": 25,
+  "model_hashes_verified": 90,
+  "source_models_modified": false,
+  "table_support_sections": {
+    "1800mm普通中岛桌 / asset-408124": 48,
+    "1800mm普通中岛桌 / asset-408125": 48,
+    "1800mm普通开箱桌 / asset-1788391": 48,
+    "1.8米普通开箱桌 / asset-16469753": 4,
+    "1.8米普通中岛桌 / asset-24312623": 4,
+    "1.8米普通中岛桌 / asset-34276510": 4,
+    "1.8米亮脚中岛桌 / asset-41053706": 116,
+    "1.8米亮脚开箱桌 / asset-41277543": 116
+  }
+}

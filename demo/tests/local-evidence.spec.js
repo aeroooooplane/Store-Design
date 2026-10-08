@@ -1,5 +1,5 @@
 import {test,expect} from '@playwright/test'
-import {createEvidenceMiddleware} from '../scripts/local-evidence.mjs'
+import {createEvidenceMiddleware} from '../server/local-evidence.mjs'
 import {mkdtemp,mkdir,writeFile,rm,readFile} from 'node:fs/promises'
 import {tmpdir} from 'node:os'
 import path from 'node:path'

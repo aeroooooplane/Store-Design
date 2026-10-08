@@ -1,0 +1,26 @@
+{
+  "cards": 90,
+  "categoryCounts": [
+    38,
+    19,
+    33
+  ],
+  "softSiCounts": [
+    12,
+    24,
+    2
+  ],
+  "modelsWithPlanLegend": 45,
+  "cleanImagesDecoded": 45,
+  "individualModelMapping": "passed",
+  "tableSupportSections": 8,
+  "originalCropsRetained": 25,
+  "filterAndSearch": "passed",
+  "checkedUrls": 390,
+  "downloadSha256": "passed",
+  "tableCategories": 4,
+  "standardPages": 360,
+  "unlistedFiles": "blocked",
+  "post": "blocked",
+  "url": "http://127.0.0.1:64071/model-library/"
+}

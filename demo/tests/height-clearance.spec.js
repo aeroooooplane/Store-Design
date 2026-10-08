@@ -21,7 +21,7 @@ test('legacy over-height layouts stay editable but cannot confirm a white model'
   await page.locator('.plan-card').first().click()
   await expect(page.locator('.properties .warning')).toContainText('高度超过层高')
   await expect(page.getByRole('button',{name:'确认平面并生成白膜 →'})).toBeDisabled()
-  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes[1].layout.items[0])).toEqual(item)
+  expect(await page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).nodes[1].layout.items[0])).toEqual(item)
   await page.locator('.drawing .plan g').first().click()
   await page.getByRole('button',{name:'删除',exact:true}).click()
   await expect(page.getByRole('button',{name:'确认平面并生成白膜 →'})).toBeEnabled()

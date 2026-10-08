@@ -2,7 +2,7 @@ import {assetPose} from './asset-contract.js'
 import {findRealAsset} from './real-assets.js'
 import {profiles} from './furniture.js'
 
-export const MAX_IMPORT_BYTES=5*1024*1024
+export const MAX_IMPORT_BYTES=50*1024*1024
 function text(value,label,max=200){if(typeof value!=='string'||!value.trim()||value.length>max)throw Error(label+'无效')}
 function room(value){
   if(!value||!['w','d','h'].every(k=>Number.isFinite(value[k])&&value[k]>0&&value[k]<=(k==='h'?20:100)))throw Error('空间尺寸无效（长宽≤100 m，层高≤20 m）')
@@ -22,6 +22,24 @@ function layout(value){
     for(const key of ['trainingStores','placed'])if(!Number.isFinite(value.modelAdvice[key])||value.modelAdvice[key]<0)throw Error('实验模型数量无效')
   }
   const ids=new Set()
+  if(value.fuzzyAdvice!=null){
+    const a=value.fuzzyAdvice
+    if(a.method!=='table-relative-cases-v1'||!Array.isArray(a.range)||a.range.length!==2||!a.range.every(n=>Number.isInteger(n)&&n>=0&&n<=36)||a.range[0]>a.range[1]||!Array.isArray(a.references)||a.references.length>3||!Array.isArray(a.warnings)||a.warnings.length>10)throw Error('案例建议记录无效')
+    if(!['single','serial','parallel','cross-row','grid'].includes(a.pattern))throw Error('案例排布类型无效')
+    text(a.support,'案例支持状态');text(a.uncertainty,'案例不确定性',1000)
+    for(const warning of a.warnings)text(warning,'案例提示',1000)
+    for(const r of a.references){for(const k of ['id','name','source','pattern','note','functions'])text(r[k],'案例来源',1000);if(!Number.isInteger(r.page)||r.page<1||!Number.isInteger(r.count)||r.count<0)throw Error('案例页码或数量无效')}
+    if(!Number.isFinite(value.planning?.clearance)||value.planning.clearance<.9||value.planning.clearance>1.5)throw Error('案例间距记录无效')
+  }
+  if(value.planning!=null){
+    const p=value.planning
+    if(!p||p.version!==2||!Array.isArray(p.zones)||p.zones.length>8)throw Error('布局通道记录无效')
+    for(const zone of p.zones){
+      text(zone?.name,'通道名称')
+      if(!['x','z','w','d'].every(k=>Number.isFinite(zone[k])&&zone[k]>=0&&zone[k]<=100))throw Error('通道尺寸无效')
+      if(zone.x+zone.w>value.room.w+.001||zone.z+zone.d>value.room.d+.001)throw Error('通道超出空间')
+    }
+  }
   for(const item of value.items){
     text(item?.id,'道具编号',128);text(item.name,'道具名称')
     if(ids.has(item.id))throw Error('方案内道具编号重复');ids.add(item.id)
@@ -35,10 +53,11 @@ function layout(value){
 }
 
 export function parseProject(raw,{allowEmpty=false}={}){
-  if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_IMPORT_BYTES)throw Error('项目文件大小不能超过 5 MB')
+  if(typeof raw!=='string'||new TextEncoder().encode(raw).length>MAX_IMPORT_BYTES)throw Error('项目文件大小不能超过 50 MB')
   let parsed
   try{parsed=JSON.parse(raw,(key,value)=>{if(['__proto__','constructor','prototype'].includes(key))throw Error('保留字段');return value})}catch{throw Error('项目 JSON 格式无效或包含保留字段')}
   if(!parsed||!Array.isArray(parsed.nodes)||(!allowEmpty&&!parsed.nodes.length)||parsed.nodes.length>500)throw Error('项目需包含 1–500 个节点')
+  if(![1,2].includes(parsed.schemaVersion??1))throw Error('不支持的项目版本，请使用兼容版本恢复')
   const byId=new Map()
   for(const node of parsed.nodes){
     text(node?.id,'节点编号',128);text(node.name,'节点名称')
@@ -69,7 +88,7 @@ export function parseProject(raw,{allowEmpty=false}={}){
     if(!parent||!['plan','edit'].includes(parent.kind))throw Error('草稿的原方案无效')
     parsed.editorDraft={parent:parent.id,layout:layout(draft.layout)}
   }
-  return {...parsed,nodes:sorted}
+  return {...parsed,schemaVersion:2,nodes:sorted}
 }
 
 export function mergeProject(existing,incoming,makeId=()=>crypto.randomUUID()){
@@ -88,6 +107,6 @@ export function mergeProject(existing,incoming,makeId=()=>crypto.randomUUID()){
   }
   const imported=validated.nodes.map(n=>({...n,id:mapping.get(n.id),...(n.parent!=null?{parent:mapping.get(n.parent)}:{}),importedFrom:n.id}))
   const result={...existing,nodes:[...existing.nodes,...imported]}
-  if(new TextEncoder().encode(JSON.stringify(result)).length>MAX_IMPORT_BYTES)throw Error('合并后项目大小超过 5 MB')
+  if(new TextEncoder().encode(JSON.stringify(result)).length>MAX_IMPORT_BYTES)throw Error('合并后项目大小超过 50 MB')
   return result
 }

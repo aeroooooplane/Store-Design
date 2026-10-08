@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test'
+import {readSaved,replaceSaved} from './browser-storage.js'
 
 for(const raw of ['{broken',JSON.stringify({nodes:[{id:'bad',kind:'root',name:'坏项目',room:{w:-1,d:6,h:3}}]}),JSON.stringify({nodes:[{id:'bad-layout',kind:'root',name:'坏布局',room:{w:8,d:6,h:3},layout:{}}]})]){
   test(`invalid saved project is isolated without overwriting: ${raw.slice(0,40)}`,async({page})=>{
@@ -13,7 +14,7 @@ for(const raw of ['{broken',JSON.stringify({nodes:[{id:'bad',kind:'root',name:'�
     expect(Buffer.concat(chunks).toString()).toBe(raw)
     await page.getByRole('button',{name:'隔离备份后新建'}).click()
     await expect(page.getByRole('button',{name:'生成四个平面方案'})).toBeVisible()
-    const values=await page.evaluate(()=>Object.keys(localStorage).filter(k=>k.startsWith('insta-studio-v2-recovery-')).map(k=>localStorage.getItem(k)))
+    const values=await page.evaluate(async()=>{const db=await(await import('/src/project-db.js')).openProjectDatabase();return new Promise((resolve,reject)=>{const request=db.transaction('backups').objectStore('backups').getAll();request.onsuccess=()=>resolve(request.result.map(r=>r.raw));request.onerror=()=>reject(request.error)})})
     expect(values).toContain(raw)
   })
 }
@@ -21,8 +22,8 @@ for(const raw of ['{broken',JSON.stringify({nodes:[{id:'bad',kind:'root',name:'�
 test('failed isolation backup cannot unlock autosave or overwrite original',async({page})=>{
   await page.addInitScript(()=>{
     localStorage.setItem('insta-studio-v2','{broken')
-    const original=Storage.prototype.setItem
-    Storage.prototype.setItem=function(k,v){if(k.includes('-recovery-'))throw Error('quota');return original.call(this,k,v)}
+    const original=IDBObjectStore.prototype.put
+    IDBObjectStore.prototype.put=function(value,...args){if(this.name==='backups')throw Error('quota');return original.call(this,value,...args)}
   })
   await page.goto('/')
   await page.getByRole('button',{name:'隔离备份后新建'}).click()
@@ -34,10 +35,11 @@ test('failed isolation backup cannot unlock autosave or overwrite original',asyn
 test('valid empty and legacy saved projects restore normally',async({page})=>{
   await page.goto('/')
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
-  await page.evaluate(()=>{const p=JSON.parse(localStorage.getItem('insta-studio-v2'));for(const n of p.nodes){if(n.room)delete n.room.shopType;if(n.layout)delete n.layout.room.shopType}localStorage.setItem('insta-studio-v2',JSON.stringify(p))})
+  const p=await readSaved(page);for(const n of p.nodes){if(n.room)delete n.room.shopType;if(n.layout)delete n.layout.room.shopType}
+  await replaceSaved(page,p)
   await page.reload()
   await expect(page.locator('.plan-card')).toHaveCount(4)
-  await page.evaluate(()=>localStorage.setItem('insta-studio-v2',JSON.stringify({nodes:[]})))
+  await replaceSaved(page,{nodes:[]})
   await page.reload()
   await expect(page.getByRole('button',{name:'生成四个平面方案'})).toBeVisible()
 })

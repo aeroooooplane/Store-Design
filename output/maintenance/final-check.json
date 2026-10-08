@@ -1,0 +1,14 @@
+{
+  "documentation_links_checked": 45,
+  "broken_links": [],
+  "model_hashes_verified": 90,
+  "clean_legends": 45,
+  "duplicate_copies_removed": 5,
+  "removed_bytes": 317563239,
+  "default_tests": {
+    "passed": 106,
+    "skipped": 10
+  },
+  "responsive_workflow_recheck": 6,
+  "plan_export_recheck": 6
+}

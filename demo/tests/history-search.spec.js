@@ -11,7 +11,7 @@ async function setup(page){
 }
 test('history name filtering is case insensitive, reversible and does not change saved data or graph',async({page})=>{
   await setup(page)
-  const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
+  const before=await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))
   await page.getByRole('searchbox').fill('  ALPHA  ')
   await expect(page.locator('.branch-list button')).toHaveCount(1)
   await expect(page.locator('.branch-list')).toContainText('Alpha 初始平面')
@@ -20,7 +20,7 @@ test('history name filtering is case insensitive, reversible and does not change
   await expect(page.locator('.branch-list')).toContainText('没有匹配的历史节点')
   await page.getByRole('button',{name:'清空历史搜索'}).click()
   await expect(page.locator('.branch-list button')).toHaveCount(3)
-  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+  expect(await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).toBe(before)
 })
 test('opening filtered result preserves the dirty draft as a separate history node',async({page})=>{
   await setup(page)
@@ -30,8 +30,8 @@ test('opening filtered result preserves the dirty draft as a separate history no
   await page.getByRole('searchbox').fill('Beta')
   await page.locator('.branch-list button').click()
   await expect(page.locator('h1')).toHaveText('Beta 对比平面')
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes.length)).toBe(4)
-  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')))
+  await expect.poll(()=>page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).nodes.length)).toBe(4)
+  const saved=await page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())))
   expect(saved.nodes[1].layout.items).toEqual(layout.items)
   expect(saved.nodes[3].parent).toBe('p')
   expect(saved.nodes[3].layout.items).toEqual([])
@@ -47,5 +47,5 @@ test('history search remains usable on a narrow screen',async({page})=>{
   await expect(page.locator('.branch-list button')).toHaveCount(1)
   await page.locator('.branch-list button').click()
   await expect(page.locator('h1')).toHaveText('Beta 对比平面')
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(await page.evaluate(async()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
 })

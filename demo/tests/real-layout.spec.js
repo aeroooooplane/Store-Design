@@ -4,13 +4,13 @@ test('real asset addition and center rotation survive saved layout reload',async
   await page.goto('/')
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
   await page.locator('.plan-card').first().click()
-  await page.getByRole('button',{name:'＋ 真实体验桌',exact:true}).click({timeout:5000})
+  await page.getByRole('button',{name:'＋ 1800mm普通中岛桌 · 产品陈列A',exact:true}).click({timeout:5000})
   await expect(page.getByLabel('道具结构')).toHaveCount(0)
   await page.getByRole('button',{name:'旋转 90°'}).click()
   await page.getByRole('button',{name:'保存平面快照',exact:true}).click()
   await page.reload()
   await page.locator('.branch-list button').filter({hasText:'平面快照'}).last().click()
-  const item=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).nodes.at(-1).layout.items.at(-1))
+  const item=await page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).nodes.at(-1).layout.items.at(-1))
   expect(item.assetId).toBe('asset-408124')
   expect(item.rotation).toBe(90)
   expect(item.w).toBeCloseTo(1.8)
@@ -73,7 +73,7 @@ test('local four-asset scene visual QA',async({page})=>{
       const {realAssets}=await import('/src/real-assets.js')
       const {createAssetItem}=await import('/src/asset-contract.js')
       const positions=[[.5,.5],[.2,4.5],[3,.5],[5,2]]
-      const items=realAssets.map((a,i)=>createAssetItem(a,`qa-${i}`,...positions[i]))
+      const items=realAssets.slice(0,4).map((a,i)=>createAssetItem(a,`qa-${i}`,...positions[i]))
       const canvas=document.createElement('canvas');canvas.id='real-scene-qa';document.body.append(canvas)
       window.qaScene=createScene(canvas,{room:{w:8,d:6,h:3.2,shopType:'中岛店'},items},style)
       await window.qaScene.ready
@@ -82,7 +82,7 @@ test('local four-asset scene visual QA',async({page})=>{
     },style)
     expect(count).toBe(4)
     await page.locator('#real-scene-qa').screenshot({path:`../output/web-qa/four-assets-${style}.png`})
-    await page.evaluate(()=>{window.qaScene.dispose();document.getElementById('real-scene-qa').remove()})
+    await page.evaluate(async()=>{window.qaScene.dispose();document.getElementById('real-scene-qa').remove()})
   }
 })
 

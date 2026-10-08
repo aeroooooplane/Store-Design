@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test'
+import {readSaved} from './browser-storage.js'
 import {readFile} from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 import {unzipSync,strFromU8} from 'three/addons/libs/fflate.module.js'
@@ -13,6 +14,22 @@ async function downloadBytes(page,name){
 }
 
 test.skip(process.env.PRODUCTION_QA!=='1','Requires a fresh build and original local assets; use playwright.preview.config.js')
+
+test('built fuzzy input survives mobile generation and exports uncertainty with the layout',async({page})=>{
+  await page.setViewportSize({width:390,height:844})
+  const errors=[];page.on('pageerror',e=>errors.push(e.message))
+  await page.goto('/')
+  await page.getByRole('button',{name:'按桌长估比例',exact:true}).click()
+  await page.getByLabel('宽约几张桌长').fill('3')
+  await page.getByLabel('深约几张桌长').fill('5')
+  await page.getByRole('button',{name:'生成四个平面方案'}).click()
+  await page.locator('.plan-card').first().click()
+  await expect(page.getByTestId('fuzzy-advice')).toBeVisible()
+  const svg=(await downloadBytes(page,'导出平面 SVG')).toString('utf8')
+  expect(svg).toContain('比例估算');expect(svg).toContain('案例启发')
+  expect(await page.evaluate(async()=>document.documentElement.scrollWidth<=window.innerWidth)).toBeTruthy()
+  expect(errors).toEqual([])
+})
 
 test('built asset directory loads only on demand and distinguishes source dimensions from web readiness',async({page})=>{
   await page.setViewportSize({width:390,height:844})
@@ -34,7 +51,7 @@ test('built asset directory loads only on demand and distinguishes source dimens
   await expect(panel).toContainText('7de855a6bdc4c8ff3493fc587ef4994c4dcf089858735dfebccff0d906584d1b')
   expect(requests.some(url=>url.includes('/assets/AssetLibrary-'))).toBe(true)
   expect(requests.some(url=>/\.glb|\.skp|\.dae|\/src\//.test(url))).toBe(false)
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(await page.evaluate(async()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   expect(errors).toEqual([])
   await panel.screenshot({path:'../output/web-qa/production-asset-directory.png'})
 })
@@ -57,18 +74,18 @@ for(const width of [390,1440])test(`built preview ${width}px history search resu
   await page.getByRole('button',{name:'复制当前布局继续编辑',exact:true}).click()
   await page.locator('.drawing .plan g').first().click()
   await page.getByLabel('横向位置 / m').fill('2.345')
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).editorDraft?.layout.items[0].x)).toBe(2.345)
+  await expect.poll(async()=>(await readSaved(page)).editorDraft?.layout.items[0].x).toBe(2.345)
   await page.reload()
   await page.locator('.drawing .plan g').first().click()
   await expect(page.getByLabel('横向位置 / m')).toHaveValue('2.345')
   await page.getByRole('button',{name:'保存平面快照',exact:true}).click()
-  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')))
+  const saved=await readSaved(page)
   expect(saved.nodes.find(n=>n.kind==='render').layout).toEqual(layout)
   expect(saved.nodes.at(-1).layout.items[0].x).toBe(2.345)
   const svg=await downloadBytes(page,'导出平面 SVG')
   const exported=await page.evaluate(xml=>JSON.parse(new DOMParser().parseFromString(xml,'image/svg+xml').querySelector('metadata').textContent).layout,svg.toString())
   expect(exported).toEqual(saved.nodes.at(-1).layout)
-  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
+  expect(await page.evaluate(async()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true)
   expect(errors).toEqual([])
   expect(scripts.some(url=>url.includes('/src/')||url.includes('/@vite/'))).toBe(false)
   await page.screenshot({path:`../output/web-qa/production-resume-${width}.png`,fullPage:true})
@@ -96,7 +113,7 @@ test('built preview opens verified local PDF and image without source modules',a
 
 test('built preview loads four real assets and exports the same layout in eight views',async({page})=>{
   const room={w:8,d:6,h:3.2,shopType:'中岛店'},positions=[[.5,.5],[.2,4.5],[3,.5],[5,2]]
-  const items=realAssets.map((a,i)=>createAssetItem(a,`qa-${i}`,...positions[i]))
+  const items=realAssets.slice(0,4).map((a,i)=>createAssetItem(a,`qa-${i}`,...positions[i]))
   const project={nodes:[{id:'r',kind:'root',name:'生产验证',room},{id:'p',parent:'r',kind:'plan',name:'四资产验证',layout:{room,items}}]}
   const loaded=new Set(),errors=[],scripts=[]
   page.on('pageerror',e=>errors.push(e.message))
@@ -116,7 +133,7 @@ test('built preview loads four real assets and exports the same layout in eight 
   await expect(page.getByRole('status')).toContainText('不保证打印比例')
   await page.getByRole('button',{name:'确认平面并生成白膜'}).click()
   await expect(page.getByRole('button',{name:'确认白膜，渲染八视角'})).toBeEnabled({timeout:90000})
-  expect([...loaded].sort()).toEqual(realAssets.map(a=>a.url).sort())
+  expect([...loaded].sort()).toEqual(realAssets.slice(0,4).map(a=>a.url).sort())
   await page.locator('.model canvas').screenshot({path:'../output/web-qa/production-four-assets-white.png'})
   await page.getByRole('button',{name:'确认白膜，渲染八视角'}).click()
   await expect(page.locator('.renders img')).toHaveCount(8,{timeout:90000})
@@ -136,7 +153,7 @@ test('built preview loads four real assets and exports the same layout in eight 
   await page.reload()
   await page.getByLabel('导入项目 JSON').setInputFiles({name:'round-trip.json',mimeType:'application/json',buffer:backupBytes})
   await expect(page.getByRole('status')).toContainText('已导入')
-  const recovered=await page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')))
+  const recovered=await readSaved(page)
   expect(recovered.nodes).toHaveLength(backup.nodes.length*2)
   expect(new Set(recovered.nodes.map(n=>n.id)).size).toBe(recovered.nodes.length)
   expect(recovered.nodes.at(-1).layout).toEqual(layout)

@@ -19,7 +19,7 @@ test('unrecoverable coordinate values are rejected at entry without breaking aut
     await expect(page.getByRole('alert')).toHaveCount(0)
   }
   await page.getByLabel('横向位置 / m').fill('2.345')
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).editorDraft?.layout.items[0].x)).toBe(2.345)
+  await expect.poll(()=>page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).editorDraft?.layout.items[0].x)).toBe(2.345)
   await page.reload()
   await page.locator('.drawing .plan g').first().click()
   await expect(page.getByLabel('横向位置 / m')).toHaveValue('2.345')
@@ -29,7 +29,7 @@ test('recoverable out-of-room draft stays editable and blocks white-model confir
   await page.getByLabel('横向位置 / m').fill('9')
   await expect(page.locator('.properties .warning')).toContainText('超出门店边界')
   await expect(page.getByRole('button',{name:'确认平面并生成白膜 →'})).toBeDisabled()
-  await expect.poll(()=>page.evaluate(()=>JSON.parse(localStorage.getItem('insta-studio-v2')).editorDraft?.layout.items[0].x)).toBe(9)
+  await expect.poll(()=>page.evaluate(async()=>JSON.parse((await (await import('/src/project-db.js')).readProjectRaw())).editorDraft?.layout.items[0].x)).toBe(9)
   await page.getByLabel('横向位置 / m').fill('2')
   await expect(page.getByRole('button',{name:'确认平面并生成白膜 →'})).toBeEnabled()
 })

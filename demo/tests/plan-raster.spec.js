@@ -6,7 +6,7 @@ test('editor downloads a bounded PNG of the current plan without changing saved 
   await page.getByRole('button',{name:'生成四个平面方案'}).click()
   await page.locator('.plan-card').first().click()
   await expect(page.getByRole('button',{name:'导出平面 PNG',exact:true})).toBeVisible()
-  const before=await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))
+  const before=await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))
   const downloading=page.waitForEvent('download')
   await page.getByRole('button',{name:'导出平面 PNG',exact:true}).click()
   const download=await downloading,bytes=await readFile(await download.path())
@@ -18,7 +18,7 @@ test('editor downloads a bounded PNG of the current plan without changing saved 
   expect(Math.max(w,h)).toBeLessThanOrEqual(4096)
   expect(w*h).toBeLessThanOrEqual(8000000)
   await expect(page.getByRole('status')).toContainText('不保证打印比例')
-  expect(await page.evaluate(()=>localStorage.getItem('insta-studio-v2'))).toBe(before)
+  expect(await page.evaluate(async()=>(await (await import('/src/project-db.js')).readProjectRaw()))).toBe(before)
 })
 
 test('raster export bounds large sheets and rejects decode failures instead of blank output',async({page})=>{

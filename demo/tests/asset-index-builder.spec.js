@@ -13,6 +13,8 @@ async function run(mutate){
   await mkdir(path.join(root,'demo/src/data'),{recursive:true})
   await copyFile(new URL('../scripts/build-asset-library.mjs',import.meta.url),path.join(root,'demo/scripts/build-asset-library.mjs'))
   await copyFile(new URL('../src/real-assets.js',import.meta.url),path.join(root,'demo/src/real-assets.js'))
+  await copyFile(new URL('../src/asset-contract.js',import.meta.url),path.join(root,'demo/src/asset-contract.js'))
+  await copyFile(new URL('../src/data/placement-manifest.json',import.meta.url),path.join(root,'demo/src/data/placement-manifest.json'))
   const manifest={assets:realAssets.map(a=>({asset_id:a.id,category:'测试类别',definition:'测试名称',status:'passed',instances:[{pid:1}],si_version:null}))}
   const validation={results:realAssets.map(a=>({asset_id:a.id,status:'passed',source_tight_face_bounds_m:[a.dimensions.w,a.dimensions.d,a.dimensions.h]}))}
   mutate?.(manifest,validation)
@@ -34,7 +36,7 @@ test('builder preserves source dimensions and unknown SI for valid metadata',asy
   const {result,output}=await run()
   expect(result.status,result.stderr).toBe(0)
   const data=JSON.parse(output)
-  expect(data.assets).toHaveLength(4)
+  expect(data.assets).toHaveLength(realAssets.length)
   expect(data.assets.every(a=>a.webReady&&a.siVersion===null&&a.facing===null)).toBe(true)
   expect(data.assets[0].dimensions).toEqual(realAssets[0].dimensions)
 })
