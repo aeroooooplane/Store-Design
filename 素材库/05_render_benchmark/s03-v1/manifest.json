@@ -1,0 +1,207 @@
+{
+  "case": "s03-v1",
+  "scope": "geometry preservation pilot, not validated reconstruction",
+  "source": {
+    "file": "上海星光摄影城照材专卖店.pdf",
+    "page": 1,
+    "drawing": "PL-03",
+    "date": "2025.06",
+    "style": "灰白表现，SI版本待品牌确认",
+    "statedArea": 23.7,
+    "notes": "图纸边界尺寸4.8×5.15m，包络面积24.72㎡与标注23.7㎡不同，不等同净面积。层高3.2m为演示假设；中岛深度1m、边柜深度0.5m待道具模型核对。结构占位为图纸重建，尚未接入真实SKP。"
+  },
+  "layoutSha256": "2c622ecf39ca3c89173587c9299e7659fb0966965d9b682a9ad14aa665e5a04b",
+  "objects": [
+    {
+      "id": "s03-accessory-1",
+      "name": "1.8米边桌配件柜",
+      "type": "display",
+      "x": 0.95,
+      "z": 0.1,
+      "w": 1.8,
+      "d": 0.5,
+      "h": 0.9
+    },
+    {
+      "id": "s03-accessory-2",
+      "name": "1.8米边桌配件柜",
+      "type": "display",
+      "x": 2.75,
+      "z": 0.1,
+      "w": 1.8,
+      "d": 0.5,
+      "h": 0.9
+    },
+    {
+      "id": "s03-cashier",
+      "name": "1.8米边收银台",
+      "type": "counter",
+      "x": 0.13,
+      "z": 0.8,
+      "w": 0.5,
+      "d": 1.8,
+      "h": 0.9
+    },
+    {
+      "id": "s03-unbox",
+      "name": "1.8米开箱桌",
+      "type": "table",
+      "x": 0.13,
+      "z": 2.6,
+      "w": 0.5,
+      "d": 1.8,
+      "h": 0.9
+    },
+    {
+      "id": "s03-go",
+      "name": "1.8米go系列中岛桌",
+      "type": "table",
+      "x": 1.77,
+      "z": 1.61,
+      "w": 1.8,
+      "d": 1,
+      "h": 0.9
+    },
+    {
+      "id": "s03-x",
+      "name": "1.8米X系列中岛桌",
+      "type": "table",
+      "x": 1.77,
+      "z": 3.56,
+      "w": 1.8,
+      "d": 1,
+      "h": 0.9
+    },
+    {
+      "id": "s03-block-back",
+      "name": "后侧结构占位",
+      "type": "structure",
+      "x": 0,
+      "z": 0,
+      "w": 0.9,
+      "d": 0.39,
+      "h": 3.2
+    },
+    {
+      "id": "s03-block-front",
+      "name": "入口结构占位",
+      "type": "structure",
+      "x": 0,
+      "z": 4.47,
+      "w": 1,
+      "d": 0.68,
+      "h": 3.2
+    }
+  ],
+  "cameraViews": [
+    {
+      "index": 0,
+      "name": "front elevated",
+      "relative": [
+        0.5,
+        1.15,
+        1.8
+      ]
+    },
+    {
+      "index": 2,
+      "name": "right-front elevated",
+      "relative": [
+        1.7,
+        1,
+        1.4
+      ]
+    }
+  ],
+  "baselineRenderer": "demo/src/scene.js",
+  "aiStatus": "four-images-generated-and-visually-reviewed",
+  "assets": [
+    {
+      "kind": "baseline",
+      "style": "white",
+      "view": 0,
+      "file": "white-view0.png",
+      "sha256": "b08a5051a51f0a23eff2981a1eeff9a9a3f08c17a877a02c6bbf07f97e691527"
+    },
+    {
+      "kind": "baseline",
+      "style": "white",
+      "view": 2,
+      "file": "white-view2.png",
+      "sha256": "712ae5476bf1af6b7150dfba9955e3d85f5e6d398cda11523aff35272e6198bb"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI1.0",
+      "view": 0,
+      "file": "SI1.0-view0.png",
+      "sha256": "cefa6a97645d02c116e27de033c4c987f0573a93a09d63bffce44d8261f615ce"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI1.0",
+      "view": 2,
+      "file": "SI1.0-view2.png",
+      "sha256": "0eefc12966d767a97abac0eac53ca7e91b055369eb738ea9364b0519c137b889"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI2.0",
+      "view": 0,
+      "file": "SI2.0-view0.png",
+      "sha256": "6d8f3a91e8bbd83cb77f6eabfd318f1d0049988666f0534998f33279e6f7033a"
+    },
+    {
+      "kind": "baseline",
+      "style": "SI2.0",
+      "view": 2,
+      "file": "SI2.0-view2.png",
+      "sha256": "fd5b8c02dc321d62647097fabf784ff4c109d89091aa115fe2323e7341d121cc"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI1.0",
+      "view": 0,
+      "file": "AI-SI1.0-view0.png",
+      "geometryApproved": false,
+      "sha256": "8ef6315be0fb8cbb5402bb50a6a626aeba1dbc790ef40d0ff2b3576fd8cbc3cc"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI1.0",
+      "view": 2,
+      "file": "AI-SI1.0-view2.png",
+      "geometryApproved": false,
+      "sha256": "98feb9240fca897a07982e5912ad10f88ea6181bc04f44f151f946274be37179"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI2.0",
+      "view": 0,
+      "file": "AI-SI2.0-view0.png",
+      "geometryApproved": false,
+      "sha256": "8eaded23fd40f64d6f597c9de81d65e8cf22c18ca0c3c063515b84435084ec71"
+    },
+    {
+      "kind": "ai-concept",
+      "style": "SI2.0",
+      "view": 2,
+      "file": "AI-SI2.0-view2.png",
+      "geometryApproved": false,
+      "sha256": "af6fd9741d517c90dbb271d2a8cc908520e7d8134d37b3ff0824e8ddc1a97d02"
+    },
+    {
+      "kind": "ai-correction-trial",
+      "style": "SI1.0",
+      "view": 2,
+      "file": "AI-SI1.0-view2-retry.png",
+      "geometryApproved": false,
+      "sha256": "f7556740cfcb2f8c62fa1d207aedba8b730c460612ce43040a79cf8cc95d1368"
+    }
+  ],
+  "geometryAcceptance": "not-approved",
+  "imageTool": "built-in imagegen",
+  "callLatencySeconds": null,
+  "billedCost": null,
+  "reviewMethod": "assistant visual inspection, pending designer review"
+}

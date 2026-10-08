@@ -1,0 +1,742 @@
+[
+  {
+    "id": "PDF-159",
+    "file": "徐州苏宁授权体验店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IFtRv",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IFtRv",
+    "sourceSha256": "4952bdfeb8106c9bb2801b63b426016d0966788a43e40c94aa1f68876dea3d64",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 68.3,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "异形边厅；前区多组体验桌，后区培训座位与仓储；保留商场柱体。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 743
+      },
+      {
+        "role": "render",
+        "page": 3,
+        "file": "render-p3-full.png",
+        "fullPage": "render-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 681
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-160",
+    "file": "德国汉堡市Saturn店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IJK7E",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IJK7E",
+    "sourceSha256": "5f542eb1d069fa1da17993d65a10436c3942ef65202e05c44eb58e17dcd68bc1",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 20.3,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "小型边厅；中央单体验桌，沿墙配件陈列，侧边独立仓储。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1601,
+        "fullHeight": 844
+      },
+      {
+        "role": "render",
+        "page": 3,
+        "file": "render-p3-full.png",
+        "fullPage": "render-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1048
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-194",
+    "file": "新疆宏景数码广场二店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IUZVu",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IUZVu",
+    "sourceSha256": "c3a3dc756e660076e839275cb1f988f324127382637234da8ffc1e92a45b099a",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 21,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "小型边厅；两张体验桌平行布置，侧墙配件柜；保留既有玻璃及局部高度条件。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1000
+      },
+      {
+        "role": "render",
+        "page": 4,
+        "file": "render-p4-full.png",
+        "fullPage": "render-p4-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1000
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-051",
+    "file": "北京三里屯太古里授权体验店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5IfFeR",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IfFeR",
+    "sourceSha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 16,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "狭长中岛；两张体验桌沿长边展开，背侧低柜与灯箱；周边柱体需独立建模。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      },
+      {
+        "role": "render",
+        "page": 3,
+        "file": "render-p3-full.png",
+        "fullPage": "render-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-171",
+    "file": "成都数码广场恒驰照材专卖店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5I7R46",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5I7R46",
+    "sourceSha256": "1e36e2ccebe98315a6948e8b0c16268b7523ff349277ba89841a1f962b9b339d",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 19.5,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "扶梯旁异形中岛；体验桌落在可用开敞区，高柜/标识围绕既有障碍布置。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 941
+      },
+      {
+        "role": "render",
+        "page": 4,
+        "file": "render-p4-full.png",
+        "fullPage": "render-p4-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 941
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-239",
+    "file": "沈阳百脑汇照材专卖店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5IXM8r",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IXM8r",
+    "sourceSha256": "01a8b48af89bc634d610682ff3be146593b633737b45806cec81d9c54f0d91b7",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 19.1,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "带柱中岛；柱侧配件与灯箱，后侧服务柜，前区两张体验桌。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 1,
+        "file": "plan-p1-crop.png",
+        "fullPage": "plan-p1-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 2,
+        "file": "render-p2-full.png",
+        "fullPage": "render-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1000
+      },
+      {
+        "role": "render",
+        "page": 3,
+        "file": "render-p3-full.png",
+        "fullPage": "render-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1000
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-079",
+    "file": "南京德基广场直营店.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5IKxE6",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IKxE6",
+    "sourceSha256": "bc28fef737dbf163ad8d01cadd241bfb5f20aa46c3db39dd3fb38b2be0644af3",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": null,
+    "areaSource": null,
+    "observation": "纵深边厅；前场场景展示，中段多张体验桌，后段洽谈/服务；面积暂未录入。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 2,
+        "file": "plan-p2-crop.png",
+        "fullPage": "plan-p2-full.png",
+        "cropNormalized": [
+          0.34,
+          0,
+          0.34,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1463
+      },
+      {
+        "role": "render",
+        "page": 3,
+        "file": "render-p3-full.png",
+        "fullPage": "render-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      },
+      {
+        "role": "render",
+        "page": 4,
+        "file": "render-p4-full.png",
+        "fullPage": "render-p4-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-083",
+    "file": "南宁万象城.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5ITOaR",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5ITOaR",
+    "sourceSha256": "f200de828440c62ed84b811df29134120bed1ca7fdf328b599a72d22333b35e2",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": null,
+    "areaSource": null,
+    "observation": "纵深边厅；体验桌沿纵深串列，左右墙面广告与配件陈列；柱位挤占边缘空间。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 3,
+        "file": "plan-p3-crop.png",
+        "fullPage": "plan-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 6,
+        "file": "render-p6-full.png",
+        "fullPage": "render-p6-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      },
+      {
+        "role": "render",
+        "page": 7,
+        "file": "render-p7-full.png",
+        "fullPage": "render-p7-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-071",
+    "file": "北京首都机场T3授权体验店.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5I9xqt",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5I9xqt",
+    "sourceSha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 38,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "机场边厅；体验桌沿纵深排列，后侧保留设备/储物空间；效果图未确认。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 7,
+        "file": "plan-p7-crop.png",
+        "fullPage": "plan-p7-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1839
+      }
+    ],
+    "trainingEligible": false,
+    "status": "仅平面；效果图待补充",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-417",
+    "file": "马来西亚Pavilion Damansara Heights.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5IRzop",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IRzop",
+    "sourceSha256": "0343fa5337f20a30f70e64a4f2e6f4f0f6551a42ffe7c5ee6c3eaddc38b5601f",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": null,
+    "areaSource": null,
+    "observation": "开放中岛；三张体验桌并列，周边门架与标识形成边界；面积暂未录入。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 3,
+        "file": "plan-p3-crop.png",
+        "fullPage": "plan-p3-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          0.87,
+          1
+        ],
+        "fullWidth": 2600,
+        "fullHeight": 1463
+      },
+      {
+        "role": "render",
+        "page": 6,
+        "file": "render-p6-full.png",
+        "fullPage": "render-p6-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      },
+      {
+        "role": "render",
+        "page": 8,
+        "file": "render-p8-full.png",
+        "fullPage": "render-p8-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 900
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-293",
+    "file": "澳门威尼斯人.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5IlD0g",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IlD0g",
+    "sourceSha256": "34ea9cb3744e769cf62bdc4f3c5227a9fcc79b1b63d6e267e710ad6f9f4ca0af",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 12,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "小型中岛；两张体验桌，侧边配件及服务柜；柜长中英文标注不一致，不取作标准尺寸。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 2,
+        "file": "plan-p2-crop.png",
+        "fullPage": "plan-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 2601,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 4,
+        "file": "render-p4-full.png",
+        "fullPage": "render-p4-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      },
+      {
+        "role": "render",
+        "page": 5,
+        "file": "render-p5-full.png",
+        "fullPage": "render-p5-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  },
+  {
+    "id": "PDF-296",
+    "file": "珠海华发商都授权体验店.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5I6hJn",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5I6hJn",
+    "sourceSha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c",
+    "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+    "reviewedAt": "2026-09-23",
+    "areaM2": 24,
+    "areaSource": "图纸文字标注；非实测",
+    "observation": "中岛；两张体验桌，侧边高配件柜及收银拆箱柜；商场吊顶高度是外部条件。",
+    "assets": [
+      {
+        "role": "plan",
+        "page": 2,
+        "file": "plan-p2-crop.png",
+        "fullPage": "plan-p2-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 2601,
+        "fullHeight": 1839
+      },
+      {
+        "role": "render",
+        "page": 4,
+        "file": "render-p4-full.png",
+        "fullPage": "render-p4-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      },
+      {
+        "role": "render",
+        "page": 5,
+        "file": "render-p5-full.png",
+        "fullPage": "render-p5-full.png",
+        "cropNormalized": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "fullWidth": 1600,
+        "fullHeight": 1132
+      }
+    ],
+    "trainingEligible": false,
+    "status": "已视觉选页，待几何标注及版本核验",
+    "limitations": [
+      "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+      "尚无道具坐标、朝向与精确外轮廓标注",
+      "本地哈希用于追溯，不表示已与飞书附件内容比对"
+    ]
+  }
+]

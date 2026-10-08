@@ -1,0 +1,348 @@
+[
+  {
+    "id": "PDF-051",
+    "room": {
+      "w": 6.7,
+      "d": 2.4
+    },
+    "outline": [
+      [
+        0,
+        0
+      ],
+      [
+        6.7,
+        0
+      ],
+      [
+        6.7,
+        2.4
+      ],
+      [
+        0,
+        2.4
+      ]
+    ],
+    "openEdges": [
+      "front",
+      "left",
+      "right"
+    ],
+    "dimensionEvidence": [
+      "overall 6700mm",
+      "overall 2400mm",
+      "table 1800 × 1000mm"
+    ],
+    "objects": [
+      {
+        "id": "PDF-051-0",
+        "kind": "table",
+        "x": 0.08,
+        "z": 1.4,
+        "w": 1.8,
+        "d": 1,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-051-1",
+        "kind": "table",
+        "x": 3.08,
+        "z": 1.4,
+        "w": 1.8,
+        "d": 1,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-051-2",
+        "kind": "display",
+        "x": 0,
+        "z": 0.15,
+        "w": 1.55,
+        "d": 0.5,
+        "h": 1.3,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-051-3",
+        "kind": "display",
+        "x": 5.15,
+        "z": 0.15,
+        "w": 1.55,
+        "d": 0.5,
+        "h": 1.3,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-051-4",
+        "kind": "counter",
+        "x": 1.55,
+        "z": 0.15,
+        "w": 1.8,
+        "d": 0.5,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-051-5",
+        "kind": "unbox",
+        "x": 3.35,
+        "z": 0.15,
+        "w": 1.8,
+        "d": 0.5,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      }
+    ],
+    "obstacles": [],
+    "notes": "Side columns are outside the 6700mm lot and not dimensioned; rear low wall height1600mm. Cabinet positions follow dimension chain.",
+    "source": {
+      "file": "北京三里屯太古里授权体验店.pdf",
+      "page": 1,
+      "sha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc"
+    },
+    "units": "m",
+    "coordinateSystem": "x right, z down from drawing top-left; exact origin unresolved where noted",
+    "status": "draft, not construction-ready",
+    "geometryTrainingEligible": false
+  },
+  {
+    "id": "PDF-296",
+    "room": {
+      "w": 6,
+      "d": 4
+    },
+    "outline": [
+      [
+        0,
+        0
+      ],
+      [
+        6,
+        0
+      ],
+      [
+        6,
+        4
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    "openEdges": [
+      "front",
+      "left"
+    ],
+    "dimensionEvidence": [
+      "overall 6000mm",
+      "overall 4000mm",
+      "table1800 × 800mm"
+    ],
+    "objects": [
+      {
+        "id": "PDF-296-0",
+        "kind": "table",
+        "x": 0.9,
+        "z": 0.7,
+        "w": 1.8,
+        "d": 0.8,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-296-1",
+        "kind": "table",
+        "x": 0.9,
+        "z": 2.5,
+        "w": 1.8,
+        "d": 0.8,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-296-2",
+        "kind": "counter",
+        "x": 4.12,
+        "z": 1.68,
+        "w": 0.6,
+        "d": 1.8,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      },
+      {
+        "id": "PDF-296-3",
+        "kind": "display",
+        "x": 3.98,
+        "z": 0.22,
+        "w": 1.6,
+        "d": 0.46,
+        "h": 2.4,
+        "rotation": 0,
+        "confidence": "dimension-chain/visual draft"
+      }
+    ],
+    "obstacles": [
+      {
+        "kind": "frame-foot",
+        "box": [
+          0.08,
+          0.08,
+          0.2,
+          0.2
+        ],
+        "status": "draft estimate"
+      },
+      {
+        "kind": "frame-foot",
+        "box": [
+          0.08,
+          3.72,
+          0.6,
+          0.2
+        ],
+        "status": "draft estimate"
+      }
+    ],
+    "notes": "Table dimensions explicit; positions/counter/display origins approximate from dimension chains; frame/side display zones incomplete.",
+    "source": {
+      "file": "珠海华发商都授权体验店.pdf",
+      "page": 2,
+      "sha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c"
+    },
+    "units": "m",
+    "coordinateSystem": "x right, z down from drawing top-left; exact origin unresolved where noted",
+    "status": "draft, not construction-ready",
+    "geometryTrainingEligible": false
+  },
+  {
+    "id": "PDF-194",
+    "room": {
+      "w": 4.7,
+      "d": null
+    },
+    "outline": null,
+    "openEdges": [
+      "front"
+    ],
+    "dimensionEvidence": [
+      "upper width4700mm",
+      "table1800 × 1000mm",
+      "depth chains use different reference edges; unresolved"
+    ],
+    "objects": [
+      {
+        "id": "PDF-194-0",
+        "kind": "table",
+        "x": null,
+        "z": null,
+        "w": 1,
+        "d": 1.8,
+        "h": null,
+        "rotation": 0,
+        "confidence": "dimensions-only"
+      },
+      {
+        "id": "PDF-194-1",
+        "kind": "table",
+        "x": null,
+        "z": null,
+        "w": 1,
+        "d": 1.8,
+        "h": null,
+        "rotation": 0,
+        "confidence": "dimensions-only"
+      }
+    ],
+    "obstacles": [],
+    "notes": "Do not force depth from area/width. Retain unresolved coordinate origin; not ready for layout reconstruction.",
+    "source": {
+      "file": "新疆宏景数码广场二店.pdf",
+      "page": 1,
+      "sha256": "c3a3dc756e660076e839275cb1f988f324127382637234da8ffc1e92a45b099a"
+    },
+    "units": "m",
+    "coordinateSystem": "x right, z down from drawing top-left; exact origin unresolved where noted",
+    "status": "draft, not construction-ready",
+    "geometryTrainingEligible": false
+  },
+  {
+    "id": "PDF-083",
+    "room": {
+      "w": 5.255,
+      "d": 9.133
+    },
+    "outline": null,
+    "openEdges": [
+      "front"
+    ],
+    "dimensionEvidence": [
+      "upper width5255mm",
+      "left depth9133mm",
+      "slanted front edge",
+      "islands1800mm and height900mm"
+    ],
+    "objects": [
+      {
+        "id": "PDF-083-0",
+        "kind": "table",
+        "x": null,
+        "z": null,
+        "w": 1.8,
+        "d": null,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimensions-only"
+      },
+      {
+        "id": "PDF-083-1",
+        "kind": "table",
+        "x": null,
+        "z": null,
+        "w": 1.8,
+        "d": null,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimensions-only"
+      },
+      {
+        "id": "PDF-083-2",
+        "kind": "table",
+        "x": null,
+        "z": null,
+        "w": 1.8,
+        "d": null,
+        "h": 0.9,
+        "rotation": 0,
+        "confidence": "dimensions-only"
+      }
+    ],
+    "obstacles": [
+      {
+        "kind": "column",
+        "box": null,
+        "status": "two right-edge columns need coordinates"
+      }
+    ],
+    "notes": "Bounding dimensions only; store has slanted front, rear storage and right columns. Must not replace with filled rectangle.",
+    "source": {
+      "file": "南宁万象城.pdf",
+      "page": 3,
+      "sha256": "f200de828440c62ed84b811df29134120bed1ca7fdf328b599a72d22333b35e2"
+    },
+    "units": "m",
+    "coordinateSystem": "x right, z down from drawing top-left; exact origin unresolved where noted",
+    "status": "draft, not construction-ready",
+    "geometryTrainingEligible": false
+  }
+]

@@ -1,0 +1,64 @@
+{
+  "id": "PDF-083",
+  "file": "南宁万象城.pdf",
+  "tag": "SI2.0 边厅店",
+  "recordId": "recvvyql5ITOaR",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5ITOaR",
+  "sourceSha256": "f200de828440c62ed84b811df29134120bed1ca7fdf328b599a72d22333b35e2",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": null,
+  "areaSource": null,
+  "observation": "纵深边厅；体验桌沿纵深串列，左右墙面广告与配件陈列；柱位挤占边缘空间。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 3,
+      "file": "plan-p3-crop.png",
+      "fullPage": "plan-p3-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        0.87,
+        1
+      ],
+      "fullWidth": 2600,
+      "fullHeight": 1839
+    },
+    {
+      "role": "render",
+      "page": 6,
+      "file": "render-p6-full.png",
+      "fullPage": "render-p6-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1132
+    },
+    {
+      "role": "render",
+      "page": 7,
+      "file": "render-p7-full.png",
+      "fullPage": "render-p7-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1132
+    }
+  ],
+  "trainingEligible": false,
+  "status": "已视觉选页，待几何标注及版本核验",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

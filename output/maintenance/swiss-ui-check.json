@@ -1,0 +1,48 @@
+{
+  "pages": [
+    {
+      "name": "workbench",
+      "width": 1440,
+      "overflow": false,
+      "background": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(17, 17, 17)"
+    },
+    {
+      "name": "workbench",
+      "width": 390,
+      "overflow": false,
+      "background": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(17, 17, 17)"
+    },
+    {
+      "name": "models",
+      "width": 1440,
+      "overflow": false,
+      "background": "rgb(255, 255, 255)",
+      "ink": "rgb(17, 17, 17)"
+    },
+    {
+      "name": "models",
+      "width": 390,
+      "overflow": false,
+      "background": "rgb(255, 255, 255)",
+      "ink": "rgb(17, 17, 17)"
+    },
+    {
+      "name": "standards",
+      "width": 1440,
+      "overflow": false,
+      "background": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(17, 17, 17)"
+    },
+    {
+      "name": "standards",
+      "width": 390,
+      "overflow": false,
+      "background": "rgba(0, 0, 0, 0)",
+      "ink": "rgb(17, 17, 17)"
+    }
+  ],
+  "pageErrors": [],
+  "editor": "checked"
+}

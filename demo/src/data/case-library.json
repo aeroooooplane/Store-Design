@@ -1,0 +1,730 @@
+{
+  "schemaVersion": 1,
+  "sourceDirectory": "素材库/06_case_packs/20260925-four-hour",
+  "sourceIndexHashes": {
+    "layout-references.jsonl": "85a8961dea90cefddd26779c2d5091e54fae3aca46ffd478bd3c89e8db5c5f9b",
+    "render-references.jsonl": "c6c3c46fde17bb3e9ffa819ac40c78ac5c2f19c05dfebf1b1ac81bf39d7df682",
+    "render-reference-cards.json": "3f6147e175888dcc4e79cb9a19c99b0506408d8821aa054fd6356ce54460e7fa"
+  },
+  "stores": [
+    {
+      "id": "PDF-001",
+      "name": "上海TPY中心",
+      "sourcePdf": "各门店图纸/上海TPY中心.pdf",
+      "sourceSha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+      "reviewPath": "素材库/06_case_packs/20260925-four-hour/PDF-001/case.json",
+      "si": {
+        "label": "SI2.0",
+        "basis": "document_uncancelled_nonzero_furniture_rows",
+        "pages": [
+          11
+        ],
+        "scope": "local_historical_pdf_not_latest_remote_verified"
+      },
+      "versionStatus": "本地历史 PDF；最终版本及远程最新状态未确认",
+      "completeGeometry": false,
+      "sameCameraPair": false,
+      "trainingEligible": false,
+      "issues": [
+        {
+          "id": "area_version_conflict",
+          "severity": "high",
+          "pages": [
+            2,
+            8,
+            15
+          ],
+          "values_m2": [
+            73,
+            78.9
+          ],
+          "impact": "禁止使用单一面积标签训练；需核版本与计量口径"
+        },
+        {
+          "id": "geometry_not_closed",
+          "severity": "high",
+          "pages": [
+            14,
+            16
+          ],
+          "impact": "尺寸链未转成经过闭合校验的边界；不生成施工坐标"
+        },
+        {
+          "id": "material_code_collision",
+          "severity": "high",
+          "pages": [
+            10,
+            31
+          ],
+          "impact": "p10 MT01为星空灰不锈钢/配件柜，MT06为黑钛收边；p31局部将黑钛收边标MT01。材质连接键须包含部位和文字名称，冲突未自动修正"
+        },
+        {
+          "id": "vertical_datum_annotation_ambiguity",
+          "severity": "medium",
+          "pages": [
+            27
+          ],
+          "impact": "4670/3020尺寸与4.680/3.040标高不直接一致；在复核基准和图纸修订前不输出确定门头高度"
+        }
+      ],
+      "layouts": [
+        {
+          "page": 14,
+          "role": "original_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0014.pdf",
+          "sha256": "e3ccec4a9f42b669f6a9955df572317b77aa89c509c52c4c71a4cd36e10a0575"
+        },
+        {
+          "page": 15,
+          "role": "design_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0015.pdf",
+          "sha256": "346823c19b57b299c3a336198a04e7143b58b619909c42afb83df226a10bf8c5"
+        },
+        {
+          "page": 16,
+          "role": "furniture_dimension_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0016.pdf",
+          "sha256": "86008bde980fcb13de61fd3047bb695f441f8689a701ecb6739becef4b786274"
+        }
+      ],
+      "renders": [
+        {
+          "page": 4,
+          "role": "exterior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0004-native1.jpeg",
+          "sha256": "a15aa24ba73741672cd547be55ab26f3eae7c1438c05d78f070ab49fa86ea88a",
+          "focus": "正立面深灰门头与白柱的分区关系",
+          "exclude": [
+            "玻璃中树木/邻铺反射",
+            "品牌文字"
+          ],
+          "geometryGuard": "保留白模门窗、柱和开口；不得把反射背景画成实体墙",
+          "materialPages": [
+            10,
+            26,
+            27
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 5,
+          "role": "exterior_oblique_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0005-native1.jpeg",
+          "sha256": "ab0f88593c5f074a7ffd15fefcf0300f072ca321c0f5cb081ce25ea66ce2e24f",
+          "focus": "侧入口斜视的门头与玻璃界面",
+          "exclude": [
+            "反射的环境内容",
+            "产品/广告"
+          ],
+          "geometryGuard": "不凭反射调整门柱位置或家具数量",
+          "materialPages": [
+            10,
+            26,
+            27,
+            28
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 6,
+          "role": "interior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0006-native1.jpeg",
+          "sha256": "66711e6e420e9956a9d27c179aae920a6dc8fc9374f9dd5a38b6bb6def8bbcb3",
+          "focus": "后侧入口朝外视角，区分店内饰面和商场界面",
+          "exclude": [
+            "雪山广告及其向局部地面的延伸",
+            "商场天花"
+          ],
+          "geometryGuard": "不能将广告中的景物解释成台阶、墙体或地砖",
+          "materialPages": [
+            10,
+            29,
+            30,
+            31
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 7,
+          "role": "cutaway_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-001/53d40b46b82d/p0007-native1.jpeg",
+          "sha256": "9e4c519ca2906aeea377108b60d9d315acf0088c90500df7a4a61450d55a4f44",
+          "focus": "剖切俯视下的主体配色和可见道具关系",
+          "exclude": [
+            "剖切边缘作为真实破损的解释",
+            "产品/文字"
+          ],
+          "geometryGuard": "不得据此删除白模屋顶、墙或第三根柱；台面数量仍以结构证据为准",
+          "materialPages": [
+            10,
+            29,
+            30,
+            31
+          ],
+          "nativeAnnotations": null
+        }
+      ]
+    },
+    {
+      "id": "PDF-201",
+      "name": "昆山商厦家电市场照材专卖店（扩店）",
+      "sourcePdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+      "sourceSha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+      "reviewPath": "素材库/06_case_packs/20260925-four-hour/PDF-201/case.json",
+      "si": {
+        "label": "SI1.0",
+        "basis": "document_uncancelled_nonzero_furniture_rows",
+        "pages": [
+          5
+        ],
+        "scope": "local_historical_pdf_not_latest_remote_verified"
+      },
+      "versionStatus": "本地历史 PDF；最终版本及远程最新状态未确认",
+      "completeGeometry": false,
+      "sameCameraPair": false,
+      "trainingEligible": false,
+      "issues": [
+        {
+          "id": "table_depth_conflict",
+          "severity": "high",
+          "pages": [
+            5,
+            11
+          ],
+          "values_mm": [
+            800,
+            1000
+          ],
+          "impact": "未核细节图前不输出确定岛台深度"
+        },
+        {
+          "id": "date_conflict",
+          "severity": "medium",
+          "pages": [
+            1,
+            4,
+            5,
+            9,
+            10,
+            11
+          ],
+          "values": [
+            "2026.04",
+            "2025.12"
+          ],
+          "impact": "不能假定所有标题栏为同一修订时间"
+        },
+        {
+          "id": "floor_reuse_conflict",
+          "severity": "high",
+          "pages": [
+            1,
+            10
+          ],
+          "impact": "封面称原地面不利旧，平面保留部分利旧备注；材质施工决策待确认"
+        },
+        {
+          "id": "bom_scope_not_total",
+          "severity": "medium",
+          "pages": [
+            5,
+            10
+          ],
+          "impact": "新增采购数量不能作为全店道具数量"
+        },
+        {
+          "id": "foreign_store_titleblocks",
+          "severity": "high",
+          "pages": [
+            20,
+            23,
+            24
+          ],
+          "impact": "单文件关联不代表同店适用；大样不能自动用作本店制造参数"
+        },
+        {
+          "id": "island_depth_detail_support",
+          "severity": "high",
+          "pages": [
+            5,
+            11,
+            21,
+            22
+          ],
+          "impact": "定位图和两张本店大样支持1000mm深，清单仍写800mm；冲突未消除，不能自动用多数票定稿"
+        }
+      ],
+      "layouts": [
+        {
+          "page": 9,
+          "role": "original_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0009.pdf",
+          "sha256": "6f8285c8f6a44c95f8a426b70e982d0d94e6383962328f4471f86a9653bc5e5b"
+        },
+        {
+          "page": 10,
+          "role": "design_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0010.pdf",
+          "sha256": "acb43af7e17a7352b79b0504f765c4691e044b8d26b296604c7c8985de0edcb8"
+        },
+        {
+          "page": 11,
+          "role": "furniture_dimension_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0011.pdf",
+          "sha256": "3469234f24c4c7bffe46a050dad1e739302abf06e4d2924b4d6e42b3c5885949"
+        }
+      ],
+      "renders": [
+        {
+          "page": 6,
+          "role": "island_store_front_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0006-native1.jpeg",
+          "sha256": "82274cef1820e8ef982aa07e59de771f79c4bbf2a8bbdec8da415feff6fba934",
+          "focus": "开放中岛正面视角及前排道具外观",
+          "exclude": [
+            "灰暗商场背景",
+            "产品/品牌字"
+          ],
+          "geometryGuard": "保持开放中岛和中央既有柱；不得补四面围墙；800/1000深度冲突不从透视图裁定",
+          "materialPages": [
+            4,
+            17
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 7,
+          "role": "island_store_oblique_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0007-native1.jpeg",
+          "sha256": "6001fd1abbfa639f5986df55cf2de85582a50a5401c8d7143a6732f1020b4f0d",
+          "focus": "左前斜视的收银台、中央柱与道具外观",
+          "exclude": [
+            "商场扶梯背景",
+            "产品/文字"
+          ],
+          "geometryGuard": "扶梯是环境上下文，不改成本店墙面；不凭单图定家具深度",
+          "materialPages": [
+            4,
+            17
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 8,
+          "role": "island_store_reverse_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-201/4205c229ec4e/p0008-native1.jpeg",
+          "sha256": "617e896b91aed99b49358db3da2d0f36b274580f9851d84efd446befd225c16d",
+          "focus": "右前反向斜视的后侧储物/开箱边桌与座椅关系",
+          "exclude": [
+            "商场环境",
+            "产品/文字"
+          ],
+          "geometryGuard": "维持开放边界；新采购清单不替代全店数量；异店大样不直接用于构造",
+          "materialPages": [
+            4,
+            17
+          ],
+          "nativeAnnotations": null
+        }
+      ]
+    },
+    {
+      "id": "PDF-235",
+      "name": "江门汇悦大融城（迁址）",
+      "sourcePdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+      "sourceSha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+      "reviewPath": "素材库/06_case_packs/20260925-four-hour/PDF-235/case.json",
+      "si": {
+        "label": "SI1.0",
+        "basis": "document_uncancelled_nonzero_furniture_rows",
+        "pages": [
+          11
+        ],
+        "scope": "local_historical_pdf_not_latest_remote_verified"
+      },
+      "versionStatus": "本地历史 PDF；最终版本及远程最新状态未确认",
+      "completeGeometry": false,
+      "sameCameraPair": false,
+      "trainingEligible": false,
+      "issues": [
+        {
+          "id": "blank_not_zero",
+          "severity": "medium",
+          "page": 11,
+          "impact": "1600配件柜和凳子空白数量不可自动写零"
+        },
+        {
+          "id": "geometry_not_closed",
+          "severity": "high",
+          "pages": [
+            14,
+            16
+          ],
+          "impact": "斜边、柱和应急门尚未形成可验证坐标模型"
+        },
+        {
+          "id": "materials_schedule_incomplete",
+          "severity": "medium",
+          "pages": [
+            10,
+            28,
+            29,
+            30
+          ],
+          "impact": "不可把全店墙面统一映射为银灰金属；补入立面主材证据，具体色号和参数仍未知"
+        }
+      ],
+      "layouts": [
+        {
+          "page": 14,
+          "role": "original_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0014.pdf",
+          "sha256": "e022718fe4247a3fb3ba684016dce038e4a498552e5b51fb78dbdaaf19c7c08a"
+        },
+        {
+          "page": 15,
+          "role": "design_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0015.pdf",
+          "sha256": "237e42472f96757fe643c8c89c9285fd6996c920d7dded6ab7b25fd8d27e6f7d"
+        },
+        {
+          "page": 16,
+          "role": "furniture_dimension_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0016.pdf",
+          "sha256": "d5ed7006651268dcda88419331403c13db1249021f074b2f55d0c95e979324cc"
+        }
+      ],
+      "renders": [
+        {
+          "page": 4,
+          "role": "exterior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0004-native1.jpeg",
+          "sha256": "f22bca0e2f730cb8829edfdee6caedfa4faa672b321af750cd64a321fc7db477",
+          "focus": "银灰门框与横向彩色广告的区域分离",
+          "exclude": [
+            "曲面LED画面",
+            "品牌字",
+            "黑色灯槽"
+          ],
+          "geometryGuard": "LED画面不是饰面涂色；保留门头曲面/开口的已核几何",
+          "materialPages": [
+            10,
+            26,
+            27
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 5,
+          "role": "interior_front_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0005-native1.jpeg",
+          "sha256": "fcc236f5b987b0d56ea5585bf1dbf364b09b521de5c85b9e8bd998c0ebbf325f",
+          "focus": "浅色墙面与银灰道具底座的内景关系",
+          "exclude": [
+            "产品/广告/文字",
+            "灯具黑色作为SI判断"
+          ],
+          "geometryGuard": "侧墙微水泥与中央金属背景分开，不把全墙统一成金属",
+          "materialPages": [
+            10,
+            28,
+            29,
+            30
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 6,
+          "role": "interior_oblique_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0006-native1.jpeg",
+          "sha256": "e7292cdf5f8fc86d2a44b8b158c50e524a27fc1c81ef396b6a69f1886017c4f0",
+          "focus": "斜向近景的台面圆角、银灰底座和墙面分区",
+          "exclude": [
+            "产品/展示内容",
+            "品牌文字"
+          ],
+          "geometryGuard": "材质增强不能抹去底座开口、台面边缘或改变已核尺寸",
+          "materialPages": [
+            10,
+            28,
+            29,
+            30
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 7,
+          "role": "cutaway_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-235/a7b3783a126f/p0007-native1.jpeg",
+          "sha256": "bc86aed9d3cfffbbe6538018fb925303b7fbdaadf3da6e248f81e0e429cf7027",
+          "focus": "剖切俯视的整体配色和可见道具拓扑",
+          "exclude": [
+            "展示剖切作为真实缺墙的解释",
+            "产品/广告"
+          ],
+          "geometryGuard": "不因遮挡删道具，不因剖切删墙；暗门仍是独立几何",
+          "materialPages": [
+            10,
+            28,
+            29,
+            30
+          ],
+          "nativeAnnotations": null
+        }
+      ]
+    },
+    {
+      "id": "PDF-088",
+      "name": "南昌武商mall",
+      "sourcePdf": "各门店图纸/南昌武商mall.pdf",
+      "sourceSha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+      "reviewPath": "素材库/06_case_packs/20260925-four-hour/PDF-088/case.json",
+      "si": {
+        "label": "SI2.0",
+        "basis": "document_uncancelled_nonzero_furniture_rows",
+        "pages": [
+          11
+        ],
+        "scope": "local_historical_pdf_not_latest_remote_verified"
+      },
+      "versionStatus": "本地历史 PDF；最终版本及远程最新状态未确认",
+      "completeGeometry": false,
+      "sameCameraPair": false,
+      "trainingEligible": false,
+      "issues": [
+        {
+          "id": "cancelled_material_readable",
+          "severity": "high",
+          "page": 10,
+          "impact": "OCR仍读得到已红线取消的PU石，必须隔离"
+        },
+        {
+          "id": "geometry_not_closed",
+          "severity": "high",
+          "pages": [
+            14,
+            16
+          ],
+          "impact": "只有局部净距约束，尚无全局边界和柱坐标"
+        }
+      ],
+      "layouts": [
+        {
+          "page": 14,
+          "role": "original_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0014.pdf",
+          "sha256": "fdfa26aae4a536fd670f20003260f8a415742dc4b3bff840f6f03e39a3aa467b"
+        },
+        {
+          "page": 15,
+          "role": "design_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0015.pdf",
+          "sha256": "5352db0e47dfb16cf0b5c05737fd82ffc7573d59dd80f3551c3771cd25a8542e"
+        },
+        {
+          "page": 16,
+          "role": "furniture_dimension_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0016.pdf",
+          "sha256": "b8f825789e5dfb0d204357c641473839228a17e58543d75b1088654953658dc1"
+        }
+      ],
+      "renders": [
+        {
+          "page": 4,
+          "role": "exterior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0004-native1.jpeg",
+          "sha256": "ef60c83edd9d648ffc95bad87c5b74e191da4e6afb253c40eb25f23628a94fa5",
+          "focus": "正面深灰门头/墙面与白色道具基座的对比",
+          "exclude": [
+            "产品/海报",
+            "品牌字"
+          ],
+          "geometryGuard": "取消的PU石不重新上墙；SI2地面不能自动涂成深灰",
+          "materialPages": [
+            10,
+            25,
+            26,
+            27
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 5,
+          "role": "entrance_oblique_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0005-native1.jpeg",
+          "sha256": "1ccc651e214bedbdaa8edb86461f50e7357a1fb881b3eb1a4c0633b5a3bebeb1",
+          "focus": "入口斜视的深灰板墙、台围板与白色台面/基座",
+          "exclude": [
+            "产品/海报",
+            "商场环境"
+          ],
+          "geometryGuard": "保持白模原有台面数量与间距，缺失视野不允许补造结构",
+          "materialPages": [
+            10,
+            27,
+            28,
+            29
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 6,
+          "role": "interior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0006-native1.jpeg",
+          "sha256": "524905cb8e8abe8d09a9b2bf999fa93eec98096aa9402a232e7478db58675727",
+          "focus": "侧视下开箱台与座椅的用途区别",
+          "exclude": [
+            "左侧商场白墙",
+            "产品/广告/文字"
+          ],
+          "geometryGuard": "开箱台不是第四张岛台；商场墙不替代店内主体材料",
+          "materialPages": [
+            10,
+            27,
+            28,
+            29
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 7,
+          "role": "cutaway_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-088/8d5e7efa53cf/p0007-native1.jpeg",
+          "sha256": "f13515b964e253718b13f572162c1755c3174e591d1a3b566921b30730bf2664",
+          "focus": "剖切俯视的店内配色及员工间位置关系",
+          "exclude": [
+            "剖去屋顶作为真实缺顶的解释",
+            "产品/海报"
+          ],
+          "geometryGuard": "保留白模员工间、门和被遮挡岛台；本图不是局部坐标的量测依据",
+          "materialPages": [
+            10,
+            27,
+            28,
+            29
+          ],
+          "nativeAnnotations": null
+        }
+      ]
+    },
+    {
+      "id": "PDF-342",
+      "name": "西安开元商场",
+      "sourcePdf": "各门店图纸/西安开元商场.pdf",
+      "sourceSha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+      "reviewPath": "素材库/06_case_packs/20260925-four-hour/PDF-342/case.json",
+      "si": {
+        "label": "SI2.0",
+        "basis": "document_uncancelled_nonzero_furniture_rows",
+        "pages": [
+          7
+        ],
+        "scope": "local_historical_pdf_not_latest_remote_verified"
+      },
+      "versionStatus": "本地历史 PDF；最终版本及远程最新状态未确认",
+      "completeGeometry": false,
+      "sameCameraPair": false,
+      "trainingEligible": false,
+      "issues": [
+        {
+          "id": "cancelled_nonzero_bom",
+          "severity": "high",
+          "page": 7,
+          "impact": "3600配件柜印有数量1但已红线取消，不可计入实际配置"
+        },
+        {
+          "id": "cancelled_material_readable",
+          "severity": "high",
+          "page": 6,
+          "impact": "取消的PU石和银灰门头不得当作当前材质"
+        },
+        {
+          "id": "geometry_not_closed",
+          "severity": "high",
+          "pages": [
+            10,
+            12
+          ],
+          "impact": "非正交边界、斜柱与尺寸链尚未闭合验证"
+        }
+      ],
+      "layouts": [
+        {
+          "page": 10,
+          "role": "original_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0010.pdf",
+          "sha256": "ae6e73fff2641c9023ddba75e3b76f724f20f437b24e3b483d1f8494f7cffa13"
+        },
+        {
+          "page": 11,
+          "role": "design_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0011.pdf",
+          "sha256": "2975ef60eb1ad7b8c34523485c6290c7609ad1891fe952fd2878da4da4dfcc0f"
+        },
+        {
+          "page": 12,
+          "role": "furniture_dimension_plan",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0012.pdf",
+          "sha256": "fbf0203aed94092558e56a07b571c47a6d14938f53dccecd6decf7ad4f270bae"
+        }
+      ],
+      "renders": [
+        {
+          "page": 2,
+          "role": "annotated_exterior_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0002-native1.jpeg",
+          "sha256": "0ce35c895665033c6e3b8c4603310c7921bf553df8cd19fdc67cb392dd3df95d",
+          "focus": "PDF页面有尺寸/材质箭头，原生JPEG无这些箭头；两种资产分开使用",
+          "exclude": [
+            "PDF页面叠加尺寸文字和箭头",
+            "左侧LED画面",
+            "品牌字"
+          ],
+          "geometryGuard": "原生JPEG无尺寸箭头，无需修补去箭头；广告和品牌文字仍存在。不以取消的银灰门头替换深灰主体，原图并非几何训练真值。",
+          "materialPages": [
+            6,
+            21
+          ],
+          "nativeAnnotations": false
+        },
+        {
+          "page": 3,
+          "role": "interior_oblique_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0003-native1.jpeg",
+          "sha256": "ea521bc7b4680d9be80da94ee0532a037245fb5f3c34dd5a3366cd7ba6c63822",
+          "focus": "斜向内景的深灰墙面/台围板和白色台面/基座",
+          "exclude": [
+            "产品/广告/文字",
+            "细收边作为主体黑色依据"
+          ],
+          "geometryGuard": "保留斜柱及门店非正交边界；不加入已取消的3600配件柜",
+          "materialPages": [
+            6,
+            22,
+            23
+          ],
+          "nativeAnnotations": null
+        },
+        {
+          "page": 4,
+          "role": "interior_alternate_render",
+          "path": "output/pdf/cleaned-v2/pages/PDF-342/aaf01f352a64/p0004-native1.jpeg",
+          "sha256": "aecf443567c9af9ec02c507ca44d38eabd20c6fd0cea23bf562fdbe6be88df56",
+          "focus": "朝入口方向的内景与门店/商场边界区别",
+          "exclude": [
+            "右侧商场或邻铺背景",
+            "产品/广告/文字"
+          ],
+          "geometryGuard": "以核准白模的对象身份和尺寸为准；不得从邻铺背景复制墙柜",
+          "materialPages": [
+            6,
+            21,
+            22,
+            23
+          ],
+          "nativeAnnotations": null
+        }
+      ]
+    }
+  ]
+}

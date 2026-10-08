@@ -1,0 +1,14 @@
+{
+  "mode": "built-in image_gen",
+  "style": "SI1.0",
+  "views": [
+    0,
+    2
+  ],
+  "inputRoles": [
+    "white-view{view}.png: geometry authority",
+    "demo/public/references/s03/effect.png: material reference only"
+  ],
+  "status": "completed-two-images",
+  "prompt": "Edit image 1, the white 3D cutaway, by adding realistic SI1.0 grey retail materials and soft studio lighting ONLY. Image 2 is a material reference ONLY, never transfer its layout, camera, ceiling, products, signage or stools. Keep the EXACT image-1 camera, framing, all silhouettes, empty background, floor outline, wall heights, positions, dimensions and occlusion. Keep two tall structural blocks on the LEFT, one near and one far; keep the rear full-height wall and low cutaway side walls. Keep EXACTLY TWO central rectangular white-top tables, EACH on ONE wide solid rectangular grey pedestal base as visible in image 1, no legs on these two tables. On the LEFT side, the back half is a CLOSED cashier cabinet with door seams; the front half is a separate narrow OPEN UNDERNEATH unboxing table with FOUR slim legs, partially obscured by the front structural block. Do not fill this open space with doors, drawers, panels or a pedestal. Along the back wall retain exactly TWO adjoining OPEN SHELF cabinets, EACH with one middle vertical divider and two tiers of visible open storage bays. Keep every visible shelf and divider, do not close fronts or add drawers. Use pale grey matte stone floor without conspicuous new grid, satin grey metal bodies, off-white tabletops, grey wall. Improve only material realism, ambient occlusion and soft shadows. No extra furniture, no products, no signs, no text, no ceiling, no remodel. Preserve the 3:2 aspect ratio. The goal is geometry-preserving material enhancement, not interior redesign."
+}

@@ -1,0 +1,1 @@
+import fs from 'node:fs/promises';const path='../../素材库/01_catalog/classification/stores.json';const rows=JSON.parse(await fs.readFile(path,'utf8'));const r=rows.find(r=>r.file==='马来西亚Pavilion KL.pdf');r.scanError='PDF.js解析失败：Bad (uncompressed) XRef entry: 27R；待替代解析器或原文件核验';await fs.writeFile(path,JSON.stringify(rows,null,2));

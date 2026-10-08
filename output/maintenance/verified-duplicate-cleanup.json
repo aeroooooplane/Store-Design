@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-04",
+  "source_archive": "设计标准/SI1.0手册文件修改版2.zip",
+  "source_archive_sha256": "ffb088cfe1f41b3229f9a0e010653547356884d3c55cf4d7639205ee4139869f",
+  "files": [
+    {
+      "path": "tmp/si-standards-review/SI1-part1.pptx",
+      "bytes": 10491636,
+      "sha256": "3f7b02c247acd3bf2e6ec74b72d900e67c87364051f92efc4d87fb75770c25a6",
+      "archive_member": "SI1.0手册文件修改版2/手册1-2章.pptx（修改版2).pptx"
+    },
+    {
+      "path": "tmp/si-standards-review/SI1-part2.pptx",
+      "bytes": 205767545,
+      "sha256": "eca3dc143751cc762ddf6e1800914981edd6f4944a11f151c912576852cac6af",
+      "archive_member": "SI1.0手册文件修改版2/手册3章（修改版2）.pptx"
+    },
+    {
+      "path": "tmp/si-standards-review/SI1-part3.pptx",
+      "bytes": 76266407,
+      "sha256": "c9b6546504b742670c7cbeb6b2777b9f8738f16dbb41b2150546c6c684da898b",
+      "archive_member": "SI1.0手册文件修改版2/手册4章(修改版2).pptx"
+    },
+    {
+      "path": "tmp/si-standards-review/SI1-part4.pptx",
+      "bytes": 19252090,
+      "sha256": "4bedb015a8bb99615a2fbabda83dcf72e971263345717cd57de2a3e360642701",
+      "archive_member": "SI1.0手册文件修改版2/手册5章（修改版2）.pptx"
+    },
+    {
+      "path": "tmp/si-standards-review/SI1-part5.pptx",
+      "bytes": 5785561,
+      "sha256": "82f8f6c008a07219e3e6424484904f640c29fd6bae05444526b122683cadd210",
+      "archive_member": "SI1.0手册文件修改版2/手册6-8章（修改版2）.pptx"
+    }
+  ],
+  "removed_bytes": 317563239,
+  "restore": "python tools/cleanup-review-copies.py --restore"
+}

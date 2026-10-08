@@ -1,0 +1,8 @@
+{
+  "schemaVersion": 1,
+  "preferredOrder": ["asset-408124", "asset-323015", "asset-752992", "asset-666964"],
+  "planningDefaults": {"table": "asset-408124", "display": "asset-323015", "counter": "asset-752992"},
+  "categoryOverrides": {"asset-666964": "table", "asset-752992": "counter"},
+  "installation": "floor",
+  "note": "仅开放已转换的落地软装；不包含墙画、标识或悬挂屏。偏好编号固定已有生成方案的规格，不规定模型尺寸。SI归属沿用目录判断，制造合规、正面与材质仍待验收。"
+}

@@ -1,0 +1,18 @@
+{
+  "stores": 11,
+  "train_stores": 9,
+  "validation_stores": 2,
+  "train_images": 18,
+  "validation_images": 4,
+  "styles": {
+    "SI1.0": {
+      "train": 10,
+      "validation": 2
+    },
+    "SI2.0": {
+      "train": 8,
+      "validation": 2
+    }
+  },
+  "status": "pilot only; labels and within-PDF layout correspondence still need designer review"
+}

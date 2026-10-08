@@ -1,0 +1,22 @@
+{
+  "masterRecords": 925,
+  "scope": "all_records（为匹配全量本地PDF，读取汇总整表，不限分享链接视图）",
+  "hasMore": false,
+  "files": 418,
+  "matched": 417,
+  "completeTags": 417,
+  "conflicts": 6,
+  "status": {
+    "总表已匹配，PDF版本待核对": 411,
+    "总表与PDF线索冲突，待核对": 6,
+    "未匹配总表": 1
+  },
+  "groups": {
+    "SI2.0 边厅店": 55,
+    "SI1.0 边厅店": 256,
+    "SI1.0 中岛店": 90,
+    "SI1.0 专区": 11,
+    "SI2.0 中岛店": 5
+  },
+  "syncedAt": "2026-09-23T06:17:30.625Z"
+}

@@ -1,0 +1,64 @@
+{
+  "id": "PDF-296",
+  "file": "珠海华发商都授权体验店.pdf",
+  "tag": "SI2.0 中岛店",
+  "recordId": "recvvyql5I6hJn",
+  "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5I6hJn",
+  "sourceSha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c",
+  "labelSource": "飞书总表；尚未逐店核对历史设计版本",
+  "reviewedAt": "2026-09-23",
+  "areaM2": 24,
+  "areaSource": "图纸文字标注；非实测",
+  "observation": "中岛；两张体验桌，侧边高配件柜及收银拆箱柜；商场吊顶高度是外部条件。",
+  "assets": [
+    {
+      "role": "plan",
+      "page": 2,
+      "file": "plan-p2-crop.png",
+      "fullPage": "plan-p2-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 2601,
+      "fullHeight": 1839
+    },
+    {
+      "role": "render",
+      "page": 4,
+      "file": "render-p4-full.png",
+      "fullPage": "render-p4-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1132
+    },
+    {
+      "role": "render",
+      "page": 5,
+      "file": "render-p5-full.png",
+      "fullPage": "render-p5-full.png",
+      "cropNormalized": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "fullWidth": 1600,
+      "fullHeight": 1132
+    }
+  ],
+  "trainingEligible": false,
+  "status": "已视觉选页，待几何标注及版本核验",
+  "limitations": [
+    "同一PDF内配对，不保证平面与效果图每个道具完全一致",
+    "尚无道具坐标、朝向与精确外轮廓标注",
+    "本地哈希用于追溯，不表示已与飞书附件内容比对"
+  ]
+}

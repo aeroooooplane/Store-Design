@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-01",
+  "source_assets": 90,
+  "named_skp_count": 90,
+  "unique_names": 90,
+  "hash_identical_count": 90,
+  "prior_native_pass_count": 90,
+  "reviewed_standard_pages": 360,
+  "additional_native_views_assets": 24,
+  "counts_by_si": {
+    "通用": 42,
+    "SI1.0": 12,
+    "非标": 10,
+    "SI2.0": 26
+  },
+  "counts_by_match": {
+    "通用": 33,
+    "对应": 22,
+    "变体": 16,
+    "非标": 18,
+    "待确认": 1
+  },
+  "total_model_bytes": 1305136900,
+  "note": "This run validates byte-identical naming copies. The 90 native load checks were from the existing batch; this run additionally loaded 24 ambiguous assets for 96 views. No source model was resaved.",
+  "catalogue_link_checks": [
+    {
+      "file": "模型预览目录.html",
+      "cards": 90,
+      "local_links_checked": 370,
+      "missing": []
+    },
+    {
+      "file": "标准阅读索引.html",
+      "cards": 360,
+      "local_links_checked": 720,
+      "missing": []
+    }
+  ],
+  "additional_native_view_images": 96,
+  "source_master_sha256_after": "ded29dc7f6741972d5d630272bef92e996b6839a51e64bfe3a2ed1b5d513b943",
+  "source_master_unchanged": true,
+  "table_naming_update_20261002": {
+    "renamed_files": 8,
+    "hash_identical": 8,
+    "all_library_files": 90,
+    "catalogue_links_valid": 370
+  }
+}

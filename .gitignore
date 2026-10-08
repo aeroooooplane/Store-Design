@@ -1,0 +1,96 @@
+# Python environments and caches
+.venv/
+.venv4070/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Node / frontend dependencies and build output
+node_modules/
+dist/
+build/
+.cache/
+coverage/
+*.map
+
+# Native binaries and generated training/runtime artifacts
+*.exe
+*.dll
+*.lib
+*.pyd
+*.so
+*.dylib
+tools/training/runtime/
+/output/pdf/
+/tmp/pdf-clean-qa/
+
+# Local derived evidence and asset payloads (sources/scripts remain tracked)
+/output/web-qa/
+/tools/sketchup/exports/
+/素材库/04_assets/incoming/first-experience-table-20260925/
+/素材库/04_assets/incoming/split-20260925/
+/素材库/04_assets/incoming/split-20260925-v2/
+/素材库/04_training/corpus-audit-4070/
+/素材库/04_training/rtx4070-clean-pilot/
+/素材库/04_training/rtx4070-pilot/
+/素材库/04_training/pdf-cleaning-v2/
+/素材库/06_case_packs/20260925-four-hour/
+/tmp/su-preflight.json
+/tmp/su-reentry-test-result.txt
+/tmp/validation-progress.txt
+
+# Large source assets staged for later upload
+各门店图纸/
+道具模型/
+*.pdf
+*.skp
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Local SI source material and reproducible visual payloads; keep manifests,
+# generators and audit records visible to source control.
+/设计标准/
+/素材库/04_assets/按SI标准命名-20261001/预览/
+/素材库/04_assets/按SI标准命名-20261001/平面图例/*.png
+/素材库/04_assets/按SI标准命名-20261001/平面图例/*.jpg
+/素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/*.png
+/output/si-standards-review-20261001/标准页面/
+/output/si-standards-review-20261001/*.png
+/output/maintenance/before-swiss/
+/output/maintenance/*.png
+/tmp/si-standards-review/SI1-part*/
+/tmp/si-standards-review/SI2/
+/tmp/si-standards-review/*.pptx
+/tmp/si-standards-review/*.jpg
+/tmp/si-standards-review/model-views/
+/tmp/clean-legends/*.png
+/tmp/clean-legends/before-publish/
+/tmp/plan-legends/*.png
+/tmp/plan-legends/*.jpg
+
+# Local preview logs and transient native-render status (retain reproduction scripts).
+/tmp/si-website-preview.log
+/tmp/si-website-preview-error.log
+/tmp/clean-legends/all.flag
+/tmp/clean-legends/progress.json
+/tmp/clean-legends/review.html
+
+# Local secrets and environment files
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Reproducible per-asset geometry dumps; published provenance stays in manifest.
+/tmp/clean-legends/asset-*-geometry.json

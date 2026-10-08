@@ -1,0 +1,685 @@
+[
+  {
+    "id": "PDF-113",
+    "file": "哈尔滨松雷广场授权体验店.pdf",
+    "path": "各门店图纸/哈尔滨松雷广场授权体验店.pdf",
+    "sizeMB": 16.93,
+    "si": "SI1.0",
+    "shopType": "中岛店",
+    "combinedTag": "SI1.0 中岛店",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": "recvvyql5IHkTo",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IHkTo",
+    "pageCount": 47,
+    "planPages": [
+      2,
+      12,
+      13,
+      14
+    ],
+    "constructionPages": [
+      2,
+      3,
+      10,
+      11,
+      12,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      44,
+      45
+    ],
+    "imagePages": [
+      4,
+      5,
+      6,
+      7,
+      40
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "边厅店"
+        ],
+        "excerpt": "边厅店   SIDE HALL STORE  影石 - 哈尔滨松雷广场店  平面图 & 效果图 & 施工图  2025.11. 21"
+      }
+    ],
+    "documentTypeHint": "边厅店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5IHkTo",
+        "name": "哈尔滨松雷广场授权体验店",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "中岛"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "哈尔滨松雷广场授权体验店",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "中岛"
+      ],
+      "designStart": "2025-10-24T00:00:00.000+08:00"
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "20251121 影石-哈尔滨松雷广场【边厅店】全套图纸  .pdf",
+        "size": 17751951
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.515Z"
+  },
+  {
+    "id": "PDF-228",
+    "file": "武汉武商MALL授权体验店.pdf",
+    "path": "各门店图纸/武汉武商MALL授权体验店.pdf",
+    "sizeMB": 16.19,
+    "si": "SI1.0",
+    "shopType": "边厅店",
+    "combinedTag": "SI1.0 边厅店",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": "recvvyql5IsAUf",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IsAUf",
+    "pageCount": 45,
+    "planPages": [
+      2,
+      14,
+      15,
+      16
+    ],
+    "constructionPages": [
+      2,
+      3,
+      12,
+      13,
+      15,
+      16,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      43,
+      44,
+      45
+    ],
+    "imagePages": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "中岛店"
+        ],
+        "excerpt": "中岛店   ISLAND STORE  影石 - 武汉武商 MALL 店  平面图 & 效果图 & 施工图  202 6 .01.0 6"
+      }
+    ],
+    "documentTypeHint": "中岛店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5IsAUf",
+        "name": "武汉武商MALL授权体验店 ",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "边厅"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "武汉武商MALL授权体验店 ",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "边厅"
+      ],
+      "designStart": "2025-11-17T00:00:00.000+08:00"
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "20260106 影石-武汉武商MALL【边厅店】全套图纸.pdf",
+        "size": 16971932
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.553Z"
+  },
+  {
+    "id": "PDF-269",
+    "file": "深圳华强北（华强一店）.pdf",
+    "path": "各门店图纸/深圳华强北（华强一店）.pdf",
+    "sizeMB": 8.15,
+    "si": null,
+    "shopType": null,
+    "combinedTag": null,
+    "siSource": null,
+    "typeSource": null,
+    "status": "未匹配总表",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": null,
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&view=vewd4CdQN9",
+    "pageCount": 11,
+    "planPages": [
+      2
+    ],
+    "constructionPages": [
+      5
+    ],
+    "imagePages": [
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "边厅店"
+        ],
+        "excerpt": "深圳华强北边厅店项目  Shenzhen huaqiang north hall store project  方案汇报文本  PROPOSAL PRESENTATION"
+      }
+    ],
+    "documentTypeHint": "边厅店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [],
+    "matchMethod": null,
+    "masterName": null
+  },
+  {
+    "id": "PDF-326",
+    "file": "菲律宾SM City Clark 中岛.pdf",
+    "path": "各门店图纸/菲律宾SM City Clark 中岛.pdf",
+    "sizeMB": 6.06,
+    "si": "SI1.0",
+    "shopType": "专区",
+    "combinedTag": "SI1.0 专区",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": "中岛店",
+    "filenameEvidence": "菲律宾SM City Clark 中岛",
+    "recordId": "recvvyql5Icn3O",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5Icn3O",
+    "pageCount": 25,
+    "planPages": [
+      5,
+      6,
+      7,
+      13,
+      16
+    ],
+    "constructionPages": [
+      3,
+      4,
+      5,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      23,
+      24
+    ],
+    "imagePages": [],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "中岛店"
+        ],
+        "excerpt": "广州城市意创建筑设计咨询有限公司 Cityinno Architecture Design Co., Ltd.  影石-菲律宾SM City Clark中岛店-装饰图纸(总面积：7.29m²)  Insta360-SM City Clark Koisk Store(Total area:7.29m²)  2025.06"
+      }
+    ],
+    "documentTypeHint": "中岛店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5Icn3O",
+        "name": "菲律宾SM City Clark 中岛",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "专区"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "菲律宾SM City Clark 中岛",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "专区"
+      ],
+      "designStart": null
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "影石-菲律宾SM City Clark中岛店-终稿图纸20250609.pdf",
+        "size": 6355500
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.589Z"
+  },
+  {
+    "id": "PDF-331",
+    "file": "菲律宾SM City Pampanga 中岛.pdf",
+    "path": "各门店图纸/菲律宾SM City Pampanga 中岛.pdf",
+    "sizeMB": 9.38,
+    "si": "SI1.0",
+    "shopType": "专区",
+    "combinedTag": "SI1.0 专区",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": "中岛店",
+    "filenameEvidence": "菲律宾SM City Pampanga 中岛",
+    "recordId": "recvvyql5Iml0c",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5Iml0c",
+    "pageCount": 27,
+    "planPages": [
+      9,
+      10,
+      18
+    ],
+    "constructionPages": [
+      7,
+      8,
+      9,
+      15,
+      17,
+      18,
+      19,
+      20,
+      21,
+      25,
+      26
+    ],
+    "imagePages": [
+      2,
+      3,
+      4,
+      5,
+      14,
+      16
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "中岛店"
+        ],
+        "excerpt": "广州城市意创建筑设计咨询有限公司 Cityinno Architecture Design Co., Ltd.  影石-菲律宾SM City Pampanga中岛店-装饰图纸(总面积：7.29m²)  Insta360-Philippines SM City Pampanga Store(Total area:7.29m²)  2025.06"
+      }
+    ],
+    "documentTypeHint": "中岛店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5Iml0c",
+        "name": "菲律宾SM City Pampanga 中岛",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "专区"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "菲律宾SM City Pampanga 中岛",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "专区"
+      ],
+      "designStart": null
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "影石-菲律宾SM City Pampanga中岛店-终稿图纸20250627.pdf",
+        "size": 9831686
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.591Z"
+  },
+  {
+    "id": "PDF-350",
+    "file": "西安龙首印象城授权体验店.pdf",
+    "path": "各门店图纸/西安龙首印象城授权体验店.pdf",
+    "sizeMB": 16.44,
+    "si": "SI1.0",
+    "shopType": "边厅店",
+    "combinedTag": "SI1.0 边厅店",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": "recvvyql5INS1x",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5INS1x",
+    "pageCount": 47,
+    "planPages": [
+      2,
+      13,
+      14,
+      15
+    ],
+    "constructionPages": [
+      2,
+      3,
+      10,
+      11,
+      12,
+      13,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      43,
+      44,
+      45
+    ],
+    "imagePages": [
+      4,
+      5,
+      6,
+      7,
+      39
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "中岛店"
+        ],
+        "excerpt": "中岛店   ISLAND STORE  影石 - 西安龙首印象城店  平面图 & 效果图 & 施工图  2025.11.12"
+      }
+    ],
+    "documentTypeHint": "中岛店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5INS1x",
+        "name": "西安龙首印象城授权体验店",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "边厅"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "西安龙首印象城授权体验店",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "边厅"
+      ],
+      "designStart": "2025-09-29T00:00:00.000+08:00"
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "20251112 影石-西安龙首印象城【中岛店】全套图纸.pdf",
+        "size": 17239170
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.596Z"
+  },
+  {
+    "id": "PDF-404",
+    "file": "韩国现代百货新村店-현대신촌점.pdf",
+    "path": "各门店图纸/韩国现代百货新村店-현대신촌점.pdf",
+    "sizeMB": 16.85,
+    "si": "SI1.0",
+    "shopType": "边厅店",
+    "combinedTag": "SI1.0 边厅店",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表与PDF线索冲突，待核对",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": "recvvyql5ILK7d",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5ILK7d",
+    "pageCount": 5,
+    "planPages": [
+      2
+    ],
+    "constructionPages": [
+      2
+    ],
+    "imagePages": [
+      3,
+      4,
+      5
+    ],
+    "scanError": null,
+    "typeEvidence": [
+      {
+        "page": 1,
+        "labels": [
+          "中岛店"
+        ],
+        "excerpt": "影石韩国首尔新村中岛店平面方案（总面积：   25.6m   2 )  lnsta360-South Korea Seoul Sincun Nakajima Store (Total area:25.6m芍  2025.0 6  广州城市意创建筑设计咨询有限公司 Cityinno Architecture Design Co., Ltd.   CiM11110"
+      }
+    ],
+    "documentTypeHint": "中岛店",
+    "siEvidence": [],
+    "siCandidate": null,
+    "candidateBasis": null,
+    "provisionalTag": null,
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5ILK7d",
+        "name": "韩国现代百货新村店-현대신촌점",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "边厅"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "韩国现代百货新村店-현대신촌점",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "边厅"
+      ],
+      "designStart": "2025-05-18T00:00:00.000+08:00"
+    },
+    "labelConflict": true,
+    "sameSizeAttachments": [
+      {
+        "name": "影石-韩国首尔新村中岛店-平面方案效果图20250603.pdf",
+        "size": 17672868
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.614Z"
+  },
+  {
+    "id": "PDF-418",
+    "file": "马来西亚Pavilion KL.pdf",
+    "path": "各门店图纸/马来西亚Pavilion KL.pdf",
+    "sizeMB": 7.47,
+    "si": "SI1.0",
+    "shopType": "中岛店",
+    "combinedTag": "SI1.0 中岛店",
+    "siSource": "飞书总表.SI形象",
+    "typeSource": "飞书总表.铺型",
+    "status": "总表已匹配，PDF版本待核对",
+    "filenameTypeHint": null,
+    "filenameEvidence": null,
+    "recordId": "recvvyql5IyTXp",
+    "sourceUrl": "https://arashivision.feishu.cn/wiki/Ynt0wThwNiaX8Dk0Gm2c2XlJnsc?table=tbl394Uo6M3FuGaN&record=recvvyql5IyTXp",
+    "pageCount": null,
+    "planPages": [],
+    "constructionPages": [],
+    "imagePages": [],
+    "scanError": "PDF.js解析失败：Bad (uncompressed) XRef entry: 27R；待替代解析器或原文件核验",
+    "matchCandidates": [
+      {
+        "recordId": "recvvyql5IyTXp",
+        "name": "马来西亚Pavilion KL",
+        "si": [
+          "si1.0"
+        ],
+        "shopType": [
+          "中岛"
+        ]
+      }
+    ],
+    "matchMethod": "项目名称精确/格式标准化",
+    "masterName": "马来西亚Pavilion KL",
+    "masterRaw": {
+      "si": [
+        "si1.0"
+      ],
+      "shopType": [
+        "中岛"
+      ],
+      "designStart": null
+    },
+    "labelConflict": false,
+    "sameSizeAttachments": [
+      {
+        "name": "影石-马来西亚Pavilion KL中岛店-装饰图纸-20251211(2).pdf",
+        "size": 7828075
+      }
+    ],
+    "attachmentSizeMatches": true,
+    "labelSyncedAt": "2026-09-23T06:17:30.619Z"
+  }
+]

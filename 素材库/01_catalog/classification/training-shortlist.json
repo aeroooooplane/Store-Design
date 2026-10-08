@@ -1,0 +1,226 @@
+[
+  {
+    "id": "PDF-159",
+    "file": "徐州苏宁授权体验店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IFtRv",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-160",
+    "file": "德国汉堡市Saturn店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IJK7E",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-194",
+    "file": "新疆宏景数码广场二店.pdf",
+    "tag": "SI1.0 边厅店",
+    "recordId": "recvvyql5IUZVu",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-051",
+    "file": "北京三里屯太古里授权体验店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5IfFeR",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-171",
+    "file": "成都数码广场恒驰照材专卖店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5I7R46",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-239",
+    "file": "沈阳百脑汇照材专卖店.pdf",
+    "tag": "SI1.0 中岛店",
+    "recordId": "recvvyql5IXM8r",
+    "planCandidates": [
+      1
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-079",
+    "file": "南京德基广场直营店.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5IKxE6",
+    "planCandidates": [
+      2
+    ],
+    "imageCandidates": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      9
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-083",
+    "file": "南宁万象城.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5ITOaR",
+    "planCandidates": [
+      2
+    ],
+    "imageCandidates": [
+      1,
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-071",
+    "file": "北京首都机场T3授权体验店.pdf",
+    "tag": "SI2.0 边厅店",
+    "recordId": "recvvyql5I9xqt",
+    "planCandidates": [
+      5,
+      7
+    ],
+    "imageCandidates": [
+      1,
+      8,
+      10,
+      16,
+      17,
+      18
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-417",
+    "file": "马来西亚Pavilion Damansara Heights.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5IRzop",
+    "planCandidates": [
+      2
+    ],
+    "imageCandidates": [
+      2,
+      3,
+      4,
+      6,
+      8,
+      10,
+      12,
+      13
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-293",
+    "file": "澳门威尼斯人.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5IlD0g",
+    "planCandidates": [
+      2,
+      14,
+      15,
+      16
+    ],
+    "imageCandidates": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  },
+  {
+    "id": "PDF-296",
+    "file": "珠海华发商都授权体验店.pdf",
+    "tag": "SI2.0 中岛店",
+    "recordId": "recvvyql5I6hJn",
+    "planCandidates": [
+      2,
+      13,
+      14,
+      15
+    ],
+    "imageCandidates": [
+      4,
+      5,
+      6,
+      7,
+      8,
+      37
+    ],
+    "attachmentSizeMatches": true,
+    "status": "待视觉筛选平面/效果图并核对版本；尚不可训练"
+  }
+]

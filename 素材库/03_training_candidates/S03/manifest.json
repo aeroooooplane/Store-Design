@@ -1,0 +1,77 @@
+﻿{
+    "storeId":  "S03",
+    "source":  "各门店图纸/上海星光摄影城照材专卖店.pdf",
+    "si":  "SI1.0",
+    "shopType":  "边厅店",
+    "splitGroup":  "上海星光摄影城",
+    "usage":  "裁切流程试验，非正式训练集",
+    "trainingEligible":  false,
+    "reasons":  [
+                    "总表标签已同步，历史图纸版本仍待核对",
+                    "道具/轮廓/入口标注未完成",
+                    "同门店所有页面必须归同一数据划分"
+                ],
+    "assets":  [
+                   {
+                       "asset":  "plan-crop.png",
+                       "sourcePage":  1,
+                       "kind":  "平面图",
+                       "cropNormalized":  [
+                                              0.16,
+                                              0.02,
+                                              0.78,
+                                              0.92
+                                          ],
+                       "review":  "裁切已视觉检查；图纸尺寸仍需结构化标注"
+                   },
+                   {
+                       "asset":  "effect-page-2.png",
+                       "sourcePage":  2,
+                       "kind":  "效果图",
+                       "cropNormalized":  [
+                                              0,
+                                              0,
+                                              1,
+                                              1
+                                          ],
+                       "review":  "整页参考，500px预览，不作为最终训练分辨率"
+                   },
+                   {
+                       "asset":  "effect-page-3.png",
+                       "sourcePage":  3,
+                       "kind":  "效果图",
+                       "cropNormalized":  [
+                                              0,
+                                              0,
+                                              1,
+                                              1
+                                          ],
+                       "review":  "整页参考，500px预览，不作为最终训练分辨率"
+                   },
+                   {
+                       "asset":  "effect-page-4.png",
+                       "sourcePage":  4,
+                       "kind":  "效果图",
+                       "cropNormalized":  [
+                                              0,
+                                              0,
+                                              1,
+                                              1
+                                          ],
+                       "review":  "整页参考，500px预览，不作为最终训练分辨率"
+                   },
+                   {
+                       "asset":  "effect-page-5.png",
+                       "sourcePage":  5,
+                       "kind":  "效果图",
+                       "cropNormalized":  [
+                                              0,
+                                              0,
+                                              1,
+                                              1
+                                          ],
+                       "review":  "整页参考，500px预览，不作为最终训练分辨率"
+                   }
+               ],
+    "recordId":  "recvvyql5I39uc"
+}
