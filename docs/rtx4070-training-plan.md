@@ -25,7 +25,7 @@
 
 ## 实际抽查发现
 
-已渲染并查看14个定向样本，逐页结论在 `素材库/04_training/corpus-audit-4070/visual-review.json`：
+已渲染并查看14个定向样本，逐页结论在 `资源库/99_历史归档/训练实验/corpus-audit-4070/visual-review.json`：
 
 - PDF-039/041 的封面写着“效果图”，关键词会误判成训练图片。
 - PDF-045/049 是设计施工说明，正文提及“立面”，并非立面图。
@@ -48,7 +48,7 @@
 `train-style.py` 新增独立输出目录、数据目录、BF16选项、输入图片哈希校验和显存峰值记录；非空输出目录拒绝覆盖。示例：
 
 ```powershell
-& tools/training/.venv4070/Scripts/python.exe tools/training/train-style.py --mode gpu --style SI1.0 --steps 80 --precision bf16 --output-dir 素材库/04_training/rtx4070-pilot/SI1.0-run01
+& tools/training/.venv4070/Scripts/python.exe tools/training/train-style.py --mode gpu --style SI1.0 --steps 80 --precision bf16 --output-dir 资源库/99_历史归档/训练实验/rtx4070-pilot/SI1.0-run01
 ```
 
 GPU依赖和基模已下载，实际运行使用额外的 `--variant fp16 --revision 451f4fe16113bff5a5d2269ed5ad43b0592e9a14`，完整命令见训练README。不要复用已有实验目录。旧tiny模型权重不能用于SD1.5。

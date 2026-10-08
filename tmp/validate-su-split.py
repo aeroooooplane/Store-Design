@@ -6,7 +6,7 @@ from PIL import Image
 # structure/CRC without allocating a full uncompressed bitmap.
 Image.MAX_IMAGE_PIXELS=500_000_000
 BASE=Path(__file__).resolve().parents[1]
-ROOT=BASE/'素材库/04_assets/incoming/split-20260925-v2'
+ROOT=BASE/'资源库/90_处理过程与审核/模型拆分/split-20260925-v2'
 def check(folder):
  p=folder/'prop.dae';meta=json.loads((folder/'metadata.json').read_text('utf8'))
  r=ET.parse(p).getroot();ns={'c':r.tag.split('}')[0][1:]};ids={e.get('id'):e for e in r.iter() if e.get('id')}

@@ -4,7 +4,7 @@ require 'json'
 require 'fileutils'
 module CleanPlanLegends
  ROOT='E:/效果图生成器/Store-Design'
- BASE=ROOT+'/素材库/04_assets/按SI标准命名-20261001'
+ BASE=ROOT+'/资源库/04_软装道具模型/单件模型'
  OUT=ROOT+'/tmp/clean-legends'
  SUPPORT={3=>'组件#16',4=>'组件#16',21=>'组#149',50=>'组#408',53=>'组#464',70=>'组#748',88=>'组#729',89=>'组#914'}
  def self.section(entities,t,z,segments,active=false,target=nil)

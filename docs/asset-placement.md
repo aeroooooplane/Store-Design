@@ -10,7 +10,7 @@
 
 ## 数据来源与再生成
 
-1. `素材库/04_assets/按SI标准命名-20261001/manifest.json`：已审核名称、变体、分类及源编号。
+1. `资源库/04_软装道具模型/单件模型/manifest.json`：已审核名称、变体、分类及源编号。
 2. `demo/public/assets/su/<id>/conversion.json`：本机转换结果、原始 DAE/GLB 哈希、尺寸与坐标系。
 3. `demo/src/data/placement-policy.json`：落地范围、用途映射、固定规划默认编号。默认编号避免接入新资产后改变现有布局算法规格。
 4. `demo/src/data/placement-manifest.json`：生成的摆放清单；前端不再维护四条尺寸常量。

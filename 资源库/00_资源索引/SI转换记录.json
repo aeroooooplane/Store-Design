@@ -1,0 +1,31 @@
+[
+  {
+    "source": "资源库/05_店铺形象设计标准/原始PPTX/SI1.0手册-店铺形象设计标准.pptx",
+    "output": "资源库/05_店铺形象设计标准/PDF/SI1.0手册-店铺形象设计标准.pdf",
+    "slides": 171,
+    "bytes": 18472878,
+    "original_source": "D:\\text demo\\店铺形象设计标准\\SI1.0手册-店铺形象设计标准.pptx",
+    "pdf": "资源库/05_店铺形象设计标准/PDF/SI1.0手册-店铺形象设计标准.pdf",
+    "pages": 171,
+    "all_pages_rendered": true,
+    "blank_candidates": [],
+    "sha256": "b63c0cf2862341363b41d626aededc0445af221e7910d966a6d8d834bebbd38c",
+    "visual_review": "all contact sheets and full-page samples reviewed; no obvious conversion defects",
+    "version_confirmed": true,
+    "cover_correction": "规范手册 SI 1.0 / 2025"
+  },
+  {
+    "source": "资源库/05_店铺形象设计标准/原始PPTX/SI2.0手册-店铺形象设计标准.pptx",
+    "output": "资源库/05_店铺形象设计标准/PDF/SI2.0手册-店铺形象设计标准.pdf",
+    "slides": 149,
+    "bytes": 20836480,
+    "original_source": "D:\\text demo\\店铺形象设计标准\\SI2.0手册-店铺形象设计标准.pptx",
+    "pdf": "资源库/05_店铺形象设计标准/PDF/SI2.0手册-店铺形象设计标准.pdf",
+    "pages": 149,
+    "all_pages_rendered": true,
+    "blank_candidates": [],
+    "sha256": "11cc0295c4f44919eb022055ac16774119787a25e81f3433b8cfd2cf586db55b",
+    "visual_review": "all contact sheets and full-page samples reviewed; no obvious conversion defects",
+    "version_confirmed": true
+  }
+]

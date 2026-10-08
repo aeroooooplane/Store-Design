@@ -2,7 +2,7 @@ import fs from 'node:fs/promises';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {chromium} from '../../demo/node_modules/@playwright/test/index.mjs';
-const root=new URL('../../素材库/03_training_candidates/batch01/',import.meta.url);
+const root=new URL('../../资源库/99_历史归档/训练候选/batch01/',import.meta.url);
 const rows=JSON.parse(await fs.readFile(new URL('manifest.json',root),'utf8'));
 assert.equal(rows.length,12);
 assert.equal(rows.flatMap(r=>r.assets).filter(a=>a.role==='render').length,22);

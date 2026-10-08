@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-const dir='../../素材库/01_catalog/classification';
+const dir='../../资源库/00_资源索引/历史目录/classification';
 const master=(await fs.readFile(dir+'/master.ndjson','utf8')).trim().split(/\r?\n/).map(JSON.parse);
 const rows=JSON.parse(await fs.readFile(dir+'/stores.json','utf8'));
 const norm=s=>(s||'').normalize('NFKC').toLowerCase().replace(/\.pdf$/,'').replace(/\s+/g,'');

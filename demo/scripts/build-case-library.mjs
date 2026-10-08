@@ -6,7 +6,7 @@ import {fileURLToPath} from 'node:url'
 import path from 'node:path'
 
 const root=fileURLToPath(new URL('../../',import.meta.url))
-const source='素材库/06_case_packs/20260925-four-hour'
+const source='资源库/90_处理过程与审核/门店案例/20260925-four-hour'
 const hashes={}
 async function read(name){
   const bytes=await readFile(path.join(root,source,name))

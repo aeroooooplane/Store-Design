@@ -4,7 +4,7 @@ import {fileURLToPath,pathToFileURL} from 'node:url'
 import path from 'node:path'
 const root=fileURLToPath(new URL('../../',import.meta.url))
 const work=path.join(root,'tmp/clean-legends')
-const manifest=JSON.parse(await readFile(path.join(root,'素材库/04_assets/按SI标准命名-20261001/manifest.json'),'utf8'))
+const manifest=JSON.parse(await readFile(path.join(root,'资源库/04_软装道具模型/单件模型/manifest.json'),'utf8'))
 let cards=[]
 for(const a of manifest.assets.filter(a=>a.plan_legend)){
  const file=path.join(work,a.asset_id+'-proof.png')

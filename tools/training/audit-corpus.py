@@ -9,6 +9,9 @@ import subprocess
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys
+sys.path.insert(0, str(ROOT/"tools"))
+from resource_library import source_pdf_path
 CATEGORIES = {
     'plan': r'平面布置|家具定位|原始平面|原始结构|FURNISHING\s*PLAN|FLOOR\s*PLAN',
     'elevation': r'立面图|ELEVATION',
@@ -35,6 +38,9 @@ def reference_files(ref):
             info, name = entry.split(b'\t', 1)
             if name.lower().endswith(b'.pdf'):
                 indexed.append((info.split()[2], name))
+    if not indexed:
+        registry=json.loads((ROOT/'资源库/00_资源索引/门店资源索引.json').read_text(encoding='utf-8'))
+        return [{'path':e['historical_path'],'expected_sha256':e['sha256'],'expected_bytes':e['bytes']} for e in registry['sources']]
     batch = subprocess.check_output(['git', 'cat-file', '--batch'], cwd=ROOT,
                                     input=b''.join(oid+b'\n' for oid, _ in indexed))
     files = []
@@ -93,22 +99,22 @@ def scan_pdf(path, sha, cache):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--ref', default='origin/main')
-    ap.add_argument('--out', default='素材库/04_training/corpus-audit-4070')
+    ap.add_argument('--out', default='资源库/99_历史归档/训练实验/corpus-audit-4070')
     ap.add_argument('--scan', action='store_true')
     args = ap.parse_args()
     out = ROOT / args.out
     out.mkdir(parents=True, exist_ok=True)
     cache = out / 'page-index'
     cache.mkdir(exist_ok=True)
-    catalog = json.loads((ROOT/'素材库/01_catalog/classification/stores.json').read_text(encoding='utf8'))
+    catalog = json.loads((ROOT/'资源库/00_资源索引/历史目录/classification/stores.json').read_text(encoding='utf8'))
     by_name = {row['file']: row for row in catalog}
-    ignored = {row['file'] for row in json.loads((ROOT/'素材库/01_catalog/classification/ignored-conflicts.json').read_text(encoding='utf8'))}
+    ignored = {row['file'] for row in json.loads((ROOT/'资源库/00_资源索引/历史目录/classification/ignored-conflicts.json').read_text(encoding='utf8'))}
     rows, totals, kinds, samples, hashes = [], collections.Counter(), collections.Counter(), [], collections.defaultdict(list)
     if (out/'visual-samples.json').exists():
         samples = json.loads((out/'visual-samples.json').read_text(encoding='utf8'))
     refs = reference_files(args.ref)
     for i, row in enumerate(refs):
-        path = ROOT / row['path']
+        path = source_pdf_path(row['path'])
         old = by_name.get(path.name, {})
         row.update(store_id=old.get('id'), master_record_id=old.get('recordId'),
                    master_si=old.get('si'), master_shop_type=old.get('shopType'),
@@ -167,7 +173,7 @@ def main():
         if (out/'visual-review.json').exists():
             reviewed = {(r['store_id'],r['page']):r for r in json.loads((out/'visual-review.json').read_text(encoding='utf8'))['samples']}
         for n, sample in enumerate(samples):
-            with fitz.open(ROOT/sample['path']) as doc:
+            with fitz.open(source_pdf_path(sample['path'])) as doc:
                 page = doc[sample['page']-1]
                 pix = page.get_pixmap(matrix=fitz.Matrix(900/max(page.rect.width,page.rect.height),900/max(page.rect.width,page.rect.height)), alpha=False)
                 img = f'review-{n:02d}.png'

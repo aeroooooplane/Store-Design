@@ -36,7 +36,7 @@
 
 均相对项目根目录：
 
-- `素材库/06_case_packs/20260925-four-hour/README.md`：使用入口、范围和准入门槛。
+- `资源库/90_处理过程与审核/门店案例/20260925-four-hour/README.md`：使用入口、范围和准入门槛。
 - 同目录`retrieval-examples.md`及JSON：平面辅助与保结构渲染两个证据返回示例，非已实现检索服务。
 - 同目录`layout-references.jsonl`、`render-references.jsonl`：按源页/图像定位。
 - 同目录`layout-gap-matrix.json`、`PDF-088/wall-column-evidence.json`：已知尺寸与缺失几何。

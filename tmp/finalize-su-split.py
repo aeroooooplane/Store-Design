@@ -1,7 +1,7 @@
 from pathlib import Path
 import hashlib, json, datetime, zipfile
 BASE=Path(__file__).resolve().parents[1]
-ROOT=BASE/'素材库/04_assets/incoming/split-20260925-v2'
+ROOT=BASE/'资源库/90_处理过程与审核/模型拆分/split-20260925-v2'
 manifest_path=ROOT/'manifest.json'
 m=json.loads(manifest_path.read_text('utf8'))
 assert m['status']=='export_complete', 'Batch still running'
@@ -69,7 +69,7 @@ precision_path=ROOT/'asset-37758059/precision-fix.json'
 if precision_path.exists() and native.get('asset-37758059',{}).get('status')=='passed':
     precision=json.loads(precision_path.read_text('utf8'));precision['status']='reopened_and_verified'
     precision_path.write_text(json.dumps(precision,ensure_ascii=False,indent=2),encoding='utf8')
-src=BASE/'道具模型/影石通用模型.skp'
+src=BASE/'资源库/04_软装道具模型/原始整包/影石通用模型.skp'
 with src.open('rb') as f: actual=hashlib.file_digest(f,'sha256').hexdigest()
 expected=m['source_sha256_before_batch'].lower()
 integrity={'source':str(src),'bytes':src.stat().st_size,'sha256_before':expected,'sha256_after':actual,'unchanged':actual==expected,'checked_at':datetime.datetime.now().astimezone().isoformat()}

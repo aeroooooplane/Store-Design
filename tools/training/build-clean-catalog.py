@@ -47,7 +47,7 @@ def native_records(pages):
 def main():
     from PIL import Image,ImageOps,ImageDraw
     parser=argparse.ArgumentParser()
-    parser.add_argument('--out',default='output/pdf/cleaned-v2')
+    parser.add_argument('--out',default='资源库/90_处理过程与审核/PDF拆分')
     parser.add_argument('--partial',action='store_true')
     args=parser.parse_args()
     out=(ROOT/args.out).resolve()
@@ -61,7 +61,7 @@ def main():
     catalog=out/'native-catalog'
     (catalog/'thumbs').mkdir(parents=True,exist_ok=True)
     reviews={}
-    review_path=ROOT/'素材库/04_training/pdf-cleaning-v2/visual-decisions.json'
+    review_path=ROOT/'资源库/99_历史归档/训练实验/pdf-cleaning-v2/visual-decisions.json'
     if not review_path.exists():
         review_path=catalog/'visual-decisions.json'
     if review_path.exists():

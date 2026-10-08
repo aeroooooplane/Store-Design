@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';import {fileURLToPath} from 'node:url';
-const root=new URL('../../素材库/05_render_benchmark/s03-v1/',import.meta.url),read=async p=>JSON.parse(await fs.readFile(new URL(p,root),'utf8'));
+const root=new URL('../../资源库/99_历史归档/渲染对照/s03-v1/',import.meta.url),read=async p=>JSON.parse(await fs.readFile(new URL(p,root),'utf8'));
 const manifest=await read('manifest.json'),review=await read('review.json');
 const cases=review.cases;for(const c of cases)for(const f of [`white-view${c.view}.png`,`${c.style}-view${c.view}.png`,`AI-${c.style}-view${c.view}.png`])await fs.access(new URL(f,root));
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

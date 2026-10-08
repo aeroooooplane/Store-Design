@@ -2,8 +2,8 @@ import {readFile, realpath, stat} from 'node:fs/promises'
 import {createReadStream} from 'node:fs'
 import path from 'node:path'
 
-const library='素材库/04_assets/按SI标准命名-20261001'
-const review='output/si-standards-review-20261001'
+const library='资源库/04_软装道具模型/单件模型'
+const review='资源库/05_店铺形象设计标准/历史阅读记录'
 const guide='docs/si-standards-review-20261001.md'
 const localPeer=value=>['127.0.0.1','::1','::ffff:127.0.0.1'].includes(value)
 const localHost=value=>/^(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(value||'')
@@ -35,6 +35,7 @@ export function localModelLibraryPlugin(root){
         for(const file of [asset.plan_legend.file,asset.plan_legend.context,asset.plan_legend.raw_file].filter(Boolean))add('/model-library/'+file,library+'/'+file)
       }
       add('/si-standards/标准阅读索引.html',review+'/标准阅读索引.html')
+      for(const version of ['SI1.0','SI2.0'])add('/si-standards/'+version+'.pdf','资源库/05_店铺形象设计标准/PDF/'+version+'手册-店铺形象设计标准.pdf')
       add('/si-guide/si-standards-review-20261001.md',guide)
       if(url.startsWith('/si-standards/')){
         const pages=JSON.parse(await readFile(path.join(root,review,'逐页文字与阅读索引.json'),'utf8'))
@@ -52,10 +53,10 @@ export function localModelLibraryPlugin(root){
         let content=await readFile(file,'utf8')
         const back='<nav class="catalogue-nav" style="padding:16px 32px;border-bottom:1px solid #111;background:white;color:#111"><a style="color:inherit;margin-right:24px" href="/">← 返回设计工作台</a><a style="color:inherit" href="/model-library/">SI 模型库</a></nav>'
         if(ext==='.md')content='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>模型库使用与命名记录</title>'+back+'<pre style="white-space:pre-wrap;max-width:1000px;margin:32px auto;padding:20px;font:16px/1.8 sans-serif">'+escape(content)+'</pre></html>'
-        else content=content.replace('<header>',back+'<header>').replaceAll('../../../output/si-standards-review-20261001/','/si-standards/').replaceAll('../../../docs/','/si-guide/')
+        else content=content.replace('<header>',back+'<header>').replaceAll('../../05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../资源库/05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../docs/','/si-guide/')
         res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Content-Length',Buffer.byteLength(content));return res.end(req.method==='HEAD'?undefined:content)
       }
-      const types={'.jpg':'image/jpeg','.png':'image/png','.json':'application/json; charset=utf-8','.csv':'text/csv; charset=utf-8','.skp':'application/octet-stream'}
+      const types={'.pdf':'application/pdf','.jpg':'image/jpeg','.png':'image/png','.json':'application/json; charset=utf-8','.csv':'text/csv; charset=utf-8','.skp':'application/octet-stream'}
       res.setHeader('Content-Type',types[ext]||'application/octet-stream')
       res.setHeader('Content-Length',info.size)
       if(ext==='.skp'||ext==='.csv')res.setHeader('Content-Disposition',`attachment; filename*=UTF-8''${encodeURIComponent(path.basename(file))}`)

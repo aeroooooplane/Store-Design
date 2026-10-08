@@ -1,7 +1,7 @@
 from pathlib import Path
 import json,html,shutil,collections
 BASE=Path(__file__).resolve().parents[1]
-ROOT=BASE/'素材库/04_assets/incoming/split-20260925-v2'
+ROOT=BASE/'资源库/90_处理过程与审核/模型拆分/split-20260925-v2'
 m=json.loads((ROOT/'manifest.json').read_text('utf8'))
 summary=json.loads((ROOT/'validation-summary.json').read_text('utf8'))
 checks={r['asset_id']:r for r in summary['results']}

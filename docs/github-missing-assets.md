@@ -12,8 +12,8 @@
 
 旧分类总表有418条，当前Git仅收录361个PDF路径。其余57条的准确文件名与稳定PDF编号见：
 
-- `素材库/04_training/corpus-audit-4070/missing-from-github.json`
-- 三份指针的详细信息：`素材库/04_training/corpus-audit-4070/unavailable-local.json`
+- `资源库/99_历史归档/训练实验/corpus-audit-4070/missing-from-github.json`
+- 三份指针的详细信息：`资源库/99_历史归档/训练实验/corpus-audit-4070/unavailable-local.json`
 
 “未在Git中找到同名文件”不等于原件永久丢失；可能位于另一台电脑、改过名或从未上传，需要核对后补齐，不自动按相似名字合并。
 

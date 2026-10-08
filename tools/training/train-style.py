@@ -23,10 +23,10 @@ def main():
     if args.precision=='bf16' and (device!='cuda' or not torch.cuda.is_bf16_supported()):raise RuntimeError('BF16 requires a supported CUDA GPU')
     dtype=torch.bfloat16 if args.precision=='bf16' else torch.float32
     def amp():return torch.autocast('cuda',dtype=dtype) if dtype!=torch.float32 else nullcontext()
-    out=args.output_dir or ROOT/'素材库/04_training/style-v0/runs'/f'{args.mode}-{args.style}'
+    out=args.output_dir or ROOT/'资源库/99_历史归档/训练实验/style-v0/runs'/f'{args.mode}-{args.style}'
     if out.exists() and any(out.iterdir()):raise FileExistsError(f'Use a fresh --output-dir; existing experiment preserved: {out}')
     out.mkdir(parents=True,exist_ok=True)
-    data=args.data_dir or ROOT/'素材库/04_training/style-v0';raw=(data/'metadata.jsonl').read_bytes();allrows=[json.loads(line) for line in raw.decode('utf8').splitlines()];rows=[r for r in allrows if r['style']==args.style];train=[r for r in rows if r['split']=='train'];val=[r for r in rows if r['split']=='validation']
+    data=args.data_dir or ROOT/'资源库/99_历史归档/训练实验/style-v0';raw=(data/'metadata.jsonl').read_bytes();allrows=[json.loads(line) for line in raw.decode('utf8').splitlines()];rows=[r for r in allrows if r['style']==args.style];train=[r for r in rows if r['split']=='train'];val=[r for r in rows if r['split']=='validation']
     for row in rows:
         if hashlib.sha256((data/row['file_name']).read_bytes()).hexdigest()!=row['image_sha256']:raise ValueError('Image hash mismatch: '+row['file_name'])
     assert train and val and not {r['store_id'] for r in train}&{r['store_id'] for r in val}

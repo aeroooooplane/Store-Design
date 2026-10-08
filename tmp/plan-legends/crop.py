@@ -1,7 +1,7 @@
 from pathlib import Path
 import fitz,json,hashlib
 from PIL import Image,ImageDraw,ImageFont
-root=Path(r'E:\效果图生成器\Store-Design');base=root/'素材库/04_assets/按SI标准命名-20261001';work=root/'tmp/plan-legends';dest=base/'平面图例';dest.mkdir(exist_ok=True)
+root=Path(r'E:\效果图生成器\Store-Design');base=root/'资源库/04_软装道具模型/单件模型';work=root/'tmp/plan-legends';dest=base/'平面图例';dest.mkdir(exist_ok=True)
 refs={r['store_id']:r for r in json.loads((work/'case-refs.json').read_text('utf-8')) if r['role']=='design_plan'}
 # Coordinates on the inspected 1888 x 1335 page overview, converted to original PDF points.
 specs=[

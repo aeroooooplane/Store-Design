@@ -7,7 +7,7 @@ import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
 
 const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
-const source=path.join(repo,'素材库/04_assets/incoming/split-20260925-v2')
+const source=path.join(repo,'资源库/90_处理过程与审核/模型拆分/split-20260925-v2')
 const manifest=JSON.parse(await readFile(path.join(source,'manifest.json'),'utf8'))
 const validation=JSON.parse(await readFile(path.join(source,'validation-summary.json'),'utf8'))
 const ids=process.argv.slice(2)
@@ -51,7 +51,7 @@ try{
         return {base64:btoa(binary),dimensions,reloadedDimensions:sizes,warnings:[...new Set(warnings)]}
       }finally{console.warn=originalWarn}
     },{url:'/@fs/'+dae.replaceAll('\\','/'),expected:{w,d,h}})
-    const output=path.join(demo,'public/assets/su',id)
+    const output=path.join(repo,'资源库/04_软装道具模型/网页模型',id)
     await mkdir(output,{recursive:true})
     const glb=Buffer.from(result.base64,'base64')
     await writeFile(path.join(output,'model.glb'),glb,{flag:'wx'})

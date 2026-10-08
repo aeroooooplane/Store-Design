@@ -3,8 +3,8 @@ from pathlib import Path
 import json, zipfile, xml.etree.ElementTree as ET, html
 
 ROOT = Path(__file__).resolve().parents[2]
-SOURCE = ROOT / '道具模型/影石通用模型.skp'
-OUT = ROOT / '素材库/04_assets/source-inspection'
+SOURCE = ROOT / '资源库/04_软装道具模型/原始整包/影石通用模型.skp'
+OUT = ROOT / '资源库/04_软装道具模型/原始模型预检'
 OUT.mkdir(parents=True, exist_ok=True)
 rows, materials = [], []
 with zipfile.ZipFile(SOURCE) as archive:

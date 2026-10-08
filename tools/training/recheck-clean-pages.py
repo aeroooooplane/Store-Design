@@ -8,7 +8,7 @@ import numpy as np
 spec=importlib.util.spec_from_file_location('clean',Path(__file__).with_name('clean-pdfs.py'))
 clean=importlib.util.module_from_spec(spec)
 spec.loader.exec_module(clean)
-out=clean.ROOT/'output/pdf/cleaned-v2'
+out=clean.ROOT/'资源库/90_处理过程与审核/PDF拆分'
 fitz.TOOLS.mupdf_display_errors(False)
 fitz.TOOLS.mupdf_display_warnings(False)
 results=[]
@@ -40,6 +40,6 @@ for path in sorted((out/'file-results').glob('*.json')):
             print(json.dumps(measurement),flush=True)
     clean.dump(path,result)
     results.append(result)
-sources=json.loads((clean.ROOT/'素材库/04_training/corpus-audit-4070/files.json').read_text(encoding='utf8'))
+sources=json.loads((clean.ROOT/'资源库/99_历史归档/训练实验/corpus-audit-4070/files.json').read_text(encoding='utf8'))
 clean.dump(out/'fresh-visual-recheck.json',{'checks':checks,'matched':sum(c['match'] for c in checks),'remaining':sum(not c['match'] for c in checks)})
 clean.aggregate(results,out,[r for r in sources if r['status']!='verified'],sum(r['status']=='verified' for r in sources))

@@ -27,10 +27,10 @@
 
 每组先取4家至少有3张候选图的门店，共20家；优先已有大图审核记录，再考虑视角数量（最多按5张计优先级），最后按记录ID确定顺序。每店按来源页顺序取首、中、末3张，组成60张起始复核样本。这不是随机样本，也不是训练/验证划分，更不保证三张恰好代表不同视角。
 
-- 浏览：`output/pdf/cleaned-v2/next-review/index.html`
-- 可复核选择清单：`素材库/04_training/pdf-cleaning-v2/next-review-selection.json`
-- 全部图像的来源与总表字段：`output/pdf/cleaned-v2/master-labels/image-labels.jsonl`
-- 第四轮初审：`output/pdf/cleaned-v2/native-catalog/review-round4/index.html`
+- 浏览：`资源库/90_处理过程与审核/PDF拆分/next-review/index.html`
+- 可复核选择清单：`资源库/99_历史归档/训练实验/pdf-cleaning-v2/next-review-selection.json`
+- 全部图像的来源与总表字段：`资源库/90_处理过程与审核/PDF拆分/master-labels/image-labels.jsonl`
+- 第四轮初审：`资源库/90_处理过程与审核/PDF拆分/native-catalog/review-round4/index.html`
 
 ## 推进顺序
 

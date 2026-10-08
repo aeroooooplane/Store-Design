@@ -1,9 +1,9 @@
 import json,hashlib,math
 from pathlib import Path
 from safetensors import safe_open
-ROOT=Path(__file__).resolve().parents[2];base=ROOT/'素材库/04_training'
+ROOT=Path(__file__).resolve().parents[2];base=ROOT/'资源库/99_历史归档/训练实验'
 labels=json.loads((base/'layout-v0/labels.json').read_text(encoding='utf8'));m=json.loads((base/'layout-v0/model.json').read_text(encoding='utf8'));ev=json.loads((base/'layout-v0/evaluation.json').read_text(encoding='utf8'))
-ignored=json.loads((ROOT/'素材库/01_catalog/classification/ignored-conflicts.json').read_text(encoding='utf8'));assert not {x['id'] for x in ignored}&{x['id'] for x in labels}
+ignored=json.loads((ROOT/'资源库/00_资源索引/历史目录/classification/ignored-conflicts.json').read_text(encoding='utf8'));assert not {x['id'] for x in ignored}&{x['id'] for x in labels}
 assert m['count']==11 and len(ev['folds'])==11 and m['history'][-1]['loss']<m['history'][0]['loss'];assert m['datasetSha256']==hashlib.sha256((base/'layout-v0/labels.json').read_bytes()).hexdigest()
 for f in ev['folds']:assert f['testId'] not in f['trainIds'] and len(f['trainIds'])==10
 raw=(base/'style-v0/metadata.jsonl').read_bytes();rows=[json.loads(s) for s in raw.decode('utf8').splitlines()];assert len(rows)==22

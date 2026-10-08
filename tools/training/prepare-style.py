@@ -3,8 +3,8 @@ import json, hashlib
 from pathlib import Path
 from PIL import Image, ImageOps, ImageDraw
 ROOT=Path(__file__).resolve().parents[2]
-SOURCE=ROOT/'素材库/03_training_candidates/batch01'
-OUT=ROOT/'素材库/04_training/style-v0'
+SOURCE=ROOT/'资源库/99_历史归档/训练候选/batch01'
+OUT=ROOT/'资源库/99_历史归档/训练实验/style-v0'
 OUT.mkdir(parents=True,exist_ok=True)
 rows=json.loads((SOURCE/'manifest.json').read_text(encoding='utf-8'))
 validation={'PDF-194','PDF-296'}

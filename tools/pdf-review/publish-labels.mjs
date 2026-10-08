@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-const dir='../../素材库/01_catalog/classification';const rows=JSON.parse(await fs.readFile(dir+'/stores.json','utf8')),summary=JSON.parse(await fs.readFile(dir+'/match-summary.json','utf8'));
+const dir='../../资源库/00_资源索引/历史目录/classification';const rows=JSON.parse(await fs.readFile(dir+'/stores.json','utf8')),summary=JSON.parse(await fs.readFile(dir+'/match-summary.json','utf8'));
 const shortlist=[];for(const tag of ['SI1.0 边厅店','SI1.0 中岛店','SI2.0 边厅店','SI2.0 中岛店']){const candidates=rows.filter(r=>r.combinedTag===tag&&!r.labelConflict&&!r.scanError&&r.planPages.length).sort((a,b)=>Number(b.attachmentSizeMatches)-Number(a.attachmentSizeMatches)||a.pageCount-b.pageCount);for(const r of candidates.slice(0,3))shortlist.push({id:r.id,file:r.file,tag,recordId:r.recordId,planCandidates:r.planPages,imageCandidates:r.imagePages,attachmentSizeMatches:r.attachmentSizeMatches,status:'待视觉筛选平面/效果图并核对版本；尚不可训练'})}
 await fs.writeFile(dir+'/training-shortlist.json',JSON.stringify(shortlist,null,2));await fs.writeFile(dir+'/review-required.json',JSON.stringify(rows.filter(r=>r.labelConflict||!r.recordId||r.scanError),null,2));
 const safe=JSON.stringify(rows).replace(/</g,'\\u003c');

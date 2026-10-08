@@ -1,0 +1,11 @@
+{
+  "tool": "built-in imagegen",
+  "SI1": "Edit image 1, the white 3D cutaway model, into a polished photorealistic architectural model render of an Insta360 SI1.0 camera store. Image 2 is MATERIAL AND LIGHTING REFERENCE ONLY; do not copy its geometry or camera. Preserve exactly image 1 camera angle, framing, perspective, floor perimeter, two tall LEFT structural blocks, rear wall, low right cutaway wall, TWO central rectangular four-legged tables, two adjoining rear low cabinets, and left-side narrow cashier/unboxing furniture; preserve all object footprints, heights and occlusion. Keep the open top and cutaway walls, no ceiling or storefront added. Apply satin light-grey metal, pale grey tile, white countertops and realistic soft light/contact shadows. Do not change table legs to pedestals. No new furniture, chairs, displays, products, posters or decorative geometry. For this geometry test do not add text or logos. Output one image, same 3:2 composition, no collage. Image 1 is absolute geometric authority.",
+  "SI2": "Edit image 1, the white 3D cutaway model, into a polished photorealistic architectural model render of an Insta360 SI2.0 camera store. Image 2 is MATERIAL AND LIGHTING REFERENCE ONLY; do not copy its geometry or camera. Preserve exactly image 1 camera angle, framing, perspective, floor perimeter, two tall LEFT structural blocks, rear wall, low right cutaway wall, TWO central rectangular four-legged tables, two adjoining rear low cabinets, and left-side narrow cashier/unboxing furniture; preserve all object footprints, heights and occlusion. Keep the open top and cutaway walls, no ceiling or storefront added. Apply matte charcoal wall and cabinet cladding, pale grey tile, white countertops and dark metal table legs and realistic soft light/contact shadows. Do not change table legs to pedestals. No new furniture, chairs, displays, products, posters or decorative geometry. For this geometry test do not add text or logos. Output one image, same 3:2 composition, no collage. Image 1 is absolute geometric authority.",
+  "views": [
+    0,
+    2
+  ],
+  "referenceSI1": "demo/public/references/s03/effect.png",
+  "referenceSI2": "资源库/99_历史归档/训练候选/batch01/PDF-083/render-p7-full.png"
+}

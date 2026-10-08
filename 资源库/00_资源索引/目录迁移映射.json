@@ -1,0 +1,3008 @@
+{
+  "mapping": {
+    "素材库/04_assets/按SI标准命名-20261001": "资源库/04_软装道具模型/单件模型",
+    "素材库/04_assets/source-inspection": "资源库/04_软装道具模型/原始模型预检",
+    "素材库/04_assets/incoming": "资源库/90_处理过程与审核/模型拆分",
+    "素材库/04_assets/handoff": "tools/sketchup/handoff",
+    "素材库/01_catalog": "资源库/00_资源索引/历史目录",
+    "素材库/02_previews": "资源库/90_处理过程与审核/页面预览",
+    "素材库/03_training_candidates": "资源库/99_历史归档/训练候选",
+    "素材库/04_training": "资源库/99_历史归档/训练实验",
+    "素材库/05_render_benchmark": "资源库/99_历史归档/渲染对照",
+    "素材库/06_case_packs": "资源库/90_处理过程与审核/门店案例",
+    "output/si-standards-review-20261001": "资源库/05_店铺形象设计标准/历史阅读记录",
+    "output/pdf/cleaned-v2": "资源库/90_处理过程与审核/PDF拆分",
+    "道具模型": "资源库/04_软装道具模型/原始整包",
+    "店铺形象设计标准": "资源库/05_店铺形象设计标准/原始PPTX"
+  },
+  "removed_pdf_copies": 418,
+  "external_originals_verified": 418,
+  "historical_git_ref": "df8bdb6c40911ac84a6953c71e995e856e3c26d1",
+  "updated_files": [
+    {
+      "old": "demo/README.md",
+      "new": "demo/README.md",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/build-asset-library.mjs",
+      "new": "demo/scripts/build-asset-library.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/build-case-library.mjs",
+      "new": "demo/scripts/build-case-library.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/build-placement-manifest.mjs",
+      "new": "demo/scripts/build-placement-manifest.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/check-model-library.mjs",
+      "new": "demo/scripts/check-model-library.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/convert-su-assets.mjs",
+      "new": "demo/scripts/convert-su-assets.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/review-clean-legends.mjs",
+      "new": "demo/scripts/review-clean-legends.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/scripts/validate-fuzzy-layout.mjs",
+      "new": "demo/scripts/validate-fuzzy-layout.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/server/local-evidence.mjs",
+      "new": "demo/server/local-evidence.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/server/local-model-library.mjs",
+      "new": "demo/server/local-model-library.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "demo/src/data/asset-library.json",
+      "new": "demo/src/data/asset-library.json",
+      "text_updated": true
+    },
+    {
+      "old": "demo/src/data/case-library.json",
+      "new": "demo/src/data/case-library.json",
+      "text_updated": true
+    },
+    {
+      "old": "demo/src/sample.js",
+      "new": "demo/src/sample.js",
+      "text_updated": true
+    },
+    {
+      "old": "demo/tests/asset-index-builder.spec.js",
+      "new": "demo/tests/asset-index-builder.spec.js",
+      "text_updated": true
+    },
+    {
+      "old": "demo/tests/catalog.spec.js",
+      "new": "demo/tests/catalog.spec.js",
+      "text_updated": true
+    },
+    {
+      "old": "demo/tests/local-evidence.spec.js",
+      "new": "demo/tests/local-evidence.spec.js",
+      "text_updated": true
+    },
+    {
+      "old": "docs/README.md",
+      "new": "docs/README.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/archive/research/github-research.md",
+      "new": "docs/archive/research/github-research.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/asset-ingestion-plan.md",
+      "new": "docs/asset-ingestion-plan.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/asset-inventory.md",
+      "new": "docs/asset-inventory.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/asset-placement.md",
+      "new": "docs/asset-placement.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/case-pack-4h-handoff.md",
+      "new": "docs/case-pack-4h-handoff.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/case-pack-4h-progress.md",
+      "new": "docs/case-pack-4h-progress.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/data-preparation-next-steps.md",
+      "new": "docs/data-preparation-next-steps.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/file-organization-20260926.md",
+      "new": "docs/file-organization-20260926.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/furniture-geometry-v2.md",
+      "new": "docs/furniture-geometry-v2.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/github-missing-assets.md",
+      "new": "docs/github-missing-assets.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/layout-library.md",
+      "new": "docs/layout-library.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/layout-observations-batch01.md",
+      "new": "docs/layout-observations-batch01.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/pdf-cleaning.md",
+      "new": "docs/pdf-cleaning.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/real-sample-review.md",
+      "new": "docs/real-sample-review.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/render-benchmark.md",
+      "new": "docs/render-benchmark.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/rtx4070-clean-pilot-results.md",
+      "new": "docs/rtx4070-clean-pilot-results.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/rtx4070-pilot-results.md",
+      "new": "docs/rtx4070-pilot-results.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/rtx4070-training-plan.md",
+      "new": "docs/rtx4070-training-plan.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/si-source-recovery.md",
+      "new": "docs/si-source-recovery.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/si-standards-review-20261001.md",
+      "new": "docs/si-standards-review-20261001.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/storage-audit-20260927.md",
+      "new": "docs/storage-audit-20260927.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/su-real-assets.md",
+      "new": "docs/su-real-assets.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/training-results.md",
+      "new": "docs/training-results.md",
+      "text_updated": true
+    },
+    {
+      "old": "docs/web-8h-progress.md",
+      "new": "docs/web-8h-progress.md",
+      "text_updated": true
+    },
+    {
+      "old": "output/si-standards-review-20261001/分类与图例校验.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/分类与图例校验.json",
+      "text_updated": false
+    },
+    {
+      "old": "output/si-standards-review-20261001/原标准文件校验.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/原标准文件校验.json",
+      "text_updated": true
+    },
+    {
+      "old": "output/si-standards-review-20261001/标准阅读索引.html",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/标准阅读索引.html",
+      "text_updated": true
+    },
+    {
+      "old": "output/si-standards-review-20261001/纯净图例图片检查.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/纯净图例图片检查.json",
+      "text_updated": false
+    },
+    {
+      "old": "output/si-standards-review-20261001/纯净图例校验.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/纯净图例校验.json",
+      "text_updated": false
+    },
+    {
+      "old": "output/si-standards-review-20261001/网站接入检查.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/网站接入检查.json",
+      "text_updated": false
+    },
+    {
+      "old": "output/si-standards-review-20261001/补充原生视图检查.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/补充原生视图检查.json",
+      "text_updated": false
+    },
+    {
+      "old": "output/si-standards-review-20261001/逐页文字与阅读索引.json",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/逐页文字与阅读索引.json",
+      "text_updated": true
+    },
+    {
+      "old": "output/si-standards-review-20261001/逐项识别记录.txt",
+      "new": "资源库/05_店铺形象设计标准/历史阅读记录/逐项识别记录.txt",
+      "text_updated": false
+    },
+    {
+      "old": "tmp/build-su-catalog.py",
+      "new": "tmp/build-su-catalog.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/check-su-source-mesh.rb",
+      "new": "tmp/check-su-source-mesh.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/check-su-visibility.rb",
+      "new": "tmp/check-su-visibility.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/export-su-variant-fix.rb",
+      "new": "tmp/export-su-variant-fix.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/finalize-su-split.py",
+      "new": "tmp/finalize-su-split.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/plan-legends/case-refs.json",
+      "new": "tmp/plan-legends/case-refs.json",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/plan-legends/classify.py",
+      "new": "tmp/plan-legends/classify.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/plan-legends/crop.py",
+      "new": "tmp/plan-legends/crop.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/plan-legends/extra-crops.py",
+      "new": "tmp/plan-legends/extra-crops.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/run-su-split-20260925-interrupted.rb",
+      "new": "tmp/run-su-split-20260925-interrupted.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/run-su-split-20260925.rb",
+      "new": "tmp/run-su-split-20260925.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/SI1-part2-text.json",
+      "new": "tmp/si-standards-review/SI1-part2-text.json",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/build-named-library.py",
+      "new": "tmp/si-standards-review/build-named-library.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/contacts.py",
+      "new": "tmp/si-standards-review/contacts.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/model-views.rb",
+      "new": "tmp/si-standards-review/model-views.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/update-table-names-20261002.py",
+      "new": "tmp/si-standards-review/update-table-names-20261002.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/si-standards-review/verify-delivery.py",
+      "new": "tmp/si-standards-review/verify-delivery.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/validate-su-split.py",
+      "new": "tmp/validate-su-split.py",
+      "text_updated": true
+    },
+    {
+      "old": "tmp/verify-su-native.rb",
+      "new": "tmp/verify-su-native.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/batch-samples.mjs",
+      "new": "tools/pdf-review/batch-samples.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/build-catalog.mjs",
+      "new": "tools/pdf-review/build-catalog.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/classify.mjs",
+      "new": "tools/pdf-review/classify.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/detail.mjs",
+      "new": "tools/pdf-review/detail.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/enrich.mjs",
+      "new": "tools/pdf-review/enrich.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/export-reviewed-batch.mjs",
+      "new": "tools/pdf-review/export-reviewed-batch.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/match-master.mjs",
+      "new": "tools/pdf-review/match-master.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/proof-pages.mjs",
+      "new": "tools/pdf-review/proof-pages.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/publish-labels.mjs",
+      "new": "tools/pdf-review/publish-labels.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/record-error.mjs",
+      "new": "tools/pdf-review/record-error.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/review.mjs",
+      "new": "tools/pdf-review/review.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/si-evidence.mjs",
+      "new": "tools/pdf-review/si-evidence.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/training-pilot.mjs",
+      "new": "tools/pdf-review/training-pilot.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/pdf-review/validate-reviewed-batch.mjs",
+      "new": "tools/pdf-review/validate-reviewed-batch.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/build-ai-v2.mjs",
+      "new": "tools/render-benchmark/build-ai-v2.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/build-gallery.mjs",
+      "new": "tools/render-benchmark/build-gallery.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/build-geometry-gallery.mjs",
+      "new": "tools/render-benchmark/build-geometry-gallery.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/capture.mjs",
+      "new": "tools/render-benchmark/capture.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/finalize.mjs",
+      "new": "tools/render-benchmark/finalize.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/verify-ai-v2.mjs",
+      "new": "tools/render-benchmark/verify-ai-v2.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/render-benchmark/verify.mjs",
+      "new": "tools/render-benchmark/verify.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/README.md",
+      "new": "tools/sketchup/README.md",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/build_model_catalogue.py",
+      "new": "tools/sketchup/build_model_catalogue.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/inspect_archive.py",
+      "new": "tools/sketchup/inspect_archive.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/publish_clean_legends.py",
+      "new": "tools/sketchup/publish_clean_legends.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/render_clean_legends.rb",
+      "new": "tools/sketchup/render_clean_legends.rb",
+      "text_updated": true
+    },
+    {
+      "old": "tools/sketchup/另一台电脑操作说明.md",
+      "new": "tools/sketchup/另一台电脑操作说明.md",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/README.md",
+      "new": "tools/training/README.md",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/audit-corpus.py",
+      "new": "tools/training/audit-corpus.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/build-clean-catalog.py",
+      "new": "tools/training/build-clean-catalog.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/build-report.mjs",
+      "new": "tools/training/build-report.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/clean-pdfs.py",
+      "new": "tools/training/clean-pdfs.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/prepare-layout.mjs",
+      "new": "tools/training/prepare-layout.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/prepare-style.py",
+      "new": "tools/training/prepare-style.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/recheck-clean-pages.py",
+      "new": "tools/training/recheck-clean-pages.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/train-layout.mjs",
+      "new": "tools/training/train-layout.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/train-style.py",
+      "new": "tools/training/train-style.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/validate-training.py",
+      "new": "tools/training/validate-training.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/verify-clean-pdfs.py",
+      "new": "tools/training/verify-clean-pdfs.py",
+      "text_updated": true
+    },
+    {
+      "old": "tools/training/verify-report.mjs",
+      "new": "tools/training/verify-report.mjs",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/01_catalog/classification/README.md",
+      "new": "资源库/00_资源索引/历史目录/classification/README.md",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/ignored-conflicts.json",
+      "new": "资源库/00_资源索引/历史目录/classification/ignored-conflicts.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/index.html",
+      "new": "资源库/00_资源索引/历史目录/classification/index.html",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/01_catalog/classification/master.manifest.json",
+      "new": "资源库/00_资源索引/历史目录/classification/master.manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/master.ndjson",
+      "new": "资源库/00_资源索引/历史目录/classification/master.ndjson",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/match-summary.json",
+      "new": "资源库/00_资源索引/历史目录/classification/match-summary.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海TPY中心.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海TPY中心.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海七宝领展授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海七宝领展授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海万象城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海万象城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海世博天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海世博天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海五角场万达授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海五角场万达授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海北外滩来福士授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海北外滩来福士授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海嘉里合集授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海嘉里合集授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海新嘉中心.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海新嘉中心.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海新天地东台里授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海新天地东台里授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海星光摄影城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海星光摄影城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海月星环球港授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海月星环球港授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海浦东嘉里城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海浦东嘉里城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海港汇恒隆授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海港汇恒隆授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海环龙商场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海环龙商场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海第一八佰伴授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海第一八佰伴授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海长宁荟聚授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海长宁荟聚授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海长宁龙之梦.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海长宁龙之梦.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海闵行凯德梦之龙照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海闵行凯德梦之龙照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海陆家嘴正大广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海陆家嘴正大广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海陆家嘴项目（改造）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海陆家嘴项目（改造）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海黄埔日月光中心授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海黄埔日月光中心授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海龙湖宝山天街.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海龙湖宝山天街.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/上海龙湖闵行天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/上海龙湖闵行天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/东莞万象滨海购物公园.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/东莞万象滨海购物公园.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/东莞悠兰里街区授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/东莞悠兰里街区授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/中山大信新都汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/中山大信新都汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/中山石歧万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/中山石歧万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/临沂万象汇.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/临沂万象汇.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/临沂百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/临沂百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/乌鲁木齐cc mall授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/乌鲁木齐cc mall授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/乌鲁木齐德汇万达（边厅改中岛）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/乌鲁木齐德汇万达（边厅改中岛）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/乌鲁木齐经开万达授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/乌鲁木齐经开万达授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/乌鲁木齐高新万达广场.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/乌鲁木齐高新万达广场.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/云南曲靖店中店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/云南曲靖店中店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山创意产业园授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山创意产业园授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山千灯湖环宇城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山千灯湖环宇城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山欢乐海岸Plus.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山欢乐海岸Plus.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山禅城NOVA岭南站授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山禅城NOVA岭南站授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山禅西环宇城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山禅西环宇城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山金铂中心授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山金铂中心授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/佛山顺德万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/佛山顺德万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/保定北国先天下授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/保定北国先天下授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/保定爱情广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/保定爱情广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/保定西大街照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/保定西大街照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/兰州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/兰州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/兰州苏宁MAX照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/兰州苏宁MAX照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/包河万象汇.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/包河万象汇.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京798创意园授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京798创意园授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京万柳华联授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京万柳华联授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京三里屯太古里授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京三里屯太古里授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京东坝万达授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京东坝万达授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京中关村大融城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京中关村大融城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京五棵松万达授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京五棵松万达授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京五棵松照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京五棵松照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京亦庄龙湖天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京亦庄龙湖天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京合生汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京合生汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京悠唐广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京悠唐广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京房山熙悦天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京房山熙悦天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京望京凯德授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京望京凯德授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京朝阳大悦城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京朝阳大悦城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京清河万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京清河万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京王府井银泰IN88授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京王府井银泰IN88授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京荟聚授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京荟聚授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京蓝色港湾授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京蓝色港湾授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京西三旗万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京西三旗万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京西单大悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京西单大悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京超极合生汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京超极合生汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京通州万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京通州万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京顺义华联授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京顺义华联授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京首都机场T3授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京首都机场T3授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京马连道照材专区.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京马连道照材专区.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/北京龙湖丽泽天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/北京龙湖丽泽天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/华强北电子世界二店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/华强北电子世界二店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京万象天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京万象天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京仙林金鹰授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京仙林金鹰授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京华海3c照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京华海3c照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京城北万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京城北万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京德基广场直营店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京德基广场直营店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京桥北弘阳广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京桥北弘阳广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京江北虹悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京江北虹悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南京金陵天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南京金陵天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南宁万象城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南宁万象城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南宁惠工电子科技城（迁址）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南宁惠工电子科技城（迁址）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南昌T16授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南昌T16授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南昌万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南昌万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南昌和昌里街区授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南昌和昌里街区授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南昌武商mall.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南昌武商mall.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/南阳万悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/南阳万悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/印尼Ratu plaza.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/印尼Ratu plaza.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/印尼雅加达 kota kasablanka.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/印尼雅加达 kota kasablanka.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/厦门SM授权体验店（扩铺）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/厦门SM授权体验店（扩铺）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/厦门大悦城授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/厦门大悦城授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/厦门百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/厦门百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾三创生活（换址）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾三创生活（换址）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾台中汉神洲际中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾台中汉神洲际中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾台南市南纺购物中心.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾台南市南纺购物中心.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾新北板桥大远百.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾新北板桥大远百.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾新北裕隆城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾新北裕隆城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾桃园大江国际.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾桃园大江国际.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾远东新竹Big City中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾远东新竹Big City中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾高雄Nova中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾高雄Nova中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/台湾高雄汉神巨蛋中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/台湾高雄汉神巨蛋中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥大蜀山半边街授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥大蜀山半边街授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥新粮仓授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥新粮仓授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥瑶海万象天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥瑶海万象天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/合肥罍街照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/合肥罍街照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/呼和浩特万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/呼和浩特万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/呼和浩特诚信数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/呼和浩特诚信数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/哈尔滨教化电子大世界照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/哈尔滨教化电子大世界照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/哈尔滨松雷广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/哈尔滨松雷广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/哈尔滨红博授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/哈尔滨红博授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/哈尔滨船舶电子大世界照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/哈尔滨船舶电子大世界照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/哈尔滨金安国际授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/哈尔滨金安国际授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/唐山硅谷数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/唐山硅谷数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/商丘正弘汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/商丘正弘汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/嘉兴八佰伴授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/嘉兴八佰伴授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大庆百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大庆百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连东关街授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连东关街授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连中央大道照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连中央大道照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连华南万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连华南万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连奥林匹克照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连奥林匹克照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连柏威年授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连柏威年授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/大连罗斯福授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/大连罗斯福授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津南开大悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津南开大悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津天河城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津天河城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津梅江天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津梅江天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/天津西青大悦汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/天津西青大悦汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/太原万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/太原万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/太原天美新天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/太原天美新天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/威海威高广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/威海威高广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宁波余姚五彩城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宁波余姚五彩城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宁波明州里授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宁波明州里授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宜兴八佰伴.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宜兴八佰伴.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宜宾万象天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宜宾万象天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宜昌国贸授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宜昌国贸授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/宝鸡开元商城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/宝鸡开元商城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/山东菏泽佳和城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/山东菏泽佳和城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/山西临汾生龙国际.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/山西临汾生龙国际.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/常州万象城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/常州万象城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/常州武进吾悦授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/常州武进吾悦授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/平顶山丹尼斯照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/平顶山丹尼斯照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州万民星光城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州万民星光城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州万菱汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州万菱汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州保利时光里.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州保利时光里.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州天环广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州天环广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州广州塔广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州广州塔广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州正佳广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州正佳广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州琶洲保利授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州琶洲保利授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州番禺天河城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州番禺天河城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州美林MLIVE天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州美林MLIVE天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/广州融创授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/广州融创授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/徐州中山南路格派照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/徐州中山南路格派照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/徐州苏宁授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/徐州苏宁授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/德国汉堡市Saturn店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/德国汉堡市Saturn店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/恩施星光里购物中心照材店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/恩施星光里购物中心照材店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/惠州华贸授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/惠州华贸授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都A世界照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都A世界照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都万象城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都万象城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都华凌摄影城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都华凌摄影城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都大悦城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都大悦城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都天府和悦广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都天府和悦广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都天府大悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都天府大悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都天府艺术公园授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都天府艺术公园授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都太古里授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都太古里授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都数码广场恒驰照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都数码广场恒驰照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都数码广场虎一心照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都数码广场虎一心照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都来福士授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都来福士授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都滨江天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都滨江天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都环球中心授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都环球中心授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都环球中心授权体验店（2F）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都环球中心授权体验店（2F）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都科华王府井授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都科华王府井授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都西宸天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都西宸天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都西村大院授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都西村大院授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都金楠天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都金楠天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都金牛凯德授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都金牛凯德授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/成都龙泉世茂广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/成都龙泉世茂广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/扬州万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/扬州万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/拉萨王府井授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/拉萨王府井授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新乡大桥照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新乡大桥照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新乡胖东来授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新乡胖东来授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新加坡Jewel中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新加坡Jewel中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新加坡suntec city.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新加坡suntec city.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新加坡建店Plaza Singapura.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新加坡建店Plaza Singapura.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆伊犁环球港授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆伊犁环球港授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆克拉玛依市汇嘉时代广场.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆克拉玛依市汇嘉时代广场.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆喀什数码街照材店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆喀什数码街照材店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆宏景数码广场二店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆宏景数码广场二店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆宏景数码广场授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆宏景数码广场授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/新疆石河子万达授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/新疆石河子万达授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/无锡百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/无锡百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/无锡荟聚.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/无锡荟聚.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/日照万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/日照万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆山商厦家电市场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆山商厦家电市场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆山商厦家电市场照材专卖店（扩店）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆山商厦家电市场照材专卖店（扩店）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明五华吾悦授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明五华吾悦授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明佰腾数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明佰腾数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明南亚风情第壹城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明南亚风情第壹城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明恒隆授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明恒隆授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/昆明顺城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/昆明顺城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/晋江SM授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/晋江SM授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州EFC广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州EFC广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州EIC广场授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州EIC广场授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州IN77授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州IN77授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州万象城（迁址）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州万象城（迁址）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州东部数码港照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州东部数码港照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州临平银泰授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州临平银泰授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州亚奥万象天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州亚奥万象天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州大悦城悦街授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州大悦城悦街授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州奥体印象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州奥体印象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州学院路照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州学院路照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/杭州百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/杭州百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/柳州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/柳州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/桂林万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/桂林万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武昌万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武昌万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉光谷世界城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉光谷世界城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉大悦城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉大悦城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉天地壹方授权体验店（迁址）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉天地壹方授权体验店（迁址）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉婚纱摄影照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉婚纱摄影照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉梦时代授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉梦时代授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉武商MALL授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉武商MALL授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉电脑大世界照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉电脑大世界照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉荟聚.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉荟聚.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉银泰创意城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉银泰创意城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/武汉销品茂授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/武汉销品茂授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/汕头万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/汕头万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/江西赣州京东授权专区.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/江西赣州京东授权专区.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/江门汇悦大融城（迁址）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/江门汇悦大融城（迁址）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳三台子万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳三台子万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳东软科技城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳东软科技城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳中街恒隆授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳中街恒隆授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳百脑汇照材专卖店二店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳百脑汇照材专卖店二店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳铁西万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳铁西万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/沈阳长白万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/沈阳长白万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泉州浦西万达授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泉州浦西万达授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国Central Phuket.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国Central Phuket.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国Mega Bangna.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国Mega Bangna.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国central westgate.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国central westgate.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国曼谷central world.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国曼谷central world.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国曼谷dusit central park.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国曼谷dusit central park.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰国芭提雅central Pattaya.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰国芭提雅central Pattaya.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰安三源照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰安三源照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/泰州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/泰州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/洛阳大卫天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/洛阳大卫天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/洛阳王城公园照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/洛阳王城公园照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/济南万象城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/济南万象城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/济南华强电子科技照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/济南华强电子科技照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/济南恒隆授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/济南恒隆授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/济宁万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/济宁万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/海口天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/海口天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/海口远大购物中心授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/海口远大购物中心授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/淄博万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/淄博万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/淄博百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/淄博百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/淮安万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/淮安万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳万丰海岸城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳万丰海岸城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳万象前海授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳万象前海授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳光明蓝鲸世界授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳光明蓝鲸世界授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳华发冰雪世界授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳华发冰雪世界授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳华强北改造项目.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳华强北改造项目.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳华强北赛格科技园照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳华强北赛格科技园照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳华强北（华强一店）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳华强北（华强一店）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳卓悦中心.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳卓悦中心.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳壹方城直营旗舰店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳壹方城直营旗舰店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳壹方汇直营店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳壹方汇直营店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳大悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳大悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳宝安大仟里.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳宝安大仟里.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳布吉万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳布吉万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳新华强照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳新华强照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳机场直营店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳机场直营店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳海岸城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳海岸城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳海雅缤纷城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳海雅缤纷城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳深业上城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳深业上城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳福田COCOPARK授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳福田COCOPARK授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳福田中航城君尚.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳福田中航城君尚.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳福田卓悦汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳福田卓悦汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳罗湖万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳罗湖万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳罗湖金光华.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳罗湖金光华.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/深圳龙华天虹授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/深圳龙华天虹授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/温州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/温州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/温州开太百货照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/温州开太百货照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/温州滨江万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/温州滨江万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/湖南摄影城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/湖南摄影城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/潍坊泰华城新天地.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/潍坊泰华城新天地.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/潍坊益家园照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/潍坊益家园照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/澳门威尼斯人.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/澳门威尼斯人.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/烟台振华商厦授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/烟台振华商厦授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/珠海万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/珠海万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/珠海华发商都授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/珠海华发商都授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/盐城聚龙湖金鹰授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/盐城聚龙湖金鹰授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/石家庄万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/石家庄万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/石家庄太和电子城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/石家庄太和电子城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/石家庄织音1953授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/石家庄织音1953授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福州东二泰禾（换铺）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福州东二泰禾（换铺）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福州中骏世界城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福州中骏世界城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福州大利嘉城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福州大利嘉城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福州烟台山授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福州烟台山授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/福建龙岩万宝授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/福建龙岩万宝授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/秦皇岛茂业天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/秦皇岛茂业天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/绍兴金帝银泰城迁址边厅.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/绍兴金帝银泰城迁址边厅.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/绵阳数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/绵阳数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/聊城万达照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/聊城万达照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/芜湖银泰inpark.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/芜湖银泰inpark.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/苏州东吴天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/苏州东吴天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/苏州中心授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/苏州中心授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/苏州人民商场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/苏州人民商场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/苏州吴江万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/苏州吴江万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/苏州昆山万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/苏州昆山万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/英国westfield中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/英国westfield中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/茂名东荟城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/茂名东荟城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/莆田万象汇.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/莆田万象汇.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾 SM Aura.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾 SM Aura.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾 SM City Grand Central.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾 SM City Grand Central.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾Festival mall 边厅.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾Festival mall 边厅.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾MOA（换址).pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾MOA（换址).pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾ONE Ayala.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾ONE Ayala.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾Robinsons Place Manila.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾Robinsons Place Manila.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City Clark 中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City Clark 中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City Dasmarinas 中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City Dasmarinas 中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City Davao边厅.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City Davao边厅.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City Fairview.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City Fairview.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City La Union.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City La Union.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City Pampanga 中岛.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City Pampanga 中岛.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM City San Pablo.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM City San Pablo.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM Megamall 边厅.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM Megamall 边厅.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM North EDSA.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM North EDSA.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/菲律宾SM South mall.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/菲律宾SM South mall.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西宁王府井授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西宁王府井授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安DT51授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安DT51授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安SKP授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安SKP授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安东新科贸照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安东新科贸照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安北部赛格广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安北部赛格广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安开元商场.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安开元商场.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安曲江创意谷授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安曲江创意谷授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安百瑞未来城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安百瑞未来城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安荟聚授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安荟聚授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安赛格授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安赛格授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安鹏博大厦照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安鹏博大厦照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安龙湖长乐天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安龙湖长乐天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/西安龙首印象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/西安龙首印象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/贵阳万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/贵阳万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/贵阳中华南路照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/贵阳中华南路照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/贵阳新大陆数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/贵阳新大陆数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/赣州万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/赣州万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/赤峰商厦照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/赤峰商厦照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/遵义吾悦广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/遵义吾悦广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/邯郸万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/邯郸万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州东万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州东万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州信万广场授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州信万广场授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州大卫城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州大卫城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州探十里授权专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州探十里授权专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州正弘汇授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州正弘汇授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州赛博数码港照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州赛博数码港照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郑州金融岛授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郑州金融岛授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/郴州解放路照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/郴州解放路照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/鄂尔多斯金峰电子城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/鄂尔多斯金峰电子城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆万象城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆万象城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆光环花园城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆光环花园城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆光环购物广场.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆光环购物广场.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆北城天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆北城天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆国泰广场授权专卖店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆国泰广场授权专卖店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆大悦城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆大悦城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆时代天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆时代天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆来福士授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆来福士授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆石桥铺赛博数码广场照材店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆石桥铺赛博数码广场照材店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆观音桥赛博数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆观音桥赛博数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆龙湖U城天街.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆龙湖U城天街.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆龙湖江岸天街.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆龙湖江岸天街.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/重庆龙湖金沙天街授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/重庆龙湖金沙天街授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/金华永盛授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/金华永盛授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/银川新华百货CCMALL授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/银川新华百货CCMALL授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/银川阅彩城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/银川阅彩城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长春万象城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长春万象城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长春百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长春百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙IFS授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙IFS授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙万象城授权体验店（边厅）.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙万象城授权体验店（边厅）.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙星城天地授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙星城天地授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙永旺梦乐城授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙永旺梦乐城授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙科佳电脑城照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙科佳电脑城照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙荟聚授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙荟聚授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/长沙高桥数码广场照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/长沙高桥数码广场照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛万象城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛万象城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛凯德MALL授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛凯德MALL授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛城阳万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛城阳万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛崂山万象汇授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛崂山万象汇授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛永旺梦乐城.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛永旺梦乐城.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛海信广场授权体验店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛海信广场授权体验店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/青岛百脑汇照材专卖店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/青岛百脑汇照材专卖店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国galleria光教店-광교점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国galleria光教店-광교점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国乐天百货蚕室店- 롯데잠실점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国乐天百货蚕室店- 롯데잠실점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国新世界大田店-신세계대전점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国新世界大田店-신세계대전점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国现代百货忠清店-현대충청점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国现代百货忠清店-현대충청점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国现代百货新村店-현대신촌점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国现代百货新村店-현대신촌점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国现代百货板桥店-현대판교점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国现代百货板桥店-현대판교점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国现代百货蔚山店-현대울산점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国现代百货蔚山店-현대울산점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国釜山乐天百货-롯데 부산본점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国釜山乐天百货-롯데 부산본점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/韩国首尔江南旗舰店-도산점.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/韩国首尔江南旗舰店-도산점.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/香港旺角郎豪坊.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/香港旺角郎豪坊.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/香港油尖旺柏丽大道街边店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/香港油尖旺柏丽大道街边店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/香港铜锣湾百德新街.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/香港铜锣湾百德新街.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚1Utama Shopping Center.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚1Utama Shopping Center.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚Gurney Plaza.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚Gurney Plaza.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚IOI Citymall中岛店.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚IOI Citymall中岛店.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚IOI Damasara边厅.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚IOI Damasara边厅.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚Pavilion Bukit Jalil.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚Pavilion Bukit Jalil.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/page-index/马来西亚Pavilion Damansara Heights.pdf.json",
+      "new": "资源库/00_资源索引/历史目录/classification/page-index/马来西亚Pavilion Damansara Heights.pdf.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/review-required.json",
+      "new": "资源库/00_资源索引/历史目录/classification/review-required.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/stores.json",
+      "new": "资源库/00_资源索引/历史目录/classification/stores.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/summary.json",
+      "new": "资源库/00_资源索引/历史目录/classification/summary.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/classification/training-shortlist.json",
+      "new": "资源库/00_资源索引/历史目录/classification/training-shortlist.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/file-index.csv",
+      "new": "资源库/00_资源索引/历史目录/file-index.csv",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/01_catalog/review-summary.json",
+      "new": "资源库/00_资源索引/历史目录/review-summary.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/01_catalog/sample-set.csv",
+      "new": "资源库/00_资源索引/历史目录/sample-set.csv",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/02_previews/S01/pages.json",
+      "new": "资源库/90_处理过程与审核/页面预览/S01/pages.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/02_previews/S02/pages.json",
+      "new": "资源库/90_处理过程与审核/页面预览/S02/pages.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/02_previews/S03/pages.json",
+      "new": "资源库/90_处理过程与审核/页面预览/S03/pages.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/02_previews/S04/pages.json",
+      "new": "资源库/90_处理过程与审核/页面预览/S04/pages.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/S03/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/S03/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-051/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-051/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-071/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-071/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-079/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-079/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-083/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-083/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-159/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-159/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-160/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-160/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-171/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-171/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-194/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-194/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-239/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-239/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-293/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-293/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-296/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-296/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/PDF-417/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/PDF-417/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/index.html",
+      "new": "资源库/99_历史归档/训练候选/batch01/index.html",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/03_training_candidates/batch01/manifest.json",
+      "new": "资源库/99_历史归档/训练候选/batch01/manifest.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/incoming/README.md",
+      "new": "资源库/90_处理过程与审核/模型拆分/README.md",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/source-inspection/index.html",
+      "new": "资源库/04_软装道具模型/原始模型预检/index.html",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/source-inspection/materials.json",
+      "new": "资源库/04_软装道具模型/原始模型预检/materials.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/source-inspection/preview-index.json",
+      "new": "资源库/04_软装道具模型/原始模型预检/preview-index.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/source-inspection/source-report.json",
+      "new": "资源库/04_软装道具模型/原始模型预检/source-report.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/manifest.json",
+      "new": "资源库/04_软装道具模型/单件模型/manifest.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/使用指引.md",
+      "new": "资源库/04_软装道具模型/单件模型/使用指引.md",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/分类与图例校验-20261002.json",
+      "new": "资源库/04_软装道具模型/单件模型/分类与图例校验-20261002.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/命名对照.csv",
+      "new": "资源库/04_软装道具模型/单件模型/命名对照.csv",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/平面图例/index.json",
+      "new": "资源库/04_软装道具模型/单件模型/平面图例/index.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/校验结果.json",
+      "new": "资源库/04_软装道具模型/单件模型/校验结果.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/桌型命名更新-20261002.json",
+      "new": "资源库/04_软装道具模型/单件模型/桌型命名更新-20261002.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_assets/按SI标准命名-20261001/模型预览目录.html",
+      "new": "资源库/04_软装道具模型/单件模型/模型预览目录.html",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_training/index.html",
+      "new": "资源库/99_历史归档/训练实验/index.html",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/04_training/layout-v0/evaluation.json",
+      "new": "资源库/99_历史归档/训练实验/layout-v0/evaluation.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/layout-v0/geometry-drafts.json",
+      "new": "资源库/99_历史归档/训练实验/layout-v0/geometry-drafts.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/layout-v0/labels.json",
+      "new": "资源库/99_历史归档/训练实验/layout-v0/labels.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/layout-v0/model.json",
+      "new": "资源库/99_历史归档/训练实验/layout-v0/model.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/metadata.jsonl",
+      "new": "资源库/99_历史归档/训练实验/style-v0/metadata.jsonl",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI1.0/loss.jsonl",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI1.0/loss.jsonl",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI1.0/report.json",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI1.0/report.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI1.0/status.json",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI1.0/status.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI2.0/loss.jsonl",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI2.0/loss.jsonl",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI2.0/report.json",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI2.0/report.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/runs/smoke-SI2.0/status.json",
+      "new": "资源库/99_历史归档/训练实验/style-v0/runs/smoke-SI2.0/status.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/04_training/style-v0/summary.json",
+      "new": "资源库/99_历史归档/训练实验/style-v0/summary.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/correction-prompt.txt",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/correction-prompt.txt",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/index.html",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/index.html",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/layout.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/layout.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/manifest.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/manifest.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/prompts.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/prompts.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v1/review.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v1/review.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/ai-prompts.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/ai-prompts.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/ai-review.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/ai-review.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/ai.html",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/ai.html",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/geometry.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/geometry.json",
+      "text_updated": false
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/index.html",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/index.html",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/layout.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/layout.json",
+      "text_updated": true
+    },
+    {
+      "old": "素材库/05_render_benchmark/s03-v2/manifest.json",
+      "new": "资源库/99_历史归档/渲染对照/s03-v2/manifest.json",
+      "text_updated": true
+    }
+  ]
+}

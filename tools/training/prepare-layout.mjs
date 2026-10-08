@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
-const root=new URL('../../',import.meta.url),out=new URL('素材库/04_training/layout-v0/',root);await fs.mkdir(out,{recursive:true});
-const manifests=JSON.parse(await fs.readFile(new URL('素材库/03_training_candidates/batch01/manifest.json',root),'utf8'));
+const root=new URL('../../',import.meta.url),out=new URL('资源库/99_历史归档/训练实验/layout-v0/',root);await fs.mkdir(out,{recursive:true});
+const manifests=JSON.parse(await fs.readFile(new URL('资源库/99_历史归档/训练候选/batch01/manifest.json',root),'utf8'));
 // Counts visually checked against selected furniture plans; cash/unboxing excluded.
 const labels={'PDF-159':[68.3,3],'PDF-160':[20.3,1],'PDF-194':[21,2],'PDF-051':[16,2],'PDF-171':[19.5,1],'PDF-239':[19.1,2],'PDF-079':[141.5,4],'PDF-083':[48,3],'PDF-071':[38,2],'PDF-417':[null,3],'PDF-293':[12,2],'PDF-296':[24,2]};
 const rows=manifests.map(m=>({id:m.id,file:m.file,tag:m.tag,areaM2:labels[m.id][0],tableCount:labels[m.id][1],sourceSha256:m.sourceSha256,page:m.assets.find(a=>a.role==='plan').page,areaEvidence:labels[m.id][0]===null?'No explicit area transcribed; exclude from area model':'PDF printed area (not usable floor area)',countEvidence:'Visual count of product island tables; excludes unboxing/cashier/workshop tables',annotationStatus:'agent-reviewed, awaiting designer review',trainingEligible:labels[m.id][0]!==null}));

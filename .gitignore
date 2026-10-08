@@ -44,11 +44,9 @@ tools/training/runtime/
 /tmp/su-reentry-test-result.txt
 /tmp/validation-progress.txt
 
-# Large source assets staged for later upload
-各门店图纸/
-道具模型/
-*.pdf
-*.skp
+# Machine-specific external source location and disposable PDF previews
+/resources.local.json
+/tmp/pdfs/
 
 # OS / editor files
 .DS_Store

@@ -48,14 +48,14 @@ try{
   const r=await fetch(base+'/model-library/'+suffix);if(r.status!==404)throw Error('Unlisted file exposed')
  }
  if((await fetch(base+'/model-library/',{method:'POST'})).status!==405)throw Error('POST allowed')
- await library.screenshot({path:'../output/si-standards-review-20261001/网站模型库-桌面.png'})
- await library.setViewportSize({width:390,height:844});await library.screenshot({path:'../output/si-standards-review-20261001/分类图例-手机.png'});if(await library.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');await library.setViewportSize({width:1440,height:1000})
- await page.setViewportSize({width:390,height:844});await page.screenshot({path:'../output/si-standards-review-20261001/网站入口-手机.png'})
+ await library.screenshot({path:'../资源库/05_店铺形象设计标准/历史阅读记录/网站模型库-桌面.png'})
+ await library.setViewportSize({width:390,height:844});await library.screenshot({path:'../资源库/05_店铺形象设计标准/历史阅读记录/分类图例-手机.png'});if(await library.evaluate(()=>document.documentElement.scrollWidth>innerWidth))throw Error('Mobile overflow');await library.setViewportSize({width:1440,height:1000})
+ await page.setViewportSize({width:390,height:844});await page.screenshot({path:'../资源库/05_店铺形象设计标准/历史阅读记录/网站入口-手机.png'})
  await library.getByRole('link',{name:'两套标准 · 360页'}).click()
  if(await library.locator('article').count()!==360)throw Error('Missing standards pages')
  const img=await library.locator('img').first().getAttribute('src')
  if(!(await fetch(new URL(img,library.url()))).ok)throw Error('Missing standard image')
  const results={cards:90,categoryCounts:[38,19,33],softSiCounts:[12,24,2],modelsWithPlanLegend:45,cleanImagesDecoded:45,individualModelMapping:'passed',tableSupportSections:8,originalCropsRetained:25,filterAndSearch:'passed',checkedUrls:urls.length,downloadSha256:'passed',tableCategories:4,standardPages:360,unlistedFiles:'blocked',post:'blocked',url:base+'/model-library/'}
- await writeFile('../output/si-standards-review-20261001/网站接入检查.json',JSON.stringify(results,null,2))
+ await writeFile('../资源库/05_店铺形象设计标准/历史阅读记录/网站接入检查.json',JSON.stringify(results,null,2))
  console.log(JSON.stringify(results))
 }finally{await browser.close()}

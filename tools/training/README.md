@@ -17,7 +17,7 @@ node tools/training/train-layout.mjs
 
 ## 数据与模型
 
-- `素材库/04_training/layout-v0/labels.json`：12家体验桌数量，11家面积有效。徐州3张产品体验桌，另有开箱桌，不计入目标；马来西亚PDH面积未转录，排除面积训练。
+- `资源库/99_历史归档/训练实验/layout-v0/labels.json`：12家体验桌数量，11家面积有效。徐州3张产品体验桌，另有开箱桌，不计入目标；马来西亚PDH面积未转录，排除面积训练。
 - `geometry-drafts.json`：4家图纸几何草标注，其中2家缺少足够尺寸基准；所有几何仍不具备训练资格，避免伪精确。
 - `model.json`：11家训练的面积→产品体验桌数量回归权重；不是整张布局生成网络，也不使用SI作为输入。3000次梯度更新，固定正则系数0.1。
 - `evaluation.json`：按门店留一验证，所有标准化在训练折内计算；均值基线也只使用训练折。最终权重使用全部11家，不另声称有独立测试集。
@@ -31,7 +31,7 @@ tiny Stable Diffusion 是测试模型，输出没有实用的门店视觉质量�
 本机已用真实CUDA张量运算验证4070可用。`requirements-lock.txt` 是旧CPU的快照，不要覆盖当前CUDA环境。
 
 ```powershell
-& tools/training/.venv4070/Scripts/python.exe tools/training/train-style.py --mode gpu --style SI1.0 --steps 80 --precision bf16 --variant fp16 --revision 451f4fe16113bff5a5d2269ed5ad43b0592e9a14 --output-dir 素材库/04_training/rtx4070-pilot/SI1.0-new-run
+& tools/training/.venv4070/Scripts/python.exe tools/training/train-style.py --mode gpu --style SI1.0 --steps 80 --precision bf16 --variant fp16 --revision 451f4fe16113bff5a5d2269ed5ad43b0592e9a14 --output-dir 资源库/99_历史归档/训练实验/rtx4070-pilot/SI1.0-new-run
 # SI2.0单独运行，替换style及output-dir；同一GPU不要同时启动两份。
 ```
 
