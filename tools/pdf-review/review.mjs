@@ -1,4 +1,5 @@
-﻿import fs from 'node:fs/promises';
+import {sourcePdfRoot,sourcePdfPath} from '../resource-library/paths.mjs';
+import fs from 'node:fs/promises';
 import path from 'node:path';
 import {createCanvas,DOMMatrix,ImageData,Path2D} from '@napi-rs/canvas';
 Object.assign(globalThis,{DOMMatrix,ImageData,Path2D});
@@ -7,8 +8,8 @@ const root=path.resolve('../..');
 const files=['佛山创意产业园授权专卖店.pdf','上海万象城授权体验店（边厅）.pdf','上海星光摄影城照材专卖店.pdf','上海七宝领展授权体验店.pdf'];
 const results=[];
 for(let i=0;i<files.length;i++){
- const file=files[i],out=path.join(root,'素材库/02_previews',`S0${i+1}`);await fs.mkdir(out,{recursive:true});
- const task=getDocument({data:new Uint8Array(await fs.readFile(path.join(root,'各门店图纸',file))),useSystemFonts:true});
+ const file=files[i],out=path.join(root,'资源库/90_处理过程与审核/页面预览',`S0${i+1}`);await fs.mkdir(out,{recursive:true});
+ const task=getDocument({data:new Uint8Array(await fs.readFile(sourcePdfPath(file))),useSystemFonts:true});
  const doc=await task.promise;
  const pages=[];const thumbs=[];
  for(let p=1;p<=doc.numPages;p++){
@@ -20,5 +21,5 @@ for(let i=0;i<files.length;i++){
  thumbs.forEach((c,j)=>{const x=(j%2)*500,y=Math.floor(j/2)*cellH;ctx.drawImage(c,x,y+25);ctx.fillStyle='#111';ctx.fillText(`S0${i+1} / page ${j+1}`,x+10,y+19)});
  await fs.writeFile(path.join(out,'contact.png'),sheet.toBuffer('image/png'));await fs.writeFile(path.join(out,'pages.json'),JSON.stringify(pages,null,2));results.push({id:`S0${i+1}`,file,pages:doc.numPages,textPages:pages.filter(p=>p.text.length>40).length});await task.destroy();console.log(JSON.stringify(results.at(-1)));
 }
-await fs.writeFile(path.join(root,'素材库/01_catalog/review-summary.json'),JSON.stringify(results,null,2));
+await fs.writeFile(path.join(root,'资源库/00_资源索引/历史目录/review-summary.json'),JSON.stringify(results,null,2));
 

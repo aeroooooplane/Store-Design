@@ -1,7 +1,7 @@
 # encoding: UTF-8
 require 'json'
 module StoreSplitMeshCheck
-  ROOT=File.expand_path('../素材库/04_assets/incoming/split-20260925-v2',__dir__)
+  ROOT=File.expand_path('../资源库/90_处理过程与审核/模型拆分/split-20260925-v2',__dir__)
   def self.run
     @model=Sketchup.active_model
     raise 'Wrong model' unless File.basename(@model.path)=='影石通用模型.skp'

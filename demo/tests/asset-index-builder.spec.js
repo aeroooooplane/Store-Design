@@ -7,7 +7,7 @@ import {realAssets} from '../src/real-assets.js'
 
 async function run(mutate){
   const root=await mkdtemp(path.join(tmpdir(),'store-asset-index-'))
-  const source=path.join(root,'素材库/04_assets/incoming/split-20260925-v2')
+  const source=path.join(root,'资源库/90_处理过程与审核/模型拆分/split-20260925-v2')
   await mkdir(source,{recursive:true})
   await mkdir(path.join(root,'demo/scripts'),{recursive:true})
   await mkdir(path.join(root,'demo/src/data'),{recursive:true})

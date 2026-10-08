@@ -25,8 +25,8 @@ export function placementEntry(named, report, bytes, policy) {
 }
 
 export async function buildPlacementManifest(repo) {
-  const demo=path.join(repo,'demo'),dir=path.join(demo,'public/assets/su')
-  const named=await readJSON(path.join(repo,'素材库/04_assets/按SI标准命名-20261001/manifest.json'))
+  const demo=path.join(repo,'demo'),dir=path.join(repo,'资源库/04_软装道具模型/网页模型')
+  const named=await readJSON(path.join(repo,'资源库/04_软装道具模型/单件模型/manifest.json'))
   const policy=await readJSON(path.join(demo,'src/data/placement-policy.json'))
   const byId=new Map(named.assets.map(a=>[a.asset_id,a]))
   if(byId.size!==named.assets.length) throw Error('命名清单含重复编号')

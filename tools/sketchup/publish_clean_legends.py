@@ -3,7 +3,7 @@ from pathlib import Path
 import json, shutil, hashlib
 
 ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/'素材库/04_assets/按SI标准命名-20261001'
+BASE=ROOT/'资源库/04_软装道具模型/单件模型'
 WORK=ROOT/'tmp/clean-legends'
 OUT=BASE/'平面图例/纯净版'
 digest=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
@@ -52,5 +52,5 @@ report={'clean_model_legends':len(records),'unique_images':len({r['file'] for r 
         'original_crops_retained':len({r['raw_file'] for r in records}),
         'model_hashes_verified':90,'source_models_modified':False,
         'table_support_sections':{a['standard_name']+' / '+a['asset_id']:a['plan_legend']['support_segment_count'] for a in models if '中岛桌' in a['standard_name'] or '开箱桌' in a['standard_name']}}
-(ROOT/'output/si-standards-review-20261001/纯净图例校验.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),'utf-8')
+(ROOT/'资源库/05_店铺形象设计标准/历史阅读记录/纯净图例校验.json').write_text(json.dumps(report,ensure_ascii=False,indent=2),'utf-8')
 print(json.dumps(report,ensure_ascii=False))

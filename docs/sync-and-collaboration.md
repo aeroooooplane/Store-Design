@@ -1,0 +1,40 @@
+# 多电脑同步与协作
+
+## 本轮合并后，另一台电脑如何更新
+
+先检查 `git status`。有尚未提交的个人工作时，先留在自己的分支提交保存；不要用强制重置清理。
+
+工作区干净后，在项目根目录执行：
+
+```powershell
+git fetch origin
+git switch main
+git pull --ff-only origin main
+git lfs pull origin main
+git status
+```
+
+本轮已把旧 `素材库/` 迁入 `资源库/`。90个命名SKP及271张图片放在 `资源库/04_软装道具模型/单件模型/`，不要再向旧目录添加新资源。`snapshot/20261008` 保留为历史分支，后续从更新后的main新建工作分支。
+
+原始门店PDF已经外置，另一台电脑需自行保留原图纸目录，将 `resources.local.example.json` 复制为 `resources.local.json` 并填写本机位置。该本机配置不提交。浏览器项目另行导出/导入JSON备份，不随Git自动同步。
+
+如果 `pull --ff-only` 提示分叉，先检查本地独有提交，另开分支合并处理；不要强推覆盖远端main。
+
+## 日常开发
+
+每次开工先同步main，再为当前任务建立独立分支，例如：
+
+```powershell
+git switch -c work/model-review-20261009
+```
+
+完成后审查 `git diff`、新增文件及相关验证结果，将本任务文件提交并推送该分支，通过Pull Request合入main。多人不要同时在同一个snapshot分支提交。
+
+PDF、PPTX、SKP等二进制文件由一人负责同一文件的一轮编辑，避免两台电脑同时修改同一个文件。文档中明确负责人、版本及用途；提交后等Git和LFS上传正常完成，再通知其他电脑拉取。GitHub上能看到文件名或LFS指针不等于实体已经上传成功。
+
+## 资源提交检查
+
+- 新文件放入正式资源目录，核对 `.gitattributes` 的LFS规则和 `.gitignore`，防止只提交清单而遗漏模型/图片。
+- LFS文件迁移目录后仍使用同一个内容哈希，无需复制一份到旧目录。
+- 换电脑下载后校验模型哈希、预览显示、PDF页数及相关工作台功能。
+- 22个GLB当前仍缺失；恢复时使用 `资源库/04_软装道具模型/网页模型/<asset-id>/model.glb`，并核对原转换清单。

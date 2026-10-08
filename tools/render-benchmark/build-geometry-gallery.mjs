@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises'
 import {createHash} from 'node:crypto'
-const root=new URL('../../素材库/05_render_benchmark/s03-v2/',import.meta.url)
+const root=new URL('../../资源库/99_历史归档/渲染对照/s03-v2/',import.meta.url)
 const manifest=JSON.parse(await fs.readFile(new URL('manifest.json',root),'utf8'))
 for(const asset of manifest.assets){
   const bytes=await fs.readFile(new URL(asset.file,root))

@@ -3,7 +3,7 @@ import {createHash} from 'node:crypto'
 import assert from 'node:assert/strict'
 import {fileURLToPath} from 'node:url'
 import {chromium} from '../../demo/node_modules/@playwright/test/index.mjs'
-const root=new URL('../../素材库/05_render_benchmark/s03-v2/',import.meta.url)
+const root=new URL('../../资源库/99_历史归档/渲染对照/s03-v2/',import.meta.url)
 const manifest=JSON.parse(await fs.readFile(new URL('manifest.json',root),'utf8'))
 assert.equal(manifest.assets.length,8)
 for(const a of manifest.assets)assert.equal(createHash('sha256').update(await fs.readFile(new URL(a.file,root))).digest('hex'),a.sha256)

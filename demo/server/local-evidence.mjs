@@ -26,7 +26,7 @@ export function createEvidenceMiddleware(root,stores){
     const ref=allowed.get(req.url)
     if(!ref)return fail(404,'证据不在允许清单中')
     try{
-      const base=await realpath(path.join(root,'output/pdf/cleaned-v2/pages'))
+      const base=await realpath(path.join(root,'资源库/90_处理过程与审核/PDF拆分/pages'))
       const file=await realpath(path.resolve(root,ref.path))
       if(!inside(base,file))return fail(403,'证据路径不在允许目录')
       const ext=path.extname(file).toLowerCase()

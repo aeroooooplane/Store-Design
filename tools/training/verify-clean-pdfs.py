@@ -16,11 +16,11 @@ def digest(path):
 
 def main():
     ap=argparse.ArgumentParser()
-    ap.add_argument('--out',default='output/pdf/cleaned-v2')
+    ap.add_argument('--out',default='资源库/90_处理过程与审核/PDF拆分')
     args=ap.parse_args()
     out=ROOT/args.out
     started=time.time()
-    sources=json.loads((ROOT/'素材库/04_training/corpus-audit-4070/files.json').read_text(encoding='utf8'))
+    sources=json.loads((ROOT/'资源库/99_历史归档/训练实验/corpus-audit-4070/files.json').read_text(encoding='utf8'))
     sources=[r for r in sources if r['status']=='verified']
     summary=json.loads((out/'summary.json').read_text(encoding='utf8'))
     assert summary['complete'], 'Split run incomplete'

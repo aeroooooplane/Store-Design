@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';const dir='../../素材库/01_catalog/classification';const rows=JSON.parse(await fs.readFile(dir+'/stores.json','utf8'));
+import fs from 'node:fs/promises';const dir='../../资源库/00_资源索引/历史目录/classification';const rows=JSON.parse(await fs.readFile(dir+'/stores.json','utf8'));
 for(const r of rows){let d;try{d=JSON.parse(await fs.readFile(dir+'/page-index/'+r.file+'.json','utf8'))}catch{continue}
  r.planPages=[];r.constructionPages=[];r.imagePages=[];r.typeEvidence=[];
  for(const p of d.pages){const t=p.text.replace(/\s+/g,'');const cover=/平面图.*效果图.*施工图/.test(t),toc=/图纸目录/.test(t);

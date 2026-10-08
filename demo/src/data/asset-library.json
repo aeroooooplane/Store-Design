@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceDirectory": "素材库/04_assets/incoming/split-20260925-v2/",
+  "sourceDirectory": "资源库/90_处理过程与审核/模型拆分/split-20260925-v2/",
   "sourceHashes": {
     "manifest.json": "7de855a6bdc4c8ff3493fc587ef4994c4dcf089858735dfebccff0d906584d1b",
     "validation-summary.json": "b1b93d1e67df46b1503c79f6df176625291be1e7d25341bc4736106e8c50fc84"

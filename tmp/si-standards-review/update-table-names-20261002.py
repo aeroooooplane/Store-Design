@@ -2,7 +2,7 @@ from pathlib import Path
 import json,csv,re,html,hashlib
 from collections import Counter
 from html.parser import HTMLParser
-root=Path(r'E:\效果图生成器\Store-Design');base=root/'素材库/04_assets/按SI标准命名-20261001'
+root=Path(r'E:\效果图生成器\Store-Design');base=root/'资源库/04_软装道具模型/单件模型'
 p=base/'manifest.json';m=json.loads(p.read_text('utf-8'));changes=[]
 page=base/'模型预览目录.html';ht=page.read_text('utf-8')
 for a in m['assets']:
@@ -38,7 +38,7 @@ for row in records:
  if c:
   row['标准名称或描述']=c['new_name'];row['变体说明']=c['new_variant'];row['新文件_相对本目录']=c['new_file'];row['识别依据']=c['judgment']
 with csvpath.open('w',encoding='utf-8-sig',newline='') as f:w=csv.DictWriter(f,fieldnames=fields);w.writeheader();w.writerows(records)
-for txt in [root/'output/si-standards-review-20261001/逐项识别记录.txt',root/'tmp/si-standards-review/naming-decisions.txt']:
+for txt in [root/'资源库/05_店铺形象设计标准/历史阅读记录/逐项识别记录.txt',root/'tmp/si-standards-review/naming-decisions.txt']:
  lines=txt.read_text('utf-8-sig').splitlines();byn={a['n']:a for a in m['assets'] if a['asset_id'] in byid};out=[]
  for line in lines:
   cells=line.split('|');a=byn.get(int(cells[0])) if cells and cells[0].isdigit() else None

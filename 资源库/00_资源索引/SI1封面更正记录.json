@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-08",
+  "user_confirmed_version": "SI1.0",
+  "before": "规范手册 SI 2.0 / 2025",
+  "after": "规范手册 SI 1.0 / 2025",
+  "pptx_modified_text_slides": [
+    "ppt/slides/slide1.xml"
+  ],
+  "pdf_pages": 171,
+  "pdf_changed_rendered_pages": [
+    1
+  ],
+  "pdf_sha256": "b63c0cf2862341363b41d626aededc0445af221e7910d966a6d8d834bebbd38c"
+}

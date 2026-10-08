@@ -8,8 +8,8 @@ import {createHash} from 'node:crypto'
 test('evidence reader checks content hashes and blocks files outside the allowed page directory',async()=>{
   const root=await mkdtemp(path.join(tmpdir(),'store-evidence-test-'))
   try{
-    await mkdir(path.join(root,'output/pdf/cleaned-v2/pages'),{recursive:true})
-    const bytes=Buffer.from('%PDF-1.4\nfixture'),relative='output/pdf/cleaned-v2/pages/fixture.pdf'
+    await mkdir(path.join(root,'资源库/90_处理过程与审核/PDF拆分/pages'),{recursive:true})
+    const bytes=Buffer.from('%PDF-1.4\nfixture'),relative='资源库/90_处理过程与审核/PDF拆分/pages/fixture.pdf'
     await writeFile(path.join(root,relative),bytes)
     await writeFile(path.join(root,'outside.pdf'),bytes)
     const hash=createHash('sha256').update(bytes).digest('hex')

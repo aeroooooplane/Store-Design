@@ -12,7 +12,7 @@ for folder in work.iterdir():
   pics=sorted(folder.glob('*.PNG'),key=lambda p:int(re.search(r'(\d+)$',p.stem).group(1)))
   if not pics: pics=sorted(folder.glob('*.png'),key=lambda p:int(re.search(r'(\d+)$',p.stem).group(1)))
   for k in range(0,len(pics),12):sheet([(p,f'{folder.name} / {i+1}') for i,p in enumerate(pics) if k<=i<k+12],work/f'{folder.name}-contact-{k//12+1:02}.jpg')
-base=root/'素材库/04_assets/incoming/split-20260925-v2';assets=json.loads((base/'manifest.json').read_text('utf-8'))['assets']; items=[]
+base=root/'资源库/90_处理过程与审核/模型拆分/split-20260925-v2';assets=json.loads((base/'manifest.json').read_text('utf-8'))['assets']; items=[]
 for i,a in enumerate(assets):
  dims=a['instances'][0]['world_bounds_m']; label=f"{i+1:02} {a['asset_id']} {a['category']}\n"+'x'.join(str(round(v*1000)) for v in dims)+' mm'
  items.append((base/a['asset_id']/'preview-instance.png',label))

@@ -8,7 +8,7 @@ const root=fileURLToPath(new URL('../../',import.meta.url)),rows=[]
 for(const c of layoutCases.filter(c=>c.eligible)){
   const advice=recommendLayout({widthUnits:c.span[0],depthUnits:c.span[1],shopType:c.shopType,blocked:c.blocked},{excludeId:c.id})
   const baseline=Math.max(1,Math.floor(((c.span[0]*c.tableLength)*(c.span[1]*c.tableLength)-16)/18)+1)
-  const manifest=JSON.parse(await readFile(path.join(root,'素材库/03_training_candidates/batch01',c.id,'manifest.json'),'utf8'))
+  const manifest=JSON.parse(await readFile(path.join(root,'资源库/99_历史归档/训练候选/batch01',c.id,'manifest.json'),'utf8'))
   const perturb=[]
   for(const x of [.9,1,1.1])for(const z of [.9,1,1.1]){
     const a=recommendLayout({widthUnits:c.span[0]*x,depthUnits:c.span[1]*z,shopType:c.shopType,blocked:c.blocked},{excludeId:c.id})

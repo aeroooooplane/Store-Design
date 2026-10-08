@@ -15,6 +15,9 @@ import shutil
 import time
 
 ROOT = Path(__file__).resolve().parents[2]
+import sys
+sys.path.insert(0, str(ROOT/"tools"))
+from resource_library import source_pdf_path
 VERSION = 2
 CATEGORY_NAMES={'cover':'封面','cover_candidate':'封面候选','contents':'图纸目录','specification':'设计施工说明',
                 'plan_candidate':'平面图候选','elevation_candidate':'立面图候选','render_candidate':'效果图候选',
@@ -170,7 +173,7 @@ def process_file(job):
     import fitz
     row, aliases, output, reviews = job
     out = Path(output)
-    source = ROOT/row['path']
+    source = source_pdf_path(row['path'])
     sid = row['store_id'] or 'UNMAPPED-'+row['expected_sha256'][:12]
     cache_path = out/'file-results'/f'{sid}.json'
     if cache_path.exists():
@@ -335,15 +338,15 @@ def aggregate(results,out,missing,total_sources):
 
 def main():
     parser=argparse.ArgumentParser()
-    parser.add_argument('--out',default='output/pdf/cleaned-v2')
+    parser.add_argument('--out',default='资源库/90_处理过程与审核/PDF拆分')
     parser.add_argument('--workers',type=int,default=4)
     parser.add_argument('--limit-files',type=int)
     args=parser.parse_args()
     out=(ROOT/args.out).resolve()
-    if not out.is_relative_to(ROOT/'output/pdf'):
-        raise ValueError('Output must stay under repository output/pdf')
+    if not (out.is_relative_to(ROOT/'资源库/90_处理过程与审核/PDF拆分') or out.is_relative_to(ROOT/'output/pdf')):
+        raise ValueError('Output must stay under the PDF processing directory')
     out.mkdir(parents=True,exist_ok=True)
-    audit=ROOT/'素材库/04_training/corpus-audit-4070'
+    audit=ROOT/'资源库/99_历史归档/训练实验/corpus-audit-4070'
     sources=json.loads((audit/'files.json').read_text(encoding='utf8'))
     available=[r for r in sources if r['status']=='verified']
     missing=[r for r in sources if r['status']!='verified']

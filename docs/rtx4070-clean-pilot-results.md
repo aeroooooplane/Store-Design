@@ -2,7 +2,7 @@
 
 日期：2026-09-25。**试训已完成；技术流程通过，设计效果未通过可用性验收。**
 
-后续标签使用策略已按用户指示更新至v2：见 `素材库/04_training/rtx4070-clean-pilot/si-curation-v2/README.md`。当前18张/8家，SI1.0为4张、SI2.0为14张；其中6张有文档依据，12张按用户主体装修黑色规则推断，分级保存。旧43张集仍是历史弱标签实验，未被整体批准。v2保留原生长宽比，尚需验证训练器预处理；本次未启动新训练。
+后续标签使用策略已按用户指示更新至v2：见 `资源库/99_历史归档/训练实验/rtx4070-clean-pilot/si-curation-v2/README.md`。当前18张/8家，SI1.0为4张、SI2.0为14张；其中6张有文档依据，12张按用户主体装修黑色规则推断，分级保存。旧43张集仍是历史弱标签实验，未被整体批准。v2保留原生长宽比，尚需验证训练器预处理；本次未启动新训练。
 
 本轮是使用清洗后新样本的独立实验，不是复述旧的80步试训。两个分组各训练200步，分别保存LoRA，离线运行于本机RTX4070。历史PDF与飞书总表附件版本仍待核，分组名不代表已确认SI版本；没有把这些图批准为正式训练数据。
 
@@ -36,9 +36,9 @@
 
 示例，左为底模，右为200步LoRA（完整10对在evaluation目录）：
 
-![SI1留出门店提示词前后对照](../素材库/04_training/rtx4070-clean-pilot/evaluation/SI1.0-PDF-055-101-comparison.png)
+![SI1留出门店提示词前后对照](../资源库/99_历史归档/训练实验/rtx4070-clean-pilot/evaluation/SI1.0-PDF-055-101-comparison.png)
 
-![SI2留出门店提示词前后对照](../素材库/04_training/rtx4070-clean-pilot/evaluation/SI2.0-PDF-417-202-comparison.png)
+![SI2留出门店提示词前后对照](../资源库/99_历史归档/训练实验/rtx4070-clean-pilot/evaluation/SI2.0-PDF-417-202-comparison.png)
 
 ## 数据边界与下一步
 
@@ -63,7 +63,7 @@
 
 ## 文件与复现
 
-实验目录：`素材库/04_training/rtx4070-clean-pilot/`。
+实验目录：`资源库/99_历史归档/训练实验/rtx4070-clean-pilot/`。
 
 - `visual-review.json`：60张逐图决定与来源SHA。
 - `prepare-experiment.ipynb`、`data/metadata.jsonl`、`dataset-summary.json`：筛选、门店划分、变换和追溯信息。

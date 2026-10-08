@@ -1,6 +1,6 @@
 from pathlib import Path
 import json,fitz
-r=Path(r'E:\效果图生成器\Store-Design');b=r/'素材库/04_assets/按SI标准命名-20261001';f=b/'平面图例/index.json';rows=json.loads(f.read_text('utf-8'))
+r=Path(r'E:\效果图生成器\Store-Design');b=r/'资源库/04_软装道具模型/单件模型';f=b/'平面图例/index.json';rows=json.loads(f.read_text('utf-8'))
 for a in rows:
  if a['id'] in ['screen98','screen55v']:
   d=fitz.open(r/a['source_pdf']);p=d[a['page']-1]

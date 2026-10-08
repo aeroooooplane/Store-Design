@@ -1,7 +1,7 @@
 from pathlib import Path
 from html.parser import HTMLParser
 import json,hashlib
-root=Path(r'E:\效果图生成器\Store-Design');out=root/'素材库/04_assets/按SI标准命名-20261001'; report=root/'output/si-standards-review-20261001'
+root=Path(r'E:\效果图生成器\Store-Design');out=root/'资源库/04_软装道具模型/单件模型'; report=root/'资源库/05_店铺形象设计标准/历史阅读记录'
 man=json.loads((out/'manifest.json').read_text('utf-8'))
 class Links(HTMLParser):
  def __init__(self):super().__init__();self.links=[];self.articles=0
@@ -23,7 +23,7 @@ views=json.loads((report/'补充原生视图检查.json').read_text('utf-8'))
 assert len(views)==24 and all(a['status']=='ok' for a in views)
 check['additional_native_view_images']=sum(len(a['additional_views']) for a in man['assets'])
 assert check['additional_native_view_images']==96
-source=root/'道具模型/影石通用模型.skp'
+source=root/'资源库/04_软装道具模型/原始整包/影石通用模型.skp'
 h=hashlib.sha256()
 with source.open('rb') as f:
  for b in iter(lambda:f.read(8*1024*1024),b''):h.update(b)

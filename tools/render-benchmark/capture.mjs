@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';
 import {chromium} from '../../demo/node_modules/@playwright/test/index.mjs';
 const version=process.argv[2];if(!/^s03-v[2-9][0-9]*$/.test(version||''))throw Error('Pass a new version, e.g. s03-v2; v1 is frozen');
-const out=new URL(`../../素材库/05_render_benchmark/${version}/`,import.meta.url);
+const out=new URL(`../../资源库/99_历史归档/渲染对照/${version}/`,import.meta.url);
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-unsafe-swiftshader']});
 try{const page=await browser.newPage();await page.goto('http://127.0.0.1:5179/');const result=await page.evaluate(async()=>{
  const {realSample}=await import('/src/sample.js'),{createScene}=await import('/src/scene.js'),{issues}=await import('/src/layout.js');const renders=[];let geometry;

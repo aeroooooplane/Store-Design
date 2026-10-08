@@ -29,11 +29,11 @@
 
 训练前：
 
-![SI1训练前](../素材库/04_training/rtx4070-pilot/SI1.0-run02/before.png)
+![SI1训练前](../资源库/99_历史归档/训练实验/rtx4070-pilot/SI1.0-run02/before.png)
 
 训练后：
 
-![SI1训练后](../素材库/04_training/rtx4070-pilot/SI1.0-run02/after.png)
+![SI1训练后](../资源库/99_历史归档/训练实验/rtx4070-pilot/SI1.0-run02/after.png)
 
 柜台与吊顶外观出现变化，但品牌文字、产品图案、展示构件细节不可靠；不能确认已学到完整SI1.0规范。
 
@@ -41,17 +41,17 @@
 
 训练前：
 
-![SI2训练前](../素材库/04_training/rtx4070-pilot/SI2.0-run01/before.png)
+![SI2训练前](../资源库/99_历史归档/训练实验/rtx4070-pilot/SI2.0-run01/before.png)
 
 训练后：
 
-![SI2训练后](../素材库/04_training/rtx4070-pilot/SI2.0-run01/after.png)
+![SI2训练后](../资源库/99_历史归档/训练实验/rtx4070-pilot/SI2.0-run01/after.png)
 
 出现深色门头/柜体和浅色台面的倾向，同时生成明显错误的白色招牌字样；不应把这些字样作为品牌设计。文字和准确Logo后续应由确定性图形叠加或真实3D资产处理。
 
 ## 产物和已知问题
 
-根目录：`素材库/04_training/rtx4070-pilot/`。每个完成目录包含 `pytorch_lora_weights.safetensors`、`report.json`、`status.json`、80步 `loss.jsonl`、`before.png`、`after.png`、`reloaded.png`。权重仅与上述SD1.5基模兼容，不用于旧tiny模型、SDXL或FLUX。
+根目录：`资源库/99_历史归档/训练实验/rtx4070-pilot/`。每个完成目录包含 `pytorch_lora_weights.safetensors`、`report.json`、`status.json`、80步 `loss.jsonl`、`before.png`、`after.png`、`reloaded.png`。权重仅与上述SD1.5基模兼容，不用于旧tiny模型、SDXL或FLUX。
 
 SI1.0-run01的80步和保存完成，但离线重载因未指定weight_name报错。已保留原实验并标记failed；脚本修正明确权重文件名后，用新的run02完整重跑通过，没有覆盖旧实验。
 
@@ -61,7 +61,7 @@ SI1.0-run01的80步和保存完成，但离线重载因未指定weight_name报�
 
 当前Git版本 `0a4e05d`：361份PDF路径，358份下载并通过哈希验证，12,303页完成文本候选分类。3份LFS对象在远端404，旧目录另有57份未入Git；详见 [缺失原件清单](github-missing-assets.md)。14个定向视觉样本已经复核，但新增页面没有一页自动批准正式训练。
 
-处理顺序：按文件/页面去重 → 逐页多标签分类 → 单独裁切效果图区 → 核对门店/SI/版本 → 按门店及重复组划分数据。平面图另做有单位的边界、入口、障碍和道具标注；目录、施工说明、机电、尺寸引线不混入干净风格训练。完整规则和解析警告见 [整理方案](rtx4070-training-plan.md)，可视抽查入口为 `素材库/04_training/corpus-audit-4070/review.html`。
+处理顺序：按文件/页面去重 → 逐页多标签分类 → 单独裁切效果图区 → 核对门店/SI/版本 → 按门店及重复组划分数据。平面图另做有单位的边界、入口、障碍和道具标注；目录、施工说明、机电、尺寸引线不混入干净风格训练。完整规则和解析警告见 [整理方案](rtx4070-training-plan.md)，可视抽查入口为 `资源库/99_历史归档/训练实验/corpus-audit-4070/review.html`。
 
 布局路线仍是现有11店的面积→体验桌数量基线，并非完整平面生成；本轮未冒充新增几何训练。SketchUp模型拆分和版本兼容问题也仍需另行解决。
 

@@ -3,7 +3,7 @@ import {readFile,writeFile} from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 import {realAssets} from '../src/real-assets.js'
 const root=new URL('../../',import.meta.url)
-const source='素材库/04_assets/incoming/split-20260925-v2/'
+const source='资源库/90_处理过程与审核/模型拆分/split-20260925-v2/'
 const hashes={}
 async function read(name){
   const bytes=await readFile(new URL(source+name,root))

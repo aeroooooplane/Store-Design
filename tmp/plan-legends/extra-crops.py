@@ -1,7 +1,7 @@
 from pathlib import Path
 import fitz,json,hashlib
 from PIL import Image,ImageDraw,ImageFont
-r=Path(r'E:\效果图生成器\Store-Design');b=r/'素材库/04_assets/按SI标准命名-20261001';out=b/'平面图例';rows=json.loads((out/'index.json').read_text('utf-8'))
+r=Path(r'E:\效果图生成器\Store-Design');b=r/'资源库/04_软装道具模型/单件模型';out=b/'平面图例';rows=json.loads((out/'index.json').read_text('utf-8'))
 specs=[
 ('si1-stool','上海五角场万达授权体验店.pdf',1,[633,352,672,388],[1263,893],'培训坐凳（单凳图例）','原图单个450方凳；模型为4件组合且高350变体，不作为组合占地'),
 ('si2-stool','深圳卓悦中心.pdf',13,[1033,613,1121,691],[1787,1263],'字母凳（4件图例）','原图文字为子母凳4个；对应标准字母凳用途，模型排布方向不同'),

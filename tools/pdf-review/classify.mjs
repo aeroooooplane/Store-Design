@@ -1,10 +1,12 @@
+import {sourcePdfRoot,sourcePdfPath} from '../resource-library/paths.mjs';
 import fs from 'node:fs/promises';import path from 'node:path';import {spawn} from 'node:child_process';
-const root=path.resolve('../..'),out=path.join(root,'素材库/01_catalog/classification'),cache=path.join(out,'page-index');await fs.mkdir(cache,{recursive:true});
-const files=(await fs.readdir(path.join(root,'各门店图纸'))).filter(f=>f.toLowerCase().endsWith('.pdf')).sort();const rows=[];
+const root=path.resolve('../..'),out=path.join(root,'资源库/00_资源索引/历史目录/classification'),cache=path.join(out,'page-index');await fs.mkdir(cache,{recursive:true});
+const existing=JSON.parse(await fs.readFile(path.join(root,'资源库/00_资源索引/门店资源索引.json'),'utf8'));const stableIds=new Map(existing.sources.map(r=>[r.source_file,r.source_id]));
+const files=(await fs.readdir(sourcePdfRoot())).filter(f=>f.toLowerCase().endsWith('.pdf')).sort();const rows=[];
 let next=0;async function worker(){while(next<files.length){const i=next++,file=files[i];
- const id=`PDF-${String(i+1).padStart(3,'0')}`,name=file.slice(0,-4),rel=`各门店图纸/${file}`,stat=await fs.stat(path.join(root,rel)),cp=path.join(cache,file+'.json');let index,error;
+ const id=stableIds.get(file),name=file.slice(0,-4),rel=`各门店图纸/${file}`,stat=await fs.stat(sourcePdfPath(file)),cp=path.join(cache,file+'.json');let index,error;if(!id)throw Error("新文件需要先分配稳定来源编号: "+file);
  try{index=JSON.parse(await fs.readFile(cp,'utf8'))}catch{
-  const result=await new Promise(resolve=>{const p=spawn(process.execPath,['classify-worker.mjs',path.join(root,rel),cp],{windowsHide:true,stdio:'ignore'});const t=setTimeout(()=>{p.kill();resolve('timeout')},90000);p.on('exit',code=>{clearTimeout(t);resolve(code)});p.on('error',e=>{clearTimeout(t);resolve(e.message)})});
+  const result=await new Promise(resolve=>{const p=spawn(process.execPath,['classify-worker.mjs',sourcePdfPath(file),cp],{windowsHide:true,stdio:'ignore'});const t=setTimeout(()=>{p.kill();resolve('timeout')},90000);p.on('exit',code=>{clearTimeout(t);resolve(code)});p.on('error',e=>{clearTimeout(t);resolve(e.message)})});
   if(result===0)try{index=JSON.parse(await fs.readFile(cp,'utf8'))}catch(e){error=e.message}else error=String(result);
  }
  let typeHint=/边厅改中岛/.test(name)?'中岛店':/中岛/.test(name)?'中岛店':/边厅/.test(name)?'边厅店':null;

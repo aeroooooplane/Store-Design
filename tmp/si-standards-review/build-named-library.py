@@ -4,9 +4,9 @@ from collections import Counter
 from PIL import Image
 ROOT=Path(r'E:\效果图生成器\Store-Design')
 WORK=ROOT/'tmp/si-standards-review'
-BASE=ROOT/'素材库/04_assets/incoming/split-20260925-v2'
-OUT=ROOT/'素材库/04_assets/按SI标准命名-20261001'
-REPORT=ROOT/'output/si-standards-review-20261001'
+BASE=ROOT/'资源库/90_处理过程与审核/模型拆分/split-20260925-v2'
+OUT=ROOT/'资源库/04_软装道具模型/单件模型'
+REPORT=ROOT/'资源库/05_店铺形象设计标准/历史阅读记录'
 OUT.mkdir(parents=True,exist_ok=True); REPORT.mkdir(parents=True,exist_ok=True)
 (OUT/'预览').mkdir(exist_ok=True)
 source=json.loads((BASE/'manifest.json').read_text('utf-8'))
@@ -79,7 +79,7 @@ for a in rows:
  links=' · '.join(f'<a href="{e(v)}">视角{i+1}</a>' for i,v in enumerate(a['additional_views']))
  cards.append(f'''<article id="{a['asset_id']}"><a href="{e(a['preview'])}"><img loading="lazy" src="{e(a['preview'])}" alt="{e(a['standard_name'])}"></a><div class="body"><div class="tag">{e(a['si_family'])} · {e(a['match'])} · {a['asset_id']}</div><h2>{a['n']:02} {e(a['standard_name'])}</h2><p>{e(a['variant'])}</p><p class="reason">{e(a['judgment'])}</p><p class="small">依据：{e(a['reference_pages'])}<br>可见几何 XYZ：{dims} mm（含陈列，不是柜体净尺寸）</p><a class="file" href="{e(a['named_skp'])}">打开对应 SU 文件 ↗</a><p class="small">{links}</p></div></article>''')
 style='''*{box-sizing:border-box}body{margin:0;background:#f4f3ee;color:#222;font:15px/1.6 "Microsoft YaHei",sans-serif}header,main{max-width:1440px;margin:auto;padding:32px}header{padding-bottom:8px}h1{font-size:34px;margin:8px 0}h2{font-size:19px;margin:8px 0}a{color:#185b4c}nav{display:flex;gap:18px;flex-wrap:wrap;margin:20px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:22px}article{background:white;border:1px solid #ddd;border-radius:12px;overflow:hidden}article img{width:100%;height:250px;object-fit:contain;background:#fafafa}.body{padding:20px}.tag{font-size:12px;font-weight:700;color:#786414}.small{font-size:12px;color:#666}.reason{min-height:70px}.file{font-weight:700}.note{padding:18px;background:#e9eee6;border-left:4px solid #41633b}'''
-(OUT/'模型预览目录.html').write_text(f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SI 模型命名目录 · 90件</title><style>{style}</style><header><div>STORE DESIGN / 2026.10.01</div><h1>SI 模型命名目录</h1><p>90 件模型 · SI1.0 {counts.get('SI1.0',0)} 件 / SI2.0 {counts.get('SI2.0',0)} 件 / 通用 {counts.get('通用',0)} 件 / 非标 {counts.get('非标',0)} 件</p><div class="note">已按标准术语与实际结构命名。对应款、变体及非标件分别标注；SI 家族归类不代表所有尺寸均符合生产标准。使用 Ctrl+F 搜索名称或资产 ID。点击图片放大查看。</div><nav><a href="命名对照.csv">命名对照表</a><a href="使用指引.md">使用指引</a><a href="../../../output/si-standards-review-20261001/标准阅读索引.html">两套标准 · 360页</a><a href="../../../docs/si-standards-review-20261001.md">阅读与判断记录</a><a href="#asset-3356988">唯一用途未定项</a></nav></header><main><div class="grid">{''.join(cards)}</div></main></html>''','utf-8')
+(OUT/'模型预览目录.html').write_text(f'''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SI 模型命名目录 · 90件</title><style>{style}</style><header><div>STORE DESIGN / 2026.10.01</div><h1>SI 模型命名目录</h1><p>90 件模型 · SI1.0 {counts.get('SI1.0',0)} 件 / SI2.0 {counts.get('SI2.0',0)} 件 / 通用 {counts.get('通用',0)} 件 / 非标 {counts.get('非标',0)} 件</p><div class="note">已按标准术语与实际结构命名。对应款、变体及非标件分别标注；SI 家族归类不代表所有尺寸均符合生产标准。使用 Ctrl+F 搜索名称或资产 ID。点击图片放大查看。</div><nav><a href="命名对照.csv">命名对照表</a><a href="使用指引.md">使用指引</a><a href="../../../资源库/05_店铺形象设计标准/历史阅读记录/标准阅读索引.html">两套标准 · 360页</a><a href="../../../docs/si-standards-review-20261001.md">阅读与判断记录</a><a href="#asset-3356988">唯一用途未定项</a></nav></header><main><div class="grid">{''.join(cards)}</div></main></html>''','utf-8')
 pagecards=[]
 for a in page_rows:
  pagecards.append(f'<article id="{a["source"]}-{a["physical_page"]}"><a href="{e(a["preview"])}"><img loading="lazy" src="{e(a["preview"])}" alt="标准页"></a><div class="body"><h2>{a["source"]} · 第{a["physical_page"]}页</h2><details><summary>查看提取文字</summary><pre style="white-space:pre-wrap">{e(a["text"])}</pre></details></div></article>')

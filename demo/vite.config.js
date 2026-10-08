@@ -3,9 +3,11 @@ import {fileURLToPath} from 'node:url'
 import evidence from './src/data/case-library.json'
 import {localEvidencePlugin} from './server/local-evidence.mjs'
 import {localModelLibraryPlugin} from './server/local-model-library.mjs'
+import {resourceModelsPlugin} from './server/resource-models.mjs'
+import placements from './src/data/placement-manifest.json'
 
 export default defineConfig({
-  plugins:[localModelLibraryPlugin(fileURLToPath(new URL('../',import.meta.url))),localEvidencePlugin(fileURLToPath(new URL('../',import.meta.url)),evidence.stores)],
+  plugins:[resourceModelsPlugin(fileURLToPath(new URL('../',import.meta.url)),placements.assets),localModelLibraryPlugin(fileURLToPath(new URL('../',import.meta.url))),localEvidencePlugin(fileURLToPath(new URL('../',import.meta.url)),evidence.stores)],
   cacheDir:process.env.VITE_CACHE_DIR||'node_modules/.vite',
   // Prebundle lazy export/viewer dependencies before the first user interaction.
   // Otherwise Vite can reload the page when ZIP export is clicked for the first time.

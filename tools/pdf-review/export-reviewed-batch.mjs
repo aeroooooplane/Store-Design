@@ -1,3 +1,4 @@
+import {sourcePdfRoot,sourcePdfPath} from '../resource-library/paths.mjs';
 import fs from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {createCanvas,DOMMatrix,ImageData,Path2D} from '@napi-rs/canvas';
@@ -5,9 +6,9 @@ Object.assign(globalThis,{DOMMatrix,ImageData,Path2D});
 const {getDocument}=await import('pdfjs-dist/legacy/build/pdf.mjs');
 const root=new URL('../../',import.meta.url);
 const read=async p=>JSON.parse(await fs.readFile(new URL(p,root),'utf8'));
-const rows=await read('素材库/01_catalog/classification/training-shortlist.json');
-const stores=await read('素材库/01_catalog/classification/stores.json');
-const out='素材库/03_training_candidates/batch01/';
+const rows=await read('资源库/00_资源索引/历史目录/classification/training-shortlist.json');
+const stores=await read('资源库/00_资源索引/历史目录/classification/stores.json');
+const out='资源库/99_历史归档/训练候选/batch01/';
 // Physical PDF pages (1 based); crop coordinates normalized to rendered page.
 const config={
  'PDF-159':[1,[2,3],68.3,'异形边厅；前区多组体验桌，后区培训座位与仓储；保留商场柱体。'],
@@ -27,7 +28,7 @@ const manifests=[];
 for(const row of rows){
  const [plan,renders,area,observation]=config[row.id];
  const dir=out+row.id+'/';await fs.mkdir(new URL(dir,root),{recursive:true});
- const bytes=await fs.readFile(new URL('各门店图纸/'+row.file,root));
+ const bytes=await fs.readFile(sourcePdfPath(row.file));
  const hash=createHash('sha256').update(bytes).digest('hex');
  const task=getDocument({data:new Uint8Array(bytes),verbosity:0,useSystemFonts:true});const pdf=await task.promise;
  const assets=[];
@@ -46,8 +47,8 @@ for(const row of rows){
 }
 await fs.writeFile(new URL(out+'manifest.json',root),JSON.stringify(manifests,null,2));
 const ignored=stores.filter(s=>s.labelConflict).map(s=>({id:s.id,file:s.file,decision:'按用户要求忽略冲突，排除本批样本，不纠正原标签',date:'2026-09-23'}));
-await fs.writeFile(new URL('素材库/01_catalog/classification/ignored-conflicts.json',root),JSON.stringify(ignored,null,2));
+await fs.writeFile(new URL('资源库/00_资源索引/历史目录/classification/ignored-conflicts.json',root),JSON.stringify(ignored,null,2));
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>影石布局规则库 · 首批图纸样本</title><style>body{font:16px/1.7 system-ui;margin:0;background:#f3f4f6;color:#18212c}header,main{max-width:1280px;margin:auto;padding:28px}h1{margin:0}article{background:white;border-radius:14px;padding:24px;margin:24px 0}small{color:#596574}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}img{width:100%;height:260px;object-fit:contain;background:#eee}a{color:#126181}select{padding:10px;font:inherit}@media(max-width:760px){.grid{grid-template-columns:1fr}}</style><header><h1>影石门店 · 首批布局样本</h1><p>12 家｜11 组平面与效果图配对＋1 家仅平面｜6 份冲突已排除</p><p>标签来自飞书总表；观察来自原始图纸。当前是参考样本库，尚非可训练数据集。</p><select id="filter"><option value="">全部类型</option>${[...new Set(manifests.map(m=>m.tag))].map(t=>`<option>${esc(t)}</option>`).join('')}</select></header><main>${manifests.map(m=>`<article data-tag="${esc(m.tag)}"><h2>${esc(m.file.replace('.pdf',''))}</h2><small>${esc(m.tag)} · ${m.areaM2===null?'面积待录入':m.areaM2+'㎡（图纸标注）'} · ${esc(m.status)}</small><p>${esc(m.observation)}</p><div class="grid">${m.assets.map(a=>`<div><a href="${m.id}/${a.file}"><img loading="lazy" src="${m.id}/${a.file}"></a><p>${a.role==='plan'?'平面':'效果图'} · PDF 第 ${a.page} 页 · <a href="${m.id}/${a.fullPage}">完整原页</a></p></div>`).join('')}</div><p><a href="${m.id}/manifest.json">来源与裁切记录</a> · <a href="${esc(m.sourceUrl)}">飞书记录</a> · <a href="../../../各门店图纸/${encodeURIComponent(m.file)}">原始 PDF</a></p></article>`).join('')}</main><script>document.querySelector('#filter').onchange=e=>document.querySelectorAll('article').forEach(a=>a.hidden=!!e.target.value&&a.dataset.tag!==e.target.value)</script></html>`;
+const html=`<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>影石布局规则库 · 首批图纸样本</title><style>body{font:16px/1.7 system-ui;margin:0;background:#f3f4f6;color:#18212c}header,main{max-width:1280px;margin:auto;padding:28px}h1{margin:0}article{background:white;border-radius:14px;padding:24px;margin:24px 0}small{color:#596574}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}img{width:100%;height:260px;object-fit:contain;background:#eee}a{color:#126181}select{padding:10px;font:inherit}@media(max-width:760px){.grid{grid-template-columns:1fr}}</style><header><h1>影石门店 · 首批布局样本</h1><p>12 家｜11 组平面与效果图配对＋1 家仅平面｜6 份冲突已排除</p><p>标签来自飞书总表；观察来自原始图纸。当前是参考样本库，尚非可训练数据集。</p><select id="filter"><option value="">全部类型</option>${[...new Set(manifests.map(m=>m.tag))].map(t=>`<option>${esc(t)}</option>`).join('')}</select></header><main>${manifests.map(m=>`<article data-tag="${esc(m.tag)}"><h2>${esc(m.file.replace('.pdf',''))}</h2><small>${esc(m.tag)} · ${m.areaM2===null?'面积待录入':m.areaM2+'㎡（图纸标注）'} · ${esc(m.status)}</small><p>${esc(m.observation)}</p><div class="grid">${m.assets.map(a=>`<div><a href="${m.id}/${a.file}"><img loading="lazy" src="${m.id}/${a.file}"></a><p>${a.role==='plan'?'平面':'效果图'} · PDF 第 ${a.page} 页 · <a href="${m.id}/${a.fullPage}">完整原页</a></p></div>`).join('')}</div><p><a href="${m.id}/manifest.json">来源与裁切记录</a> · <a href="${esc(m.sourceUrl)}">飞书记录</a> · <span>原始 PDF 已外置：${esc(m.file)}</span></p></article>`).join('')}</main><script>document.querySelector('#filter').onchange=e=>document.querySelectorAll('article').forEach(a=>a.hidden=!!e.target.value&&a.dataset.tag!==e.target.value)</script></html>`;
 await fs.writeFile(new URL(out+'index.html',root),html);
 console.log(JSON.stringify({stores:manifests.length,plans:manifests.length,renders:manifests.reduce((n,m)=>n+m.assets.filter(a=>a.role==='render').length,0),ignored:ignored.length}));
