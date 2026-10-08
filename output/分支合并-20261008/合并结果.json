@@ -1,0 +1,12 @@
+{
+  "merged_branch": "snapshot/20261008",
+  "target_branch": "main",
+  "commit": "cec092e5932c975a6bc8b729ba067d73c06892a5",
+  "parents": [
+    "2cbe533e5b4e0307c2fe07d88ff01d1cb2639cbf",
+    "d1cc7c5d421966c7bc2d2b8c96f7b062ebef9d4e"
+  ],
+  "tree": "a690b70e996fed85810ea0a865070afe66bb64b6",
+  "snapshot_tree_preserved": true,
+  "url": "https://github.com/aeroooooplane/Store-Design/commit/cec092e5932c975a6bc8b729ba067d73c06892a5"
+}

@@ -1,0 +1,5821 @@
+{
+  "commit": "2cbe533e5b4e0307c2fe07d88ff01d1cb2639cbf",
+  "source": "D:\\各门店图纸",
+  "github_pdf_count": 361,
+  "local_pdf_count": 418,
+  "counts": {
+    "same_name_same_content": 361,
+    "same_content_other_name": 0,
+    "same_name_different_content": 0,
+    "not_in_github": 57
+  },
+  "groups": {
+    "same_name_same_content": [
+      {
+        "path": "上海TPY中心.pdf",
+        "size": 15259039,
+        "sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "github_paths": [
+          "各门店图纸/上海TPY中心.pdf"
+        ]
+      },
+      {
+        "path": "上海七宝领展授权体验店.pdf",
+        "size": 14495767,
+        "sha256": "94c5c78ed1408f2f32ecb99d7811a3d0dfd593e7eb19518235d9a76d06a9bd4f",
+        "github_paths": [
+          "各门店图纸/上海七宝领展授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海万象城授权体验店（边厅）.pdf",
+        "size": 9709038,
+        "sha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+        "github_paths": [
+          "各门店图纸/上海万象城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "上海世博天地授权体验店.pdf",
+        "size": 16010095,
+        "sha256": "a6cfdaa4a0a7a53c62c0fff95dffa5700b14212a78cd168fafc5b399a7e11eb7",
+        "github_paths": [
+          "各门店图纸/上海世博天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海五角场万达授权体验店.pdf",
+        "size": 12989396,
+        "sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+        "github_paths": [
+          "各门店图纸/上海五角场万达授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海北外滩来福士授权体验店.pdf",
+        "size": 18627595,
+        "sha256": "191ebc935e4107288f78318829cc3555fe1bf583b742e16b2278d8aef09a57cf",
+        "github_paths": [
+          "各门店图纸/上海北外滩来福士授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海嘉里合集授权专卖店.pdf",
+        "size": 7967809,
+        "sha256": "a7d672cd28a944468cc7ae28d127d3c2fdc6196b380c8040b8fbdda83a96d96d",
+        "github_paths": [
+          "各门店图纸/上海嘉里合集授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "上海新嘉中心.pdf",
+        "size": 18072665,
+        "sha256": "ff031704958d19f6ea7f5f8bf0be4437c823daeac574137f2a095395e52ed73c",
+        "github_paths": [
+          "各门店图纸/上海新嘉中心.pdf"
+        ]
+      },
+      {
+        "path": "上海新天地东台里授权体验店.pdf",
+        "size": 1387185,
+        "sha256": "58e5d568518729cb88021229001a74dd724761f2594436592dc495030e58f7af",
+        "github_paths": [
+          "各门店图纸/上海新天地东台里授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海星光摄影城照材专卖店.pdf",
+        "size": 8559516,
+        "sha256": "66dfd84de00a68596bcca54ef48aea81a599f40424f1a729968bf4ffca6870fd",
+        "github_paths": [
+          "各门店图纸/上海星光摄影城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "上海月星环球港授权体验店.pdf",
+        "size": 9958081,
+        "sha256": "fefbd3728ff0941d27d5deeec3756f82c2048dff0c9222f89fdffd03ac48e463",
+        "github_paths": [
+          "各门店图纸/上海月星环球港授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海浦东嘉里城授权体验店.pdf",
+        "size": 10772122,
+        "sha256": "91d09a82bd09cafa9314d144c255e0523247cf449385069b6b8d2ef2bc77a065",
+        "github_paths": [
+          "各门店图纸/上海浦东嘉里城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海港汇恒隆授权体验店.pdf",
+        "size": 6216901,
+        "sha256": "f80c47d673f740ff3dd47b7d3fc8dc0f2200cb7b627a8318b298cb1d825a0208",
+        "github_paths": [
+          "各门店图纸/上海港汇恒隆授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海环龙商场照材专卖店.pdf",
+        "size": 37761163,
+        "sha256": "5fd6c4244cd2c097b2ac9cbb3f479b8b01b0ef4d03571df8c950f16c5b66badb",
+        "github_paths": [
+          "各门店图纸/上海环龙商场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "上海百脑汇照材专卖店.pdf",
+        "size": 11115809,
+        "sha256": "606411680471ce0e7d032f75836e89b1100919c7eae58b0d14facd1a1ba08775",
+        "github_paths": [
+          "各门店图纸/上海百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "上海第一八佰伴授权体验店.pdf",
+        "size": 18895717,
+        "sha256": "ca8ed05e83e5430fec61d4907806256e0523bc79d337f86456079d2e91781798",
+        "github_paths": [
+          "各门店图纸/上海第一八佰伴授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海长宁荟聚授权体验店.pdf",
+        "size": 15204730,
+        "sha256": "1f65c080bece31bf8de2ed24d80ae176450436800a7ecfc5b91e794d160eeac0",
+        "github_paths": [
+          "各门店图纸/上海长宁荟聚授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海长宁龙之梦.pdf",
+        "size": 14583582,
+        "sha256": "6372848f1ad41d2b28bab02a847676d4ebb0f53475415141802dc0c094eb9ac2",
+        "github_paths": [
+          "各门店图纸/上海长宁龙之梦.pdf"
+        ]
+      },
+      {
+        "path": "上海闵行凯德梦之龙照材专卖店.pdf",
+        "size": 6578746,
+        "sha256": "8180a52e5e78375a5ee96eddfda2a154b39b603c5008cef8a223f405896f5de7",
+        "github_paths": [
+          "各门店图纸/上海闵行凯德梦之龙照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "上海陆家嘴正大广场授权体验店.pdf",
+        "size": 20006484,
+        "sha256": "9cadfe6cda7433f6bbc05b6acea111ed1a570621c44514eeb61153f512503f8c",
+        "github_paths": [
+          "各门店图纸/上海陆家嘴正大广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海陆家嘴项目（改造）.pdf",
+        "size": 12744828,
+        "sha256": "8e4459c2205e30fb91a23e10c19aececa28b4c1f508be1371b3adfd41c8d26ae",
+        "github_paths": [
+          "各门店图纸/上海陆家嘴项目（改造）.pdf"
+        ]
+      },
+      {
+        "path": "上海黄埔日月光中心授权体验店.pdf",
+        "size": 16454623,
+        "sha256": "a161abc2ca90f747ece136b4bd283431c390b425baa6a92f42567c63245ad652",
+        "github_paths": [
+          "各门店图纸/上海黄埔日月光中心授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "上海龙湖宝山天街.pdf",
+        "size": 4001701,
+        "sha256": "d225883862e434ea3e9e15f735fcfbcc3f3a8e21059427b3daa25b8d13205e79",
+        "github_paths": [
+          "各门店图纸/上海龙湖宝山天街.pdf"
+        ]
+      },
+      {
+        "path": "上海龙湖闵行天街授权体验店.pdf",
+        "size": 15640321,
+        "sha256": "e09ae59bd1e6b85926613ff8dfb6682d69d791b0edc692dfe6ff678b641f912a",
+        "github_paths": [
+          "各门店图纸/上海龙湖闵行天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "东莞万象滨海购物公园.pdf",
+        "size": 13793267,
+        "sha256": "3b6ebced0e7c711e9db2aefc0a9583e2331fb8a5c478b33cd4d69a74770980af",
+        "github_paths": [
+          "各门店图纸/东莞万象滨海购物公园.pdf"
+        ]
+      },
+      {
+        "path": "东莞悠兰里街区授权专卖店.pdf",
+        "size": 37515278,
+        "sha256": "fb339e56ad3501cdc5d6a308e882715d6cca5d27cdc43d31c677d48533d0fc95",
+        "github_paths": [
+          "各门店图纸/东莞悠兰里街区授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "临沂万象汇.pdf",
+        "size": 17289615,
+        "sha256": "d777b05068216ca00dc68aa20ab6d584ed507ba5234a976eca4bd4b89e6f62e9",
+        "github_paths": [
+          "各门店图纸/临沂万象汇.pdf"
+        ]
+      },
+      {
+        "path": "临沂百脑汇照材专卖店.pdf",
+        "size": 8843667,
+        "sha256": "f0a353caaf486648604010369e5f73fe65981656b124fe1b8ab57b29a9e6aa3a",
+        "github_paths": [
+          "各门店图纸/临沂百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "乌鲁木齐cc mall授权专卖店.pdf",
+        "size": 4685663,
+        "sha256": "7359c9e64946682368a09ad1dec42b44d2fb907e5b4d0acdb5c20dbdaa2f1221",
+        "github_paths": [
+          "各门店图纸/乌鲁木齐cc mall授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "乌鲁木齐德汇万达（边厅改中岛）.pdf",
+        "size": 6411051,
+        "sha256": "05b7f2398df0f71834caae2353e81024be14ba49276e03653ca3bad25f9e844a",
+        "github_paths": [
+          "各门店图纸/乌鲁木齐德汇万达（边厅改中岛）.pdf"
+        ]
+      },
+      {
+        "path": "乌鲁木齐经开万达授权专卖店.pdf",
+        "size": 9472674,
+        "sha256": "f186cfa7a5b523d92737ccc5d81674acf4793d51135b82365afb5a0f4dd3f0fb",
+        "github_paths": [
+          "各门店图纸/乌鲁木齐经开万达授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "乌鲁木齐高新万达广场.pdf",
+        "size": 10466353,
+        "sha256": "2fdec1509c639630af5b1217e3378c6cb646c3666d5bbacfc5b31c706656a445",
+        "github_paths": [
+          "各门店图纸/乌鲁木齐高新万达广场.pdf"
+        ]
+      },
+      {
+        "path": "佛山创意产业园授权专卖店.pdf",
+        "size": 48890298,
+        "sha256": "8ac35e744a8daa3f308dcbc9f84f3d9c66eb72f426a4c93da520940e8e8642ca",
+        "github_paths": [
+          "各门店图纸/佛山创意产业园授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "佛山千灯湖环宇城授权体验店.pdf",
+        "size": 12383620,
+        "sha256": "868516b1048b77d52fb913e36fc4580e1a0d089ff3e2c39c1bbe2cf7ec0a3abc",
+        "github_paths": [
+          "各门店图纸/佛山千灯湖环宇城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "佛山欢乐海岸Plus.pdf",
+        "size": 38709066,
+        "sha256": "0deca263f5cde40fa36c78a367f5d4f1102df800a9feac1cf1e9d037a0477c8a",
+        "github_paths": [
+          "各门店图纸/佛山欢乐海岸Plus.pdf"
+        ]
+      },
+      {
+        "path": "佛山禅城NOVA岭南站授权体验店.pdf",
+        "size": 17710663,
+        "sha256": "6e0238e2134b14eef6f759244965c5cbc9e3c25df3a567399dc121ce516e096f",
+        "github_paths": [
+          "各门店图纸/佛山禅城NOVA岭南站授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "佛山禅西环宇城授权体验店.pdf",
+        "size": 13728636,
+        "sha256": "5aad0140601a0bae5aee0478550eea7388a2d7ec9f8407599d9db083bf82d109",
+        "github_paths": [
+          "各门店图纸/佛山禅西环宇城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "佛山金铂中心授权体验店.pdf",
+        "size": 17149587,
+        "sha256": "96278410e120b78a9cd4bb6531847d18afb0cfd928760832477502713f75ea6b",
+        "github_paths": [
+          "各门店图纸/佛山金铂中心授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "佛山顺德万象汇授权体验店.pdf",
+        "size": 18473578,
+        "sha256": "91765a7a5e3b43acffe9c9aab4a9f8ee7db9a2ba31999bb41f6f8b51761e6769",
+        "github_paths": [
+          "各门店图纸/佛山顺德万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "保定北国先天下授权体验店.pdf",
+        "size": 20631354,
+        "sha256": "d40d829cb5655bfdb03fada4eb9fb1660c9663607d4e15f2a8aa59bc3c8edc75",
+        "github_paths": [
+          "各门店图纸/保定北国先天下授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "保定爱情广场授权体验店.pdf",
+        "size": 20093796,
+        "sha256": "cf320ec51dddba29f50012f2267068b016fa7d231942cc34aeaf6ecd0bc2e88e",
+        "github_paths": [
+          "各门店图纸/保定爱情广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "保定西大街照材专卖店.pdf",
+        "size": 15364407,
+        "sha256": "6d2b772b16668d0789ed3c5d80234692929b06ba5959225eab96a9e09e800b3b",
+        "github_paths": [
+          "各门店图纸/保定西大街照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "兰州万象城授权体验店.pdf",
+        "size": 3003167,
+        "sha256": "bc11e9da7730af517a48b998a7d2fdaa098e60f00838da60308a9d459df9e178",
+        "github_paths": [
+          "各门店图纸/兰州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "兰州苏宁MAX照材专卖店.pdf",
+        "size": 19157931,
+        "sha256": "7d866b838bc6df4b73f80119cddf2a1cdfbe5ed6355a23b5f72078b4a3c32ce3",
+        "github_paths": [
+          "各门店图纸/兰州苏宁MAX照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "包河万象汇.pdf",
+        "size": 17804973,
+        "sha256": "3ffe17987587113ae5388182fd4e2ab8682d22344b702cb078b2985e1e54602e",
+        "github_paths": [
+          "各门店图纸/包河万象汇.pdf"
+        ]
+      },
+      {
+        "path": "北京798创意园授权专卖店.pdf",
+        "size": 10159113,
+        "sha256": "8eba05d238862c9619eeace4bd8e8ae425cdba59413c00552101781e28cb9b56",
+        "github_paths": [
+          "各门店图纸/北京798创意园授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "北京万柳华联授权体验店.pdf",
+        "size": 22776801,
+        "sha256": "84f1c75f1f393e297700ee49b55d29ebdc985577084567a8a2066784c31d9cb9",
+        "github_paths": [
+          "各门店图纸/北京万柳华联授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京三里屯太古里授权体验店.pdf",
+        "size": 11643735,
+        "sha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+        "github_paths": [
+          "各门店图纸/北京三里屯太古里授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京东坝万达授权体验店.pdf",
+        "size": 15195054,
+        "sha256": "2821f2d899b41c579b7b73f073c4fca11f2f97997c07d7d0b242d4d517305092",
+        "github_paths": [
+          "各门店图纸/北京东坝万达授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京中关村大融城授权体验店.pdf",
+        "size": 2577210,
+        "sha256": "761e4f768a07a7364bd552382c49b7fd81d596e84e477d0221a20bfc42fb777d",
+        "github_paths": [
+          "各门店图纸/北京中关村大融城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京五棵松万达授权体验店.pdf",
+        "size": 16611376,
+        "sha256": "77e3ae5741ea39e785bf685810216d333ecb213558edf56e6cb15f7ee5d48353",
+        "github_paths": [
+          "各门店图纸/北京五棵松万达授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京五棵松照材专卖店.pdf",
+        "size": 2644557,
+        "sha256": "5ee0646cc839d56b76acbac870d66c1068408d2cae64297063e6a05c18532153",
+        "github_paths": [
+          "各门店图纸/北京五棵松照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "北京亦庄龙湖天街授权体验店.pdf",
+        "size": 22501137,
+        "sha256": "d0076c77dc4ab9d97615fb18aa2e0b31f4d41ad01a7e45f99b966ffb2e0e2a67",
+        "github_paths": [
+          "各门店图纸/北京亦庄龙湖天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京合生汇授权体验店.pdf",
+        "size": 8175600,
+        "sha256": "85d0071d1781af7f62555608532a62fc0cb8b97259e16127da52de412b00575f",
+        "github_paths": [
+          "各门店图纸/北京合生汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京悠唐广场授权体验店.pdf",
+        "size": 8795108,
+        "sha256": "948b24b9dcdc1c2071b4835cd27ca5118bf0a2e7a0161976ede1b2a3116b6ba3",
+        "github_paths": [
+          "各门店图纸/北京悠唐广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京房山熙悦天街授权体验店.pdf",
+        "size": 13500157,
+        "sha256": "728c6bb41cd97460e7c920c7a616375624bd9f5390f2ebf17c6311a2221b6ac7",
+        "github_paths": [
+          "各门店图纸/北京房山熙悦天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京望京凯德授权体验店.pdf",
+        "size": 17420960,
+        "sha256": "545b63ccb1b6502173749477f2e61cfdc9443ce9292d4cd7e4f4873f779d059c",
+        "github_paths": [
+          "各门店图纸/北京望京凯德授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京朝阳大悦城授权体验店（边厅）.pdf",
+        "size": 20403152,
+        "sha256": "f45e1b866e6930d23869ebbcaf6717271959eb30b5a4a93607625bf56515eb09",
+        "github_paths": [
+          "各门店图纸/北京朝阳大悦城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "北京清河万象汇授权体验店.pdf",
+        "size": 5797374,
+        "sha256": "2b4c59ea4357336c3a81519f5ac7d5b8e751f926c6fab11bd3d779e9babd9425",
+        "github_paths": [
+          "各门店图纸/北京清河万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京王府井银泰IN88授权体验店.pdf",
+        "size": 15184413,
+        "sha256": "3ae4217cf3df3ff438bff4893aa2915ef2d84aa59dfb0610644baee2a28e6271",
+        "github_paths": [
+          "各门店图纸/北京王府井银泰IN88授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京荟聚授权体验店.pdf",
+        "size": 15742960,
+        "sha256": "6e9fdc7bddc534b49017ea964937ce23aef0fcf1b64035149990ea13b2179579",
+        "github_paths": [
+          "各门店图纸/北京荟聚授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京蓝色港湾授权体验店.pdf",
+        "size": 21653929,
+        "sha256": "6fa90802f53a1f824e6bce6de7e2bd37f0024e8f74434e9ebf4c4c121407a20e",
+        "github_paths": [
+          "各门店图纸/北京蓝色港湾授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京西三旗万象汇授权体验店.pdf",
+        "size": 21525412,
+        "sha256": "ea347ad8743cb3548ee583f0bb5f6a91b19c43937c6374fdea802a3f5576d7ea",
+        "github_paths": [
+          "各门店图纸/北京西三旗万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京西单大悦城授权体验店.pdf",
+        "size": 22694472,
+        "sha256": "80b3a118b5e788d60480700aacdc4673c2a7beae540829c31b7f78e69b35ecbc",
+        "github_paths": [
+          "各门店图纸/北京西单大悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京超极合生汇授权体验店.pdf",
+        "size": 14052056,
+        "sha256": "d6b06296e785c3ff46c7b49d1e1924d581acfca40b23ad02dd4c23e31d172c80",
+        "github_paths": [
+          "各门店图纸/北京超极合生汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京通州万象汇授权体验店.pdf",
+        "size": 13219402,
+        "sha256": "528000c70e391c19e00fee60483b5e0bc3b62e3d4f6c13e4f7ce4fe8fd718c50",
+        "github_paths": [
+          "各门店图纸/北京通州万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京顺义华联授权体验店.pdf",
+        "size": 24351686,
+        "sha256": "17bd29c757af87ecebf16224e5a1b278bc6dfcabd51d2281c5f46354723b3ea1",
+        "github_paths": [
+          "各门店图纸/北京顺义华联授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京首都机场T3授权体验店.pdf",
+        "size": 10449303,
+        "sha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+        "github_paths": [
+          "各门店图纸/北京首都机场T3授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "北京马连道照材专区.pdf",
+        "size": 98692986,
+        "sha256": "d2338dc7fc98c4ab80010d864ee510de104f9a6e73aaff6dd007689d3ae70175",
+        "github_paths": [
+          "各门店图纸/北京马连道照材专区.pdf"
+        ]
+      },
+      {
+        "path": "北京龙湖丽泽天街授权体验店.pdf",
+        "size": 6391710,
+        "sha256": "7de29d9944a3db1b22a9eead0b841fa3b70b0c3236853958a912558e99d067f3",
+        "github_paths": [
+          "各门店图纸/北京龙湖丽泽天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "华强北电子世界二店.pdf",
+        "size": 28820424,
+        "sha256": "c37438a30f6f8690eb1098b301a5ef1a515cbf9dca55f623e2d28062d41658c9",
+        "github_paths": [
+          "各门店图纸/华强北电子世界二店.pdf"
+        ]
+      },
+      {
+        "path": "南京万象天地授权体验店.pdf",
+        "size": 10561744,
+        "sha256": "4ddf243332ecb670c1614fb42279c6618ad60b0adc8e7abed8d7de60fdb5aae5",
+        "github_paths": [
+          "各门店图纸/南京万象天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南京仙林金鹰授权专卖店.pdf",
+        "size": 30833695,
+        "sha256": "69381b8f2e9287da94827eff68fb1c88d3856e3405e5c824846f64d97526345a",
+        "github_paths": [
+          "各门店图纸/南京仙林金鹰授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "南京华海3c照材专卖店.pdf",
+        "size": 24853086,
+        "sha256": "7b88c7794d09e5fabf5453c606089c4b97504d5cb7807a8949c38bbce760184e",
+        "github_paths": [
+          "各门店图纸/南京华海3c照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "南京城北万象汇授权体验店.pdf",
+        "size": 18039865,
+        "sha256": "b91bbab0c35944a1e52654616fb4404a36b7a51071b888fdf0e0c9d0b13d83b3",
+        "github_paths": [
+          "各门店图纸/南京城北万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南京德基广场直营店.pdf",
+        "size": 4584231,
+        "sha256": "bc28fef737dbf163ad8d01cadd241bfb5f20aa46c3db39dd3fb38b2be0644af3",
+        "github_paths": [
+          "各门店图纸/南京德基广场直营店.pdf"
+        ]
+      },
+      {
+        "path": "南京桥北弘阳广场授权体验店.pdf",
+        "size": 34352108,
+        "sha256": "589367ac95c8095d596dc8e85a940f0f9b7d06cbe824faae60fb4c9a37a461d3",
+        "github_paths": [
+          "各门店图纸/南京桥北弘阳广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南京江北虹悦城授权体验店.pdf",
+        "size": 43257920,
+        "sha256": "5ace6ca9804c86fc0d189678cba8d648286e70cc4084e78b83102ca9ea647620",
+        "github_paths": [
+          "各门店图纸/南京江北虹悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南京金陵天地授权体验店.pdf",
+        "size": 9922940,
+        "sha256": "cf39c869c891c11bddac16fdea8bd12f08ce3965d63218a9c36a57fde969cb94",
+        "github_paths": [
+          "各门店图纸/南京金陵天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南宁万象城.pdf",
+        "size": 10894448,
+        "sha256": "f200de828440c62ed84b811df29134120bed1ca7fdf328b599a72d22333b35e2",
+        "github_paths": [
+          "各门店图纸/南宁万象城.pdf"
+        ]
+      },
+      {
+        "path": "南宁惠工电子科技城（迁址）.pdf",
+        "size": 16105511,
+        "sha256": "52872ab9c3833e50de4aeb214e7864540afcb0496129e4f70a7eb196638cbb5c",
+        "github_paths": [
+          "各门店图纸/南宁惠工电子科技城（迁址）.pdf"
+        ]
+      },
+      {
+        "path": "南昌T16授权体验店.pdf",
+        "size": 11501465,
+        "sha256": "6cfc08c5d16a5206e413fbf74018e93197e5cf09172d8664861533adfd5bc054",
+        "github_paths": [
+          "各门店图纸/南昌T16授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南昌万象城授权体验店.pdf",
+        "size": 29782391,
+        "sha256": "1c63d2141432faf0f776461dcbc16d79227612d53af6839c54fdc1e688d8068b",
+        "github_paths": [
+          "各门店图纸/南昌万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "南昌和昌里街区授权专卖店.pdf",
+        "size": 8327023,
+        "sha256": "dad6709ec87a0dd8c2e6890453b1fedfd34d92c8e82f39509054bd5db53e875f",
+        "github_paths": [
+          "各门店图纸/南昌和昌里街区授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "南昌武商mall.pdf",
+        "size": 13893318,
+        "sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "github_paths": [
+          "各门店图纸/南昌武商mall.pdf"
+        ]
+      },
+      {
+        "path": "南阳万悦城授权体验店.pdf",
+        "size": 28700278,
+        "sha256": "815413af3923b98aba4f0245581abb3cc4071153ff8385590ffaf282dd7b9320",
+        "github_paths": [
+          "各门店图纸/南阳万悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "厦门SM授权体验店（扩铺）.pdf",
+        "size": 32612430,
+        "sha256": "1b9102a093002c5b268816188ac9a78a89bc57f592ded23a131a90aae77456c1",
+        "github_paths": [
+          "各门店图纸/厦门SM授权体验店（扩铺）.pdf"
+        ]
+      },
+      {
+        "path": "厦门大悦城授权专卖店.pdf",
+        "size": 8195041,
+        "sha256": "0472086a42844f548fc41e1bec9cf272865821adb4220b6cf267f39ca4e9515e",
+        "github_paths": [
+          "各门店图纸/厦门大悦城授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "厦门百脑汇照材专卖店.pdf",
+        "size": 30753182,
+        "sha256": "a35b553b435c7fde71dddba867b4cfba0ccbbffd40cbfbaf69bb3233db4b078d",
+        "github_paths": [
+          "各门店图纸/厦门百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "台湾三创生活（换址）.pdf",
+        "size": 42314363,
+        "sha256": "cda69cbae05ef1452e4beffc2928209b2a2eb8ae41bb2b86b4b6784806bdabc1",
+        "github_paths": [
+          "各门店图纸/台湾三创生活（换址）.pdf"
+        ]
+      },
+      {
+        "path": "台湾台中汉神洲际中岛.pdf",
+        "size": 11086097,
+        "sha256": "4d0f4c03daec1d15f6985629adddf1b68d710643e89d7dbd9f1ef2700e22dd19",
+        "github_paths": [
+          "各门店图纸/台湾台中汉神洲际中岛.pdf"
+        ]
+      },
+      {
+        "path": "台湾台南市南纺购物中心.pdf",
+        "size": 10985396,
+        "sha256": "02a8704e29744ba05d3e6290134a8f8aafa7cd07a292753be7a99a8cf7a179d9",
+        "github_paths": [
+          "各门店图纸/台湾台南市南纺购物中心.pdf"
+        ]
+      },
+      {
+        "path": "台湾新北板桥大远百.pdf",
+        "size": 20645618,
+        "sha256": "7bffbff41edf785f85fba20be00ed931b92cf0ef2f947991695368703e92a133",
+        "github_paths": [
+          "各门店图纸/台湾新北板桥大远百.pdf"
+        ]
+      },
+      {
+        "path": "台湾新北裕隆城.pdf",
+        "size": 14336516,
+        "sha256": "0b1b61e4c962bfdd2b512b0640bdc19f7557f9927d70ae3bfad20f69e8b749a5",
+        "github_paths": [
+          "各门店图纸/台湾新北裕隆城.pdf"
+        ]
+      },
+      {
+        "path": "台湾桃园大江国际.pdf",
+        "size": 14269316,
+        "sha256": "c45e7854573f7aec726b4b5349b65718bccb04ae680cff664b63ed0782eb35af",
+        "github_paths": [
+          "各门店图纸/台湾桃园大江国际.pdf"
+        ]
+      },
+      {
+        "path": "台湾远东新竹Big City中岛.pdf",
+        "size": 10165947,
+        "sha256": "42bb31e5dcc4e6c110503c64a64112d05e2930f516f052bf6ab0416eae61e5d5",
+        "github_paths": [
+          "各门店图纸/台湾远东新竹Big City中岛.pdf"
+        ]
+      },
+      {
+        "path": "台湾高雄Nova中岛.pdf",
+        "size": 2535629,
+        "sha256": "5225399ebd5f9539bb3c061721eef7375c8876605325e61651af489229e624ca",
+        "github_paths": [
+          "各门店图纸/台湾高雄Nova中岛.pdf"
+        ]
+      },
+      {
+        "path": "台湾高雄汉神巨蛋中岛.pdf",
+        "size": 11674874,
+        "sha256": "d2e6857333b704194fffe1140d2be65a3b3b17791f2a2745ae98d369f8ce95f1",
+        "github_paths": [
+          "各门店图纸/台湾高雄汉神巨蛋中岛.pdf"
+        ]
+      },
+      {
+        "path": "合肥万象城授权体验店.pdf",
+        "size": 25470695,
+        "sha256": "aec7a7d40226b767837af3100207e40e59519f493272f3d6a4fbec92c7182bbb",
+        "github_paths": [
+          "各门店图纸/合肥万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "合肥大蜀山半边街授权专卖店.pdf",
+        "size": 24184934,
+        "sha256": "9630828161de91ccb33e75691dd9893bde95e54ff1330a0dce405d7ed48e8e21",
+        "github_paths": [
+          "各门店图纸/合肥大蜀山半边街授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "合肥新粮仓授权专卖店.pdf",
+        "size": 17282214,
+        "sha256": "2dd9ceb9beaa3898b167bdd25ed87a29562b095919beec701636b63b8045408e",
+        "github_paths": [
+          "各门店图纸/合肥新粮仓授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "合肥瑶海万象天地授权体验店.pdf",
+        "size": 33473532,
+        "sha256": "2992ea24985135f6eca7b07d60dc36ecb1facc2ec7dd1396569da135d6437a52",
+        "github_paths": [
+          "各门店图纸/合肥瑶海万象天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "合肥百脑汇照材专卖店.pdf",
+        "size": 15336167,
+        "sha256": "1c4b06dc0e49c6d7aa4bd337b274cf7faad2304f26e4a3a0536ac89a7b236fc7",
+        "github_paths": [
+          "各门店图纸/合肥百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "合肥罍街照材专卖店.pdf",
+        "size": 14658984,
+        "sha256": "25f7475221667b7ebb5290ef6d40c5f95fe0fffd29a80cc43e0cee47da9a3d20",
+        "github_paths": [
+          "各门店图纸/合肥罍街照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "呼和浩特万象城授权体验店.pdf",
+        "size": 5401662,
+        "sha256": "935f2d6ce8479deb87016a91171076640220b01a20e1e5846717d32debb0259b",
+        "github_paths": [
+          "各门店图纸/呼和浩特万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "呼和浩特诚信数码广场照材专卖店.pdf",
+        "size": 16486809,
+        "sha256": "9facac8f5e7657a1446fcec8f9fca00a0136d698b06210c4e0ac55cf41bfb410",
+        "github_paths": [
+          "各门店图纸/呼和浩特诚信数码广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "哈尔滨教化电子大世界照材专卖店.pdf",
+        "size": 15762537,
+        "sha256": "730f11d26c01126a55d9e15d996deb67564dd57a2dc1949c2fe72e35a75fd812",
+        "github_paths": [
+          "各门店图纸/哈尔滨教化电子大世界照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "哈尔滨松雷广场授权体验店.pdf",
+        "size": 17751951,
+        "sha256": "d03b2f0c0eed33bfd4e955850356644bce1333f3c7a4e377a31de015f92af88c",
+        "github_paths": [
+          "各门店图纸/哈尔滨松雷广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "哈尔滨红博授权体验店.pdf",
+        "size": 24328137,
+        "sha256": "60377dfc05922552cb68e967d561366b80300e7511a8347419a174d2ad2ec37d",
+        "github_paths": [
+          "各门店图纸/哈尔滨红博授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "哈尔滨船舶电子大世界照材专卖店.pdf",
+        "size": 14966719,
+        "sha256": "868ccaecfcd038b17ae50ce14c9547a3de6a49672892bb703dd57801a6d5d774",
+        "github_paths": [
+          "各门店图纸/哈尔滨船舶电子大世界照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "哈尔滨金安国际授权体验店.pdf",
+        "size": 14067305,
+        "sha256": "bc76085c2680eb4cf9dadd23814f48ad3dbc61d5e94affb797477061164dd322",
+        "github_paths": [
+          "各门店图纸/哈尔滨金安国际授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "唐山硅谷数码广场照材专卖店.pdf",
+        "size": 25900072,
+        "sha256": "5c63276ae0d5db0ae24e8c662663ed30641bf0799e44740ad2a9fef2aa56dc75",
+        "github_paths": [
+          "各门店图纸/唐山硅谷数码广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "商丘正弘汇授权体验店.pdf",
+        "size": 23132219,
+        "sha256": "b5af301ccb74014a4b16b990d94c1dc0a45c251bdcf22cb19c53fdbaad6e7e33",
+        "github_paths": [
+          "各门店图纸/商丘正弘汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "嘉兴八佰伴授权体验店.pdf",
+        "size": 14044809,
+        "sha256": "03da5cac27e451c9def8d4b3b6ac81e5b3f2c74a41ce93fe7deab7d60bec0305",
+        "github_paths": [
+          "各门店图纸/嘉兴八佰伴授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "大庆百脑汇照材专卖店.pdf",
+        "size": 31568314,
+        "sha256": "4ea6658058d69c03ea1590ae1af22c75127ae2a644a92322236bb54f7b4322eb",
+        "github_paths": [
+          "各门店图纸/大庆百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "大连东关街授权专卖店.pdf",
+        "size": 176307342,
+        "sha256": "215555ab07b9c7677a90247af1d7fc4da0ba93dce8952a085e65aaa276fc6cc1",
+        "github_paths": [
+          "各门店图纸/大连东关街授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "大连中央大道照材专卖店.pdf",
+        "size": 22851090,
+        "sha256": "c2a37d69dcc3995961d736b69bc62d1e57eb62ada9f2d7bbafd83bf8cba832fb",
+        "github_paths": [
+          "各门店图纸/大连中央大道照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "大连华南万象汇授权体验店.pdf",
+        "size": 12107251,
+        "sha256": "03ee6dcf974181fc9f65c352db0d941a8db11a0e9472d1fc9a3ef5e2d53c9dfd",
+        "github_paths": [
+          "各门店图纸/大连华南万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "大连奥林匹克照材专卖店.pdf",
+        "size": 654469,
+        "sha256": "674455d041df4f58c7ae25d882ceebcb1c62de0e566ff2457938eb64ffcb7366",
+        "github_paths": [
+          "各门店图纸/大连奥林匹克照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "大连柏威年授权体验店.pdf",
+        "size": 16842362,
+        "sha256": "95cbc8833373a842abb6021c8ea3950b70b4ab215893cdc1a69b753a0f59b755",
+        "github_paths": [
+          "各门店图纸/大连柏威年授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "大连罗斯福授权体验店.pdf",
+        "size": 20838285,
+        "sha256": "5e4ca7135a06773148a70b7534d204ddbea747c666710ee6c328a3c308c50a4e",
+        "github_paths": [
+          "各门店图纸/大连罗斯福授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "天津万象城授权体验店.pdf",
+        "size": 22500128,
+        "sha256": "63f7ee709ccac2ba93f78e7b63af50638b78388e56e5baedd9de9776f753cb29",
+        "github_paths": [
+          "各门店图纸/天津万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "天津南开大悦城授权体验店.pdf",
+        "size": 11057302,
+        "sha256": "e888bda9fc5291c17a52b792eee4475c6268f10a1bfbaf6ecae225975214ea75",
+        "github_paths": [
+          "各门店图纸/天津南开大悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "天津天河城授权体验店.pdf",
+        "size": 14683000,
+        "sha256": "087e31e51809ef33e0c33e7f49381e15e123fb9f63c8bc1fa9c8337822e4819a",
+        "github_paths": [
+          "各门店图纸/天津天河城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "天津梅江天街授权体验店.pdf",
+        "size": 15327719,
+        "sha256": "9ae5f266a1fef4df1f794c2d6282413268af604eb5069f2dc1e142b100a4ebcb",
+        "github_paths": [
+          "各门店图纸/天津梅江天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "天津百脑汇照材专卖店.pdf",
+        "size": 30973815,
+        "sha256": "aa241f625fe3db0148316b69084b4675b97abcc3e1f3ab36842e15643707c5c9",
+        "github_paths": [
+          "各门店图纸/天津百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "天津西青大悦汇授权体验店.pdf",
+        "size": 23156449,
+        "sha256": "60a234527b0ce65b1a7100ce65d1ba551957a52eee91e2e2d1aaabc6e65b47cb",
+        "github_paths": [
+          "各门店图纸/天津西青大悦汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "太原万象城授权体验店.pdf",
+        "size": 20914917,
+        "sha256": "826c2f51af787f8e996d7b1f3aee39e0edd714eb5362ddcf02fde5def254c993",
+        "github_paths": [
+          "各门店图纸/太原万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "太原天美新天地授权体验店.pdf",
+        "size": 14369801,
+        "sha256": "42f28620124d6fb92ef0ce2d4e7971d1707dc0c60bf3694dc2f049bb724a8e7b",
+        "github_paths": [
+          "各门店图纸/太原天美新天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "威海威高广场授权体验店.pdf",
+        "size": 9820940,
+        "sha256": "bbea19a3dd3775b5304427667b51e4ed8878b91ec98f1722bc7d8ab9562eedb0",
+        "github_paths": [
+          "各门店图纸/威海威高广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "宁波余姚五彩城授权体验店.pdf",
+        "size": 20116146,
+        "sha256": "3a98a2d6080c8a7a1076b7b3bb2aa7b5b66401e48af806f3c828e3306b0c6153",
+        "github_paths": [
+          "各门店图纸/宁波余姚五彩城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "宁波明州里授权专卖店.pdf",
+        "size": 28859487,
+        "sha256": "1f1d097374f7b498ac6d462208422464cca644d69467a3bd5c26370eb4363a60",
+        "github_paths": [
+          "各门店图纸/宁波明州里授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "宝鸡开元商城授权体验店.pdf",
+        "size": 16618954,
+        "sha256": "e87258abb6078ca1d344bf6315b5c70c3ca11c2624f7f3fdbfceeba97944fafc",
+        "github_paths": [
+          "各门店图纸/宝鸡开元商城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "山东菏泽佳和城授权体验店.pdf",
+        "size": 10896804,
+        "sha256": "d008fe7405ba7d010ce13dea254dbe7b4e129e7098733ff56538f96d10152a36",
+        "github_paths": [
+          "各门店图纸/山东菏泽佳和城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "山西临汾生龙国际.pdf",
+        "size": 15768266,
+        "sha256": "ce80c1cfd36051b4e7f8a0064b64b561f0719ce4e70bf907fc166108cc2ddddf",
+        "github_paths": [
+          "各门店图纸/山西临汾生龙国际.pdf"
+        ]
+      },
+      {
+        "path": "常州万象城授权体验店（边厅）.pdf",
+        "size": 14881556,
+        "sha256": "620397bd9b3c13ca8175854a984d164f154cf03ecbbef3c27edaccbcc7725ac8",
+        "github_paths": [
+          "各门店图纸/常州万象城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "常州武进吾悦授权体验店.pdf",
+        "size": 9910047,
+        "sha256": "5d2e1eea2385b3b094e90f9f379d79c72babb377f080ed771144f12ef2fd6339",
+        "github_paths": [
+          "各门店图纸/常州武进吾悦授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "平顶山丹尼斯照材专卖店.pdf",
+        "size": 25821642,
+        "sha256": "b41217d27ba322cf39706701de7cbd8e62a3ad7b940e585b013e0f7a9a2c659b",
+        "github_paths": [
+          "各门店图纸/平顶山丹尼斯照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "广州万民星光城授权体验店.pdf",
+        "size": 25040447,
+        "sha256": "ca82da2c001617180cf2b910950932e1eb14bd753a5288473088c69f2e7e57f3",
+        "github_paths": [
+          "各门店图纸/广州万民星光城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州万菱汇授权体验店.pdf",
+        "size": 13706036,
+        "sha256": "367de68cb04f9598657ac14d4f0896d5b5e971475367177c0a61517efbe65208",
+        "github_paths": [
+          "各门店图纸/广州万菱汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州保利时光里.pdf",
+        "size": 11305201,
+        "sha256": "48cb965559bcee60707304da060a6ce5ca1385f3e4eeb7a282453a8559733947",
+        "github_paths": [
+          "各门店图纸/广州保利时光里.pdf"
+        ]
+      },
+      {
+        "path": "广州天环广场授权体验店.pdf",
+        "size": 10014668,
+        "sha256": "d56d99151cfa8661a275bb5d8f2ff4988f4f1b8e9a9cfaacc99b3c5f8574df7b",
+        "github_paths": [
+          "各门店图纸/广州天环广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州广州塔广场授权体验店.pdf",
+        "size": 14460098,
+        "sha256": "63cfff76686aee4b8eabd6069093543910fd725ef1265b00e07145f30d583f09",
+        "github_paths": [
+          "各门店图纸/广州广州塔广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州正佳广场授权体验店.pdf",
+        "size": 16444747,
+        "sha256": "44d87069838a0ce2598d1aac8c5673babcfae6a05484d98cf6e6a09c3d9275d4",
+        "github_paths": [
+          "各门店图纸/广州正佳广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州琶洲保利授权体验店.pdf",
+        "size": 20001379,
+        "sha256": "514ea97a440ef7c5c50b6ed2f364c8ef94f9bc1c64381dcc340efdc81b827f23",
+        "github_paths": [
+          "各门店图纸/广州琶洲保利授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州番禺天河城授权体验店（边厅）.pdf",
+        "size": 20251472,
+        "sha256": "0587b8ce31f389e1e901af87d32cade6136774b4dba836957e9a622b8b6103ec",
+        "github_paths": [
+          "各门店图纸/广州番禺天河城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "广州百脑汇照材专卖店.pdf",
+        "size": 15776425,
+        "sha256": "c10148903bfd9c462abcbc1f51827b09193e23a1167b9b1607abb2a0cb0ced77",
+        "github_paths": [
+          "各门店图纸/广州百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "广州美林MLIVE天地授权体验店.pdf",
+        "size": 10128141,
+        "sha256": "413df3d6286fcd0cdcb7d63e0f60a6c9d03875e9aaf2435957bf8aa90f14c178",
+        "github_paths": [
+          "各门店图纸/广州美林MLIVE天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "广州融创授权体验店.pdf",
+        "size": 34409636,
+        "sha256": "4fe12da8c114f7944c724ecb440fe88bb0d99a846c30fbe34836f573edfbe3f0",
+        "github_paths": [
+          "各门店图纸/广州融创授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "德国汉堡市Saturn店.pdf",
+        "size": 13564349,
+        "sha256": "5f542eb1d069fa1da17993d65a10436c3942ef65202e05c44eb58e17dcd68bc1",
+        "github_paths": [
+          "各门店图纸/德国汉堡市Saturn店.pdf"
+        ]
+      },
+      {
+        "path": "恩施星光里购物中心照材店.pdf",
+        "size": 17077723,
+        "sha256": "a83fa7ea0995c182be87e0993e3c7aa0dea2d534682f4a97d56ce950c7a02f8c",
+        "github_paths": [
+          "各门店图纸/恩施星光里购物中心照材店.pdf"
+        ]
+      },
+      {
+        "path": "惠州华贸授权体验店.pdf",
+        "size": 7252293,
+        "sha256": "1f51253545ed3bbaf281581b10fffbf24d472a58f5969a5a5485b3685f1ad21c",
+        "github_paths": [
+          "各门店图纸/惠州华贸授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都A世界照材专卖店.pdf",
+        "size": 30552321,
+        "sha256": "2ba193929f18e153e8e6c9fa33e4acc14b59e7556ce30f36bb631b98eafc10ee",
+        "github_paths": [
+          "各门店图纸/成都A世界照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都万象城授权体验店（边厅）.pdf",
+        "size": 19633863,
+        "sha256": "f936bc75d165fb569bb9f6a0313a33cc291b0d71769a6df151d57ecec3c5d332",
+        "github_paths": [
+          "各门店图纸/成都万象城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "成都华凌摄影城照材专卖店.pdf",
+        "size": 12996025,
+        "sha256": "8b9953869ff4816baf5aa9b1e1c735c4e8cf380f28f544e1bb71e3daba4b7957",
+        "github_paths": [
+          "各门店图纸/成都华凌摄影城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都大悦城授权体验店（边厅）.pdf",
+        "size": 17876544,
+        "sha256": "15b9594a08829b860cc005dfaed4396f1ecd041e78cc5a0cc8e5e6bcfff7dc26",
+        "github_paths": [
+          "各门店图纸/成都大悦城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "成都天府和悦广场授权体验店.pdf",
+        "size": 15647896,
+        "sha256": "256635d0d30dff166993d333623106d62ebc44a41ac5191434dcb3eeae544c16",
+        "github_paths": [
+          "各门店图纸/成都天府和悦广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都天府大悦城授权体验店.pdf",
+        "size": 11246222,
+        "sha256": "0d576ac1cca629cb43bbd2ef5ca5251d5851bfe3daf25cc6b9bc40599c07149f",
+        "github_paths": [
+          "各门店图纸/成都天府大悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都天府艺术公园授权专卖店.pdf",
+        "size": 44963297,
+        "sha256": "33bed94b5831fa3e6ae1fa2977b6088c92b85ca114c6d3ba2be40e8db03810f2",
+        "github_paths": [
+          "各门店图纸/成都天府艺术公园授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都太古里授权体验店.pdf",
+        "size": 22585803,
+        "sha256": "c0240b26ccc49367258b2c6c32263343b2f1c84ca337771ef7a8e04675565c14",
+        "github_paths": [
+          "各门店图纸/成都太古里授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都数码广场恒驰照材专卖店.pdf",
+        "size": 13737846,
+        "sha256": "1e36e2ccebe98315a6948e8b0c16268b7523ff349277ba89841a1f962b9b339d",
+        "github_paths": [
+          "各门店图纸/成都数码广场恒驰照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都数码广场虎一心照材专卖店.pdf",
+        "size": 17716194,
+        "sha256": "b598c50429ac3f177d2aab1fc6c496082d379140a4de16f3b58c2f2f64d782f9",
+        "github_paths": [
+          "各门店图纸/成都数码广场虎一心照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都来福士授权体验店.pdf",
+        "size": 11188032,
+        "sha256": "90b67913116455c792816feac71755cca81469374e0d5daaa005015887ddf2c2",
+        "github_paths": [
+          "各门店图纸/成都来福士授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都滨江天街授权体验店.pdf",
+        "size": 33870127,
+        "sha256": "46124f0f124ce2c1b6bfec5f08663999776a095f639cd5051f580377c0621408",
+        "github_paths": [
+          "各门店图纸/成都滨江天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都环球中心授权体验店.pdf",
+        "size": 17295074,
+        "sha256": "29a2fba616c022d176e1e07f3060c750eb55320149d7fe18d1942ca69f3ae74a",
+        "github_paths": [
+          "各门店图纸/成都环球中心授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都环球中心授权体验店（2F）.pdf",
+        "size": 17295074,
+        "sha256": "29a2fba616c022d176e1e07f3060c750eb55320149d7fe18d1942ca69f3ae74a",
+        "github_paths": [
+          "各门店图纸/成都环球中心授权体验店（2F）.pdf"
+        ]
+      },
+      {
+        "path": "成都百脑汇照材专卖店.pdf",
+        "size": 19068484,
+        "sha256": "eed1ee5223c107375921646fefe7930a4c71c7a05c0e291b4ad50a51901b7493",
+        "github_paths": [
+          "各门店图纸/成都百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都科华王府井授权体验店.pdf",
+        "size": 28340862,
+        "sha256": "5bc421b1cf65569d451ff2c824b5c3a5379f19481a14b2b739a0e27373dc98d7",
+        "github_paths": [
+          "各门店图纸/成都科华王府井授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都西宸天街授权体验店.pdf",
+        "size": 15610045,
+        "sha256": "b7ac778267b1abd9e241e7f18b22f7512dd93357c17744e698b8d751eef05ad7",
+        "github_paths": [
+          "各门店图纸/成都西宸天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都西村大院授权专卖店.pdf",
+        "size": 18326805,
+        "sha256": "8ef28107d071a9bdf4fe7f500e0470e5b5d76d8853e35f5b2fd7e5d4c1ad928d",
+        "github_paths": [
+          "各门店图纸/成都西村大院授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "成都金楠天街授权体验店.pdf",
+        "size": 12579387,
+        "sha256": "c8740345d2e871db091003724588318b36ba7a326ecf8a13902a40694ad335aa",
+        "github_paths": [
+          "各门店图纸/成都金楠天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都金牛凯德授权体验店.pdf",
+        "size": 12036174,
+        "sha256": "086d91728fe65fdace626b81d37af1fcc2eb0d089a2fb72912afece8397f8daf",
+        "github_paths": [
+          "各门店图纸/成都金牛凯德授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "成都龙泉世茂广场授权体验店.pdf",
+        "size": 11889187,
+        "sha256": "b91d8cb78c42fa32164ed31d358b0e04356a1d9b972c80c84be170794edd11d2",
+        "github_paths": [
+          "各门店图纸/成都龙泉世茂广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "拉萨王府井授权体验店.pdf",
+        "size": 3672791,
+        "sha256": "46d55561a61a149e1ebaa7c7484313036543ffa52da461321a9a6817d9cdb213",
+        "github_paths": [
+          "各门店图纸/拉萨王府井授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "新加坡Jewel中岛.pdf",
+        "size": 18622656,
+        "sha256": "eb8883fa4a6b74942be401d13c55cf782e89dcd2c3de658f25bb9901e44cf945",
+        "github_paths": [
+          "各门店图纸/新加坡Jewel中岛.pdf"
+        ]
+      },
+      {
+        "path": "新加坡suntec city.pdf",
+        "size": 24592309,
+        "sha256": "25733a6c2633c2ddef2bf83a648d72f0ebdf9616614dea4498fe2cb4d96c7297",
+        "github_paths": [
+          "各门店图纸/新加坡suntec city.pdf"
+        ]
+      },
+      {
+        "path": "新加坡建店Plaza Singapura.pdf",
+        "size": 18143658,
+        "sha256": "19974b517105357dd683650541993ea5e5957760fae80851fd066655f2df0637",
+        "github_paths": [
+          "各门店图纸/新加坡建店Plaza Singapura.pdf"
+        ]
+      },
+      {
+        "path": "新疆宏景数码广场二店.pdf",
+        "size": 15865179,
+        "sha256": "c3a3dc756e660076e839275cb1f988f324127382637234da8ffc1e92a45b099a",
+        "github_paths": [
+          "各门店图纸/新疆宏景数码广场二店.pdf"
+        ]
+      },
+      {
+        "path": "无锡百脑汇照材专卖店.pdf",
+        "size": 13088483,
+        "sha256": "98814fddcc46a1cc1fcb9db0e1031404ce610c3f7be67ac2c506d6df00495d27",
+        "github_paths": [
+          "各门店图纸/无锡百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "无锡荟聚.pdf",
+        "size": 15522478,
+        "sha256": "80badd1c0238fdffc23ab311ec2759ff44b7558924996b6d7cdf02cd52b227d4",
+        "github_paths": [
+          "各门店图纸/无锡荟聚.pdf"
+        ]
+      },
+      {
+        "path": "日照万象汇授权体验店.pdf",
+        "size": 13880983,
+        "sha256": "438481bb46b54a8d1a56cd78399100f4c7168b0bc3022b99f219f4046070b645",
+        "github_paths": [
+          "各门店图纸/日照万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "昆山商厦家电市场照材专卖店.pdf",
+        "size": 22290743,
+        "sha256": "7d40041580f42a0a8af3fd218a32ca9e105d0ca0dd272d2044f7f472e1818f99",
+        "github_paths": [
+          "各门店图纸/昆山商厦家电市场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "size": 9462251,
+        "sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "github_paths": [
+          "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf"
+        ]
+      },
+      {
+        "path": "昆明万象城授权体验店.pdf",
+        "size": 15555556,
+        "sha256": "c075a140cba3688f66ea2eb67d8988e55f387543b9a6508bdb0301f43aacfa80",
+        "github_paths": [
+          "各门店图纸/昆明万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "昆明五华吾悦授权体验店.pdf",
+        "size": 30868072,
+        "sha256": "fe4f79a3a3f0a51ff59a39fa7233afd65eaf522e09e9ffe5f732e565db632b4c",
+        "github_paths": [
+          "各门店图纸/昆明五华吾悦授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "昆明佰腾数码广场照材专卖店.pdf",
+        "size": 33191995,
+        "sha256": "68db0f851e52d19e820e2629f7467c21ff82df6b9802806502a12367188fbd18",
+        "github_paths": [
+          "各门店图纸/昆明佰腾数码广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "昆明南亚风情第壹城授权体验店.pdf",
+        "size": 19297344,
+        "sha256": "f95dbdf335fee7107d764e7cfbf37f8ca48da0c4d7738456c1d5847a15ecd914",
+        "github_paths": [
+          "各门店图纸/昆明南亚风情第壹城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "昆明恒隆授权体验店.pdf",
+        "size": 18445443,
+        "sha256": "07d3aa175992f5279c3023d23ae7264e647711afcea54e5e23730c1147c17e14",
+        "github_paths": [
+          "各门店图纸/昆明恒隆授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "昆明顺城授权体验店（边厅）.pdf",
+        "size": 19352387,
+        "sha256": "a1db96c112cabb383b259257edbc14255dba1f4700e5b846eea43f4043eb8fa3",
+        "github_paths": [
+          "各门店图纸/昆明顺城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "晋江SM授权体验店.pdf",
+        "size": 19173578,
+        "sha256": "747c187019529dfe772188be776b3d28169142cf60fa4b3c1842e474b02c999b",
+        "github_paths": [
+          "各门店图纸/晋江SM授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "杭州EFC广场照材专卖店.pdf",
+        "size": 2452599,
+        "sha256": "58cd22d4bd36a68d1adc7493d5315a50b8136e0361da217eeec3ef1879f1933b",
+        "github_paths": [
+          "各门店图纸/杭州EFC广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "杭州EIC广场授权专卖店.pdf",
+        "size": 14779236,
+        "sha256": "98cb5acb3f6919c7cb3c63b0ac10aa38b153278ef73001a9cfaaa6b69cd170ec",
+        "github_paths": [
+          "各门店图纸/杭州EIC广场授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "杭州IN77授权体验店.pdf",
+        "size": 9093322,
+        "sha256": "af24676a2ad8fae00f7f131519f3a42ec32f051961610e8c7734963bec6144c4",
+        "github_paths": [
+          "各门店图纸/杭州IN77授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "杭州万象城（迁址）.pdf",
+        "size": 15029005,
+        "sha256": "5f14d68a9fa1b88a71de2cd272594460c2c954e591afb264fd232c61d34aa57c",
+        "github_paths": [
+          "各门店图纸/杭州万象城（迁址）.pdf"
+        ]
+      },
+      {
+        "path": "杭州东部数码港照材专卖店.pdf",
+        "size": 20174181,
+        "sha256": "e482376ada22c3926789fb5f487719b394ba600ff9a9b0897601d4be4971d17e",
+        "github_paths": [
+          "各门店图纸/杭州东部数码港照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "杭州临平银泰授权体验店.pdf",
+        "size": 8247973,
+        "sha256": "a2ba37dea7ff7b72b2041ff6cfe23ba90f21bea0d74f03b5bcad39c1a524b107",
+        "github_paths": [
+          "各门店图纸/杭州临平银泰授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "杭州亚奥万象天地授权体验店.pdf",
+        "size": 10420170,
+        "sha256": "16a9c89b56b80fae6a07df88dc95917546cf4bac594387bbbcb30251fdb7a062",
+        "github_paths": [
+          "各门店图纸/杭州亚奥万象天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "杭州大悦城悦街授权专卖店.pdf",
+        "size": 33677066,
+        "sha256": "3db80d64886d325a70a9be9b972756bb65155f708900dc7c960856b9df0d9a0f",
+        "github_paths": [
+          "各门店图纸/杭州大悦城悦街授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "杭州奥体印象城授权体验店.pdf",
+        "size": 20514848,
+        "sha256": "33ea1fff43c619cff65cb48fb59ed4ce0214f5e2ac0687de2f942ca4d5bf1613",
+        "github_paths": [
+          "各门店图纸/杭州奥体印象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "杭州学院路照材专卖店.pdf",
+        "size": 8792605,
+        "sha256": "8c163b2f76eba2700207bcc4705e6ee6bb87f3e9590876dd0cc37af68c38216b",
+        "github_paths": [
+          "各门店图纸/杭州学院路照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "杭州百脑汇照材专卖店.pdf",
+        "size": 12620373,
+        "sha256": "6bb93668613414a4d4c79a59df8f1d7c986facd0ffb17e7c9c0a9858287e2e41",
+        "github_paths": [
+          "各门店图纸/杭州百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "柳州万象城授权体验店.pdf",
+        "size": 11312215,
+        "sha256": "6d9439989f530be34546820874172b61d926c400f24d7a5d3514603218734521",
+        "github_paths": [
+          "各门店图纸/柳州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "桂林万象城授权体验店.pdf",
+        "size": 8270583,
+        "sha256": "795f7dcb427ee6682c55ec146b806ae284ec60305ef1d7fcabe796bd2c6aa68b",
+        "github_paths": [
+          "各门店图纸/桂林万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "武昌万象城授权体验店.pdf",
+        "size": 21601827,
+        "sha256": "1953c4e3d9ed8dd732ec82863afb2de138a0b3b13a9f21d5c9a37ad3b4ec411d",
+        "github_paths": [
+          "各门店图纸/武昌万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "武汉光谷世界城.pdf",
+        "size": 13084757,
+        "sha256": "2d0164ee349844a6429889125cc1ae5d033f0a14a7adbc89e531c3598a8ffe8a",
+        "github_paths": [
+          "各门店图纸/武汉光谷世界城.pdf"
+        ]
+      },
+      {
+        "path": "武汉大悦城.pdf",
+        "size": 14812528,
+        "sha256": "7b4fb4c420216154f35f46f662121e730d9dfc15bce6c4aaea653cd2e6df1f9b",
+        "github_paths": [
+          "各门店图纸/武汉大悦城.pdf"
+        ]
+      },
+      {
+        "path": "武汉天地壹方授权体验店（迁址）.pdf",
+        "size": 23563143,
+        "sha256": "d6e9fa3392284e87c2ee200d8c6c729f7a27730668766829c44de743d64c9dab",
+        "github_paths": [
+          "各门店图纸/武汉天地壹方授权体验店（迁址）.pdf"
+        ]
+      },
+      {
+        "path": "武汉婚纱摄影照材专卖店.pdf",
+        "size": 11625235,
+        "sha256": "23ad60c15cf6b9627e5bff53465ffef4d7fe82ffce691e3507a96ac3ae44d028",
+        "github_paths": [
+          "各门店图纸/武汉婚纱摄影照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "武汉梦时代授权专卖店.pdf",
+        "size": 29850833,
+        "sha256": "ef658e42daa18b01ecf21f2988e28f26507567d4ee1322ae3781747e54c911a7",
+        "github_paths": [
+          "各门店图纸/武汉梦时代授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "武汉武商MALL授权体验店.pdf",
+        "size": 16971932,
+        "sha256": "1d1e700ddee02b3e8467eefd5e4110e1ef7421dcaad2b5bdf1947b020d8a284f",
+        "github_paths": [
+          "各门店图纸/武汉武商MALL授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "武汉电脑大世界照材专卖店.pdf",
+        "size": 28669391,
+        "sha256": "69f95250a7dbe7781372d66df97597631f9214076c3f043392e47bd6789b7642",
+        "github_paths": [
+          "各门店图纸/武汉电脑大世界照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "武汉荟聚.pdf",
+        "size": 23358495,
+        "sha256": "c6b8b8326d62c1bfb4f8046bd1dbac2a72981241fe8603aa40357ffaa809d563",
+        "github_paths": [
+          "各门店图纸/武汉荟聚.pdf"
+        ]
+      },
+      {
+        "path": "武汉银泰创意城.pdf",
+        "size": 18164793,
+        "sha256": "e71f6b826ef071016885b67ee05a9e6c201a13e00182f6652a197ffde30bc207",
+        "github_paths": [
+          "各门店图纸/武汉银泰创意城.pdf"
+        ]
+      },
+      {
+        "path": "武汉销品茂授权体验店.pdf",
+        "size": 16411469,
+        "sha256": "6c4715b68de1fe0dd45b0b4183c01e166bc3e04c6fc4a81861efe7cc6c308052",
+        "github_paths": [
+          "各门店图纸/武汉销品茂授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "汕头万象城授权体验店.pdf",
+        "size": 15477243,
+        "sha256": "9d7e83f4cbd06e61c328f0cda169e74be1a4f61506f8cea8b019c9d5a1aabccf",
+        "github_paths": [
+          "各门店图纸/汕头万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "江西赣州京东授权专区.pdf",
+        "size": 28119754,
+        "sha256": "d06dbaca8c9dd3486aad276cbae83078ca6e26d17b52828d1e036d279e82a686",
+        "github_paths": [
+          "各门店图纸/江西赣州京东授权专区.pdf"
+        ]
+      },
+      {
+        "path": "江门汇悦大融城（迁址）.pdf",
+        "size": 12469947,
+        "sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+        "github_paths": [
+          "各门店图纸/江门汇悦大融城（迁址）.pdf"
+        ]
+      },
+      {
+        "path": "沈阳三台子万象汇授权体验店.pdf",
+        "size": 9024619,
+        "sha256": "036175534d033be9f5a077ba84663388c833bf29c297469d5f86d69ab570e2fb",
+        "github_paths": [
+          "各门店图纸/沈阳三台子万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳东软科技城照材专卖店.pdf",
+        "size": 10542816,
+        "sha256": "1bef9e282d2b858ad448edebc8d21cbd2445e9eb86496383c7ca44c08ff4212a",
+        "github_paths": [
+          "各门店图纸/沈阳东软科技城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳中街恒隆授权体验店.pdf",
+        "size": 14174578,
+        "sha256": "926fe3605a8526680be4a4954b48b9cdc22a9099bb32cc12ed2c932532412af0",
+        "github_paths": [
+          "各门店图纸/沈阳中街恒隆授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳百脑汇照材专卖店.pdf",
+        "size": 1438510,
+        "sha256": "01a8b48af89bc634d610682ff3be146593b633737b45806cec81d9c54f0d91b7",
+        "github_paths": [
+          "各门店图纸/沈阳百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳百脑汇照材专卖店二店.pdf",
+        "size": 16214289,
+        "sha256": "bd560c8e83c80713d376a86dc390e507acfd9a0e8306e6473747c7cb70be266a",
+        "github_paths": [
+          "各门店图纸/沈阳百脑汇照材专卖店二店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳铁西万象汇授权体验店.pdf",
+        "size": 9760913,
+        "sha256": "c91b6d64f4486a4915f18a417b3d8ce9396b187fe3a6b31b7899caf3d145edd0",
+        "github_paths": [
+          "各门店图纸/沈阳铁西万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "沈阳长白万象汇授权体验店.pdf",
+        "size": 19101026,
+        "sha256": "21495a4b99d74aa926f942e1ac44879a7122475dd335e646360af3e8ae1047ab",
+        "github_paths": [
+          "各门店图纸/沈阳长白万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "泉州浦西万达授权专卖店.pdf",
+        "size": 16366926,
+        "sha256": "4187ba1aa4c666815fa23e0e4e74b534c98265932c11ff58ddde6d7aca274f54",
+        "github_paths": [
+          "各门店图纸/泉州浦西万达授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "泰国Central Phuket.pdf",
+        "size": 17968552,
+        "sha256": "b82f4f14ec9faba186a0e1827eaf86267283772590e8fffa6fd81565ccaa498e",
+        "github_paths": [
+          "各门店图纸/泰国Central Phuket.pdf"
+        ]
+      },
+      {
+        "path": "泰国central westgate.pdf",
+        "size": 11641334,
+        "sha256": "0c5edc2b4f0cf128dcb94783998a5035c0282e931cb86c83dd892028d9fa89e9",
+        "github_paths": [
+          "各门店图纸/泰国central westgate.pdf"
+        ]
+      },
+      {
+        "path": "泰国Mega Bangna.pdf",
+        "size": 18109226,
+        "sha256": "012184a35ba09f71c4e068a0c4d40825b2dfc8aa19158bd829c27ffce377ffe9",
+        "github_paths": [
+          "各门店图纸/泰国Mega Bangna.pdf"
+        ]
+      },
+      {
+        "path": "泰国曼谷central world.pdf",
+        "size": 14986939,
+        "sha256": "968bae6f4b42e5390819cf86fa91f9f9cc62dec30f5eabbdf56ec0440f4b53b0",
+        "github_paths": [
+          "各门店图纸/泰国曼谷central world.pdf"
+        ]
+      },
+      {
+        "path": "泰国曼谷dusit central park.pdf",
+        "size": 10581621,
+        "sha256": "203540515c11b6b3d91bf137d2a81f862d60998f5b387678616aa7a3ec9d0bcc",
+        "github_paths": [
+          "各门店图纸/泰国曼谷dusit central park.pdf"
+        ]
+      },
+      {
+        "path": "泰国芭提雅central Pattaya.pdf",
+        "size": 12808882,
+        "sha256": "326ecda0a6ef1dd432ccd18c04bcd2d05f7dbe8f49fc584325dd77d9240e5140",
+        "github_paths": [
+          "各门店图纸/泰国芭提雅central Pattaya.pdf"
+        ]
+      },
+      {
+        "path": "泰安三源照材专卖店.pdf",
+        "size": 14563134,
+        "sha256": "90e9a472d7fa2215ae0d5edafad41f70b9e7d4ba0bc0d9ec67c73398a277cbc5",
+        "github_paths": [
+          "各门店图纸/泰安三源照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "泰州万象城授权体验店.pdf",
+        "size": 11434502,
+        "sha256": "2489d47fe6069a89b5ad22440f8c30af53ed2f02281ebfc98576b3d0d6ac0ece",
+        "github_paths": [
+          "各门店图纸/泰州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "洛阳大卫天地授权体验店.pdf",
+        "size": 42096755,
+        "sha256": "6983760d8d8ec6164ad7e0978a9a85ef893dafe30ba10927bc373ea1d1f1b89a",
+        "github_paths": [
+          "各门店图纸/洛阳大卫天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "洛阳王城公园照材专卖店.pdf",
+        "size": 3813046,
+        "sha256": "6aaef597fd5061f5c3eb16aa0ac7a4f8bd05974a65f6237a138d738d025d98bd",
+        "github_paths": [
+          "各门店图纸/洛阳王城公园照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "济南万象城授权体验店（边厅）.pdf",
+        "size": 43356910,
+        "sha256": "9d135e89427e1134fa3bf983b8dbcbe8e607b6a40c208e29fe76e1314182550c",
+        "github_paths": [
+          "各门店图纸/济南万象城授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "济南华强电子科技照材专卖店.pdf",
+        "size": 11919912,
+        "sha256": "dd8f910c7e75cd2974b9bc79889fc6377c4ff19a9ef971800447eab20a1209d4",
+        "github_paths": [
+          "各门店图纸/济南华强电子科技照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "济南恒隆授权体验店.pdf",
+        "size": 12853927,
+        "sha256": "5c75388222b70472bc9307caf946d6f2cf0028e2ad0c73b935bd76426f116b03",
+        "github_paths": [
+          "各门店图纸/济南恒隆授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "济宁万象汇授权体验店.pdf",
+        "size": 35455573,
+        "sha256": "74af158e5ddc1ab9f0b9b6514f7ebf3a77cad0ba7c5f968d3acc03aa94c59467",
+        "github_paths": [
+          "各门店图纸/济宁万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "海口天街授权体验店.pdf",
+        "size": 19108749,
+        "sha256": "b8b0be0215c8bda7fb545d9ee4708e68b94c6377fc6028c7ea72ccd2a4e6373e",
+        "github_paths": [
+          "各门店图纸/海口天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "海口远大购物中心授权体验店.pdf",
+        "size": 24260920,
+        "sha256": "84ae588d3c71cec5acd75d60920f3992337e95bd2591c56ab9de22d0dc7afd22",
+        "github_paths": [
+          "各门店图纸/海口远大购物中心授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "淮安万象城授权体验店.pdf",
+        "size": 9877738,
+        "sha256": "6866e71f74e38f8559e5723549e44080131440f5fd4cdc222cecf53956393edf",
+        "github_paths": [
+          "各门店图纸/淮安万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳万丰海岸城授权体验店.pdf",
+        "size": 19138268,
+        "sha256": "465eb0d7c1474ec4b9513e7020ffc913ef3283349656d6629a32d8e15710d95a",
+        "github_paths": [
+          "各门店图纸/深圳万丰海岸城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳万象前海授权体验店.pdf",
+        "size": 14128230,
+        "sha256": "d1e152f059909572993fd5b14b37ddb6e9d58e8d00fd74f1486cd7918b72a8ea",
+        "github_paths": [
+          "各门店图纸/深圳万象前海授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳光明蓝鲸世界授权体验店.pdf",
+        "size": 32039020,
+        "sha256": "ad2b0b34b76e34bc27c6c7c269fbea669d98af314bb6ac6b2089dcb7a0ff071c",
+        "github_paths": [
+          "各门店图纸/深圳光明蓝鲸世界授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳华发冰雪世界授权体验店.pdf",
+        "size": 26742656,
+        "sha256": "c144e366756dea641bf2c1159328d6c93f2e2c67ad7b99d5511851f568dec41c",
+        "github_paths": [
+          "各门店图纸/深圳华发冰雪世界授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳华强北改造项目.pdf",
+        "size": 13207034,
+        "sha256": "b4bcb20bd9f01a87468f015f18ab4d0f3b3133367521720871d8395fbb36cb31",
+        "github_paths": [
+          "各门店图纸/深圳华强北改造项目.pdf"
+        ]
+      },
+      {
+        "path": "深圳华强北赛格科技园照材专卖店.pdf",
+        "size": 30710640,
+        "sha256": "e599ff19754ddd7f68ea130c1fa876cfb50bde4ae0babc65cbf585bc54659bba",
+        "github_paths": [
+          "各门店图纸/深圳华强北赛格科技园照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "深圳华强北（华强一店）.pdf",
+        "size": 8545306,
+        "sha256": "0ed1f462e9b625a44019346c3d69b9b26cf1d6bc0b473bfcf474c5b9ebfa3f91",
+        "github_paths": [
+          "各门店图纸/深圳华强北（华强一店）.pdf"
+        ]
+      },
+      {
+        "path": "深圳卓悦中心.pdf",
+        "size": 18515239,
+        "sha256": "5dcc5a29caef217c9b112e09985a41a63471456e23e6569f9cb3ee2cf44a1820",
+        "github_paths": [
+          "各门店图纸/深圳卓悦中心.pdf"
+        ]
+      },
+      {
+        "path": "深圳壹方城直营旗舰店.pdf",
+        "size": 14422068,
+        "sha256": "cf345fe18b1f0c932fd0c5e4780a858045ecd13d5aecc543b361daed5938d797",
+        "github_paths": [
+          "各门店图纸/深圳壹方城直营旗舰店.pdf"
+        ]
+      },
+      {
+        "path": "深圳壹方汇直营店.pdf",
+        "size": 19793078,
+        "sha256": "7e7acc74fbc767834fb67f9c78558684bf0d8289e3517a2090b92e12f82b0e28",
+        "github_paths": [
+          "各门店图纸/深圳壹方汇直营店.pdf"
+        ]
+      },
+      {
+        "path": "深圳大悦城授权体验店.pdf",
+        "size": 11491418,
+        "sha256": "2419a980aad38a058767dc52339071b814c4b5a3edab1457185cfc734604e43a",
+        "github_paths": [
+          "各门店图纸/深圳大悦城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳宝安大仟里.pdf",
+        "size": 18675603,
+        "sha256": "99be0d1a1e4014b6bcdccf1568dd9a48f8581f2ab82a5f0884f1b452f39b9ef3",
+        "github_paths": [
+          "各门店图纸/深圳宝安大仟里.pdf"
+        ]
+      },
+      {
+        "path": "深圳布吉万象汇授权体验店.pdf",
+        "size": 20428618,
+        "sha256": "52fc44166f993a1b23aef96952b24656ffcc20062cbc2a1ab6ff15c5f13bb246",
+        "github_paths": [
+          "各门店图纸/深圳布吉万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳新华强照材专卖店.pdf",
+        "size": 16104506,
+        "sha256": "64cbab813c7ed8c0200fb1d5a381ab4ac1c867f3357ec92ccc050589ab787c6b",
+        "github_paths": [
+          "各门店图纸/深圳新华强照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "深圳机场直营店.pdf",
+        "size": 3089815,
+        "sha256": "2e76e64f3fda7468f9dcebe4a159cbde3e61ccb890992b4fed740bcaca3ca24c",
+        "github_paths": [
+          "各门店图纸/深圳机场直营店.pdf"
+        ]
+      },
+      {
+        "path": "深圳海岸城授权体验店.pdf",
+        "size": 33817622,
+        "sha256": "82bb18fe16372c780bc8c8416ade1419506e792c2792ad0c14928f45ffa598a3",
+        "github_paths": [
+          "各门店图纸/深圳海岸城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳海雅缤纷城.pdf",
+        "size": 40289523,
+        "sha256": "a1be387afe237c77848c652ef5a577cc58fcd3f51d3a96cfe165055f1480657b",
+        "github_paths": [
+          "各门店图纸/深圳海雅缤纷城.pdf"
+        ]
+      },
+      {
+        "path": "深圳深业上城授权体验店.pdf",
+        "size": 16634061,
+        "sha256": "d39a28b8ff01dfa12d07207cbe4f6e4f4a0eb344ca123e2c107d07ee88a0ae39",
+        "github_paths": [
+          "各门店图纸/深圳深业上城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳福田COCOPARK授权体验店.pdf",
+        "size": 15262691,
+        "sha256": "58b503f1811c027df7629da986fbc180f429f66494d0e1d420418d6f5f4b6366",
+        "github_paths": [
+          "各门店图纸/深圳福田COCOPARK授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳福田中航城君尚.pdf",
+        "size": 23225512,
+        "sha256": "02c56530e723564378639d53b88632af86b5bb866a8dfb42704550447b8809fc",
+        "github_paths": [
+          "各门店图纸/深圳福田中航城君尚.pdf"
+        ]
+      },
+      {
+        "path": "深圳福田卓悦汇授权体验店.pdf",
+        "size": 16083135,
+        "sha256": "a573c0515a2404966c5ffd06ceb8cf1fe062ae966a2750a79300203e363a804a",
+        "github_paths": [
+          "各门店图纸/深圳福田卓悦汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳罗湖万象城授权体验店.pdf",
+        "size": 17240215,
+        "sha256": "b4479266a53743a97c2658cff55b5c48383e89d1900308739f38f7cc03cee26c",
+        "github_paths": [
+          "各门店图纸/深圳罗湖万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "深圳罗湖金光华.pdf",
+        "size": 15348844,
+        "sha256": "bf5a15515fae64eec3889e0a982c6df393b448bb233c47e5efd30c98cdce43d4",
+        "github_paths": [
+          "各门店图纸/深圳罗湖金光华.pdf"
+        ]
+      },
+      {
+        "path": "深圳龙华天虹授权体验店.pdf",
+        "size": 20287327,
+        "sha256": "4ba6b34d7b862e091ad477413a24c338aaca9221f5169c24cd09b4ea2bba6a80",
+        "github_paths": [
+          "各门店图纸/深圳龙华天虹授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "温州万象城授权体验店.pdf",
+        "size": 8744033,
+        "sha256": "d769c4b642097b0ddf8df0fc3373c709f41cb295543108a444948ec638f91818",
+        "github_paths": [
+          "各门店图纸/温州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "温州开太百货照材专卖店.pdf",
+        "size": 13435395,
+        "sha256": "550ea14581fb3fd25dfd5353610df08c92287974b8fb890155e4f683890a5b42",
+        "github_paths": [
+          "各门店图纸/温州开太百货照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "温州滨江万象城授权体验店.pdf",
+        "size": 7600876,
+        "sha256": "792c791d17e5466e083c6a1af2a3b066ffb07276d65c14d161d3bc06d3bce372",
+        "github_paths": [
+          "各门店图纸/温州滨江万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "湖南摄影城照材专卖店.pdf",
+        "size": 5616818,
+        "sha256": "3c9fa0f92d8cd9569b04bfe933e05764ba114f2deb340e70508be40474aef720",
+        "github_paths": [
+          "各门店图纸/湖南摄影城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "潍坊泰华城新天地.pdf",
+        "size": 17133744,
+        "sha256": "3f67d2a410ad3094055546bfa87ec702461390edf5188faef1c408f87016ae76",
+        "github_paths": [
+          "各门店图纸/潍坊泰华城新天地.pdf"
+        ]
+      },
+      {
+        "path": "潍坊益家园照材专卖店.pdf",
+        "size": 23040391,
+        "sha256": "1aab67151a1888d0bcd58287ce14f174454938bbafe00c8c7da88a73fdb8260a",
+        "github_paths": [
+          "各门店图纸/潍坊益家园照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "澳门威尼斯人.pdf",
+        "size": 17362145,
+        "sha256": "34ea9cb3744e769cf62bdc4f3c5227a9fcc79b1b63d6e267e710ad6f9f4ca0af",
+        "github_paths": [
+          "各门店图纸/澳门威尼斯人.pdf"
+        ]
+      },
+      {
+        "path": "石家庄万象城授权体验店.pdf",
+        "size": 33085949,
+        "sha256": "373d770b088a39c8162121d3670482ef9feaa56acd771cf39145f9c67a821fab",
+        "github_paths": [
+          "各门店图纸/石家庄万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "石家庄太和电子城照材专卖店.pdf",
+        "size": 8827960,
+        "sha256": "78910cf7b5fb200d0cd9dab2243cd2ae6c9ae0c2346c027bf5347d016fe135cf",
+        "github_paths": [
+          "各门店图纸/石家庄太和电子城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "石家庄织音1953授权专卖店.pdf",
+        "size": 12196572,
+        "sha256": "1fc05df961b7657da8df0cd86c57c58d7c8bdb50a8466577be92eff2d97c3a6e",
+        "github_paths": [
+          "各门店图纸/石家庄织音1953授权专卖店.pdf"
+        ]
+      },
+      {
+        "path": "福州万象城授权体验店.pdf",
+        "size": 22220979,
+        "sha256": "63fb19fd1e066f27bca23f59b8768a511cc6bc0815942a749b6a8b65591adae6",
+        "github_paths": [
+          "各门店图纸/福州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "福州东二泰禾（换铺）.pdf",
+        "size": 27790555,
+        "sha256": "db3111ec9355498eb11ddf63664118da87142f961bf60a820d538006ad25a498",
+        "github_paths": [
+          "各门店图纸/福州东二泰禾（换铺）.pdf"
+        ]
+      },
+      {
+        "path": "福州中骏世界城授权体验店.pdf",
+        "size": 12666442,
+        "sha256": "d18fe9e321e70f210108f1c7b2ae8045b3ed51c4185b81e2a105207ff3c33147",
+        "github_paths": [
+          "各门店图纸/福州中骏世界城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "福州大利嘉城照材专卖店.pdf",
+        "size": 20605970,
+        "sha256": "ba6b45a300ed2ad30e46154379dc45e473081b01a529e00693fefa05d27fb47a",
+        "github_paths": [
+          "各门店图纸/福州大利嘉城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "福州烟台山授权体验店.pdf",
+        "size": 43931407,
+        "sha256": "9d9ec5982767f91f908b46284df8945ee73d7fdcd437ee07ecbb863ee234c61b",
+        "github_paths": [
+          "各门店图纸/福州烟台山授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "福建龙岩万宝授权体验店.pdf",
+        "size": 20823969,
+        "sha256": "68929fc57783151ef8a29e198d5c4fbda19ee0aee39e244b2aa6dfeb51ca94e3",
+        "github_paths": [
+          "各门店图纸/福建龙岩万宝授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "秦皇岛茂业天地授权体验店.pdf",
+        "size": 14392725,
+        "sha256": "5ae3ad260f30d331aac764e669ad73c6c1c78411d3e1f1015b3202e2dbfe5459",
+        "github_paths": [
+          "各门店图纸/秦皇岛茂业天地授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "绍兴金帝银泰城迁址边厅.pdf",
+        "size": 14299931,
+        "sha256": "d3c57f9412aa9a16007219018ad680009ee2af7b98a627ddf78f3bd41ac85d02",
+        "github_paths": [
+          "各门店图纸/绍兴金帝银泰城迁址边厅.pdf"
+        ]
+      },
+      {
+        "path": "绵阳数码广场照材专卖店.pdf",
+        "size": 30460969,
+        "sha256": "0ac6eeea6fddeee62a9dc49467ccd6b4c927a170f96ce3534eb16d3628cd06d9",
+        "github_paths": [
+          "各门店图纸/绵阳数码广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "聊城万达照材专卖店.pdf",
+        "size": 8314982,
+        "sha256": "3e65fb97ea49c0aa59cb86ea3c1768922be7ae752c9a71bac115baf562bf7f79",
+        "github_paths": [
+          "各门店图纸/聊城万达照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "芜湖银泰inpark.pdf",
+        "size": 16143914,
+        "sha256": "ae441f69b3cbff0e1ebcad7944fdbf162793eff7f265ca1f114400eafeca9c28",
+        "github_paths": [
+          "各门店图纸/芜湖银泰inpark.pdf"
+        ]
+      },
+      {
+        "path": "苏州东吴天街授权体验店.pdf",
+        "size": 26375591,
+        "sha256": "378a9206c63e090a25e114d14b13d618db3e91be7b9c85c103968c4bf51ffbb4",
+        "github_paths": [
+          "各门店图纸/苏州东吴天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "苏州中心授权体验店.pdf",
+        "size": 17894633,
+        "sha256": "e8fc78b155286f011ce3e23e857d529e3353fcad71921062eff40c1fe29ca4a0",
+        "github_paths": [
+          "各门店图纸/苏州中心授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "苏州人民商场照材专卖店.pdf",
+        "size": 20297841,
+        "sha256": "c318a8f9e9719dda1a1a24fc7a05d3c3887f47d00beb9d6620d844275933d457",
+        "github_paths": [
+          "各门店图纸/苏州人民商场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "苏州吴江万象汇授权体验店.pdf",
+        "size": 12263060,
+        "sha256": "a453208cf56410c0b93e02264c908662be9a194cb2320c2f94f5736b01c7889f",
+        "github_paths": [
+          "各门店图纸/苏州吴江万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "苏州昆山万象汇授权体验店.pdf",
+        "size": 26839339,
+        "sha256": "8f22280648ab1a975fa66438f4489dbdf56df11ab35dfd216ef2122dccd99769",
+        "github_paths": [
+          "各门店图纸/苏州昆山万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "英国westfield中岛.pdf",
+        "size": 2331160,
+        "sha256": "2a6a7b8b607d863261905d309c0c34ae949a2c5a1bbc58c6d2024ce7d438c782",
+        "github_paths": [
+          "各门店图纸/英国westfield中岛.pdf"
+        ]
+      },
+      {
+        "path": "茂名东荟城授权体验店.pdf",
+        "size": 15572012,
+        "sha256": "921eecc43972779f21fce8e6f27738464850f190c92754c4def8098973c74bdb",
+        "github_paths": [
+          "各门店图纸/茂名东荟城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "莆田万象汇.pdf",
+        "size": 14511900,
+        "sha256": "402527548b447761d6ebca0eab0adbc3cbe49bacde686d6c963ce0880654d369",
+        "github_paths": [
+          "各门店图纸/莆田万象汇.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾 SM Aura.pdf",
+        "size": 8765469,
+        "sha256": "9099f3f295ba282a9980df12e223cca6ff75d76686e98335bfd27174740bb738",
+        "github_paths": [
+          "各门店图纸/菲律宾 SM Aura.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾 SM City Grand Central.pdf",
+        "size": 9316069,
+        "sha256": "9dce34bf320d214b2f92fc2a871f4206a5f428186b41778c6b2abc058af696b0",
+        "github_paths": [
+          "各门店图纸/菲律宾 SM City Grand Central.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾Festival mall 边厅.pdf",
+        "size": 24565241,
+        "sha256": "2841dbaf70736411bc744cd069463f04040f5e54d16d3e9308f23ed0eb9dd425",
+        "github_paths": [
+          "各门店图纸/菲律宾Festival mall 边厅.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾MOA（换址).pdf",
+        "size": 10181254,
+        "sha256": "229652f4f0ad95c6b895a89d4fc67b2727accea5c4b4eab5eb3ba7aaff69c70c",
+        "github_paths": [
+          "各门店图纸/菲律宾MOA（换址).pdf"
+        ]
+      },
+      {
+        "path": "菲律宾ONE Ayala.pdf",
+        "size": 2600458,
+        "sha256": "a7839599ee7d1fa77b56fe04a7c492be9f6c5159a0a802cd825041c3e5fe9314",
+        "github_paths": [
+          "各门店图纸/菲律宾ONE Ayala.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾Robinsons Place Manila.pdf",
+        "size": 17641920,
+        "sha256": "f1f832f6b30f009c49798de5066d5cf189be50e39c0c1a2afa37ceea57786667",
+        "github_paths": [
+          "各门店图纸/菲律宾Robinsons Place Manila.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City Clark 中岛.pdf",
+        "size": 6355500,
+        "sha256": "4cbd5ab914780507d81b8ea075c5c544bb677be0aefeeaa5eedddc808b49cb8b",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City Clark 中岛.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City Dasmarinas 中岛.pdf",
+        "size": 10540487,
+        "sha256": "2666bd2de04d37489e2ef564eb1362db6a9b16c0cd96d362413439ef1538feac",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City Dasmarinas 中岛.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City Davao边厅.pdf",
+        "size": 26161790,
+        "sha256": "20afb36b86bae82ce2818b60d41d5df8b69bc2eddd05460817485f8f98d97521",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City Davao边厅.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City Fairview.pdf",
+        "size": 35559426,
+        "sha256": "245bf2f4eef475e73a6aad2b4742433942c18d3a07a110cec8d935453a2092b1",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City Fairview.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City La Union.pdf",
+        "size": 26371678,
+        "sha256": "4d3c863dc039842cb4f221301deb6d51273f1354a460dd486f4c730582c98836",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City La Union.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City Pampanga 中岛.pdf",
+        "size": 9831686,
+        "sha256": "35870f17c12cce83846e2d2ef8417e64594865938582dd7998e4bd7367b601db",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City Pampanga 中岛.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM City San Pablo.pdf",
+        "size": 20136858,
+        "sha256": "e1c739ca369a1a25666a0215d84fd3b4efa6a5a6065a69d6a0294dd95b708af1",
+        "github_paths": [
+          "各门店图纸/菲律宾SM City San Pablo.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM Megamall 边厅.pdf",
+        "size": 3085323,
+        "sha256": "806366651b9d666fa02e04af8eeafefcce5a1c06216f2630a43969a52cbffd75",
+        "github_paths": [
+          "各门店图纸/菲律宾SM Megamall 边厅.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM North EDSA.pdf",
+        "size": 11607049,
+        "sha256": "0f02391c2151e3677b63767ab7ad075e3aa96b4a843edd778eaf210a53591d69",
+        "github_paths": [
+          "各门店图纸/菲律宾SM North EDSA.pdf"
+        ]
+      },
+      {
+        "path": "菲律宾SM South mall.pdf",
+        "size": 11772721,
+        "sha256": "d77308e604a9e22923ea560efac400acb6d22273194f5b17ce62ea6aad48ee64",
+        "github_paths": [
+          "各门店图纸/菲律宾SM South mall.pdf"
+        ]
+      },
+      {
+        "path": "西宁王府井授权体验店.pdf",
+        "size": 22444240,
+        "sha256": "d9fde0adc4bbbc98bb48c057f3a372eccf46d9433845540d7879072532739013",
+        "github_paths": [
+          "各门店图纸/西宁王府井授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安DT51授权体验店.pdf",
+        "size": 22980475,
+        "sha256": "046670fccfbffddb8759e9bda1783c919a425ca7fad9a7682bdf232e69c77513",
+        "github_paths": [
+          "各门店图纸/西安DT51授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安SKP授权体验店.pdf",
+        "size": 14222985,
+        "sha256": "f407e5893c6615dea4e96ff900506665a5e29d4423d42ac29625af19e49f1c01",
+        "github_paths": [
+          "各门店图纸/西安SKP授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安万象城授权体验店.pdf",
+        "size": 14786437,
+        "sha256": "948fca6dba4d69cdc2ef5f437cb5044866de164e2a887a14fecff79f1034a6aa",
+        "github_paths": [
+          "各门店图纸/西安万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安东新科贸照材专卖店.pdf",
+        "size": 13561535,
+        "sha256": "8de1b7b19c9c37347740e33d85e8f338fd15da6795505471c7f03caa83ac8396",
+        "github_paths": [
+          "各门店图纸/西安东新科贸照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "西安北部赛格广场照材专卖店.pdf",
+        "size": 8259532,
+        "sha256": "2852bddbeabf0f28d6f606a1481c9707680cbd9018d871a2b03e3c92b320cf0c",
+        "github_paths": [
+          "各门店图纸/西安北部赛格广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "西安开元商场.pdf",
+        "size": 11995578,
+        "sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "github_paths": [
+          "各门店图纸/西安开元商场.pdf"
+        ]
+      },
+      {
+        "path": "西安曲江创意谷授权体验店.pdf",
+        "size": 13624511,
+        "sha256": "12ab184016eae0b0d766ca133786d07e3d4ac9185b9d9fcaaafdacb424f4681a",
+        "github_paths": [
+          "各门店图纸/西安曲江创意谷授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安百瑞未来城照材专卖店.pdf",
+        "size": 15221375,
+        "sha256": "59b8a6e2a974ca302b14997c27b728daa3ca8e8564897e5ab2a61a8cf462a39f",
+        "github_paths": [
+          "各门店图纸/西安百瑞未来城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "西安百脑汇照材专卖店.pdf",
+        "size": 1870773,
+        "sha256": "e36945eca8f18ae4f2ef601957eec59a2e528fbfbc03a4beca16af813f65dcf5",
+        "github_paths": [
+          "各门店图纸/西安百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "西安荟聚授权体验店.pdf",
+        "size": 27858935,
+        "sha256": "44c38d84e7cb3aaa506b5dfaed0a20edd31d37984aff66cbbac6537d3aef4292",
+        "github_paths": [
+          "各门店图纸/西安荟聚授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安赛格授权体验店（边厅）.pdf",
+        "size": 18529606,
+        "sha256": "e2146388ab258d956697a7749ccc80e8d5c8fc4f60e9da7586ba4a59575482a2",
+        "github_paths": [
+          "各门店图纸/西安赛格授权体验店（边厅）.pdf"
+        ]
+      },
+      {
+        "path": "西安鹏博大厦照材专卖店.pdf",
+        "size": 14234200,
+        "sha256": "e578ec7bbe3c93914f7f9c42786f52a401c89cf0ad15f81866bb99447f030c68",
+        "github_paths": [
+          "各门店图纸/西安鹏博大厦照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "西安龙湖长乐天街授权体验店.pdf",
+        "size": 14777212,
+        "sha256": "344d297932e09ba9c3961739af9dd806295bea8070c76413df304fe9fff0361e",
+        "github_paths": [
+          "各门店图纸/西安龙湖长乐天街授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "西安龙首印象城授权体验店.pdf",
+        "size": 17239170,
+        "sha256": "fc1daf9ed07524096e42afdd8325e2b9e6ac9c09fbee5e1461bd04ec9cdd95cc",
+        "github_paths": [
+          "各门店图纸/西安龙首印象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "贵阳万象城授权体验店.pdf",
+        "size": 13899270,
+        "sha256": "743e1b9b678a3d2d1f86361413d68f2f02e6123122b04ab4dc3996276ba2d8fe",
+        "github_paths": [
+          "各门店图纸/贵阳万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "贵阳中华南路照材专卖店.pdf",
+        "size": 19027469,
+        "sha256": "1fb1ebae9dc9b28ebf57dd9b8002880e270e4ae9f75064b16dbaed3e70a50d2d",
+        "github_paths": [
+          "各门店图纸/贵阳中华南路照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "贵阳新大陆数码广场照材专卖店.pdf",
+        "size": 6548882,
+        "sha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+        "github_paths": [
+          "各门店图纸/贵阳新大陆数码广场照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "赣州万象城授权体验店.pdf",
+        "size": 13442366,
+        "sha256": "705a1df3a9d7ac9d9c5f94a4167f2da5e200f6e51f2a380853861e597ab7fced",
+        "github_paths": [
+          "各门店图纸/赣州万象城授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "赤峰商厦照材专卖店.pdf",
+        "size": 8297842,
+        "sha256": "36b20eacccd3136089ed9ef36823c2523d748038e730161a918798a93e69d325",
+        "github_paths": [
+          "各门店图纸/赤峰商厦照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "邯郸万象汇授权体验店.pdf",
+        "size": 16010036,
+        "sha256": "6ad01cb39ed0d7fff201f857ad6b407fe661e219a524c0d1d4040599065b2de8",
+        "github_paths": [
+          "各门店图纸/邯郸万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "郴州解放路照材专卖店.pdf",
+        "size": 16735640,
+        "sha256": "772cfe64034d808f0a9ee85b8418dbdf128d5dc69087c883c52c9227f7f6f995",
+        "github_paths": [
+          "各门店图纸/郴州解放路照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "鄂尔多斯金峰电子城照材专卖店.pdf",
+        "size": 20334993,
+        "sha256": "a27106ebb43f7ea759b36e4b6a5be217a257c5ac3ea66fdbf01b11f67ce88ff3",
+        "github_paths": [
+          "各门店图纸/鄂尔多斯金峰电子城照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "金华永盛授权体验店.pdf",
+        "size": 9014029,
+        "sha256": "26b2f876ed70448945398532fba8c8b532a8b85908e69c89a8faecebfe6c38ff",
+        "github_paths": [
+          "各门店图纸/金华永盛授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "青岛万象城.pdf",
+        "size": 17901796,
+        "sha256": "f605a001d9e06be1e9b395bc22d0841e54852228ee4cb4db7afadee9e55f4e62",
+        "github_paths": [
+          "各门店图纸/青岛万象城.pdf"
+        ]
+      },
+      {
+        "path": "青岛凯德MALL授权体验店.pdf",
+        "size": 24217154,
+        "sha256": "32dadc099d1108b50e1e4502d30eccd6523f7fa445dfa707cb94dea567341d61",
+        "github_paths": [
+          "各门店图纸/青岛凯德MALL授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "青岛城阳万象汇授权体验店.pdf",
+        "size": 9936280,
+        "sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "github_paths": [
+          "各门店图纸/青岛城阳万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "青岛崂山万象汇授权体验店.pdf",
+        "size": 29608353,
+        "sha256": "d4ec4eea5fc0d952b290fcfdd316dc1b1e37c752b23e09a1f22440945d78945e",
+        "github_paths": [
+          "各门店图纸/青岛崂山万象汇授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "青岛永旺梦乐城.pdf",
+        "size": 12809070,
+        "sha256": "62907cffe04d6afebb7dac68c784a83aab044f121ce5b11f2d2a001c1b5f4d2e",
+        "github_paths": [
+          "各门店图纸/青岛永旺梦乐城.pdf"
+        ]
+      },
+      {
+        "path": "青岛海信广场授权体验店.pdf",
+        "size": 13038378,
+        "sha256": "0f21a116f78ec298528962b49a9e46c2d99e5bd818bf1328555a4bfee8d4a2ff",
+        "github_paths": [
+          "各门店图纸/青岛海信广场授权体验店.pdf"
+        ]
+      },
+      {
+        "path": "青岛百脑汇照材专卖店.pdf",
+        "size": 24193548,
+        "sha256": "772d5a2b17920150be398909402fd361aee4f05d5197cc882bc43e433d1a7513",
+        "github_paths": [
+          "各门店图纸/青岛百脑汇照材专卖店.pdf"
+        ]
+      },
+      {
+        "path": "韩国galleria光教店-광교점.pdf",
+        "size": 31280190,
+        "sha256": "fb96e08f7207f083fa77ee1ca8e0876eba2517d4df4f7a2b1da5a9496e65e8cc",
+        "github_paths": [
+          "各门店图纸/韩国galleria光教店-광교점.pdf"
+        ]
+      },
+      {
+        "path": "韩国乐天百货蚕室店- 롯데잠실점.pdf",
+        "size": 3301217,
+        "sha256": "6b54074009cb32d975a4bf8bbc1f011d097c9543c931bd54c5df08159591cdc3",
+        "github_paths": [
+          "各门店图纸/韩国乐天百货蚕室店- 롯데잠실점.pdf"
+        ]
+      },
+      {
+        "path": "韩国新世界大田店-신세계대전점.pdf",
+        "size": 36581528,
+        "sha256": "181f4ff0b3f4b04d8a5ac85bb42e64f5f02f82f4e47844635ff83c7d598470a8",
+        "github_paths": [
+          "各门店图纸/韩国新世界大田店-신세계대전점.pdf"
+        ]
+      },
+      {
+        "path": "韩国现代百货忠清店-현대충청점.pdf",
+        "size": 29881163,
+        "sha256": "393d674774417db1bd666cf9e50c5a7e82e14c0226ab4f63993b6655243d34c0",
+        "github_paths": [
+          "各门店图纸/韩国现代百货忠清店-현대충청점.pdf"
+        ]
+      },
+      {
+        "path": "韩国现代百货新村店-현대신촌점.pdf",
+        "size": 17672868,
+        "sha256": "37f9d18b627f7ba203189e8212199777da07796dd32e9e52f1239d8f40bb1ce3",
+        "github_paths": [
+          "各门店图纸/韩国现代百货新村店-현대신촌점.pdf"
+        ]
+      },
+      {
+        "path": "韩国现代百货板桥店-현대판교점.pdf",
+        "size": 21915039,
+        "sha256": "50e916a0439a05ccdcf57f2a18eea1afddbf656da5e0134c75d9c3e780ad2046",
+        "github_paths": [
+          "各门店图纸/韩国现代百货板桥店-현대판교점.pdf"
+        ]
+      },
+      {
+        "path": "韩国现代百货蔚山店-현대울산점.pdf",
+        "size": 23449756,
+        "sha256": "ae8699cd9ad3b951309411cae4edf2888440eacafcd986bb75c0d8890f0efb67",
+        "github_paths": [
+          "各门店图纸/韩国现代百货蔚山店-현대울산점.pdf"
+        ]
+      },
+      {
+        "path": "韩国釜山乐天百货-롯데 부산본점.pdf",
+        "size": 8238465,
+        "sha256": "91867586d61743fac76a23f80c7a805e9440f580791910585ee1ad0701c276be",
+        "github_paths": [
+          "各门店图纸/韩国釜山乐天百货-롯데 부산본점.pdf"
+        ]
+      },
+      {
+        "path": "韩国首尔江南旗舰店-도산점.pdf",
+        "size": 3315718,
+        "sha256": "822d21a8c68d6f1429a2194680e3b3809707a74eb26071f28ed3d8c4d1f1dcab",
+        "github_paths": [
+          "各门店图纸/韩国首尔江南旗舰店-도산점.pdf"
+        ]
+      },
+      {
+        "path": "香港旺角郎豪坊.pdf",
+        "size": 14026455,
+        "sha256": "c1c3ff63468589fdc7aff2d7f1820d8b8880bb8bc321ded0f2787fdd1494afc7",
+        "github_paths": [
+          "各门店图纸/香港旺角郎豪坊.pdf"
+        ]
+      },
+      {
+        "path": "香港油尖旺柏丽大道街边店.pdf",
+        "size": 47361666,
+        "sha256": "a3fbc393dc14dce156bcf05d14e3edc7dd09f918d6257e44e986076554f4f648",
+        "github_paths": [
+          "各门店图纸/香港油尖旺柏丽大道街边店.pdf"
+        ]
+      },
+      {
+        "path": "香港铜锣湾百德新街.pdf",
+        "size": 22878150,
+        "sha256": "733efc657ff88155110bc87b57496d9a617498cff1c626db067f1adfd365415d",
+        "github_paths": [
+          "各门店图纸/香港铜锣湾百德新街.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚1Utama Shopping Center.pdf",
+        "size": 21629980,
+        "sha256": "b551e2a036ab50b920ee45175a16230a8230b927f7e49f910eefb4a415acd1b4",
+        "github_paths": [
+          "各门店图纸/马来西亚1Utama Shopping Center.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚Gurney Plaza.pdf",
+        "size": 1525832,
+        "sha256": "62dc82168ee52eb01aa820671291dcda9f0959b1f6f24a1187978dfe7bf84a57",
+        "github_paths": [
+          "各门店图纸/马来西亚Gurney Plaza.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚IOI Citymall中岛店.pdf",
+        "size": 7460035,
+        "sha256": "8e5c82302008dab20f9dbdde44c2dd183393f0d4fd32e295db1c693325641a9f",
+        "github_paths": [
+          "各门店图纸/马来西亚IOI Citymall中岛店.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚IOI Damasara边厅.pdf",
+        "size": 34513950,
+        "sha256": "f6d8e4392a1ac4b77a74bd59af68bf9b92672d31b352c7a4aa5246f08695cd4c",
+        "github_paths": [
+          "各门店图纸/马来西亚IOI Damasara边厅.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚Pavilion Bukit Jalil.pdf",
+        "size": 24288357,
+        "sha256": "8b9cb8a3091d719fa99064b5325dc42e2ed0bf51ddcafa48ae5b2957a1ada934",
+        "github_paths": [
+          "各门店图纸/马来西亚Pavilion Bukit Jalil.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚Pavilion Damansara Heights.pdf",
+        "size": 5456585,
+        "sha256": "0343fa5337f20a30f70e64a4f2e6f4f0f6551a42ffe7c5ee6c3eaddc38b5601f",
+        "github_paths": [
+          "各门店图纸/马来西亚Pavilion Damansara Heights.pdf"
+        ]
+      },
+      {
+        "path": "马来西亚Pavilion KL.pdf",
+        "size": 7828075,
+        "sha256": "ef3f8f23da19396cdcdc8b4260915eb5f30273c655bee35f44bfcadac392458e",
+        "github_paths": [
+          "各门店图纸/马来西亚Pavilion KL.pdf"
+        ]
+      }
+    ],
+    "same_content_other_name": [],
+    "same_name_different_content": [],
+    "not_in_github": [
+      {
+        "path": "中山大信新都汇授权体验店.pdf",
+        "size": 8301048,
+        "sha256": "75ca8221e5cbee99345bfbd9c9614116fff5c0db5863c4f7cdf8079d963fb795",
+        "github_paths": []
+      },
+      {
+        "path": "中山石歧万象汇授权体验店.pdf",
+        "size": 14135023,
+        "sha256": "890a95182de887d36ac457ade20ed15c63b227a05ac06ffeb71dff117d229146",
+        "github_paths": []
+      },
+      {
+        "path": "云南曲靖店中店.pdf",
+        "size": 8228041,
+        "sha256": "18c625af768d47202abf937726c4e6eda08fb38d589a796e59ba6fbf132b6ab7",
+        "github_paths": []
+      },
+      {
+        "path": "印尼Ratu plaza.pdf",
+        "size": 3369354,
+        "sha256": "5cbff81c4037d6f8eb9b384a1d8ae42e989287cbe1644b7d9658dbf0eb0499d7",
+        "github_paths": []
+      },
+      {
+        "path": "印尼雅加达 kota kasablanka.pdf",
+        "size": 3487543,
+        "sha256": "dd789f80b0e50770a0a69620e022045e5f574d2069880d5f8d8ed34c17f81b4f",
+        "github_paths": []
+      },
+      {
+        "path": "宜兴八佰伴.pdf",
+        "size": 17641306,
+        "sha256": "dd7b6737ac19d6414e9e594703329ee620f0fb782a9bc66d22f16d96620fff84",
+        "github_paths": []
+      },
+      {
+        "path": "宜宾万象天地授权体验店.pdf",
+        "size": 37968248,
+        "sha256": "1f52f730b23803013b8c3da41e8b655bd63294781df27a86a533763bd5b22726",
+        "github_paths": []
+      },
+      {
+        "path": "宜昌国贸授权体验店.pdf",
+        "size": 14267053,
+        "sha256": "d8a20c258bf87143b08ee4932f5324b7860f3463d9bae6c745a302f335d4a8d7",
+        "github_paths": []
+      },
+      {
+        "path": "徐州中山南路格派照材专卖店.pdf",
+        "size": 7332680,
+        "sha256": "e8e5e153450a0d91474495a6d4173f53c94c2b07e812e01f9fe51354bfe15fef",
+        "github_paths": []
+      },
+      {
+        "path": "徐州苏宁授权体验店.pdf",
+        "size": 11602637,
+        "sha256": "4952bdfeb8106c9bb2801b63b426016d0966788a43e40c94aa1f68876dea3d64",
+        "github_paths": []
+      },
+      {
+        "path": "扬州万象汇授权体验店.pdf",
+        "size": 30202119,
+        "sha256": "e3fffa712afd97cbb8a39289e880258cc7eb171879df866d34c4e7a69ae8e440",
+        "github_paths": []
+      },
+      {
+        "path": "新乡大桥照材专卖店.pdf",
+        "size": 13415791,
+        "sha256": "f00c1aff6585b487431c02804b097124526cc5aa3f42744ea4fc4e90ab281d6c",
+        "github_paths": []
+      },
+      {
+        "path": "新乡胖东来授权体验店.pdf",
+        "size": 4458156,
+        "sha256": "970863f7f100cfa5253c6dec54baf6246def804962cb3f21e81bddd4a5877aaf",
+        "github_paths": []
+      },
+      {
+        "path": "新疆伊犁环球港授权体验店.pdf",
+        "size": 12230202,
+        "sha256": "0919bb8b58ad0264ace8586a7c70d443b9daa3e65eb3bd4fdfe9baa58d8082b7",
+        "github_paths": []
+      },
+      {
+        "path": "新疆克拉玛依市汇嘉时代广场.pdf",
+        "size": 13771187,
+        "sha256": "48cb637db210a4c1168d0995aae236072a31dc703745ba62a40c24c28ddcccd5",
+        "github_paths": []
+      },
+      {
+        "path": "新疆喀什数码街照材店.pdf",
+        "size": 4239341,
+        "sha256": "58eaaa8102ac89ec3d423150d99df8e4e4c23fb2787a174bc49a1dd3b192971e",
+        "github_paths": []
+      },
+      {
+        "path": "新疆宏景数码广场授权专卖店.pdf",
+        "size": 7824313,
+        "sha256": "fe2e06d2da054ad7a1e0f4fc6dc3cb9ab0afe1d0a298d2cacef31ca4942dbaa5",
+        "github_paths": []
+      },
+      {
+        "path": "新疆石河子万达授权专卖店.pdf",
+        "size": 6046197,
+        "sha256": "1c8bbcf473969316b2caf42c1aec338f6c5d69af25daebe9c7cdb3103e46f70e",
+        "github_paths": []
+      },
+      {
+        "path": "淄博万象汇授权体验店.pdf",
+        "size": 24442907,
+        "sha256": "d9ab9b3f81b535fda20dd442866c16ed381bfa1cf74223800c9ab765051a2315",
+        "github_paths": []
+      },
+      {
+        "path": "淄博百脑汇照材专卖店.pdf",
+        "size": 10227751,
+        "sha256": "d6c3c356c158b0c9be2e811a1664852f3ad630989162a736e4e3ed0c6dab5fcb",
+        "github_paths": []
+      },
+      {
+        "path": "烟台振华商厦授权体验店.pdf",
+        "size": 24910722,
+        "sha256": "ce572a726fa063e104cce83e2522b6b5e5dbc791f68bf32bd66066aa5343a6c7",
+        "github_paths": []
+      },
+      {
+        "path": "珠海万象汇授权体验店.pdf",
+        "size": 13872537,
+        "sha256": "56e292d72a7f8d149df4cc5912f5b5c6ff12035ceed1f99a798701cd312ab279",
+        "github_paths": []
+      },
+      {
+        "path": "珠海华发商都授权体验店.pdf",
+        "size": 8881244,
+        "sha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c",
+        "github_paths": []
+      },
+      {
+        "path": "盐城聚龙湖金鹰授权体验店.pdf",
+        "size": 16784916,
+        "sha256": "a0819fcd23bdd51f8420e6923758d4f8843137e5f8289ba774269156758dde18",
+        "github_paths": []
+      },
+      {
+        "path": "遵义吾悦广场授权体验店.pdf",
+        "size": 11536694,
+        "sha256": "11b900ed971166313a94ab3a5e7b9ebd780d16cd6317aca8d99d0e6e3efa1197",
+        "github_paths": []
+      },
+      {
+        "path": "郑州东万象城授权体验店.pdf",
+        "size": 16085704,
+        "sha256": "d140c0a6f2829865344ab7ffb3f943fb859b379db3226147ec65be10d9024dab",
+        "github_paths": []
+      },
+      {
+        "path": "郑州信万广场授权专卖店.pdf",
+        "size": 20476888,
+        "sha256": "08920f1fe7e0d917b3d4dc906506cc782532af1fca5841089de2a0e8e1676257",
+        "github_paths": []
+      },
+      {
+        "path": "郑州大卫城授权体验店.pdf",
+        "size": 18495324,
+        "sha256": "17e51113bfd89a2a8de265af33291ec859fd9fa7daa8a0628d9acbcfca791add",
+        "github_paths": []
+      },
+      {
+        "path": "郑州探十里授权专卖店.pdf",
+        "size": 18701542,
+        "sha256": "872275779b3205cc90400ceed98fe7f18d80aad1218b88f1014e08b00e2ff37c",
+        "github_paths": []
+      },
+      {
+        "path": "郑州正弘汇授权体验店（边厅）.pdf",
+        "size": 22458548,
+        "sha256": "461852adc4a139314048993d60c77fe54b755a25fca05cb347f5f45c35d0a87a",
+        "github_paths": []
+      },
+      {
+        "path": "郑州赛博数码港照材专卖店.pdf",
+        "size": 26012054,
+        "sha256": "f0046db1ec9cf9c580fdfa35bd479b7e31bfe62024de4a8aab91e890fdf1f053",
+        "github_paths": []
+      },
+      {
+        "path": "郑州金融岛授权体验店.pdf",
+        "size": 32607422,
+        "sha256": "5e3651edd9d232ce68a8578a3ab334319dd5bb095f9de0727d46998133436a8d",
+        "github_paths": []
+      },
+      {
+        "path": "重庆万象城.pdf",
+        "size": 14211302,
+        "sha256": "38f5fb264d21d2f26f3fdc602dd0fbfdb2ded1aa010864a1f4b008bad932de1b",
+        "github_paths": []
+      },
+      {
+        "path": "重庆光环花园城.pdf",
+        "size": 18810265,
+        "sha256": "fa1b58d67ef2ffccd45f39a39b01e8779f63eaaffeb77216cc47665fbbe2c247",
+        "github_paths": []
+      },
+      {
+        "path": "重庆光环购物广场.pdf",
+        "size": 10247463,
+        "sha256": "626310298018d140a97f7dfef388466556308bd279b1824a15f44da467a5bf51",
+        "github_paths": []
+      },
+      {
+        "path": "重庆北城天街授权体验店.pdf",
+        "size": 13984453,
+        "sha256": "ca2180576460726945115ac4d11fc81ba829861c4a81aafbfb145e87abda1d74",
+        "github_paths": []
+      },
+      {
+        "path": "重庆国泰广场授权专卖店（边厅）.pdf",
+        "size": 16894656,
+        "sha256": "ed64b2c0f36da937cfebfff7835b4a1fba6cbf0cecff07f9d5f8f273bfe3daca",
+        "github_paths": []
+      },
+      {
+        "path": "重庆大悦城授权体验店.pdf",
+        "size": 9372080,
+        "sha256": "cd964d4ce9ec0a659d4c88e172120cec454187ee1c0f566f433bc6ec798da56f",
+        "github_paths": []
+      },
+      {
+        "path": "重庆时代天街授权体验店.pdf",
+        "size": 12089975,
+        "sha256": "f5dbb743c7d6b33fe4f760b41d8c85f541e69bb36c8bd227acf168e1d63a50df",
+        "github_paths": []
+      },
+      {
+        "path": "重庆来福士授权体验店.pdf",
+        "size": 12700863,
+        "sha256": "b4e99e19e08ed315da394b62cc90c2ab79d53437edb531a76301ac34b006658c",
+        "github_paths": []
+      },
+      {
+        "path": "重庆百脑汇照材专卖店.pdf",
+        "size": 16702841,
+        "sha256": "fa969f98cb00d4a50047a42870485640695f9820c685613a66080d09d7204378",
+        "github_paths": []
+      },
+      {
+        "path": "重庆石桥铺赛博数码广场照材店.pdf",
+        "size": 17381301,
+        "sha256": "18706b20ac4b977aeaa91b36486c691b8da4ec47635d22c00ab1ffa91e87e384",
+        "github_paths": []
+      },
+      {
+        "path": "重庆观音桥赛博数码广场照材专卖店.pdf",
+        "size": 6384549,
+        "sha256": "5d93b50eb507f175aacbeda88d74e702ec0591c2ce47d360b5b69918cc484204",
+        "github_paths": []
+      },
+      {
+        "path": "重庆龙湖U城天街.pdf",
+        "size": 19102296,
+        "sha256": "cc8fff636a411352527e95840541e5d2f89a4d64e22aa6ece992fd89d2ad90e5",
+        "github_paths": []
+      },
+      {
+        "path": "重庆龙湖江岸天街.pdf",
+        "size": 15863687,
+        "sha256": "d5e46006ffdccd9ba5b9102486334418e95afc51d8ec3a895f5daf0bcfcf73f0",
+        "github_paths": []
+      },
+      {
+        "path": "重庆龙湖金沙天街授权体验店.pdf",
+        "size": 19696838,
+        "sha256": "f316da0f79037cf0c85b6151ccb613a1caeab8af1dc92b6611f8c0eea52a6f8f",
+        "github_paths": []
+      },
+      {
+        "path": "银川新华百货CCMALL授权体验店.pdf",
+        "size": 15852901,
+        "sha256": "ac9f735a9c1545c2728030fc3559f20e35ed7219bbb47d2ca57a921e980d8474",
+        "github_paths": []
+      },
+      {
+        "path": "银川阅彩城授权体验店.pdf",
+        "size": 9489745,
+        "sha256": "e2afdc857e53db7391a7d9c8dde658eb4c208d40e98940c224d6be60281dd643",
+        "github_paths": []
+      },
+      {
+        "path": "长春万象城授权体验店.pdf",
+        "size": 9878308,
+        "sha256": "1417c449e8bb7ee04b07234cd1dc6c1fb43614fa932194e6cf0ebd6ba6f744a8",
+        "github_paths": []
+      },
+      {
+        "path": "长春百脑汇照材专卖店.pdf",
+        "size": 16035382,
+        "sha256": "c13e58d3d7195612cb2eb9234ab0f089bda1fd801b45ac9c58d9d9c193bd18d6",
+        "github_paths": []
+      },
+      {
+        "path": "长沙IFS授权体验店.pdf",
+        "size": 15385601,
+        "sha256": "3c79d313b4f1dc41a30f95ee3693721ddcdb0a0bc12655eb82a49df6c3f3a1d7",
+        "github_paths": []
+      },
+      {
+        "path": "长沙万象城授权体验店（边厅）.pdf",
+        "size": 22887132,
+        "sha256": "f032e199f5486a7c2d1d8386c336e039a3a7095132b3519b379019b59b20b56d",
+        "github_paths": []
+      },
+      {
+        "path": "长沙星城天地授权体验店.pdf",
+        "size": 34271957,
+        "sha256": "cba03ec0620ae58d01fa5d4453358fc4ee2219fe6b17478cf13bcaeb09f4d0a8",
+        "github_paths": []
+      },
+      {
+        "path": "长沙永旺梦乐城授权体验店.pdf",
+        "size": 15813407,
+        "sha256": "c240f63462563a2b3e18afa262133b560afc8eb3048146d215d58918c6b217c8",
+        "github_paths": []
+      },
+      {
+        "path": "长沙科佳电脑城照材专卖店.pdf",
+        "size": 26868427,
+        "sha256": "adbebc49b7926f3b735dfd1634a23680b88c74cc222fed28033c3d4d736212bf",
+        "github_paths": []
+      },
+      {
+        "path": "长沙荟聚授权体验店.pdf",
+        "size": 20003842,
+        "sha256": "1c07dcd75dd1440e312bed0e54d575a078470ff1c6243f71f510808a6518cfd9",
+        "github_paths": []
+      },
+      {
+        "path": "长沙高桥数码广场照材专卖店.pdf",
+        "size": 10959954,
+        "sha256": "8866b83502fc99186aed67ff3fa4246d589b2085c540eefae8b11615e8f1170f",
+        "github_paths": []
+      }
+    ]
+  },
+  "github_files": [
+    {
+      "path": "各门店图纸/上海TPY中心.pdf",
+      "blob": "c7a26b0e7758554e9c1c42ab900e3f8264567acc",
+      "sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+      "size": 15259039,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海七宝领展授权体验店.pdf",
+      "blob": "652703f3f9b28133c369232fec61ce3e8c562020",
+      "sha256": "94c5c78ed1408f2f32ecb99d7811a3d0dfd593e7eb19518235d9a76d06a9bd4f",
+      "size": 14495767,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海万象城授权体验店（边厅）.pdf",
+      "blob": "e78f6dc52fef2e19ec582a37795c1f761c75e675",
+      "sha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+      "size": 9709038,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海世博天地授权体验店.pdf",
+      "blob": "3ac30a1a660e683f6eb01542b5b9acb05b50b1f1",
+      "sha256": "a6cfdaa4a0a7a53c62c0fff95dffa5700b14212a78cd168fafc5b399a7e11eb7",
+      "size": 16010095,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海五角场万达授权体验店.pdf",
+      "blob": "ad1ef607dd7c06d7682a71331f31f1b0acf7e16a",
+      "sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+      "size": 12989396,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海北外滩来福士授权体验店.pdf",
+      "blob": "754cb413d61e20cda71096ad85df129bb6e53277",
+      "sha256": "191ebc935e4107288f78318829cc3555fe1bf583b742e16b2278d8aef09a57cf",
+      "size": 18627595,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海嘉里合集授权专卖店.pdf",
+      "blob": "9efed57f5706f0b11b1de438d38bcde9681562c3",
+      "sha256": "a7d672cd28a944468cc7ae28d127d3c2fdc6196b380c8040b8fbdda83a96d96d",
+      "size": 7967809,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海新嘉中心.pdf",
+      "blob": "635e484184d9ba7962acb23a26fb593fa2f3bbc9",
+      "sha256": "ff031704958d19f6ea7f5f8bf0be4437c823daeac574137f2a095395e52ed73c",
+      "size": 18072665,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海新天地东台里授权体验店.pdf",
+      "blob": "4c403fc05cb0d3cfb60fc876e4d39c0e775b71a2",
+      "sha256": "58e5d568518729cb88021229001a74dd724761f2594436592dc495030e58f7af",
+      "size": 1387185,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海星光摄影城照材专卖店.pdf",
+      "blob": "9759eaa71514bea094407e43a7d463b3efe32a40",
+      "sha256": "66dfd84de00a68596bcca54ef48aea81a599f40424f1a729968bf4ffca6870fd",
+      "size": 8559516,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海月星环球港授权体验店.pdf",
+      "blob": "cf3db1a08442fc5ae5d63cc34fd2b1e790b3ce9a",
+      "sha256": "fefbd3728ff0941d27d5deeec3756f82c2048dff0c9222f89fdffd03ac48e463",
+      "size": 9958081,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海浦东嘉里城授权体验店.pdf",
+      "blob": "927c6a925bf001cf9ce83c3dac2e9dac5eaa624f",
+      "sha256": "91d09a82bd09cafa9314d144c255e0523247cf449385069b6b8d2ef2bc77a065",
+      "size": 10772122,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海港汇恒隆授权体验店.pdf",
+      "blob": "86d9090590589fe471f05c5fdc61732df96505a0",
+      "sha256": "f80c47d673f740ff3dd47b7d3fc8dc0f2200cb7b627a8318b298cb1d825a0208",
+      "size": 6216901,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海环龙商场照材专卖店.pdf",
+      "blob": "45fea51bd2e9e32f9a0e4f27c97ad99ff1cafe4d",
+      "sha256": "5fd6c4244cd2c097b2ac9cbb3f479b8b01b0ef4d03571df8c950f16c5b66badb",
+      "size": 37761163,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海百脑汇照材专卖店.pdf",
+      "blob": "5408dd6dd03e7a330df7ef43ce91283798c748f3",
+      "sha256": "606411680471ce0e7d032f75836e89b1100919c7eae58b0d14facd1a1ba08775",
+      "size": 11115809,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海第一八佰伴授权体验店.pdf",
+      "blob": "b968921b5749f624621332808e28b0c202ed7275",
+      "sha256": "ca8ed05e83e5430fec61d4907806256e0523bc79d337f86456079d2e91781798",
+      "size": 18895717,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海长宁荟聚授权体验店.pdf",
+      "blob": "09b8c0481c4bf1ff660025a169657b97b03cf4fc",
+      "sha256": "1f65c080bece31bf8de2ed24d80ae176450436800a7ecfc5b91e794d160eeac0",
+      "size": 15204730,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海长宁龙之梦.pdf",
+      "blob": "654595341016dfc5d65006f1866275bdbfbd7b9b",
+      "sha256": "6372848f1ad41d2b28bab02a847676d4ebb0f53475415141802dc0c094eb9ac2",
+      "size": 14583582,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海闵行凯德梦之龙照材专卖店.pdf",
+      "blob": "c562378d2cce94e9e0ecf5d60db3c04011088ee0",
+      "sha256": "8180a52e5e78375a5ee96eddfda2a154b39b603c5008cef8a223f405896f5de7",
+      "size": 6578746,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海陆家嘴正大广场授权体验店.pdf",
+      "blob": "ba13711e23b600101b3a1ab86d1a66418ea8dc14",
+      "sha256": "9cadfe6cda7433f6bbc05b6acea111ed1a570621c44514eeb61153f512503f8c",
+      "size": 20006484,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海陆家嘴项目（改造）.pdf",
+      "blob": "2573f7b8ad270848833455ce40d0a6d3a22bbed0",
+      "sha256": "8e4459c2205e30fb91a23e10c19aececa28b4c1f508be1371b3adfd41c8d26ae",
+      "size": 12744828,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海黄埔日月光中心授权体验店.pdf",
+      "blob": "c882e4c9f30a61fc31235c469a4237ceb37e60ae",
+      "sha256": "a161abc2ca90f747ece136b4bd283431c390b425baa6a92f42567c63245ad652",
+      "size": 16454623,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海龙湖宝山天街.pdf",
+      "blob": "f205ca3749cd47988a9b1a70e6a25e74a082227f",
+      "sha256": "d225883862e434ea3e9e15f735fcfbcc3f3a8e21059427b3daa25b8d13205e79",
+      "size": 4001701,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/上海龙湖闵行天街授权体验店.pdf",
+      "blob": "c33e0f2d4dd826b06474b4fde22b8426a3336178",
+      "sha256": "e09ae59bd1e6b85926613ff8dfb6682d69d791b0edc692dfe6ff678b641f912a",
+      "size": 15640321,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/东莞万象滨海购物公园.pdf",
+      "blob": "87d656356536640f9b759a5daaf2f687d71ba9c8",
+      "sha256": "3b6ebced0e7c711e9db2aefc0a9583e2331fb8a5c478b33cd4d69a74770980af",
+      "size": 13793267,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/东莞悠兰里街区授权专卖店.pdf",
+      "blob": "9b0c063928193dc47da8185609062634ab4340ae",
+      "sha256": "fb339e56ad3501cdc5d6a308e882715d6cca5d27cdc43d31c677d48533d0fc95",
+      "size": 37515278,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/临沂万象汇.pdf",
+      "blob": "ba0eca34a1ce488c4023164daf48913cec6fd158",
+      "sha256": "d777b05068216ca00dc68aa20ab6d584ed507ba5234a976eca4bd4b89e6f62e9",
+      "size": 17289615,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/临沂百脑汇照材专卖店.pdf",
+      "blob": "a3613e607871f00cbcea8ac1287bad5989aeb89b",
+      "sha256": "f0a353caaf486648604010369e5f73fe65981656b124fe1b8ab57b29a9e6aa3a",
+      "size": 8843667,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/乌鲁木齐cc mall授权专卖店.pdf",
+      "blob": "c4da1284438a29269329410e7e1a96f15ac6ad7a",
+      "sha256": "7359c9e64946682368a09ad1dec42b44d2fb907e5b4d0acdb5c20dbdaa2f1221",
+      "size": 4685663,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/乌鲁木齐德汇万达（边厅改中岛）.pdf",
+      "blob": "a964709871fc0ebbe699ec67006a208e71c5579f",
+      "sha256": "05b7f2398df0f71834caae2353e81024be14ba49276e03653ca3bad25f9e844a",
+      "size": 6411051,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/乌鲁木齐经开万达授权专卖店.pdf",
+      "blob": "7cd275f9455f4f2bacb7074a80880d2faa276dab",
+      "sha256": "f186cfa7a5b523d92737ccc5d81674acf4793d51135b82365afb5a0f4dd3f0fb",
+      "size": 9472674,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/乌鲁木齐高新万达广场.pdf",
+      "blob": "c6580c9b6ed1608631c2139a3244624dd262dd10",
+      "sha256": "2fdec1509c639630af5b1217e3378c6cb646c3666d5bbacfc5b31c706656a445",
+      "size": 10466353,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山创意产业园授权专卖店.pdf",
+      "blob": "6947f7bdc81b926511d9f454821d37a2c1431392",
+      "sha256": "8ac35e744a8daa3f308dcbc9f84f3d9c66eb72f426a4c93da520940e8e8642ca",
+      "size": 48890298,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山千灯湖环宇城授权体验店.pdf",
+      "blob": "e4ab07cc71bea07925b723b93c817d2bfc9ff85f",
+      "sha256": "868516b1048b77d52fb913e36fc4580e1a0d089ff3e2c39c1bbe2cf7ec0a3abc",
+      "size": 12383620,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山欢乐海岸Plus.pdf",
+      "blob": "16524f655da4673ea76730d30ff0b16a5da517bb",
+      "sha256": "0deca263f5cde40fa36c78a367f5d4f1102df800a9feac1cf1e9d037a0477c8a",
+      "size": 38709066,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山禅城NOVA岭南站授权体验店.pdf",
+      "blob": "15b6292a19a3c4257d27980a016ff0e68aa27c02",
+      "sha256": "6e0238e2134b14eef6f759244965c5cbc9e3c25df3a567399dc121ce516e096f",
+      "size": 17710663,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山禅西环宇城授权体验店.pdf",
+      "blob": "194fb642f816bce9040bba84acdc4e846aeda03e",
+      "sha256": "5aad0140601a0bae5aee0478550eea7388a2d7ec9f8407599d9db083bf82d109",
+      "size": 13728636,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山金铂中心授权体验店.pdf",
+      "blob": "ba1b90e238f59ae1d0486c58c032045f6fef13c9",
+      "sha256": "96278410e120b78a9cd4bb6531847d18afb0cfd928760832477502713f75ea6b",
+      "size": 17149587,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/佛山顺德万象汇授权体验店.pdf",
+      "blob": "48272d56c57d13fc4e21dde36edfe3d5f276ac36",
+      "sha256": "91765a7a5e3b43acffe9c9aab4a9f8ee7db9a2ba31999bb41f6f8b51761e6769",
+      "size": 18473578,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/保定北国先天下授权体验店.pdf",
+      "blob": "1ca27ad8e74e3dd894ab733653393e926c46539e",
+      "sha256": "d40d829cb5655bfdb03fada4eb9fb1660c9663607d4e15f2a8aa59bc3c8edc75",
+      "size": 20631354,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/保定爱情广场授权体验店.pdf",
+      "blob": "84f1fe7baaba0e3ea0219c005be81e7757c53879",
+      "sha256": "cf320ec51dddba29f50012f2267068b016fa7d231942cc34aeaf6ecd0bc2e88e",
+      "size": 20093796,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/保定西大街照材专卖店.pdf",
+      "blob": "dff3cff2e59dfbec394eebb4ffa3b3ef08ab3f4e",
+      "sha256": "6d2b772b16668d0789ed3c5d80234692929b06ba5959225eab96a9e09e800b3b",
+      "size": 15364407,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/兰州万象城授权体验店.pdf",
+      "blob": "53725a838cde586a8a1ee3dadfae9f2b21d114cf",
+      "sha256": "bc11e9da7730af517a48b998a7d2fdaa098e60f00838da60308a9d459df9e178",
+      "size": 3003167,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/兰州苏宁MAX照材专卖店.pdf",
+      "blob": "24551dd4c60b2f9d00ea1c6f940ddb2c1f63d4d8",
+      "sha256": "7d866b838bc6df4b73f80119cddf2a1cdfbe5ed6355a23b5f72078b4a3c32ce3",
+      "size": 19157931,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/包河万象汇.pdf",
+      "blob": "08329bdd9ea1c8b02a431555d6503656b47f9cfa",
+      "sha256": "3ffe17987587113ae5388182fd4e2ab8682d22344b702cb078b2985e1e54602e",
+      "size": 17804973,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京798创意园授权专卖店.pdf",
+      "blob": "fbaf6a6aacab9f7cff23a5f1e0207d516b12cdc6",
+      "sha256": "8eba05d238862c9619eeace4bd8e8ae425cdba59413c00552101781e28cb9b56",
+      "size": 10159113,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京万柳华联授权体验店.pdf",
+      "blob": "265e24ebe107515d7afa501990bfca8262d35725",
+      "sha256": "84f1c75f1f393e297700ee49b55d29ebdc985577084567a8a2066784c31d9cb9",
+      "size": 22776801,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京三里屯太古里授权体验店.pdf",
+      "blob": "96c55eafdb576675c6bdc052c525eed5a8dde5f7",
+      "sha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+      "size": 11643735,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京东坝万达授权体验店.pdf",
+      "blob": "6735e0701fb33e961532562869b159f737286b3d",
+      "sha256": "2821f2d899b41c579b7b73f073c4fca11f2f97997c07d7d0b242d4d517305092",
+      "size": 15195054,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京中关村大融城授权体验店.pdf",
+      "blob": "39ffe26c9ce59a9d475bcd8268b92d2a415ed230",
+      "sha256": "761e4f768a07a7364bd552382c49b7fd81d596e84e477d0221a20bfc42fb777d",
+      "size": 2577210,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京五棵松万达授权体验店.pdf",
+      "blob": "4b6cd5b20669cd786513dd6a3bec8e2edb5e918e",
+      "sha256": "77e3ae5741ea39e785bf685810216d333ecb213558edf56e6cb15f7ee5d48353",
+      "size": 16611376,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京五棵松照材专卖店.pdf",
+      "blob": "bcd2bfc5b773fd9e2d4230d76ed6303f214d4ca7",
+      "sha256": "5ee0646cc839d56b76acbac870d66c1068408d2cae64297063e6a05c18532153",
+      "size": 2644557,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京亦庄龙湖天街授权体验店.pdf",
+      "blob": "ebe734cd1a20a7262566d2e388e515e0f1ed17fa",
+      "sha256": "d0076c77dc4ab9d97615fb18aa2e0b31f4d41ad01a7e45f99b966ffb2e0e2a67",
+      "size": 22501137,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京合生汇授权体验店.pdf",
+      "blob": "ca7a75ef4b1f3af98250796bf0b8493f0239887c",
+      "sha256": "85d0071d1781af7f62555608532a62fc0cb8b97259e16127da52de412b00575f",
+      "size": 8175600,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京悠唐广场授权体验店.pdf",
+      "blob": "ebdc5d9730517eda1458b7a50c463c9fa36442ee",
+      "sha256": "948b24b9dcdc1c2071b4835cd27ca5118bf0a2e7a0161976ede1b2a3116b6ba3",
+      "size": 8795108,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京房山熙悦天街授权体验店.pdf",
+      "blob": "669032bd543f25c3ec4daf42f033794f336fc465",
+      "sha256": "728c6bb41cd97460e7c920c7a616375624bd9f5390f2ebf17c6311a2221b6ac7",
+      "size": 13500157,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京望京凯德授权体验店.pdf",
+      "blob": "bf5d0a899a0d076e7ee1c473e87c6662d2fc61d5",
+      "sha256": "545b63ccb1b6502173749477f2e61cfdc9443ce9292d4cd7e4f4873f779d059c",
+      "size": 17420960,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京朝阳大悦城授权体验店（边厅）.pdf",
+      "blob": "3c03e90df301938c9a29e56587cc2c0fdd03e0c0",
+      "sha256": "f45e1b866e6930d23869ebbcaf6717271959eb30b5a4a93607625bf56515eb09",
+      "size": 20403152,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京清河万象汇授权体验店.pdf",
+      "blob": "7979f38bfbc0de99424a7871c6ce7a937dcf6af6",
+      "sha256": "2b4c59ea4357336c3a81519f5ac7d5b8e751f926c6fab11bd3d779e9babd9425",
+      "size": 5797374,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京王府井银泰IN88授权体验店.pdf",
+      "blob": "a8768b7e424c212144ac54fec67bc760cd840ee3",
+      "sha256": "3ae4217cf3df3ff438bff4893aa2915ef2d84aa59dfb0610644baee2a28e6271",
+      "size": 15184413,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京荟聚授权体验店.pdf",
+      "blob": "0698037b7ffcbe78a093dd82877e67c04f165480",
+      "sha256": "6e9fdc7bddc534b49017ea964937ce23aef0fcf1b64035149990ea13b2179579",
+      "size": 15742960,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京蓝色港湾授权体验店.pdf",
+      "blob": "b84ea43a92523fdee0f9a0c685851688810ecb78",
+      "sha256": "6fa90802f53a1f824e6bce6de7e2bd37f0024e8f74434e9ebf4c4c121407a20e",
+      "size": 21653929,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京西三旗万象汇授权体验店.pdf",
+      "blob": "4b8da36bdd8134074ca88b9b745cf796c4a4ce5b",
+      "sha256": "ea347ad8743cb3548ee583f0bb5f6a91b19c43937c6374fdea802a3f5576d7ea",
+      "size": 21525412,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京西单大悦城授权体验店.pdf",
+      "blob": "bad03d7ba1ae17abd5dbcbd0806c4559da237531",
+      "sha256": "80b3a118b5e788d60480700aacdc4673c2a7beae540829c31b7f78e69b35ecbc",
+      "size": 22694472,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京超极合生汇授权体验店.pdf",
+      "blob": "4baa465e8b70c1f3f8a5d80f5ea8a05b9b12c307",
+      "sha256": "d6b06296e785c3ff46c7b49d1e1924d581acfca40b23ad02dd4c23e31d172c80",
+      "size": 14052056,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京通州万象汇授权体验店.pdf",
+      "blob": "564fb5c3c73f55f4cee9f73e3dce4135a00ec6da",
+      "sha256": "528000c70e391c19e00fee60483b5e0bc3b62e3d4f6c13e4f7ce4fe8fd718c50",
+      "size": 13219402,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京顺义华联授权体验店.pdf",
+      "blob": "60c222617eb166323623fb655b143e77e408120c",
+      "sha256": "17bd29c757af87ecebf16224e5a1b278bc6dfcabd51d2281c5f46354723b3ea1",
+      "size": 24351686,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京首都机场T3授权体验店.pdf",
+      "blob": "23b7ccd3ef3fef2d1dc3aa2f03f860772b5f4980",
+      "sha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+      "size": 10449303,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京马连道照材专区.pdf",
+      "blob": "ae959f50a583d6dc7e43a750d634046303ec76be",
+      "sha256": "d2338dc7fc98c4ab80010d864ee510de104f9a6e73aaff6dd007689d3ae70175",
+      "size": 98692986,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/北京龙湖丽泽天街授权体验店.pdf",
+      "blob": "d31a25ceecbb24512b89d4901e0acc6738d697c5",
+      "sha256": "7de29d9944a3db1b22a9eead0b841fa3b70b0c3236853958a912558e99d067f3",
+      "size": 6391710,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/华强北电子世界二店.pdf",
+      "blob": "724669bca5c7f427f15812c4dedceae65009468f",
+      "sha256": "c37438a30f6f8690eb1098b301a5ef1a515cbf9dca55f623e2d28062d41658c9",
+      "size": 28820424,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京万象天地授权体验店.pdf",
+      "blob": "0bde343f095c07224a7e1ab19223b447b366f749",
+      "sha256": "4ddf243332ecb670c1614fb42279c6618ad60b0adc8e7abed8d7de60fdb5aae5",
+      "size": 10561744,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京仙林金鹰授权专卖店.pdf",
+      "blob": "1a1ba506df533329bf97e0d14b0b2ad7d43ffca9",
+      "sha256": "69381b8f2e9287da94827eff68fb1c88d3856e3405e5c824846f64d97526345a",
+      "size": 30833695,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京华海3c照材专卖店.pdf",
+      "blob": "2bb7a45e835e159189d40f5362761c7a69b8e314",
+      "sha256": "7b88c7794d09e5fabf5453c606089c4b97504d5cb7807a8949c38bbce760184e",
+      "size": 24853086,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京城北万象汇授权体验店.pdf",
+      "blob": "8526143c3a49650cc0d6dbecff7c2bf2420e9c9d",
+      "sha256": "b91bbab0c35944a1e52654616fb4404a36b7a51071b888fdf0e0c9d0b13d83b3",
+      "size": 18039865,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京德基广场直营店.pdf",
+      "blob": "59e9573b35c92159512bb574fae06612dfe0e721",
+      "sha256": "bc28fef737dbf163ad8d01cadd241bfb5f20aa46c3db39dd3fb38b2be0644af3",
+      "size": 4584231,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京桥北弘阳广场授权体验店.pdf",
+      "blob": "54f5b47fc7cea7daafc4064c4db6479be504f562",
+      "sha256": "589367ac95c8095d596dc8e85a940f0f9b7d06cbe824faae60fb4c9a37a461d3",
+      "size": 34352108,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京江北虹悦城授权体验店.pdf",
+      "blob": "b61b43650f0c81d03eaba78017e6f896ccbec563",
+      "sha256": "5ace6ca9804c86fc0d189678cba8d648286e70cc4084e78b83102ca9ea647620",
+      "size": 43257920,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南京金陵天地授权体验店.pdf",
+      "blob": "acb90b3ece0eef0b6965a69544814974a9cfe5b8",
+      "sha256": "cf39c869c891c11bddac16fdea8bd12f08ce3965d63218a9c36a57fde969cb94",
+      "size": 9922940,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南宁万象城.pdf",
+      "blob": "ffe238c82e9b1b906f2798dc16f1a02644e206e1",
+      "sha256": "f200de828440c62ed84b811df29134120bed1ca7fdf328b599a72d22333b35e2",
+      "size": 10894448,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南宁惠工电子科技城（迁址）.pdf",
+      "blob": "56f8406fa91025b3431d8e19e350fb19654d784a",
+      "sha256": "52872ab9c3833e50de4aeb214e7864540afcb0496129e4f70a7eb196638cbb5c",
+      "size": 16105511,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南昌T16授权体验店.pdf",
+      "blob": "907d2cfb4106d1ffa3bb3e6fac7753965b3a7d24",
+      "sha256": "6cfc08c5d16a5206e413fbf74018e93197e5cf09172d8664861533adfd5bc054",
+      "size": 11501465,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南昌万象城授权体验店.pdf",
+      "blob": "0fdb98eb5c0da0e875d5ab5e9d1bd4b49058d7b2",
+      "sha256": "1c63d2141432faf0f776461dcbc16d79227612d53af6839c54fdc1e688d8068b",
+      "size": 29782391,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南昌和昌里街区授权专卖店.pdf",
+      "blob": "e0712b6535d257bd01b7b947d87c489b480c34b5",
+      "sha256": "dad6709ec87a0dd8c2e6890453b1fedfd34d92c8e82f39509054bd5db53e875f",
+      "size": 8327023,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南昌武商mall.pdf",
+      "blob": "a0a7922cc5587b0bd2ba6722973f65ef535d17af",
+      "sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+      "size": 13893318,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/南阳万悦城授权体验店.pdf",
+      "blob": "e27c49940837f9bff082e48ce2a4d07a1a21c813",
+      "sha256": "815413af3923b98aba4f0245581abb3cc4071153ff8385590ffaf282dd7b9320",
+      "size": 28700278,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/厦门SM授权体验店（扩铺）.pdf",
+      "blob": "b2f058cf7a21b09d9433aae4cf1bf91eaa348542",
+      "sha256": "1b9102a093002c5b268816188ac9a78a89bc57f592ded23a131a90aae77456c1",
+      "size": 32612430,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/厦门大悦城授权专卖店.pdf",
+      "blob": "2e16f6ac95cac0fbaaa5b4cdbd398424a35cf0a9",
+      "sha256": "0472086a42844f548fc41e1bec9cf272865821adb4220b6cf267f39ca4e9515e",
+      "size": 8195041,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/厦门百脑汇照材专卖店.pdf",
+      "blob": "06d8d044a4fbadd5f873ab643d380060ee23198c",
+      "sha256": "a35b553b435c7fde71dddba867b4cfba0ccbbffd40cbfbaf69bb3233db4b078d",
+      "size": 30753182,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾三创生活（换址）.pdf",
+      "blob": "c56a7fad99eb94bbcca47626e55f5f2573eebf66",
+      "sha256": "cda69cbae05ef1452e4beffc2928209b2a2eb8ae41bb2b86b4b6784806bdabc1",
+      "size": 42314363,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾台中汉神洲际中岛.pdf",
+      "blob": "99c3d6c5774baeecedc8704ffec3b30ce204ebdb",
+      "sha256": "4d0f4c03daec1d15f6985629adddf1b68d710643e89d7dbd9f1ef2700e22dd19",
+      "size": 11086097,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾台南市南纺购物中心.pdf",
+      "blob": "14bce0cc0ef6505016ebf6244986d6ea4689fd85",
+      "sha256": "02a8704e29744ba05d3e6290134a8f8aafa7cd07a292753be7a99a8cf7a179d9",
+      "size": 10985396,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾新北板桥大远百.pdf",
+      "blob": "458a4a7229fe423c6bbdcb7c982d77277cc274d1",
+      "sha256": "7bffbff41edf785f85fba20be00ed931b92cf0ef2f947991695368703e92a133",
+      "size": 20645618,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾新北裕隆城.pdf",
+      "blob": "fd26597978ea3f8e347de8736258e5fd44ccb49d",
+      "sha256": "0b1b61e4c962bfdd2b512b0640bdc19f7557f9927d70ae3bfad20f69e8b749a5",
+      "size": 14336516,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾桃园大江国际.pdf",
+      "blob": "feb69a5f4786e2e9c65fb99290ead20a80e92e23",
+      "sha256": "c45e7854573f7aec726b4b5349b65718bccb04ae680cff664b63ed0782eb35af",
+      "size": 14269316,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾远东新竹Big City中岛.pdf",
+      "blob": "cf5d2e2675d94cad1f183db93201b1b58e267320",
+      "sha256": "42bb31e5dcc4e6c110503c64a64112d05e2930f516f052bf6ab0416eae61e5d5",
+      "size": 10165947,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾高雄Nova中岛.pdf",
+      "blob": "11c114d98d4091b819c1083477dccc8fe23001f3",
+      "sha256": "5225399ebd5f9539bb3c061721eef7375c8876605325e61651af489229e624ca",
+      "size": 2535629,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/台湾高雄汉神巨蛋中岛.pdf",
+      "blob": "7a49f30e95f32a29e4517d4b73bb13d6597b96b6",
+      "sha256": "d2e6857333b704194fffe1140d2be65a3b3b17791f2a2745ae98d369f8ce95f1",
+      "size": 11674874,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥万象城授权体验店.pdf",
+      "blob": "3d24d9ad2ce49f8ce5e8b78698f8dc49db4c50f1",
+      "sha256": "aec7a7d40226b767837af3100207e40e59519f493272f3d6a4fbec92c7182bbb",
+      "size": 25470695,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥大蜀山半边街授权专卖店.pdf",
+      "blob": "4126783cfdaedd88f6bb3d6220fc8d895f2f64b2",
+      "sha256": "9630828161de91ccb33e75691dd9893bde95e54ff1330a0dce405d7ed48e8e21",
+      "size": 24184934,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥新粮仓授权专卖店.pdf",
+      "blob": "cd603552e6035b5e0a727f66c951bb2bdf6353b8",
+      "sha256": "2dd9ceb9beaa3898b167bdd25ed87a29562b095919beec701636b63b8045408e",
+      "size": 17282214,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥瑶海万象天地授权体验店.pdf",
+      "blob": "9486bade9f82880d847877dde3ca4325b9c269a0",
+      "sha256": "2992ea24985135f6eca7b07d60dc36ecb1facc2ec7dd1396569da135d6437a52",
+      "size": 33473532,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥百脑汇照材专卖店.pdf",
+      "blob": "47405a9aa7a04f6605d29ef961c57145b6058a60",
+      "sha256": "1c4b06dc0e49c6d7aa4bd337b274cf7faad2304f26e4a3a0536ac89a7b236fc7",
+      "size": 15336167,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/合肥罍街照材专卖店.pdf",
+      "blob": "25b61a5da2d606f587f437b3fd58b8689bf1d1e5",
+      "sha256": "25f7475221667b7ebb5290ef6d40c5f95fe0fffd29a80cc43e0cee47da9a3d20",
+      "size": 14658984,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/呼和浩特万象城授权体验店.pdf",
+      "blob": "188fd0b3b6b1de251fd6ba26ec153045bf7f1f08",
+      "sha256": "935f2d6ce8479deb87016a91171076640220b01a20e1e5846717d32debb0259b",
+      "size": 5401662,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/呼和浩特诚信数码广场照材专卖店.pdf",
+      "blob": "3475a5e83b199017f57128ca72f34c133476c371",
+      "sha256": "9facac8f5e7657a1446fcec8f9fca00a0136d698b06210c4e0ac55cf41bfb410",
+      "size": 16486809,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/哈尔滨教化电子大世界照材专卖店.pdf",
+      "blob": "cace435e0f120b60f986bde396c97524ac91dbb5",
+      "sha256": "730f11d26c01126a55d9e15d996deb67564dd57a2dc1949c2fe72e35a75fd812",
+      "size": 15762537,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/哈尔滨松雷广场授权体验店.pdf",
+      "blob": "1260ca41c983c703a1dd29f7a736a254c3e233f2",
+      "sha256": "d03b2f0c0eed33bfd4e955850356644bce1333f3c7a4e377a31de015f92af88c",
+      "size": 17751951,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/哈尔滨红博授权体验店.pdf",
+      "blob": "de94de5f8cad34202743982ba518b3133aed17ea",
+      "sha256": "60377dfc05922552cb68e967d561366b80300e7511a8347419a174d2ad2ec37d",
+      "size": 24328137,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/哈尔滨船舶电子大世界照材专卖店.pdf",
+      "blob": "7bc931e7b61f2426fe9032c28b40e90cfe8892e7",
+      "sha256": "868ccaecfcd038b17ae50ce14c9547a3de6a49672892bb703dd57801a6d5d774",
+      "size": 14966719,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/哈尔滨金安国际授权体验店.pdf",
+      "blob": "9e976aaa6be672f3e633d0de2d997d283c4b1112",
+      "sha256": "bc76085c2680eb4cf9dadd23814f48ad3dbc61d5e94affb797477061164dd322",
+      "size": 14067305,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/唐山硅谷数码广场照材专卖店.pdf",
+      "blob": "ff336458a5cd6973f5e883db0aebdd1236da97cd",
+      "sha256": "5c63276ae0d5db0ae24e8c662663ed30641bf0799e44740ad2a9fef2aa56dc75",
+      "size": 25900072,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/商丘正弘汇授权体验店.pdf",
+      "blob": "456132655f4d08be3f5fdb646ae0b1b7b2771deb",
+      "sha256": "b5af301ccb74014a4b16b990d94c1dc0a45c251bdcf22cb19c53fdbaad6e7e33",
+      "size": 23132219,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/嘉兴八佰伴授权体验店.pdf",
+      "blob": "518df4d25abef6b3a2877254f0d1c71f02c61ee3",
+      "sha256": "03da5cac27e451c9def8d4b3b6ac81e5b3f2c74a41ce93fe7deab7d60bec0305",
+      "size": 14044809,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大庆百脑汇照材专卖店.pdf",
+      "blob": "55644fabe5936351c16de60cff7c27fd7f2b6243",
+      "sha256": "4ea6658058d69c03ea1590ae1af22c75127ae2a644a92322236bb54f7b4322eb",
+      "size": 31568314,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连东关街授权专卖店.pdf",
+      "blob": "185f8e1cec2a51ba368d67a8b41c96c7d0c15262",
+      "sha256": "215555ab07b9c7677a90247af1d7fc4da0ba93dce8952a085e65aaa276fc6cc1",
+      "size": 176307342,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连中央大道照材专卖店.pdf",
+      "blob": "52c5b2050be2392649845b05a40512e10169152b",
+      "sha256": "c2a37d69dcc3995961d736b69bc62d1e57eb62ada9f2d7bbafd83bf8cba832fb",
+      "size": 22851090,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连华南万象汇授权体验店.pdf",
+      "blob": "1de8756a4b148beef44eef17adfa3c57f2923cc9",
+      "sha256": "03ee6dcf974181fc9f65c352db0d941a8db11a0e9472d1fc9a3ef5e2d53c9dfd",
+      "size": 12107251,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连奥林匹克照材专卖店.pdf",
+      "blob": "b82944a79d74b27c7638fd9dd465a68ee2471db4",
+      "sha256": "674455d041df4f58c7ae25d882ceebcb1c62de0e566ff2457938eb64ffcb7366",
+      "size": 654469,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连柏威年授权体验店.pdf",
+      "blob": "9fa9886e916283935a16140eb4d50866e6cfe3fd",
+      "sha256": "95cbc8833373a842abb6021c8ea3950b70b4ab215893cdc1a69b753a0f59b755",
+      "size": 16842362,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/大连罗斯福授权体验店.pdf",
+      "blob": "59571c01618f87f0d148cb7d63f4716a709de186",
+      "sha256": "5e4ca7135a06773148a70b7534d204ddbea747c666710ee6c328a3c308c50a4e",
+      "size": 20838285,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津万象城授权体验店.pdf",
+      "blob": "bfc7ef1b0355b948ff7055249a6c46fb7282c5ad",
+      "sha256": "63f7ee709ccac2ba93f78e7b63af50638b78388e56e5baedd9de9776f753cb29",
+      "size": 22500128,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津南开大悦城授权体验店.pdf",
+      "blob": "c779f6450c5d9589b12a03abfe5e0f3b42993096",
+      "sha256": "e888bda9fc5291c17a52b792eee4475c6268f10a1bfbaf6ecae225975214ea75",
+      "size": 11057302,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津天河城授权体验店.pdf",
+      "blob": "de5e7373b8880eb45097b965971ee8c59fdf0931",
+      "sha256": "087e31e51809ef33e0c33e7f49381e15e123fb9f63c8bc1fa9c8337822e4819a",
+      "size": 14683000,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津梅江天街授权体验店.pdf",
+      "blob": "41fa6105f19ab416ac107447da94702ee67003db",
+      "sha256": "9ae5f266a1fef4df1f794c2d6282413268af604eb5069f2dc1e142b100a4ebcb",
+      "size": 15327719,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津百脑汇照材专卖店.pdf",
+      "blob": "affcd4f58b564dd3e257fb949cd88771c5a586d4",
+      "sha256": "aa241f625fe3db0148316b69084b4675b97abcc3e1f3ab36842e15643707c5c9",
+      "size": 30973815,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/天津西青大悦汇授权体验店.pdf",
+      "blob": "3fc355fb64a3ab257970112740434851bc697c42",
+      "sha256": "60a234527b0ce65b1a7100ce65d1ba551957a52eee91e2e2d1aaabc6e65b47cb",
+      "size": 23156449,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/太原万象城授权体验店.pdf",
+      "blob": "3d390ac280d00cf5dfdcb3b0d9e6e3a2e702ca67",
+      "sha256": "826c2f51af787f8e996d7b1f3aee39e0edd714eb5362ddcf02fde5def254c993",
+      "size": 20914917,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/太原天美新天地授权体验店.pdf",
+      "blob": "f02c65e7f740eebd60ce53cb01c20665cd94fa6b",
+      "sha256": "42f28620124d6fb92ef0ce2d4e7971d1707dc0c60bf3694dc2f049bb724a8e7b",
+      "size": 14369801,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/威海威高广场授权体验店.pdf",
+      "blob": "6afd8a61510dcbc016910314cb01bfa40f058864",
+      "sha256": "bbea19a3dd3775b5304427667b51e4ed8878b91ec98f1722bc7d8ab9562eedb0",
+      "size": 9820940,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/宁波余姚五彩城授权体验店.pdf",
+      "blob": "4a24b459c6386743ef5b5cc622d22bdbbe7652cc",
+      "sha256": "3a98a2d6080c8a7a1076b7b3bb2aa7b5b66401e48af806f3c828e3306b0c6153",
+      "size": 20116146,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/宁波明州里授权专卖店.pdf",
+      "blob": "dfc203301861ce770e2b57284d682210f2cbb57c",
+      "sha256": "1f1d097374f7b498ac6d462208422464cca644d69467a3bd5c26370eb4363a60",
+      "size": 28859487,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/宝鸡开元商城授权体验店.pdf",
+      "blob": "3e3dd544de3f762d92b1ffd4718e670c3b1a6202",
+      "sha256": "e87258abb6078ca1d344bf6315b5c70c3ca11c2624f7f3fdbfceeba97944fafc",
+      "size": 16618954,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/山东菏泽佳和城授权体验店.pdf",
+      "blob": "595ff83d6d2a5c6060b51a1be75312b036ad123e",
+      "sha256": "d008fe7405ba7d010ce13dea254dbe7b4e129e7098733ff56538f96d10152a36",
+      "size": 10896804,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/山西临汾生龙国际.pdf",
+      "blob": "eea537ab9854cfe7e1b0422a9f4543f45a735fab",
+      "sha256": "ce80c1cfd36051b4e7f8a0064b64b561f0719ce4e70bf907fc166108cc2ddddf",
+      "size": 15768266,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/常州万象城授权体验店（边厅）.pdf",
+      "blob": "a897d92761037ebe27ae24dbd48803f2f9b854ce",
+      "sha256": "620397bd9b3c13ca8175854a984d164f154cf03ecbbef3c27edaccbcc7725ac8",
+      "size": 14881556,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/常州武进吾悦授权体验店.pdf",
+      "blob": "839661d8790ac572333300c1d2dae976e5465b6b",
+      "sha256": "5d2e1eea2385b3b094e90f9f379d79c72babb377f080ed771144f12ef2fd6339",
+      "size": 9910047,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/平顶山丹尼斯照材专卖店.pdf",
+      "blob": "d10b97544884cdfbc4679953f39cda9cc1e245f2",
+      "sha256": "b41217d27ba322cf39706701de7cbd8e62a3ad7b940e585b013e0f7a9a2c659b",
+      "size": 25821642,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州万民星光城授权体验店.pdf",
+      "blob": "dc9c833495462d511aa57b4ca04eb6818c472d68",
+      "sha256": "ca82da2c001617180cf2b910950932e1eb14bd753a5288473088c69f2e7e57f3",
+      "size": 25040447,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州万菱汇授权体验店.pdf",
+      "blob": "b5887014b5ebadbe0fc38e7d485dea3d050ff1cb",
+      "sha256": "367de68cb04f9598657ac14d4f0896d5b5e971475367177c0a61517efbe65208",
+      "size": 13706036,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州保利时光里.pdf",
+      "blob": "dcb7ce5bf6a87e8df2fd6bdf0e22619c558c14e9",
+      "sha256": "48cb965559bcee60707304da060a6ce5ca1385f3e4eeb7a282453a8559733947",
+      "size": 11305201,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州天环广场授权体验店.pdf",
+      "blob": "c830d1dba806ae2aedf049ce8c72517ef24a3bd1",
+      "sha256": "d56d99151cfa8661a275bb5d8f2ff4988f4f1b8e9a9cfaacc99b3c5f8574df7b",
+      "size": 10014668,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州广州塔广场授权体验店.pdf",
+      "blob": "984c3c03cc11e3dab08de787b5bc684ce0af7a4e",
+      "sha256": "63cfff76686aee4b8eabd6069093543910fd725ef1265b00e07145f30d583f09",
+      "size": 14460098,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州正佳广场授权体验店.pdf",
+      "blob": "8244a29676b9300977b2225bbdc79470eb7feccd",
+      "sha256": "44d87069838a0ce2598d1aac8c5673babcfae6a05484d98cf6e6a09c3d9275d4",
+      "size": 16444747,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州琶洲保利授权体验店.pdf",
+      "blob": "b84f2786bdd8d8cb380256cab3d76a4ff466d511",
+      "sha256": "514ea97a440ef7c5c50b6ed2f364c8ef94f9bc1c64381dcc340efdc81b827f23",
+      "size": 20001379,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州番禺天河城授权体验店（边厅）.pdf",
+      "blob": "ff2b8230b730d9e3b6b877c31af950db13d8441d",
+      "sha256": "0587b8ce31f389e1e901af87d32cade6136774b4dba836957e9a622b8b6103ec",
+      "size": 20251472,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州百脑汇照材专卖店.pdf",
+      "blob": "1d40600b4fdb1bbf51afe5fdc74a3cd36d5f634f",
+      "sha256": "c10148903bfd9c462abcbc1f51827b09193e23a1167b9b1607abb2a0cb0ced77",
+      "size": 15776425,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州美林MLIVE天地授权体验店.pdf",
+      "blob": "ba65705c257c17d43072da0a325f8f9b711a23e9",
+      "sha256": "413df3d6286fcd0cdcb7d63e0f60a6c9d03875e9aaf2435957bf8aa90f14c178",
+      "size": 10128141,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/广州融创授权体验店.pdf",
+      "blob": "0ff6fec520fdb59d0e5f5d4d31ad50b6f2d50ca3",
+      "sha256": "4fe12da8c114f7944c724ecb440fe88bb0d99a846c30fbe34836f573edfbe3f0",
+      "size": 34409636,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/德国汉堡市Saturn店.pdf",
+      "blob": "a3b9633e9c120bc728efa522a823227813b27867",
+      "sha256": "5f542eb1d069fa1da17993d65a10436c3942ef65202e05c44eb58e17dcd68bc1",
+      "size": 13564349,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/恩施星光里购物中心照材店.pdf",
+      "blob": "4d690a20aedae9545e015f8dd38cf50436618b71",
+      "sha256": "a83fa7ea0995c182be87e0993e3c7aa0dea2d534682f4a97d56ce950c7a02f8c",
+      "size": 17077723,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/惠州华贸授权体验店.pdf",
+      "blob": "646b848cd40510f0c1c8e35a632a39e5ca2c3fde",
+      "sha256": "1f51253545ed3bbaf281581b10fffbf24d472a58f5969a5a5485b3685f1ad21c",
+      "size": 7252293,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都A世界照材专卖店.pdf",
+      "blob": "447c632d85a88d2ae721deb73ca0e1fbba58014f",
+      "sha256": "2ba193929f18e153e8e6c9fa33e4acc14b59e7556ce30f36bb631b98eafc10ee",
+      "size": 30552321,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都万象城授权体验店（边厅）.pdf",
+      "blob": "4f93d2aef3e982a6140f88207b71123d313e0bfe",
+      "sha256": "f936bc75d165fb569bb9f6a0313a33cc291b0d71769a6df151d57ecec3c5d332",
+      "size": 19633863,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都华凌摄影城照材专卖店.pdf",
+      "blob": "92b44a1c666a86342432a44f43126c3dd2e9a178",
+      "sha256": "8b9953869ff4816baf5aa9b1e1c735c4e8cf380f28f544e1bb71e3daba4b7957",
+      "size": 12996025,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都大悦城授权体验店（边厅）.pdf",
+      "blob": "f854b6d72436d29b6229d9b86ee9ca4336cd9043",
+      "sha256": "15b9594a08829b860cc005dfaed4396f1ecd041e78cc5a0cc8e5e6bcfff7dc26",
+      "size": 17876544,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都天府和悦广场授权体验店.pdf",
+      "blob": "6dcb54348da0e76f1b7b0d592dcd62497ff59a79",
+      "sha256": "256635d0d30dff166993d333623106d62ebc44a41ac5191434dcb3eeae544c16",
+      "size": 15647896,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都天府大悦城授权体验店.pdf",
+      "blob": "f025aa1d395b7b6c56fccc04c63a080907e40770",
+      "sha256": "0d576ac1cca629cb43bbd2ef5ca5251d5851bfe3daf25cc6b9bc40599c07149f",
+      "size": 11246222,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都天府艺术公园授权专卖店.pdf",
+      "blob": "6b512231236c5a3ebb1a8ac0ef61dd22b9a349bb",
+      "sha256": "33bed94b5831fa3e6ae1fa2977b6088c92b85ca114c6d3ba2be40e8db03810f2",
+      "size": 44963297,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都太古里授权体验店.pdf",
+      "blob": "566f6f9844c502bfa08f1ca909cf2df9d032f17f",
+      "sha256": "c0240b26ccc49367258b2c6c32263343b2f1c84ca337771ef7a8e04675565c14",
+      "size": 22585803,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都数码广场恒驰照材专卖店.pdf",
+      "blob": "28f461da193d5510f0dd9ace476d81cbfd02d8cd",
+      "sha256": "1e36e2ccebe98315a6948e8b0c16268b7523ff349277ba89841a1f962b9b339d",
+      "size": 13737846,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都数码广场虎一心照材专卖店.pdf",
+      "blob": "82409f7b3adf9f824e39d077bd11d113d420e204",
+      "sha256": "b598c50429ac3f177d2aab1fc6c496082d379140a4de16f3b58c2f2f64d782f9",
+      "size": 17716194,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都来福士授权体验店.pdf",
+      "blob": "d93e09d697bbb2f0d1e8461cc060f57d40a71382",
+      "sha256": "90b67913116455c792816feac71755cca81469374e0d5daaa005015887ddf2c2",
+      "size": 11188032,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都滨江天街授权体验店.pdf",
+      "blob": "eee8e20d2466d9f0a4db3dfc161a2068665e92c7",
+      "sha256": "46124f0f124ce2c1b6bfec5f08663999776a095f639cd5051f580377c0621408",
+      "size": 33870127,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都环球中心授权体验店.pdf",
+      "blob": "7feee6ee73d5d4afab79625b9e4e4ba3201af883",
+      "sha256": "29a2fba616c022d176e1e07f3060c750eb55320149d7fe18d1942ca69f3ae74a",
+      "size": 17295074,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都环球中心授权体验店（2F）.pdf",
+      "blob": "7feee6ee73d5d4afab79625b9e4e4ba3201af883",
+      "sha256": "29a2fba616c022d176e1e07f3060c750eb55320149d7fe18d1942ca69f3ae74a",
+      "size": 17295074,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都百脑汇照材专卖店.pdf",
+      "blob": "a9b564df9b37396f84d03a0724193b1a7bef0d75",
+      "sha256": "eed1ee5223c107375921646fefe7930a4c71c7a05c0e291b4ad50a51901b7493",
+      "size": 19068484,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都科华王府井授权体验店.pdf",
+      "blob": "33c26cee71c4ece14fd0505da933a0cac53d7c67",
+      "sha256": "5bc421b1cf65569d451ff2c824b5c3a5379f19481a14b2b739a0e27373dc98d7",
+      "size": 28340862,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都西宸天街授权体验店.pdf",
+      "blob": "467a27fa548db5e4bf6b2a605385d53e86f728a2",
+      "sha256": "b7ac778267b1abd9e241e7f18b22f7512dd93357c17744e698b8d751eef05ad7",
+      "size": 15610045,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都西村大院授权专卖店.pdf",
+      "blob": "7441032530efc5c93525650c0a7ec2a97b5d1075",
+      "sha256": "8ef28107d071a9bdf4fe7f500e0470e5b5d76d8853e35f5b2fd7e5d4c1ad928d",
+      "size": 18326805,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都金楠天街授权体验店.pdf",
+      "blob": "5708886353ab819802f4b42f1bbbe7642b3eec24",
+      "sha256": "c8740345d2e871db091003724588318b36ba7a326ecf8a13902a40694ad335aa",
+      "size": 12579387,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都金牛凯德授权体验店.pdf",
+      "blob": "6999ed4ed7aefcd71510b115954e8355b9160455",
+      "sha256": "086d91728fe65fdace626b81d37af1fcc2eb0d089a2fb72912afece8397f8daf",
+      "size": 12036174,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/成都龙泉世茂广场授权体验店.pdf",
+      "blob": "327b6eca6920c199501a95afd9130652f2a879cf",
+      "sha256": "b91d8cb78c42fa32164ed31d358b0e04356a1d9b972c80c84be170794edd11d2",
+      "size": 11889187,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/拉萨王府井授权体验店.pdf",
+      "blob": "bbf2bdad6524417fea7e8b99f69fd5cfc10cd03b",
+      "sha256": "46d55561a61a149e1ebaa7c7484313036543ffa52da461321a9a6817d9cdb213",
+      "size": 3672791,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/新加坡Jewel中岛.pdf",
+      "blob": "708a3fa281f61cb735a04407c31564ef72e8e5f8",
+      "sha256": "eb8883fa4a6b74942be401d13c55cf782e89dcd2c3de658f25bb9901e44cf945",
+      "size": 18622656,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/新加坡suntec city.pdf",
+      "blob": "aa562133de7f562f30929720e555396f77b5c650",
+      "sha256": "25733a6c2633c2ddef2bf83a648d72f0ebdf9616614dea4498fe2cb4d96c7297",
+      "size": 24592309,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/新加坡建店Plaza Singapura.pdf",
+      "blob": "4a7e442ff055a04a95e53c52000d9b1b7b3434da",
+      "sha256": "19974b517105357dd683650541993ea5e5957760fae80851fd066655f2df0637",
+      "size": 18143658,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/新疆宏景数码广场二店.pdf",
+      "blob": "0f11ce33d717ac1bd49a3e91f0e26205f2deb8eb",
+      "sha256": "c3a3dc756e660076e839275cb1f988f324127382637234da8ffc1e92a45b099a",
+      "size": 15865179,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/无锡百脑汇照材专卖店.pdf",
+      "blob": "8179f9b2d2f5c1f594f09e5c79bd243bde856d6d",
+      "sha256": "98814fddcc46a1cc1fcb9db0e1031404ce610c3f7be67ac2c506d6df00495d27",
+      "size": 13088483,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/无锡荟聚.pdf",
+      "blob": "820be3f8eacf5d11304d1ed10fb74d1dc83f10b8",
+      "sha256": "80badd1c0238fdffc23ab311ec2759ff44b7558924996b6d7cdf02cd52b227d4",
+      "size": 15522478,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/日照万象汇授权体验店.pdf",
+      "blob": "bcbb576df5d439bbfaabfb6b129fd0137b0023cd",
+      "sha256": "438481bb46b54a8d1a56cd78399100f4c7168b0bc3022b99f219f4046070b645",
+      "size": 13880983,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆山商厦家电市场照材专卖店.pdf",
+      "blob": "1c14dddccfac016f80507f6735f074fe02e5ed79",
+      "sha256": "7d40041580f42a0a8af3fd218a32ca9e105d0ca0dd272d2044f7f472e1818f99",
+      "size": 22290743,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+      "blob": "26c6939e6bc28568099f93880a5f606b6bd2c28e",
+      "sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+      "size": 9462251,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明万象城授权体验店.pdf",
+      "blob": "c0f0ccb4341dfd68e259158e2b5b95af789b6ee2",
+      "sha256": "c075a140cba3688f66ea2eb67d8988e55f387543b9a6508bdb0301f43aacfa80",
+      "size": 15555556,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明五华吾悦授权体验店.pdf",
+      "blob": "0f647979e65d017adcb3296c277d27794ed1591e",
+      "sha256": "fe4f79a3a3f0a51ff59a39fa7233afd65eaf522e09e9ffe5f732e565db632b4c",
+      "size": 30868072,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明佰腾数码广场照材专卖店.pdf",
+      "blob": "41756945cce024284fedf4e5c5df993db040d69c",
+      "sha256": "68db0f851e52d19e820e2629f7467c21ff82df6b9802806502a12367188fbd18",
+      "size": 33191995,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明南亚风情第壹城授权体验店.pdf",
+      "blob": "929b12037d9bef86307a364606e8d96649493c5b",
+      "sha256": "f95dbdf335fee7107d764e7cfbf37f8ca48da0c4d7738456c1d5847a15ecd914",
+      "size": 19297344,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明恒隆授权体验店.pdf",
+      "blob": "6e16ab0f58f70cab333486d1768f118b3ab9e563",
+      "sha256": "07d3aa175992f5279c3023d23ae7264e647711afcea54e5e23730c1147c17e14",
+      "size": 18445443,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/昆明顺城授权体验店（边厅）.pdf",
+      "blob": "38e89de7152e0f863ff0d1905740c9ee0caeba6c",
+      "sha256": "a1db96c112cabb383b259257edbc14255dba1f4700e5b846eea43f4043eb8fa3",
+      "size": 19352387,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/晋江SM授权体验店.pdf",
+      "blob": "b87b94d639e4e43fc964cf28ef3546a3740b6346",
+      "sha256": "747c187019529dfe772188be776b3d28169142cf60fa4b3c1842e474b02c999b",
+      "size": 19173578,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州EFC广场照材专卖店.pdf",
+      "blob": "dfec7ad6dc8fc8a362759cf76f4630f4c9d4ed25",
+      "sha256": "58cd22d4bd36a68d1adc7493d5315a50b8136e0361da217eeec3ef1879f1933b",
+      "size": 2452599,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州EIC广场授权专卖店.pdf",
+      "blob": "5f7e18f3bd760a4ac4182bddaedfc837e3300a43",
+      "sha256": "98cb5acb3f6919c7cb3c63b0ac10aa38b153278ef73001a9cfaaa6b69cd170ec",
+      "size": 14779236,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州IN77授权体验店.pdf",
+      "blob": "0c525ad080c9fc52a46b8e2f3247d6f79a654d27",
+      "sha256": "af24676a2ad8fae00f7f131519f3a42ec32f051961610e8c7734963bec6144c4",
+      "size": 9093322,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州万象城（迁址）.pdf",
+      "blob": "bad71408b8296b7f314ce6f30181a6ad173f10b8",
+      "sha256": "5f14d68a9fa1b88a71de2cd272594460c2c954e591afb264fd232c61d34aa57c",
+      "size": 15029005,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州东部数码港照材专卖店.pdf",
+      "blob": "adf95d93cd4f5f5af45e2f0ca2b1795d67609699",
+      "sha256": "e482376ada22c3926789fb5f487719b394ba600ff9a9b0897601d4be4971d17e",
+      "size": 20174181,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州临平银泰授权体验店.pdf",
+      "blob": "e3c9d01e840ba908dd6e78c716b3085ba2b4b230",
+      "sha256": "a2ba37dea7ff7b72b2041ff6cfe23ba90f21bea0d74f03b5bcad39c1a524b107",
+      "size": 8247973,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州亚奥万象天地授权体验店.pdf",
+      "blob": "8f9f34507b515ab59eee65e2f2734acff1aebfce",
+      "sha256": "16a9c89b56b80fae6a07df88dc95917546cf4bac594387bbbcb30251fdb7a062",
+      "size": 10420170,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州大悦城悦街授权专卖店.pdf",
+      "blob": "43f4c860bf3c21ea8fb142d766fe03205942eb28",
+      "sha256": "3db80d64886d325a70a9be9b972756bb65155f708900dc7c960856b9df0d9a0f",
+      "size": 33677066,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州奥体印象城授权体验店.pdf",
+      "blob": "439510b45b700808c3570b9490a5d7c2689bc2be",
+      "sha256": "33ea1fff43c619cff65cb48fb59ed4ce0214f5e2ac0687de2f942ca4d5bf1613",
+      "size": 20514848,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州学院路照材专卖店.pdf",
+      "blob": "9cd23400dae7ef2aed3259d91ef4448bb1736777",
+      "sha256": "8c163b2f76eba2700207bcc4705e6ee6bb87f3e9590876dd0cc37af68c38216b",
+      "size": 8792605,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/杭州百脑汇照材专卖店.pdf",
+      "blob": "cf6e1a1d12ca4c6afb3fb399b66472e16f3fe624",
+      "sha256": "6bb93668613414a4d4c79a59df8f1d7c986facd0ffb17e7c9c0a9858287e2e41",
+      "size": 12620373,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/柳州万象城授权体验店.pdf",
+      "blob": "e14fd13728a9632aa4d8a435e3300252eda05623",
+      "sha256": "6d9439989f530be34546820874172b61d926c400f24d7a5d3514603218734521",
+      "size": 11312215,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/桂林万象城授权体验店.pdf",
+      "blob": "33e965baba253db9c30c78352faf97100f64d013",
+      "sha256": "795f7dcb427ee6682c55ec146b806ae284ec60305ef1d7fcabe796bd2c6aa68b",
+      "size": 8270583,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武昌万象城授权体验店.pdf",
+      "blob": "375f0eece894787bc8f0c06267725ff2eb231ca2",
+      "sha256": "1953c4e3d9ed8dd732ec82863afb2de138a0b3b13a9f21d5c9a37ad3b4ec411d",
+      "size": 21601827,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉光谷世界城.pdf",
+      "blob": "43c795975bbb69fcd279ad07dad3ecf54a0e7103",
+      "sha256": "2d0164ee349844a6429889125cc1ae5d033f0a14a7adbc89e531c3598a8ffe8a",
+      "size": 13084757,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉大悦城.pdf",
+      "blob": "c7ab3eb11f68614a0957116e369127347cc7a977",
+      "sha256": "7b4fb4c420216154f35f46f662121e730d9dfc15bce6c4aaea653cd2e6df1f9b",
+      "size": 14812528,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉天地壹方授权体验店（迁址）.pdf",
+      "blob": "aaf192432d81a914c924af7de3f346335ad50bb2",
+      "sha256": "d6e9fa3392284e87c2ee200d8c6c729f7a27730668766829c44de743d64c9dab",
+      "size": 23563143,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉婚纱摄影照材专卖店.pdf",
+      "blob": "c69c9b7568fe13b76f1406aaffe46c6c263225da",
+      "sha256": "23ad60c15cf6b9627e5bff53465ffef4d7fe82ffce691e3507a96ac3ae44d028",
+      "size": 11625235,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉梦时代授权专卖店.pdf",
+      "blob": "ea88dacbdc17b8ae1bc893c4f9853bc0ea519f0d",
+      "sha256": "ef658e42daa18b01ecf21f2988e28f26507567d4ee1322ae3781747e54c911a7",
+      "size": 29850833,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉武商MALL授权体验店.pdf",
+      "blob": "b48e89480f88a97c402efbbec54e57532d74e00c",
+      "sha256": "1d1e700ddee02b3e8467eefd5e4110e1ef7421dcaad2b5bdf1947b020d8a284f",
+      "size": 16971932,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉电脑大世界照材专卖店.pdf",
+      "blob": "92767fc00ecad749740598f841a5b2841d5565bb",
+      "sha256": "69f95250a7dbe7781372d66df97597631f9214076c3f043392e47bd6789b7642",
+      "size": 28669391,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉荟聚.pdf",
+      "blob": "8bbf6902489e61506096c83b43237a124d4e8117",
+      "sha256": "c6b8b8326d62c1bfb4f8046bd1dbac2a72981241fe8603aa40357ffaa809d563",
+      "size": 23358495,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉银泰创意城.pdf",
+      "blob": "87db86933516a95112de34fe8f805adecb16b9dc",
+      "sha256": "e71f6b826ef071016885b67ee05a9e6c201a13e00182f6652a197ffde30bc207",
+      "size": 18164793,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/武汉销品茂授权体验店.pdf",
+      "blob": "787faaf5b24997ad52bb3f7f0fd763c1b3502b2b",
+      "sha256": "6c4715b68de1fe0dd45b0b4183c01e166bc3e04c6fc4a81861efe7cc6c308052",
+      "size": 16411469,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/汕头万象城授权体验店.pdf",
+      "blob": "8012ddb4eb26bdf9237cd9459543d51a5f998eeb",
+      "sha256": "9d7e83f4cbd06e61c328f0cda169e74be1a4f61506f8cea8b019c9d5a1aabccf",
+      "size": 15477243,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/江西赣州京东授权专区.pdf",
+      "blob": "1b9096614aced9bcc9b60306ab8d28fb2064dfd9",
+      "sha256": "d06dbaca8c9dd3486aad276cbae83078ca6e26d17b52828d1e036d279e82a686",
+      "size": 28119754,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+      "blob": "d884ae31dbf04234e9de9bfb7eb37ad1e51708cb",
+      "sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+      "size": 12469947,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳三台子万象汇授权体验店.pdf",
+      "blob": "550bf52734bafd4a5446400682173bc47cbe8682",
+      "sha256": "036175534d033be9f5a077ba84663388c833bf29c297469d5f86d69ab570e2fb",
+      "size": 9024619,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳东软科技城照材专卖店.pdf",
+      "blob": "2ca9ee52ce1dc1dcce3f96f496c8fda8c8b59d29",
+      "sha256": "1bef9e282d2b858ad448edebc8d21cbd2445e9eb86496383c7ca44c08ff4212a",
+      "size": 10542816,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳中街恒隆授权体验店.pdf",
+      "blob": "b6b66fb66332f08723c6d4402be0f122b1f470f3",
+      "sha256": "926fe3605a8526680be4a4954b48b9cdc22a9099bb32cc12ed2c932532412af0",
+      "size": 14174578,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳百脑汇照材专卖店.pdf",
+      "blob": "4cd184298e2e650528abb0f1ba5327370c137eb2",
+      "sha256": "01a8b48af89bc634d610682ff3be146593b633737b45806cec81d9c54f0d91b7",
+      "size": 1438510,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳百脑汇照材专卖店二店.pdf",
+      "blob": "8ed0eb070889d329b00d23f4d10c688eb2c6c3bf",
+      "sha256": "bd560c8e83c80713d376a86dc390e507acfd9a0e8306e6473747c7cb70be266a",
+      "size": 16214289,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳铁西万象汇授权体验店.pdf",
+      "blob": "7ea0d1b9a6a46394643c02fc45ef82762e0bba38",
+      "sha256": "c91b6d64f4486a4915f18a417b3d8ce9396b187fe3a6b31b7899caf3d145edd0",
+      "size": 9760913,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/沈阳长白万象汇授权体验店.pdf",
+      "blob": "52aef577d306cb5d3adfe308ab9702fdd9f8233c",
+      "sha256": "21495a4b99d74aa926f942e1ac44879a7122475dd335e646360af3e8ae1047ab",
+      "size": 19101026,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泉州浦西万达授权专卖店.pdf",
+      "blob": "69e5468c5a8cff12764f779e6509d9e02c8e4d5c",
+      "sha256": "4187ba1aa4c666815fa23e0e4e74b534c98265932c11ff58ddde6d7aca274f54",
+      "size": 16366926,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国Central Phuket.pdf",
+      "blob": "e3a2b6bcdf3893bb81c0d1e7b0af4e4d81465b37",
+      "sha256": "b82f4f14ec9faba186a0e1827eaf86267283772590e8fffa6fd81565ccaa498e",
+      "size": 17968552,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国Mega Bangna.pdf",
+      "blob": "d687dc9805fd995158d0f1202a17db4638a53a48",
+      "sha256": "012184a35ba09f71c4e068a0c4d40825b2dfc8aa19158bd829c27ffce377ffe9",
+      "size": 18109226,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国central westgate.pdf",
+      "blob": "78cad7bfd87ab44d6d8da23a8e03a3287d59c557",
+      "sha256": "0c5edc2b4f0cf128dcb94783998a5035c0282e931cb86c83dd892028d9fa89e9",
+      "size": 11641334,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国曼谷central world.pdf",
+      "blob": "96a75e249b1b7c37296db9b9fbdca73b4f78a6f1",
+      "sha256": "968bae6f4b42e5390819cf86fa91f9f9cc62dec30f5eabbdf56ec0440f4b53b0",
+      "size": 14986939,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国曼谷dusit central park.pdf",
+      "blob": "ef8d4b8378fac0e0bf5743df9c6a0a7b33edb9d6",
+      "sha256": "203540515c11b6b3d91bf137d2a81f862d60998f5b387678616aa7a3ec9d0bcc",
+      "size": 10581621,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰国芭提雅central Pattaya.pdf",
+      "blob": "e5e3b299315f2cb192deba8b962ec3f77c6b033b",
+      "sha256": "326ecda0a6ef1dd432ccd18c04bcd2d05f7dbe8f49fc584325dd77d9240e5140",
+      "size": 12808882,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰安三源照材专卖店.pdf",
+      "blob": "c0eabc3cf35e0f8b37f147938837dbae06914fc7",
+      "sha256": "90e9a472d7fa2215ae0d5edafad41f70b9e7d4ba0bc0d9ec67c73398a277cbc5",
+      "size": 14563134,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/泰州万象城授权体验店.pdf",
+      "blob": "51b5ae59494a15db59f7e0eddf51634f7dd57796",
+      "sha256": "2489d47fe6069a89b5ad22440f8c30af53ed2f02281ebfc98576b3d0d6ac0ece",
+      "size": 11434502,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/洛阳大卫天地授权体验店.pdf",
+      "blob": "8cc6dc72757e52315de87912cbbb81393a4dcb9f",
+      "sha256": "6983760d8d8ec6164ad7e0978a9a85ef893dafe30ba10927bc373ea1d1f1b89a",
+      "size": 42096755,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/洛阳王城公园照材专卖店.pdf",
+      "blob": "6c34a888a8a06242182e3cefad2a93e8c65872c6",
+      "sha256": "6aaef597fd5061f5c3eb16aa0ac7a4f8bd05974a65f6237a138d738d025d98bd",
+      "size": 3813046,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/济南万象城授权体验店（边厅）.pdf",
+      "blob": "a1206820d595164d7609478dba695482bfaafd0b",
+      "sha256": "9d135e89427e1134fa3bf983b8dbcbe8e607b6a40c208e29fe76e1314182550c",
+      "size": 43356910,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/济南华强电子科技照材专卖店.pdf",
+      "blob": "2cc2111e7c168ea7ce4b46c7e053d8bc0bc51e18",
+      "sha256": "dd8f910c7e75cd2974b9bc79889fc6377c4ff19a9ef971800447eab20a1209d4",
+      "size": 11919912,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/济南恒隆授权体验店.pdf",
+      "blob": "5904ea3e350d212892c1f1a4e33ec3504d16b7dd",
+      "sha256": "5c75388222b70472bc9307caf946d6f2cf0028e2ad0c73b935bd76426f116b03",
+      "size": 12853927,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/济宁万象汇授权体验店.pdf",
+      "blob": "ddc714480bae332fbe7fc25ce113bd9e66c453ab",
+      "sha256": "74af158e5ddc1ab9f0b9b6514f7ebf3a77cad0ba7c5f968d3acc03aa94c59467",
+      "size": 35455573,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/海口天街授权体验店.pdf",
+      "blob": "14dabc7cb7743cd434e8865d25f3b83fbbe8cf56",
+      "sha256": "b8b0be0215c8bda7fb545d9ee4708e68b94c6377fc6028c7ea72ccd2a4e6373e",
+      "size": 19108749,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/海口远大购物中心授权体验店.pdf",
+      "blob": "946b412049f932f9c6246f2bfa6c4eb10cab4952",
+      "sha256": "84ae588d3c71cec5acd75d60920f3992337e95bd2591c56ab9de22d0dc7afd22",
+      "size": 24260920,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/淮安万象城授权体验店.pdf",
+      "blob": "e0ff1e3767f1d8af96a45023d637992ae4e48644",
+      "sha256": "6866e71f74e38f8559e5723549e44080131440f5fd4cdc222cecf53956393edf",
+      "size": 9877738,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳万丰海岸城授权体验店.pdf",
+      "blob": "63547ecf0720dc07b83f46bd5161a495ea84f80c",
+      "sha256": "465eb0d7c1474ec4b9513e7020ffc913ef3283349656d6629a32d8e15710d95a",
+      "size": 19138268,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳万象前海授权体验店.pdf",
+      "blob": "70090168101ef4717eefdffcb84426262f9aef66",
+      "sha256": "d1e152f059909572993fd5b14b37ddb6e9d58e8d00fd74f1486cd7918b72a8ea",
+      "size": 14128230,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳光明蓝鲸世界授权体验店.pdf",
+      "blob": "caa5a1d3a1011efb5fd1d2f3e9e98950c5f749fe",
+      "sha256": "ad2b0b34b76e34bc27c6c7c269fbea669d98af314bb6ac6b2089dcb7a0ff071c",
+      "size": 32039020,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳华发冰雪世界授权体验店.pdf",
+      "blob": "0ad2d5f12caa562d4c1cfba834203ec6bc82fca5",
+      "sha256": "c144e366756dea641bf2c1159328d6c93f2e2c67ad7b99d5511851f568dec41c",
+      "size": 26742656,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳华强北改造项目.pdf",
+      "blob": "bbc6e0c08bf4879ed46c14df1efeffdeccc3f5e0",
+      "sha256": "b4bcb20bd9f01a87468f015f18ab4d0f3b3133367521720871d8395fbb36cb31",
+      "size": 13207034,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳华强北赛格科技园照材专卖店.pdf",
+      "blob": "0f1a619b0dbe0e2165ecfa7d4b6616a2a751cbfc",
+      "sha256": "e599ff19754ddd7f68ea130c1fa876cfb50bde4ae0babc65cbf585bc54659bba",
+      "size": 30710640,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳华强北（华强一店）.pdf",
+      "blob": "3ca552988ba6a9cae836d3cd469817a182c79b92",
+      "sha256": "0ed1f462e9b625a44019346c3d69b9b26cf1d6bc0b473bfcf474c5b9ebfa3f91",
+      "size": 8545306,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳卓悦中心.pdf",
+      "blob": "b5fe39472023beff6eeaabce14ee281b6b69a5f0",
+      "sha256": "5dcc5a29caef217c9b112e09985a41a63471456e23e6569f9cb3ee2cf44a1820",
+      "size": 18515239,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳壹方城直营旗舰店.pdf",
+      "blob": "fabf323a6bbdcaaa699693218d58b5a53969b5fb",
+      "sha256": "cf345fe18b1f0c932fd0c5e4780a858045ecd13d5aecc543b361daed5938d797",
+      "size": 14422068,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳壹方汇直营店.pdf",
+      "blob": "a404532d9401ece0de74546360fca467c570d37b",
+      "sha256": "7e7acc74fbc767834fb67f9c78558684bf0d8289e3517a2090b92e12f82b0e28",
+      "size": 19793078,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳大悦城授权体验店.pdf",
+      "blob": "750b6a8b40bede5445ce15a90041637fb63a88d2",
+      "sha256": "2419a980aad38a058767dc52339071b814c4b5a3edab1457185cfc734604e43a",
+      "size": 11491418,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳宝安大仟里.pdf",
+      "blob": "1b5c3ca94dd75dc37d459af295c3b9668d278e92",
+      "sha256": "99be0d1a1e4014b6bcdccf1568dd9a48f8581f2ab82a5f0884f1b452f39b9ef3",
+      "size": 18675603,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳布吉万象汇授权体验店.pdf",
+      "blob": "5268934b5a010d355afb92658895438197de8905",
+      "sha256": "52fc44166f993a1b23aef96952b24656ffcc20062cbc2a1ab6ff15c5f13bb246",
+      "size": 20428618,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳新华强照材专卖店.pdf",
+      "blob": "6b9267190ce8c5952fd1a68fe1610c6d3f88e0e7",
+      "sha256": "64cbab813c7ed8c0200fb1d5a381ab4ac1c867f3357ec92ccc050589ab787c6b",
+      "size": 16104506,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳机场直营店.pdf",
+      "blob": "33a3d1ddc4d72d4b9c70eaa6c8a3c9e847cedced",
+      "sha256": "2e76e64f3fda7468f9dcebe4a159cbde3e61ccb890992b4fed740bcaca3ca24c",
+      "size": 3089815,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳海岸城授权体验店.pdf",
+      "blob": "a5f619d42513aade55e1f514453c3065d05d20d1",
+      "sha256": "82bb18fe16372c780bc8c8416ade1419506e792c2792ad0c14928f45ffa598a3",
+      "size": 33817622,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳海雅缤纷城.pdf",
+      "blob": "b9c5011551fe609fb130add348ee1570fbfc2e6f",
+      "sha256": "a1be387afe237c77848c652ef5a577cc58fcd3f51d3a96cfe165055f1480657b",
+      "size": 40289523,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳深业上城授权体验店.pdf",
+      "blob": "00be8874dce28096a8d8386d18e6654edceeeab1",
+      "sha256": "d39a28b8ff01dfa12d07207cbe4f6e4f4a0eb344ca123e2c107d07ee88a0ae39",
+      "size": 16634061,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳福田COCOPARK授权体验店.pdf",
+      "blob": "3522f7ce946345ffcb5c4ac0c31e453d5b601e7f",
+      "sha256": "58b503f1811c027df7629da986fbc180f429f66494d0e1d420418d6f5f4b6366",
+      "size": 15262691,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳福田中航城君尚.pdf",
+      "blob": "48c81e505c146ebfb4a96b027236493f3f9ae03b",
+      "sha256": "02c56530e723564378639d53b88632af86b5bb866a8dfb42704550447b8809fc",
+      "size": 23225512,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳福田卓悦汇授权体验店.pdf",
+      "blob": "927516510de780db36ddfc50ac8e759e865d5376",
+      "sha256": "a573c0515a2404966c5ffd06ceb8cf1fe062ae966a2750a79300203e363a804a",
+      "size": 16083135,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳罗湖万象城授权体验店.pdf",
+      "blob": "c282ec82e5e0115f2a67836d17debdfa5175a709",
+      "sha256": "b4479266a53743a97c2658cff55b5c48383e89d1900308739f38f7cc03cee26c",
+      "size": 17240215,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳罗湖金光华.pdf",
+      "blob": "4d4d427e613600f7c957fe7bca3e93acc573fcbd",
+      "sha256": "bf5a15515fae64eec3889e0a982c6df393b448bb233c47e5efd30c98cdce43d4",
+      "size": 15348844,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/深圳龙华天虹授权体验店.pdf",
+      "blob": "f8a8d79624ad911a64353dc50c5256752e260074",
+      "sha256": "4ba6b34d7b862e091ad477413a24c338aaca9221f5169c24cd09b4ea2bba6a80",
+      "size": 20287327,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/温州万象城授权体验店.pdf",
+      "blob": "61072be7a5be9858255f7fa91a00a6cf22e0f965",
+      "sha256": "d769c4b642097b0ddf8df0fc3373c709f41cb295543108a444948ec638f91818",
+      "size": 8744033,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/温州开太百货照材专卖店.pdf",
+      "blob": "3a81e9b86a54760d81f360030d4ac85a74fc7449",
+      "sha256": "550ea14581fb3fd25dfd5353610df08c92287974b8fb890155e4f683890a5b42",
+      "size": 13435395,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/温州滨江万象城授权体验店.pdf",
+      "blob": "fb3f3925d59e1c95494f06672797f11fa82b9c25",
+      "sha256": "792c791d17e5466e083c6a1af2a3b066ffb07276d65c14d161d3bc06d3bce372",
+      "size": 7600876,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/湖南摄影城照材专卖店.pdf",
+      "blob": "eebdf40e6524de7e9eb24be6395b99682763a34b",
+      "sha256": "3c9fa0f92d8cd9569b04bfe933e05764ba114f2deb340e70508be40474aef720",
+      "size": 5616818,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/潍坊泰华城新天地.pdf",
+      "blob": "55ec543a5df687379f4599c6bc212ad39c853e23",
+      "sha256": "3f67d2a410ad3094055546bfa87ec702461390edf5188faef1c408f87016ae76",
+      "size": 17133744,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/潍坊益家园照材专卖店.pdf",
+      "blob": "b14649a649ee06910a7f6b3c315d3d7bfd92405e",
+      "sha256": "1aab67151a1888d0bcd58287ce14f174454938bbafe00c8c7da88a73fdb8260a",
+      "size": 23040391,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/澳门威尼斯人.pdf",
+      "blob": "42ca15f54f0265739a61141d4dde9d14c568e053",
+      "sha256": "34ea9cb3744e769cf62bdc4f3c5227a9fcc79b1b63d6e267e710ad6f9f4ca0af",
+      "size": 17362145,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/石家庄万象城授权体验店.pdf",
+      "blob": "ecba31786d7d4958440d029346f1b94efc6b7eb0",
+      "sha256": "373d770b088a39c8162121d3670482ef9feaa56acd771cf39145f9c67a821fab",
+      "size": 33085949,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/石家庄太和电子城照材专卖店.pdf",
+      "blob": "706a123ccb857c4b97e8db455a1e60b8037508f4",
+      "sha256": "78910cf7b5fb200d0cd9dab2243cd2ae6c9ae0c2346c027bf5347d016fe135cf",
+      "size": 8827960,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/石家庄织音1953授权专卖店.pdf",
+      "blob": "ddffffc8141ec14387c48a6066f8ff5038c44ac8",
+      "sha256": "1fc05df961b7657da8df0cd86c57c58d7c8bdb50a8466577be92eff2d97c3a6e",
+      "size": 12196572,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福州万象城授权体验店.pdf",
+      "blob": "0a7a9c55f4ccd3784c2fcd8b57aa436fba9b74d6",
+      "sha256": "63fb19fd1e066f27bca23f59b8768a511cc6bc0815942a749b6a8b65591adae6",
+      "size": 22220979,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福州东二泰禾（换铺）.pdf",
+      "blob": "192945d3206bf9db4c2a8db774425349685a3abd",
+      "sha256": "db3111ec9355498eb11ddf63664118da87142f961bf60a820d538006ad25a498",
+      "size": 27790555,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福州中骏世界城授权体验店.pdf",
+      "blob": "05659a1cc08fcdbab83aa0d19840bff9f54342f5",
+      "sha256": "d18fe9e321e70f210108f1c7b2ae8045b3ed51c4185b81e2a105207ff3c33147",
+      "size": 12666442,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福州大利嘉城照材专卖店.pdf",
+      "blob": "b5dd9658cd90d334fd5ed02675731e30b66cdbd5",
+      "sha256": "ba6b45a300ed2ad30e46154379dc45e473081b01a529e00693fefa05d27fb47a",
+      "size": 20605970,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福州烟台山授权体验店.pdf",
+      "blob": "2ff1ac9245ef9dd443b7b3328ed9b75572c2fbcd",
+      "sha256": "9d9ec5982767f91f908b46284df8945ee73d7fdcd437ee07ecbb863ee234c61b",
+      "size": 43931407,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/福建龙岩万宝授权体验店.pdf",
+      "blob": "26b70ca0b5da11ec09a1565a14bac8974725becf",
+      "sha256": "68929fc57783151ef8a29e198d5c4fbda19ee0aee39e244b2aa6dfeb51ca94e3",
+      "size": 20823969,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/秦皇岛茂业天地授权体验店.pdf",
+      "blob": "b74721e2fcb08d1294085caa0a13ead5ec24ab18",
+      "sha256": "5ae3ad260f30d331aac764e669ad73c6c1c78411d3e1f1015b3202e2dbfe5459",
+      "size": 14392725,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/绍兴金帝银泰城迁址边厅.pdf",
+      "blob": "8e0d07fbe259d93bc62445406c5d3eb1b4887fb8",
+      "sha256": "d3c57f9412aa9a16007219018ad680009ee2af7b98a627ddf78f3bd41ac85d02",
+      "size": 14299931,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/绵阳数码广场照材专卖店.pdf",
+      "blob": "c34c52f25875dea2f4389fec4ffdd2590cfd401c",
+      "sha256": "0ac6eeea6fddeee62a9dc49467ccd6b4c927a170f96ce3534eb16d3628cd06d9",
+      "size": 30460969,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/聊城万达照材专卖店.pdf",
+      "blob": "adb69d78603ff47a440125b6f1da6d5df3cf3cdb",
+      "sha256": "3e65fb97ea49c0aa59cb86ea3c1768922be7ae752c9a71bac115baf562bf7f79",
+      "size": 8314982,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/芜湖银泰inpark.pdf",
+      "blob": "4b9d1df6bd31ebfff92ab4fda5a3309233ce7776",
+      "sha256": "ae441f69b3cbff0e1ebcad7944fdbf162793eff7f265ca1f114400eafeca9c28",
+      "size": 16143914,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/苏州东吴天街授权体验店.pdf",
+      "blob": "7c22d37b9e1773a7ab9f3695bf3b12c881e3fb1d",
+      "sha256": "378a9206c63e090a25e114d14b13d618db3e91be7b9c85c103968c4bf51ffbb4",
+      "size": 26375591,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/苏州中心授权体验店.pdf",
+      "blob": "c02de086c6308f12b8cb03e5f285282c7985dc3d",
+      "sha256": "e8fc78b155286f011ce3e23e857d529e3353fcad71921062eff40c1fe29ca4a0",
+      "size": 17894633,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/苏州人民商场照材专卖店.pdf",
+      "blob": "3090d1e2b10287ac32d61ad92591032b73ac1b71",
+      "sha256": "c318a8f9e9719dda1a1a24fc7a05d3c3887f47d00beb9d6620d844275933d457",
+      "size": 20297841,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/苏州吴江万象汇授权体验店.pdf",
+      "blob": "ccd84139bfc1d57e36ae9a4fff946d3949b79566",
+      "sha256": "a453208cf56410c0b93e02264c908662be9a194cb2320c2f94f5736b01c7889f",
+      "size": 12263060,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/苏州昆山万象汇授权体验店.pdf",
+      "blob": "b8c1be07baa901d9ed4c9f03fac9be7d16f1d0c3",
+      "sha256": "8f22280648ab1a975fa66438f4489dbdf56df11ab35dfd216ef2122dccd99769",
+      "size": 26839339,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/英国westfield中岛.pdf",
+      "blob": "8998f8d6bcb4b34215a02094b9a8a7fa1f92cc80",
+      "sha256": "2a6a7b8b607d863261905d309c0c34ae949a2c5a1bbc58c6d2024ce7d438c782",
+      "size": 2331160,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/茂名东荟城授权体验店.pdf",
+      "blob": "08e3f376ce7740e09ca57f1f106bbcab169897fd",
+      "sha256": "921eecc43972779f21fce8e6f27738464850f190c92754c4def8098973c74bdb",
+      "size": 15572012,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/莆田万象汇.pdf",
+      "blob": "a126d143a50040c2faa9b70317cc499b1f39a857",
+      "sha256": "402527548b447761d6ebca0eab0adbc3cbe49bacde686d6c963ce0880654d369",
+      "size": 14511900,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾 SM Aura.pdf",
+      "blob": "a2c42030f349b8e862991bf0da33af70110296c1",
+      "sha256": "9099f3f295ba282a9980df12e223cca6ff75d76686e98335bfd27174740bb738",
+      "size": 8765469,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾 SM City Grand Central.pdf",
+      "blob": "411273febb62f40fa06e7a22e6cfdd6645d295a1",
+      "sha256": "9dce34bf320d214b2f92fc2a871f4206a5f428186b41778c6b2abc058af696b0",
+      "size": 9316069,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾Festival mall 边厅.pdf",
+      "blob": "9494a235dafa4f4cef23da64cb9ea54a95b76037",
+      "sha256": "2841dbaf70736411bc744cd069463f04040f5e54d16d3e9308f23ed0eb9dd425",
+      "size": 24565241,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾MOA（换址).pdf",
+      "blob": "6d9e533b06ceae8aab86cb03ad0beb169d7e9355",
+      "sha256": "229652f4f0ad95c6b895a89d4fc67b2727accea5c4b4eab5eb3ba7aaff69c70c",
+      "size": 10181254,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾ONE Ayala.pdf",
+      "blob": "b7f003091723f1b4787ca337adec452c80ee9591",
+      "sha256": "a7839599ee7d1fa77b56fe04a7c492be9f6c5159a0a802cd825041c3e5fe9314",
+      "size": 2600458,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾Robinsons Place Manila.pdf",
+      "blob": "e50dcd7ce7c53dfc544ba37bd385d5f8fe78b5c5",
+      "sha256": "f1f832f6b30f009c49798de5066d5cf189be50e39c0c1a2afa37ceea57786667",
+      "size": 17641920,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City Clark 中岛.pdf",
+      "blob": "51d0f3e4ca4df223ac9f3adece699f306b8b24d1",
+      "sha256": "4cbd5ab914780507d81b8ea075c5c544bb677be0aefeeaa5eedddc808b49cb8b",
+      "size": 6355500,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City Dasmarinas 中岛.pdf",
+      "blob": "67b9b172f78bae394f13dd51624723f84652adf5",
+      "sha256": "2666bd2de04d37489e2ef564eb1362db6a9b16c0cd96d362413439ef1538feac",
+      "size": 10540487,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City Davao边厅.pdf",
+      "blob": "71e1c9fb52e27a806c467893a281e0619c262f24",
+      "sha256": "20afb36b86bae82ce2818b60d41d5df8b69bc2eddd05460817485f8f98d97521",
+      "size": 26161790,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City Fairview.pdf",
+      "blob": "aeb1db4dccc13510e40d3e8064a6456d157697f0",
+      "sha256": "245bf2f4eef475e73a6aad2b4742433942c18d3a07a110cec8d935453a2092b1",
+      "size": 35559426,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City La Union.pdf",
+      "blob": "33f713b57a1185e1b207a5defb6c1b85b5b4740f",
+      "sha256": "4d3c863dc039842cb4f221301deb6d51273f1354a460dd486f4c730582c98836",
+      "size": 26371678,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City Pampanga 中岛.pdf",
+      "blob": "dedb88023a4890806cb021da69ec533f1d210f3e",
+      "sha256": "35870f17c12cce83846e2d2ef8417e64594865938582dd7998e4bd7367b601db",
+      "size": 9831686,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM City San Pablo.pdf",
+      "blob": "2c27c65f58f830d149f2dfb3d7a2bfa91e0729a9",
+      "sha256": "e1c739ca369a1a25666a0215d84fd3b4efa6a5a6065a69d6a0294dd95b708af1",
+      "size": 20136858,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM Megamall 边厅.pdf",
+      "blob": "58ecdc1ce48197a0622f4c0ac093f9044fe96a6e",
+      "sha256": "806366651b9d666fa02e04af8eeafefcce5a1c06216f2630a43969a52cbffd75",
+      "size": 3085323,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM North EDSA.pdf",
+      "blob": "bb8bf77cac6c35317edd830883fba79769c66c99",
+      "sha256": "0f02391c2151e3677b63767ab7ad075e3aa96b4a843edd778eaf210a53591d69",
+      "size": 11607049,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/菲律宾SM South mall.pdf",
+      "blob": "0233e22c1b070ba394a63c000885c3c3f802ec82",
+      "sha256": "d77308e604a9e22923ea560efac400acb6d22273194f5b17ce62ea6aad48ee64",
+      "size": 11772721,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西宁王府井授权体验店.pdf",
+      "blob": "ff38ab3ecca3876a7e531ba22229379950608540",
+      "sha256": "d9fde0adc4bbbc98bb48c057f3a372eccf46d9433845540d7879072532739013",
+      "size": 22444240,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安DT51授权体验店.pdf",
+      "blob": "57f426cf194075089f80b3dcad0c02c02f8c3787",
+      "sha256": "046670fccfbffddb8759e9bda1783c919a425ca7fad9a7682bdf232e69c77513",
+      "size": 22980475,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安SKP授权体验店.pdf",
+      "blob": "98875a6e6c6f843f556fec05ee1d5fb77079a7d0",
+      "sha256": "f407e5893c6615dea4e96ff900506665a5e29d4423d42ac29625af19e49f1c01",
+      "size": 14222985,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安万象城授权体验店.pdf",
+      "blob": "6e384f4ee0fc5c55aa1c2e71129e234760c60906",
+      "sha256": "948fca6dba4d69cdc2ef5f437cb5044866de164e2a887a14fecff79f1034a6aa",
+      "size": 14786437,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安东新科贸照材专卖店.pdf",
+      "blob": "8c360b48faa6b3193a411bff07b77aaaec67e179",
+      "sha256": "8de1b7b19c9c37347740e33d85e8f338fd15da6795505471c7f03caa83ac8396",
+      "size": 13561535,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安北部赛格广场照材专卖店.pdf",
+      "blob": "3611dc3e10382b8c53a4be6d7e51c9de7ae372da",
+      "sha256": "2852bddbeabf0f28d6f606a1481c9707680cbd9018d871a2b03e3c92b320cf0c",
+      "size": 8259532,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安开元商场.pdf",
+      "blob": "a8ab8615e4e90441e8e84cc24f8adc24c5ea160b",
+      "sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+      "size": 11995578,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安曲江创意谷授权体验店.pdf",
+      "blob": "dd28da62b619d5ea1edb4cf8505b34b05f6de842",
+      "sha256": "12ab184016eae0b0d766ca133786d07e3d4ac9185b9d9fcaaafdacb424f4681a",
+      "size": 13624511,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安百瑞未来城照材专卖店.pdf",
+      "blob": "aa89ea416309d5c2e6dee809226c19e2bab856dc",
+      "sha256": "59b8a6e2a974ca302b14997c27b728daa3ca8e8564897e5ab2a61a8cf462a39f",
+      "size": 15221375,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安百脑汇照材专卖店.pdf",
+      "blob": "65366e4e960a006380c00747f9196e350b23d08b",
+      "sha256": "e36945eca8f18ae4f2ef601957eec59a2e528fbfbc03a4beca16af813f65dcf5",
+      "size": 1870773,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安荟聚授权体验店.pdf",
+      "blob": "89c18e581211d4f9ee6c29b361373523c582414b",
+      "sha256": "44c38d84e7cb3aaa506b5dfaed0a20edd31d37984aff66cbbac6537d3aef4292",
+      "size": 27858935,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安赛格授权体验店（边厅）.pdf",
+      "blob": "a75b5d7b6b6556517ed133f873d2d4042a2b079b",
+      "sha256": "e2146388ab258d956697a7749ccc80e8d5c8fc4f60e9da7586ba4a59575482a2",
+      "size": 18529606,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安鹏博大厦照材专卖店.pdf",
+      "blob": "a602631e38d4661d67dac1be3e0693e426682747",
+      "sha256": "e578ec7bbe3c93914f7f9c42786f52a401c89cf0ad15f81866bb99447f030c68",
+      "size": 14234200,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安龙湖长乐天街授权体验店.pdf",
+      "blob": "9aa9a6f9657e3e792e98aded3aea046b01bb0662",
+      "sha256": "344d297932e09ba9c3961739af9dd806295bea8070c76413df304fe9fff0361e",
+      "size": 14777212,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/西安龙首印象城授权体验店.pdf",
+      "blob": "0b585ac0a936ab09f50fb3cafebfbeb1beb5db9d",
+      "sha256": "fc1daf9ed07524096e42afdd8325e2b9e6ac9c09fbee5e1461bd04ec9cdd95cc",
+      "size": 17239170,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/贵阳万象城授权体验店.pdf",
+      "blob": "65f42922af554c0963799a5d1b2be6bd35abbe69",
+      "sha256": "743e1b9b678a3d2d1f86361413d68f2f02e6123122b04ab4dc3996276ba2d8fe",
+      "size": 13899270,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/贵阳中华南路照材专卖店.pdf",
+      "blob": "927ca12cfe821dccfe21b1edcb81f1d83503face",
+      "sha256": "1fb1ebae9dc9b28ebf57dd9b8002880e270e4ae9f75064b16dbaed3e70a50d2d",
+      "size": 19027469,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/贵阳新大陆数码广场照材专卖店.pdf",
+      "blob": "9a7753487dde70f2068a187f95fd5a0e3429d5b3",
+      "sha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+      "size": 6548882,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/赣州万象城授权体验店.pdf",
+      "blob": "12820706b85580ca6270a6ecba01f912ac370503",
+      "sha256": "705a1df3a9d7ac9d9c5f94a4167f2da5e200f6e51f2a380853861e597ab7fced",
+      "size": 13442366,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/赤峰商厦照材专卖店.pdf",
+      "blob": "cd96d55d9684cdb5d0e56d5256247f217c6143f4",
+      "sha256": "36b20eacccd3136089ed9ef36823c2523d748038e730161a918798a93e69d325",
+      "size": 8297842,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/邯郸万象汇授权体验店.pdf",
+      "blob": "32cc6ad8f3fe770e4c00afa0bd8341c04dab4bd2",
+      "sha256": "6ad01cb39ed0d7fff201f857ad6b407fe661e219a524c0d1d4040599065b2de8",
+      "size": 16010036,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/郴州解放路照材专卖店.pdf",
+      "blob": "4b72d1c6c76c95979b59e69f89902cc26b0ed3e7",
+      "sha256": "772cfe64034d808f0a9ee85b8418dbdf128d5dc69087c883c52c9227f7f6f995",
+      "size": 16735640,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/鄂尔多斯金峰电子城照材专卖店.pdf",
+      "blob": "df39d961f78aa542162f55539597e0f0c9f581e7",
+      "sha256": "a27106ebb43f7ea759b36e4b6a5be217a257c5ac3ea66fdbf01b11f67ce88ff3",
+      "size": 20334993,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/金华永盛授权体验店.pdf",
+      "blob": "6b5366eca2d0f2994e2bbd80f15414906404dd27",
+      "sha256": "26b2f876ed70448945398532fba8c8b532a8b85908e69c89a8faecebfe6c38ff",
+      "size": 9014029,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛万象城.pdf",
+      "blob": "30a37653f3e70f6c63dd1e4f98598612032e0175",
+      "sha256": "f605a001d9e06be1e9b395bc22d0841e54852228ee4cb4db7afadee9e55f4e62",
+      "size": 17901796,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛凯德MALL授权体验店.pdf",
+      "blob": "7c8b9a4c64125563758b14dbd222dd48325187ab",
+      "sha256": "32dadc099d1108b50e1e4502d30eccd6523f7fa445dfa707cb94dea567341d61",
+      "size": 24217154,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+      "blob": "2c4ac382dbcee848170d5480437a4825b5941fed",
+      "sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+      "size": 9936280,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛崂山万象汇授权体验店.pdf",
+      "blob": "1e5b849dccacf9009636c90195ac254898cfbe3e",
+      "sha256": "d4ec4eea5fc0d952b290fcfdd316dc1b1e37c752b23e09a1f22440945d78945e",
+      "size": 29608353,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛永旺梦乐城.pdf",
+      "blob": "0411ee16e22e7335c99b4b2bb4cb3e6b00a69708",
+      "sha256": "62907cffe04d6afebb7dac68c784a83aab044f121ce5b11f2d2a001c1b5f4d2e",
+      "size": 12809070,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛海信广场授权体验店.pdf",
+      "blob": "3486b5943115e9bd3047a472c8d8a0d0ebacc075",
+      "sha256": "0f21a116f78ec298528962b49a9e46c2d99e5bd818bf1328555a4bfee8d4a2ff",
+      "size": 13038378,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/青岛百脑汇照材专卖店.pdf",
+      "blob": "f0e033152664eab0bede58cf8c21a8411a7a6731",
+      "sha256": "772d5a2b17920150be398909402fd361aee4f05d5197cc882bc43e433d1a7513",
+      "size": 24193548,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国galleria光教店-광교점.pdf",
+      "blob": "86e163bfbd02f080fcca2184f7bcdc3cad796167",
+      "sha256": "fb96e08f7207f083fa77ee1ca8e0876eba2517d4df4f7a2b1da5a9496e65e8cc",
+      "size": 31280190,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国乐天百货蚕室店- 롯데잠실점.pdf",
+      "blob": "f51a9c3bace75786ddd0d7794a1d454d92245d19",
+      "sha256": "6b54074009cb32d975a4bf8bbc1f011d097c9543c931bd54c5df08159591cdc3",
+      "size": 3301217,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国新世界大田店-신세계대전점.pdf",
+      "blob": "bdc0316f8670cfe6744e6a242abf764d84ca8719",
+      "sha256": "181f4ff0b3f4b04d8a5ac85bb42e64f5f02f82f4e47844635ff83c7d598470a8",
+      "size": 36581528,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国现代百货忠清店-현대충청점.pdf",
+      "blob": "fd15cfb88f33ed47b7f5e9c6439e3a3068801c5c",
+      "sha256": "393d674774417db1bd666cf9e50c5a7e82e14c0226ab4f63993b6655243d34c0",
+      "size": 29881163,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国现代百货新村店-현대신촌점.pdf",
+      "blob": "a7f378957edf81a6f646f0fa9a74fb91474e9aa7",
+      "sha256": "37f9d18b627f7ba203189e8212199777da07796dd32e9e52f1239d8f40bb1ce3",
+      "size": 17672868,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国现代百货板桥店-현대판교점.pdf",
+      "blob": "2bedcf5339066615090d2a0d80e83e2139666680",
+      "sha256": "50e916a0439a05ccdcf57f2a18eea1afddbf656da5e0134c75d9c3e780ad2046",
+      "size": 21915039,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国现代百货蔚山店-현대울산점.pdf",
+      "blob": "10c9a0b779319493d1431042808cc9fd5c2b6b08",
+      "sha256": "ae8699cd9ad3b951309411cae4edf2888440eacafcd986bb75c0d8890f0efb67",
+      "size": 23449756,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国釜山乐天百货-롯데 부산본점.pdf",
+      "blob": "a2d5295990ca977367ebd330bd7aa017062bd624",
+      "sha256": "91867586d61743fac76a23f80c7a805e9440f580791910585ee1ad0701c276be",
+      "size": 8238465,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/韩国首尔江南旗舰店-도산점.pdf",
+      "blob": "e9495e750a4cec38edb4ab12db4ff5107fe88779",
+      "sha256": "822d21a8c68d6f1429a2194680e3b3809707a74eb26071f28ed3d8c4d1f1dcab",
+      "size": 3315718,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/香港旺角郎豪坊.pdf",
+      "blob": "31b253db21295255033359d2418292f06cda7962",
+      "sha256": "c1c3ff63468589fdc7aff2d7f1820d8b8880bb8bc321ded0f2787fdd1494afc7",
+      "size": 14026455,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/香港油尖旺柏丽大道街边店.pdf",
+      "blob": "9cf116a4b07d0393c9e52707d2982bab593e661d",
+      "sha256": "a3fbc393dc14dce156bcf05d14e3edc7dd09f918d6257e44e986076554f4f648",
+      "size": 47361666,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/香港铜锣湾百德新街.pdf",
+      "blob": "38b19226bdcf03066c761aa7f65bc258b6b85d12",
+      "sha256": "733efc657ff88155110bc87b57496d9a617498cff1c626db067f1adfd365415d",
+      "size": 22878150,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚1Utama Shopping Center.pdf",
+      "blob": "083d08c6f62abc4197404b2618bff5d45e0d7752",
+      "sha256": "b551e2a036ab50b920ee45175a16230a8230b927f7e49f910eefb4a415acd1b4",
+      "size": 21629980,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚Gurney Plaza.pdf",
+      "blob": "cfcb7cee4a24109ecb68f6926f8474e522d52ac1",
+      "sha256": "62dc82168ee52eb01aa820671291dcda9f0959b1f6f24a1187978dfe7bf84a57",
+      "size": 1525832,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚IOI Citymall中岛店.pdf",
+      "blob": "78df05063034cef2fd6fe630d8a8565c157aef71",
+      "sha256": "8e5c82302008dab20f9dbdde44c2dd183393f0d4fd32e295db1c693325641a9f",
+      "size": 7460035,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚IOI Damasara边厅.pdf",
+      "blob": "3897f1930979ef32a7ce5aef6eff32b37c75c7bd",
+      "sha256": "f6d8e4392a1ac4b77a74bd59af68bf9b92672d31b352c7a4aa5246f08695cd4c",
+      "size": 34513950,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚Pavilion Bukit Jalil.pdf",
+      "blob": "fcab4a8a14976e240b2edca4510cfc6c1ea4e4eb",
+      "sha256": "8b9cb8a3091d719fa99064b5325dc42e2ed0bf51ddcafa48ae5b2957a1ada934",
+      "size": 24288357,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚Pavilion Damansara Heights.pdf",
+      "blob": "aee817de1f965c69f79bb66e04e456210f409239",
+      "sha256": "0343fa5337f20a30f70e64a4f2e6f4f0f6551a42ffe7c5ee6c3eaddc38b5601f",
+      "size": 5456585,
+      "storage": "lfs"
+    },
+    {
+      "path": "各门店图纸/马来西亚Pavilion KL.pdf",
+      "blob": "04cd2c53f107a5b17bf3d55411f6c9d92236602c",
+      "sha256": "ef3f8f23da19396cdcdc8b4260915eb5f30273c655bee35f44bfcadac392458e",
+      "size": 7828075,
+      "storage": "lfs"
+    }
+  ],
+  "remote_content_absent_locally": [],
+  "other_local_files": [
+    "宁波万象城授权体验店（边厅）.pptx",
+    "杭州西溪天街授权体验店.rar",
+    "海口吾悦广场授权体验店.pptx",
+    "深圳KK ONE授权体验店.rar",
+    "郑州智汇城照材专卖店.rar"
+  ],
+  "lfs_availability": {
+    "checked": true,
+    "missing": [
+      {
+        "oid": "fb339e56ad3501cdc5d6a308e882715d6cca5d27cdc43d31c677d48533d0fc95",
+        "paths": [
+          "各门店图纸/东莞悠兰里街区授权专卖店.pdf"
+        ],
+        "code": 404,
+        "message": "Object does not exist on the server"
+      },
+      {
+        "oid": "4ea6658058d69c03ea1590ae1af22c75127ae2a644a92322236bb54f7b4322eb",
+        "paths": [
+          "各门店图纸/大庆百脑汇照材专卖店.pdf"
+        ],
+        "code": 404,
+        "message": "Object does not exist on the server"
+      },
+      {
+        "oid": "a27106ebb43f7ea759b36e4b6a5be217a257c5ac3ea66fdbf01b11f67ce88ff3",
+        "paths": [
+          "各门店图纸/鄂尔多斯金峰电子城照材专卖店.pdf"
+        ],
+        "code": 404,
+        "message": "Object does not exist on the server"
+      }
+    ],
+    "error": null,
+    "available_unique_object_count": 357,
+    "available_pdf_path_count": 358,
+    "missing_pdf_path_count": 3
+  },
+  "total_pdf_paths_to_upload_or_repair": 60
+}
