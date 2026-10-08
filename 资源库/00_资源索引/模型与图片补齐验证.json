@@ -1,0 +1,2898 @@
+{
+  "date": "2026-10-08",
+  "source_ref": "7ccd220b614964d2172f30ed3bc6341188fbb882",
+  "skp_verified": 90,
+  "image_verified": 271,
+  "skp_bytes": 1305136900,
+  "glb_missing": 22,
+  "files": [
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1200mm配件柜_浅灰款__asset-2595882.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1200mm配件柜_浅灰款__asset-2595882.skp",
+      "git_blob": "c3ef4362cce4d0c618d102136baa4388ac9b74f7",
+      "kind": "skp",
+      "sha256": "36cdeb8d210b826f10f7dbd9c5bf834df71e7ca2a29518def572d41c9fc97686",
+      "bytes": 5331712
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1600mm配件柜_浅灰款__asset-323015.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1600mm配件柜_浅灰款__asset-323015.skp",
+      "git_blob": "2431a3f964656bee6ec6b36308d150165c381bef",
+      "kind": "skp",
+      "sha256": "13c2054b773592caeba4623e526d636b68e2231f66ecc722419666b589256059",
+      "bytes": 6040666
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm开箱储物柜_含2把白色高脚凳__asset-666964.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm开箱储物柜_含2把白色高脚凳__asset-666964.skp",
+      "git_blob": "def841cc3c793e620d04fe5047c883aed19bc4c6",
+      "kind": "skp",
+      "sha256": "2895b36e93ce07265c52c30f847b3f880251e37fdb1d4fdbbf86317438a42d19",
+      "bytes": 6430509
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm普通中岛桌_产品陈列A__asset-408124.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm普通中岛桌_产品陈列A__asset-408124.skp",
+      "git_blob": "393b9ba30bf4924afde15db8b99b09237317b346",
+      "kind": "skp",
+      "sha256": "dec40d27fb069099448a28729d92930304ff4dc4103d57bb452cfcbbf184a586",
+      "bytes": 18703403
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm普通中岛桌_产品陈列B__asset-408125.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm普通中岛桌_产品陈列B__asset-408125.skp",
+      "git_blob": "ec6f244a639e9ccfc610c43917c20c1d23718738",
+      "kind": "skp",
+      "sha256": "66682d612e87ddb90362ae8a6eac0064cec0cc9eb23987406ceaf57f77c66ca6",
+      "bytes": 8284489
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm普通开箱桌_含4把白色高脚凳__asset-1788391.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm普通开箱桌_含4把白色高脚凳__asset-1788391.skp",
+      "git_blob": "4b9bb6816dc7b06857432c6f91abe3c11ed73178",
+      "kind": "skp",
+      "sha256": "6e1e092973c8d7084a1332837c60f7987852ac436b24d8edfb73afd2997f9496",
+      "bytes": 6831630
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm边桌储物柜_带托盘及背面画面__asset-752992.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm边桌储物柜_带托盘及背面画面__asset-752992.skp",
+      "git_blob": "d332b3deb233336264f3780071d7f4b420d931be",
+      "kind": "skp",
+      "sha256": "8d855a8f113c23d5c392508420bf92b9506ef2ddab46745e00250c0323ed833c",
+      "bytes": 9428896
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_1800mm边桌配件柜_带托盘及背面画面__asset-34320268.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_1800mm边桌配件柜_带托盘及背面画面__asset-34320268.skp",
+      "git_blob": "99b95eb3a829c663d9d568a6786cadcd728434a9",
+      "kind": "skp",
+      "sha256": "c9969b50cb0c70cc6006f2207a7736a9b422cf7d719dfbda5b56ea96d1d0095d",
+      "bytes": 9416306
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
+      "git_blob": "5fff9a2a67d9f2771572e532ec1231d20216f41c",
+      "kind": "skp",
+      "sha256": "c616944738e2daf4d967fccb0542efeca2d9d83224c72ccb6d412d7eaa0915ee",
+      "bytes": 34899
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_收银台_白色圆角_约1942mm变体__asset-24488377.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_收银台_白色圆角_约1942mm变体__asset-24488377.skp",
+      "git_blob": "388ccbe73432bb764c28f5bdfcf972d573ab2c0c",
+      "kind": "skp",
+      "sha256": "ddd5609583454c8dd0a838772a06de93f5a4827121298bf07a70bf52b25d4829",
+      "bytes": 4373518
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_边桌收银柜_1800mm变体_带电脑__asset-2360478.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_边桌收银柜_1800mm变体_带电脑__asset-2360478.skp",
+      "git_blob": "364b13e1594fcde8fa1219847b2c9f710e550318",
+      "kind": "skp",
+      "sha256": "3c097d17b677b6891ccac775b5e016faa1ed0d4ddbf4042625de4228b6e2d798",
+      "bytes": 8072686
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI1.0/SI1.0_边桌收银柜_1800mm变体_带背面画面__asset-24498456.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI1.0/SI1.0_边桌收银柜_1800mm变体_带背面画面__asset-24498456.skp",
+      "git_blob": "90ec1a3478a440c4416a46e3f2938698d043e8be",
+      "kind": "skp",
+      "sha256": "7d90cb2a63051d2002d71df04bb80f33d39d2be94cfe8087a6e5f285b1c356e5",
+      "bytes": 8077625
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.2米配件柜_无人机画面变体__asset-24482600.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.2米配件柜_无人机画面变体__asset-24482600.skp",
+      "git_blob": "9f9dd700228b63ef7e2a5f53d7566bc0c6d4926f",
+      "kind": "skp",
+      "sha256": "b5fcf53f8b55a905c55564a2d118d0273a415d7137b682f4d9d085f7307c44a4",
+      "bytes": 40714255
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.2米配件柜_骑行画面款__asset-34327615.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.2米配件柜_骑行画面款__asset-34327615.skp",
+      "git_blob": "de15ec12fdd3f9ba95031f736690d9ea336ef1dd",
+      "kind": "skp",
+      "sha256": "f408bca2e449a2bd349bb0e2bdb81def310caa3d210fb8d956ed6af342fa5678",
+      "bytes": 23381516
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米亮脚中岛桌_带产品托盘__asset-41053706.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米亮脚中岛桌_带产品托盘__asset-41053706.skp",
+      "git_blob": "f7730f9014e1cfba706b2cae28ebb50381e78d44",
+      "kind": "skp",
+      "sha256": "61c3711b8b0662e4c0036f2f61ad034e9b35a47b52a9d7577c8a606563439573",
+      "bytes": 17129146
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543.skp",
+      "git_blob": "d8d36a243e57d428a70200bb1b1bc281ef11ee4c",
+      "kind": "skp",
+      "sha256": "16940281ea37b7ad62b6a0ac5a2ec8c9628b891deb2f9fdb248b7979921b529a",
+      "bytes": 39804325
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米收银桌(左)_带电脑__asset-24432224.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米收银桌(左)_带电脑__asset-24432224.skp",
+      "git_blob": "f600a250a9052c7d43fdc37cc633be33ee0e8f74",
+      "kind": "skp",
+      "sha256": "c938b7ec05d6b211c60b07bfd9d3324d09ab6821dcbd75b0c6e2028c2001831c",
+      "bytes": 10244511
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米收银边柜_单操作垫_未配电脑__asset-33819654.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米收银边柜_单操作垫_未配电脑__asset-33819654.skp",
+      "git_blob": "bf3fd21e05e6cf37efde50fda3b402cbb18694c8",
+      "kind": "skp",
+      "sha256": "e225b0e40d38a3c3cdfe62eabc02087fb9ad2aeb1c3f8c5df8c310f307da5a29",
+      "bytes": 6509190
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米普通中岛桌_产品陈列A__asset-24312623.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米普通中岛桌_产品陈列A__asset-24312623.skp",
+      "git_blob": "924a9f55f45d03906ce83e0ac13bac654a7cc2ec",
+      "kind": "skp",
+      "sha256": "439117577950ad2515369defc0001c6f0a0179ba915bb525c3fe02f88448f36c",
+      "bytes": 18957421
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
+      "git_blob": "800b69f606ed427de1fd5c6a665d7ea5c0887ced",
+      "kind": "skp",
+      "sha256": "506849f97ec167ba43dd778d1edd08eb3fe6e461dc560461aea4c9b27dcf9a10",
+      "bytes": 18962174
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753.skp",
+      "git_blob": "90c9dbb75c79455fa72ef9e18272accf45c81d44",
+      "kind": "skp",
+      "sha256": "bb19ca37bdc3441030b2a98a459e067fb3ddd95cc939db5097053c8a1c78d79b",
+      "bytes": 43558668
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911.skp",
+      "git_blob": "4f4d41801c3012492912cb26a66c93fd9b5837b3",
+      "kind": "skp",
+      "sha256": "8cc78cea46aeba47f9dd8cb3ee137a574cd8df08c5e2466f40e420a48521493c",
+      "bytes": 8318028
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_1.8米配件边柜(带托盘)_产品陈列款__asset-33660153.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_1.8米配件边柜(带托盘)_产品陈列款__asset-33660153.skp",
+      "git_blob": "1fc863c0cafed54637618feffa244573c636baef",
+      "kind": "skp",
+      "sha256": "099775fbf2103c7a729673e55c821cd70697a3e08793ceca6f459648c5108212",
+      "bytes": 8953369
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885.skp",
+      "git_blob": "ee64aa85e231ab19a200a1cc4a454310596ae638",
+      "kind": "skp",
+      "sha256": "5c10821f5e294f58ef92f5a63777a89566b9c8c0b8795afefea78625ff0c0b6d",
+      "bytes": 32730056
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122.skp",
+      "git_blob": "5ba4a8415a2bbec9a2e8fe09971d986768f44705",
+      "kind": "skp",
+      "sha256": "23f1c0b216bc7dc7cc5d3939d48a584ab05b5a760489f7f76fed17f01f8f5478",
+      "bytes": 33474090
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_2.4米配件柜(场景)_带原模型顶部标签__asset-36890994.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_2.4米配件柜(场景)_带原模型顶部标签__asset-36890994.skp",
+      "git_blob": "0858c282bc62c255b940e877d5f858b2b48c2ddc",
+      "kind": "skp",
+      "sha256": "1f32ef82eeac7a8217b5395cf3d7ecc6459d9854103d5f1146af49e17b3c3b41",
+      "bytes": 56510866
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_2.4米配件柜(场景)_陈列变体A__asset-6799167.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_2.4米配件柜(场景)_陈列变体A__asset-6799167.skp",
+      "git_blob": "916686816c0992373dedbdb93141035b1817476e",
+      "kind": "skp",
+      "sha256": "ded16da88c0dcb619f8258c3a05f95b05a153e9ed2d864bd848bfc46586f7403",
+      "bytes": 73511123
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_3.6米配件柜_场景与AVBU陈列B__asset-36857093.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_3.6米配件柜_场景与AVBU陈列B__asset-36857093.skp",
+      "git_blob": "d4a414d2c6392cf0acb709ce4c7bbdab41b90288",
+      "kind": "skp",
+      "sha256": "682cd710f5f80ed451d39660c491065b2822f8c455795443ac30a44763ea8eed",
+      "bytes": 64765329
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_3.6米配件柜_陈列变体A__asset-15903179.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_3.6米配件柜_陈列变体A__asset-15903179.skp",
+      "git_blob": "3ece241d5161cf23e17b649b8f36554526a0afa8",
+      "kind": "skp",
+      "sha256": "9823288d6c44f1750dd4dc05e36814a7398dfa3b469c2805d3277df67fef0ceb",
+      "bytes": 75643514
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_产品展示台_600mm方台_ANTIGRAVITY_非标延展__asset-37747691.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_产品展示台_600mm方台_ANTIGRAVITY_非标延展__asset-37747691.skp",
+      "git_blob": "48917fb3858208d50fdd430d1028c3ef11367b8c",
+      "kind": "skp",
+      "sha256": "4f61e3a4e8be422a821fa6b54fa5b368466f2b739caf1d1fa836f4a04f088b90",
+      "bytes": 8803231
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_产品展示台_600mm方台_GOULTRA_非标延展__asset-37747693.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_产品展示台_600mm方台_GOULTRA_非标延展__asset-37747693.skp",
+      "git_blob": "d31b972beb105a81102d327ec21489b99bb62fb6",
+      "kind": "skp",
+      "sha256": "23c81098c7c917d79ff5ebbe886e04a2d2dc95b849127bb749e34a8cdf7406de",
+      "bytes": 34551506
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_产品展示台_600mm方台_X5_非标延展__asset-37747692.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_产品展示台_600mm方台_X5_非标延展__asset-37747692.skp",
+      "git_blob": "f811866044777a62804ca4b30e5c27ef3032544d",
+      "kind": "skp",
+      "sha256": "2e0538663a05378cda581374ae27e6965fef4b03bc46c7e19cfd6a886ed1e656",
+      "bytes": 32936460
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_产品展示台_600mm方台_空台_非标延展__asset-36882381.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_产品展示台_600mm方台_空台_非标延展__asset-36882381.skp",
+      "git_blob": "fdaa92838f0fc15c7283b4d2a8055223d0e98b20",
+      "kind": "skp",
+      "sha256": "b6edf7b0896b701a7dc36645b59f4a4ea368818c8be86bec42ec2d0dcd8e0801",
+      "bytes": 2053196
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_字母凳_4件组合__asset-15903874.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_字母凳_4件组合__asset-15903874.skp",
+      "git_blob": "83b64e675f676b25637f3d5a73e375aa27394a55",
+      "kind": "skp",
+      "sha256": "7e199016bb1216ed0a6406d83d86674c224497f1a589a620ac9de426afee8efa",
+      "bytes": 8977902
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204.skp",
+      "git_blob": "4754f83a059de5a32a5cc7d4b3bb1380dab13eb9",
+      "kind": "skp",
+      "sha256": "ec277d72d0d1e9ba89092565aca3699afd2d70e328dc7ac04be89c1c9143679d",
+      "bytes": 32462075
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228.skp",
+      "git_blob": "040e8b3bf0a6124c5db639c20f6d38d6a8406651",
+      "kind": "skp",
+      "sha256": "186f38fa40713df21b01735641620ec837d708f38908223823709f1e16ee1d71",
+      "bytes": 4448248
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068.skp",
+      "git_blob": "7ff155c8fb087e13b63d335c2c4413532876f030",
+      "kind": "skp",
+      "sha256": "d5d8a1c1e8bd1948613aeeab8cc97ed5826d97496dd45f5cbe3e951e4116bbf4",
+      "bytes": 109228835
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/SI2.0/SI2.0_试飞台_直径800_H921变体__asset-16510684.skp",
+      "path": "资源库/04_软装道具模型/单件模型/SI2.0/SI2.0_试飞台_直径800_H921变体__asset-16510684.skp",
+      "git_blob": "ea8eca04613746e67207713c37a6bf6c4c3eadb4",
+      "kind": "skp",
+      "sha256": "5aceed05c72119bcc30fce87377133f74671bc1468b944130205696a5e673202",
+      "bytes": 227646
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/PDF-001-p15.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/PDF-001-p15.jpg",
+      "git_blob": "b4d1d70738e128bb29cb84e745e68c7ad4897dda",
+      "kind": "jpg",
+      "sha256": "8395aee75863e306d8e69afd55b0e26159f87935c4864a954a48072b19295681",
+      "bytes": 326106
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/PDF-088-p15.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/PDF-088-p15.jpg",
+      "git_blob": "7194e0095e6b88b12e79c5a9ce4664ee2dd9fecc",
+      "kind": "jpg",
+      "sha256": "e27383a0bc1fdfe6602ac04d371f3979136c064e246864135ccc667eff024ad5",
+      "bytes": 324356
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/PDF-201-p10.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/PDF-201-p10.jpg",
+      "git_blob": "30841f1cd5cf32b56b488375cc71b199b56497bb",
+      "kind": "jpg",
+      "sha256": "9b1621c6706a8f498f9680b970a52792725b1b4995b5b607c4380663f7779f6f",
+      "bytes": 458408
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/PDF-235-p15.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/PDF-235-p15.jpg",
+      "git_blob": "d6b7bc307733cd526404e40c3ec98185ff0d7fe0",
+      "kind": "jpg",
+      "sha256": "4dca22c6a30222edfae4549184c626299ed0269060ad05b022fb50613acd2cec",
+      "bytes": 297074
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/PDF-342-p11.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/PDF-342-p11.jpg",
+      "git_blob": "c287e014676f37ffd54554085f0cb4745b2148b1",
+      "kind": "jpg",
+      "sha256": "1eebd79c9be2485441828024d67d999435cb3ac02762a7e070667901b72afe70",
+      "bytes": 329482
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/edge-accessory-source-p6.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/edge-accessory-source-p6.jpg",
+      "git_blob": "6a342ea2dd8d57b0374fd7d837f1b7e76bd2a232",
+      "kind": "jpg",
+      "sha256": "0e134130ffcf60c1a19e55980ae1af4db7fde8bbc501ebbcfbb7228f24b8ad6f",
+      "bytes": 226227
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/edge-accessory.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/edge-accessory.png",
+      "git_blob": "279640b0b0b45ec92b3b27b6f2511c66ff286148",
+      "kind": "png",
+      "sha256": "1dd312aa27c7eee981c4a2422a608eb3d0d3f2b8fc5706eeec9cc02093941cb3",
+      "bytes": 22515
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/edge-cash-source-p6.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/edge-cash-source-p6.jpg",
+      "git_blob": "6a342ea2dd8d57b0374fd7d837f1b7e76bd2a232",
+      "kind": "jpg",
+      "sha256": "0e134130ffcf60c1a19e55980ae1af4db7fde8bbc501ebbcfbb7228f24b8ad6f",
+      "bytes": 226227
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/edge-cash.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/edge-cash.png",
+      "git_blob": "68d9a16f7fd32d50c27b6bc0b541636f92d0c27d",
+      "kind": "png",
+      "sha256": "4df1d93860f755c48b544becf117a3c4b66fb017bffda41b14a9df9c02f2e891",
+      "bytes": 20209
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/flight-source-p6.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/flight-source-p6.jpg",
+      "git_blob": "2f867e655b83002a4fa77e36591d81535b13fe72",
+      "kind": "jpg",
+      "sha256": "a9d494559fe3987d2b07c1fba2411c648a016d4a06630387bf6a259443dc80f2",
+      "bytes": 358595
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/flight.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/flight.png",
+      "git_blob": "132fce136e2bf884d9f5af3f15370416b823b45e",
+      "kind": "png",
+      "sha256": "ae0026e0cc6839c54204e8ceb73afe6c826225e625f868882c40e66cd5d02c69",
+      "bytes": 23704
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/leica1200.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/leica1200.png",
+      "git_blob": "a06fd3e14341c51c28f8c414b5dda61f39398da3",
+      "kind": "png",
+      "sha256": "87770d123234055ef525dd9335af88e4cf3bf931a239a7a1394701eb86f97e7c",
+      "bytes": 20954
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen55v-source-p6.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen55v-source-p6.jpg",
+      "git_blob": "6a342ea2dd8d57b0374fd7d837f1b7e76bd2a232",
+      "kind": "jpg",
+      "sha256": "0e134130ffcf60c1a19e55980ae1af4db7fde8bbc501ebbcfbb7228f24b8ad6f",
+      "bytes": 226227
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen55v.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen55v.png",
+      "git_blob": "f69781bb919aeaed8a38b3403d440e1222647278",
+      "kind": "png",
+      "sha256": "a6d56098859e935c4fd0a79ca4f0a6d222e3a833f01396a9952a221c9f71b896",
+      "bytes": 10433
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen65-source-p10.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen65-source-p10.jpg",
+      "git_blob": "c65e36ba1b8cc710b762fa810931cc782062e571",
+      "kind": "jpg",
+      "sha256": "536fb50114f12e670fa0c7f783ea8ff76c51da2a73756fbaef403b2177951892",
+      "bytes": 394524
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen65.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen65.png",
+      "git_blob": "9d6bd5a46e882af372a2113a4b1f6face148415e",
+      "kind": "png",
+      "sha256": "b60d8213ad9bc694c37a08712f7d24646bfcd04d3be7c357b6e80baa01b62670",
+      "bytes": 24594
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen75.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen75.png",
+      "git_blob": "1afa20e2d21bb19cfb836eec4c8c5c5ec43343a9",
+      "kind": "png",
+      "sha256": "f91fac36b0540f3dbdfa978646e084dbae8cb01661a811768c1d9caa47dc5834",
+      "bytes": 13653
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen75v-source-p8.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen75v-source-p8.jpg",
+      "git_blob": "aa7f741ce7811634b62d30cc8f4fefbfd6e64c0a",
+      "kind": "jpg",
+      "sha256": "42d74342f07503e3b691cb08c7341d1d74cf80991daeed6dedbab04f625ac595",
+      "bytes": 203201
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen75v.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen75v.png",
+      "git_blob": "eb44b3a28f0aa4a261071d16e6a29f88c2b4b8e7",
+      "kind": "png",
+      "sha256": "94d53c36945b6dfe6cb1b736dc8cbc09d1d3674b7e1226e7ce437ea6febb8028",
+      "bytes": 32796
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen86.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen86.png",
+      "git_blob": "01e2b5efe57bcfa2ce7ac7f46b336d33d2b54d96",
+      "kind": "png",
+      "sha256": "5e98d59c7821d8533968c91cd95fea4d6a62c64b96016a2e2fd8706c50be1959",
+      "bytes": 15135
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen98-source-p1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen98-source-p1.jpg",
+      "git_blob": "f2bd12f6ca7a3d44c4a734883386e9506aac6b8c",
+      "kind": "jpg",
+      "sha256": "a20167d30f74597a85cf303479eba7bd03d35483abf06c54553ad02631ceb409",
+      "bytes": 154353
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/screen98.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/screen98.png",
+      "git_blob": "b23503f93c1a36c07694d1ea810c79194468a3c1",
+      "kind": "png",
+      "sha256": "1b8aa1be950962b749b2c49c4385bf50bb6c112b306c21881f3f85530e080ad7",
+      "bytes": 9715
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-cab1200.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-cab1200.png",
+      "git_blob": "139c0f7754d5402d7cecaae55cb79cb07cfffe6a",
+      "kind": "png",
+      "sha256": "16bf54664753fe7d59ec5ea996480a1b016e25cb35a566468bc20aab2e80d75b",
+      "bytes": 17171
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-cab1600-source-p7.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-cab1600-source-p7.jpg",
+      "git_blob": "e6af61539e923d552379c1e89614fed522bffcd8",
+      "kind": "jpg",
+      "sha256": "d9453ed84fa83550c563204bde8f6fe4f45c9f7f32a61537bccd95de40e08234",
+      "bytes": 195062
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-cab1600.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-cab1600.png",
+      "git_blob": "8be19b9a0d13eaeb1118ee9092360f63d6549ba3",
+      "kind": "png",
+      "sha256": "0e2f3a3d2725af147eeceac9b498a564d63551737fd21e25e01236db403f48c2",
+      "bytes": 19595
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-island.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-island.png",
+      "git_blob": "3881221d3db4eb4d1d5fc2bfb0bd4ac8a68a0022",
+      "kind": "png",
+      "sha256": "660f2df6d1bb546264c0e1446581a7ff58f722eca12400310acefa75fe6f71b5",
+      "bytes": 48759
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-stool-source-p1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-stool-source-p1.jpg",
+      "git_blob": "f2bd12f6ca7a3d44c4a734883386e9506aac6b8c",
+      "kind": "jpg",
+      "sha256": "a20167d30f74597a85cf303479eba7bd03d35483abf06c54553ad02631ceb409",
+      "bytes": 154353
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-stool.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-stool.png",
+      "git_blob": "27d90a08d87381b1cea45a8fc7a29a10c99d2adb",
+      "kind": "png",
+      "sha256": "7462c781c7a77ea6f0b85b31fc8ebf2490c37f28bb170262bfb1397a3ffa13e5",
+      "bytes": 3366
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-storage-unbox.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-storage-unbox.png",
+      "git_blob": "930bdda06440f695e1e63ecd6246d8878dd71e89",
+      "kind": "png",
+      "sha256": "8f0d93ca4984bb42b7d76c2a89a5d41a4e3a47c63e0161ae1d7f25ec15785cba",
+      "bytes": 32158
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-storage.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-storage.png",
+      "git_blob": "5e8bc0b005be0c53ce52099c210a4f60bca99800",
+      "kind": "png",
+      "sha256": "4afec1aaaa36b6533ff6d3b54705411b5edc566ec777d70a0728fdee42ba98b2",
+      "bytes": 29151
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si1-unbox.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si1-unbox.png",
+      "git_blob": "9632c257c32e6139759fb290f92c6ae610f38ab0",
+      "kind": "png",
+      "sha256": "4997d0babbffe91216ce57d0c3a44204e0b629be84319d7d2afda1f9a3fa1606",
+      "bytes": 20171
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-avbu2400.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-avbu2400.png",
+      "git_blob": "109e1f618c51232b39ac4f91c58e8200193fc89b",
+      "kind": "png",
+      "sha256": "b8289ba384592a26e1d9d44c7db881545b0f16be86d23c0c2ce2b6d749cab10e",
+      "bytes": 14966
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-cab2400.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-cab2400.png",
+      "git_blob": "8bc82fc4ebc1f1d7cc697c44dbfc2c79b489f532",
+      "kind": "png",
+      "sha256": "a27c1dcfadde3e6d1f0dcad74791495bb9d919cc7fc4cabca8a07f9bfb329026",
+      "bytes": 25966
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-cab3600.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-cab3600.png",
+      "git_blob": "0fb4534910658f40b275628532a2154107c2e321",
+      "kind": "png",
+      "sha256": "4231298186a00eba82801b5cad006a8c9435e6c3fc9897f0fdb19297d6696e96",
+      "bytes": 16994
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-cash-left.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-cash-left.png",
+      "git_blob": "f9c7696314ae06ba0ad6b16b671a93ed48d297ed",
+      "kind": "png",
+      "sha256": "0cb5c495fc7d0fef2e9fb52fc0e686c512d22f5abed7e15e25e1fb264600962c",
+      "bytes": 9708
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-island.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-island.png",
+      "git_blob": "5ba900f79abc1f3a425f812cd629196c971b5b9e",
+      "kind": "png",
+      "sha256": "f0bc88cf5cfa4ea0bb03f4bee1518c864e9b44740de987adac4fadcd283b1906",
+      "bytes": 23383
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-stool-source-p13.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-stool-source-p13.jpg",
+      "git_blob": "cdd2da49ae30dc5ded0214b976306c9b7d125a71",
+      "kind": "jpg",
+      "sha256": "8fb538b4b147cc6e00c6033c275d92a1ad4531a94199c9e4148e5cab1bf0f9ec",
+      "bytes": 305769
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-stool.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-stool.png",
+      "git_blob": "449f7efb7569c4f61953c16ec2044d17e651e1d0",
+      "kind": "png",
+      "sha256": "24f460141a39fda9040bdec51278207165b7522d0de8a5e3af444822dd15d0be",
+      "bytes": 15600
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/si2-unbox.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/si2-unbox.png",
+      "git_blob": "909b48435fc36a5f92931414f2c4c64b6174abec",
+      "kind": "png",
+      "sha256": "0af80ad9a42fae2c85db2d55081f1e67de9da68841e54edae644d3a443ae7f78",
+      "bytes": 26597
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/water-sign.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/water-sign.png",
+      "git_blob": "e0c13e4960a396b9985ad6494b8fc80be26c48ea",
+      "kind": "png",
+      "sha256": "a550e7a9a1020ce61d0c806ef56299e44a3096f858df512ff186454fbd2828b8",
+      "bytes": 3179
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-11479197.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-11479197.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-11479198.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-11479198.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-11525433.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-11525433.png",
+      "git_blob": "7b168229c06fb866cac457628d9b6251fb232ed3",
+      "kind": "png",
+      "sha256": "cc5b02afb253a51ca79cf71a97856225701a84e4dedecbdd7c55df19d7dd893d",
+      "bytes": 4222
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-15903179.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-15903179.png",
+      "git_blob": "90a2c7421dd5d8f05a115db2c274101bda63ad15",
+      "kind": "png",
+      "sha256": "c253d26262b7d7742acc9f9b691f24df193a0ed8736c8588f4ae0766ff5e430c",
+      "bytes": 4613
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-15903874.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-15903874.png",
+      "git_blob": "b33c2766403b087ea505597aa0d9eb206d47c542",
+      "kind": "png",
+      "sha256": "d85fe6e28dfe278b9dd41aed263583d9f1828886316b61c757b8be6c93263db6",
+      "bytes": 5642
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-16469753.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-16469753.png",
+      "git_blob": "2d068f052f636767f5f06be8db76ef5c8b48ffb4",
+      "kind": "png",
+      "sha256": "8f61d13554424d4f5088dee94b6af5ed5142f511472970011547c4badbf8c8f8",
+      "bytes": 27785
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-16510684.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-16510684.png",
+      "git_blob": "0751c6955565b319074871c248dc9e927980d113",
+      "kind": "png",
+      "sha256": "97fc14628594b1316a45b6c86823addbe2b06245d682e4a2aff843b22b4dc81b",
+      "bytes": 30556
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-1788391.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-1788391.png",
+      "git_blob": "474b4dd8f103f42e8af1b90b440acedd76be4596",
+      "kind": "png",
+      "sha256": "9c2cdbd31849a796b794a3ff743665724e57498946889782802ab336ab21c1e2",
+      "bytes": 23792
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2245165.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2245165.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2360478.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2360478.png",
+      "git_blob": "4fc62d02aa62393b0030bbbecca9cd07763f7a09",
+      "kind": "png",
+      "sha256": "5094d0fd6d1c384ece78c728496d40a2e7aa48fb05a0e5416edb14265224c4e5",
+      "bytes": 5360
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-24312623.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-24312623.png",
+      "git_blob": "4fa307be4ce643d7aacc9b6fd2b59aabc0497af0",
+      "kind": "png",
+      "sha256": "a181a74ef67cfdd4e84367f068e1f03e0dff2bcdb49436b3a5102c4ac8ee3dac",
+      "bytes": 10623
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-24432224.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-24432224.png",
+      "git_blob": "566defcf123efe711d11bf06be71ae2c43921305",
+      "kind": "png",
+      "sha256": "b6ed82ac9df18d0de381a6215be572a5eb66f2ea3a71120792bde97c9c9e5f80",
+      "bytes": 16295
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-24482600.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-24482600.png",
+      "git_blob": "5b7a2cad8100757642867406ec585bb89861b3b5",
+      "kind": "png",
+      "sha256": "9dc94a13c5121e5bba285ec631a3e371425e495848ab3a4370b94cc999e9e44d",
+      "bytes": 5065
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-24498456.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-24498456.png",
+      "git_blob": "05ef6b76f623de880b87dcbd24118fda80d3a355",
+      "kind": "png",
+      "sha256": "8fa4cc5c47acf0bc16385682ebffdb56024c4afcc0acbb8dcd4f0e36b07b934e",
+      "bytes": 5358
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2500908.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2500908.png",
+      "git_blob": "5cb23f78f1f0d2ba01e13d02857176c9ad50d373",
+      "kind": "png",
+      "sha256": "0d053789575246eee8c970c7eb6232dac6c0d84174760478173e1c8eead0eccc",
+      "bytes": 4210
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2587726.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2587726.png",
+      "git_blob": "22dc4717fc0c1fbd1aae4617af385a249dd191a4",
+      "kind": "png",
+      "sha256": "f6b6f5386e1f0c5506f51157109fa7050de703b4f18bd904ce093b831031e6b3",
+      "bytes": 6936
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2595839.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2595839.png",
+      "git_blob": "72079f86ad7cd2924cb26fea2cd54c52ecdbcffb",
+      "kind": "png",
+      "sha256": "93c391d3772832305b8443765b990ce38274e5022e38172a4422c21710f8c604",
+      "bytes": 4055
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2595882.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2595882.png",
+      "git_blob": "5bd5c5670be06bc973ae1c7cbee1836f9dd4bf2b",
+      "kind": "png",
+      "sha256": "af9472072aa71e7a4e2264c7251266d81eb5e70ae86127d2caf7404473c3e6ea",
+      "bytes": 4931
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2597250.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2597250.png",
+      "git_blob": "75c98ab15f123bb547fdcba1cac0f57597cb9276",
+      "kind": "png",
+      "sha256": "151607ab86e2f3e85e679ea9dac29c7f0086cc75ad32834f1ba4526b44489738",
+      "bytes": 4233
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-28115483.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-28115483.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-2932497.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-2932497.png",
+      "git_blob": "417690d1561982e2ed726c09ce3c6a4ce0d03791",
+      "kind": "png",
+      "sha256": "545750df5970f0078c60d95b9e3dfa2d14682c77029d97d53b4aeb681ce7f363",
+      "bytes": 4233
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-3021147.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-3021147.png",
+      "git_blob": "8f22a4cf394d6fabe0371d257e08ad96c3fdefe2",
+      "kind": "png",
+      "sha256": "bc0959cbb385b5337acd2a84d2cedcb84ed54babb934d318b6ab55e82a309288",
+      "bytes": 4179
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-316267.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-316267.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-323015.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-323015.png",
+      "git_blob": "76d2cf33c416cbe345c161a5bf37843b2113cafb",
+      "kind": "png",
+      "sha256": "f97050f9fca666a1e7aa5f69bb4d5df6203ef49bde96013938c425562ae01be9",
+      "bytes": 4710
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-33660153.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-33660153.png",
+      "git_blob": "49b50f48348824246b56111b29bf5e100fc3197a",
+      "kind": "png",
+      "sha256": "87c06a50c38409d1fcb2d173dad3efb02222ad0ffc687a9e7d45077178347b9f",
+      "bytes": 9549
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-33819654.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-33819654.png",
+      "git_blob": "7e5bd077f5a552c9f2b221d06a1d0af2d979b80c",
+      "kind": "png",
+      "sha256": "35018ba84e059608b88464a7d120a72ddaf183844d3afc7f37a51bea67f65d36",
+      "bytes": 6914
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-34276510.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-34276510.png",
+      "git_blob": "e219c527f8046d42df9ad80956caded9cbd4d0b4",
+      "kind": "png",
+      "sha256": "b91f46ad00cb54d53e4bce417afb83d1e72bad4a10f7f81f0728aa683629d07a",
+      "bytes": 10445
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-34320268.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-34320268.png",
+      "git_blob": "9f1977cd0e01a4f8284ca43f44591c93d76fd962",
+      "kind": "png",
+      "sha256": "113545d17bfae6e0aed295cc2768c7b568a035e87572be4811acba02e092dc3f",
+      "bytes": 14934
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-34327615.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-34327615.png",
+      "git_blob": "f2b4ef32094c25035d0039e28774856fd7d70d4a",
+      "kind": "png",
+      "sha256": "d97823e1cb649aa7461054dc2299a53c3dd5bc5ba47a33feaa032cfbf0246185",
+      "bytes": 5067
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-36857093.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-36857093.png",
+      "git_blob": "6ace4883a4b953c968653f8e51e303d1f5893b4b",
+      "kind": "png",
+      "sha256": "d3e598c53b192a5602c00822cff70178b4ed96227d1ea5193e32aa3265c77a57",
+      "bytes": 4420
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-36887885.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-36887885.png",
+      "git_blob": "e73a16b07cd0fdafb0eb59a3ee9cd6d47972f153",
+      "kind": "png",
+      "sha256": "15187bdeba9530d0382d722a80858f8fe53596b230c167a14d7bcc48d375a624",
+      "bytes": 4795
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-36890994.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-36890994.png",
+      "git_blob": "c5fd38c49f2475a943b0745719ad07a7fffed300",
+      "kind": "png",
+      "sha256": "94499e87b2373a1e91f4373cc052361a17a639875cc8ca602153e60745761e99",
+      "bytes": 4561
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-36929122.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-36929122.png",
+      "git_blob": "e73a16b07cd0fdafb0eb59a3ee9cd6d47972f153",
+      "kind": "png",
+      "sha256": "15187bdeba9530d0382d722a80858f8fe53596b230c167a14d7bcc48d375a624",
+      "bytes": 4795
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-36929204.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-36929204.png",
+      "git_blob": "831562e886e55a8b7c56f232a7d3772fa804aa37",
+      "kind": "png",
+      "sha256": "c2a646a537402df714cc01920802ac1a539e8addf7d17eeea7f517db6366172d",
+      "bytes": 4287
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-37758059.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-37758059.png",
+      "git_blob": "372dc62d5080e12a439d4473d78f77019c6aa1fe",
+      "kind": "png",
+      "sha256": "3ebe0b1bd3fadb6cee88397a10a6bd7083a134ae325d783e2a34c566ce40d26c",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-408124.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-408124.png",
+      "git_blob": "c4ac00c29d12067a286cadda39d6e1fff73ad805",
+      "kind": "png",
+      "sha256": "187c26e8c565425c1e332524b952f88ec9a69916ef935032374d66c3e9e6490c",
+      "bytes": 15267
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-408125.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-408125.png",
+      "git_blob": "d717b744afad21762c6894f5d4faaf60a998b6d7",
+      "kind": "png",
+      "sha256": "d40475b7dca7b2fe507c6db13a623fc3afd27a5eec84664779374d2647eeec80",
+      "bytes": 14454
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-41053706.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-41053706.png",
+      "git_blob": "08b42805730fa1921f0b44d75cf89d840b7439e5",
+      "kind": "png",
+      "sha256": "4483b23010e9a408269cef4ee477a11525d83e244469edc19dab9b143e6c4fb1",
+      "bytes": 9241
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-41277543.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-41277543.png",
+      "git_blob": "f65f2fce6fc2ab0dd2a04c01357b52b145be3ee4",
+      "kind": "png",
+      "sha256": "5f051093b3a2bc680842b5617d72791dd49e417ae777d9378960117380fac168",
+      "bytes": 24912
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-569180.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-569180.png",
+      "git_blob": "8ea122b1fad99e6d379e85223092c51d918caca9",
+      "kind": "png",
+      "sha256": "ae417ce2d25953c2f4fa1135c11db438d2587d0cdae72b28b8fd5de11a257698",
+      "bytes": 5440
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-666964.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-666964.png",
+      "git_blob": "96b31362341dc8223cd79ed74a66ecb5790acf82",
+      "kind": "png",
+      "sha256": "8a6eb398870d7bc3847ba4525bf6ebefce1416d4538a819d9e3826799a0f369b",
+      "bytes": 19627
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-6799167.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-6799167.png",
+      "git_blob": "e559526ab6e705661a7658a071c5f7a15b27bd1c",
+      "kind": "png",
+      "sha256": "6c4e2ab8ef484ee4a5d06c1ccb33f9e2d756f12310c1f47904b8905593dc1c1e",
+      "bytes": 4567
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-752992.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-752992.png",
+      "git_blob": "68320f8eb07a306852bebdbc4ef2bfc2b8cfbc80",
+      "kind": "png",
+      "sha256": "926677d9628239bb898dbbd3548f56c6abe6f1328ae4926a59fd5d17f2e774f1",
+      "bytes": 14934
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-957634.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-957634.png",
+      "git_blob": "eaa52b5acd47211c598e7096505c54707aaa21d2",
+      "kind": "png",
+      "sha256": "287ad509eb06a04c7fdb452a3295202f5661a512b08fc2401bbc2d0bd160efac",
+      "bytes": 4061
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/平面图例/纯净版/asset-958185.png",
+      "path": "资源库/04_软装道具模型/单件模型/平面图例/纯净版/asset-958185.png",
+      "git_blob": "22dc4717fc0c1fbd1aae4617af385a249dd191a4",
+      "kind": "png",
+      "sha256": "f6b6f5386e1f0c5506f51157109fa7050de703b4f18bd904ce093b831031e6b3",
+      "bytes": 6936
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_KV灯箱_GO3S横版_2200x1250__asset-2587203.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_KV灯箱_GO3S横版_2200x1250__asset-2587203.skp",
+      "git_blob": "c36ab494f353fc89ab3b40bac5381c1ddafe376c",
+      "kind": "skp",
+      "sha256": "1bd9876a15fd507cde13aaf33fe005b015f9578d5121a55af8dbdcfef849bdf4",
+      "bytes": 4607794
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_KV灯箱_GO3S竖版_933x1670__asset-1156409.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_KV灯箱_GO3S竖版_933x1670__asset-1156409.skp",
+      "git_blob": "1c1b60cea7d52493a1532f7f0bc200dc86612824",
+      "kind": "skp",
+      "sha256": "f234ca56c55dc956c0f790f1100bfedbe9cbf659067a374e02a49f523dc40301",
+      "bytes": 17736813
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_KV灯箱_水下画面_933x2300_A__asset-11478950.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_KV灯箱_水下画面_933x2300_A__asset-11478950.skp",
+      "git_blob": "c9cfb9385315266692f4338e57002973d33de0b9",
+      "kind": "skp",
+      "sha256": "d591d83348a60164b951a0c525d1ae5c99f1a0f786ea865ee88ffe7f22de6f82",
+      "bytes": 386047
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_KV灯箱_水下画面_933x2300_B__asset-11525436.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_KV灯箱_水下画面_933x2300_B__asset-11525436.skp",
+      "git_blob": "3216d024998e03750f905a9b8c5c3111c55b9205",
+      "kind": "skp",
+      "sha256": "f16d1f14daf53c06d1c1c62e33aeb26172eea5f0a1adb1db3e0c3dfe78d79e74",
+      "bytes": 392887
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_LED门头屏_4614mm_落日画面__asset-11525629.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_LED门头屏_4614mm_落日画面__asset-11525629.skp",
+      "git_blob": "b67bd97acefb99946eb24d254d1a43aa5e10996e",
+      "kind": "skp",
+      "sha256": "7feb2c96e70cc3c74c2b0d82b419511a82fd5ced841d73b86baddd31dccad099",
+      "bytes": 1485769
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_LED门头屏_约7000mm_滑雪全景__asset-2463847.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_LED门头屏_约7000mm_滑雪全景__asset-2463847.skp",
+      "git_blob": "981dd547898cbd6ca86cc40b2128ee4c10e907cb",
+      "kind": "skp",
+      "sha256": "217debe3783df069162b54ab01146278e7a2743e93da7839a74b9dc507fc1c62",
+      "bytes": 377395
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_LOGO画面_Insta360_500x100_平面__asset-3147733.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_LOGO画面_Insta360_500x100_平面__asset-3147733.skp",
+      "git_blob": "a0143c3c27daaf68a41898ed59d9002dc3086d33",
+      "kind": "skp",
+      "sha256": "a15e1b54e166c513e8740b290d0743b7c50e6ccd5e27e2d16d2499df5429356f",
+      "bytes": 70991
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_双面侧招_影石Insta360_600mm方牌__asset-568756.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_双面侧招_影石Insta360_600mm方牌__asset-568756.skp",
+      "git_blob": "10f55e59fc82c3e434492848b1c981f1bfbc54ec",
+      "kind": "skp",
+      "sha256": "9f7a6c8b4e1936ed89ccd3ebae97dab9725470352b51f201db8b9786a41d62af",
+      "bytes": 452524
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_吊挂LOGO_影石Insta360_1778mm_长吊杆__asset-33937175.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_吊挂LOGO_影石Insta360_1778mm_长吊杆__asset-33937175.skp",
+      "git_blob": "ff03c53c619cee04ae59486c7448d6573968bcad",
+      "kind": "skp",
+      "sha256": "bf227ec8b1989115c7373657cd6345628c78178f2f8b1a04b73eeac769b6577d",
+      "bytes": 805935
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_吊挂LOGO_影石Insta360_1867mm_短吊杆__asset-33917980.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_吊挂LOGO_影石Insta360_1867mm_短吊杆__asset-33917980.skp",
+      "git_blob": "c3ecfcc18148c5e80fb452870863b3b462c24ffc",
+      "kind": "skp",
+      "sha256": "c4840be4a99e40545c6be94b5f9a846baac6ea29df92e909bf94c1c16436b4b0",
+      "bytes": 1132893
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_吊挂LOGO_影石Insta360始于敢想_1267mm__asset-1129848.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_吊挂LOGO_影石Insta360始于敢想_1267mm__asset-1129848.skp",
+      "git_blob": "601bd359088fc927dcd85ba22c37cd629b280d22",
+      "kind": "skp",
+      "sha256": "2407cf938b42886ed38747cd84ccba8f288c91e1a840224fd1a27fa06c85c7a7",
+      "bytes": 3734859
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_ANTIGRAVITY_2619mm__asset-37760531.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_ANTIGRAVITY_2619mm__asset-37760531.skp",
+      "git_blob": "47801a9b895a03f162668fe9deb92000a699eee9",
+      "kind": "skp",
+      "sha256": "b8c8ca9e513849f13c7db28f2e3c49d449102259167bfae90d874fa343491120",
+      "bytes": 61588
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_Insta360_2027mm__asset-40910342.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_Insta360_2027mm__asset-40910342.skp",
+      "git_blob": "735527a8b77d6e53c6847f1d65f361d79d46a60e",
+      "kind": "skp",
+      "sha256": "8d57ed896bd21aa3b89aa404f4c42055f841d3162313a0b9a8afbf7372839e77",
+      "bytes": 217177
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_Insta360_Thinkbold_1092mm__asset-34293910.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_Insta360_Thinkbold_1092mm__asset-34293910.skp",
+      "git_blob": "b76dff775aef8708ae37cc671f5865e6a5a64d1b",
+      "kind": "skp",
+      "sha256": "e0aef01b44d62c0137f2960aa354769afa6ef62b89b0804d5d27c5bfbcf67244",
+      "bytes": 224566
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影石Insta360_2930mm__asset-40896298.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影石Insta360_2930mm__asset-40896298.skp",
+      "git_blob": "10b316238c1163973b490eb7d3163d94d0822990",
+      "kind": "skp",
+      "sha256": "94d6ef65c0d3bd9f62a1a892c7d06b7402ca347da1492559e0542cf25ea1e6d4",
+      "bytes": 333835
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影石Insta360_3453mm__asset-20533337.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影石Insta360_3453mm__asset-20533337.skp",
+      "git_blob": "673dab4702014521916f77e93343b2d0f3470505",
+      "kind": "skp",
+      "sha256": "5bf4c7acc356e7ba8436e433492968f7678719542c805ab6494d41d0dc0c8133",
+      "bytes": 414150
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影石Insta360全景相机_4673mm__asset-33868332.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影石Insta360全景相机_4673mm__asset-33868332.skp",
+      "git_blob": "d724017647d2ed09916b83cfca2cded02f0a2dce",
+      "kind": "skp",
+      "sha256": "f69bd89c6f0cb79dc215d15002ac0e63238196cd86d729ca6afac26357d2bd24",
+      "bytes": 515127
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影石Insta360始于敢想_1266mm_B__asset-33868330.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影石Insta360始于敢想_1266mm_B__asset-33868330.skp",
+      "git_blob": "8480d521ab54984ec1d7cad2c7744509c6b086c2",
+      "kind": "skp",
+      "sha256": "38ae4dc75a9233dc2b3c8531348bb8e6f13fe1f4f03426d2fd9398cc9490e832",
+      "bytes": 410596
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影石Insta360始于敢想_1267mm_A__asset-6952129.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影石Insta360始于敢想_1267mm_A__asset-6952129.skp",
+      "git_blob": "a81545c873b94e99d76e5ceb5af2c396668028bd",
+      "kind": "skp",
+      "sha256": "bbcf62c32b2d5742fd1673acf2c4d793fee42ab317c90eb7d8a9db14c150bcf9",
+      "bytes": 472224
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_墙面LOGO_影翎ANTIGRAVITY_3155mm__asset-11483499.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_墙面LOGO_影翎ANTIGRAVITY_3155mm__asset-11483499.skp",
+      "git_blob": "74a29d7f5fc46aca11185bc3e15cfde1b2ccb821",
+      "kind": "skp",
+      "sha256": "9849909436ca7ad93aec245ffd5e5de41b277cc14ea39a925ce501482967a9de",
+      "bytes": 99385
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_55寸竖屏__asset-2597250.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_55寸竖屏__asset-2597250.skp",
+      "git_blob": "a3f054590f0308c68b5e1026fd4523e2a9cd6721",
+      "kind": "skp",
+      "sha256": "256afae31edba113719e59e6df4574a57dcc33baec830ac4137c9d04e8c6c5ac",
+      "bytes": 514440
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
+      "git_blob": "9a03554c480af27cff7ecd27ec1d1f410fef5cee",
+      "kind": "skp",
+      "sha256": "376e2bdead3246dd7bb4b7d6845494d730d7b5a47b829f5922b5fe46ed77820e",
+      "bytes": 18216212
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_单板滑雪画面__asset-28115483.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_单板滑雪画面__asset-28115483.skp",
+      "git_blob": "ef40c367836475f96f6cc56d43f9ca662210a2f2",
+      "kind": "skp",
+      "sha256": "29afe80feb87edeb990a722df17931494c99384e0c0fba88a4fbfbe09529533c",
+      "bytes": 18659455
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_建筑画面__asset-11479198.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_建筑画面__asset-11479198.skp",
+      "git_blob": "af7486e41267e0b2d15244aa33d50604f2dcf7bb",
+      "kind": "skp",
+      "sha256": "b2749a57b0763fea20c35f26221b5025b13c7d64342845294306b16ff4082824",
+      "bytes": 18878404
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_旋转实例A__asset-957634.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_旋转实例A__asset-957634.skp",
+      "git_blob": "fce3b8b4212fcb651b30c7cd710c888151853cc7",
+      "kind": "skp",
+      "sha256": "25ed246bea410978064a1ba0738912ad7e74d4108faa01cc8c3ed9fd255f70c2",
+      "bytes": 18207334
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
+      "git_blob": "776b1cd1531b24776566f3fe842658f6518547c0",
+      "kind": "skp",
+      "sha256": "ae87eae2bc7252f89b583497f6de93f06c9af6ae17e9a9f4f394a94d946c2eff",
+      "bytes": 18095792
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_滑雪画面B__asset-2245165.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_滑雪画面B__asset-2245165.skp",
+      "git_blob": "86dcb4f156ab950a929f7004c8cddeb564de48a5",
+      "kind": "skp",
+      "sha256": "ce2ec5983b6ca52b7a0fa05c41190bb58d015730798d40d15f69b7c3d9ffc796",
+      "bytes": 18214716
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059.skp",
+      "git_blob": "f9cf8be6eb4d2b854006e3a59d49921188c5ea38",
+      "kind": "skp",
+      "sha256": "a04d2e14855f27e3f5f11a500f9aaf5d6762774683a6739e5d5201405ced3e9a",
+      "bytes": 18212005
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸横屏_滑雪画面__asset-316267.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸横屏_滑雪画面__asset-316267.skp",
+      "git_blob": "19ca82239c49039911738a571d7f9694272cedbe",
+      "kind": "skp",
+      "sha256": "1d6fca7030f480c56b9d2be971b589a28405605a69f681524e55664b81f7f57a",
+      "bytes": 18214710
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
+      "git_blob": "8aa2f75e25f22cf6cfc3bff4716cce46f6f983e6",
+      "kind": "skp",
+      "sha256": "b996eaf4e8c25fd47f3efa10f1a47fa0c38c8ea8ac5d7c53e3236d741c2e950c",
+      "bytes": 18217563
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
+      "git_blob": "608078b1a1745b5b9c72913a70a75c4944fb3860",
+      "kind": "skp",
+      "sha256": "159697c3dea58abc0d0c94683444e90e299669cbc3fa0cf7b0e30980e755e98b",
+      "bytes": 4199925
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_86寸横屏_滑雪画面__asset-2932497.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_86寸横屏_滑雪画面__asset-2932497.skp",
+      "git_blob": "2fb3561c31ba1e778e56dddb8270aeb1868b53cf",
+      "kind": "skp",
+      "sha256": "872580e91c200db4e09e9230a3c99a9bc0d01e56059d4f7e676a97506de39aa8",
+      "bytes": 3755156
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
+      "git_blob": "a495def29d3d9ad8e3cd8432615e47e9b0fbd392",
+      "kind": "skp",
+      "sha256": "dbc1b434bd9d5c6d1cfa459aa02ee1739dc0d01a9f926dab92fc63c32c16b0b7",
+      "bytes": 503417
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_广告机_横屏_1142x645非标规格__asset-28104668.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_广告机_横屏_1142x645非标规格__asset-28104668.skp",
+      "git_blob": "c72417c97f920d6ebc326d1ccb19158e3a5f8c60",
+      "kind": "skp",
+      "sha256": "dc209badbc4026bc73fbd1fb9c72e5679b21493f54baca2bc3172d20be4c850d",
+      "bytes": 3358195
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_消防栓箱_红色设备箱__asset-24488049.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_消防栓箱_红色设备箱__asset-24488049.skp",
+      "git_blob": "2976fc2433ce8979bb174a4d0555a1fe239eae53",
+      "kind": "skp",
+      "sha256": "3c2edda438adbcb291ea19e4060950d2612054d2e4b21a67a317561040a1b8c5",
+      "bytes": 127363
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_电子水牌_43寸_H1650__asset-2587726.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_电子水牌_43寸_H1650__asset-2587726.skp",
+      "git_blob": "0aa5f99c225229a39dd8804586f47151ee9d0a1d",
+      "kind": "skp",
+      "sha256": "76baafdc999ae5b89b79a34f4873f23457cf7bb342282b66f3bd6af66b0cc6f7",
+      "bytes": 310850
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_电子水牌_43寸_H1650_旋转实例__asset-958185.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_电子水牌_43寸_H1650_旋转实例__asset-958185.skp",
+      "git_blob": "232eb38337ee22de73481e7db3fdac779e64b2c3",
+      "kind": "skp",
+      "sha256": "696ebd70ec8940b554694775d6952c01170d66cab07584190d85b795035c0a53",
+      "bytes": 309903
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_轨道射灯_单灯_灰色__asset-754909.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_轨道射灯_单灯_灰色__asset-754909.skp",
+      "git_blob": "78e1c1943d109239ccc5fb33557a143dacf09af6",
+      "kind": "skp",
+      "sha256": "20eebf3ba5f49f6346f8a3dcb197d791bf76b8486ab52a659c3e39027a114c40",
+      "bytes": 42651
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_轨道射灯组合_1500mm轨道__asset-775543.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_轨道射灯组合_1500mm轨道__asset-775543.skp",
+      "git_blob": "4a7469ab643b87d4c6b066cdec4e9c972a247a08",
+      "kind": "skp",
+      "sha256": "19e17c97d20605e8af8e25465ecd8292c2749a7db205871712d34e51692a0cce",
+      "bytes": 480426
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_轨道射灯组合_3690mm轨道__asset-33908345.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_轨道射灯组合_3690mm轨道__asset-33908345.skp",
+      "git_blob": "1aa130910263ac021b9bcdcc6c24f9bc2613bb5c",
+      "kind": "skp",
+      "sha256": "c49243fc98bf05a82c044dd2132a08322871ea055da4b7bb717169174d91276f",
+      "bytes": 569255
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_轨道射灯组合_750mm轨道__asset-2908609.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_轨道射灯组合_750mm轨道__asset-2908609.skp",
+      "git_blob": "9ab9bcb708ccb45e0d9299354a4980397e36fc6c",
+      "kind": "skp",
+      "sha256": "05372eb6cf64e91f8832c98b5b40de42641bf2a1cd9b94f3a23606f7fad73ad3",
+      "bytes": 480154
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/通用/通用_轨道射灯组合_四轨组合__asset-2932358.skp",
+      "path": "资源库/04_软装道具模型/单件模型/通用/通用_轨道射灯组合_四轨组合__asset-2932358.skp",
+      "git_blob": "f2299a9fde0bf715fbefa4c2ef721b857ca4bc9f",
+      "kind": "skp",
+      "sha256": "ddf235b6736df0fe66b146ef476735333d90521c372397208af5cb8dd1d803c6",
+      "bytes": 584433
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_KV画面_AcePro2_1200x1500_平面__asset-569211.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_KV画面_AcePro2_1200x1500_平面__asset-569211.skp",
+      "git_blob": "0372ea3502093e58f669326f349a1ff7d6bb86dd",
+      "kind": "skp",
+      "sha256": "50a74b1a616a513d6a36fb8cb8e092fb71a794dcf31e44bfcfd22e6bcc05b9f9",
+      "bytes": 1048894
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_KV画面_AcePro2_1700x980_平面__asset-754006.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_KV画面_AcePro2_1700x980_平面__asset-754006.skp",
+      "git_blob": "923a5294394d291a458fffba99da2bd6ee997f34",
+      "kind": "skp",
+      "sha256": "006dba82f4f1c150c7282c7756c458df48591f78c00bccc06f91a87e300a5d9b",
+      "bytes": 1049801
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_L形挡板_银灰圆角_900mm_用途未定__asset-3356988.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_L形挡板_银灰圆角_900mm_用途未定__asset-3356988.skp",
+      "git_blob": "a835f8dfeeab9cec0080aa178a2cc1f4c5b63491",
+      "kind": "skp",
+      "sha256": "3ab4fa84330ef01f3bcf8ea2f8fede05e53dedf64165cabcb75a94745826fd49",
+      "bytes": 33167
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_中岛陈列柜组合_白色_带配件柜及产品屏__asset-28034994.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_中岛陈列柜组合_白色_带配件柜及产品屏__asset-28034994.skp",
+      "git_blob": "04efd8ef7a8175698b7feba905060f35e17b2680",
+      "kind": "skp",
+      "sha256": "45a51b91c80605c6c2e9c2719185819a87688fb83d13cbaa6717eb3dd5d7aa2f",
+      "bytes": 100881685
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_产品放大模型_X3相机__asset-1691382.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_产品放大模型_X3相机__asset-1691382.skp",
+      "git_blob": "37f202f5da06318009cee742b50a6df3134ca2ad",
+      "kind": "skp",
+      "sha256": "173e23cdfbf38d2d2887b1801e5c000ef3f7522b2b02aa53be6b921faa47ac4c",
+      "bytes": 315442
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_产品标识_X5立体字__asset-1688590.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_产品标识_X5立体字__asset-1688590.skp",
+      "git_blob": "727b05695470709be558c580fc0843c3aec92860",
+      "kind": "skp",
+      "sha256": "fce3a83336a3deab7f3ae7259cb1e69d537ea6f90b960406d858223dced97bac",
+      "bytes": 40884
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_休闲沙发_黑色双人款_2000mm__asset-3356837.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_休闲沙发_黑色双人款_2000mm__asset-3356837.skp",
+      "git_blob": "9394f9d8acfe224853ec5e4104dcfe622ef2927b",
+      "kind": "skp",
+      "sha256": "a173c3c501f93402c979c4025c54f7c7bc0360f2967c5aa6c79d86b350df1ba1",
+      "bytes": 20216
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_曲面LED屏_冰川画面_长条弯折款__asset-11511980.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_曲面LED屏_冰川画面_长条弯折款__asset-11511980.skp",
+      "git_blob": "7d563d3412dd443c658addf0505605d256bb6ed4",
+      "kind": "skp",
+      "sha256": "69369a37bf49cf26671d7df337c085e8278037aae25b20343bb22390ccc0d754",
+      "bytes": 18843752
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_橱窗场景道具_柯基犬_带运动相机__asset-1567211.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_橱窗场景道具_柯基犬_带运动相机__asset-1567211.skp",
+      "git_blob": "cb0941e816eaf7f663edc5e226673545175c18f7",
+      "kind": "skp",
+      "sha256": "b6884396ec5066cd51d721230bb441e9b2f36f65510c529563459263df1165de",
+      "bytes": 65418725
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/非标/非标_橱窗模特_头盔赛车服人台__asset-1688589.skp",
+      "path": "资源库/04_软装道具模型/单件模型/非标/非标_橱窗模特_头盔赛车服人台__asset-1688589.skp",
+      "git_blob": "b8fee017db7304527e81b508f385c7c41fa6d638",
+      "kind": "skp",
+      "sha256": "d906169950fc47753bba42bcf463b6a240c45e77c1dd991a332bb7b53aef0ebd",
+      "bytes": 5516401
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1129848.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1129848.jpg",
+      "git_blob": "cdcf9f8c5b87637bb7d5cdcc2e794e07e2bc47db",
+      "kind": "jpg",
+      "sha256": "85a03411aa391bee85942a33a87ad3c6d2e05324d2ca4e21be1fc406aa05b009",
+      "bytes": 7843
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11478950.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11478950.jpg",
+      "git_blob": "35e077b9cf268bfb0448664b889bb5c6efa18aaf",
+      "kind": "jpg",
+      "sha256": "bf3ac34eb64bf8ae64bb69f742c8fb44af17eb60d962667b0817932dfa01f66c",
+      "bytes": 14175
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11479197.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11479197.jpg",
+      "git_blob": "6bcc3b242b9da6d4534bbced302b9a49efb4533b",
+      "kind": "jpg",
+      "sha256": "d7e38bffdc7d61327299fca03ca62e1a54d48fe6cc767c4881f7a7b72a49e7fc",
+      "bytes": 9088
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11479198.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11479198.jpg",
+      "git_blob": "85c30467dec9825519097e814ed264b27b9a8515",
+      "kind": "jpg",
+      "sha256": "c1bd721bd8baddc344dbff28ea17eccc2b12c50cb9c922142700eac8884e7192",
+      "bytes": 11725
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11483499.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11483499.jpg",
+      "git_blob": "2cadfefb6d7679141d0bb98094a45a763284cdfa",
+      "kind": "jpg",
+      "sha256": "2eb57824851322c4dcc49fa4d3841593e0287fb246461c3b8cc61d07c09c72e9",
+      "bytes": 5463
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11511980.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11511980.jpg",
+      "git_blob": "175cce053ad50f6b49268674cce7e4979ef0c74a",
+      "kind": "jpg",
+      "sha256": "9a5934bcd434b49f9a73de0f2f549ecac78b6c8925af95326e88514f55485f6f",
+      "bytes": 10695
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11525433.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11525433.jpg",
+      "git_blob": "845053c7fb05f507ea6a8891b115878fb6b51d4d",
+      "kind": "jpg",
+      "sha256": "46fa4232b8944c592fbf5c316dcaa558f1f68173af237c021f996c2252d4f44c",
+      "bytes": 8098
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11525436.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11525436.jpg",
+      "git_blob": "975e5c53c73f624f63de0df3c508bf0d881fb13c",
+      "kind": "jpg",
+      "sha256": "3b671a54a30de79670c84661335de924138b7809a744d315cc710e2f93745c88",
+      "bytes": 14166
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-11525629.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-11525629.jpg",
+      "git_blob": "579669a9bb238f12ce86371709ee27c232026f39",
+      "kind": "jpg",
+      "sha256": "d2b7f7a34e063b1be5b71a3d1f90a3ebc77f250653a21cd1cc66afa258f3b934",
+      "bytes": 5166
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1156409.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1156409.jpg",
+      "git_blob": "0e29ef724252f0cf69dcce40137e6cfe9779d363",
+      "kind": "jpg",
+      "sha256": "053dd8ddd020888bba6fbeefe017e1e107855fe96644596e090346b298bb6bf2",
+      "bytes": 12289
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1567211.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1567211.jpg",
+      "git_blob": "4d6840d16bf524816fe6205b84454e1b339b88ef",
+      "kind": "jpg",
+      "sha256": "0213722c6c46507d7a907299a74649b3d6ce26d6392faa0cf0530c46dd9417fe",
+      "bytes": 13967
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-15903179.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-15903179.jpg",
+      "git_blob": "156ae8ef4fc3012f5d287c58172c61001fc7e9ff",
+      "kind": "jpg",
+      "sha256": "bb5dc67311b6375741d3a48ee329ecdd317dde95454fddea15750c4fea84c29a",
+      "bytes": 12675
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-15903874.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-15903874.jpg",
+      "git_blob": "3bb9f144a6bf35f2f6c99c93225bfc52434e958f",
+      "kind": "jpg",
+      "sha256": "89688d8635dcf4d743a16a03ea6ea61de3b039e88602b8e88ec1f4409f60f9f2",
+      "bytes": 9627
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16469753-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16469753-0.jpg",
+      "git_blob": "4bf88229f43ae3e0810edfbc4e626a9c9807cc65",
+      "kind": "jpg",
+      "sha256": "ff300d42b7b4efc04b2dab3aa17dc9d06d2c9246f55a0b3843f6fbed3ca34dae",
+      "bytes": 50229
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16469753-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16469753-1.jpg",
+      "git_blob": "46918733c2332cab80cdc81525241201dd09bf38",
+      "kind": "jpg",
+      "sha256": "d8fd2efb8ef73c1156cf5c4d88b3788570141b111fa3b18a2d351e2e96dd7434",
+      "bytes": 50065
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16469753-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16469753-2.jpg",
+      "git_blob": "1364a42d1dbdc5e4d22b9959272b9b7e0bd6ad1e",
+      "kind": "jpg",
+      "sha256": "f3cce0ed7f5519d6e43eff41d28804f06a86e8191ae0fd4255ef1e4de2ba8825",
+      "bytes": 31208
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16469753-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16469753-3.jpg",
+      "git_blob": "4ff28ffca898fa9775ebf491839167aee736a8c6",
+      "kind": "jpg",
+      "sha256": "d4bc7a0984b3a15432b66aab624105d99e14b2b4ccd16151cbe33c7dc92fa88f",
+      "bytes": 33372
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16469753.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16469753.jpg",
+      "git_blob": "bdd19ba10cd2ed0053f2fd4b9728e5e428fc6953",
+      "kind": "jpg",
+      "sha256": "14991d7bcb288aa5b774d153c752ea3b38e51670fb2d353d2bccd5272b2dd97f",
+      "bytes": 53778
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-16510684.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-16510684.jpg",
+      "git_blob": "b7794b1abb67c9d5605e482e416b6980c6d2dadb",
+      "kind": "jpg",
+      "sha256": "defff53f295b434926c3e08c6454c27d98d21edf1bd54daa87793d5fb903706d",
+      "bytes": 8922
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1688589.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1688589.jpg",
+      "git_blob": "29d7bf159f539e6c6541f0590616478696e05a64",
+      "kind": "jpg",
+      "sha256": "b82df0cd33515769229c3d17303c177f0e7e54266d790c226636d1cec101fe5b",
+      "bytes": 9172
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1688590.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1688590.jpg",
+      "git_blob": "00d07fb955b2cd8bbd7c8c5f51feb6c0f6043d65",
+      "kind": "jpg",
+      "sha256": "b6c367a4a3cf3166bb591b0b86262b33076e26fb66230d1272a3cac7cba86ae8",
+      "bytes": 11924
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1691382.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1691382.jpg",
+      "git_blob": "a7c95b4c1200f9a5abc72e08880d999eb255a244",
+      "kind": "jpg",
+      "sha256": "c802b99979d651dca65bf2e64ddf66909acd138d2e465bea02f76ac3abd36915",
+      "bytes": 9172
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-1788391.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-1788391.jpg",
+      "git_blob": "f28c1ad4a1cf12eaf93ccb689365ab3311bfc2b4",
+      "kind": "jpg",
+      "sha256": "d2ecc316a69ac33e4903a0a87744fcb79a96bb005f5120441727e369538d5a39",
+      "bytes": 12416
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-20533337.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-20533337.jpg",
+      "git_blob": "c79348b7b8a4f7af1061d074ee57309a9d94d6e9",
+      "kind": "jpg",
+      "sha256": "bf188831ce7d3a0279585801b369563a77f254db0da6064accc4ee12dc068c6b",
+      "bytes": 6027
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2245165.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2245165.jpg",
+      "git_blob": "13c44fa157fb516131b8d9ec23c799f2df081f80",
+      "kind": "jpg",
+      "sha256": "88cf4873ddda3f52a2ca71aebf356f8c173e2d5a1d5e1d33450a7826b89a8dbd",
+      "bytes": 9257
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2360478-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2360478-0.jpg",
+      "git_blob": "236b5cb3e7de2d46366fdeac1061bb237c7a0a1a",
+      "kind": "jpg",
+      "sha256": "8b82d551fdb83ff1ab93e6649934102d645fbfb45dd2b82c1c293e54e29d943c",
+      "bytes": 58088
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2360478-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2360478-1.jpg",
+      "git_blob": "abad70862b5917a6cc2b5445bd7258ede5593aba",
+      "kind": "jpg",
+      "sha256": "cef4cc23bac8a96eb307f3a059e4e6d9929e2992fdc3a9b2067c0e9defde82ed",
+      "bytes": 44952
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2360478-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2360478-2.jpg",
+      "git_blob": "25e5af5d5d67735b0a2a1ee099a59e9dad1da8fe",
+      "kind": "jpg",
+      "sha256": "c4760f5744ad8de5aba214fdf9a82e71edda2a49bf8339b567c178fd2ff9243a",
+      "bytes": 20784
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2360478-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2360478-3.jpg",
+      "git_blob": "5bb520033db67623db9b489a47cb5617d9c829d7",
+      "kind": "jpg",
+      "sha256": "15538a3ce94146fa581825776c24e2263a7cad84128b8aeb1e1e1712ba731b9a",
+      "bytes": 54886
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2360478.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2360478.jpg",
+      "git_blob": "64baf90bf8ae2e725161e81acfb20b0f507340ad",
+      "kind": "jpg",
+      "sha256": "01f65ebdd6b1635fc7ae9a40973153946047425150a9d206d1aaad8294045c4a",
+      "bytes": 62384
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24312623.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24312623.jpg",
+      "git_blob": "caf69091ace25745c6caa8a1495c412bf0e6292f",
+      "kind": "jpg",
+      "sha256": "043b74b70c4eb94a189fd6ce648caaea1ec46618b79423d97a45aa13d942b97f",
+      "bytes": 13922
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24432224-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24432224-0.jpg",
+      "git_blob": "ad22f9a1b925fe9cce53b8b3d913757e2fa19b59",
+      "kind": "jpg",
+      "sha256": "a5add8eff2275398e2af2adc4674bd08b2af97d6275ef2a8584ead052519bb80",
+      "bytes": 35465
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24432224-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24432224-1.jpg",
+      "git_blob": "a686369773911980eed23309351d22a817bc7edd",
+      "kind": "jpg",
+      "sha256": "8e7342ac1316d3b95d0256087372528287cbce893a80fabec67b2dd158ed7910",
+      "bytes": 43352
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24432224-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24432224-2.jpg",
+      "git_blob": "bd7f839453757882dca3e7633a907b07a2a40a49",
+      "kind": "jpg",
+      "sha256": "8e47802864f4cfa7d23c64361f65fb0b65209e98877b984c7edecc2575fd6a70",
+      "bytes": 26124
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24432224-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24432224-3.jpg",
+      "git_blob": "76e59c775aafad993ad260295fc8606e00bcf8b8",
+      "kind": "jpg",
+      "sha256": "51191b45d00652c7b15f7b4ce4e1270bb9f2b11dfda769ef868b16d9ea588429",
+      "bytes": 19559
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24432224.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24432224.jpg",
+      "git_blob": "2aac83ba9710273a7b055123be4da5aa347467d5",
+      "kind": "jpg",
+      "sha256": "ca40f430473fc08e2434f8176b159d6ead8ca68c8449fe80e45d588033452c39",
+      "bytes": 37500
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24482600.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24482600.jpg",
+      "git_blob": "8641b405a9f0c10c14d6a5e2be2dc86ef5fdeb9b",
+      "kind": "jpg",
+      "sha256": "b5474036a5cb1e8f88eff4f9cffc4c6f544b2471af2a694687b4def178cb5b15",
+      "bytes": 18690
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488049.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488049.jpg",
+      "git_blob": "4544b0378a94bc4210a68d6bcd19e56ad8cb69a3",
+      "kind": "jpg",
+      "sha256": "7bcd321f172ea198e2ccdccccbc68a28bd96a68aaba39b657255fc8644a69354",
+      "bytes": 9412
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488377-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488377-0.jpg",
+      "git_blob": "4c4e9b1b6710d21e7ab5a47abb7e7393961c4c44",
+      "kind": "jpg",
+      "sha256": "bdc43bf3f9bacbfb7d58c4fda87a4811860c83efff5bde2689e34ed49e1af85c",
+      "bytes": 37673
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488377-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488377-1.jpg",
+      "git_blob": "60af9752721c320bf2b7fa17ae9cc0ec4fcb9406",
+      "kind": "jpg",
+      "sha256": "6237f41277cb7892c3db0632284bba43e33c2d58c8f11881ac1e2a7fe4aab568",
+      "bytes": 40848
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488377-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488377-2.jpg",
+      "git_blob": "9b930ee118f20debb7ed20c57900259d272b21f0",
+      "kind": "jpg",
+      "sha256": "2b3ec49d95fe41ed2716f5376d33d01bfa209f6ec4868ea187d88ddd8b044ad1",
+      "bytes": 29464
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488377-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488377-3.jpg",
+      "git_blob": "9acb36ca5cc579687ba68d8cf6e49d8213f6c3cb",
+      "kind": "jpg",
+      "sha256": "d8da1ea0b23ef26e34370c605ba027d5c3bd0a54e421a4eee0ca07b6a9c09f89",
+      "bytes": 21303
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24488377.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24488377.jpg",
+      "git_blob": "8c67113d49f880a6808d1eb465dfa4c04d5dba8f",
+      "kind": "jpg",
+      "sha256": "b2b45da916b72f45949023e36b7404dab15a63af22ac436bc81192d5e622f476",
+      "bytes": 39807
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24498456-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24498456-0.jpg",
+      "git_blob": "a39794cf5912a4735009b7e8a1ccf7bdd70fc59b",
+      "kind": "jpg",
+      "sha256": "28c317e622d09c54054db6935d4502364836f23e7001cf3845a10a1dc6ed353b",
+      "bytes": 58930
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24498456-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24498456-1.jpg",
+      "git_blob": "bb0dece094428981de1fcde20b90a7fe4bdaa0ed",
+      "kind": "jpg",
+      "sha256": "d970000fd830d8c925ca90b0103ca5e66d8cd94fec7aa0219c17d8e98416920d",
+      "bytes": 45216
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24498456-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24498456-2.jpg",
+      "git_blob": "c4975bec136e1220f2581df2ee635e4c5e3541f0",
+      "kind": "jpg",
+      "sha256": "f7475f3a7e59d7a0f5601c29fa79915cacba7f5545046db3dc7fd6cb81e233b6",
+      "bytes": 54895
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24498456-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24498456-3.jpg",
+      "git_blob": "102f3050e49d0b840a1ca4009622491d3238f9a2",
+      "kind": "jpg",
+      "sha256": "30b4deb1ecc707578cb5a7f3a63cffc6062cef5c27cd3bb30b9079ba63d9057c",
+      "bytes": 21033
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-24498456.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-24498456.jpg",
+      "git_blob": "411c7b427610daed690cce7a8ebe7a2051261c3c",
+      "kind": "jpg",
+      "sha256": "a4c118fc093f6e09a33427732def6c2b3ef39d8f7fe0876222691f3e842c8c48",
+      "bytes": 63269
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2463847.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2463847.jpg",
+      "git_blob": "cdbc3c37f9c70d404b063d8db4961ab7c58427d1",
+      "kind": "jpg",
+      "sha256": "ae812e263f04e8d1a41a43c98e9665d2a0e8f1c717355cc643f8bcf36f5480a0",
+      "bytes": 5411
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2500908.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2500908.jpg",
+      "git_blob": "1a7d725217eb510b220146fe1c05e7c0addb541c",
+      "kind": "jpg",
+      "sha256": "5f16f194899a3a79915511d1c46c942d964a1aa65af9cea511f1be30072fe82f",
+      "bytes": 8842
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2587203.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2587203.jpg",
+      "git_blob": "f7be121c07f80963b5b84546e7ba08569925a5b1",
+      "kind": "jpg",
+      "sha256": "6fbed4afa63dcfff73a5f5faa10e3143222de6d057ce6aa2e56ee0e742212bc0",
+      "bytes": 11492
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2587726.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2587726.jpg",
+      "git_blob": "901376b71f5bac7da8f75c391fa9fd57ad8f2278",
+      "kind": "jpg",
+      "sha256": "76cf0b3f5d82428774524f1fbda10c1c4d8a00de4eba30c224a8b06814d7251f",
+      "bytes": 11778
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2595839.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2595839.jpg",
+      "git_blob": "f161ca5b6405482d588aa88c0082965657eb2481",
+      "kind": "jpg",
+      "sha256": "cee8d571c3d22a8276be6c88563a6c7b1b92869971172abb466fe6ef8720cb72",
+      "bytes": 12924
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2595882.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2595882.jpg",
+      "git_blob": "436c63062a1daa810951470a0d4456d8a40b6220",
+      "kind": "jpg",
+      "sha256": "b92b457624d8d115a633a9aaefa0f804d9480efec8ac28029e73a67eca80a877",
+      "bytes": 21126
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2597250.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2597250.jpg",
+      "git_blob": "d0b03fe63caa855a34c9ea228eb1249bca791852",
+      "kind": "jpg",
+      "sha256": "3530e8bfe49781dae60016e86284009b79350d057247cfaa5dfc724f383d5e2c",
+      "bytes": 13293
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28034994-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28034994-0.jpg",
+      "git_blob": "26e6fc4cb39ffe2fd695f83b037c75a405ed7d77",
+      "kind": "jpg",
+      "sha256": "0e290a2168dcd7c3471f7c9da7791d7c185687096fbf0f4779df6711270df709",
+      "bytes": 95393
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28034994-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28034994-1.jpg",
+      "git_blob": "189f85f155eb80e3ed309975a230cab45e04c53a",
+      "kind": "jpg",
+      "sha256": "7f0adac4427968859bdc8ecf00ca8ea10562670fe857d707fe4b340b9fc4d747",
+      "bytes": 90649
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28034994-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28034994-2.jpg",
+      "git_blob": "210790aefceb45f2c456cdaf3df33e31eaca1609",
+      "kind": "jpg",
+      "sha256": "a09348fbaef0a81953dcedcd8ae0a36c58e0fff04ca9143e3f526d00725b2b78",
+      "bytes": 52525
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28034994-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28034994-3.jpg",
+      "git_blob": "2780c1e4835eb07ad18504115c29b92b4ca4d9cd",
+      "kind": "jpg",
+      "sha256": "b8234d966bf6da615b2f076f08cc80eae73fcbbbf02021650df8107fc38da831",
+      "bytes": 56345
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28034994.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28034994.jpg",
+      "git_blob": "6dce3f83de6739a57f4323d1fd0e5eef1a5f2f14",
+      "kind": "jpg",
+      "sha256": "27816c004869e0e63ba68b92547911bb056b203a21863216a639adff0a858691",
+      "bytes": 102419
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28104668.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28104668.jpg",
+      "git_blob": "0d639e6820e35ae1d1f23c0d1546afdd4a1f15cd",
+      "kind": "jpg",
+      "sha256": "63deeb6e65c6fc8e94e3707a46e05589b44e4b87b27494aec3953edb56c80258",
+      "bytes": 3526
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28115483.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28115483.jpg",
+      "git_blob": "900d8712fd967d813ab875d75e8ba5d3ddbb5600",
+      "kind": "jpg",
+      "sha256": "f6f636b793a16a3171b8b96519b7d9fe6b7e9950a5a6b545feb3e038fe273ad2",
+      "bytes": 8881
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28192911-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28192911-0.jpg",
+      "git_blob": "93877a989ba857b5b137ae706bc02fe5aebfc1e6",
+      "kind": "jpg",
+      "sha256": "53b974ec0923f05ef4d4347510f268678dd181f53bd53eaf7ec65b2fb5831f29",
+      "bytes": 81434
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28192911-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28192911-1.jpg",
+      "git_blob": "b5d0accdd6d3227adb48c5ccd03aac94192e53cf",
+      "kind": "jpg",
+      "sha256": "6ac1e1cfdd9b022b6eb7a276387a5f096d5d6ee70d6bc3ed5aa971040cd45acd",
+      "bytes": 41560
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28192911-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28192911-2.jpg",
+      "git_blob": "bd631998bd78b33fbdef41cb900d6170f6e2cab4",
+      "kind": "jpg",
+      "sha256": "1e1f24642fe2a9d80604807fc10f452c044abe37d4e5086bb59b715f90beec18",
+      "bytes": 73577
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28192911-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28192911-3.jpg",
+      "git_blob": "be86f6ec2453359ec731a9c27080718136e9e022",
+      "kind": "jpg",
+      "sha256": "9224171f4d6472b57536ec781778fa2e78f1771a8f0aec7c711a4037cf051ac2",
+      "bytes": 18040
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-28192911.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-28192911.jpg",
+      "git_blob": "36d545d03ef6dff8ba262361b7d8e423a99bd374",
+      "kind": "jpg",
+      "sha256": "850c7a1f6af47050d5a1de88f591b431a224e371d0bada913d8c143f5512a360",
+      "bytes": 87288
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2908609.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2908609.jpg",
+      "git_blob": "5bc9c53df87538579eda4572a59c549760cd85d7",
+      "kind": "jpg",
+      "sha256": "945b882efece2d80a00f784b236f36ea78cf9552114533ed016e159605dcf0e3",
+      "bytes": 5328
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2932358.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2932358.jpg",
+      "git_blob": "aaf88189da0e5918f6c6011ac5225399b4d513e2",
+      "kind": "jpg",
+      "sha256": "8832d857ef90cf015473f0638b33c33257e3a52551ae62507c210e3bd4405ea7",
+      "bytes": 8451
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-2932497.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-2932497.jpg",
+      "git_blob": "ceaa286aa76db3592c4f987a8599800e6268aecf",
+      "kind": "jpg",
+      "sha256": "4e51bc6b783a043c3b636fed1498ab60ea0d90213429faaec610db466fb6f451",
+      "bytes": 8550
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3021147.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3021147.jpg",
+      "git_blob": "07c63e731f98621117ebe4733c83ed363f012c95",
+      "kind": "jpg",
+      "sha256": "aa481a2efb373e0e370cf538be7c0359eba9530a06cd7e6b19433cf531aa7f1f",
+      "bytes": 10493
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3147733.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3147733.jpg",
+      "git_blob": "676a8da29f9308afd268a6de9698465171e96f98",
+      "kind": "jpg",
+      "sha256": "cd4ec541975eee300c937275fd829d435e6a73f56ec3c3f31f1f375ae6c186b0",
+      "bytes": 5026
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-316267.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-316267.jpg",
+      "git_blob": "13c44fa157fb516131b8d9ec23c799f2df081f80",
+      "kind": "jpg",
+      "sha256": "88cf4873ddda3f52a2ca71aebf356f8c173e2d5a1d5e1d33450a7826b89a8dbd",
+      "bytes": 9257
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-323015.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-323015.jpg",
+      "git_blob": "9665d2e644b88a842259ff87c6410fbddb874c5e",
+      "kind": "jpg",
+      "sha256": "c5f97c270f8ca4c28ca697816f9bee0038fa292434a9b0a2e052e398467fd963",
+      "bytes": 19512
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356837.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356837.jpg",
+      "git_blob": "d9930c6b7918f40dd9d4f749ba6dc42873b945a5",
+      "kind": "jpg",
+      "sha256": "4467a4528e6ca7fe72248904b8266198d28fd9a8d0f9e9bd20aa1ab15f0bec24",
+      "bytes": 6195
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356988-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356988-0.jpg",
+      "git_blob": "ba6ba8d909b998acdfe45ccc2368b221f6ad5413",
+      "kind": "jpg",
+      "sha256": "674a41816fa2e3542ec9286c3bcd917c6b24a4eb55fe38eee10d3b7320a60c64",
+      "bytes": 29557
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356988-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356988-1.jpg",
+      "git_blob": "eadf13c59c8441cd6259ee24b607f535211fed71",
+      "kind": "jpg",
+      "sha256": "d1ddb7a4817afcd7e7a57099c4335d022201f061f239c3db654e938d0ed9f46e",
+      "bytes": 26482
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356988-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356988-2.jpg",
+      "git_blob": "241b3a06f0788a8f0730263a8ad481db85ac8d6e",
+      "kind": "jpg",
+      "sha256": "c740807503e90a5581fd0cd539f46ac02034b1804352536cfcac34131e145376",
+      "bytes": 24857
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356988-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356988-3.jpg",
+      "git_blob": "7c9da91b77b14cb7a7eb5f3dc65fb44f1f3202f5",
+      "kind": "jpg",
+      "sha256": "2ebc33516a9f597a785fb5db3ec0efaad651f579f9244cca50e49dc2ede0a7ed",
+      "bytes": 15712
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-3356988.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-3356988.jpg",
+      "git_blob": "855f68e875d12f5da30ad4e7df401058afbe58fe",
+      "kind": "jpg",
+      "sha256": "e00923f19917092d824db34660fb1971fb1a0eca9773e13afa0f1b48f7a0f02a",
+      "bytes": 31484
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33660153-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33660153-0.jpg",
+      "git_blob": "af10003620fe0f9552063cbe84a73a78ced72952",
+      "kind": "jpg",
+      "sha256": "0d7a196cdc0533a13f13741e0a1180b5b74280169677cace04838922594ec47d",
+      "bytes": 65132
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33660153-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33660153-1.jpg",
+      "git_blob": "dbfe19cc60d3280cf81e701d8fad33a84e4088ae",
+      "kind": "jpg",
+      "sha256": "fce636910cbb14caecfb3d8e255b549225f8bd0b18daa8f7594d7cc80aae9371",
+      "bytes": 35189
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33660153-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33660153-2.jpg",
+      "git_blob": "8977a899e8dd9044042b39b23657926992d6123a",
+      "kind": "jpg",
+      "sha256": "d0a44b80228103f215ccd85dd68a69aab6f77b43e4f3d9a4df3777460724ec13",
+      "bytes": 64168
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33660153-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33660153-3.jpg",
+      "git_blob": "9168dfc77fdd93552a9acaca62083cfe9c7c8547",
+      "kind": "jpg",
+      "sha256": "9cfac3bdc06a9266a31e8933e2f487cef5635fbc31e8063f59d43b7a5fac59c1",
+      "bytes": 19311
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33660153.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33660153.jpg",
+      "git_blob": "3ffe14bd98c3c81c830392ae33979982a3539182",
+      "kind": "jpg",
+      "sha256": "e98be2fe2b97d6c10eae647b57f59111711a860767dc96df839a39237828a300",
+      "bytes": 69665
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33819654-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33819654-0.jpg",
+      "git_blob": "67ac94540d112d2ae9478780c9baf38ca9f050f8",
+      "kind": "jpg",
+      "sha256": "4a6a6b9a9789e44688ec26418e69931a9b04ad1d31c96ad330e6c1f0fe1b883f",
+      "bytes": 34531
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33819654-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33819654-1.jpg",
+      "git_blob": "eea1e542eac3d23364f01d4c5d4144ce817f4691",
+      "kind": "jpg",
+      "sha256": "37d2e574ef6d95a3c806fc0972be1ec121cc498c0fb3b8bfc5142facf3400828",
+      "bytes": 30642
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33819654-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33819654-2.jpg",
+      "git_blob": "fdcdc397edadb91e5191104c2c33588de4aaa17f",
+      "kind": "jpg",
+      "sha256": "47b000f8a18f058cab295a9739a1b994474d42008c0bbc5d0c70ad9c4d069620",
+      "bytes": 26416
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33819654-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33819654-3.jpg",
+      "git_blob": "94a5d89e0d54697a1b11aae19615e219f30e410b",
+      "kind": "jpg",
+      "sha256": "668abbfbdbf5e12377cc6be82eb73593a7c10ae080e0e0228fb9c5f4c419bb20",
+      "bytes": 16337
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33819654.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33819654.jpg",
+      "git_blob": "4cd1cca6e8eaaf37b772adf9d950f8b22fe97e9e",
+      "kind": "jpg",
+      "sha256": "158f7b30a6e3d80f92b193c9df9142b6b214047e6b0f1eed91d9ac82120da84d",
+      "bytes": 36347
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33868330.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33868330.jpg",
+      "git_blob": "1d5f39bf7bd7178b07f87d54189ee40afc00f12c",
+      "kind": "jpg",
+      "sha256": "543c0fcaee5b81873a233930f476f6880bee89ff5330e0a697fd67cc9b4152da",
+      "bytes": 7718
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33868332.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33868332.jpg",
+      "git_blob": "8cf943984ccbbe21d2a0fd3ebf0ee8b3ae3f7a84",
+      "kind": "jpg",
+      "sha256": "b3fbfc84fa0d71e20816ffa5ca7473ed24da73cfd0c51ffc3538bb8d42947a5f",
+      "bytes": 5484
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33908345.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33908345.jpg",
+      "git_blob": "dcf59931f51ca10aefd533d5ed7d0a93bc133151",
+      "kind": "jpg",
+      "sha256": "23ab9bdac925b9dc417c4207d13b4aa2293b8f09ea920ae93fc0effe59c5b084",
+      "bytes": 3916
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33917980.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33917980.jpg",
+      "git_blob": "7963b4193f33a1011f5d8b92d1c09354b697b1ca",
+      "kind": "jpg",
+      "sha256": "f7d7aaf25b01489f198ed610af68a706a76a02eaf97adc0a84e6d05e0dc32c53",
+      "bytes": 6770
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-33937175.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-33937175.jpg",
+      "git_blob": "63a9ff14ed4e49ec2e866cac74532a72ad5b06a7",
+      "kind": "jpg",
+      "sha256": "197944db8d2df5842d6537873f49ef4fd71f191d0bcad3df03fbb4c8de4ca6de",
+      "bytes": 9027
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34276510.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34276510.jpg",
+      "git_blob": "fb6bc3b1990d93ed867d5aa8659817e1a42b40e8",
+      "kind": "jpg",
+      "sha256": "16565c6522849f050425cab4c234181652390388ffd5d07982e7cc7953cd83cd",
+      "bytes": 16398
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34293910.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34293910.jpg",
+      "git_blob": "1105cbad47b4e243d9e8276c50cee7ee33799361",
+      "kind": "jpg",
+      "sha256": "0257bdccebc334a53c26c1c79e23fae8deb85f772a51e45a93b31854471f7ed5",
+      "bytes": 9345
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34320268-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34320268-0.jpg",
+      "git_blob": "947afba2057b5ddbf80ab9512dbf94899d0e9f8d",
+      "kind": "jpg",
+      "sha256": "3e57398a2eee4a33bfd6cff626a100c0424a246506dc2e569b1b284cdbb6cad6",
+      "bytes": 67402
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34320268-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34320268-1.jpg",
+      "git_blob": "8b436f3b75401ed189f365571f342ab815fdb4ad",
+      "kind": "jpg",
+      "sha256": "2bf7aa3980320e4c0241ff77d4c37d9c5302a8ea882c3d820136407067377df7",
+      "bytes": 61799
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34320268-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34320268-2.jpg",
+      "git_blob": "58dbd69642d68e8c0e5c2a16b1ba336be91975dd",
+      "kind": "jpg",
+      "sha256": "e11c242c50e9a1510a18148766a1017a94e1707ec51b47b18304ecb8122cbcba",
+      "bytes": 22197
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34320268-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34320268-3.jpg",
+      "git_blob": "a13f24e91ee91091f9e63b43b088a04146986a01",
+      "kind": "jpg",
+      "sha256": "b9bcc9ed060a1126ba7b544a14c8bb4b4c5547c2eadb1487e58d85fd7ec8f1c6",
+      "bytes": 61105
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34320268.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34320268.jpg",
+      "git_blob": "441041d7b7f8d950d5c7751fa3f885916e2bc68b",
+      "kind": "jpg",
+      "sha256": "6e6c616f5a39cca78312a1b92613b97797716cd66036a49cda59972f351fd1e0",
+      "bytes": 71945
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-34327615.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-34327615.jpg",
+      "git_blob": "38babc34e937a92d875716c9a98a5cb69e8ecab5",
+      "kind": "jpg",
+      "sha256": "175f54b793f3a6731dc5a9f65aeb96d95bb2d8bfd87d840b468c0856ce10bf0f",
+      "bytes": 18796
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36857093.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36857093.jpg",
+      "git_blob": "a30d6f110d8a2cac6b822e5b07290006960a4d3d",
+      "kind": "jpg",
+      "sha256": "7b408068a3a8b7de81744ab19614cd7a0ced178d36fa0ca0ba0d2f80c286367f",
+      "bytes": 13129
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36882381.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36882381.jpg",
+      "git_blob": "7cf7225622679533e5553aa32e295ce911f6e830",
+      "kind": "jpg",
+      "sha256": "5d7e8d32849eaeffc4c506717b33dede43dbe8b299303e42ff3e84cb6fedb65c",
+      "bytes": 11809
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36887885-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36887885-0.jpg",
+      "git_blob": "742852a09626bf91b22c824d47a723fc24b5ee7c",
+      "kind": "jpg",
+      "sha256": "51f20d9e4cfcd2dc9826e695e27c5dad70adbfa2bf4a816f1e7e00f649adb620",
+      "bytes": 78635
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36887885-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36887885-1.jpg",
+      "git_blob": "f424aea7e80d2f5ae51721cd45c71d12329c3d7d",
+      "kind": "jpg",
+      "sha256": "8f3d9418055e543336fb936a353fb21be8d4fbb26d2cdbcd3ac852d7bd3c85bf",
+      "bytes": 29323
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36887885-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36887885-2.jpg",
+      "git_blob": "2b2092ef92190e10fdb8ba75debbfbebe07f75d0",
+      "kind": "jpg",
+      "sha256": "be3616b400376a428a853b049ec6cb796d03800babfbfc13890aa6eb7a724c51",
+      "bytes": 79647
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36887885-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36887885-3.jpg",
+      "git_blob": "19252d0ed9527a829bde429bb7491cbac929b80f",
+      "kind": "jpg",
+      "sha256": "b25682f4dab9e7fdc6e576d804a76a0341c2b99b1db9869efc60fcbb4e9f5822",
+      "bytes": 17323
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36887885.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36887885.jpg",
+      "git_blob": "420d0441a798ddbfd69e05990c6a33a5d2fbc81d",
+      "kind": "jpg",
+      "sha256": "2ea28612c1adb0aaa32dd83dcc58180836ff74a68cb2a90566cf6aa968e5f5f3",
+      "bytes": 84226
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36890994-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36890994-0.jpg",
+      "git_blob": "b0edbba300c8179c1b6b5062d2f9be1bd8378fb0",
+      "kind": "jpg",
+      "sha256": "33e27ede53c3c5d4f8a5fe6c7c7b32c28edb1dfefb8cad988a40295011f8905e",
+      "bytes": 70842
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36890994-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36890994-1.jpg",
+      "git_blob": "3cbc085e6d279fa44afcc2897df2f8332c496d65",
+      "kind": "jpg",
+      "sha256": "504e40f5ed65608d07786220498f55fdf243b6378be6d3827798a3045b36a969",
+      "bytes": 27586
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36890994-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36890994-2.jpg",
+      "git_blob": "95d4d1fc2091fc0ff7cd11a40057675c175792e3",
+      "kind": "jpg",
+      "sha256": "23867ba78fe9ea09f5e8524018558aa1fbe833b7cecc7fb29f058b377d742f0d",
+      "bytes": 68994
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36890994-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36890994-3.jpg",
+      "git_blob": "153f5400ed3255fd4ea7860c07f1edecac2d2ecc",
+      "kind": "jpg",
+      "sha256": "165c8c34606805a08b7dc020e8f3256933c03fb8006587cf8d332b2f7747e867",
+      "bytes": 17726
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36890994.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36890994.jpg",
+      "git_blob": "13f5ae683d0032ea4be533fb8635f79d2478bb07",
+      "kind": "jpg",
+      "sha256": "6d6dc7bc16227c455e752117430303507472eed6c5ceffd4bdfad33bf191b726",
+      "bytes": 75436
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929122-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929122-0.jpg",
+      "git_blob": "81d8ae5505e91481eb2ee856f2cff2ccf368ddf6",
+      "kind": "jpg",
+      "sha256": "b70d8846d71636eb8462b59a7c226c8dc7bc74a88dd7dbdaf27db2f2c1a41e0b",
+      "bytes": 79850
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929122-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929122-1.jpg",
+      "git_blob": "ac758a283569439b391c2c9060bcbea3164e9c2e",
+      "kind": "jpg",
+      "sha256": "d7bbca67a1456ecdc68268d48dbffd9bde6e13367e941ee381371bf722387ead",
+      "bytes": 31659
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929122-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929122-2.jpg",
+      "git_blob": "80a328db7ff02a407d1b527b7dcd1d289a9c968b",
+      "kind": "jpg",
+      "sha256": "d63426657619d13ff2808f023dc6551d08f627c3a5fcacc99ccb6e38185701cd",
+      "bytes": 82201
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929122-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929122-3.jpg",
+      "git_blob": "d3f1e7121a82ab934b5ab8b9dc37c4608d09b311",
+      "kind": "jpg",
+      "sha256": "4e4b72c1094e7de8a07478de2c96d811080a664f2727024bbafe7aaf289f679d",
+      "bytes": 18348
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929122.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929122.jpg",
+      "git_blob": "9df479fcadbd139bd9bb4ff59b6fc0bb53802c03",
+      "kind": "jpg",
+      "sha256": "826611db3bcabd78062622597acd831bc12109cdc991b9eef698075c4663bb67",
+      "bytes": 85656
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929204-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929204-0.jpg",
+      "git_blob": "64a5a87535c87648f4e37057071e9c05002abc57",
+      "kind": "jpg",
+      "sha256": "bc347a093ba865a2d72056142971b35dd3eab8d6928f874e1418bb9fc9ed0ccc",
+      "bytes": 51175
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929204-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929204-1.jpg",
+      "git_blob": "1fc29d515a380e7a4d68e96825e7a68795eebbc6",
+      "kind": "jpg",
+      "sha256": "b2a8ae81c1a3ed37be967f5c19f7a6b61c6f9903054113900471f705e2b34b3f",
+      "bytes": 30381
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929204-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929204-2.jpg",
+      "git_blob": "786a38db3250a28ce92fd68bdf3398086e2c4f67",
+      "kind": "jpg",
+      "sha256": "17613974a4ee956e291de0f4d151a1c83efb68b3f5ba3133e1c3a43323b5888c",
+      "bytes": 64050
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929204-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929204-3.jpg",
+      "git_blob": "467bed450fbb5179f98879a071c297c2c37da858",
+      "kind": "jpg",
+      "sha256": "7b13b72b726c795e72360eb2ba1c64a4c5923167f0e3852554882793aff684ba",
+      "bytes": 14056
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-36929204.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-36929204.jpg",
+      "git_blob": "4dbe20f77955a84a88fadf4f354d553ac5228020",
+      "kind": "jpg",
+      "sha256": "f9f7561c36c49713b6e5850b3c2256b9a9bf533d4b2a387600e93ee273e50fee",
+      "bytes": 54935
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37747691.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37747691.jpg",
+      "git_blob": "b52dc233373914873290d123d2ac876910162f7f",
+      "kind": "jpg",
+      "sha256": "d5a630bdfa099e4e8df2c36c07d35dbf4545018dc536dcd66385b7a75f880ded",
+      "bytes": 15432
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37747692.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37747692.jpg",
+      "git_blob": "124b39d989006516f9bf8018256ec4fcad11a1bc",
+      "kind": "jpg",
+      "sha256": "f44b3399cb66f50d0895eb5f7927478a1292390a3867487f83790b319b4989d4",
+      "bytes": 15248
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37747693.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37747693.jpg",
+      "git_blob": "3dbfc74f9f91f3b875e217acc71fb697358fcb7a",
+      "kind": "jpg",
+      "sha256": "ca4a41022f0b1570bbfe0d8b64f9a31595b5a45d3c85eeff679bfb2fc06b9933",
+      "bytes": 16466
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37758059-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37758059-0.jpg",
+      "git_blob": "caae1c796cc7f60e82db87c277c03a54dd9c1f1a",
+      "kind": "jpg",
+      "sha256": "63c54f1c8faa19b6ed7c43f67c819408b930bd00b4a90e5e989c7d6b0318253e",
+      "bytes": 30530
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37758059-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37758059-1.jpg",
+      "git_blob": "fa03d4e2ec88f0b269472edb4c81c662aef40075",
+      "kind": "jpg",
+      "sha256": "bb93b89bb76cc70e7e96148e682d138c5245ddd9a590f169a82b5d80db18d4c5",
+      "bytes": 20944
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37758059-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37758059-2.jpg",
+      "git_blob": "7ed4ee9ff1808756b495c45ddfc6a2228781c7fc",
+      "kind": "jpg",
+      "sha256": "bf5dff54e3aba650d4406e898c9081ea31d6cd5d09ef5708890238e48d35dd2c",
+      "bytes": 30952
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37758059-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37758059-3.jpg",
+      "git_blob": "ff036db77df6ab5d306d2d173d9a21187054ed64",
+      "kind": "jpg",
+      "sha256": "10e6821d4ac51ddeee23c63fc7039f3f1ff1f790582ec3cba2a9b3f3bc7f55ef",
+      "bytes": 14850
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37758059.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37758059.jpg",
+      "git_blob": "f8dd1640de5e116cbfa1902d0b24620bc3b94f6a",
+      "kind": "jpg",
+      "sha256": "6b88626b78b1422fb9ee06fe86dbbb979897bac1b5b134577129ece4c03845ef",
+      "bytes": 32324
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-37760531.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-37760531.jpg",
+      "git_blob": "a47264eba114b86277ab4be15a32b92fe2638bb9",
+      "kind": "jpg",
+      "sha256": "0857332ecc2c32d14961c8286a32f28854c058af505218c7fc8202a9ee6a55f5",
+      "bytes": 5038
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-40808068.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-40808068.jpg",
+      "git_blob": "94fd60811441162d3a2bd1069d9f9f6d6711fd4d",
+      "kind": "jpg",
+      "sha256": "188b3de3f8a11fcc8337794e77f82a515da55a083d131d8df5a00cd254306b39",
+      "bytes": 14142
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408124-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408124-0.jpg",
+      "git_blob": "3b7cca7a07ee257eafcecfe2923b82a0555238cb",
+      "kind": "jpg",
+      "sha256": "e082148386f71e8c508f936b7a600bbbf958e07189efb59fb4473a17445e10c7",
+      "bytes": 60966
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408124-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408124-1.jpg",
+      "git_blob": "8286660ec10fa72be9ae578c760b634f2048a710",
+      "kind": "jpg",
+      "sha256": "b7476df20b8fadff5c4bd0b605f9d48bcd7576c7c5410446219ed323166ad958",
+      "bytes": 62880
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408124-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408124-2.jpg",
+      "git_blob": "ce307808f5e4ce9f38154c81898b1756cb19c7b8",
+      "kind": "jpg",
+      "sha256": "cc787d76b40797278e902897f0c4aa1f51bf83b4184d1cf1f426a9ba2c0566f5",
+      "bytes": 32079
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408124-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408124-3.jpg",
+      "git_blob": "93278cc60134cecabfa595e4db8edcc99fa974db",
+      "kind": "jpg",
+      "sha256": "b61ecc20fd1009e736475de0332a8707c73eea10f6e565ef53af31b4745ff46a",
+      "bytes": 45454
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408124.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408124.jpg",
+      "git_blob": "6eceed5cd3b508de16e41d5757d7068cb6eb6dea",
+      "kind": "jpg",
+      "sha256": "d3b474a8d0d96a6b6357b1288d8d1d140412cac8d688db40af1f52198927c7b0",
+      "bytes": 65339
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-408125.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-408125.jpg",
+      "git_blob": "f76c9d1a4ef5dc0622914240fe06d2cb46526bb0",
+      "kind": "jpg",
+      "sha256": "63d6073b91de3b770054ebe3199dd914094b24d605ce271880438097339ae223",
+      "bytes": 16742
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-40888228.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-40888228.jpg",
+      "git_blob": "21914f109c52c0381fd1b64beb8bf3a15db01c91",
+      "kind": "jpg",
+      "sha256": "5fe3474a2c06b41faa5cf09d270bd6de694b479a40c376fb9c6465e4266f1c35",
+      "bytes": 10513
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-40896298.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-40896298.jpg",
+      "git_blob": "df5e41734dc34f27cee128bd05d863ad76b20063",
+      "kind": "jpg",
+      "sha256": "faf15ccc90973f72ef733cc2d04d90e13f90473c9262911f5ffc028cad0567c6",
+      "bytes": 6260
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-40910342.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-40910342.jpg",
+      "git_blob": "a1a319b122702d76b4339264c028e406f74ad07c",
+      "kind": "jpg",
+      "sha256": "a7bf154104a305f54887cad9255fa27c8ed316e2874411a4c4982050106e553e",
+      "bytes": 7124
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41053706-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41053706-0.jpg",
+      "git_blob": "5d802c9834c7f6c52753e014419b8d14597f0746",
+      "kind": "jpg",
+      "sha256": "a1b3d10a90b8f242fdf0495ea684044ebcc407dd18b9d906bcd73f9e2e2deeea",
+      "bytes": 47244
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41053706-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41053706-1.jpg",
+      "git_blob": "2352db3f69e0d3956018cbb50b229510bd928c48",
+      "kind": "jpg",
+      "sha256": "75923ba0add6eb5464616e751527189c77e54ec4251d23cb8defc32f86461e6b",
+      "bytes": 47059
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41053706-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41053706-2.jpg",
+      "git_blob": "b16e46818d923a5eb8ef5d1ff1ec2f4c9e154ac5",
+      "kind": "jpg",
+      "sha256": "d1f22e30ceab4cf6e729469c3a27051407782c5fa241b54a16b66326a763c977",
+      "bytes": 25310
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41053706-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41053706-3.jpg",
+      "git_blob": "dcbfd47a34ad257d68e569f0be20c217267906b0",
+      "kind": "jpg",
+      "sha256": "9a29cf371dd22e1eb7136502a726f8123767354ad799931f27c5ffa0628899e6",
+      "bytes": 28877
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41053706.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41053706.jpg",
+      "git_blob": "e1c37aa5217da1214e98e447e01aa24df96045ca",
+      "kind": "jpg",
+      "sha256": "148600c2390572c537964ca5933b45d632bc662798f7562aaf8512dc50594740",
+      "bytes": 50175
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41277543-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41277543-0.jpg",
+      "git_blob": "ca316b7ca7a8ce423beb70922fb9631cc16826f7",
+      "kind": "jpg",
+      "sha256": "37713c92b3c5fdcbac4b7f89f130e8d5e3a5c139d5f2e594b27b816dbdbb6586",
+      "bytes": 46040
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41277543-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41277543-1.jpg",
+      "git_blob": "db00e75f63d5962c55e0334e73e347a36177d2c3",
+      "kind": "jpg",
+      "sha256": "425e81f44d73647a91b76623c82de9b165d33a282608ef5bf0ef142e82592da8",
+      "bytes": 45476
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41277543-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41277543-2.jpg",
+      "git_blob": "00021e8870fe1d5a740131c144d8e9c2f98796b5",
+      "kind": "jpg",
+      "sha256": "4a7accc09b3219c9f38425e4960455ec1398e8fb36ca82c025eac833bb49e855",
+      "bytes": 30308
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41277543-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41277543-3.jpg",
+      "git_blob": "a8a5f0d6cd50ae81cd8c04697d58967f8e282fca",
+      "kind": "jpg",
+      "sha256": "683605783beafb2a922c60d93cfcfc87b3ed51c155ab92ca32fb8ebe2bbc97c2",
+      "bytes": 29524
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-41277543.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-41277543.jpg",
+      "git_blob": "3ac0deacf16548038bd2a90fe41aeda3e9358125",
+      "kind": "jpg",
+      "sha256": "cd45c752fb5bf3e097267e1b4689478e128ea95e3656e493f2e041464ac0fb36",
+      "bytes": 49435
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-568756-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-568756-0.jpg",
+      "git_blob": "7395b5e4731a08124a02fdc0a7bacf05f6b9e618",
+      "kind": "jpg",
+      "sha256": "f33ac5c245e49c531347b68da1b9e077fe8e2de9d3ab71017821328832d19815",
+      "bytes": 50014
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-568756-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-568756-1.jpg",
+      "git_blob": "fcfd92e96ed85beaea6f6ce5e455e0a680487516",
+      "kind": "jpg",
+      "sha256": "2d96f0caf06c793f8f8f0907a3b8a902e52bd3252edab1e3dc9dba128d58e4d5",
+      "bytes": 50143
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-568756-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-568756-2.jpg",
+      "git_blob": "31fc4e0dd0b215c5c3d143ad8f521d25feaabc06",
+      "kind": "jpg",
+      "sha256": "f92e9cd68a816a1b8a1935fd81f931aff0cd04be85da0d7e1e83ac42e5c04cbb",
+      "bytes": 20900
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-568756-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-568756-3.jpg",
+      "git_blob": "dcb4dda212acd0a3d5c9ea545a14ac2b2266c7ba",
+      "kind": "jpg",
+      "sha256": "0c67ca9a4dd94871a9c1be406e3046cff369434019bf8f9811dc251cd7bf6c14",
+      "bytes": 49819
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-568756.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-568756.jpg",
+      "git_blob": "41c9904d2d60f5f49fce39a446f9416aee9073ac",
+      "kind": "jpg",
+      "sha256": "1de4ea469c4ab66e2d2e8a005ef02206069b4d38712c01f5e4b67c6356ad0db3",
+      "bytes": 54434
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569180-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569180-0.jpg",
+      "git_blob": "1adbaea7ac65620e644e324516676238a43b71e4",
+      "kind": "jpg",
+      "sha256": "d69bdfa1a5029d616a1fea57ea3a34b5d62d98dd0060604e1afea6881ff3d380",
+      "bytes": 38746
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569180-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569180-1.jpg",
+      "git_blob": "198e68025cb5d9ba46fbbae34e94070b626bdca3",
+      "kind": "jpg",
+      "sha256": "8d75d35f98c58893c446dc52ed9e35724486372b8e2a542d81cb4b4aa21eaf6f",
+      "bytes": 42650
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569180-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569180-2.jpg",
+      "git_blob": "f50868a06f031df10dd6ebb57f0a35acc67bcbde",
+      "kind": "jpg",
+      "sha256": "4b5cc3b558336a023afae47add6f8b8efc440a22ae74a0ecd0f000fba4fa6e15",
+      "bytes": 23679
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569180-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569180-3.jpg",
+      "git_blob": "ba603b6fdf92263baa33ff94bea8b5c7abfb2d01",
+      "kind": "jpg",
+      "sha256": "28373e799cc0c202f9a601befac33b999b9e0d8d6f4d7a1807fa62c85fa248db",
+      "bytes": 19442
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569180.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569180.jpg",
+      "git_blob": "020bc12b5be27450996925e5b06cea4f78e09062",
+      "kind": "jpg",
+      "sha256": "ae329bc16840e8a54bd750b0be320404a10424a8d416b4aa8b5ec3ff7f35552e",
+      "bytes": 40707
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-569211.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-569211.jpg",
+      "git_blob": "0f19fe0019c078889f1ccea8c3ed6a47605a36f6",
+      "kind": "jpg",
+      "sha256": "e78f1a21afc42f9db693b86edec632c9b3ed143845037b63344f710130fbdc28",
+      "bytes": 11292
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-666964-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-666964-0.jpg",
+      "git_blob": "c04918a63dca9320f057a93641985092b94283d8",
+      "kind": "jpg",
+      "sha256": "46e3542d580bc5fcc543332281467a26d68d67bd5873bcdc8f516e7d7df32f66",
+      "bytes": 60915
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-666964-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-666964-1.jpg",
+      "git_blob": "56ab9473f986b3119faacbe6ae36efd514a22eec",
+      "kind": "jpg",
+      "sha256": "128aa2ead9f69f7eab859d5dbea4654ba1330f22cdadb00bfa69910afec082cd",
+      "bytes": 63924
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-666964-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-666964-2.jpg",
+      "git_blob": "a15e6ed3e0b69eab781963d9479ad03e734c5cbf",
+      "kind": "jpg",
+      "sha256": "a679a7006ff5bcb8df70ad2e03c1831b40a5ef04261d3042f4598688ffdc48f1",
+      "bytes": 29479
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-666964-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-666964-3.jpg",
+      "git_blob": "630288226d0cdcd373dc06eebfd91bea2caed759",
+      "kind": "jpg",
+      "sha256": "460090abad79c3253bfc5c4ab221777ccb693772330b48e70c3a60f1892a03d8",
+      "bytes": 45645
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-666964.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-666964.jpg",
+      "git_blob": "c9ffd1bfa3868b5863fa4962d90d17abdd843e90",
+      "kind": "jpg",
+      "sha256": "4678671741be9ae51692a9ad35b989fb8abe53f59dea45c74cc613bbe6e06c85",
+      "bytes": 65107
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-6799167.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-6799167.jpg",
+      "git_blob": "c8c62a8a362f3b2d471dc24d1aec26ece51a6c49",
+      "kind": "jpg",
+      "sha256": "cdc62c5a464d70c6f4d4369efe435067d3f4f7303698d3a9768f51e7d59a2b19",
+      "bytes": 15849
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-6952129.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-6952129.jpg",
+      "git_blob": "470558a93cdef8a179b2b18be8252689659f4a98",
+      "kind": "jpg",
+      "sha256": "5517fd15235557786907f8e6a04ee6cc7f7e2df3f2af843d00a02f1c86ef1012",
+      "bytes": 7631
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-752992-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-752992-0.jpg",
+      "git_blob": "99ee80f61e782eebeac3d6b066915587adc6e037",
+      "kind": "jpg",
+      "sha256": "af630fd82d72b742d327ef59d67ab2dbd2236728247c7af60b710bf870a9a594",
+      "bytes": 48226
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-752992-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-752992-1.jpg",
+      "git_blob": "aff7672a38f83530e120ff3f5ca9970d4a64730a",
+      "kind": "jpg",
+      "sha256": "704c7b0e78e81b54f3c9f7b60fce5f432a57b656ad85120514c840b6538f2609",
+      "bytes": 61805
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-752992-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-752992-2.jpg",
+      "git_blob": "58dbd69642d68e8c0e5c2a16b1ba336be91975dd",
+      "kind": "jpg",
+      "sha256": "e11c242c50e9a1510a18148766a1017a94e1707ec51b47b18304ecb8122cbcba",
+      "bytes": 22197
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-752992-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-752992-3.jpg",
+      "git_blob": "0b923cb2494d7a0bf4b4bcb4bffc720729128ca3",
+      "kind": "jpg",
+      "sha256": "98f63cdad50c15978563241b3c5119aacb406b437e968b713198434198121f6e",
+      "bytes": 39858
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-752992.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-752992.jpg",
+      "git_blob": "96dac8e90d6631571bb0bcd3c49f785822656cf3",
+      "kind": "jpg",
+      "sha256": "27b8529a946dd6defa664deb67c4d834f0501d01cf2d6277dd1a8ce60ef564a9",
+      "bytes": 51341
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-754006.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-754006.jpg",
+      "git_blob": "912ec7cc0dbb98a6af53b420b53321f92e7fd05b",
+      "kind": "jpg",
+      "sha256": "1e454dbd1cd40b83b25fc0c38c5de69a5fd351ac516132106c0ca67624a39041",
+      "bytes": 11725
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-754909.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-754909.jpg",
+      "git_blob": "f213b38643b84b72835b43b696418b6d162abc9a",
+      "kind": "jpg",
+      "sha256": "e3bf84b0c93ef8229f1678498a417dd67cec4af4e3b4d405d068e5bf8e756bb6",
+      "bytes": 8504
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-775543.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-775543.jpg",
+      "git_blob": "6727fdb61fcf4b0683a35a72e07f7801585fdfe1",
+      "kind": "jpg",
+      "sha256": "48ffe7a6fcbe66415348d32f9ab06746b72b92fccc1bbda118ea44b2e8526ef7",
+      "bytes": 5449
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-957634.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-957634.jpg",
+      "git_blob": "065f0dea9771c45d0d95e15e6efb6bd8dfba9188",
+      "kind": "jpg",
+      "sha256": "680c467a08ba1d72b64c64102303630cd674ab9c9e7a9f03a70420d7faa9b1dd",
+      "bytes": 3225
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-958185-0.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-958185-0.jpg",
+      "git_blob": "45c8dae1bae4849d5fe685da30b8f92139e5ba90",
+      "kind": "jpg",
+      "sha256": "a3801b892f2e5110e83807a1824b85c223bc416e9c9ab514ccf14398a0e97cdf",
+      "bytes": 30987
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-958185-1.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-958185-1.jpg",
+      "git_blob": "a6f761058acbf91441abfb45edaebb2dbf5401cc",
+      "kind": "jpg",
+      "sha256": "37e8a35fad1f4ed4217ac83929229936890f68bdaed4b713eca02b106ba70b57",
+      "bytes": 23764
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-958185-2.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-958185-2.jpg",
+      "git_blob": "4af83ddce95ebce0147015caf8e6ce9d4a88778a",
+      "kind": "jpg",
+      "sha256": "17d7ba4b5152f2b9400f5778eff8374f3ac8a5b1fd1ef935cc41f0dffe9f433b",
+      "bytes": 30774
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-958185-3.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-958185-3.jpg",
+      "git_blob": "6336ad5c4bcdbe0d2a27da8aa8b9266948b1da4c",
+      "kind": "jpg",
+      "sha256": "06f6f35d413f1f883cee1de7f088bf68f64274ce226616bca94eecba9286c726",
+      "bytes": 24766
+    },
+    {
+      "original_path": "素材库/04_assets/按SI标准命名-20261001/预览/asset-958185.jpg",
+      "path": "资源库/04_软装道具模型/单件模型/预览/asset-958185.jpg",
+      "git_blob": "eafce9c1b6ce3e8eaf699940ad138f75c71a2799",
+      "kind": "jpg",
+      "sha256": "39cc14bfb3e3ee4448f892a0d16de9ebfa568d8adbe76b9ee9996a0595b581fb",
+      "bytes": 32856
+    }
+  ]
+}
