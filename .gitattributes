@@ -1,3 +1,17 @@
+# TypeScript workspace: LF on every platform (Prettier enforces LF, Windows uses core.autocrlf).
+apps/** text=auto eol=lf
+packages/** text=auto eol=lf
+database/** text=auto eol=lf
+.github/** text=auto eol=lf
+/package.json text eol=lf
+/pnpm-lock.yaml text eol=lf
+/pnpm-workspace.yaml text eol=lf
+/tsconfig.base.json text eol=lf
+/eslint.config.js text eol=lf
+/.prettierrc.json text eol=lf
+/.prettierignore text eol=lf
+/.env.example text eol=lf
+
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.skp filter=lfs diff=lfs merge=lfs -text
 *.pptx filter=lfs diff=lfs merge=lfs -text

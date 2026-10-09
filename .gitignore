@@ -13,6 +13,10 @@ __pycache__/
 # Node / frontend dependencies and build output
 node_modules/
 dist/
+*.tsbuildinfo
+
+# Local runtime data of the TypeScript workspace (embedded database, stored files, archives)
+/data/
 build/
 .cache/
 coverage/
