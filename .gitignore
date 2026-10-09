@@ -100,3 +100,15 @@ Thumbs.db
 
 # Reproducible per-asset geometry dumps; published provenance stays in manifest.
 /tmp/clean-legends/asset-*-geometry.json
+
+# Store-drawing cleaning: caches and the paused full run stay on the machine that produced them;
+# another machine recomputes in its own rebuild namespace (tools/data-cleaning/light-handoff-20261009-01/START_HERE.md).
+# Pilot caches committed before 2026-10-09 remain tracked.
+/资源库/90_处理过程与审核/数据清洗-20261009/_cache/
+/资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/
+/资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/
+
+# New source drawings (95 PDF + 1 Excel) ship as assets of release cleaning-source-supplement-20261009 and are
+# restored by restore_sources.py, keeping 1.5 GB out of Git LFS. Already tracked drawings are unaffected;
+# add a drawing to Git deliberately with `git add -f`.
+/资源库/01_各门店原图纸/*
