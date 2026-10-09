@@ -90,12 +90,67 @@ export type LayoutIssueCode =
   | 'item_overlap'
   | 'item_blocks_entrance'
   | 'item_too_tall'
+  | 'item_asset_unknown'
+  | 'item_asset_size_mismatch'
 
 export interface LayoutIssue {
   code: LayoutIssueCode
   severity: IssueSeverity
   message: string
   itemIds: string[]
+}
+
+/** What the asset contract needs to know about a catalogue model. */
+export interface AssetFit {
+  footprint: { w: number; d: number; h: number }
+  placeable: boolean
+}
+
+/** Footprint of a real model after a quarter-turn rotation (props are never scaled). */
+export function rotatedFootprint(
+  asset: AssetFit,
+  rotation: Rotation,
+): { w: number; d: number; h: number } {
+  const swap = rotation === 90 || rotation === 270
+  return {
+    w: swap ? asset.footprint.d : asset.footprint.w,
+    d: swap ? asset.footprint.w : asset.footprint.d,
+    h: asset.footprint.h,
+  }
+}
+
+/**
+ * Items that reference a catalogue model must use a placeable model at its true size.
+ * This is a contract violation rather than a design issue, so callers reject such layouts.
+ */
+export function checkAssetFit(
+  layout: Layout,
+  assets: ReadonlyMap<string, AssetFit>,
+): LayoutIssue[] {
+  const issues: LayoutIssue[] = []
+  for (const item of layout.items) {
+    if (item.assetId === null) continue
+    const asset = assets.get(item.assetId)
+    if (!asset?.placeable) {
+      issues.push({
+        code: 'item_asset_unknown',
+        severity: 'error',
+        message: `${item.name}引用的模型 ${item.assetId} 不存在或不可摆放`,
+        itemIds: [item.id],
+      })
+      continue
+    }
+    const expected = rotatedFootprint(asset, item.rotation)
+    if ((['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - expected[k]) > EPSILON_M)) {
+      issues.push({
+        code: 'item_asset_size_mismatch',
+        severity: 'error',
+        message: `${item.name}的尺寸与真实模型不符，模型不可拉伸`,
+        itemIds: [item.id],
+      })
+    }
+  }
+  return issues
 }
 
 /**

@@ -7,6 +7,13 @@ export type Action =
   | 'project:update'
   | 'project:delete'
   | 'project:restore'
+  | 'project:import'
+  | 'project:export'
+  | 'node:read'
+  | 'node:create'
+  | 'node:update'
+  | 'draft:read'
+  | 'draft:write'
   | 'asset:read'
   | 'file:read'
 

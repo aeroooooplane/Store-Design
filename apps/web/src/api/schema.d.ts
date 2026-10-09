@@ -623,6 +623,1909 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/projects/import": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 导入项目文件为新项目（新格式或旧版工作台备份）
+         * @description 请求体上限 5 MB。旧版矩形空间转为多边形，结构占位转为障碍物，与当前模型不符的道具改为占位，并逐条返回说明。
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        name?: string;
+                        data: unknown;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            project: {
+                                /** Format: uuid */
+                                id: string;
+                                name: string;
+                                /** @enum {string} */
+                                shopType: "side_hall" | "island" | "zone";
+                                /** @enum {string} */
+                                market: "domestic" | "overseas";
+                                /** @enum {string} */
+                                siStyle: "SI1.0" | "SI2.0";
+                                revision: number;
+                                /** Format: date-time */
+                                createdAt: string;
+                                /** Format: date-time */
+                                updatedAt: string;
+                                deletedAt: string | null;
+                            };
+                            nodesImported: number;
+                            draftImported: boolean;
+                            /** @enum {string} */
+                            format: "store-design-project" | "legacy";
+                            warnings: string[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/projects/{projectId}/export": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 导出项目文件（全部节点与草稿） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** @enum {string} */
+                            format: "store-design-project";
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            /** Format: date-time */
+                            exportedAt: string;
+                            project: {
+                                name: string;
+                                /** @enum {string} */
+                                shopType: "side_hall" | "island" | "zone";
+                                /** @enum {string} */
+                                market: "domestic" | "overseas";
+                                /** @enum {string} */
+                                siStyle: "SI1.0" | "SI2.0";
+                            };
+                            nodes: {
+                                id: string;
+                                parentId: string | null;
+                                /** @enum {string} */
+                                kind: "space" | "plan" | "edit" | "white" | "render";
+                                name: string;
+                                space: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    boundary: [
+                                        number,
+                                        number
+                                    ][];
+                                    height: number;
+                                    /** @default [] */
+                                    entrances: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        /** @enum {string} */
+                                        kind: "main" | "side";
+                                    }[];
+                                    /** @default [] */
+                                    openEdges: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                    }[];
+                                    /** @default [] */
+                                    obstacles: {
+                                        /** @enum {string} */
+                                        kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                        polygon: [
+                                            number,
+                                            number
+                                        ][];
+                                        /** @default null */
+                                        height: number | null;
+                                        /** @default null */
+                                        label: string | null;
+                                    }[];
+                                    /** @default null */
+                                    calibration: {
+                                        /** @enum {string} */
+                                        method: "manual" | "dimension" | "item_label" | "area";
+                                        reference: string;
+                                        verified: boolean;
+                                    } | null;
+                                } | null;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: 0 | 90 | 180 | 270;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                } | null;
+                                strategy: ("max" | "area" | "min" | "case") | null;
+                                siStyle: ("SI1.0" | "SI2.0") | null;
+                                /** @enum {string} */
+                                origin: "user" | "generator" | "agent" | "import" | "recognition";
+                                importedFrom: string | null;
+                                hidden: boolean;
+                            }[];
+                            draft: {
+                                baseNodeId: string;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: 0 | 90 | 180 | 270;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                };
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/projects/{projectId}/nodes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 历史树（节点摘要，不含空间与布局） */
+        get: {
+            parameters: {
+                query?: {
+                    includeHidden?: "true" | "false";
+                };
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            projectId: string;
+                            nodes: {
+                                /** Format: uuid */
+                                id: string;
+                                parentId: string | null;
+                                /** @enum {string} */
+                                kind: "space" | "plan" | "edit" | "white" | "render";
+                                name: string;
+                                strategy: ("max" | "area" | "min" | "case") | null;
+                                siStyle: ("SI1.0" | "SI2.0") | null;
+                                /** @enum {string} */
+                                origin: "user" | "generator" | "agent" | "import" | "recognition";
+                                importedFrom: string | null;
+                                hidden: boolean;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        /**
+         * 新建历史节点（空间、方案、编辑、白模确认、渲染）
+         * @description 布局中的模型必须存在且保持真实尺寸，否则 400。越界、重叠等问题随结果返回；白模确认与渲染节点不允许有错误级问题。
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        parentId: string | null;
+                        /** @enum {string} */
+                        kind: "space" | "plan" | "edit" | "white" | "render";
+                        name: string;
+                        space?: {
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            height: number;
+                            /** @default [] */
+                            entrances?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            /** @default [] */
+                            openEdges?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                            }[];
+                            /** @default [] */
+                            obstacles?: {
+                                /** @enum {string} */
+                                kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                polygon: [
+                                    number,
+                                    number
+                                ][];
+                                /** @default null */
+                                height?: number | null;
+                                /** @default null */
+                                label?: string | null;
+                            }[];
+                            /** @default null */
+                            calibration?: {
+                                /** @enum {string} */
+                                method: "manual" | "dimension" | "item_label" | "area";
+                                reference: string;
+                                verified: boolean;
+                            } | null;
+                        };
+                        layout?: {
+                            /** @enum {number} */
+                            schemaVersion: 3;
+                            items: {
+                                id: string;
+                                assetId: string | null;
+                                /** @enum {string} */
+                                function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                name: string;
+                                cx: number;
+                                cz: number;
+                                rotation: 0 | 90 | 180 | 270;
+                                w: number;
+                                d: number;
+                                h: number;
+                                /** @default false */
+                                placeholder?: boolean;
+                                /** @default false */
+                                locked?: boolean;
+                            }[];
+                            /** @default null */
+                            planning?: {
+                                /** @enum {string} */
+                                strategy: "max" | "area" | "min" | "case";
+                                requested: number;
+                                placed: number;
+                                /** @default [] */
+                                relaxations?: {
+                                    rule: string;
+                                    target: number;
+                                    actual: number;
+                                }[];
+                                /** @default null */
+                                note?: string | null;
+                            } | null;
+                        };
+                        /** @enum {string} */
+                        strategy?: "max" | "area" | "min" | "case";
+                        /** @enum {string} */
+                        siStyle?: "SI1.0" | "SI2.0";
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            node: {
+                                /** Format: uuid */
+                                id: string;
+                                parentId: string | null;
+                                /** @enum {string} */
+                                kind: "space" | "plan" | "edit" | "white" | "render";
+                                name: string;
+                                strategy: ("max" | "area" | "min" | "case") | null;
+                                siStyle: ("SI1.0" | "SI2.0") | null;
+                                /** @enum {string} */
+                                origin: "user" | "generator" | "agent" | "import" | "recognition";
+                                importedFrom: string | null;
+                                hidden: boolean;
+                                /** Format: date-time */
+                                createdAt: string;
+                                /** Format: uuid */
+                                projectId: string;
+                                space: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    boundary: [
+                                        number,
+                                        number
+                                    ][];
+                                    height: number;
+                                    /** @default [] */
+                                    entrances: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        /** @enum {string} */
+                                        kind: "main" | "side";
+                                    }[];
+                                    /** @default [] */
+                                    openEdges: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                    }[];
+                                    /** @default [] */
+                                    obstacles: {
+                                        /** @enum {string} */
+                                        kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                        polygon: [
+                                            number,
+                                            number
+                                        ][];
+                                        /** @default null */
+                                        height: number | null;
+                                        /** @default null */
+                                        label: string | null;
+                                    }[];
+                                    /** @default null */
+                                    calibration: {
+                                        /** @enum {string} */
+                                        method: "manual" | "dimension" | "item_label" | "area";
+                                        reference: string;
+                                        verified: boolean;
+                                    } | null;
+                                } | null;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: 0 | 90 | 180 | 270;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                } | null;
+                            };
+                            issues: {
+                                code: string;
+                                /** @enum {string} */
+                                severity: "error" | "warning";
+                                message: string;
+                                itemIds?: string[];
+                                path?: (string | number)[];
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/nodes/{nodeId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 节点详情（含空间与布局） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            parentId: string | null;
+                            /** @enum {string} */
+                            kind: "space" | "plan" | "edit" | "white" | "render";
+                            name: string;
+                            strategy: ("max" | "area" | "min" | "case") | null;
+                            siStyle: ("SI1.0" | "SI2.0") | null;
+                            /** @enum {string} */
+                            origin: "user" | "generator" | "agent" | "import" | "recognition";
+                            importedFrom: string | null;
+                            hidden: boolean;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            space: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                boundary: [
+                                    number,
+                                    number
+                                ][];
+                                height: number;
+                                /** @default [] */
+                                entrances: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    /** @enum {string} */
+                                    kind: "main" | "side";
+                                }[];
+                                /** @default [] */
+                                openEdges: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                }[];
+                                /** @default [] */
+                                obstacles: {
+                                    /** @enum {string} */
+                                    kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                    polygon: [
+                                        number,
+                                        number
+                                    ][];
+                                    /** @default null */
+                                    height: number | null;
+                                    /** @default null */
+                                    label: string | null;
+                                }[];
+                                /** @default null */
+                                calibration: {
+                                    /** @enum {string} */
+                                    method: "manual" | "dimension" | "item_label" | "area";
+                                    reference: string;
+                                    verified: boolean;
+                                } | null;
+                            } | null;
+                            layout: {
+                                /** @enum {number} */
+                                schemaVersion: 3;
+                                items: {
+                                    id: string;
+                                    assetId: string | null;
+                                    /** @enum {string} */
+                                    function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                    name: string;
+                                    cx: number;
+                                    cz: number;
+                                    rotation: 0 | 90 | 180 | 270;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                    /** @default false */
+                                    placeholder: boolean;
+                                    /** @default false */
+                                    locked: boolean;
+                                }[];
+                                /** @default null */
+                                planning: {
+                                    /** @enum {string} */
+                                    strategy: "max" | "area" | "min" | "case";
+                                    requested: number;
+                                    placed: number;
+                                    /** @default [] */
+                                    relaxations: {
+                                        rule: string;
+                                        target: number;
+                                        actual: number;
+                                    }[];
+                                    /** @default null */
+                                    note: string | null;
+                                } | null;
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 重命名节点（节点内容不可修改） */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        name: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            parentId: string | null;
+                            /** @enum {string} */
+                            kind: "space" | "plan" | "edit" | "white" | "render";
+                            name: string;
+                            strategy: ("max" | "area" | "min" | "case") | null;
+                            siStyle: ("SI1.0" | "SI2.0") | null;
+                            /** @enum {string} */
+                            origin: "user" | "generator" | "agent" | "import" | "recognition";
+                            importedFrom: string | null;
+                            hidden: boolean;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            space: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                boundary: [
+                                    number,
+                                    number
+                                ][];
+                                height: number;
+                                /** @default [] */
+                                entrances: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    /** @enum {string} */
+                                    kind: "main" | "side";
+                                }[];
+                                /** @default [] */
+                                openEdges: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                }[];
+                                /** @default [] */
+                                obstacles: {
+                                    /** @enum {string} */
+                                    kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                    polygon: [
+                                        number,
+                                        number
+                                    ][];
+                                    /** @default null */
+                                    height: number | null;
+                                    /** @default null */
+                                    label: string | null;
+                                }[];
+                                /** @default null */
+                                calibration: {
+                                    /** @enum {string} */
+                                    method: "manual" | "dimension" | "item_label" | "area";
+                                    reference: string;
+                                    verified: boolean;
+                                } | null;
+                            } | null;
+                            layout: {
+                                /** @enum {number} */
+                                schemaVersion: 3;
+                                items: {
+                                    id: string;
+                                    assetId: string | null;
+                                    /** @enum {string} */
+                                    function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                    name: string;
+                                    cx: number;
+                                    cz: number;
+                                    rotation: 0 | 90 | 180 | 270;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                    /** @default false */
+                                    placeholder: boolean;
+                                    /** @default false */
+                                    locked: boolean;
+                                }[];
+                                /** @default null */
+                                planning: {
+                                    /** @enum {string} */
+                                    strategy: "max" | "area" | "min" | "case";
+                                    requested: number;
+                                    placed: number;
+                                    /** @default [] */
+                                    relaxations: {
+                                        rule: string;
+                                        target: number;
+                                        actual: number;
+                                    }[];
+                                    /** @default null */
+                                    note: string | null;
+                                } | null;
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/v1/nodes/{nodeId}/hide": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 在树图中隐藏节点（不删除） */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            parentId: string | null;
+                            /** @enum {string} */
+                            kind: "space" | "plan" | "edit" | "white" | "render";
+                            name: string;
+                            strategy: ("max" | "area" | "min" | "case") | null;
+                            siStyle: ("SI1.0" | "SI2.0") | null;
+                            /** @enum {string} */
+                            origin: "user" | "generator" | "agent" | "import" | "recognition";
+                            importedFrom: string | null;
+                            hidden: boolean;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            space: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                boundary: [
+                                    number,
+                                    number
+                                ][];
+                                height: number;
+                                /** @default [] */
+                                entrances: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    /** @enum {string} */
+                                    kind: "main" | "side";
+                                }[];
+                                /** @default [] */
+                                openEdges: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                }[];
+                                /** @default [] */
+                                obstacles: {
+                                    /** @enum {string} */
+                                    kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                    polygon: [
+                                        number,
+                                        number
+                                    ][];
+                                    /** @default null */
+                                    height: number | null;
+                                    /** @default null */
+                                    label: string | null;
+                                }[];
+                                /** @default null */
+                                calibration: {
+                                    /** @enum {string} */
+                                    method: "manual" | "dimension" | "item_label" | "area";
+                                    reference: string;
+                                    verified: boolean;
+                                } | null;
+                            } | null;
+                            layout: {
+                                /** @enum {number} */
+                                schemaVersion: 3;
+                                items: {
+                                    id: string;
+                                    assetId: string | null;
+                                    /** @enum {string} */
+                                    function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                    name: string;
+                                    cx: number;
+                                    cz: number;
+                                    rotation: 0 | 90 | 180 | 270;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                    /** @default false */
+                                    placeholder: boolean;
+                                    /** @default false */
+                                    locked: boolean;
+                                }[];
+                                /** @default null */
+                                planning: {
+                                    /** @enum {string} */
+                                    strategy: "max" | "area" | "min" | "case";
+                                    requested: number;
+                                    placed: number;
+                                    /** @default [] */
+                                    relaxations: {
+                                        rule: string;
+                                        target: number;
+                                        actual: number;
+                                    }[];
+                                    /** @default null */
+                                    note: string | null;
+                                } | null;
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/nodes/{nodeId}/restore": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 恢复显示节点 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            parentId: string | null;
+                            /** @enum {string} */
+                            kind: "space" | "plan" | "edit" | "white" | "render";
+                            name: string;
+                            strategy: ("max" | "area" | "min" | "case") | null;
+                            siStyle: ("SI1.0" | "SI2.0") | null;
+                            /** @enum {string} */
+                            origin: "user" | "generator" | "agent" | "import" | "recognition";
+                            importedFrom: string | null;
+                            hidden: boolean;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            space: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                boundary: [
+                                    number,
+                                    number
+                                ][];
+                                height: number;
+                                /** @default [] */
+                                entrances: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    /** @enum {string} */
+                                    kind: "main" | "side";
+                                }[];
+                                /** @default [] */
+                                openEdges: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                }[];
+                                /** @default [] */
+                                obstacles: {
+                                    /** @enum {string} */
+                                    kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                    polygon: [
+                                        number,
+                                        number
+                                    ][];
+                                    /** @default null */
+                                    height: number | null;
+                                    /** @default null */
+                                    label: string | null;
+                                }[];
+                                /** @default null */
+                                calibration: {
+                                    /** @enum {string} */
+                                    method: "manual" | "dimension" | "item_label" | "area";
+                                    reference: string;
+                                    verified: boolean;
+                                } | null;
+                            } | null;
+                            layout: {
+                                /** @enum {number} */
+                                schemaVersion: 3;
+                                items: {
+                                    id: string;
+                                    assetId: string | null;
+                                    /** @enum {string} */
+                                    function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                    name: string;
+                                    cx: number;
+                                    cz: number;
+                                    rotation: 0 | 90 | 180 | 270;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                    /** @default false */
+                                    placeholder: boolean;
+                                    /** @default false */
+                                    locked: boolean;
+                                }[];
+                                /** @default null */
+                                planning: {
+                                    /** @enum {string} */
+                                    strategy: "max" | "area" | "min" | "case";
+                                    requested: number;
+                                    placed: number;
+                                    /** @default [] */
+                                    relaxations: {
+                                        rule: string;
+                                        target: number;
+                                        actual: number;
+                                    }[];
+                                    /** @default null */
+                                    note: string | null;
+                                } | null;
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/projects/{projectId}/draft": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 读取项目的共享编辑草稿 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            projectId: string;
+                            /** Format: uuid */
+                            baseNodeId: string;
+                            layout: {
+                                /** @enum {number} */
+                                schemaVersion: 3;
+                                items: {
+                                    id: string;
+                                    assetId: string | null;
+                                    /** @enum {string} */
+                                    function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                    name: string;
+                                    cx: number;
+                                    cz: number;
+                                    rotation: 0 | 90 | 180 | 270;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                    /** @default false */
+                                    placeholder: boolean;
+                                    /** @default false */
+                                    locked: boolean;
+                                }[];
+                                /** @default null */
+                                planning: {
+                                    /** @enum {string} */
+                                    strategy: "max" | "area" | "min" | "case";
+                                    requested: number;
+                                    placed: number;
+                                    /** @default [] */
+                                    relaxations: {
+                                        rule: string;
+                                        target: number;
+                                        actual: number;
+                                    }[];
+                                    /** @default null */
+                                    note: string | null;
+                                } | null;
+                            };
+                            revision: number;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                428: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        /** 保存草稿（首次保存不带 If-Match，之后必须带） */
+        put: {
+            parameters: {
+                query?: never;
+                header?: {
+                    /** @description 草稿版本号；首次保存可省略 */
+                    "if-match"?: string;
+                };
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        /** Format: uuid */
+                        baseNodeId: string;
+                        layout: {
+                            /** @enum {number} */
+                            schemaVersion: 3;
+                            items: {
+                                id: string;
+                                assetId: string | null;
+                                /** @enum {string} */
+                                function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                name: string;
+                                cx: number;
+                                cz: number;
+                                rotation: 0 | 90 | 180 | 270;
+                                w: number;
+                                d: number;
+                                h: number;
+                                /** @default false */
+                                placeholder?: boolean;
+                                /** @default false */
+                                locked?: boolean;
+                            }[];
+                            /** @default null */
+                            planning?: {
+                                /** @enum {string} */
+                                strategy: "max" | "area" | "min" | "case";
+                                requested: number;
+                                placed: number;
+                                /** @default [] */
+                                relaxations?: {
+                                    rule: string;
+                                    target: number;
+                                    actual: number;
+                                }[];
+                                /** @default null */
+                                note?: string | null;
+                            } | null;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            draft: {
+                                /** Format: uuid */
+                                projectId: string;
+                                /** Format: uuid */
+                                baseNodeId: string;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: 0 | 90 | 180 | 270;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                };
+                                revision: number;
+                                /** Format: date-time */
+                                updatedAt: string;
+                            };
+                            issues: {
+                                code: string;
+                                /** @enum {string} */
+                                severity: "error" | "warning";
+                                message: string;
+                                itemIds?: string[];
+                                path?: (string | number)[];
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                428: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        post?: never;
+        /** 丢弃草稿 */
+        delete: {
+            parameters: {
+                query?: never;
+                header?: {
+                    /** @description 草稿版本号；首次保存可省略 */
+                    "if-match"?: string;
+                };
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 已丢弃 */
+                204: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                428: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/assets": {
         parameters: {
             query?: never;

@@ -105,6 +105,7 @@
 | origin_ref | uuid null | 例如 agent_actions.id、recognition_runs.id |
 | imported_from | text null | 旧项目节点编号 |
 | hidden_at | timestamptz null | 在树图中隐藏，可恢复 |
+| seq | bigint identity | 插入顺序（同一事务内创建时间相同，树按此排序；导入时父节点先插入） |
 | created_at | timestamptz | |
 
 索引：`(project_id, created_at)`、`(parent_id)`。约束：父节点必须属于同一项目。
