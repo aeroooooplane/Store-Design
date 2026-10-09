@@ -19,6 +19,8 @@ export async function registerOpenApi(app: FastifyInstance): Promise<void> {
       tags: [
         { name: 'health', description: '运行状态' },
         { name: 'projects', description: '设计项目' },
+        { name: 'assets', description: '模型目录（只读，由 pnpm catalog:import 导入）' },
+        { name: 'files', description: '按编号读取已登记的文件' },
       ],
     },
     transform: jsonSchemaTransform,

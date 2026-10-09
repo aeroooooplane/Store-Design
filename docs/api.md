@@ -55,6 +55,14 @@
 
 删除与恢复写入审计表 `audit_events`。
 
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/assets` | 模型目录：`q` 按编号或名称搜索、`function` 用途、`placeable=true|false`、`siFamily`；每项含占地尺寸 `footprint`（米）、正面方向 `front`、GLB 与预览图链接 |
+| GET | `/assets/{assetId}` | 单个模型 |
+| GET | `/files/{fileId}` | 按编号读取已登记文件（GLB、预览图等），支持 `If-None-Match` 返回 304；文件只是未下载的 LFS 指针时返回 404，`details.reason = "lfs_pointer"` |
+
+模型目录只读，由 `pnpm catalog:import` 从资源库导入或刷新（可重复运行，GLB 哈希须与转换记录一致才会挂接）。
+
 ## 修改接口后
 
 ```powershell

@@ -3,6 +3,9 @@ import type { FastifyInstance } from 'fastify'
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod'
 import type { Database } from '@store/database'
 import type { AppConfig } from './config/env.ts'
+import type { StorageRoots } from './lib/storage.ts'
+import { assetRoutes } from './modules/assets/routes.ts'
+import { fileRoutes } from './modules/files/routes.ts'
 import { healthRoutes } from './modules/health/routes.ts'
 import { projectRoutes } from './modules/projects/routes.ts'
 import { installErrorHandling } from './plugins/errors.ts'
@@ -35,7 +38,14 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await registerSecurity(app, config)
   await registerOpenApi(app)
 
+  const roots = storageRoots(config)
   await app.register(healthRoutes, { prefix: API_PREFIX, db })
   await app.register(projectRoutes, { prefix: API_PREFIX, db })
+  await app.register(assetRoutes, { prefix: API_PREFIX, db })
+  await app.register(fileRoutes, { prefix: API_PREFIX, db, roots })
   return app
+}
+
+export function storageRoots(config: AppConfig): StorageRoots {
+  return { storage: config.storageRoot, resource: config.resourceRoot }
 }

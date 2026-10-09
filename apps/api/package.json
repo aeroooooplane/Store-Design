@@ -7,7 +7,8 @@
     "start": "node --env-file-if-exists=../../.env src/server.ts",
     "openapi": "node src/scripts/export-openapi.ts",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "catalog:import": "node --env-file-if-exists=../../.env src/scripts/import-catalog.ts"
   },
   "dependencies": {
     "@fastify/cors": "11.3.1",
