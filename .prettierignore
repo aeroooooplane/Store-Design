@@ -1,0 +1,13 @@
+# Only the TypeScript workspace is formatted; legacy code, data and docs keep their own style.
+*
+!apps/
+!apps/**
+!packages/
+!packages/**
+!database/
+!database/**
+apps/web/src/api/schema.d.ts
+apps/api/openapi.json
+database/migrations/
+**/node_modules/
+**/dist/

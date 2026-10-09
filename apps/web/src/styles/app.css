@@ -1,0 +1,131 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-4);
+}
+.page-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+.page-header h1 {
+  font-size: 24px;
+  margin: 0;
+}
+.page-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 1px;
+}
+
+button {
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+}
+button:disabled {
+  opacity: 0.4;
+  cursor: wait;
+}
+button.primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+  font-weight: 700;
+}
+input,
+select {
+  border: 1px solid var(--line);
+  padding: 8px 10px;
+  background: var(--paper);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: center;
+  margin-bottom: var(--space-2);
+}
+.tabs button[aria-pressed='true'] {
+  border-color: var(--ink);
+  font-weight: 700;
+}
+
+.create-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: var(--space-1);
+  align-items: end;
+  padding: var(--space-2);
+  background: var(--surface);
+  margin-bottom: var(--space-3);
+}
+.create-form label {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+table.projects {
+  width: 100%;
+  border-collapse: collapse;
+}
+table.projects th {
+  text-align: left;
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 400;
+  border-bottom: 1px solid var(--ink);
+  padding: 8px;
+}
+table.projects td {
+  border-bottom: 1px solid var(--line-soft);
+  padding: 10px 8px;
+}
+table.projects td.actions {
+  text-align: right;
+  white-space: nowrap;
+}
+table.projects td.actions > * + * {
+  margin-left: var(--space-1);
+}
+
+.notice {
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+.error {
+  padding: var(--space-1) var(--space-2);
+  border-left: 3px solid var(--danger);
+  color: var(--danger);
+  margin: var(--space-1) 0;
+}
+.pager {
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: var(--space-2);
+  font-size: 12px;
+  color: var(--muted);
+}
+dl.facts {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-1) var(--space-3);
+}
+dl.facts dt {
+  color: var(--muted);
+}
+dl.facts dd {
+  margin: 0;
+}

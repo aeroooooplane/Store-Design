@@ -11,6 +11,36 @@
 - [界面规范](docs/design-system.md)：颜色、字体、网格、交互与维护入口。
 - [整理记录](docs/maintenance-20261004.md)：本轮调整、保留理由及删除清单。
 
+## 重构版开发（进行中）
+
+新版采用 pnpm Monorepo：`apps/web`（React + Vite）、`apps/api`（Fastify）、`packages/shared`（共享校验与几何）、`database`（Drizzle schema 与 SQL 迁移）。需求、架构与数据表见 [需求确认](docs/requirements.md)、[架构](docs/architecture.md)、[数据模型](docs/data-model.md)、[API 说明](docs/api.md)。下文“本机运行”仍是旧版 `demo/` 的用法，新版功能对齐前两者并行。
+
+**环境**：Node.js 24 及以上。pnpm 通过 Node 自带的 corepack 提供，首次执行一次 `corepack enable pnpm`（无管理员权限时用 `corepack enable --install-directory "$env:APPDATA\npm" pnpm`）。
+
+```powershell
+pnpm install                # 安装依赖
+copy .env.example .env      # 首次：复制环境变量模板，按需填写（.env 不提交）
+pnpm db:migrate             # 初始化 / 升级数据库
+pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（127.0.0.1:5173）
+```
+
+- 网页：<http://127.0.0.1:5173/>；API 文档：<http://127.0.0.1:3001/api/docs>。
+- 数据库：默认 `DATABASE_URL=pglite://./data/pglite`，是嵌入式 PostgreSQL，无需安装，数据在 `data/`（不提交）。部署时改为 `postgres://用户:密码@主机:5432/库名`，再执行 `pnpm db:migrate`。
+- 修改表结构：编辑 `database/schema/` 后执行 `pnpm db:generate` 生成迁移 SQL，检查后提交，再 `pnpm db:migrate`。
+- 修改接口：执行 `pnpm api:openapi`，重新导出 OpenAPI 文档并生成前端类型。
+
+| 命令 | 作用 |
+|---|---|
+| `pnpm test` | 全部单元与集成测试（API 测试使用内存数据库） |
+| `pnpm typecheck` | 严格模式类型检查 |
+| `pnpm lint` / `pnpm format` | 代码检查 / 统一格式 |
+| `pnpm check` | lint + 类型检查 + 测试，提交前执行 |
+| `pnpm build` | 构建网页（`apps/web/dist`） |
+
+部署（第一阶段）：准备 PostgreSQL 16+，设置 `.env` 中的 `DATABASE_URL`、`NODE_ENV=production`、`WEB_ORIGIN`，执行 `pnpm install --frozen-lockfile && pnpm db:migrate && pnpm build`，用 `pnpm --filter @store/api start` 启动 API，网页 `dist` 由反向代理托管，并把 `/api` 转发到 API。**当前没有登录，只能部署在受信任的内网**，上线前须接入用户系统（见[架构第 9 节](docs/architecture.md)）。
+
+已知提示：`openapi-typescript` 声明的 peer 依赖为 TypeScript 5，在本项目的 TypeScript 6 下实测生成正常，安装时的 peer 警告可以忽略。
+
 ## 当前能力
 
 | 功能 | 当前状态 |

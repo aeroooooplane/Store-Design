@@ -13,6 +13,10 @@ __pycache__/
 # Node / frontend dependencies and build output
 node_modules/
 dist/
+*.tsbuildinfo
+
+# Local runtime data of the TypeScript workspace (embedded database, stored files, archives)
+/data/
 build/
 .cache/
 coverage/
@@ -75,6 +79,10 @@ Thumbs.db
 /tmp/clean-legends/before-publish/
 /tmp/plan-legends/*.png
 /tmp/plan-legends/*.jpg
+
+# Expanded copy of the DAE delivery; the verified ZIP is tracked with LFS.
+/资源库/90_处理过程与审核/模型拆分/dae-20261009/split-20260925-v2/
+/资源库/90_处理过程与审核/模型拆分/dae-20261009/*.zip
 
 # Local preview logs and transient native-render status (retain reproduction scripts).
 /tmp/si-website-preview.log

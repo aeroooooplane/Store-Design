@@ -6,9 +6,10 @@
 
 | 需要了解什么 | 入口 |
 |---|---|
+| 重构需求基线（2026-10-09） | [需求确认](requirements.md)、[重构架构](architecture.md)、[数据模型](data-model.md) |
 | 启动、操作、备份和验证 | [工作台指南](../demo/README.md) |
 | 当前产品范围 | [项目范围](project-brief.md)、[使用流程](product-flow.md) |
-| 实际代码与服务职责 | [架构](architecture.md) |
+| 重构前的代码与服务职责 | [旧架构](archive/20261009-before-refactor/architecture.md) |
 | 极简黑白界面 | [视觉规范](design-system.md) |
 | 已做与下一步 | [后续工作](roadmap.md) |
 | 本轮整理、删除与恢复 | [整理记录](maintenance-20261004.md) |
