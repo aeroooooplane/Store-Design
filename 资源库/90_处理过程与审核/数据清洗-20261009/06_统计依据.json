@@ -1,0 +1,111 @@
+{
+  "counts": {
+    "inventory": {
+      "files": 423,
+      "formats": {
+        "pdf": 418,
+        "pptx": 2,
+        "rar": 3
+      },
+      "indexed_pdf_pages": 14251,
+      "pptx_slides": 23,
+      "archive_pdf_pages": 24
+    },
+    "scanned_sources": 20,
+    "scanned_pages": 601,
+    "indexed_pdf_pages_unscanned": 13650,
+    "page_types": {
+      "other": 188,
+      "plan_layout": 34,
+      "elevation": 162,
+      "render": 46,
+      "cover_index": 56,
+      "material": 18,
+      "plan_original": 10,
+      "plan_other": 86,
+      "photo": 1
+    },
+    "vision_checked_pages": 71,
+    "classification_awaiting_vision": 232,
+    "provisional_stores": 20,
+    "provisional_versions": 20,
+    "confirmed_versions": 0,
+    "auto_status": {
+      "partial": 19,
+      "failed": 1,
+      "complete": 0
+    },
+    "scale_methods": {
+      "two_axis_vision_and_vector": 3,
+      "unverified": 17
+    },
+    "known_boundaries": 11,
+    "prop_records": 143,
+    "prop_geometry_records": 113,
+    "prop_candidate_records": 101,
+    "prop_candidate_rate": 0.7062937062937062,
+    "confirmed_asset_match_count": 0,
+    "training_candidates": 0,
+    "render_pages": 46,
+    "remaining_sources": 403,
+    "pilot_gate_rate": 0.42105263157894735
+  },
+  "coverage_complete": false,
+  "source_reports": [
+    "00_文件清单_最终复核.json",
+    "01_页面分类.jsonl",
+    "02_门店与版本.json",
+    "03_试点提取审核.json",
+    "04_效果图引用.json",
+    "05_道具名称映射.json"
+  ],
+  "by_si": [
+    {
+      "si": "SI1.0",
+      "pilot_count": 12,
+      "training_usable": 0
+    },
+    {
+      "si": "SI2.0",
+      "pilot_count": 8,
+      "training_usable": 0
+    },
+    {
+      "si": "未知",
+      "pilot_count": 0,
+      "training_usable": 0
+    }
+  ],
+  "by_shop_type": [
+    {
+      "shop_type": "专区",
+      "pilot_count": 3,
+      "training_usable": 0
+    },
+    {
+      "shop_type": "中岛店",
+      "pilot_count": 8,
+      "training_usable": 0
+    },
+    {
+      "shop_type": "未知",
+      "pilot_count": 0,
+      "training_usable": 0
+    },
+    {
+      "shop_type": "边厅店",
+      "pilot_count": 9,
+      "training_usable": 0
+    }
+  ],
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:54.941578+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

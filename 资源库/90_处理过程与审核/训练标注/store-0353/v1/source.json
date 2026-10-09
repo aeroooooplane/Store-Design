@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.671529+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\贵阳新大陆数码广场照材专卖店.pdf",
+  "sha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+  "physical_page": 6,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1190.550048828125,
+    841.8900146484375
+  ],
+  "page_rotation": 0,
+  "render_dpi": 151.19061998038345,
+  "pdf_to_pixel_matrix": [
+    2.09986972194977,
+    0,
+    0,
+    2.09986972194977,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布局图",
+        "bbox": [
+          1127.221435546875,
+          379.9064025878906,
+          1139.2757568359375,
+          439.349853515625
+        ],
+        "size": 11.951109886169434,
+        "direction": [
+          -0.0017455881461501122,
+          -0.9999985098838806
+        ]
+      }
+    ],
+    "project_name": [],
+    "date_evidence": [
+      {
+        "text": "2025-4-23",
+        "bbox": [
+          1083.814697265625,
+          582.5520629882812,
+          1126.599853515625,
+          592.032470703125
+        ],
+        "size": 9.516868591308594,
+        "direction": [
+          0.9999985098838806,
+          -0.0017456362256780267
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "P-03",
+        "bbox": [
+          1087.3431396484375,
+          730.1300659179688,
+          1122.783203125,
+          747.8963623046875
+        ],
+        "size": 17.704578399658203,
+        "direction": [
+          0.9999985098838806,
+          -0.0017449046717956662
+        ]
+      }
+    ]
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+  "normalized_pdf_to_m_matrix": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1190.550048828125,
+    841.8900146484375
+  ],
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1190.550048828125,
+        841.8900146484375
+      ],
+      "title": "平面布置/家具定位候选",
+      "method": "vision",
+      "crop_policy": "full_page_evidence",
+      "independent_frame_count": 1
+    }
+  ],
+  "extraction_revision": "geometry8.py",
+  "visual_decisions_script": "package_pilot.py",
+  "original_page_rotation": 270,
+  "original_pdf_to_normalized_pdf_matrix": [
+    0.0,
+    -1.0,
+    1.0,
+    0.0,
+    0.0,
+    841.8900146484375
+  ],
+  "version_date": null,
+  "revision_number": null
+}

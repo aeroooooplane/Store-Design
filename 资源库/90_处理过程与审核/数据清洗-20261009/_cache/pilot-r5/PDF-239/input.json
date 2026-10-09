@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:40:30.787845+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-006",
+      "label_text": "柱子现场三面灯箱，",
+      "function": "other",
+      "x": 370.92,
+      "z": 462.54,
+      "w": 149.57999999999998,
+      "d": 148.92000000000002,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 445.71000000000004,
+      "center_z": 537.0,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          410.2799987792969,
+          509.786865234375,
+          512.9390258789062,
+          526.1001586914062
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            520.5,
+            462.54
+          ],
+          [
+            370.92,
+            462.54
+          ],
+          [
+            370.92,
+            611.46
+          ],
+          [
+            520.5,
+            611.46
+          ],
+          [
+            520.5,
+            462.54
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "发光LOGO",
+      "function": "other",
+      "x": 916.74,
+      "z": 347.04,
+      "w": 133.98000000000002,
+      "d": 6.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 983.73,
+      "center_z": 350.04,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          975.9599609375,
+          285.50689697265625,
+          1021.586181640625,
+          301.8201904296875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            916.74,
+            353.04
+          ],
+          [
+            1050.72,
+            353.04
+          ],
+          [
+            1050.72,
+            347.04
+          ],
+          [
+            916.74,
+            347.04
+          ],
+          [
+            916.74,
+            353.04
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-007",
+      "label_text": "灯箱",
+      "function": "other",
+      "x": 335.46,
+      "z": 459.0,
+      "w": 14.220000000000027,
+      "d": 212.70000000000005,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 342.57,
+      "center_z": 565.35,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          290.1600036621094,
+          551.546875,
+          312.9731140136719,
+          567.8601684570312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            349.68,
+            671.7
+          ],
+          [
+            349.68,
+            459.0
+          ],
+          [
+            335.46,
+            459.0
+          ],
+          [
+            335.46,
+            671.7
+          ],
+          [
+            349.68,
+            671.7
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 19.1,
+    "evidence": [
+      {
+        "value": 19.1,
+        "text": "设计面积：19.1m²",
+        "bbox": [
+          1494.47998046875,
+          1102.7109375,
+          1592.1002197265625,
+          1115.1827392578125
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

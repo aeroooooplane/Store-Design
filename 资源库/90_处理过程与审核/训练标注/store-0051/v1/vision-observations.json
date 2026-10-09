@@ -1,0 +1,29 @@
+{
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "training_eligible": false,
+  "method": "vision",
+  "evidence_file": "evidence.png",
+  "evidence_sha256": "19d1c1871fe433607465f4075d9d796a5a64735cabc42792f1601da348a66c56",
+  "source_page": 1,
+  "stated_area_m2": 16.0,
+  "room_height_m": null,
+  "title_date_raw": "2025-07",
+  "version_confirmed": false,
+  "date_order_confirmed": false,
+  "region_note": "面积/高度位于左下红黑文字区或右侧AREA图签；日期位于右侧DATE图签。",
+  "source_city": null,
+  "boundary_area_check": {
+    "area_m2": 16.08,
+    "stated_area_m2": 16.0,
+    "difference_ratio": 0.004999999999999893,
+    "used_for_scale": false
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:08:04.972312+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

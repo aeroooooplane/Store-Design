@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "aligned_ids": [
+    1,
+    2,
+    3
+  ],
+  "unresolved_ids": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "boundary_alignment": true,
+  "observations": [
+    "两张中岛桌及收银边柜对齐，弧形平台候选外边线对齐。",
+    "3个弧形定制柜未通过选择阈值；未强行接收近似矩形。",
+    "显示屏尚未可靠定位；去掉A中的重叠误配，但正确物体数量没有增加。",
+    "收银边柜中英文名义长度冲突仍存在。"
+  ],
+  "method": "vision",
+  "source_id": "PDF-293",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "version_confirmed": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "inspected_images": [
+    {
+      "method": "A",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-A.png",
+      "sha256": "120814d430abf2c698cf22bcda59c17c26ed6675e87460094458db8e2160726c"
+    },
+    {
+      "method": "B",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-B.png",
+      "sha256": "01c67a46e97a8bade6767ef4cae10b745f3ed2439192104e9b33268f2a7dea2d"
+    }
+  ],
+  "scope": "本轮助手打开A/B完整叠加图逐页目视检查；不是人工审批或独立盲测。",
+  "needs_human": [
+    "完整道具清点、边界语义、入口障碍物、尺寸双轴验证、版本及资产对应尚未全部完成。"
+  ]
+}

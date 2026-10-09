@@ -1,0 +1,193 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:46.618342+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-001",
+  "store_id": "store-0001",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified",
+    "method": "vision_dimension_numbers_and_vector_endpoints",
+    "checks": [
+      {
+        "axis": "x",
+        "label": "13037",
+        "length_m": 13.037,
+        "endpoints": [
+          [
+            183.9600067138672,
+            655.3199462890625
+          ],
+          [
+            922.9199829101562,
+            655.3199462890625
+          ]
+        ],
+        "path_index": 350,
+        "endpoint_method": "dimension_extension_intersections",
+        "method": "vision",
+        "number_unit": "mm",
+        "length_pdf_points": 738.9599761962891,
+        "source_page": 15,
+        "coordinate_space": "normalized_pdf_points",
+        "m_per_pdf_point": 0.017642362807125833
+      },
+      {
+        "axis": "z",
+        "label": "7713",
+        "length_m": 7.713,
+        "endpoints": [
+          [
+            140.0399932861328,
+            154.67999267578125
+          ],
+          [
+            140.0399932861328,
+            591.8399658203125
+          ]
+        ],
+        "path_index": 199,
+        "endpoint_method": "dimension_extension_intersections",
+        "method": "vision",
+        "number_unit": "mm",
+        "length_pdf_points": 437.15997314453125,
+        "source_page": 15,
+        "coordinate_space": "normalized_pdf_points",
+        "m_per_pdf_point": 0.01764342683187505
+      }
+    ],
+    "error": 6.030896630651118e-05,
+    "error_definition": "abs(sx-sz)/mean(sx,sz)",
+    "max_error": 0.02,
+    "two_axes_verified": true,
+    "m_per_pdf_point": 0.017642894819500442,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "lease_line",
+    "area_m2": 78.961,
+    "stated_area": 78.9,
+    "area_difference_ratio": 0.0007746451204054443,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 9,
+    "item_count": 9,
+    "resolved_geometry_count": 9,
+    "rejected_geometry_ids": [],
+    "out_of_bounds": [],
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [
+    {
+      "field": "stated_area_candidates",
+      "evidence": [
+        {
+          "page": 2,
+          "text": "店铺实测面积：73m²",
+          "bbox": [
+            67.91999816894531,
+            689.8499755859375,
+            207.60000610351562,
+            709.6499633789062
+          ]
+        },
+        {
+          "page": 15,
+          "text": "店铺实测面积：78.9m²",
+          "bbox": [
+            48.119998931884766,
+            719.20458984375,
+            162.19998168945312,
+            734.1205444335938
+          ]
+        }
+      ],
+      "resolution": null
+    }
+  ],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-001\\overlay.png",
+    "inspected_sha256": "8e04b0837e6d1ade6fffd0fd081aeacf0adb387d34d7981b4a3265659e21d034",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "租赁线与主要桌柜相符；圆柱、凳子及入口线段仍不完整。第2页73㎡与第15页78.9㎡冲突。"
+  },
+  "needs_human": [
+    "租赁线与主要桌柜相符；圆柱、凳子及入口线段仍不完整。第2页73㎡与第15页78.9㎡冲突。",
+    "标定仅验证图纸内部两方向一致性，仍需人工审核。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": true,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "2600W3770H内嵌灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-006",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-010",
+      "label_text": "装吊楣+发光logo "
+    },
+    {
+      "layer": "fixed",
+      "id": "object-011",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-016",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-017",
+      "label_text": "门楣装铝板+发光logo "
+    },
+    {
+      "layer": "fixed",
+      "id": "object-018",
+      "label_text": "门楣装铝板+发光logo "
+    },
+    {
+      "layer": "fixed",
+      "id": "object-019",
+      "label_text": "LOGO高度：500mm"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-003",
+      "label_text": "配电箱"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-004",
+      "label_text": "管井暗门"
+    }
+  ]
+}

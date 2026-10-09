@@ -1,0 +1,4 @@
+interface:
+  display_name: "门店精确效果图 V2"
+  short_description: "根据平面图与原始 SU 道具生成结构一致的白模和多视角效果图"
+  default_prompt: "请使用 $store-layout-render，按我的平面图、门店类型和 SI 版本生成空间结构一致的多视角效果图，先复用模型缓存并校核道具位置。"

@@ -1,0 +1,304 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:40:23.204850+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-019",
+  "store_id": "store-0019",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "吊挂LOGO",
+      "function": "other",
+      "x": 429.72,
+      "z": 114.74,
+      "w": 329.81999999999994,
+      "d": 5.640000000000001,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 594.63,
+      "center_z": 117.56,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          577.3800048828125,
+          104.11942291259766,
+          613.85546875,
+          112.06832122802734
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            429.72,
+            120.38
+          ],
+          [
+            759.54,
+            120.38
+          ],
+          [
+            759.54,
+            114.74
+          ],
+          [
+            429.72,
+            114.74
+          ],
+          [
+            429.72,
+            120.38
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-004",
+      "label_text": "吊挂LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          781.5,
+          273.9194641113281,
+          817.9754638671875,
+          281.8683776855469
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-008",
+      "label_text": "吊挂LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          371.5799865722656,
+          426.1994323730469,
+          408.0553894042969,
+          434.1483459472656
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-011",
+      "label_text": "+LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          641.9400024414062,
+          539.4012451171875,
+          677.1517944335938,
+          549.73486328125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-013",
+      "label_text": "竖向灯箱",
+      "function": "other",
+      "x": 420.6,
+      "z": 706.7,
+      "w": 329.76,
+      "d": 5.639999999999986,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 585.48,
+      "center_z": 709.52,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          693.6599731445312,
+          708.6011962890625,
+          732.4715576171875,
+          718.934814453125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            750.36,
+            712.34
+          ],
+          [
+            750.36,
+            706.7
+          ],
+          [
+            420.6,
+            706.7
+          ],
+          [
+            420.6,
+            712.34
+          ],
+          [
+            750.36,
+            712.34
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-014",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 420.6,
+      "z": 706.7,
+      "w": 329.76,
+      "d": 5.639999999999986,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 585.48,
+      "center_z": 709.52,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          555.4199829101562,
+          712.3812255859375,
+          583.4322509765625,
+          722.71484375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            750.36,
+            712.34
+          ],
+          [
+            750.36,
+            706.7
+          ],
+          [
+            420.6,
+            706.7
+          ],
+          [
+            420.6,
+            712.34
+          ],
+          [
+            750.36,
+            712.34
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

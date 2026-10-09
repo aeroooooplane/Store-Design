@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-043",
+  "store_id": "store-0043",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "4a3f559d0f80abfc75899623ea451cfe910abdcae6c09faf37bd54c3d5e5afc8",
+  "evidence_sha256": "6f9dc5f2f2dcc54d7f36aaded6857661210f43c0dae037436ca6fc91968ba174",
+  "status": "inspected_extraction_failed",
+  "alignment": "no_geometry_extracted",
+  "completeness": false,
+  "notes": "平面标题和道具文字大部分转曲；自动提取为零件，不能作为结构化完成。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:48.527675+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

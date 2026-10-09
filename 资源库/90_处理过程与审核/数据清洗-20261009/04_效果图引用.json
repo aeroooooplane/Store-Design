@@ -1,0 +1,1366 @@
+{
+  "scope": "visually_checked_pilot_subset",
+  "items": [
+    {
+      "source_id": "PDF-001",
+      "store_id": "store-0001",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            153.96002197265625,
+            1190.52001953125,
+            671.6400146484375
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 2609,
+          "xref": 29,
+          "sha256": "a15aa24ba73741672cd547be55ab26f3eae7c1438c05d78f070ab49fa86ea88a",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-001",
+      "store_id": "store-0001",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            177.0,
+            87.84002685546875,
+            1012.9199829101562,
+            784.4400024414062
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 5001,
+          "xref": 34,
+          "sha256": "ab0f88593c5f074a7ffd15fefcf0300f072ca321c0f5cb081ce25ea66ce2e24f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "侧入口向内",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-001",
+      "store_id": "store-0001",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 6,
+      "regions": [
+        {
+          "bbox": [
+            165.60000610351562,
+            68.8800048828125,
+            1024.800048828125,
+            784.9199829101562
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 4999,
+          "xref": 37,
+          "sha256": "66711e6e420e9956a9d27c179aae920a6dc8fc9374f9dd5a38b6bb6def8bbcb3",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口向店内",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-001",
+      "store_id": "store-0001",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 7,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            171.3599853515625,
+            1190.52001953125,
+            689.0399780273438
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 2609,
+          "xref": 40,
+          "sha256": "9e4c519ca2906aeea377108b60d9d315acf0088c90500df7a4a61450d55a4f44",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内俯视",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-002",
+      "store_id": "store-0002",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            -0.0001220703125,
+            960.0,
+            539.9998779296875
+          ],
+          "pixel_width": 2666,
+          "pixel_height": 1499,
+          "xref": 3211,
+          "sha256": "d41245c34d0a0fc7d309500f07f021fa5dc6b21f460e45e11697bcea93073868",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-002",
+      "store_id": "store-0002",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            -0.0001220703125,
+            960.0,
+            539.9998779296875
+          ],
+          "pixel_width": 2666,
+          "pixel_height": 1499,
+          "xref": 3209,
+          "sha256": "02044e2327d3dd5993b9a795dde66dded78748fbe0291e32157946b31c4abbad",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "店内面向后墙",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-002",
+      "store_id": "store-0002",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            -0.0001220703125,
+            960.0,
+            539.9998779296875
+          ],
+          "pixel_width": 2666,
+          "pixel_height": 1499,
+          "xref": 3203,
+          "sha256": "7c16931c4f792a1de8d9fffa1a5257a7e1b0d63978ca92181e1f6acab0c63198",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-005",
+      "store_id": "store-0005",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 2,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 74,
+          "sha256": "d91a8b93e7e54f617a447d7b432c42f463f1d0be11fa0190b28c43e8267764ac",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "外立面斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-005",
+      "store_id": "store-0005",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            1280.0,
+            800.0
+          ],
+          "pixel_width": 1280,
+          "pixel_height": 800,
+          "xref": 87,
+          "sha256": "49126f1c6baf64f3ebadd6e9255d8829e278ed6b0b63ea89dcffed5f7f7a4ee6",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-005",
+      "store_id": "store-0005",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 76,
+          "sha256": "8e496c4d95988563329b40eef9c2d73bd0ffe932e955b0c82e36ce75edcad05a",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内桌区局部",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-005",
+      "store_id": "store-0005",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 80,
+          "sha256": "199e02e52e402db4762094bdfa947996d52fcfb44e5a88912dbad4edc712905d",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-029",
+      "store_id": "store-0029",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            72.60003662109375,
+            1120.320068359375,
+            781.2000122070312
+          ],
+          "pixel_width": 5988,
+          "pixel_height": 4000,
+          "xref": 27,
+          "sha256": "6ad21528d4d4ad6bf91ba86faf6a955b848d7c4eb928b00702e1950f73a228d8",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-029",
+      "store_id": "store-0029",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 6,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            72.60003662109375,
+            1120.320068359375,
+            781.2000122070312
+          ],
+          "pixel_width": 5988,
+          "pixel_height": 4000,
+          "xref": 30,
+          "sha256": "8078ecf0d84a401599a9d3a3f7a0596fd4a724c38e796d0446e2212e99690e1e",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口向店内",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-029",
+      "store_id": "store-0029",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 7,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            72.60003662109375,
+            1120.320068359375,
+            781.2000122070312
+          ],
+          "pixel_width": 5988,
+          "pixel_height": 4000,
+          "xref": 33,
+          "sha256": "324135ec6e865523946e6234e2896b1760e58ce24eaafa0e6af21294a2f3eeea",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "店内反向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-029",
+      "store_id": "store-0029",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 8,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            72.60003662109375,
+            1120.320068359375,
+            781.2000122070312
+          ],
+          "pixel_width": 5988,
+          "pixel_height": 4000,
+          "xref": 36,
+          "sha256": "9438099dc0250d9a4628a42c7883837ff7dff3b7fcc9bad094f68af2c8436f90",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内俯视",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-029",
+      "store_id": "store-0029",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 9,
+      "regions": [
+        {
+          "bbox": [
+            118.80000305175781,
+            77.6400146484375,
+            1060.800048828125,
+            783.9600219726562
+          ],
+          "pixel_width": 1706,
+          "pixel_height": 1279,
+          "xref": 39,
+          "sha256": "d572a42546cc273c24fb88577e4bca8831fec89fe92fa639e0fcd418aea108ab",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "商场走道看门店的合成候选",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-043",
+      "store_id": "store-0043",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 2,
+      "regions": [
+        {
+          "bbox": [
+            99.0,
+            55.20001220703125,
+            885.5999755859375,
+            497.760009765625
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 3,
+          "sha256": "757781fec29d9e7b821158b93bb2909a093b781a613045e63bfc64615a021f03",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛第一面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-043",
+      "store_id": "store-0043",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            99.12000274658203,
+            55.55999755859375,
+            886.5599975585938,
+            498.6000061035156
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 6,
+          "sha256": "60b36887f979b601ada8cc68459038d116adf6cafead5e4b56b62f1244300257",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛第二面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-043",
+      "store_id": "store-0043",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            93.23999786376953,
+            52.44000244140625,
+            866.52001953125,
+            487.44000244140625
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 9,
+          "sha256": "f1c7dd3bb64be08ed5d3afaca651722b8881a52dc7ae44a90a812e9d9b1d13f7",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中央柱另一侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-043",
+      "store_id": "store-0043",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            93.0,
+            52.44000244140625,
+            866.1599731445312,
+            487.44000244140625
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 12,
+          "sha256": "47db10ed51d548a31b70e9f01e5acb4cbf529f4c700eb660256227418cb98b20",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "自行车展示侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-051",
+      "store_id": "store-0051",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 2,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3840.0,
+            2160.0
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 86,
+          "sha256": "94a1f266cc10b982dff5e54f4429348249f2f40433aa08b96092f6dbc736d7e4",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-051",
+      "store_id": "store-0051",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3840.0,
+            2160.0
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 83,
+          "sha256": "381bb828620d81da26bb416ad384e4641eea2c0dd4f7bb0dba8d7a4236a1c227",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛斜侧面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-051",
+      "store_id": "store-0051",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3840.0,
+            2160.0
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 80,
+          "sha256": "4b8bed29eb55dbb8cbfc2d9b96b784c2d319b10c007ef9b0335f640c949833b5",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛背面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-088",
+      "store_id": "store-0088",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            93.0,
+            1190.52001953125,
+            755.280029296875
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3338,
+          "xref": 37,
+          "sha256": "ef60c83edd9d648ffc95bad87c5b74e191da4e6afb253c40eb25f23628a94fa5",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-088",
+      "store_id": "store-0088",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            98.03997802734375,
+            1190.52001953125,
+            760.3200073242188
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3338,
+          "xref": 40,
+          "sha256": "1ccc651e214bedbdaa8edb86461f50e7357a1fb881b3eb1a4c0633b5a3bebeb1",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "入口斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-088",
+      "store_id": "store-0088",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 6,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            98.15997314453125,
+            1190.52001953125,
+            760.4400024414062
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3338,
+          "xref": 43,
+          "sha256": "524905cb8e8abe8d09a9b2bf999fa93eec98096aa9402a232e7478db58675727",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "店内反向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-088",
+      "store_id": "store-0088",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 7,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            101.15997314453125,
+            1190.52001953125,
+            763.4400024414062
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3338,
+          "xref": 46,
+          "sha256": "f13515b964e253718b13f572162c1755c3174e591d1a3b566921b30730bf2664",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内俯视",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-090",
+      "store_id": "store-0090",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 2,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            960.0,
+            564.47998046875
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2352,
+          "xref": 4,
+          "sha256": "1d1ccdc63801cc01c5eef79f379603706ab9780d368c233ef10595064b995874",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "专区斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-090",
+      "store_id": "store-0090",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            960.0,
+            564.47998046875
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2352,
+          "xref": 8,
+          "sha256": "800f61ff980c9dfc38991eb68b19ca869322d15ec111281dedf3bd0dee6171de",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "专区正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-239",
+      "store_id": "store-0239",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 2,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 86,
+          "sha256": "2298a05897cee49659096285ccfdf805e52e6bdf0b03a0dbcf2158e9addb9e67",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-239",
+      "store_id": "store-0239",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 3,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 78,
+          "sha256": "336f0aaafd6a6d47cbdd484239f82a535937cc143ff81474577ed7f4c0671a1d",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-239",
+      "store_id": "store-0239",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            0.0,
+            3000.0,
+            1875.0
+          ],
+          "pixel_width": 4000,
+          "pixel_height": 2500,
+          "xref": 82,
+          "sha256": "e9401ee90bf13f4f2f15eb2620c15219b8179359e6ddeeb7895f54b4a170eec9",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中央柱另一侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-293",
+      "store_id": "store-0293",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            92.0400390625,
+            1120.320068359375,
+            759.8400268554688
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3778,
+          "xref": 32,
+          "sha256": "f374ff40d38f070e59b5dfef3717ae023fff7b7d5227977e561144b4d9259d7f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-293",
+      "store_id": "store-0293",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            77.8800048828125,
+            1120.320068359375,
+            783.239990234375
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 3990,
+          "xref": 35,
+          "sha256": "5db28c447f8c173aab09868861686730fdb03e67806523b628b6a3476ee4c729",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-293",
+      "store_id": "store-0293",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 6,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            70.08001708984375,
+            1119.0,
+            781.3200073242188
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 4028,
+          "xref": 38,
+          "sha256": "d58662a790ea48767d7d6a33eeac4e6e2fb7abb4cca34e28c18aec043b82a1a6",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛另一侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-293",
+      "store_id": "store-0293",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 7,
+      "regions": [
+        {
+          "bbox": [
+            167.63999938964844,
+            87.84002685546875,
+            1023.0,
+            779.760009765625
+          ],
+          "pixel_width": 5296,
+          "pixel_height": 4284,
+          "xref": 41,
+          "sha256": "b2fc8f33a2f367c62a6daa5d09e6c9d59fc12f8007b5a507b60a5da1d0fe4819",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "临水栏杆外侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-293",
+      "store_id": "store-0293",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 8,
+      "regions": [
+        {
+          "bbox": [
+            59.400001525878906,
+            74.39996337890625,
+            1120.4400634765625,
+            784.9199829101562
+          ],
+          "pixel_width": 6000,
+          "pixel_height": 4018,
+          "xref": 44,
+          "sha256": "55cf520d8550a8a0330ce64984cc74513455cf4d8fb6c5ff613523366a797a9e",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "中岛俯视",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-296",
+      "store_id": "store-0296",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 4,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            87.84002685546875,
+            1190.52001953125,
+            757.4400024414062
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 29,
+          "sha256": "778159f83d0560d08077e41633ea7d9f2deb7e23b935c0c86b610337913643c5",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "门架一面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-296",
+      "store_id": "store-0296",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 5,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            87.84002685546875,
+            1190.52001953125,
+            757.4400024414062
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 34,
+          "sha256": "88a3d34103a970c180c6e9aead6788f343cdebe63c24ba1c51ae4e3b4fde0c6f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "门架另一面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-296",
+      "store_id": "store-0296",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 6,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            87.84002685546875,
+            1190.52001953125,
+            757.4400024414062
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 37,
+          "sha256": "cf973535f7624da50d28415f4ac3ffafe7a062aa61d679dd2ec4f310d3da635a",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "广告背墙侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-296",
+      "store_id": "store-0296",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 7,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            87.84002685546875,
+            1190.52001953125,
+            757.4400024414062
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 40,
+          "sha256": "7af5d92b21e5d897f41d5884b53d3ae063f8f8baf07e1fdcc1b37f809871348d",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "广告背墙另一侧",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-296",
+      "store_id": "store-0296",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 8,
+      "regions": [
+        {
+          "bbox": [
+            0.0,
+            87.84002685546875,
+            1190.52001953125,
+            757.4400024414062
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 43,
+          "sha256": "7e83548ebfd33ac567261e94894074a21a6656c0aa8209f77ad625aa30eb4aef",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "整体俯视",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-353",
+      "store_id": "store-0353",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 18,
+      "regions": [
+        {
+          "bbox": [
+            1031.9697265625,
+            93.65601348876953,
+            1127.8487548828125,
+            111.9111328125
+          ],
+          "pixel_width": 567,
+          "pixel_height": 108,
+          "xref": 19,
+          "sha256": "de250174e8e256fbb8de1bcb8160785c043d4bf236103f356c8fede81058a00f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        },
+        {
+          "bbox": [
+            48.0982666015625,
+            127.94384765625,
+            1141.0242919921875,
+            742.7444458007812
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 23,
+          "sha256": "bf983382cf2b75c15a5553e1434460dfc09b2f2135efbb197fb82fa4cf007d60",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内展示区正面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-353",
+      "store_id": "store-0353",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 19,
+      "regions": [
+        {
+          "bbox": [
+            1031.9697265625,
+            93.65601348876953,
+            1127.8487548828125,
+            111.9111328125
+          ],
+          "pixel_width": 567,
+          "pixel_height": 108,
+          "xref": 19,
+          "sha256": "de250174e8e256fbb8de1bcb8160785c043d4bf236103f356c8fede81058a00f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        },
+        {
+          "bbox": [
+            48.0982666015625,
+            127.94384765625,
+            1141.0242919921875,
+            742.7444458007812
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 26,
+          "sha256": "d3919538886f3216558b5898fb96417ce10583e85af8e1cb787395bba62f7835",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室内展示区斜向",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-353",
+      "store_id": "store-0353",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 20,
+      "regions": [
+        {
+          "bbox": [
+            1031.9697265625,
+            93.65601348876953,
+            1127.8487548828125,
+            111.9111328125
+          ],
+          "pixel_width": 567,
+          "pixel_height": 108,
+          "xref": 19,
+          "sha256": "de250174e8e256fbb8de1bcb8160785c043d4bf236103f356c8fede81058a00f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        },
+        {
+          "bbox": [
+            48.0982666015625,
+            127.94384765625,
+            1141.0242919921875,
+            742.7444458007812
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 29,
+          "sha256": "3eed840f51b764a11a1e6824d32cc19305bd68bab7429523c0fe08a8f2f5e4e1",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "室外门面",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    },
+    {
+      "source_id": "PDF-353",
+      "store_id": "store-0353",
+      "version_id": null,
+      "candidate_version_id": "v1",
+      "page": 21,
+      "regions": [
+        {
+          "bbox": [
+            1031.9697265625,
+            93.65601348876953,
+            1127.8487548828125,
+            111.9111328125
+          ],
+          "pixel_width": 567,
+          "pixel_height": 108,
+          "xref": 19,
+          "sha256": "de250174e8e256fbb8de1bcb8160785c043d4bf236103f356c8fede81058a00f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        },
+        {
+          "bbox": [
+            48.0982666015625,
+            127.94384765625,
+            1141.0242919921875,
+            742.7444458007812
+          ],
+          "pixel_width": 3840,
+          "pixel_height": 2160,
+          "xref": 32,
+          "sha256": "a979101c72f4a58254b638f5b9d129c4055310a794d63454d57b9c5493d78b7f",
+          "hash_basis": "encoded_image_bytes_returned_by_extract_image",
+          "missing_hash_reason": null,
+          "coordinate_space": "original_unrotated_pdf_points"
+        }
+      ],
+      "view_description": "橱窗局部",
+      "method": "vision",
+      "same_layout": null,
+      "version_assignment_reason": "同来源不等于同版本；未完成相机/几何对应核验。"
+    }
+  ],
+  "coverage_complete": false,
+  "same_layout_true_count": 0,
+  "note": "仅记录原PDF图片区域及哈希；未向03_各门店效果图导出。",
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:54.925554+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

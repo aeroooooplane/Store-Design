@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "assets": [
+    {
+      "asset": "accessory_1600",
+      "packed_file_images": 12,
+      "bounds_verified": true
+    },
+    {
+      "asset": "cashier_body",
+      "packed_file_images": 2,
+      "bounds_verified": true
+    },
+    {
+      "asset": "cashier_top",
+      "packed_file_images": 6,
+      "bounds_verified": true
+    },
+    {
+      "asset": "digital_sign",
+      "packed_file_images": 1,
+      "bounds_verified": true
+    },
+    {
+      "asset": "island_a",
+      "packed_file_images": 7,
+      "bounds_verified": true
+    },
+    {
+      "asset": "island_b",
+      "packed_file_images": 11,
+      "bounds_verified": true
+    },
+    {
+      "asset": "lightbox_artwork",
+      "packed_file_images": 1,
+      "bounds_verified": true
+    },
+    {
+      "asset": "logo_full",
+      "packed_file_images": 1,
+      "bounds_verified": true
+    },
+    {
+      "asset": "portrait_artwork",
+      "packed_file_images": 1,
+      "bounds_verified": true
+    },
+    {
+      "asset": "screen_75_assembly",
+      "packed_file_images": 1,
+      "bounds_verified": true
+    },
+    {
+      "asset": "unbox_chair",
+      "packed_file_images": 0,
+      "bounds_verified": true
+    },
+    {
+      "asset": "unbox_table",
+      "packed_file_images": 3,
+      "bounds_verified": true
+    }
+  ],
+  "count": 12
+}

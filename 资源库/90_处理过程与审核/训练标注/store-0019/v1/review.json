@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:47.582723+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-019",
+  "store_id": "store-0019",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified",
+    "method": "vision_dimension_numbers_and_vector_endpoints",
+    "checks": [
+      {
+        "axis": "x",
+        "label": "4900",
+        "length_m": 4.9,
+        "endpoints": [
+          [
+            364.1399841308594,
+            770.9600219726562
+          ],
+          [
+            825.1199951171875,
+            770.9600219726562
+          ]
+        ],
+        "path_index": 3680,
+        "endpoint_method": "dimension_segment",
+        "method": "vision",
+        "number_unit": "mm",
+        "length_pdf_points": 460.9800109863281,
+        "source_page": 7,
+        "coordinate_space": "normalized_pdf_points",
+        "m_per_pdf_point": 0.010629528142697115
+      },
+      {
+        "axis": "z",
+        "label": "6290",
+        "length_m": 6.29,
+        "endpoints": [
+          [
+            308.7599792480469,
+            114.739990234375
+          ],
+          [
+            308.7599792480469,
+            706.4000244140625
+          ]
+        ],
+        "path_index": 3692,
+        "endpoint_method": "dimension_segment",
+        "method": "vision",
+        "number_unit": "mm",
+        "length_pdf_points": 591.6600341796875,
+        "source_page": 7,
+        "coordinate_space": "normalized_pdf_points",
+        "m_per_pdf_point": 0.0106311050884497
+      }
+    ],
+    "error": 0.0001483441942147854,
+    "error_definition": "abs(sx-sz)/mean(sx,sz)",
+    "max_error": 0.02,
+    "two_axes_verified": true,
+    "m_per_pdf_point": 0.010630316615573409,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "outer_outline",
+    "area_m2": 30.792,
+    "stated_area": null,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 8,
+    "item_count": 8,
+    "resolved_geometry_count": 6,
+    "rejected_geometry_ids": [],
+    "out_of_bounds": [
+      {
+        "object_id": "object-003",
+        "outside_area": 0.001,
+        "area_unit": "m2",
+        "note": "包围框测试；曲面道具可能出现矩形过界。"
+      }
+    ],
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-019\\overlay.png",
+    "inspected_sha256": "fda48aab42f7635b1ea2a526aaf7df4619de04609f64c192f05c64b2cd1f3c34",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "外轮廓与桌柜基本相符；斜向屏幕和电子水牌无可靠包围框，消防设施未完整提取。"
+  },
+  "needs_human": [
+    "外轮廓与桌柜基本相符；斜向屏幕和电子水牌无可靠包围框，消防设施未完整提取。",
+    "标定仅验证图纸内部两方向一致性，仍需人工审核。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": true,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "吊挂LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-004",
+      "label_text": "吊挂LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-008",
+      "label_text": "吊挂LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-011",
+      "label_text": "+LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-013",
+      "label_text": "竖向灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-014",
+      "label_text": "LOGO"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:49:24.524175+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-032",
+  "store_id": "store-0032",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": {
+    "closed": true,
+    "area_pdf_points": 265401.5772641599,
+    "area_m2": null,
+    "stated_area_difference": null,
+    "method": "enclosing_vector_polygon_candidate"
+  },
+  "props": {
+    "label_count": 10,
+    "geometry_candidate_count": 10,
+    "out_of_bounds": null,
+    "overlaps": null,
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "未命名家具",
+    "入口线段",
+    "墙柱与固定设施完整性",
+    "图签日期及修订数字可能转曲"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "pending",
+    "method": null
+  },
+  "needs_human": [
+    "未完成两方向尺寸标定；保留 PDF 点坐标。",
+    "道具框为文字邻近矢量候选，尚需视觉确认；未标文字的家具可能遗漏。",
+    "入口未建立可靠线段；不能把主通道文字当成入口尺寸。",
+    "版本、完整边界、障碍物和固定设施尚需审核。"
+  ]
+}

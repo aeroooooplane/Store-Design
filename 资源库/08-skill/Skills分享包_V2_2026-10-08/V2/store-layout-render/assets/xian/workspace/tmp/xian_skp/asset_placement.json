@@ -1,0 +1,284 @@
+{
+  "placements": [
+    {
+      "id": "unbox_1800",
+      "asset": "unbox_table",
+      "location": [
+        0.5,
+        1.1,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    },
+    {
+      "id": "ace_1800",
+      "asset": "island_a",
+      "location": [
+        0.5,
+        4.437,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    },
+    {
+      "id": "go_1800",
+      "asset": "island_a",
+      "location": [
+        0.5,
+        7.774,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          -90
+        ]
+      ]
+    },
+    {
+      "id": "x_1800",
+      "asset": "island_b",
+      "location": [
+        2.9,
+        7.807,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    },
+    {
+      "id": "cashier_unbox_1800",
+      "asset": "cashier_body",
+      "location": [
+        3.625,
+        1.197,
+        0
+      ],
+      "rotations": []
+    },
+    {
+      "id": "cashier_console",
+      "asset": "cashier_top",
+      "location": [
+        3.15,
+        1.197,
+        0.9
+      ],
+      "rotations": []
+    },
+    {
+      "id": "accessory_1600",
+      "asset": "accessory_1600",
+      "location": [
+        3.625,
+        5.577,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          -90
+        ]
+      ]
+    },
+    {
+      "id": "digital_sign",
+      "asset": "digital_sign",
+      "location": [
+        4.595,
+        6.17,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    },
+    {
+      "id": "screen_75",
+      "asset": "screen_75_assembly",
+      "location": [
+        3.625,
+        2.26,
+        1.442
+      ],
+      "rotations": []
+    },
+    {
+      "id": "left_lightbox",
+      "asset": "lightbox_artwork",
+      "location": [
+        2.389,
+        4.797,
+        1.1
+      ],
+      "rotations": [
+        [
+          "X",
+          90
+        ],
+        [
+          "Z",
+          -90
+        ]
+      ]
+    },
+    {
+      "id": "north_fascia_logo",
+      "asset": "logo_full",
+      "location": [
+        2.2,
+        -0.012,
+        3.19
+      ],
+      "rotations": [],
+      "uniform_scale": 0.519302,
+      "note": "原始LOGO等比例缩至200mm高"
+    },
+    {
+      "id": "south_fascia_logo",
+      "asset": "logo_full",
+      "location": [
+        2.3,
+        8.802,
+        3.19
+      ],
+      "rotations": [
+        [
+          "Z",
+          180
+        ]
+      ],
+      "uniform_scale": 0.519302
+    },
+    {
+      "id": "east_fascia_logo",
+      "asset": "logo_full",
+      "location": [
+        4.862,
+        6.16,
+        3.19
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ],
+      "uniform_scale": 0.519302
+    },
+    {
+      "id": "above_screen_logo",
+      "asset": "logo_full",
+      "location": [
+        3.625,
+        2.265,
+        2.6
+      ],
+      "rotations": [],
+      "uniform_scale": 0.519302
+    },
+    {
+      "id": "east_lightbox",
+      "asset": "portrait_artwork",
+      "location": [
+        4.838,
+        4.89,
+        0
+      ],
+      "rotations": [
+        [
+          "Y",
+          -90
+        ],
+        [
+          "Z",
+          90
+        ]
+      ],
+      "uniform_scale": 1.7963817135814506
+    },
+    {
+      "id": "unbox_chair_1",
+      "asset": "unbox_chair",
+      "location": [
+        -0.12,
+        0.7,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          -90
+        ]
+      ]
+    },
+    {
+      "id": "unbox_chair_2",
+      "asset": "unbox_chair",
+      "location": [
+        -0.12,
+        1.48,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          -90
+        ]
+      ]
+    },
+    {
+      "id": "unbox_chair_3",
+      "asset": "unbox_chair",
+      "location": [
+        1.12,
+        0.7,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    },
+    {
+      "id": "unbox_chair_4",
+      "asset": "unbox_chair",
+      "location": [
+        1.12,
+        1.48,
+        0
+      ],
+      "rotations": [
+        [
+          "Z",
+          90
+        ]
+      ]
+    }
+  ],
+  "notes": [
+    "三张中岛桌使用库内1800x1000mm原始几何；台面采用库内两套完整展示配置，尚未逐个核对产品型号。",
+    "收银台库内净模型宽1780mm，图纸标注名义1800mm，保留模型原尺寸；未拉伸。已排除模型内超出台体的二维构造辅助对象。",
+    "广告机和灯箱安装标高需立面确认，当前为临时定位。",
+    "本版为原模型复原与空间一致性验证，不作为施工放样依据。"
+  ]
+}

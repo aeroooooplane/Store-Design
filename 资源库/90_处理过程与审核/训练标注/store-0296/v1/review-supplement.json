@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-296",
+  "store_id": "store-0296",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "c5160414b09cbf6f4c83dd56c5a53e278e9ead610b021ccc9614f32ed78a1c56",
+  "evidence_sha256": "060864bba2fefe10b11ca05a28e071d3625e3f73b675f12a59a8595ffe87ac63",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "地台闭合轮廓相符；配件柜与屏幕包围框包含背墙/灯箱，予以置空。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:53.678224+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

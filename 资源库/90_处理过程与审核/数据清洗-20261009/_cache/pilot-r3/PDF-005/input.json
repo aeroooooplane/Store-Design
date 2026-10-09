@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:18.449588+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-002",
+      "label_text": "强弱电箱",
+      "function": "other",
+      "x": 467.2,
+      "z": 236.6,
+      "w": 31.0,
+      "d": 20.400000000000006,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 482.7,
+      "center_z": 246.8,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          479.5337219238281,
+          237.32000732421875,
+          484.5273742675781,
+          256.0755920410156
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            498.2,
+            236.6
+          ],
+          [
+            467.2,
+            236.6
+          ],
+          [
+            467.2,
+            257.0
+          ],
+          [
+            498.2,
+            257.0
+          ],
+          [
+            498.2,
+            236.6
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-005",
+      "label_text": "内嵌灯箱",
+      "function": "other",
+      "x": 324.0,
+      "z": 251.6,
+      "w": 75.39999999999998,
+      "d": 5.400000000000006,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 361.7,
+      "center_z": 254.3,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          365.40484619140625,
+          257.84002685546875,
+          370.4767761230469,
+          278.1277160644531
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            399.4,
+            257.0
+          ],
+          [
+            399.4,
+            251.6
+          ],
+          [
+            324.0,
+            251.6
+          ],
+          [
+            324.0,
+            257.0
+          ],
+          [
+            399.4,
+            257.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-009",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          494.5337219238281,
+          308.3599853515625,
+          499.5273742675781,
+          321.8968200683594
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-014",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          80.89371490478516,
+          421.2799987792969,
+          85.88737487792969,
+          434.8168029785156
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-016",
+      "label_text": "内嵌竖向灯箱",
+      "function": "other",
+      "x": 122.6,
+      "z": 460.9,
+      "w": 5.400000000000006,
+      "d": 53.10000000000002,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 125.3,
+      "center_z": 487.45,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          115.68485260009766,
+          470.3600158691406,
+          120.75677490234375,
+          500.7915954589844
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            122.6,
+            514.0
+          ],
+          [
+            128.0,
+            514.0
+          ],
+          [
+            128.0,
+            460.9
+          ],
+          [
+            122.6,
+            460.9
+          ],
+          [
+            122.6,
+            514.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-017",
+      "label_text": "内嵌灯箱",
+      "function": "other",
+      "x": 449.3,
+      "z": 500.8,
+      "w": 75.30000000000001,
+      "d": 5.300000000000011,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 486.95000000000005,
+      "center_z": 503.45000000000005,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          467.52484130859375,
+          507.9200134277344,
+          472.5967712402344,
+          528.2077026367188
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            524.6,
+            506.1
+          ],
+          [
+            524.6,
+            500.8
+          ],
+          [
+            449.3,
+            500.8
+          ],
+          [
+            449.3,
+            506.1
+          ],
+          [
+            524.6,
+            506.1
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-018",
+      "label_text": "内嵌竖向灯箱",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          177.00486755371094,
+          522.5599975585938,
+          182.0767822265625,
+          552.9915771484375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-019",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          346.5648498535156,
+          538.52001953125,
+          351.63677978515625,
+          548.6638793945312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 55.9,
+    "evidence": [
+      {
+        "value": 55.9,
+        "text": "SITE:55.9㎡",
+        "bbox": [
+          297.41864013671875,
+          779.8400268554688,
+          303.7384948730469,
+          810.8992309570312
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "source_storage": "external",
+  "source_storage": "repository",
   "source_count": 418,
   "sources": [
     {
@@ -29,7 +29,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海TPY中心.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海TPY中心.pdf"
     },
     {
       "source_id": "PDF-002",
@@ -52,7 +52,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海七宝领展授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海七宝领展授权体验店.pdf"
     },
     {
       "source_id": "PDF-003",
@@ -72,7 +72,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海万象城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海万象城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-004",
@@ -121,7 +121,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海世博天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海世博天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-005",
@@ -144,7 +144,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海五角场万达授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海五角场万达授权体验店.pdf"
     },
     {
       "source_id": "PDF-006",
@@ -162,7 +162,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海北外滩来福士授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海北外滩来福士授权体验店.pdf"
     },
     {
       "source_id": "PDF-007",
@@ -189,7 +189,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海嘉里合集授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海嘉里合集授权专卖店.pdf"
     },
     {
       "source_id": "PDF-008",
@@ -213,7 +213,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海新嘉中心.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海新嘉中心.pdf"
     },
     {
       "source_id": "PDF-009",
@@ -238,7 +238,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海新天地东台里授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海新天地东台里授权体验店.pdf"
     },
     {
       "source_id": "PDF-010",
@@ -261,7 +261,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海星光摄影城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海星光摄影城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-011",
@@ -292,7 +292,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海月星环球港授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海月星环球港授权体验店.pdf"
     },
     {
       "source_id": "PDF-012",
@@ -312,7 +312,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海浦东嘉里城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海浦东嘉里城授权体验店.pdf"
     },
     {
       "source_id": "PDF-013",
@@ -334,7 +334,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海港汇恒隆授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海港汇恒隆授权体验店.pdf"
     },
     {
       "source_id": "PDF-014",
@@ -360,7 +360,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海环龙商场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海环龙商场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-015",
@@ -379,7 +379,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-016",
@@ -405,7 +405,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海第一八佰伴授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海第一八佰伴授权体验店.pdf"
     },
     {
       "source_id": "PDF-017",
@@ -424,7 +424,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海长宁荟聚授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海长宁荟聚授权体验店.pdf"
     },
     {
       "source_id": "PDF-018",
@@ -452,7 +452,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海长宁龙之梦.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海长宁龙之梦.pdf"
     },
     {
       "source_id": "PDF-019",
@@ -472,7 +472,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海闵行凯德梦之龙照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海闵行凯德梦之龙照材专卖店.pdf"
     },
     {
       "source_id": "PDF-020",
@@ -525,7 +525,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海陆家嘴正大广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海陆家嘴正大广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-021",
@@ -569,7 +569,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海陆家嘴项目（改造）.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海陆家嘴项目（改造）.pdf"
     },
     {
       "source_id": "PDF-022",
@@ -595,7 +595,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海黄埔日月光中心授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海黄埔日月光中心授权体验店.pdf"
     },
     {
       "source_id": "PDF-023",
@@ -619,7 +619,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海龙湖宝山天街.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海龙湖宝山天街.pdf"
     },
     {
       "source_id": "PDF-024",
@@ -645,7 +645,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/上海龙湖闵行天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/上海龙湖闵行天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-025",
@@ -668,7 +668,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/东莞万象滨海购物公园.pdf"
+      "source_location": "资源库/01_各门店原图纸/东莞万象滨海购物公园.pdf"
     },
     {
       "source_id": "PDF-026",
@@ -691,7 +691,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/东莞悠兰里街区授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/东莞悠兰里街区授权专卖店.pdf"
     },
     {
       "source_id": "PDF-027",
@@ -718,7 +718,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/中山大信新都汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/中山大信新都汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-028",
@@ -763,7 +763,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/中山石歧万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/中山石歧万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-029",
@@ -793,7 +793,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/临沂万象汇.pdf"
+      "source_location": "资源库/01_各门店原图纸/临沂万象汇.pdf"
     },
     {
       "source_id": "PDF-030",
@@ -812,7 +812,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/临沂百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/临沂百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-031",
@@ -836,7 +836,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/乌鲁木齐cc mall授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/乌鲁木齐cc mall授权专卖店.pdf"
     },
     {
       "source_id": "PDF-032",
@@ -859,7 +859,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/乌鲁木齐德汇万达（边厅改中岛）.pdf"
+      "source_location": "资源库/01_各门店原图纸/乌鲁木齐德汇万达（边厅改中岛）.pdf"
     },
     {
       "source_id": "PDF-033",
@@ -883,7 +883,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/乌鲁木齐经开万达授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/乌鲁木齐经开万达授权专卖店.pdf"
     },
     {
       "source_id": "PDF-034",
@@ -903,7 +903,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/乌鲁木齐高新万达广场.pdf"
+      "source_location": "资源库/01_各门店原图纸/乌鲁木齐高新万达广场.pdf"
     },
     {
       "source_id": "PDF-035",
@@ -922,7 +922,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/云南曲靖店中店.pdf"
+      "source_location": "资源库/01_各门店原图纸/云南曲靖店中店.pdf"
     },
     {
       "source_id": "PDF-036",
@@ -943,7 +943,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山创意产业园授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山创意产业园授权专卖店.pdf"
     },
     {
       "source_id": "PDF-037",
@@ -962,7 +962,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山千灯湖环宇城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山千灯湖环宇城授权体验店.pdf"
     },
     {
       "source_id": "PDF-038",
@@ -1040,7 +1040,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山欢乐海岸Plus.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山欢乐海岸Plus.pdf"
     },
     {
       "source_id": "PDF-039",
@@ -1067,7 +1067,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山禅城NOVA岭南站授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山禅城NOVA岭南站授权体验店.pdf"
     },
     {
       "source_id": "PDF-040",
@@ -1087,7 +1087,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山禅西环宇城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山禅西环宇城授权体验店.pdf"
     },
     {
       "source_id": "PDF-041",
@@ -1115,7 +1115,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山金铂中心授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山金铂中心授权体验店.pdf"
     },
     {
       "source_id": "PDF-042",
@@ -1143,7 +1143,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/佛山顺德万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/佛山顺德万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-043",
@@ -1192,7 +1192,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/保定北国先天下授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/保定北国先天下授权体验店.pdf"
     },
     {
       "source_id": "PDF-044",
@@ -1220,7 +1220,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/保定爱情广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/保定爱情广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-045",
@@ -1241,7 +1241,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/保定西大街照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/保定西大街照材专卖店.pdf"
     },
     {
       "source_id": "PDF-046",
@@ -1265,7 +1265,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/兰州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/兰州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-047",
@@ -1291,7 +1291,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/兰州苏宁MAX照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/兰州苏宁MAX照材专卖店.pdf"
     },
     {
       "source_id": "PDF-048",
@@ -1341,7 +1341,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/包河万象汇.pdf"
+      "source_location": "资源库/01_各门店原图纸/包河万象汇.pdf"
     },
     {
       "source_id": "PDF-049",
@@ -1360,7 +1360,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京798创意园授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京798创意园授权专卖店.pdf"
     },
     {
       "source_id": "PDF-050",
@@ -1379,7 +1379,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京万柳华联授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京万柳华联授权体验店.pdf"
     },
     {
       "source_id": "PDF-051",
@@ -1401,7 +1401,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京三里屯太古里授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京三里屯太古里授权体验店.pdf"
     },
     {
       "source_id": "PDF-052",
@@ -1420,7 +1420,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京东坝万达授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京东坝万达授权体验店.pdf"
     },
     {
       "source_id": "PDF-053",
@@ -1441,7 +1441,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京中关村大融城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京中关村大融城授权体验店.pdf"
     },
     {
       "source_id": "PDF-054",
@@ -1470,7 +1470,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京五棵松万达授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京五棵松万达授权体验店.pdf"
     },
     {
       "source_id": "PDF-055",
@@ -1493,7 +1493,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京五棵松照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京五棵松照材专卖店.pdf"
     },
     {
       "source_id": "PDF-056",
@@ -1517,7 +1517,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京亦庄龙湖天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京亦庄龙湖天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-057",
@@ -1543,7 +1543,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京合生汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京合生汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-058",
@@ -1563,7 +1563,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京悠唐广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京悠唐广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-059",
@@ -1582,7 +1582,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京房山熙悦天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京房山熙悦天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-060",
@@ -1626,7 +1626,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京望京凯德授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京望京凯德授权体验店.pdf"
     },
     {
       "source_id": "PDF-061",
@@ -1645,7 +1645,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京朝阳大悦城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京朝阳大悦城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-062",
@@ -1663,7 +1663,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京清河万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京清河万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-063",
@@ -1689,7 +1689,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京王府井银泰IN88授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京王府井银泰IN88授权体验店.pdf"
     },
     {
       "source_id": "PDF-064",
@@ -1708,7 +1708,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京荟聚授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京荟聚授权体验店.pdf"
     },
     {
       "source_id": "PDF-065",
@@ -1767,7 +1767,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京蓝色港湾授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京蓝色港湾授权体验店.pdf"
     },
     {
       "source_id": "PDF-066",
@@ -1794,7 +1794,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京西三旗万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京西三旗万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-067",
@@ -1817,7 +1817,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京西单大悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京西单大悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-068",
@@ -1841,7 +1841,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京超极合生汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京超极合生汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-069",
@@ -1868,7 +1868,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京通州万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京通州万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-070",
@@ -1895,7 +1895,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京顺义华联授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京顺义华联授权体验店.pdf"
     },
     {
       "source_id": "PDF-071",
@@ -1921,7 +1921,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京首都机场T3授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京首都机场T3授权体验店.pdf"
     },
     {
       "source_id": "PDF-072",
@@ -1947,7 +1947,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京马连道照材专区.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京马连道照材专区.pdf"
     },
     {
       "source_id": "PDF-073",
@@ -1976,7 +1976,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/北京龙湖丽泽天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/北京龙湖丽泽天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-074",
@@ -2000,7 +2000,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/华强北电子世界二店.pdf"
+      "source_location": "资源库/01_各门店原图纸/华强北电子世界二店.pdf"
     },
     {
       "source_id": "PDF-075",
@@ -2024,7 +2024,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京万象天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京万象天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-076",
@@ -2048,7 +2048,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京仙林金鹰授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京仙林金鹰授权专卖店.pdf"
     },
     {
       "source_id": "PDF-077",
@@ -2071,7 +2071,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京华海3c照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京华海3c照材专卖店.pdf"
     },
     {
       "source_id": "PDF-078",
@@ -2098,7 +2098,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京城北万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京城北万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-079",
@@ -2125,7 +2125,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京德基广场直营店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京德基广场直营店.pdf"
     },
     {
       "source_id": "PDF-080",
@@ -2170,7 +2170,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京桥北弘阳广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京桥北弘阳广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-081",
@@ -2194,7 +2194,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京江北虹悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京江北虹悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-082",
@@ -2218,7 +2218,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南京金陵天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南京金陵天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-083",
@@ -2247,7 +2247,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南宁万象城.pdf"
+      "source_location": "资源库/01_各门店原图纸/南宁万象城.pdf"
     },
     {
       "source_id": "PDF-084",
@@ -2266,7 +2266,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南宁惠工电子科技城（迁址）.pdf"
+      "source_location": "资源库/01_各门店原图纸/南宁惠工电子科技城（迁址）.pdf"
     },
     {
       "source_id": "PDF-085",
@@ -2287,7 +2287,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南昌T16授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南昌T16授权体验店.pdf"
     },
     {
       "source_id": "PDF-086",
@@ -2310,7 +2310,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南昌万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南昌万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-087",
@@ -2333,7 +2333,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南昌和昌里街区授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南昌和昌里街区授权专卖店.pdf"
     },
     {
       "source_id": "PDF-088",
@@ -2361,7 +2361,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南昌武商mall.pdf"
+      "source_location": "资源库/01_各门店原图纸/南昌武商mall.pdf"
     },
     {
       "source_id": "PDF-089",
@@ -2386,7 +2386,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/南阳万悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/南阳万悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-090",
@@ -2407,7 +2407,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/印尼Ratu plaza.pdf"
+      "source_location": "资源库/01_各门店原图纸/印尼Ratu plaza.pdf"
     },
     {
       "source_id": "PDF-091",
@@ -2436,7 +2436,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/印尼雅加达 kota kasablanka.pdf"
+      "source_location": "资源库/01_各门店原图纸/印尼雅加达 kota kasablanka.pdf"
     },
     {
       "source_id": "PDF-092",
@@ -2477,7 +2477,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/厦门SM授权体验店（扩铺）.pdf"
+      "source_location": "资源库/01_各门店原图纸/厦门SM授权体验店（扩铺）.pdf"
     },
     {
       "source_id": "PDF-093",
@@ -2497,7 +2497,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/厦门大悦城授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/厦门大悦城授权专卖店.pdf"
     },
     {
       "source_id": "PDF-094",
@@ -2543,7 +2543,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/厦门百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/厦门百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-095",
@@ -2593,7 +2593,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾三创生活（换址）.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾三创生活（换址）.pdf"
     },
     {
       "source_id": "PDF-096",
@@ -2633,7 +2633,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾台中汉神洲际中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾台中汉神洲际中岛.pdf"
     },
     {
       "source_id": "PDF-097",
@@ -2652,7 +2652,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾台南市南纺购物中心.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾台南市南纺购物中心.pdf"
     },
     {
       "source_id": "PDF-098",
@@ -2678,7 +2678,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾新北板桥大远百.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾新北板桥大远百.pdf"
     },
     {
       "source_id": "PDF-099",
@@ -2737,7 +2737,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾新北裕隆城.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾新北裕隆城.pdf"
     },
     {
       "source_id": "PDF-100",
@@ -2779,7 +2779,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾桃园大江国际.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾桃园大江国际.pdf"
     },
     {
       "source_id": "PDF-101",
@@ -2801,7 +2801,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾远东新竹Big City中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾远东新竹Big City中岛.pdf"
     },
     {
       "source_id": "PDF-102",
@@ -2823,7 +2823,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾高雄Nova中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾高雄Nova中岛.pdf"
     },
     {
       "source_id": "PDF-103",
@@ -2865,7 +2865,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/台湾高雄汉神巨蛋中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/台湾高雄汉神巨蛋中岛.pdf"
     },
     {
       "source_id": "PDF-104",
@@ -2916,7 +2916,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-105",
@@ -2942,7 +2942,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥大蜀山半边街授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥大蜀山半边街授权专卖店.pdf"
     },
     {
       "source_id": "PDF-106",
@@ -2961,7 +2961,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥新粮仓授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥新粮仓授权专卖店.pdf"
     },
     {
       "source_id": "PDF-107",
@@ -2991,7 +2991,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥瑶海万象天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥瑶海万象天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-108",
@@ -3011,7 +3011,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-109",
@@ -3037,7 +3037,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/合肥罍街照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/合肥罍街照材专卖店.pdf"
     },
     {
       "source_id": "PDF-110",
@@ -3057,7 +3057,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/呼和浩特万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/呼和浩特万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-111",
@@ -3083,7 +3083,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/呼和浩特诚信数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/呼和浩特诚信数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-112",
@@ -3110,7 +3110,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/哈尔滨教化电子大世界照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/哈尔滨教化电子大世界照材专卖店.pdf"
     },
     {
       "source_id": "PDF-113",
@@ -3137,7 +3137,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/哈尔滨松雷广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/哈尔滨松雷广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-114",
@@ -3157,7 +3157,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/哈尔滨红博授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/哈尔滨红博授权体验店.pdf"
     },
     {
       "source_id": "PDF-115",
@@ -3199,7 +3199,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/哈尔滨船舶电子大世界照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/哈尔滨船舶电子大世界照材专卖店.pdf"
     },
     {
       "source_id": "PDF-116",
@@ -3227,7 +3227,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/哈尔滨金安国际授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/哈尔滨金安国际授权体验店.pdf"
     },
     {
       "source_id": "PDF-117",
@@ -3250,7 +3250,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/唐山硅谷数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/唐山硅谷数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-118",
@@ -3273,7 +3273,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/商丘正弘汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/商丘正弘汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-119",
@@ -3296,7 +3296,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/嘉兴八佰伴授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/嘉兴八佰伴授权体验店.pdf"
     },
     {
       "source_id": "PDF-120",
@@ -3320,7 +3320,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大庆百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大庆百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-121",
@@ -3358,7 +3358,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连东关街授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连东关街授权专卖店.pdf"
     },
     {
       "source_id": "PDF-122",
@@ -3377,7 +3377,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连中央大道照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连中央大道照材专卖店.pdf"
     },
     {
       "source_id": "PDF-123",
@@ -3396,7 +3396,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连华南万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连华南万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-124",
@@ -3417,7 +3417,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连奥林匹克照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连奥林匹克照材专卖店.pdf"
     },
     {
       "source_id": "PDF-125",
@@ -3445,7 +3445,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连柏威年授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连柏威年授权体验店.pdf"
     },
     {
       "source_id": "PDF-126",
@@ -3469,7 +3469,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/大连罗斯福授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/大连罗斯福授权体验店.pdf"
     },
     {
       "source_id": "PDF-127",
@@ -3523,7 +3523,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-128",
@@ -3553,7 +3553,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津南开大悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津南开大悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-129",
@@ -3596,7 +3596,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津天河城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津天河城授权体验店.pdf"
     },
     {
       "source_id": "PDF-130",
@@ -3643,7 +3643,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津梅江天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津梅江天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-131",
@@ -3668,7 +3668,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-132",
@@ -3693,7 +3693,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/天津西青大悦汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/天津西青大悦汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-133",
@@ -3722,7 +3722,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/太原万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/太原万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-134",
@@ -3745,7 +3745,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/太原天美新天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/太原天美新天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-135",
@@ -3765,7 +3765,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/威海威高广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/威海威高广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-136",
@@ -3793,7 +3793,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宁波余姚五彩城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/宁波余姚五彩城授权体验店.pdf"
     },
     {
       "source_id": "PDF-137",
@@ -3817,7 +3817,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宁波明州里授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/宁波明州里授权专卖店.pdf"
     },
     {
       "source_id": "PDF-138",
@@ -3845,7 +3845,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宜兴八佰伴.pdf"
+      "source_location": "资源库/01_各门店原图纸/宜兴八佰伴.pdf"
     },
     {
       "source_id": "PDF-139",
@@ -3870,7 +3870,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宜宾万象天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/宜宾万象天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-140",
@@ -3897,7 +3897,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宜昌国贸授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/宜昌国贸授权体验店.pdf"
     },
     {
       "source_id": "PDF-141",
@@ -3945,7 +3945,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/宝鸡开元商城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/宝鸡开元商城授权体验店.pdf"
     },
     {
       "source_id": "PDF-142",
@@ -3965,7 +3965,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/山东菏泽佳和城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/山东菏泽佳和城授权体验店.pdf"
     },
     {
       "source_id": "PDF-143",
@@ -3994,7 +3994,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/山西临汾生龙国际.pdf"
+      "source_location": "资源库/01_各门店原图纸/山西临汾生龙国际.pdf"
     },
     {
       "source_id": "PDF-144",
@@ -4038,7 +4038,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/常州万象城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/常州万象城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-145",
@@ -4057,7 +4057,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/常州武进吾悦授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/常州武进吾悦授权体验店.pdf"
     },
     {
       "source_id": "PDF-146",
@@ -4077,7 +4077,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/平顶山丹尼斯照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/平顶山丹尼斯照材专卖店.pdf"
     },
     {
       "source_id": "PDF-147",
@@ -4096,7 +4096,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州万民星光城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州万民星光城授权体验店.pdf"
     },
     {
       "source_id": "PDF-148",
@@ -4122,7 +4122,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州万菱汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州万菱汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-149",
@@ -4150,7 +4150,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州保利时光里.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州保利时光里.pdf"
     },
     {
       "source_id": "PDF-150",
@@ -4185,7 +4185,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州天环广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州天环广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-151",
@@ -4232,7 +4232,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州广州塔广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州广州塔广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-152",
@@ -4255,7 +4255,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州正佳广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州正佳广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-153",
@@ -4313,7 +4313,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州琶洲保利授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州琶洲保利授权体验店.pdf"
     },
     {
       "source_id": "PDF-154",
@@ -4366,7 +4366,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州番禺天河城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州番禺天河城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-155",
@@ -4409,7 +4409,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-156",
@@ -4432,7 +4432,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州美林MLIVE天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州美林MLIVE天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-157",
@@ -4456,7 +4456,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/广州融创授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/广州融创授权体验店.pdf"
     },
     {
       "source_id": "PDF-158",
@@ -4480,7 +4480,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/徐州中山南路格派照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/徐州中山南路格派照材专卖店.pdf"
     },
     {
       "source_id": "PDF-159",
@@ -4502,7 +4502,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/徐州苏宁授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/徐州苏宁授权体验店.pdf"
     },
     {
       "source_id": "PDF-160",
@@ -4524,7 +4524,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/德国汉堡市Saturn店.pdf"
+      "source_location": "资源库/01_各门店原图纸/德国汉堡市Saturn店.pdf"
     },
     {
       "source_id": "PDF-161",
@@ -4552,7 +4552,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/恩施星光里购物中心照材店.pdf"
+      "source_location": "资源库/01_各门店原图纸/恩施星光里购物中心照材店.pdf"
     },
     {
       "source_id": "PDF-162",
@@ -4573,7 +4573,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/惠州华贸授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/惠州华贸授权体验店.pdf"
     },
     {
       "source_id": "PDF-163",
@@ -4596,7 +4596,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都A世界照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都A世界照材专卖店.pdf"
     },
     {
       "source_id": "PDF-164",
@@ -4653,7 +4653,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都万象城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都万象城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-165",
@@ -4676,7 +4676,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都华凌摄影城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都华凌摄影城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-166",
@@ -4702,7 +4702,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都大悦城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都大悦城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-167",
@@ -4728,7 +4728,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都天府和悦广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都天府和悦广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-168",
@@ -4750,7 +4750,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都天府大悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都天府大悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-169",
@@ -4798,7 +4798,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都天府艺术公园授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都天府艺术公园授权专卖店.pdf"
     },
     {
       "source_id": "PDF-170",
@@ -4857,7 +4857,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都太古里授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都太古里授权体验店.pdf"
     },
     {
       "source_id": "PDF-171",
@@ -4879,7 +4879,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都数码广场恒驰照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都数码广场恒驰照材专卖店.pdf"
     },
     {
       "source_id": "PDF-172",
@@ -4902,7 +4902,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都数码广场虎一心照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都数码广场虎一心照材专卖店.pdf"
     },
     {
       "source_id": "PDF-173",
@@ -4922,7 +4922,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都来福士授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都来福士授权体验店.pdf"
     },
     {
       "source_id": "PDF-174",
@@ -4972,7 +4972,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都滨江天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都滨江天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-175",
@@ -5018,7 +5018,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都环球中心授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都环球中心授权体验店.pdf"
     },
     {
       "source_id": "PDF-176",
@@ -5064,7 +5064,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都环球中心授权体验店（2F）.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都环球中心授权体验店（2F）.pdf"
     },
     {
       "source_id": "PDF-177",
@@ -5089,7 +5089,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-178",
@@ -5142,7 +5142,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都科华王府井授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都科华王府井授权体验店.pdf"
     },
     {
       "source_id": "PDF-179",
@@ -5188,7 +5188,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都西宸天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都西宸天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-180",
@@ -5207,7 +5207,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都西村大院授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都西村大院授权专卖店.pdf"
     },
     {
       "source_id": "PDF-181",
@@ -5228,7 +5228,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都金楠天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都金楠天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-182",
@@ -5274,7 +5274,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都金牛凯德授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都金牛凯德授权体验店.pdf"
     },
     {
       "source_id": "PDF-183",
@@ -5306,7 +5306,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/成都龙泉世茂广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/成都龙泉世茂广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-184",
@@ -5352,7 +5352,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/扬州万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/扬州万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-185",
@@ -5377,7 +5377,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/拉萨王府井授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/拉萨王府井授权体验店.pdf"
     },
     {
       "source_id": "PDF-186",
@@ -5403,7 +5403,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新乡大桥照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新乡大桥照材专卖店.pdf"
     },
     {
       "source_id": "PDF-187",
@@ -5425,7 +5425,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新乡胖东来授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新乡胖东来授权体验店.pdf"
     },
     {
       "source_id": "PDF-188",
@@ -5452,7 +5452,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新加坡Jewel中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/新加坡Jewel中岛.pdf"
     },
     {
       "source_id": "PDF-189",
@@ -5476,7 +5476,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新加坡suntec city.pdf"
+      "source_location": "资源库/01_各门店原图纸/新加坡suntec city.pdf"
     },
     {
       "source_id": "PDF-190",
@@ -5501,7 +5501,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新加坡建店Plaza Singapura.pdf"
+      "source_location": "资源库/01_各门店原图纸/新加坡建店Plaza Singapura.pdf"
     },
     {
       "source_id": "PDF-191",
@@ -5521,7 +5521,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆伊犁环球港授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆伊犁环球港授权体验店.pdf"
     },
     {
       "source_id": "PDF-192",
@@ -5540,7 +5540,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆克拉玛依市汇嘉时代广场.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆克拉玛依市汇嘉时代广场.pdf"
     },
     {
       "source_id": "PDF-193",
@@ -5565,7 +5565,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆喀什数码街照材店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆喀什数码街照材店.pdf"
     },
     {
       "source_id": "PDF-194",
@@ -5587,7 +5587,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆宏景数码广场二店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆宏景数码广场二店.pdf"
     },
     {
       "source_id": "PDF-195",
@@ -5610,7 +5610,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆宏景数码广场授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆宏景数码广场授权专卖店.pdf"
     },
     {
       "source_id": "PDF-196",
@@ -5630,7 +5630,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/新疆石河子万达授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/新疆石河子万达授权专卖店.pdf"
     },
     {
       "source_id": "PDF-197",
@@ -5673,7 +5673,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/无锡百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/无锡百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-198",
@@ -5700,7 +5700,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/无锡荟聚.pdf"
+      "source_location": "资源库/01_各门店原图纸/无锡荟聚.pdf"
     },
     {
       "source_id": "PDF-199",
@@ -5720,7 +5720,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/日照万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/日照万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-200",
@@ -5763,7 +5763,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆山商厦家电市场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆山商厦家电市场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-201",
@@ -5782,7 +5782,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆山商厦家电市场照材专卖店（扩店）.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆山商厦家电市场照材专卖店（扩店）.pdf"
     },
     {
       "source_id": "PDF-202",
@@ -5808,7 +5808,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-203",
@@ -5836,7 +5836,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明五华吾悦授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明五华吾悦授权体验店.pdf"
     },
     {
       "source_id": "PDF-204",
@@ -5881,7 +5881,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明佰腾数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明佰腾数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-205",
@@ -5908,7 +5908,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明南亚风情第壹城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明南亚风情第壹城授权体验店.pdf"
     },
     {
       "source_id": "PDF-206",
@@ -5930,7 +5930,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明恒隆授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明恒隆授权体验店.pdf"
     },
     {
       "source_id": "PDF-207",
@@ -5986,7 +5986,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/昆明顺城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/昆明顺城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-208",
@@ -6012,7 +6012,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/晋江SM授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/晋江SM授权体验店.pdf"
     },
     {
       "source_id": "PDF-209",
@@ -6028,7 +6028,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州EFC广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州EFC广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-210",
@@ -6047,7 +6047,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州EIC广场授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州EIC广场授权专卖店.pdf"
     },
     {
       "source_id": "PDF-211",
@@ -6066,7 +6066,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州IN77授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州IN77授权体验店.pdf"
     },
     {
       "source_id": "PDF-212",
@@ -6090,7 +6090,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州万象城（迁址）.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州万象城（迁址）.pdf"
     },
     {
       "source_id": "PDF-213",
@@ -6109,7 +6109,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州东部数码港照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州东部数码港照材专卖店.pdf"
     },
     {
       "source_id": "PDF-214",
@@ -6137,7 +6137,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州临平银泰授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州临平银泰授权体验店.pdf"
     },
     {
       "source_id": "PDF-215",
@@ -6159,7 +6159,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州亚奥万象天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州亚奥万象天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-216",
@@ -6198,7 +6198,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州大悦城悦街授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州大悦城悦街授权专卖店.pdf"
     },
     {
       "source_id": "PDF-217",
@@ -6255,7 +6255,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州奥体印象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州奥体印象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-218",
@@ -6274,7 +6274,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州学院路照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州学院路照材专卖店.pdf"
     },
     {
       "source_id": "PDF-219",
@@ -6293,7 +6293,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/杭州百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/杭州百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-220",
@@ -6324,7 +6324,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/柳州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/柳州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-221",
@@ -6348,7 +6348,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/桂林万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/桂林万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-222",
@@ -6372,7 +6372,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武昌万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武昌万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-223",
@@ -6400,7 +6400,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉光谷世界城.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉光谷世界城.pdf"
     },
     {
       "source_id": "PDF-224",
@@ -6426,7 +6426,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉大悦城.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉大悦城.pdf"
     },
     {
       "source_id": "PDF-225",
@@ -6452,7 +6452,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉天地壹方授权体验店（迁址）.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉天地壹方授权体验店（迁址）.pdf"
     },
     {
       "source_id": "PDF-226",
@@ -6473,7 +6473,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉婚纱摄影照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉婚纱摄影照材专卖店.pdf"
     },
     {
       "source_id": "PDF-227",
@@ -6497,7 +6497,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉梦时代授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉梦时代授权专卖店.pdf"
     },
     {
       "source_id": "PDF-228",
@@ -6525,7 +6525,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉武商MALL授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉武商MALL授权体验店.pdf"
     },
     {
       "source_id": "PDF-229",
@@ -6561,7 +6561,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉电脑大世界照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉电脑大世界照材专卖店.pdf"
     },
     {
       "source_id": "PDF-230",
@@ -6589,7 +6589,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉荟聚.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉荟聚.pdf"
     },
     {
       "source_id": "PDF-231",
@@ -6608,7 +6608,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉银泰创意城.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉银泰创意城.pdf"
     },
     {
       "source_id": "PDF-232",
@@ -6627,7 +6627,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/武汉销品茂授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/武汉销品茂授权体验店.pdf"
     },
     {
       "source_id": "PDF-233",
@@ -6647,7 +6647,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/汕头万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/汕头万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-234",
@@ -6670,7 +6670,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/江西赣州京东授权专区.pdf"
+      "source_location": "资源库/01_各门店原图纸/江西赣州京东授权专区.pdf"
     },
     {
       "source_id": "PDF-235",
@@ -6698,7 +6698,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/江门汇悦大融城（迁址）.pdf"
+      "source_location": "资源库/01_各门店原图纸/江门汇悦大融城（迁址）.pdf"
     },
     {
       "source_id": "PDF-236",
@@ -6722,7 +6722,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳三台子万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳三台子万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-237",
@@ -6763,7 +6763,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳东软科技城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳东软科技城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-238",
@@ -6782,7 +6782,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳中街恒隆授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳中街恒隆授权体验店.pdf"
     },
     {
       "source_id": "PDF-239",
@@ -6804,7 +6804,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-240",
@@ -6827,7 +6827,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳百脑汇照材专卖店二店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳百脑汇照材专卖店二店.pdf"
     },
     {
       "source_id": "PDF-241",
@@ -6847,7 +6847,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳铁西万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳铁西万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-242",
@@ -6874,7 +6874,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/沈阳长白万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/沈阳长白万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-243",
@@ -6926,7 +6926,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泉州浦西万达授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/泉州浦西万达授权专卖店.pdf"
     },
     {
       "source_id": "PDF-244",
@@ -6950,7 +6950,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国Central Phuket.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国Central Phuket.pdf"
     },
     {
       "source_id": "PDF-246",
@@ -6981,7 +6981,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国central westgate.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国central westgate.pdf"
     },
     {
       "source_id": "PDF-245",
@@ -7026,7 +7026,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国Mega Bangna.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国Mega Bangna.pdf"
     },
     {
       "source_id": "PDF-247",
@@ -7072,7 +7072,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国曼谷central world.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国曼谷central world.pdf"
     },
     {
       "source_id": "PDF-248",
@@ -7104,7 +7104,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国曼谷dusit central park.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国曼谷dusit central park.pdf"
     },
     {
       "source_id": "PDF-249",
@@ -7130,7 +7130,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰国芭提雅central Pattaya.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰国芭提雅central Pattaya.pdf"
     },
     {
       "source_id": "PDF-250",
@@ -7152,7 +7152,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰安三源照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰安三源照材专卖店.pdf"
     },
     {
       "source_id": "PDF-251",
@@ -7175,7 +7175,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/泰州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/泰州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-252",
@@ -7228,7 +7228,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/洛阳大卫天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/洛阳大卫天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-253",
@@ -7252,7 +7252,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/洛阳王城公园照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/洛阳王城公园照材专卖店.pdf"
     },
     {
       "source_id": "PDF-254",
@@ -7278,7 +7278,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/济南万象城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/济南万象城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-255",
@@ -7303,7 +7303,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/济南华强电子科技照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/济南华强电子科技照材专卖店.pdf"
     },
     {
       "source_id": "PDF-256",
@@ -7327,7 +7327,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/济南恒隆授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/济南恒隆授权体验店.pdf"
     },
     {
       "source_id": "PDF-257",
@@ -7379,7 +7379,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/济宁万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/济宁万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-258",
@@ -7402,7 +7402,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/海口天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/海口天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-259",
@@ -7421,7 +7421,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/海口远大购物中心授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/海口远大购物中心授权体验店.pdf"
     },
     {
       "source_id": "PDF-260",
@@ -7440,7 +7440,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/淄博万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/淄博万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-261",
@@ -7459,7 +7459,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/淄博百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/淄博百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-262",
@@ -7477,7 +7477,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/淮安万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/淮安万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-263",
@@ -7501,7 +7501,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳万丰海岸城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳万丰海岸城授权体验店.pdf"
     },
     {
       "source_id": "PDF-264",
@@ -7524,7 +7524,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳万象前海授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳万象前海授权体验店.pdf"
     },
     {
       "source_id": "PDF-265",
@@ -7548,7 +7548,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳光明蓝鲸世界授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳光明蓝鲸世界授权体验店.pdf"
     },
     {
       "source_id": "PDF-266",
@@ -7574,7 +7574,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳华发冰雪世界授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳华发冰雪世界授权体验店.pdf"
     },
     {
       "source_id": "PDF-267",
@@ -7615,7 +7615,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳华强北改造项目.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳华强北改造项目.pdf"
     },
     {
       "source_id": "PDF-268",
@@ -7663,7 +7663,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳华强北赛格科技园照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳华强北赛格科技园照材专卖店.pdf"
     },
     {
       "source_id": "PDF-269",
@@ -7691,7 +7691,7 @@
       "shop_type": null,
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳华强北（华强一店）.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳华强北（华强一店）.pdf"
     },
     {
       "source_id": "PDF-270",
@@ -7716,7 +7716,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳卓悦中心.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳卓悦中心.pdf"
     },
     {
       "source_id": "PDF-271",
@@ -7735,7 +7735,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳壹方城直营旗舰店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳壹方城直营旗舰店.pdf"
     },
     {
       "source_id": "PDF-272",
@@ -7754,7 +7754,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳壹方汇直营店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳壹方汇直营店.pdf"
     },
     {
       "source_id": "PDF-273",
@@ -7774,7 +7774,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳大悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳大悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-274",
@@ -7793,7 +7793,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳宝安大仟里.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳宝安大仟里.pdf"
     },
     {
       "source_id": "PDF-275",
@@ -7820,7 +7820,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳布吉万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳布吉万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-276",
@@ -7847,7 +7847,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳新华强照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳新华强照材专卖店.pdf"
     },
     {
       "source_id": "PDF-277",
@@ -7871,7 +7871,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳机场直营店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳机场直营店.pdf"
     },
     {
       "source_id": "PDF-278",
@@ -7921,7 +7921,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳海岸城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳海岸城授权体验店.pdf"
     },
     {
       "source_id": "PDF-279",
@@ -7945,7 +7945,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳海雅缤纷城.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳海雅缤纷城.pdf"
     },
     {
       "source_id": "PDF-280",
@@ -7992,7 +7992,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳深业上城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳深业上城授权体验店.pdf"
     },
     {
       "source_id": "PDF-281",
@@ -8038,7 +8038,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳福田COCOPARK授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳福田COCOPARK授权体验店.pdf"
     },
     {
       "source_id": "PDF-282",
@@ -8069,7 +8069,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳福田中航城君尚.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳福田中航城君尚.pdf"
     },
     {
       "source_id": "PDF-283",
@@ -8096,7 +8096,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳福田卓悦汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳福田卓悦汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-284",
@@ -8144,7 +8144,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳罗湖万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳罗湖万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-285",
@@ -8168,7 +8168,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳罗湖金光华.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳罗湖金光华.pdf"
     },
     {
       "source_id": "PDF-286",
@@ -8197,7 +8197,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/深圳龙华天虹授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/深圳龙华天虹授权体验店.pdf"
     },
     {
       "source_id": "PDF-287",
@@ -8217,7 +8217,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/温州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/温州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-288",
@@ -8236,7 +8236,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/温州开太百货照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/温州开太百货照材专卖店.pdf"
     },
     {
       "source_id": "PDF-289",
@@ -8259,7 +8259,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/温州滨江万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/温州滨江万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-290",
@@ -8279,7 +8279,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/湖南摄影城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/湖南摄影城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-291",
@@ -8305,7 +8305,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/潍坊泰华城新天地.pdf"
+      "source_location": "资源库/01_各门店原图纸/潍坊泰华城新天地.pdf"
     },
     {
       "source_id": "PDF-292",
@@ -8338,7 +8338,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/潍坊益家园照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/潍坊益家园照材专卖店.pdf"
     },
     {
       "source_id": "PDF-293",
@@ -8365,7 +8365,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/澳门威尼斯人.pdf"
+      "source_location": "资源库/01_各门店原图纸/澳门威尼斯人.pdf"
     },
     {
       "source_id": "PDF-294",
@@ -8416,7 +8416,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/烟台振华商厦授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/烟台振华商厦授权体验店.pdf"
     },
     {
       "source_id": "PDF-295",
@@ -8443,7 +8443,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/珠海万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/珠海万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-296",
@@ -8471,7 +8471,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/珠海华发商都授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/珠海华发商都授权体验店.pdf"
     },
     {
       "source_id": "PDF-297",
@@ -8490,7 +8490,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/盐城聚龙湖金鹰授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/盐城聚龙湖金鹰授权体验店.pdf"
     },
     {
       "source_id": "PDF-298",
@@ -8525,7 +8525,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/石家庄万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/石家庄万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-299",
@@ -8545,7 +8545,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/石家庄太和电子城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/石家庄太和电子城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-300",
@@ -8568,7 +8568,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/石家庄织音1953授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/石家庄织音1953授权专卖店.pdf"
     },
     {
       "source_id": "PDF-301",
@@ -8622,7 +8622,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/福州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-302",
@@ -8647,7 +8647,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福州东二泰禾（换铺）.pdf"
+      "source_location": "资源库/01_各门店原图纸/福州东二泰禾（换铺）.pdf"
     },
     {
       "source_id": "PDF-303",
@@ -8673,7 +8673,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福州中骏世界城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/福州中骏世界城授权体验店.pdf"
     },
     {
       "source_id": "PDF-304",
@@ -8700,7 +8700,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福州大利嘉城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/福州大利嘉城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-305",
@@ -8752,7 +8752,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福州烟台山授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/福州烟台山授权体验店.pdf"
     },
     {
       "source_id": "PDF-306",
@@ -8777,7 +8777,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/福建龙岩万宝授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/福建龙岩万宝授权体验店.pdf"
     },
     {
       "source_id": "PDF-307",
@@ -8803,7 +8803,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/秦皇岛茂业天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/秦皇岛茂业天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-308",
@@ -8823,7 +8823,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/绍兴金帝银泰城迁址边厅.pdf"
+      "source_location": "资源库/01_各门店原图纸/绍兴金帝银泰城迁址边厅.pdf"
     },
     {
       "source_id": "PDF-309",
@@ -8857,7 +8857,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/绵阳数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/绵阳数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-310",
@@ -8877,7 +8877,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/聊城万达照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/聊城万达照材专卖店.pdf"
     },
     {
       "source_id": "PDF-311",
@@ -8905,7 +8905,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/芜湖银泰inpark.pdf"
+      "source_location": "资源库/01_各门店原图纸/芜湖银泰inpark.pdf"
     },
     {
       "source_id": "PDF-312",
@@ -8925,7 +8925,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/苏州东吴天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/苏州东吴天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-313",
@@ -8947,7 +8947,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/苏州中心授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/苏州中心授权体验店.pdf"
     },
     {
       "source_id": "PDF-314",
@@ -8966,7 +8966,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/苏州人民商场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/苏州人民商场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-315",
@@ -8985,7 +8985,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/苏州吴江万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/苏州吴江万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-316",
@@ -9008,7 +9008,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/苏州昆山万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/苏州昆山万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-317",
@@ -9031,7 +9031,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/英国westfield中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/英国westfield中岛.pdf"
     },
     {
       "source_id": "PDF-318",
@@ -9050,7 +9050,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/茂名东荟城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/茂名东荟城授权体验店.pdf"
     },
     {
       "source_id": "PDF-319",
@@ -9078,7 +9078,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/莆田万象汇.pdf"
+      "source_location": "资源库/01_各门店原图纸/莆田万象汇.pdf"
     },
     {
       "source_id": "PDF-320",
@@ -9099,7 +9099,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾 SM Aura.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾 SM Aura.pdf"
     },
     {
       "source_id": "PDF-321",
@@ -9126,7 +9126,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾 SM City Grand Central.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾 SM City Grand Central.pdf"
     },
     {
       "source_id": "PDF-322",
@@ -9148,7 +9148,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾Festival mall 边厅.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾Festival mall 边厅.pdf"
     },
     {
       "source_id": "PDF-323",
@@ -9168,7 +9168,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾MOA（换址).pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾MOA（换址).pdf"
     },
     {
       "source_id": "PDF-324",
@@ -9186,7 +9186,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾ONE Ayala.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾ONE Ayala.pdf"
     },
     {
       "source_id": "PDF-325",
@@ -9231,7 +9231,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾Robinsons Place Manila.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾Robinsons Place Manila.pdf"
     },
     {
       "source_id": "PDF-326",
@@ -9253,7 +9253,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City Clark 中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City Clark 中岛.pdf"
     },
     {
       "source_id": "PDF-327",
@@ -9290,7 +9290,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City Dasmarinas 中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City Dasmarinas 中岛.pdf"
     },
     {
       "source_id": "PDF-328",
@@ -9335,7 +9335,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City Davao边厅.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City Davao边厅.pdf"
     },
     {
       "source_id": "PDF-329",
@@ -9386,7 +9386,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City Fairview.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City Fairview.pdf"
     },
     {
       "source_id": "PDF-330",
@@ -9411,7 +9411,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City La Union.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City La Union.pdf"
     },
     {
       "source_id": "PDF-331",
@@ -9438,7 +9438,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City Pampanga 中岛.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City Pampanga 中岛.pdf"
     },
     {
       "source_id": "PDF-332",
@@ -9486,7 +9486,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM City San Pablo.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM City San Pablo.pdf"
     },
     {
       "source_id": "PDF-333",
@@ -9509,7 +9509,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM Megamall 边厅.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM Megamall 边厅.pdf"
     },
     {
       "source_id": "PDF-334",
@@ -9528,7 +9528,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM North EDSA.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM North EDSA.pdf"
     },
     {
       "source_id": "PDF-335",
@@ -9554,7 +9554,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/菲律宾SM South mall.pdf"
+      "source_location": "资源库/01_各门店原图纸/菲律宾SM South mall.pdf"
     },
     {
       "source_id": "PDF-336",
@@ -9577,7 +9577,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西宁王府井授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西宁王府井授权体验店.pdf"
     },
     {
       "source_id": "PDF-337",
@@ -9600,7 +9600,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安DT51授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安DT51授权体验店.pdf"
     },
     {
       "source_id": "PDF-338",
@@ -9644,7 +9644,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安SKP授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安SKP授权体验店.pdf"
     },
     {
       "source_id": "PDF-339",
@@ -9667,7 +9667,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-340",
@@ -9693,7 +9693,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安东新科贸照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安东新科贸照材专卖店.pdf"
     },
     {
       "source_id": "PDF-341",
@@ -9716,7 +9716,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安北部赛格广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安北部赛格广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-342",
@@ -9739,7 +9739,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安开元商场.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安开元商场.pdf"
     },
     {
       "source_id": "PDF-343",
@@ -9758,7 +9758,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安曲江创意谷授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安曲江创意谷授权体验店.pdf"
     },
     {
       "source_id": "PDF-344",
@@ -9802,7 +9802,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安百瑞未来城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安百瑞未来城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-345",
@@ -9825,7 +9825,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-346",
@@ -9876,7 +9876,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安荟聚授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安荟聚授权体验店.pdf"
     },
     {
       "source_id": "PDF-347",
@@ -9903,7 +9903,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安赛格授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安赛格授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-348",
@@ -9925,7 +9925,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安鹏博大厦照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安鹏博大厦照材专卖店.pdf"
     },
     {
       "source_id": "PDF-349",
@@ -9945,7 +9945,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安龙湖长乐天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安龙湖长乐天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-350",
@@ -9972,7 +9972,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/西安龙首印象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/西安龙首印象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-351",
@@ -9995,7 +9995,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/贵阳万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/贵阳万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-352",
@@ -10022,7 +10022,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/贵阳中华南路照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/贵阳中华南路照材专卖店.pdf"
     },
     {
       "source_id": "PDF-353",
@@ -10045,7 +10045,7 @@
       "shop_type": "专区",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/贵阳新大陆数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/贵阳新大陆数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-354",
@@ -10070,7 +10070,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/赣州万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/赣州万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-355",
@@ -10090,7 +10090,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/赤峰商厦照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/赤峰商厦照材专卖店.pdf"
     },
     {
       "source_id": "PDF-356",
@@ -10118,7 +10118,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/遵义吾悦广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/遵义吾悦广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-357",
@@ -10146,7 +10146,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/邯郸万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/邯郸万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-358",
@@ -10200,7 +10200,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州东万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州东万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-359",
@@ -10223,7 +10223,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州信万广场授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州信万广场授权专卖店.pdf"
     },
     {
       "source_id": "PDF-360",
@@ -10277,7 +10277,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州大卫城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州大卫城授权体验店.pdf"
     },
     {
       "source_id": "PDF-361",
@@ -10300,7 +10300,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州探十里授权专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州探十里授权专卖店.pdf"
     },
     {
       "source_id": "PDF-362",
@@ -10329,7 +10329,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州正弘汇授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州正弘汇授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-363",
@@ -10352,7 +10352,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州赛博数码港照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州赛博数码港照材专卖店.pdf"
     },
     {
       "source_id": "PDF-364",
@@ -10374,7 +10374,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郑州金融岛授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郑州金融岛授权体验店.pdf"
     },
     {
       "source_id": "PDF-365",
@@ -10402,7 +10402,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/郴州解放路照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/郴州解放路照材专卖店.pdf"
     },
     {
       "source_id": "PDF-366",
@@ -10422,7 +10422,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/鄂尔多斯金峰电子城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/鄂尔多斯金峰电子城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-367",
@@ -10447,7 +10447,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆万象城.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆万象城.pdf"
     },
     {
       "source_id": "PDF-368",
@@ -10471,7 +10471,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆光环花园城.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆光环花园城.pdf"
     },
     {
       "source_id": "PDF-369",
@@ -10491,7 +10491,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆光环购物广场.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆光环购物广场.pdf"
     },
     {
       "source_id": "PDF-370",
@@ -10510,7 +10510,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆北城天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆北城天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-371",
@@ -10536,7 +10536,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆国泰广场授权专卖店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆国泰广场授权专卖店（边厅）.pdf"
     },
     {
       "source_id": "PDF-372",
@@ -10556,7 +10556,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆大悦城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆大悦城授权体验店.pdf"
     },
     {
       "source_id": "PDF-373",
@@ -10578,7 +10578,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆时代天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆时代天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-374",
@@ -10597,7 +10597,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆来福士授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆来福士授权体验店.pdf"
     },
     {
       "source_id": "PDF-375",
@@ -10619,7 +10619,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-376",
@@ -10664,7 +10664,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆石桥铺赛博数码广场照材店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆石桥铺赛博数码广场照材店.pdf"
     },
     {
       "source_id": "PDF-377",
@@ -10684,7 +10684,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆观音桥赛博数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆观音桥赛博数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-378",
@@ -10710,7 +10710,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆龙湖U城天街.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆龙湖U城天街.pdf"
     },
     {
       "source_id": "PDF-379",
@@ -10729,7 +10729,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆龙湖江岸天街.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆龙湖江岸天街.pdf"
     },
     {
       "source_id": "PDF-380",
@@ -10755,7 +10755,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/重庆龙湖金沙天街授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/重庆龙湖金沙天街授权体验店.pdf"
     },
     {
       "source_id": "PDF-381",
@@ -10778,7 +10778,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/金华永盛授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/金华永盛授权体验店.pdf"
     },
     {
       "source_id": "PDF-382",
@@ -10800,7 +10800,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/银川新华百货CCMALL授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/银川新华百货CCMALL授权体验店.pdf"
     },
     {
       "source_id": "PDF-383",
@@ -10823,7 +10823,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/银川阅彩城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/银川阅彩城授权体验店.pdf"
     },
     {
       "source_id": "PDF-384",
@@ -10843,7 +10843,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长春万象城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长春万象城授权体验店.pdf"
     },
     {
       "source_id": "PDF-385",
@@ -10865,7 +10865,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长春百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长春百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-386",
@@ -10886,7 +10886,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙IFS授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙IFS授权体验店.pdf"
     },
     {
       "source_id": "PDF-387",
@@ -10927,7 +10927,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙万象城授权体验店（边厅）.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙万象城授权体验店（边厅）.pdf"
     },
     {
       "source_id": "PDF-388",
@@ -10977,7 +10977,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙星城天地授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙星城天地授权体验店.pdf"
     },
     {
       "source_id": "PDF-389",
@@ -10996,7 +10996,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙永旺梦乐城授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙永旺梦乐城授权体验店.pdf"
     },
     {
       "source_id": "PDF-390",
@@ -11019,7 +11019,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙科佳电脑城照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙科佳电脑城照材专卖店.pdf"
     },
     {
       "source_id": "PDF-391",
@@ -11069,7 +11069,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙荟聚授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙荟聚授权体验店.pdf"
     },
     {
       "source_id": "PDF-392",
@@ -11094,7 +11094,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/长沙高桥数码广场照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/长沙高桥数码广场照材专卖店.pdf"
     },
     {
       "source_id": "PDF-393",
@@ -11122,7 +11122,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛万象城.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛万象城.pdf"
     },
     {
       "source_id": "PDF-394",
@@ -11148,7 +11148,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛凯德MALL授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛凯德MALL授权体验店.pdf"
     },
     {
       "source_id": "PDF-395",
@@ -11168,7 +11168,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛城阳万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛城阳万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-396",
@@ -11228,7 +11228,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛崂山万象汇授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛崂山万象汇授权体验店.pdf"
     },
     {
       "source_id": "PDF-397",
@@ -11252,7 +11252,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛永旺梦乐城.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛永旺梦乐城.pdf"
     },
     {
       "source_id": "PDF-398",
@@ -11294,7 +11294,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛海信广场授权体验店.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛海信广场授权体验店.pdf"
     },
     {
       "source_id": "PDF-399",
@@ -11317,7 +11317,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/青岛百脑汇照材专卖店.pdf"
+      "source_location": "资源库/01_各门店原图纸/青岛百脑汇照材专卖店.pdf"
     },
     {
       "source_id": "PDF-400",
@@ -11345,7 +11345,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国galleria光教店-광교점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国galleria光教店-광교점.pdf"
     },
     {
       "source_id": "PDF-401",
@@ -11378,7 +11378,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国乐天百货蚕室店- 롯데잠실점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国乐天百货蚕室店- 롯데잠실점.pdf"
     },
     {
       "source_id": "PDF-402",
@@ -11399,7 +11399,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国新世界大田店-신세계대전점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国新世界大田店-신세계대전점.pdf"
     },
     {
       "source_id": "PDF-403",
@@ -11442,7 +11442,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国现代百货忠清店-현대충청점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国现代百货忠清店-현대충청점.pdf"
     },
     {
       "source_id": "PDF-404",
@@ -11464,7 +11464,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国现代百货新村店-현대신촌점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国现代百货新村店-현대신촌점.pdf"
     },
     {
       "source_id": "PDF-405",
@@ -11500,7 +11500,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国现代百货板桥店-현대판교점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国现代百货板桥店-현대판교점.pdf"
     },
     {
       "source_id": "PDF-406",
@@ -11524,7 +11524,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国现代百货蔚山店-현대울산점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国现代百货蔚山店-현대울산점.pdf"
     },
     {
       "source_id": "PDF-407",
@@ -11550,7 +11550,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国釜山乐天百货-롯데 부산본점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国釜山乐天百货-롯데 부산본점.pdf"
     },
     {
       "source_id": "PDF-408",
@@ -11585,7 +11585,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/韩国首尔江南旗舰店-도산점.pdf"
+      "source_location": "资源库/01_各门店原图纸/韩国首尔江南旗舰店-도산점.pdf"
     },
     {
       "source_id": "PDF-409",
@@ -11608,7 +11608,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/香港旺角郎豪坊.pdf"
+      "source_location": "资源库/01_各门店原图纸/香港旺角郎豪坊.pdf"
     },
     {
       "source_id": "PDF-410",
@@ -11675,7 +11675,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/香港油尖旺柏丽大道街边店.pdf"
+      "source_location": "资源库/01_各门店原图纸/香港油尖旺柏丽大道街边店.pdf"
     },
     {
       "source_id": "PDF-411",
@@ -11733,7 +11733,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/香港铜锣湾百德新街.pdf"
+      "source_location": "资源库/01_各门店原图纸/香港铜锣湾百德新街.pdf"
     },
     {
       "source_id": "PDF-412",
@@ -11756,7 +11756,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚1Utama Shopping Center.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚1Utama Shopping Center.pdf"
     },
     {
       "source_id": "PDF-413",
@@ -11779,7 +11779,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚Gurney Plaza.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚Gurney Plaza.pdf"
     },
     {
       "source_id": "PDF-414",
@@ -11805,7 +11805,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚IOI Citymall中岛店.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚IOI Citymall中岛店.pdf"
     },
     {
       "source_id": "PDF-415",
@@ -11853,7 +11853,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚IOI Damasara边厅.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚IOI Damasara边厅.pdf"
     },
     {
       "source_id": "PDF-416",
@@ -11876,7 +11876,7 @@
       "shop_type": "边厅店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚Pavilion Bukit Jalil.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚Pavilion Bukit Jalil.pdf"
     },
     {
       "source_id": "PDF-417",
@@ -11903,7 +11903,7 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚Pavilion Damansara Heights.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚Pavilion Damansara Heights.pdf"
     },
     {
       "source_id": "PDF-418",
@@ -11919,7 +11919,8 @@
       "shop_type": "中岛店",
       "store_version_confirmed": false,
       "training_eligible": false,
-      "source_location": "external:store-pdfs/马来西亚Pavilion KL.pdf"
+      "source_location": "资源库/01_各门店原图纸/马来西亚Pavilion KL.pdf"
     }
-  ]
+  ],
+  "source_root": "资源库/01_各门店原图纸"
 }

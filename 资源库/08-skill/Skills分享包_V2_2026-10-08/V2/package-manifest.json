@@ -1,0 +1,550 @@
+{
+  "version": "V2",
+  "files": [
+    {
+      "path": "_品牌更新备份_2026-09-23/assets/catalog.json",
+      "bytes": 8801,
+      "sha256": "893e3ee6f0c6b820885b7deabbca3634c41f5d640d9af72173d694fffe88374a"
+    },
+    {
+      "path": "_品牌更新备份_2026-09-23/references/运行与增量渲染.md",
+      "bytes": 4442,
+      "sha256": "cac39961d1f1dc6b97539268fef62f16887c5b710cc4dceb5af9fb021ca344bd"
+    },
+    {
+      "path": "_品牌更新备份_2026-09-23/references/V2操作指南.md",
+      "bytes": 6756,
+      "sha256": "6d00e16797945bca0871df7eac2aaf3a7987ba2cb492e72e58079d8505c080a7"
+    },
+    {
+      "path": "_品牌更新备份_2026-09-23/SKILL.md",
+      "bytes": 5396,
+      "sha256": "0ddbc600ed975c57042dd7533c087bcd68f0e080b713fde7e09942e928545609"
+    },
+    {
+      "path": "门店出图.ps1",
+      "bytes": 1072,
+      "sha256": "5a10cd10d2be58eb7e7d4f7c1c0c203e48d1fd02c4e59cb8e6189ce51b3ce9aa"
+    },
+    {
+      "path": "先读我.md",
+      "bytes": 3792,
+      "sha256": "fda32cff6492fa6e6425ba3de4a3b1b601dffcfc3dfc6f32b9bf514539ab6132"
+    },
+    {
+      "path": "asset-portability-audit.json",
+      "bytes": 1384,
+      "sha256": "a12956fb95b18491b94697ca88fc5fcbc30b9a1464a8a603119dfb03a3d3fff6"
+    },
+    {
+      "path": "store-layout-render/agents/openai.yaml",
+      "bytes": 353,
+      "sha256": "dd23085d1864326f4d717d253e0b0d548538f9dbf46ad31ff64fd07c7bd4fbc7"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/影石新logo.zip",
+      "bytes": 789212,
+      "sha256": "3c762211e4c0d0aa28a35f41bb52d4ac624e06499f4a86794173b19a57302216"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/artboard-reference.jpg",
+      "bytes": 259521,
+      "sha256": "3606a35570226c5df3bfbe8824525ebda9bfcc26c6233ba44dac3b89347351be"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/manifest.json",
+      "bytes": 1888,
+      "sha256": "603177956a33c13f517967fd2a1fd6804fde618f5cdf2448d643adef6f347a5a"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/影石Insta360.ai",
+      "bytes": 822429,
+      "sha256": "7c7fc34188e1ceba8d02caed887c56534f4dfacf234ef8f2cf8bd50176c0a85e"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/CN-logo-black-on- transparent-rgb-mid6.pdf",
+      "bytes": 49134,
+      "sha256": "416a5533c6cb36e1f30566c9d4eac4f13b7d07faefa8c2ebfce7c094474073df"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/CN-logo-black-on- transparent-rgb5.pdf",
+      "bytes": 49099,
+      "sha256": "a2e6296f7dbca007ee4056fab666aa55c76b67cf39e3017f6d7a5f6aca854914"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/Insta360.ai",
+      "bytes": 563555,
+      "sha256": "b0c900bb3868818db29c5a248d3814ddf04a86092e537801d2bb4ef56a184ef8"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/logo-black-on- transparent-rgb-mid2.pdf",
+      "bytes": 45062,
+      "sha256": "73108d965e6369e4483a3960e3efb43b9a0625be65aaf41e705442a94729005e"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/logo-black-on-transparent-rgb1.pdf",
+      "bytes": 45004,
+      "sha256": "0c98cafdfa546830e3d3328da1d83431aac3c6160a4e90a8e4be586c7471ed6f"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/logo-slogan-black-on-%20transparent-rgb3.pdf",
+      "bytes": 46704,
+      "sha256": "33df5ea503c19fecdd84670b666d73c64b3c2969a397f16230957656f11de592"
+    },
+    {
+      "path": "store-layout-render/assets/brand/2026-09-23/originals/slogan-black-on- transparent-rgb-mid4.pdf",
+      "bytes": 46718,
+      "sha256": "dba9b862765e658a8fc9fb11337bc8b9b2a6ef11e3ebc7236c10fd8570f421cc"
+    },
+    {
+      "path": "store-layout-render/assets/catalog.json",
+      "bytes": 9148,
+      "sha256": "58e2bffc1bf43322d7645660fbd934c523469ba9d9017cab4aa471680d2e30be"
+    },
+    {
+      "path": "store-layout-render/assets/source/影石-西安赛高世纪金花照材店-复尺平面方案.pdf",
+      "bytes": 356060,
+      "sha256": "9a45d3ef44ca8d1067b4f971176b6751f6186122aacda088d7e1381494524bc3"
+    },
+    {
+      "path": "store-layout-render/assets/source/影石-Insta360 SI1.0 设计手册.pdf",
+      "bytes": 194148115,
+      "sha256": "981e5cd0f7dc6ecc620ee8964efe12b3e8d4d4b9aa24ca6cbce1ae19385f989d"
+    },
+    {
+      "path": "store-layout-render/assets/source/影石通用模型.skp",
+      "bytes": 1163262594,
+      "sha256": "ded29dc7f6741972d5d630272bef92e996b6839a51e64bfe3a2ed1b5d513b943"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/白模与效果图对照.jpg",
+      "bytes": 1089774,
+      "sha256": "85e08ac445796be5edadd8712fc66addaa42ee28cd4604e41a4b32ccd3fbbe9f"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/本目录阅读说明.md",
+      "bytes": 829,
+      "sha256": "41e23a9a446923ea26ecae3b35bfb1a7b3c6cf77de5a6c18fc508c89c3b3cf21"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/方向纠正说明.md",
+      "bytes": 1580,
+      "sha256": "d319308baeb58213330a245f6632e36e69e89898153031849ce2e1d09d7f9ee3"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/交付说明.md",
+      "bytes": 5275,
+      "sha256": "644f3671c86a4d9aaa9092cfe715ed53985279610a73c149e664c5efc89276c4"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/前后左右四视角.jpg",
+      "bytes": 238959,
+      "sha256": "e666e2579cf15ce77b09294806e54a0b9573aeb32c430023523797c8620d1202"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/十视角总览.jpg",
+      "bytes": 607191,
+      "sha256": "55aa77f17112c8315fb753d87a65bccbeafff811b7e4ea18367fadaaf8b86991"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/西安赛高_十视角效果图与白模.zip",
+      "bytes": 48201806,
+      "sha256": "5a019ddbb9efb067db8fa4c21528cb16204a9a1c8a8a3d450ea0c3a0f5dcfce9"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/direction_audit.json",
+      "bytes": 3146,
+      "sha256": "a1951666dac94dbef39f69587474159ec82f06960b9bccf326ba84f4a4909e56"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/saved_scene_audit.json",
+      "bytes": 366,
+      "sha256": "4897b0c4e5c3087a05fc710bb6a132291a1ff4e54bb8d8fa852f9f3d7543a06b"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/validation.json",
+      "bytes": 23061,
+      "sha256": "afc1e8be1899ca921996b7d4c6a8d73cc5896cb6354f05569a1450ce8c9214b8"
+    },
+    {
+      "path": "store-layout-render/assets/xian/delivery/verification_report.json",
+      "bytes": 6538,
+      "sha256": "df191894e9013a803fa7735c66872ce72de993edfe81f727acd048af5e4ac2ba"
+    },
+    {
+      "path": "store-layout-render/assets/xian/job.json",
+      "bytes": 1890,
+      "sha256": "46e5acd543990f432314974071b3f09bca440ff889677c8a25746a199940c28f"
+    },
+    {
+      "path": "store-layout-render/assets/xian/scene.blend",
+      "bytes": 70318485,
+      "sha256": "ab725ee46893660cf7990a24179deaf60235dd5a519cfa831a392d1a8b737b23"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/store_effect_poc/build_xian_v2.py",
+      "bytes": 18331,
+      "sha256": "0b9d989968709454cdb747db4e45bd7312067427420a0214282b7090f487dd1f"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/store_effect_poc/xian_si10_scene_v2.json",
+      "bytes": 5248,
+      "sha256": "09e7038a838105f2c4531d81f3048a1ed45f7b3e95655b5eb6fb19d66dc531a2"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/asset_placement.json",
+      "bytes": 4992,
+      "sha256": "8e3735dcb27a4d5fd4101445740fa2c8350a172e09941a51b103036a617147d2"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/accessory_1600.blend",
+      "bytes": 6949910,
+      "sha256": "1ffd6468bda3a65353a09580d633030f9df6bb4c1673729f6823a186605a9958"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/accessory_1600.json",
+      "bytes": 757,
+      "sha256": "08359512efcb3f0e0eb3c547a9e78020c734a3684b0984c1be4b567979224d52"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/accessory_1600.png",
+      "bytes": 609937,
+      "sha256": "6ec84013d03296ddc68646eb7fc67ed0319f7bcd29ddc7edc81b65718621aeaf"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/accessory_1600.skp",
+      "bytes": 6015770,
+      "sha256": "4d8ff2e7edae728ecba24692d117ea2649cb2623919645a32970a2002284e597"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_body.blend",
+      "bytes": 685716,
+      "sha256": "ac6efca5abed3caf6eeb77e36da7ad870960b56c0ceea8a3a36ac519aa662a34"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_body.json",
+      "bytes": 583,
+      "sha256": "31402db025bd7dcfe64cd4f9dfc4ee46e535f2af871a470c06bc056c16bd586b"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_body.png",
+      "bytes": 640790,
+      "sha256": "3dcd7c97ffd95d5304c43e4b1d05fde326d20fec47f479412179351c7f333c8f"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_body.skp",
+      "bytes": 129364,
+      "sha256": "a9e2c581b849bf7f1f93820d2b5407ec81fce3738263b0557a6961f850ea3d06"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_top.blend",
+      "bytes": 5149375,
+      "sha256": "f1012c30996e2fdbaa1a47235bf4fb94faa5a3e3bd5298c2bbd61eb4b08ea6d0"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_top.json",
+      "bytes": 854,
+      "sha256": "03aeb043a0b584e02f38e04d7facc1fb205bcc457ffca562121f0976e8ee419e"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_top.png",
+      "bytes": 641349,
+      "sha256": "dac2086453f086ba87d2a15f8dc25702249443cddc25a3bec33da10845ffe849"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/cashier_top.skp",
+      "bytes": 4282609,
+      "sha256": "03bfe2c85ed16286f394aec8c38d3139ed47907b27a25e7684c404df68155d30"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/digital_sign.blend",
+      "bytes": 828149,
+      "sha256": "93c42be91aa231cc319860ca698456b947320b8320d22d4cf3f086ea354ff5ce"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/digital_sign.json",
+      "bytes": 553,
+      "sha256": "8255c0e75be53c276a0655b5fc56c077b96adacd7fe4007e3262bfa95989f3d5"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/digital_sign.png",
+      "bytes": 659346,
+      "sha256": "9f45f136dd217bf5138f68948a7e5dfad75e1d17253a73b5569c296e711b4730"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/digital_sign.skp",
+      "bytes": 286608,
+      "sha256": "bc3c0a9f6259032c6296468f454947c0a8872dd6f048c38e139e5c8955a8faa4"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_a.blend",
+      "bytes": 8103328,
+      "sha256": "bb1442419d2415bb29f178cad61e17985f17da4f1cb5429f197e308e9e85fda3"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_a.json",
+      "bytes": 975,
+      "sha256": "e30941f60c260afd4c4c9dad65f100976be1e5a363bf0385c1ea32ee359ee85e"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_a.png",
+      "bytes": 677528,
+      "sha256": "15b48d6eed5a9e592d941b8a1d08281aa1a8d89fc9a4ef2c8d2d7e5528ccce67"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_a.skp",
+      "bytes": 8252797,
+      "sha256": "efd6f11e0fd0773afba6f014a41d4ba198a38ccc76ce2b925e76cb9896a30f73"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_b.blend",
+      "bytes": 19622486,
+      "sha256": "ace8e30b7caea1df62673ff32c40ed2bdb7cd51ab217d29243a5186a2a7a5d91"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_b.json",
+      "bytes": 1182,
+      "sha256": "5fb9a0ce84ae402e02195df5abe989eb2a7d4cfc89f55039d98c01c4df828564"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_b.png",
+      "bytes": 685134,
+      "sha256": "0a5e5ff0416eec2aadb34048f02789562d5215eb097e02c82be74597d63abf67"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/island_b.skp",
+      "bytes": 18671689,
+      "sha256": "da02c2b48d19853e6e0fa852023ef8c4b471898ae5eb96700ca7d928e6e10a76"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/lightbox_artwork.blend",
+      "bytes": 1477308,
+      "sha256": "a8d2490c6bc0cb374e779414a83ecd70631f730bbac740f5147baf5b59c10372"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/lightbox_artwork.json",
+      "bytes": 501,
+      "sha256": "9a7591a84ab2b8fd81e7968da1534716e57c065ee2c7f9c38d2c820bc7b48fc4"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/lightbox_artwork.png",
+      "bytes": 657066,
+      "sha256": "0545dc1df9b2357e418b4f40366ad11e191da12a7a896a2bb7e986a9845b8e2b"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/lightbox_artwork.skp",
+      "bytes": 1025551,
+      "sha256": "fd884e326b2a09727b80ed8889db5eaf03ccc25aaf9eca607561fcece0825c62"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/logo_full.blend",
+      "bytes": 746509,
+      "sha256": "ff945ff56ca1a678180bdcd906eff718aefd083df0fb140df978efe70b1147fa"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/logo_full.json",
+      "bytes": 535,
+      "sha256": "a8cc50215fb69d985472971df0572f86470097b1a381136a6ebe26d05802fed2"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/logo_full.png",
+      "bytes": 629230,
+      "sha256": "c05817c2c97fc3abe23ad367c0ae3fbdc499dcab114923da7fe61e30c9d7387b"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/logo_full.skp",
+      "bytes": 202005,
+      "sha256": "b8d647903091336119e44f31a7e983947d3e771433ed81843d26a613c66f4b3b"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/portrait_artwork.blend",
+      "bytes": 18180607,
+      "sha256": "01e2135c5a51aecc7f5be26dc18652bd8741b57d81debbbcbf387d186855c38e"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/portrait_artwork.json",
+      "bytes": 544,
+      "sha256": "8e66c940a1c3508ff8d1713b1af5616b3011774f9ae99d0861c59c6709795f72"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/portrait_artwork.png",
+      "bytes": 670963,
+      "sha256": "f102ed0b926df8c297d2f80f220e22a2448285640d0b9c87483107bbadcbf327"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/portrait_artwork.skp",
+      "bytes": 17715777,
+      "sha256": "ba6c3854d4945cbe855028780197d61731a4aa33e2c1eab442248128d71f9a1c"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/screen_75_assembly.blend",
+      "bytes": 964646,
+      "sha256": "2157dfaedacfc582df28bf5c613aded38c2753304a7250790a19f259763f480f"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/screen_75_assembly.json",
+      "bytes": 565,
+      "sha256": "c4fbb97899920e517c425c9110e625f9ab21442208a51dc6ccc0ef59964aebd6"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/screen_75_assembly.png",
+      "bytes": 692953,
+      "sha256": "7d4e50efe184c8e35933a259ea694c33b08589fc8e5a90c6353b58580c3420f6"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/screen_75_assembly.skp",
+      "bytes": 491899,
+      "sha256": "e96596c7d1bac9418eb12162a95e036523b73573fec89980f689103b15ef8763"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_chair.blend",
+      "bytes": 2137094,
+      "sha256": "6757c98e6fbea1bc463fa6a6e6376cfe4b9b53daf3aed583699bea1ca48add79"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_chair.json",
+      "bytes": 590,
+      "sha256": "5c4522fcb1a3e9dc64a8b5014eddc24b5278221c3db53501f46411d4bcddbb97"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_chair.png",
+      "bytes": 645329,
+      "sha256": "506491f35fedc1af07113782ae9e180c07d648716e69ab533dae40ccf05b12cf"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_chair.skp",
+      "bytes": 2332893,
+      "sha256": "0eb93077c1c81ed194ef42abc9376772ca9a192abac3ecf6f8a70bc3ee7dc837"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_table.blend",
+      "bytes": 4949790,
+      "sha256": "e52ac2cf11a61c99529b6786e97178c24bc3aba417e674613b20e4fc98914e67"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_table.json",
+      "bytes": 641,
+      "sha256": "ddf047894af4c368623b706cf31be6780aa75f1a2792be693f9ca1e5d10c0d0d"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_table.png",
+      "bytes": 639157,
+      "sha256": "f68d7e297a169cfdc038d9dc3b28aeb0362b747e710068e1c74eda9512bfc129"
+    },
+    {
+      "path": "store-layout-render/assets/xian/workspace/tmp/xian_skp/assets/unbox_table.skp",
+      "bytes": 4477465,
+      "sha256": "dd8755de7785216c6389585a432c89f3013df9041ef34d9bb71a1b7c06441d73"
+    },
+    {
+      "path": "store-layout-render/references/灯箱与广告画面规则.md",
+      "bytes": 2357,
+      "sha256": "cb5ab7beb579e43acbfa06fec78a86c7e22fb36ac6c131bfaaf4929779a8e9e5"
+    },
+    {
+      "path": "store-layout-render/references/品牌Logo规则.md",
+      "bytes": 4287,
+      "sha256": "970a5b52e3e792a9d1930704479801deabf02c60a8c0694b124d5bf82cb4e326"
+    },
+    {
+      "path": "store-layout-render/references/图纸与几何规则.md",
+      "bytes": 5165,
+      "sha256": "34e3a2ca460d6ff7eda23bf5318f8c7e078bd36ac30be1d78c61cb65efe675ae"
+    },
+    {
+      "path": "store-layout-render/references/运行与增量渲染.md",
+      "bytes": 4826,
+      "sha256": "17f173d0c397b4d950133d551d4e54a033c2801aa9e933a8045c1d5334e02ebd"
+    },
+    {
+      "path": "store-layout-render/references/GitHub优化建议.md",
+      "bytes": 4471,
+      "sha256": "84add7f7e0c16d64460df77aa6ccc1780d8a0095dda7e1464da6ce7c61e86432"
+    },
+    {
+      "path": "store-layout-render/references/V2操作指南.md",
+      "bytes": 7716,
+      "sha256": "ace105d0a35d6d6622cb4272503ca652caa827332c80fca5f6347c809af932e5"
+    },
+    {
+      "path": "store-layout-render/scripts/contact_sheet.py",
+      "bytes": 1680,
+      "sha256": "529ed7cfc61f9c6e3a5a0bac2007a7e98a12a2b02fbb34857ce0f53dc846a1a7"
+    },
+    {
+      "path": "store-layout-render/scripts/pdf_cache.py",
+      "bytes": 3084,
+      "sha256": "3da9a0c64a9d207e78e44cffcaac45755179c24907559c2bc725c3a08d5f0210"
+    },
+    {
+      "path": "store-layout-render/scripts/pipeline.py",
+      "bytes": 5881,
+      "sha256": "ac031f50e45737ec3ae03f284c7793cf5d2585f4bae08fa5a79801285a22bd3e"
+    },
+    {
+      "path": "store-layout-render/scripts/render_core.py",
+      "bytes": 1552,
+      "sha256": "88508228691069bea7722175249947cfc82d5787277246ec45aa3a959aa652d4"
+    },
+    {
+      "path": "store-layout-render/scripts/render_queue.py",
+      "bytes": 3381,
+      "sha256": "ccd1416e2aeb52fe55c810275c422e4bee9026eedd126ca3d623ce26365784d9"
+    },
+    {
+      "path": "store-layout-render/scripts/render_scene.py",
+      "bytes": 10918,
+      "sha256": "5b7381f4438e4c2ba702422bb3f3205124d304bd0a3f241f15ee863bb8af20d5"
+    },
+    {
+      "path": "store-layout-render/scripts/requirements.txt",
+      "bytes": 129,
+      "sha256": "7fbc54627da36ff039b1719764334bfc4c31a0ec37c817bb8db9c41a787789ec"
+    },
+    {
+      "path": "store-layout-render/scripts/verify_package.py",
+      "bytes": 850,
+      "sha256": "7b3e2c220f902a75b0760395182901635398b8835336136f0a2a32d00642b4e0"
+    },
+    {
+      "path": "store-layout-render/SKILL.md",
+      "bytes": 6444,
+      "sha256": "ff8b6b4588c3beb9d4183fbd12e7d90d0064fa3a45d5bd30f7114d34547c9f04"
+    },
+    {
+      "path": "store-layout-render/tests/test_render_core.py",
+      "bytes": 2448,
+      "sha256": "f658d1ade73f0ffa2e212986aa4d53215b22682495cab7a9eefc62bbff1ae142"
+    },
+    {
+      "path": "store-layout-render/tests/test_v2.py",
+      "bytes": 7194,
+      "sha256": "3e48aa45421dd6f2f8c79262221e8822ec16e73842d5acfc5ad0906aedc030e9"
+    },
+    {
+      "path": "V1历史验证.json",
+      "bytes": 1457,
+      "sha256": "af93c4a573b456e42352341c2f8c6b83002c911eeeef1271a7f3ef33e4706336"
+    },
+    {
+      "path": "V2五视角预览.jpg",
+      "bytes": 136243,
+      "sha256": "081826331d82aaec44be99a3a72e6c8194a3ec9f33dc148fbc816c1d317c55d8"
+    },
+    {
+      "path": "V2验证报告.md",
+      "bytes": 2481,
+      "sha256": "da82f3e3d153d2c574918b2a7e7875044c346e09e65f3d76f685883192dcfd04"
+    },
+    {
+      "path": "verification-v2.json",
+      "bytes": 8289,
+      "sha256": "41789cc87882c6c956569b6d561cd403fe4b87094c2d44af83ee07ac9e094544"
+    },
+    {
+      "path": "store-layout-render/references/双PDF交付规则.md",
+      "bytes": 2294,
+      "sha256": "b541d6a7e9dc5eedd99ba8d86a2f60052ff31877a92dac3f2445fae8d1fe932f"
+    }
+  ]
+}

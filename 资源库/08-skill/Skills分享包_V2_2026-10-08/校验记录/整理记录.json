@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-08",
+  "source_packages_unchanged": true,
+  "packages": [
+    {
+      "version": "V2",
+      "source": "D:\\Codex生成效果图\\规则V2",
+      "original_files": 108,
+      "original_bytes": 1622824036,
+      "copy_hash_check": "PASS",
+      "only_changed_file": "package-manifest.json"
+    }
+  ],
+  "selection": "V2 only, selected by user. V1 sharing duplicate removed; original V1/V2 folders unchanged."
+}

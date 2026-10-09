@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "date": "2026-09-14",
+  "source_files_sha256_match": 3,
+  "zip_png_count": 21,
+  "portable_asset_audit": "asset-portability-audit.json",
+  "unit_tests_passed": 5,
+  "first_render": {
+    "profile": "draft",
+    "rendered": 2,
+    "skipped": 0,
+    "passes": [
+      {
+        "file": "material/01_storefront.png",
+        "status": "rendered",
+        "seconds": 7.253
+      },
+      {
+        "file": "white/01_storefront.png",
+        "status": "rendered",
+        "seconds": 5.291
+      }
+    ],
+    "elapsed_seconds": 14.053
+  },
+  "relocated_add_view": {
+    "profile": "draft",
+    "rendered": 2,
+    "skipped": 2,
+    "passes": [
+      {
+        "file": "material/01_storefront.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/01_storefront.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/12_added_view.png",
+        "status": "rendered",
+        "seconds": 5.479
+      },
+      {
+        "file": "white/12_added_view.png",
+        "status": "rendered",
+        "seconds": 3.73
+      }
+    ],
+    "elapsed_seconds": 10.127
+  },
+  "same_camera_scene_visibility_pairs_checked": 2,
+  "limitations": [
+    "Windows same machine relocated paths; not tested on another physical PC",
+    "draft CPU benchmarks only; no full final batch rerun for packaging",
+    "SI2 and arbitrary floorplan automation not implemented"
+  ]
+}

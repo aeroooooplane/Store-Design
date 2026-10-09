@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "aligned_ids": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "unresolved_ids": [
+    2
+  ],
+  "boundary_alignment": null,
+  "observations": [
+    "配件柜、两张中岛桌、圆桌、四椅共8件与图上位置轮廓一致。",
+    "四椅提取的是外侧投影轮廓，仍不代表座向/模型尺寸已经确认。",
+    "80寸显示屏缺少候选，专区边界语义不确定，均保留未解决。"
+  ],
+  "method": "vision",
+  "source_id": "PDF-353",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "version_confirmed": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "inspected_images": [
+    {
+      "method": "A",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-A.png",
+      "sha256": "028b1ab98dfbb6f41b6319759b32526c992864d801f24a19652eb8c52786d3b4"
+    },
+    {
+      "method": "B",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-B.png",
+      "sha256": "85eda72f722515675fa285e130626687b79069d1018914d1b8fbcb55ec5b3fa4"
+    }
+  ],
+  "scope": "本轮助手打开A/B完整叠加图逐页目视检查；不是人工审批或独立盲测。",
+  "needs_human": [
+    "完整道具清点、边界语义、入口障碍物、尺寸双轴验证、版本及资产对应尚未全部完成。"
+  ]
+}

@@ -1,0 +1,319 @@
+﻿source_id,priority,category,reason,evidence
+ALL,1,试点未过门槛,8/19=42.1%，低于80%；全量结构化未启动，不将未处理项算failed。,03_试点提取审核.json
+NEW-001,1,未入索引,pptx文件，仅完成哈希/容器核验，未结构化。,D:\各门店图纸\宁波万象城授权体验店（边厅）.pptx
+NEW-002,1,未入索引,rar文件，仅完成哈希/容器核验，未结构化。,D:\各门店图纸\杭州西溪天街授权体验店.rar
+NEW-003,1,未入索引,pptx文件，仅完成哈希/容器核验，未结构化。,D:\各门店图纸\海口吾悦广场授权体验店.pptx
+NEW-004,1,未入索引,rar文件，仅完成哈希/容器核验，未结构化。,D:\各门店图纸\深圳KK ONE授权体验店.rar
+NEW-005,1,未入索引,rar文件，仅完成哈希/容器核验，未结构化。,D:\各门店图纸\郑州智汇城照材专卖店.rar
+PDF-001,1,字段冲突,"{""field"": ""stated_area_candidates"", ""evidence"": [{""page"": 2, ""text"": ""店铺实测面积：73m²"", ""bbox"": [67.91999816894531, 689.8499755859375, 207.60000610351562, 709.6499633789062]}, {""page"": 15, ""text"": ""店铺实测面积：78.9m²"", ""bbox"": [48.119998931884766, 719.20458984375, 162.19998168945312, 734.1205444335938]}], ""resolution"": null}",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0001\v1\review.json
+PDF-175/PDF-176,1,内容重复,不同文件名含2F差异但SHA256完全相同，必须进入同一数据划分组；不据文件名制造新版本。,00_文件清单_最终复核.json
+PDF-239,1,门店身份冲突,文件名沈阳；实际图签“深航百脑汇店”；用户背景称深圳。城市未裁决。,D:\text demo\资源库\90_处理过程与审核\数据清洗-20261009\_cache\PDF-239-title-crop.png
+PDF-293,1,字段冲突,"{""field"": ""cashier_nominal_length"", ""values_m"": [0.9, 1.8], ""method"": ""vision"", ""reason"": ""同一物体中文0.9米、英文1.8-Meter，不能自行裁决。"", ""resolution"": null}",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0293\v1\review.json
+PDF-001,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0001\v1\source.json
+PDF-001,2,结构完整性不足,租赁线与主要桌柜相符；圆柱、凳子及入口线段仍不完整。第2页73㎡与第15页78.9㎡冲突。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0001\v1\review-supplement.json
+PDF-002,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0002\v1\input.json
+PDF-002,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0002\v1\source.json
+PDF-002,2,结构完整性不足,主要桌柜可见，但狭长异形店界未闭合；GO中岛与通用中岛文字指向同一实体。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0002\v1\review-supplement.json
+PDF-002,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0002\v1\input.json
+PDF-003,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0003\v1\input.json
+PDF-003,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0003\v1\source.json
+PDF-003,2,结构完整性不足,屏幕误匹配到洽谈椅；收银台与开箱文字指向同一组合桌；墙界、椅子缺失。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0003\v1\review-supplement.json
+PDF-003,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0003\v1\input.json
+PDF-003,2,道具误配已置空,object-008,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0003\v1\review.json
+PDF-005,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0005\v1\input.json
+PDF-005,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0005\v1\source.json
+PDF-005,2,结构完整性不足,边界候选跨到图外；收银与开箱重复，屏幕候选错误；培训凳只识别一件，数量不全。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0005\v1\review-supplement.json
+PDF-005,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0005\v1\input.json
+PDF-005,2,道具误配已置空,object-006,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0005\v1\review.json
+PDF-008,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0008\v1\input.json
+PDF-008,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0008\v1\source.json
+PDF-008,2,结构完整性不足,弧形店界未恢复；多个收银/开箱文字重复；4个凳子仅匹配一件；一个屏幕误匹配墙体。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0008\v1\review-supplement.json
+PDF-008,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0008\v1\input.json
+PDF-008,2,道具误配已置空,object-005,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0008\v1\review.json
+PDF-013,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0013\v1\input.json
+PDF-013,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0013\v1\source.json
+PDF-013,2,结构完整性不足,包围候选是玻璃内沿，不能作为店界；收银候选误匹配人形模特底座。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0013\v1\review-supplement.json
+PDF-013,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0013\v1\input.json
+PDF-013,2,道具误配已置空,object-005,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0013\v1\review.json
+PDF-019,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0019\v1\source.json
+PDF-019,2,结构完整性不足,外轮廓与桌柜基本相符；斜向屏幕和电子水牌无可靠包围框，消防设施未完整提取。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0019\v1\review-supplement.json
+PDF-029,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0029\v1\input.json
+PDF-029,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0029\v1\source.json
+PDF-029,2,结构完整性不足,深红色租赁虚线闭合正确；凳子只匹配一件，仓库两组货架未结构化。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0029\v1\review-supplement.json
+PDF-032,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0032\v1\input.json
+PDF-032,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0032\v1\source.json
+PDF-032,2,结构完整性不足,店界与主要桌子相符；两个配件柜标签误匹配中岛桌，收银/开箱重复，椅子未齐。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0032\v1\review-supplement.json
+PDF-032,2,道具误配已置空,"object-002,object-003",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0032\v1\review.json
+PDF-035,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0035\v1\input.json
+PDF-035,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0035\v1\source.json
+PDF-035,2,结构完整性不足,已从尼康使用区中分离影石展示区；配件柜误匹配储物开箱桌，另一配件柜未定位。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0035\v1\review-supplement.json
+PDF-035,2,道具误配已置空,object-003,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0035\v1\review.json
+PDF-043,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0043\v1\input.json
+PDF-043,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0043\v1\source.json
+PDF-043,2,结构完整性不足,平面标题和道具文字大部分转曲；自动提取为零件，不能作为结构化完成。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0043\v1\review-supplement.json
+PDF-043,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0043\v1\input.json
+PDF-049,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0049\v1\input.json
+PDF-049,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0049\v1\source.json
+PDF-049,2,结构完整性不足,配件柜包围框包含柱子；储物柜误匹配桌上产品；屏幕误匹配储物柜，店界未恢复。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0049\v1\review-supplement.json
+PDF-049,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0049\v1\input.json
+PDF-049,2,道具误配已置空,"object-006,object-007,object-011",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0049\v1\review.json
+PDF-051,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0051\v1\source.json
+PDF-051,2,结构完整性不足,店界及桌体相符；左侧配件柜未定位，LED屏未独立提取；完整固定设施仍待确认。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0051\v1\review-supplement.json
+PDF-071,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0071\v1\input.json
+PDF-071,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0071\v1\source.json
+PDF-071,2,结构完整性不足,只能读取组合收银/开箱桌；两张大桌及展示柜缺失，边界未恢复。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0071\v1\review-supplement.json
+PDF-071,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0071\v1\input.json
+PDF-088,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0088\v1\input.json
+PDF-088,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0088\v1\source.json
+PDF-088,2,结构完整性不足,反向虚线链拼接后租赁轮廓相符；柱子、员工休息室、固定设施尚不完整。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0088\v1\review-supplement.json
+PDF-090,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0090\v1\input.json
+PDF-090,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0090\v1\source.json
+PDF-090,2,结构完整性不足,地台边界和主要道具相符；配件柜未定位，座椅与入口未结构化。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0090\v1\review-supplement.json
+PDF-239,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0239\v1\input.json
+PDF-239,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0239\v1\source.json
+PDF-239,2,结构完整性不足,图签高分辨率复核为“深航百脑汇店”；用户背景称深圳，文件名沈阳；三项证据冲突，城市仍为null。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0239\v1\review-supplement.json
+PDF-239,2,道具误配已置空,"object-005,object-008,object-009",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0239\v1\review.json
+PDF-293,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0293\v1\input.json
+PDF-293,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0293\v1\source.json
+PDF-293,2,结构完整性不足,地台曲线候选与原图基本相符，曲线离散误差未评估；曲线配件柜未定位，屏幕错配，中英收银长度不一致。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0293\v1\review-supplement.json
+PDF-293,2,道具误配已置空,object-006,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0293\v1\review.json
+PDF-296,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0296\v1\input.json
+PDF-296,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0296\v1\source.json
+PDF-296,2,结构完整性不足,地台闭合轮廓相符；配件柜与屏幕包围框包含背墙/灯箱，予以置空。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0296\v1\review-supplement.json
+PDF-296,2,道具误配已置空,"object-004,object-010",D:\text demo\资源库\90_处理过程与审核\训练标注\store-0296\v1\review.json
+PDF-353,2,两方向比例未核验,尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0353\v1\input.json
+PDF-353,2,版本未确认,v1为所选页临时编号；未完成同店多来源及多个布局候选版本归并。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0353\v1\source.json
+PDF-353,2,结构完整性不足,两张中岛和配件柜可见；专区边界、圆洽谈桌及椅子未提取，屏幕未定位。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0353\v1\review-supplement.json
+PDF-353,2,边界未恢复,边界为null；不使用邻店、玻璃内沿或图框冒充店界。,D:\text demo\资源库\90_处理过程与审核\训练标注\store-0353\v1\input.json
+PDF-001,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第25页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第42页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第46页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第48页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-001,4,页面分类待视觉,第49页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-001.json
+PDF-002,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第15页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第35页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第39页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-002,4,页面分类待视觉,第42页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-002.json
+PDF-003,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第2页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第3页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第4页自动类型material，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第5页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第8页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第10页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第20页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第22页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第23页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第24页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第25页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第26页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第28页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第30页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第36页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第37页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-003,4,页面分类待视觉,第38页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-003.json
+PDF-008,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第2页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第3页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第4页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第5页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第6页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第7页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第23页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第39页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第40页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第43页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-008,4,页面分类待视觉,第46页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-008.json
+PDF-013,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第2页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第3页自动类型material，置信度0.75；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第4页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第7页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第18页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第20页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-013,4,页面分类待视觉,第22页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-013.json
+PDF-019,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第2页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第3页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第4页自动类型material，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第5页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第10页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第16页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第20页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第21页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第22页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第23页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第25页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第26页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第27页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第28页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-019,4,页面分类待视觉,第29页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-019.json
+PDF-029,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第4页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第10页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第15页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第23页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第26页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第44页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第48页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第50页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-029,4,页面分类待视觉,第51页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-029.json
+PDF-032,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第2页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第3页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第4页自动类型material，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第6页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第9页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第11页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第15页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第16页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第17页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第20页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第29页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第30页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第31页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第32页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-032,4,页面分类待视觉,第33页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-032.json
+PDF-035,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第5页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第6页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第7页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第10页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第22页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第25页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-035,4,页面分类待视觉,第27页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-035.json
+PDF-043,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第6页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第7页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第9页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第10页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第15页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第16页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第19页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第20页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第22页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第23页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第24页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第25页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第26页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第27页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第28页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第29页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第30页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第31页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第32页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第33页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第37页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-043,4,页面分类待视觉,第40页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-043.json
+PDF-049,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第7页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第18页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第19页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第27页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第31页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-049,4,页面分类待视觉,第34页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-049.json
+PDF-071,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第2页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第3页自动类型material，置信度0.75；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第4页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第6页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第9页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第10页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第15页自动类型plan_other，置信度0.75；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第16页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第24页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第25页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第26页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第27页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-071,4,页面分类待视觉,第28页自动类型elevation，置信度0.75；未视读确认。,_cache/classified-r2/PDF-071.json
+PDF-088,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第3页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第8页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第24页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第40页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第44页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第46页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-088,4,页面分类待视觉,第47页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-088.json
+PDF-293,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第9页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第18页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第21页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第29页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第30页自动类型cover_index，置信度0.75；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第32页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-293,4,页面分类待视觉,第33页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-293.json
+PDF-296,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第9页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第16页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第22页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第30页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第37页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第41页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第43页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-296,4,页面分类待视觉,第44页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-296.json
+PDF-353,4,页面分类待视觉,第1页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第4页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第10页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第11页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第12页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第13页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第14页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第15页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第16页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json
+PDF-353,4,页面分类待视觉,第17页自动类型other，置信度0.2；未视读确认。,_cache/classified-r2/PDF-353.json

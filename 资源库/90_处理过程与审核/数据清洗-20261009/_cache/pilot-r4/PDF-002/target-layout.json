@@ -1,0 +1,1766 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:34:09.150169+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-002",
+  "store_id": "store-0002",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-002",
+      "label_text": "1.8米收银台",
+      "function": "cashier",
+      "x": 553.08,
+      "z": 188.0,
+      "w": 101.09999999999991,
+      "d": 33.41999999999999,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 603.63,
+      "center_z": 204.70999999999998,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-2360478",
+          "score": 0.9,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24488377",
+          "score": 0.9,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.942,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-24498456",
+          "score": 0.9,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          613.3200073242188,
+          201.1818389892578,
+          637.4393310546875,
+          205.9273223876953
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            613.3200073242188,
+            206.88185119628906,
+            634.021728515625,
+            211.62733459472656
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            553.08,
+            190.82
+          ],
+          [
+            553.08,
+            218.6
+          ],
+          [
+            553.14,
+            219.14
+          ],
+          [
+            553.26,
+            219.56
+          ],
+          [
+            553.5,
+            220.04
+          ],
+          [
+            553.74,
+            220.46
+          ],
+          [
+            554.1,
+            220.76
+          ],
+          [
+            554.52,
+            221.06
+          ],
+          [
+            554.94,
+            221.24
+          ],
+          [
+            555.42,
+            221.42
+          ],
+          [
+            555.9,
+            221.42
+          ],
+          [
+            651.42,
+            221.42
+          ],
+          [
+            651.9,
+            221.42
+          ],
+          [
+            652.38,
+            221.24
+          ],
+          [
+            652.8,
+            221.06
+          ],
+          [
+            653.22,
+            220.76
+          ],
+          [
+            653.52,
+            220.46
+          ],
+          [
+            653.82,
+            220.04
+          ],
+          [
+            654.06,
+            219.56
+          ],
+          [
+            654.18,
+            219.14
+          ],
+          [
+            654.18,
+            218.6
+          ],
+          [
+            654.18,
+            190.82
+          ],
+          [
+            654.18,
+            190.34
+          ],
+          [
+            654.06,
+            189.86
+          ],
+          [
+            653.82,
+            189.44
+          ],
+          [
+            653.52,
+            189.02
+          ],
+          [
+            653.22,
+            188.66
+          ],
+          [
+            652.8,
+            188.36
+          ],
+          [
+            652.38,
+            188.18
+          ],
+          [
+            651.9,
+            188.06
+          ],
+          [
+            651.42,
+            188.0
+          ],
+          [
+            555.9,
+            188.0
+          ],
+          [
+            555.42,
+            188.06
+          ],
+          [
+            554.94,
+            188.18
+          ],
+          [
+            554.52,
+            188.36
+          ],
+          [
+            554.1,
+            188.66
+          ],
+          [
+            553.74,
+            189.02
+          ],
+          [
+            553.5,
+            189.44
+          ],
+          [
+            553.26,
+            189.86
+          ],
+          [
+            553.14,
+            190.34
+          ],
+          [
+            553.08,
+            190.82
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-004",
+      "label_text": "1.8米开箱桌",
+      "function": "unboxing_table",
+      "x": 425.04,
+      "z": 285.62,
+      "w": 56.15999999999997,
+      "d": 101.10000000000002,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 453.12,
+      "center_z": 336.17,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.9,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.9,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.75,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          439.1999816894531,
+          274.6218566894531,
+          463.3194580078125,
+          279.3673095703125
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            442.8599853515625,
+            280.2618713378906,
+            463.5617980957031,
+            285.00732421875
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            427.14,
+            285.92
+          ],
+          [
+            426.54,
+            286.34
+          ],
+          [
+            426.0,
+            286.82
+          ],
+          [
+            425.58,
+            287.42
+          ],
+          [
+            425.28,
+            288.08
+          ],
+          [
+            425.1,
+            288.8
+          ],
+          [
+            425.04,
+            289.58
+          ],
+          [
+            425.04,
+            383.9
+          ],
+          [
+            425.1,
+            384.44
+          ],
+          [
+            425.22,
+            384.86
+          ],
+          [
+            425.4,
+            385.34
+          ],
+          [
+            425.7,
+            385.76
+          ],
+          [
+            426.06,
+            386.06
+          ],
+          [
+            426.42,
+            386.36
+          ],
+          [
+            426.9,
+            386.54
+          ],
+          [
+            427.38,
+            386.72
+          ],
+          [
+            427.86,
+            386.72
+          ],
+          [
+            478.38,
+            386.72
+          ],
+          [
+            478.86,
+            386.72
+          ],
+          [
+            479.34,
+            386.54
+          ],
+          [
+            479.82,
+            386.36
+          ],
+          [
+            480.18,
+            386.06
+          ],
+          [
+            480.54,
+            385.76
+          ],
+          [
+            480.84,
+            385.34
+          ],
+          [
+            481.02,
+            384.86
+          ],
+          [
+            481.14,
+            384.44
+          ],
+          [
+            481.2,
+            383.9
+          ],
+          [
+            481.2,
+            288.44
+          ],
+          [
+            481.14,
+            287.96
+          ],
+          [
+            481.02,
+            287.48
+          ],
+          [
+            480.84,
+            287.06
+          ],
+          [
+            480.54,
+            286.64
+          ],
+          [
+            480.18,
+            286.28
+          ],
+          [
+            479.82,
+            285.98
+          ],
+          [
+            479.34,
+            285.8
+          ],
+          [
+            478.86,
+            285.68
+          ],
+          [
+            478.38,
+            285.62
+          ],
+          [
+            427.86,
+            285.62
+          ],
+          [
+            427.14,
+            285.92
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-005",
+      "label_text": "1.8米X系列中岛桌",
+      "function": "island_table",
+      "x": 548.64,
+      "z": 285.62,
+      "w": 56.15999999999997,
+      "d": 101.10000000000002,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 576.72,
+      "center_z": 336.17,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.55,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          558.0,
+          275.3418884277344,
+          593.9049682617188,
+          280.08734130859375
+        ],
+        "nominal_length_m": null,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            573.47998046875,
+            280.9819030761719,
+            594.1817626953125,
+            285.72735595703125
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            602.94,
+            285.8
+          ],
+          [
+            602.46,
+            285.68
+          ],
+          [
+            601.98,
+            285.62
+          ],
+          [
+            551.4,
+            285.62
+          ],
+          [
+            550.86,
+            285.68
+          ],
+          [
+            550.32,
+            285.86
+          ],
+          [
+            549.84,
+            286.1
+          ],
+          [
+            549.42,
+            286.46
+          ],
+          [
+            549.06,
+            286.88
+          ],
+          [
+            548.82,
+            287.36
+          ],
+          [
+            548.64,
+            287.9
+          ],
+          [
+            548.64,
+            288.44
+          ],
+          [
+            548.64,
+            383.9
+          ],
+          [
+            548.64,
+            384.5
+          ],
+          [
+            548.82,
+            384.98
+          ],
+          [
+            549.06,
+            385.46
+          ],
+          [
+            549.42,
+            385.94
+          ],
+          [
+            549.84,
+            386.24
+          ],
+          [
+            550.32,
+            386.54
+          ],
+          [
+            550.86,
+            386.66
+          ],
+          [
+            551.4,
+            386.72
+          ],
+          [
+            601.98,
+            386.72
+          ],
+          [
+            602.46,
+            386.72
+          ],
+          [
+            602.94,
+            386.54
+          ],
+          [
+            603.36,
+            386.36
+          ],
+          [
+            603.78,
+            386.06
+          ],
+          [
+            604.14,
+            385.76
+          ],
+          [
+            604.38,
+            385.34
+          ],
+          [
+            604.62,
+            384.86
+          ],
+          [
+            604.74,
+            384.44
+          ],
+          [
+            604.8,
+            383.9
+          ],
+          [
+            604.8,
+            288.44
+          ],
+          [
+            604.74,
+            287.96
+          ],
+          [
+            604.62,
+            287.48
+          ],
+          [
+            604.38,
+            287.06
+          ],
+          [
+            604.14,
+            286.64
+          ],
+          [
+            603.78,
+            286.28
+          ],
+          [
+            603.36,
+            285.98
+          ],
+          [
+            602.94,
+            285.8
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-007",
+      "label_text": "75寸广告机(横向)",
+      "function": "screen",
+      "x": 370.56,
+      "z": 294.08,
+      "w": 3.8999999999999773,
+      "d": 94.32,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 372.51,
+      "center_z": 341.24,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          376.48187255859375,
+          321.6664123535156,
+          381.2273254394531,
+          356.6000061035156
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            370.56,
+            294.08
+          ],
+          [
+            370.56,
+            388.4
+          ],
+          [
+            374.46,
+            388.4
+          ],
+          [
+            374.46,
+            294.08
+          ],
+          [
+            370.56,
+            294.08
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-008",
+      "label_text": "1.8米中岛桌",
+      "function": "island_table",
+      "x": 425.04,
+      "z": 448.52,
+      "w": 56.15999999999997,
+      "d": 101.10000000000002,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 453.12,
+      "center_z": 499.07,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.75,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          442.2599792480469,
+          436.8018798828125,
+          466.37945556640625,
+          441.5473327636719
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            442.2599792480469,
+            442.4418640136719,
+            462.9617919921875,
+            447.18731689453125
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            481.02,
+            547.76
+          ],
+          [
+            481.14,
+            547.28
+          ],
+          [
+            481.2,
+            546.8
+          ],
+          [
+            481.2,
+            451.34
+          ],
+          [
+            481.14,
+            450.86
+          ],
+          [
+            481.02,
+            450.38
+          ],
+          [
+            480.84,
+            449.9
+          ],
+          [
+            480.54,
+            449.54
+          ],
+          [
+            480.18,
+            449.18
+          ],
+          [
+            479.82,
+            448.88
+          ],
+          [
+            479.34,
+            448.7
+          ],
+          [
+            478.86,
+            448.58
+          ],
+          [
+            478.38,
+            448.52
+          ],
+          [
+            427.86,
+            448.52
+          ],
+          [
+            427.38,
+            448.58
+          ],
+          [
+            426.9,
+            448.7
+          ],
+          [
+            426.42,
+            448.88
+          ],
+          [
+            426.06,
+            449.18
+          ],
+          [
+            425.7,
+            449.54
+          ],
+          [
+            425.4,
+            449.9
+          ],
+          [
+            425.22,
+            450.38
+          ],
+          [
+            425.1,
+            450.86
+          ],
+          [
+            425.04,
+            451.34
+          ],
+          [
+            425.04,
+            546.8
+          ],
+          [
+            425.1,
+            547.34
+          ],
+          [
+            425.22,
+            547.88
+          ],
+          [
+            425.52,
+            548.36
+          ],
+          [
+            425.88,
+            548.78
+          ],
+          [
+            426.3,
+            549.14
+          ],
+          [
+            426.78,
+            549.44
+          ],
+          [
+            427.32,
+            549.56
+          ],
+          [
+            427.86,
+            549.62
+          ],
+          [
+            478.38,
+            549.62
+          ],
+          [
+            478.86,
+            549.56
+          ],
+          [
+            479.34,
+            549.44
+          ],
+          [
+            479.82,
+            549.26
+          ],
+          [
+            480.18,
+            548.96
+          ],
+          [
+            480.54,
+            548.6
+          ],
+          [
+            480.84,
+            548.24
+          ],
+          [
+            481.02,
+            547.76
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-009",
+      "label_text": "H:2400mm1.2米配件柜",
+      "function": "accessory_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 2.4,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-6799167",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-36887885",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-36890994",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          355.8726806640625,
+          444.1400146484375,
+          366.318115234375,
+          468.25946044921875
+        ],
+        "nominal_length_m": 2.4,
+        "height_text": {
+          "text": "H:2400mm1.2米配件柜",
+          "bbox": [
+            355.8726806640625,
+            444.1400146484375,
+            366.318115234375,
+            468.25946044921875
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-010",
+      "label_text": "86寸广告机(横向)",
+      "function": "screen",
+      "x": 654.18,
+      "z": 443.18,
+      "w": 3.900000000000091,
+      "d": 107.87999999999994,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 656.13,
+      "center_z": 497.12,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          647.5618286132812,
+          481.02618408203125,
+          652.3073120117188,
+          515.9600219726562
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            654.18,
+            443.18
+          ],
+          [
+            654.18,
+            551.06
+          ],
+          [
+            658.08,
+            551.06
+          ],
+          [
+            658.08,
+            443.18
+          ],
+          [
+            654.18,
+            443.18
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-011",
+      "label_text": "H:2400mm1.2米配件柜",
+      "function": "accessory_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 2.4,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-6799167",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-36887885",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-36890994",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 2.4,
+            "asset_nominal_m": 2.4,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          355.2126770019531,
+          512.9600219726562,
+          365.5981140136719,
+          537.0794677734375
+        ],
+        "nominal_length_m": 2.4,
+        "height_text": {
+          "text": "H:2400mm1.2米配件柜",
+          "bbox": [
+            355.2126770019531,
+            512.9600219726562,
+            365.5981140136719,
+            537.0794677734375
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            0.0,
+            1.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-012",
+      "label_text": "1.8米GO系列中岛桌",
+      "function": "island_table",
+      "x": 425.04,
+      "z": 448.52,
+      "w": 56.15999999999997,
+      "d": 101.10000000000002,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 453.12,
+      "center_z": 499.07,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.55,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          429.53997802734375,
+          550.621826171875,
+          469.517822265625,
+          555.3673095703125
+        ],
+        "nominal_length_m": null,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            449.0999755859375,
+            556.3218383789062,
+            469.8017883300781,
+            561.0673217773438
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            481.02,
+            547.76
+          ],
+          [
+            481.14,
+            547.28
+          ],
+          [
+            481.2,
+            546.8
+          ],
+          [
+            481.2,
+            451.34
+          ],
+          [
+            481.14,
+            450.86
+          ],
+          [
+            481.02,
+            450.38
+          ],
+          [
+            480.84,
+            449.9
+          ],
+          [
+            480.54,
+            449.54
+          ],
+          [
+            480.18,
+            449.18
+          ],
+          [
+            479.82,
+            448.88
+          ],
+          [
+            479.34,
+            448.7
+          ],
+          [
+            478.86,
+            448.58
+          ],
+          [
+            478.38,
+            448.52
+          ],
+          [
+            427.86,
+            448.52
+          ],
+          [
+            427.38,
+            448.58
+          ],
+          [
+            426.9,
+            448.7
+          ],
+          [
+            426.42,
+            448.88
+          ],
+          [
+            426.06,
+            449.18
+          ],
+          [
+            425.7,
+            449.54
+          ],
+          [
+            425.4,
+            449.9
+          ],
+          [
+            425.22,
+            450.38
+          ],
+          [
+            425.1,
+            450.86
+          ],
+          [
+            425.04,
+            451.34
+          ],
+          [
+            425.04,
+            546.8
+          ],
+          [
+            425.1,
+            547.34
+          ],
+          [
+            425.22,
+            547.88
+          ],
+          [
+            425.52,
+            548.36
+          ],
+          [
+            425.88,
+            548.78
+          ],
+          [
+            426.3,
+            549.14
+          ],
+          [
+            426.78,
+            549.44
+          ],
+          [
+            427.32,
+            549.56
+          ],
+          [
+            427.86,
+            549.62
+          ],
+          [
+            478.38,
+            549.62
+          ],
+          [
+            478.86,
+            549.56
+          ],
+          [
+            479.34,
+            549.44
+          ],
+          [
+            479.82,
+            549.26
+          ],
+          [
+            480.18,
+            548.96
+          ],
+          [
+            480.54,
+            548.6
+          ],
+          [
+            480.84,
+            548.24
+          ],
+          [
+            481.02,
+            547.76
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-013",
+      "label_text": "1.8米X系列中岛桌",
+      "function": "island_table",
+      "x": 548.64,
+      "z": 448.52,
+      "w": 56.15999999999997,
+      "d": 101.10000000000002,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 576.72,
+      "center_z": 499.07,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.55,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          560.0999755859375,
+          550.86181640625,
+          596.0050048828125,
+          555.6072998046875
+        ],
+        "nominal_length_m": null,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            560.0999755859375,
+            556.5018310546875,
+            580.8017578125,
+            561.247314453125
+          ],
+          "size": 4.455840110778809,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            603.78,
+            548.96
+          ],
+          [
+            604.14,
+            548.6
+          ],
+          [
+            604.38,
+            548.24
+          ],
+          [
+            604.62,
+            547.76
+          ],
+          [
+            604.74,
+            547.28
+          ],
+          [
+            604.8,
+            546.8
+          ],
+          [
+            604.8,
+            451.34
+          ],
+          [
+            604.74,
+            450.86
+          ],
+          [
+            604.62,
+            450.38
+          ],
+          [
+            604.38,
+            449.9
+          ],
+          [
+            604.14,
+            449.54
+          ],
+          [
+            603.78,
+            449.18
+          ],
+          [
+            603.36,
+            448.88
+          ],
+          [
+            602.94,
+            448.7
+          ],
+          [
+            602.46,
+            448.58
+          ],
+          [
+            601.98,
+            448.52
+          ],
+          [
+            551.4,
+            448.52
+          ],
+          [
+            550.86,
+            448.58
+          ],
+          [
+            550.32,
+            448.76
+          ],
+          [
+            549.84,
+            449.0
+          ],
+          [
+            549.42,
+            449.36
+          ],
+          [
+            549.06,
+            449.78
+          ],
+          [
+            548.82,
+            450.26
+          ],
+          [
+            548.64,
+            450.8
+          ],
+          [
+            548.64,
+            451.34
+          ],
+          [
+            548.64,
+            546.8
+          ],
+          [
+            548.64,
+            547.34
+          ],
+          [
+            548.82,
+            547.88
+          ],
+          [
+            549.06,
+            548.36
+          ],
+          [
+            549.42,
+            548.78
+          ],
+          [
+            549.84,
+            549.14
+          ],
+          [
+            550.32,
+            549.44
+          ],
+          [
+            550.86,
+            549.56
+          ],
+          [
+            551.4,
+            549.62
+          ],
+          [
+            601.98,
+            549.62
+          ],
+          [
+            602.46,
+            549.56
+          ],
+          [
+            602.94,
+            549.44
+          ],
+          [
+            603.36,
+            549.26
+          ],
+          [
+            603.78,
+            548.96
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-016",
+      "label_text": "电子水牌(可移动)",
+      "function": "screen",
+      "x": 621.96,
+      "z": 639.86,
+      "w": 30.839999999999918,
+      "d": 19.620000000000005,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 637.38,
+      "center_z": 649.6700000000001,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          619.5599975585938,
+          634.141845703125,
+          653.7271728515625,
+          638.8873291015625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            621.96,
+            659.48
+          ],
+          [
+            652.8,
+            659.48
+          ],
+          [
+            652.8,
+            639.86
+          ],
+          [
+            621.96,
+            639.86
+          ],
+          [
+            621.96,
+            659.48
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

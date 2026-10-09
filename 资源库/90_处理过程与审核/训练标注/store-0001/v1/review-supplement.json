@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-001",
+  "store_id": "store-0001",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "decaf717d2a81aa2368c578b6e2ad7e677386e9f7d6964f3c6f33dbc51455805",
+  "evidence_sha256": "d896e846c1bad11434dc682d3d09a709b375a729f4e7ba287122a4ff36b2391a",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "租赁线与主要桌柜相符；圆柱、凳子及入口线段仍不完整。第2页73㎡与第15页78.9㎡冲突。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:44.077489+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

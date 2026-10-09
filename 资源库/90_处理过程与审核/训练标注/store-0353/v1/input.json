@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.673848+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "normalized_pdf_page_top_left",
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "boundary_bbox_origin_pdf": null,
+    "precision_decimals": null,
+    "height_unit": "m",
+    "required_origin_unresolved": true
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-003",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          295.62359619140625,
+          329.6689147949219,
+          321.3175964355469,
+          342.54949951171875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 250.71710205078125,
+          "z": 325.46929931640625,
+          "w": 111.317626953125,
+          "d": 3.651611328125,
+          "pdf_polygon": [
+            [
+              250.71710205078125,
+              325.46929931640625
+            ],
+            [
+              250.71710205078125,
+              329.12091064453125
+            ],
+            [
+              361.924072265625,
+              329.12091064453125
+            ],
+            [
+              362.03472900390625,
+              325.46929931640625
+            ],
+            [
+              250.71710205078125,
+              325.46929931640625
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "专区",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

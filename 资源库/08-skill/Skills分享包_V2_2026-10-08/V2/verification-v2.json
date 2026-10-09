@@ -1,0 +1,309 @@
+{
+  "status": "PASS",
+  "first_render": {
+    "profile": "draft",
+    "rendered": 9,
+    "skipped": 0,
+    "passes": [
+      {
+        "file": "material/07_front_relationship.png",
+        "status": "rendered",
+        "seconds": 4.786
+      },
+      {
+        "file": "material/08_back_relationship.png",
+        "status": "rendered",
+        "seconds": 3.667
+      },
+      {
+        "file": "material/03_main_aisle.png",
+        "status": "rendered",
+        "seconds": 3.777
+      },
+      {
+        "file": "material/09_right_relationship.png",
+        "status": "rendered",
+        "seconds": 3.345
+      },
+      {
+        "file": "material/11_plan_check.png",
+        "status": "rendered",
+        "seconds": 3.275
+      },
+      {
+        "file": "white/07_front_relationship.png",
+        "status": "rendered",
+        "seconds": 3.319
+      },
+      {
+        "file": "white/08_back_relationship.png",
+        "status": "rendered",
+        "seconds": 3.118
+      },
+      {
+        "file": "white/03_main_aisle.png",
+        "status": "rendered",
+        "seconds": 3.265
+      },
+      {
+        "file": "white/09_right_relationship.png",
+        "status": "rendered",
+        "seconds": 2.932
+      }
+    ],
+    "started_at": 1789369388.5834079,
+    "total": 9,
+    "order": "grouped",
+    "material_switches": 1,
+    "elapsed_seconds": 32.601
+  },
+  "rerun": {
+    "profile": "draft",
+    "rendered": 0,
+    "skipped": 9,
+    "passes": [
+      {
+        "file": "material/07_front_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/08_back_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/03_main_aisle.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/09_right_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/11_plan_check.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/07_front_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/08_back_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/03_main_aisle.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/09_right_relationship.png",
+        "status": "cached"
+      }
+    ],
+    "started_at": 1789369495.1183507,
+    "total": 9,
+    "order": "grouped",
+    "material_switches": 1,
+    "elapsed_seconds": 1.022
+  },
+  "recovery": {
+    "profile": "draft",
+    "rendered": 1,
+    "skipped": 8,
+    "passes": [
+      {
+        "file": "material/07_front_relationship.png",
+        "status": "rendered",
+        "seconds": 5.342
+      },
+      {
+        "file": "material/08_back_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/03_main_aisle.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/09_right_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "material/11_plan_check.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/07_front_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/08_back_relationship.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/03_main_aisle.png",
+        "status": "cached"
+      },
+      {
+        "file": "white/09_right_relationship.png",
+        "status": "cached"
+      }
+    ],
+    "started_at": 1789369499.065862,
+    "total": 9,
+    "order": "grouped",
+    "material_switches": 1,
+    "recovered": [
+      "C:\\Users\\insta360\\Documents\\Codex\\tmp\\v2-test\\recovery\\material\\_recovered\\07_front_relationship-cf2b7a4d9ab548d98cfd6c718d736ddf.png"
+    ],
+    "elapsed_seconds": 6.429
+  },
+  "v1_baseline": {
+    "profile": "draft",
+    "rendered": 9,
+    "skipped": 0,
+    "passes": [
+      {
+        "file": "material/03_main_aisle.png",
+        "status": "rendered",
+        "seconds": 5.623
+      },
+      {
+        "file": "white/03_main_aisle.png",
+        "status": "rendered",
+        "seconds": 5.924
+      },
+      {
+        "file": "material/07_front_relationship.png",
+        "status": "rendered",
+        "seconds": 7.179
+      },
+      {
+        "file": "white/07_front_relationship.png",
+        "status": "rendered",
+        "seconds": 3.651
+      },
+      {
+        "file": "material/08_back_relationship.png",
+        "status": "rendered",
+        "seconds": 3.693
+      },
+      {
+        "file": "white/08_back_relationship.png",
+        "status": "rendered",
+        "seconds": 3.617
+      },
+      {
+        "file": "material/09_right_relationship.png",
+        "status": "rendered",
+        "seconds": 6.532
+      },
+      {
+        "file": "white/09_right_relationship.png",
+        "status": "rendered",
+        "seconds": 8.765
+      },
+      {
+        "file": "material/11_plan_check.png",
+        "status": "rendered",
+        "seconds": 12.877
+      }
+    ],
+    "elapsed_seconds": 59.463
+  },
+  "image_comparison": [
+    {
+      "file": "material/07_front_relationship.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "material/08_back_relationship.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "material/03_main_aisle.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "material/09_right_relationship.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "material/11_plan_check.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "white/07_front_relationship.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "white/08_back_relationship.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "white/03_main_aisle.png",
+      "mean_pixel_difference": 0.0
+    },
+    {
+      "file": "white/09_right_relationship.png",
+      "mean_pixel_difference": 0.0
+    }
+  ],
+  "pdf_first": {
+    "source": "D:\\Codex生成效果图\\规则V1\\store-layout-render\\assets\\source\\影石-西安赛高世纪金花照材店-复尺平面方案.pdf",
+    "source_sha256": "9a45d3ef44ca8d1067b4f971176b6751f6186122aacda088d7e1381494524bc3",
+    "parsed_pages": 1,
+    "cached_pages": 0,
+    "pages": [
+      {
+        "page": 1,
+        "path": "C:\\Users\\insta360\\Documents\\Codex\\tmp\\v2-test\\pdf\\pdf-cache\\9a45d3ef44ca8d1067b4f971176b6751f6186122aacda088d7e1381494524bc3\\3da9a0c64a9d207e-0.11.9\\page-1.json"
+      }
+    ],
+    "elapsed_seconds": 4.0038
+  },
+  "pdf_cached": {
+    "source": "D:\\Codex生成效果图\\规则V1\\store-layout-render\\assets\\source\\影石-西安赛高世纪金花照材店-复尺平面方案.pdf",
+    "source_sha256": "9a45d3ef44ca8d1067b4f971176b6751f6186122aacda088d7e1381494524bc3",
+    "parsed_pages": 0,
+    "cached_pages": 1,
+    "pages": [
+      {
+        "page": 1,
+        "path": "C:\\Users\\insta360\\Documents\\Codex\\tmp\\v2-test\\pdf\\pdf-cache\\9a45d3ef44ca8d1067b4f971176b6751f6186122aacda088d7e1381494524bc3\\3da9a0c64a9d207e-0.11.9\\page-1.json"
+      }
+    ],
+    "elapsed_seconds": 0.0145
+  },
+  "version": "V2",
+  "unit_tests_passed": 16,
+  "unchanged_asset_files": 28,
+  "supplement": {
+    "status": "PASS",
+    "unchanged_images": 9,
+    "run": {
+      "profile": "draft",
+      "rendered": 2,
+      "skipped": 0,
+      "started_at": 1789369567.3067524,
+      "total": 2,
+      "order": "grouped",
+      "material_switches": 1,
+      "elapsed_seconds": 7.953,
+      "log": "C:\\Users\\insta360\\Documents\\Codex\\tmp\\v2-test\\final-preview\\blender-20260914-150606-5ad76f.log"
+    }
+  },
+  "check_status": {
+    "state": "check_passed",
+    "selected_views": 11,
+    "log": "C:\\Users\\insta360\\Documents\\Codex\\tmp\\v2-test\\检查环境\\blender-20260914-150655-2052af.log",
+    "python_pdfplumber": true,
+    "python_pillow": true,
+    "updated_at": 1789369616.2396915
+  },
+  "limits": [
+    "single-machine draft benchmarks",
+    "no SI2 validation",
+    "no arbitrary PDF to exact 3D automation",
+    "no token-cost benchmark"
+  ]
+}

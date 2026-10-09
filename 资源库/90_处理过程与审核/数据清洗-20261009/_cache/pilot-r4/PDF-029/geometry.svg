@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1190.52001953125 841.9199829101562">
+<g id="walls_columns" fill="none" stroke="rgb(0, 150, 240)" stroke-width="1">
+</g>
+<g id="entrances" fill="none" stroke="rgb(255, 0, 180)" stroke-width="1">
+</g>
+<g id="obstacles" fill="none" stroke="rgb(255, 130, 0)" stroke-width="1">
+<rect x="456.6" y="109.32" width="75.84000000000003" height="27.599999999999994"/>
+</g>
+<g id="fixed" fill="none" stroke="rgb(150, 60, 200)" stroke-width="1">
+</g>
+<g id="props" fill="none" stroke="rgb(0, 180, 80)" stroke-width="1">
+<rect x="469.32" y="227.04" width="119.04000000000002" height="5.159999999999997"/>
+<rect x="527.64" y="306.6" width="31.91999999999996" height="31.91999999999996"/>
+<rect x="342.84" y="256.32" width="31.200000000000045" height="168.60000000000002"/>
+<rect x="474.84" y="392.28" width="22.680000000000007" height="12.840000000000032"/>
+<rect x="474.84" y="509.28" width="22.680000000000007" height="12.720000000000027"/>
+<rect x="673.32" y="509.28" width="22.559999999999945" height="12.720000000000027"/>
+<rect x="815.88" y="466.68" width="5.159999999999968" height="119.16000000000003"/>
+<rect x="374.04" y="641.76" width="39.0" height="24.840000000000032"/>
+</g>
+</svg>

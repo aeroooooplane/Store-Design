@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:47.920956+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-032",
+  "store_id": "store-0032",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "normalized_pdf_page_top_left",
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "boundary_bbox_origin_pdf": [
+      210.1199951171875,
+      218.1199951171875
+    ],
+    "precision_decimals": null,
+    "height_unit": "m",
+    "required_origin_unresolved": false
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "points": [
+      [
+        210.1199951171875,
+        594.3200073242188
+      ],
+      [
+        210.1199951171875,
+        218.1199951171875
+      ],
+      [
+        915.5999755859375,
+        218.1199951171875
+      ],
+      [
+        915.5999755859375,
+        594.3200073242188
+      ],
+      [
+        210.1199951171875,
+        594.3200073242188
+      ]
+    ],
+    "kind": "outer_outline",
+    "method": "enclosing_vector_polygon_candidate",
+    "confidence": 0.8,
+    "confirmed": false,
+    "visual_method": "vision",
+    "curve_discretization": "cubic_12_segments_where_present; error_not_measured"
+  },
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          580.9199829101562,
+          203.92222595214844,
+          609.639892578125,
+          214.516845703125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 512.6400146484375,
+          "z": 215.1199951171875,
+          "w": 100.43994140625,
+          "d": 3.0,
+          "pdf_polygon": [
+            [
+              613.0799560546875,
+              218.1199951171875
+            ],
+            [
+              613.0799560546875,
+              215.1199951171875
+            ],
+            [
+              512.6400146484375,
+              215.1199951171875
+            ],
+            [
+              512.6400146484375,
+              218.1199951171875
+            ],
+            [
+              613.0799560546875,
+              218.1199951171875
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    },
+    {
+      "id": "object-006",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          154.44000244140625,
+          371.5622253417969,
+          183.1598663330078,
+          382.1568603515625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 207.0,
+          "z": 358.0400085449219,
+          "w": 3.1199951171875,
+          "d": 100.44000244140625,
+          "pdf_polygon": [
+            [
+              210.1199951171875,
+              358.0400085449219
+            ],
+            [
+              207.0,
+              358.0400085449219
+            ],
+            [
+              207.0,
+              458.4800109863281
+            ],
+            [
+              210.1199951171875,
+              458.4800109863281
+            ],
+            [
+              210.1199951171875,
+              358.0400085449219
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    },
+    {
+      "id": "object-007",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          992.0399780273438,
+          379.4822082519531,
+          1020.7598266601562,
+          390.07684326171875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": null,
+          "z": null,
+          "w": null,
+          "d": null,
+          "pdf_polygon": null
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    },
+    {
+      "id": "object-011",
+      "label_text": "灯箱",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1000.0799560546875,
+          483.6422119140625,
+          1019.9760131835938,
+          494.2368469238281
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": null,
+          "z": null,
+          "w": null,
+          "d": null,
+          "pdf_polygon": null
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    },
+    {
+      "id": "object-015",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          546.8399658203125,
+          598.1222534179688,
+          575.5598754882812,
+          608.7168579101562
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 512.6400146484375,
+          "z": 594.3200073242188,
+          "w": 100.43994140625,
+          "d": 3.1199951171875,
+          "pdf_polygon": [
+            [
+              613.0799560546875,
+              597.4400024414062
+            ],
+            [
+              613.0799560546875,
+              594.3200073242188
+            ],
+            [
+              512.6400146484375,
+              594.3200073242188
+            ],
+            [
+              512.6400146484375,
+              597.4400024414062
+            ],
+            [
+              613.0799560546875,
+              597.4400024414062
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。"
+      },
+      "movable": false,
+      "polygon": null
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

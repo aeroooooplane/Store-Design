@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:18.448680+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\上海五角场万达授权体验店.pdf",
+  "sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    842.0,
+    595.0
+  ],
+  "page_rotation": 270,
+  "render_dpi": 213.7767220902613,
+  "pdf_to_pixel_matrix": [
+    2.969121140142518,
+    0,
+    0,
+    2.969121140142518,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": [],
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "试点临时分组，尚未证实来源内各方案和日期的版本关系。"
+}

@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-032",
+  "store_id": "store-0032",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "6ecae1b117a97f72eb6a30dbaba6f2a2919697a1198e511866f4cd54196e1aa9",
+  "evidence_sha256": "c7a1aac41ea4ac09a0a2179d06289058c714318a63bd6e6752a7050a5d5c1c0f",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "店界与主要桌子相符；两个配件柜标签误匹配中岛桌，收银/开箱重复，椅子未齐。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:48.382136+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

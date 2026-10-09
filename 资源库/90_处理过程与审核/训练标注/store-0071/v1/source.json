@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:48.698408+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-071",
+  "store_id": "store-0071",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\北京首都机场T3授权体验店.pdf",
+  "sha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+  "physical_page": 7,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 151.13350125944586,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0990764063811924,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [],
+    "project_name": [],
+    "date_evidence": [],
+    "drawing_number": []
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+  "normalized_pdf_to_m_matrix": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "title": "平面布置/家具定位候选",
+      "method": "vision",
+      "crop_policy": "full_page_evidence",
+      "independent_frame_count": 1
+    }
+  ],
+  "extraction_revision": "geometry8.py",
+  "visual_decisions_script": "package_pilot.py",
+  "original_page_rotation": 270,
+  "original_pdf_to_normalized_pdf_matrix": [
+    0.0,
+    -1.0,
+    1.0,
+    0.0,
+    0.0,
+    842.0
+  ],
+  "version_date": null,
+  "revision_number": null
+}

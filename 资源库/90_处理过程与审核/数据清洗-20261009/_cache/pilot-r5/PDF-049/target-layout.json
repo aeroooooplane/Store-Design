@@ -1,0 +1,727 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:40:27.755706+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-049",
+  "store_id": "store-0049",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-002",
+      "label_text": "1.8米收银台+开箱",
+      "function": "unboxing_table",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.9,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.9,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.75,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          497.6400146484375,
+          192.50759887695312,
+          534.3218383789062,
+          197.2980499267578
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            498.0,
+            198.14755249023438,
+            518.898193359375,
+            202.93800354003906
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-003",
+      "label_text": "收银",
+      "function": "cashier",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-2360478",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24488377",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.942,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-24498456",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          477.239990234375,
+          216.50759887695312,
+          486.2361755371094,
+          221.2980499267578
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-004",
+      "label_text": "开箱",
+      "function": "unboxing_table",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.55,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          527.8800048828125,
+          219.02755737304688,
+          536.8761596679688,
+          223.81800842285156
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-006",
+      "label_text": "1.6米配件柜",
+      "function": "accessory_cabinet",
+      "x": 470.28,
+      "z": 334.04,
+      "w": 26.04000000000002,
+      "d": 90.71999999999997,
+      "h": 2.4,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 483.29999999999995,
+      "center_z": 379.4,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.9,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 1.6,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-34320268",
+          "score": 0.9,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 1.6,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-28192911",
+          "score": 0.75,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 1.6,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          496.67999267578125,
+          377.18756103515625,
+          521.0281372070312,
+          381.9779968261719
+        ],
+        "nominal_length_m": 1.6,
+        "height_text": {
+          "text": "H:2400mm",
+          "bbox": [
+            496.67999267578125,
+            382.94757080078125,
+            520.214111328125,
+            387.7380065917969
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": [
+          [
+            496.32,
+            424.76
+          ],
+          [
+            496.32,
+            334.04
+          ],
+          [
+            470.28,
+            334.04
+          ],
+          [
+            470.28,
+            424.76
+          ],
+          [
+            496.32,
+            424.76
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-007",
+      "label_text": "1.8米边桌储物柜",
+      "function": "side_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.9,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          544.6799926757812,
+          390.267578125,
+          578.0242919921875,
+          395.0580139160156
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            544.6799926757812,
+            396.027587890625,
+            565.5781860351562,
+            400.8180236816406
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-008",
+      "label_text": "1.7米边桌储物柜",
+      "function": "side_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.9,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": 1.7,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          544.9200439453125,
+          474.74755859375,
+          578.2642822265625,
+          479.5379943847656
+        ],
+        "nominal_length_m": 1.7,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            544.9200439453125,
+            480.507568359375,
+            565.8181762695312,
+            485.2980041503906
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-009",
+      "label_text": "1.7米边桌储物柜",
+      "function": "side_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.9,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": 1.7,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          497.280029296875,
+          507.74755859375,
+          530.624267578125,
+          512.5380249023438
+        ],
+        "nominal_length_m": 1.7,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            497.280029296875,
+            513.507568359375,
+            518.17822265625,
+            518.2980346679688
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-010",
+      "label_text": "75寸广告机(横向)",
+      "function": "screen",
+      "x": 456.6,
+      "z": 461.6,
+      "w": 11.399999999999977,
+      "d": 202.79999999999995,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 462.3,
+      "center_z": 563.0,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          459.6675720214844,
+          539.4951171875,
+          464.4580078125,
+          574.760009765625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            462.24,
+            653.0
+          ],
+          [
+            462.24,
+            664.4
+          ],
+          [
+            468.0,
+            664.4
+          ],
+          [
+            468.0,
+            461.6
+          ],
+          [
+            456.6,
+            461.6
+          ],
+          [
+            456.6,
+            653.0
+          ],
+          [
+            462.24,
+            653.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-011",
+      "label_text": "75寸广告机(横向)",
+      "function": "screen",
+      "x": 606.84,
+      "z": 510.44,
+      "w": 4.199999999999932,
+      "d": 95.28000000000003,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 608.94,
+      "center_z": 558.08,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          610.6220092773438,
+          539.47998046875,
+          615.4124755859375,
+          574.7449340820312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            606.84,
+            510.44
+          ],
+          [
+            606.84,
+            605.72
+          ],
+          [
+            611.04,
+            605.72
+          ],
+          [
+            611.04,
+            510.44
+          ],
+          [
+            606.84,
+            510.44
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-012",
+      "label_text": "1.7米边桌储物柜",
+      "function": "side_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.9,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": 1.7,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          544.7999877929688,
+          586.5875244140625,
+          578.144287109375,
+          591.3779907226562
+        ],
+        "nominal_length_m": 1.7,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            544.7999877929688,
+            592.2275390625,
+            565.6981811523438,
+            597.0180053710938
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-013",
+      "label_text": "1.7米边桌储物柜",
+      "function": "side_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.9,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": 1.7,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          497.280029296875,
+          606.6275634765625,
+          530.624267578125,
+          611.4180297851562
+        ],
+        "nominal_length_m": 1.7,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            497.280029296875,
+            612.3875732421875,
+            518.17822265625,
+            617.1780395507812
+          ],
+          "size": 4.498080253601074,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

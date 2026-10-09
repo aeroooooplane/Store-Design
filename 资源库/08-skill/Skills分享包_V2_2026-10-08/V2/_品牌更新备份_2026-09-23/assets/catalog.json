@@ -1,0 +1,224 @@
+{
+  "assets": [
+    {
+      "id": "accessory_1600",
+      "size_m": [
+        0.45000016689300537,
+        1.600000023841858,
+        2.4000000953674316
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/accessory_1600.blend",
+      "front_axis": "-X",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/accessory_1600.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/accessory_1600.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "cashier_body",
+      "size_m": [
+        1.7799999713897705,
+        0.6010000109672546,
+        0.8999999761581421
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/cashier_body.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/cashier_body.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/cashier_body.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "cashier_top",
+      "size_m": [
+        0.699999988079071,
+        0.34419873356819153,
+        0.30454444885253906
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/cashier_top.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/cashier_top.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/cashier_top.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "digital_sign",
+      "size_m": [
+        0.550000011920929,
+        0.3499999940395355,
+        1.6500005722045898
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/digital_sign.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/digital_sign.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/digital_sign.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "island_a",
+      "size_m": [
+        1.8000000715255737,
+        1.0000001192092896,
+        1.2320988178253174
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/island_a.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/island_a.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/island_a.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "island_b",
+      "size_m": [
+        1.8000000715255737,
+        1.0000001192092896,
+        1.3268853425979614
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/island_b.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/island_b.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/island_b.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "lightbox_artwork",
+      "size_m": [
+        1.7000000476837158,
+        0.9800000190734863,
+        1.4360262111379196e-11
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/lightbox_artwork.blend",
+      "front_axis": "multi_axis_see_example",
+      "scaling": "positive_uniform_only_if_approved",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/lightbox_artwork.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/lightbox_artwork.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "logo_full",
+      "size_m": [
+        2.026848077774048,
+        0.05000000074505806,
+        0.3851321339607239
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/logo_full.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "positive_uniform_only_if_approved",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/logo_full.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/logo_full.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "portrait_artwork",
+      "size_m": [
+        1.6700236797332764,
+        0.029999999329447746,
+        0.9330000281333923
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/portrait_artwork.blend",
+      "front_axis": "multi_axis_see_example",
+      "scaling": "positive_uniform_only_if_approved",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/portrait_artwork.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/portrait_artwork.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "screen_75_assembly",
+      "size_m": [
+        1.6920000314712524,
+        0.05000000074505806,
+        0.9580000042915344
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/screen_75_assembly.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/screen_75_assembly.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/screen_75_assembly.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "unbox_chair",
+      "size_m": [
+        0.4401645362377167,
+        0.4381784200668335,
+        0.800000011920929
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/unbox_chair.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/unbox_chair.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/unbox_chair.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    },
+    {
+      "id": "unbox_table",
+      "size_m": [
+        1.8000000715255737,
+        1.0000001192092896,
+        0.9074999690055847
+      ],
+      "blend": "xian/workspace/tmp/xian_skp/assets/unbox_table.blend",
+      "front_axis": "not_independently_calibrated_use_verified_example_rotation_or_inspect_preview",
+      "scaling": "forbidden",
+      "validated_style": "SI1.0",
+      "texture_status": "packed",
+      "metadata": "xian/workspace/tmp/xian_skp/assets/unbox_table.json",
+      "preview": "xian/workspace/tmp/xian_skp/assets/unbox_table.png",
+      "native_bounds": "See metadata.bounds_m",
+      "manual_page": null,
+      "example_placement": "xian/workspace/tmp/xian_skp/asset_placement.json"
+    }
+  ],
+  "count": 12,
+  "si2_validation": false,
+  "path_base": "this catalog.json directory (assets)",
+  "notes": "SI1.0 example transforms verified; native front axes not all independently calibrated; manual page mapping pending."
+}

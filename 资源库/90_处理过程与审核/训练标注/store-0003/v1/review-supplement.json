@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-003",
+  "store_id": "store-0003",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "ddcfafd7c309acf649d6f97770648a153a16e5e35753b7fcdce1bbd2f1f4fc4b",
+  "evidence_sha256": "ee328d9b45935e0ae6fdf9b8cf230ab1503285cf1f5ff041c57948c5ef1b157e",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "屏幕误匹配到洽谈椅；收银台与开箱文字指向同一组合桌；墙界、椅子缺失。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:45.864555+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:48.270509+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-043",
+  "store_id": "store-0043",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "normalized_pdf_page_top_left",
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "boundary_bbox_origin_pdf": null,
+    "precision_decimals": null,
+    "height_unit": "m",
+    "required_origin_unresolved": true
+  },
+  "items": [],
+  "unlabelled_objects_complete": false,
+  "scale_status": "unverified",
+  "source_label_count": 0
+}

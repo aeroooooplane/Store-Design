@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:41:20.447178+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-013",
+  "store_id": "store-0013",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": [
+      211.20001220703125,
+      273.67999267578125
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": {
+    "points": [
+      [
+        896.6400146484375,
+        400.8800048828125
+      ],
+      [
+        896.6400146484375,
+        273.67999267578125
+      ],
+      [
+        211.20001220703125,
+        273.67999267578125
+      ],
+      [
+        211.20001220703125,
+        400.8800048828125
+      ],
+      [
+        896.6400146484375,
+        400.8800048828125
+      ]
+    ],
+    "kind": null,
+    "method": "enclosing_vector_polygon_candidate",
+    "confidence": 0.35,
+    "confirmed": false
+  },
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "吊装LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          547.9199829101562,
+          254.3650665283203,
+          577.98779296875,
+          262.4434814453125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-003",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 598.0800170898438,
+      "z": 293.1199951171875,
+      "w": 139.55999755859375,
+      "d": 38.760009765625,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 667.8600158691406,
+      "center_z": 312.5,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          660.719970703125,
+          262.4050598144531,
+          678.4277954101562,
+          270.48345947265625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            598.0800170898438,
+            293.1199951171875
+          ],
+          [
+            598.0800170898438,
+            329.5999755859375
+          ],
+          [
+            598.2000122070312,
+            329.96002197265625
+          ],
+          [
+            598.3200073242188,
+            330.32000732421875
+          ],
+          [
+            598.4400024414062,
+            330.67999267578125
+          ],
+          [
+            598.6799926757812,
+            331.0400085449219
+          ],
+          [
+            598.9199829101562,
+            331.2799987792969
+          ],
+          [
+            599.280029296875,
+            331.5199890136719
+          ],
+          [
+            599.6400146484375,
+            331.760009765625
+          ],
+          [
+            600.0,
+            331.8800048828125
+          ],
+          [
+            735.3599853515625,
+            331.8800048828125
+          ],
+          [
+            735.719970703125,
+            331.8800048828125
+          ],
+          [
+            736.2000122070312,
+            331.760009765625
+          ],
+          [
+            736.5599975585938,
+            331.5199890136719
+          ],
+          [
+            736.9200439453125,
+            331.2799987792969
+          ],
+          [
+            737.1600341796875,
+            331.0400085449219
+          ],
+          [
+            737.4000244140625,
+            330.67999267578125
+          ],
+          [
+            737.52001953125,
+            330.32000732421875
+          ],
+          [
+            737.6400146484375,
+            293.1199951171875
+          ],
+          [
+            598.0800170898438,
+            293.1199951171875
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-004",
+      "label_text": "不锈钢LOGO",
+      "function": "other",
+      "x": 598.0800170898438,
+      "z": 293.1199951171875,
+      "w": 139.55999755859375,
+      "d": 38.760009765625,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 667.8600158691406,
+      "center_z": 312.5,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          719.1600341796875,
+          297.4450378417969,
+          755.3477783203125,
+          305.5234375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            598.0800170898438,
+            293.1199951171875
+          ],
+          [
+            598.0800170898438,
+            329.5999755859375
+          ],
+          [
+            598.2000122070312,
+            329.96002197265625
+          ],
+          [
+            598.3200073242188,
+            330.32000732421875
+          ],
+          [
+            598.4400024414062,
+            330.67999267578125
+          ],
+          [
+            598.6799926757812,
+            331.0400085449219
+          ],
+          [
+            598.9199829101562,
+            331.2799987792969
+          ],
+          [
+            599.280029296875,
+            331.5199890136719
+          ],
+          [
+            599.6400146484375,
+            331.760009765625
+          ],
+          [
+            600.0,
+            331.8800048828125
+          ],
+          [
+            735.3599853515625,
+            331.8800048828125
+          ],
+          [
+            735.719970703125,
+            331.8800048828125
+          ],
+          [
+            736.2000122070312,
+            331.760009765625
+          ],
+          [
+            736.5599975585938,
+            331.5199890136719
+          ],
+          [
+            736.9200439453125,
+            331.2799987792969
+          ],
+          [
+            737.1600341796875,
+            331.0400085449219
+          ],
+          [
+            737.4000244140625,
+            330.67999267578125
+          ],
+          [
+            737.52001953125,
+            330.32000732421875
+          ],
+          [
+            737.6400146484375,
+            293.1199951171875
+          ],
+          [
+            598.0800170898438,
+            293.1199951171875
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-010",
+      "label_text": "吊装LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          547.9199829101562,
+          410.7250671386719,
+          577.98779296875,
+          418.803466796875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-011",
+      "label_text": "LOGO指定高度：/",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          67.0799560546875,
+          768.8936157226562,
+          156.53164672851562,
+          783.1495971679688
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 16.2,
+    "evidence": [
+      {
+        "value": 16.2,
+        "text": "店铺实测面积：16.2m²",
+        "bbox": [
+          68.1600341796875,
+          710.93359375,
+          179.52001953125,
+          725.1895751953125
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

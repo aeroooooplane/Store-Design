@@ -1,0 +1,32 @@
+{
+  "id": "screen_75_assembly",
+  "source": "screen_75_assembly.skp",
+  "bounds_m": [
+    [
+      0.0,
+      -7.219114108078224e-16,
+      0.0
+    ],
+    [
+      1.6920000314712524,
+      0.05000000074505806,
+      0.9580000042915344
+    ]
+  ],
+  "size_m": [
+    1.6920000314712524,
+    0.05000000074505806,
+    0.9580000042915344
+  ],
+  "meshes": 2,
+  "vertices": 24,
+  "triangles": 40,
+  "materials": [
+    "*9",
+    "DefaultMaterial",
+    "Dots Stroke",
+    "Material",
+    "电视框__Ceramic",
+    "黑钛不锈钢__Steel1"
+  ]
+}

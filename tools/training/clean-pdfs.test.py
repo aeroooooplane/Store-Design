@@ -73,7 +73,7 @@ class CleaningTests(unittest.TestCase):
 
     def test_real_pdf_with_existing_alpha_and_soft_mask_can_extract(self):
         import fitz
-        source=clean.ROOT/'各门店图纸/上海龙湖宝山天街.pdf'
+        source=clean.ROOT/'资源库/01_各门店原图纸/上海龙湖宝山天街.pdf'
         if not source.exists():
             self.skipTest('Local corpus integration fixture unavailable')
         with tempfile.TemporaryDirectory() as folder, fitz.open(source) as doc:
@@ -86,7 +86,7 @@ class CleaningTests(unittest.TestCase):
     def test_fallback_split_preserves_form_appearance_and_field(self):
         import fitz
         from pypdf import PdfReader
-        source=clean.ROOT/'各门店图纸/天津百脑汇照材专卖店.pdf'
+        source=clean.ROOT/'资源库/01_各门店原图纸/天津百脑汇照材专卖店.pdf'
         if not source.exists():
             self.skipTest('Local corpus fixture unavailable')
         with tempfile.TemporaryDirectory() as folder, fitz.open(source) as doc:
@@ -99,7 +99,7 @@ class CleaningTests(unittest.TestCase):
 
     def test_missing_object_source_split_has_explicit_recovery_status(self):
         import fitz
-        source=clean.ROOT/'各门店图纸/台湾远东新竹Big City中岛.pdf'
+        source=clean.ROOT/'资源库/01_各门店原图纸/台湾远东新竹Big City中岛.pdf'
         if not source.exists():
             self.skipTest('Local corpus fixture unavailable')
         with tempfile.TemporaryDirectory() as folder, fitz.open(source) as doc:

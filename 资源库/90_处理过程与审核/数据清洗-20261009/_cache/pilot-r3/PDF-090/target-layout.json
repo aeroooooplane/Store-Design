@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:25.708063+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-090",
+  "store_id": "store-0090",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-001",
+      "label_text": "Accessories cabinet",
+      "function": "accessory_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-2595882",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.2,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-34320268",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          701.7449951171875,
+          417.583984375,
+          850.6886596679688,
+          440.0066223144531
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-002",
+      "label_text": "98\" TV",
+      "function": "screen",
+      "x": 314.0,
+      "z": 431.5,
+      "w": 310.4,
+      "d": 28.399999999999977,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 469.2,
+      "center_z": 445.7,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          447.16497802734375,
+          436.12396240234375,
+          494.20001220703125,
+          458.5466003417969
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            314.0,
+            431.5
+          ],
+          [
+            314.0,
+            459.9
+          ],
+          [
+            624.4,
+            459.9
+          ],
+          [
+            624.4,
+            431.5
+          ],
+          [
+            314.0,
+            431.5
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-005",
+      "label_text": "open a box",
+      "function": "unboxing_table",
+      "x": 1121.2,
+      "z": 552.0,
+      "w": 85.0,
+      "d": 212.60000000000002,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 1163.7,
+      "center_z": 658.3,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.55,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1125.5699462890625,
+          643.3789672851562,
+          1203.9613037109375,
+          665.8016357421875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            1206.2,
+            559.1
+          ],
+          [
+            1206.1,
+            558.1
+          ],
+          [
+            1206.0,
+            557.2
+          ],
+          [
+            1205.7,
+            556.3
+          ],
+          [
+            1205.2,
+            555.5
+          ],
+          [
+            1204.7,
+            554.8
+          ],
+          [
+            1204.1,
+            554.1
+          ],
+          [
+            1203.5,
+            553.5
+          ],
+          [
+            1202.7,
+            553.0
+          ],
+          [
+            1201.9,
+            552.6
+          ],
+          [
+            1201.0,
+            552.3
+          ],
+          [
+            1200.1,
+            552.1
+          ],
+          [
+            1199.1,
+            552.0
+          ],
+          [
+            1128.3,
+            552.0
+          ],
+          [
+            1127.3,
+            552.1
+          ],
+          [
+            1126.4,
+            552.3
+          ],
+          [
+            1125.5,
+            552.6
+          ],
+          [
+            1124.7,
+            553.0
+          ],
+          [
+            1123.9,
+            553.5
+          ],
+          [
+            1123.3,
+            554.1
+          ],
+          [
+            1122.7,
+            554.8
+          ],
+          [
+            1122.1,
+            555.5
+          ],
+          [
+            1121.7,
+            556.3
+          ],
+          [
+            1121.4,
+            557.2
+          ],
+          [
+            1121.2,
+            558.1
+          ],
+          [
+            1121.2,
+            559.1
+          ],
+          [
+            1121.2,
+            757.5
+          ],
+          [
+            1121.2,
+            758.5
+          ],
+          [
+            1121.4,
+            759.4
+          ],
+          [
+            1121.7,
+            760.3
+          ],
+          [
+            1122.1,
+            761.1
+          ],
+          [
+            1122.7,
+            761.8
+          ],
+          [
+            1123.3,
+            762.5
+          ],
+          [
+            1123.9,
+            763.1
+          ],
+          [
+            1124.7,
+            763.6
+          ],
+          [
+            1125.5,
+            764.0
+          ],
+          [
+            1126.4,
+            764.3
+          ],
+          [
+            1127.3,
+            764.5
+          ],
+          [
+            1128.3,
+            764.6
+          ],
+          [
+            1199.1,
+            764.6
+          ],
+          [
+            1200.1,
+            764.5
+          ],
+          [
+            1201.0,
+            764.3
+          ],
+          [
+            1201.9,
+            764.0
+          ],
+          [
+            1202.7,
+            763.6
+          ],
+          [
+            1203.5,
+            763.1
+          ],
+          [
+            1204.1,
+            762.5
+          ],
+          [
+            1204.7,
+            761.8
+          ],
+          [
+            1205.2,
+            761.1
+          ],
+          [
+            1205.7,
+            760.3
+          ],
+          [
+            1206.0,
+            759.4
+          ],
+          [
+            1206.1,
+            758.5
+          ],
+          [
+            1206.2,
+            757.5
+          ],
+          [
+            1206.2,
+            559.1
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-006",
+      "label_text": "1.8m Center Island Table",
+      "function": "island_table",
+      "x": 484.1,
+      "z": 642.0,
+      "w": 24.799999999999955,
+      "d": 28.399999999999977,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 496.5,
+      "center_z": 656.2,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.75,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          387.79498291015625,
+          669.553955078125,
+          575.934814453125,
+          691.9766235351562
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            507.5,
+            642.0
+          ],
+          [
+            485.5,
+            642.0
+          ],
+          [
+            485.3,
+            642.0
+          ],
+          [
+            485.1,
+            642.1
+          ],
+          [
+            485.0,
+            642.1
+          ],
+          [
+            484.8,
+            642.2
+          ],
+          [
+            484.6,
+            642.3
+          ],
+          [
+            484.5,
+            642.4
+          ],
+          [
+            484.4,
+            642.6
+          ],
+          [
+            484.3,
+            642.7
+          ],
+          [
+            484.2,
+            642.9
+          ],
+          [
+            484.1,
+            643.0
+          ],
+          [
+            484.1,
+            643.2
+          ],
+          [
+            484.1,
+            643.4
+          ],
+          [
+            484.1,
+            668.9
+          ],
+          [
+            484.1,
+            669.1
+          ],
+          [
+            484.1,
+            669.3
+          ],
+          [
+            484.2,
+            669.5
+          ],
+          [
+            484.3,
+            669.6
+          ],
+          [
+            484.4,
+            669.8
+          ],
+          [
+            484.5,
+            669.9
+          ],
+          [
+            484.6,
+            670.1
+          ],
+          [
+            484.8,
+            670.2
+          ],
+          [
+            485.0,
+            670.2
+          ],
+          [
+            485.1,
+            670.3
+          ],
+          [
+            485.3,
+            670.3
+          ],
+          [
+            485.5,
+            670.4
+          ],
+          [
+            507.5,
+            670.4
+          ],
+          [
+            507.7,
+            670.3
+          ],
+          [
+            507.8,
+            670.3
+          ],
+          [
+            508.0,
+            670.2
+          ],
+          [
+            508.2,
+            670.2
+          ],
+          [
+            508.3,
+            670.1
+          ],
+          [
+            508.5,
+            669.9
+          ],
+          [
+            508.6,
+            669.8
+          ],
+          [
+            508.7,
+            669.6
+          ],
+          [
+            508.8,
+            669.5
+          ],
+          [
+            508.8,
+            669.3
+          ],
+          [
+            508.9,
+            669.1
+          ],
+          [
+            508.9,
+            668.9
+          ],
+          [
+            508.9,
+            643.4
+          ],
+          [
+            508.9,
+            643.2
+          ],
+          [
+            508.8,
+            643.0
+          ],
+          [
+            508.8,
+            642.9
+          ],
+          [
+            508.7,
+            642.7
+          ],
+          [
+            508.6,
+            642.6
+          ],
+          [
+            508.5,
+            642.4
+          ],
+          [
+            508.3,
+            642.3
+          ],
+          [
+            508.2,
+            642.2
+          ],
+          [
+            508.0,
+            642.1
+          ],
+          [
+            507.8,
+            642.1
+          ],
+          [
+            507.7,
+            642.0
+          ],
+          [
+            507.5,
+            642.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-007",
+      "label_text": "1.8m Center Island Table",
+      "function": "island_table",
+      "x": 944.7,
+      "z": 642.0,
+      "w": 24.799999999999955,
+      "d": 28.399999999999977,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 957.1,
+      "center_z": 656.2,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.75,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          779.0249633789062,
+          669.553955078125,
+          967.1643676757812,
+          691.9766235351562
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            968.1,
+            642.0
+          ],
+          [
+            946.1,
+            642.0
+          ],
+          [
+            945.9,
+            642.0
+          ],
+          [
+            945.8,
+            642.1
+          ],
+          [
+            945.6,
+            642.1
+          ],
+          [
+            945.4,
+            642.2
+          ],
+          [
+            945.3,
+            642.3
+          ],
+          [
+            945.1,
+            642.4
+          ],
+          [
+            945.0,
+            642.6
+          ],
+          [
+            944.9,
+            642.7
+          ],
+          [
+            944.8,
+            642.9
+          ],
+          [
+            944.8,
+            643.0
+          ],
+          [
+            944.7,
+            643.2
+          ],
+          [
+            944.7,
+            643.4
+          ],
+          [
+            944.7,
+            668.9
+          ],
+          [
+            944.7,
+            669.1
+          ],
+          [
+            944.8,
+            669.3
+          ],
+          [
+            944.8,
+            669.5
+          ],
+          [
+            944.9,
+            669.6
+          ],
+          [
+            945.0,
+            669.8
+          ],
+          [
+            945.1,
+            669.9
+          ],
+          [
+            945.3,
+            670.1
+          ],
+          [
+            945.4,
+            670.2
+          ],
+          [
+            945.6,
+            670.2
+          ],
+          [
+            945.8,
+            670.3
+          ],
+          [
+            945.9,
+            670.3
+          ],
+          [
+            946.1,
+            670.4
+          ],
+          [
+            968.1,
+            670.4
+          ],
+          [
+            968.3,
+            670.3
+          ],
+          [
+            968.5,
+            670.3
+          ],
+          [
+            968.7,
+            670.2
+          ],
+          [
+            968.8,
+            670.2
+          ],
+          [
+            969.0,
+            670.1
+          ],
+          [
+            969.1,
+            669.9
+          ],
+          [
+            969.2,
+            669.8
+          ],
+          [
+            969.3,
+            669.6
+          ],
+          [
+            969.4,
+            669.5
+          ],
+          [
+            969.5,
+            669.3
+          ],
+          [
+            969.5,
+            669.1
+          ],
+          [
+            969.5,
+            668.9
+          ],
+          [
+            969.5,
+            643.4
+          ],
+          [
+            969.5,
+            643.2
+          ],
+          [
+            969.5,
+            643.0
+          ],
+          [
+            969.4,
+            642.9
+          ],
+          [
+            969.3,
+            642.7
+          ],
+          [
+            969.2,
+            642.6
+          ],
+          [
+            969.1,
+            642.4
+          ],
+          [
+            969.0,
+            642.3
+          ],
+          [
+            968.8,
+            642.2
+          ],
+          [
+            968.7,
+            642.1
+          ],
+          [
+            968.5,
+            642.1
+          ],
+          [
+            968.3,
+            642.0
+          ],
+          [
+            968.1,
+            642.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

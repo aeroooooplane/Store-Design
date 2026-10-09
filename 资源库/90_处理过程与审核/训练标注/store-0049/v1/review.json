@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:48.426294+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-049",
+  "store_id": "store-0049",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": false,
+    "clockwise": false,
+    "kind": null,
+    "area_m2": null,
+    "stated_area": 26.4,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 11,
+    "item_count": 9,
+    "resolved_geometry_count": 5,
+    "rejected_geometry_ids": [
+      "object-006",
+      "object-007",
+      "object-011"
+    ],
+    "out_of_bounds": null,
+    "overlaps": [
+      {
+        "objects": [
+          "object-009",
+          "object-013"
+        ],
+        "intersection_area": 1.149175,
+        "area_unit": "pdf_point2"
+      }
+    ],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-049\\overlay.png",
+    "inspected_sha256": "e1d79b16ba7e657e6a91f9bdc80cd18a26dea92f286ac4941f34a46733e75c99",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "配件柜包围框包含柱子；储物柜误匹配桌上产品；屏幕误匹配储物柜，店界未恢复。"
+  },
+  "needs_human": [
+    "配件柜包围框包含柱子；储物柜误匹配桌上产品；屏幕误匹配储物柜，店界未恢复。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "LOGO墙"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-005",
+      "label_text": "内嵌灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-014",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-015",
+      "label_text": "门楣装发光LOGO "
+    },
+    {
+      "layer": "fixed",
+      "id": "object-016",
+      "label_text": "LOGO指定高度：/"
+    }
+  ]
+}

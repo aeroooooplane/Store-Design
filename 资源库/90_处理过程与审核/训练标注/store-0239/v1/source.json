@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.186173+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\沈阳百脑汇照材专卖店.pdf",
+  "sha256": "01a8b48af89bc634d610682ff3be146593b633737b45806cec81d9c54f0d91b7",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 106.88836104513065,
+  "pdf_to_pixel_matrix": [
+    1.484560570071259,
+    0,
+    0,
+    1.484560570071259,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布置图",
+        "bbox": [
+          1522.97998046875,
+          789.2347412109375,
+          1605.7816162109375,
+          805.7950439453125
+        ],
+        "size": 16.560300827026367,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "深航百脑汇店",
+        "bbox": [
+          1505.2799072265625,
+          609.69091796875,
+          1575.5439453125,
+          622.162841796875
+        ],
+        "size": 11.710679054260254,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "text": "店型",
+        "bbox": [
+          1469.760009765625,
+          938.9774780273438,
+          1495.2373046875,
+          951.7161254882812
+        ],
+        "size": 12.738659858703613,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [
+      {
+        "text": "2024.6.18",
+        "bbox": [
+          1582.199951171875,
+          686.19091796875,
+          1635.8818359375,
+          698.662841796875
+        ],
+        "size": 11.710679054260254,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PE-02",
+        "bbox": [
+          1592.52001953125,
+          649.1575317382812,
+          1639.96630859375,
+          668.135986328125
+        ],
+        "size": 18.97842025756836,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "visual_project_name": {
+      "method": "vision",
+      "text": "深圳百脑汇店",
+      "page": 1,
+      "bbox": [
+        1505.28,
+        609.69,
+        1575.54,
+        622.16
+      ],
+      "coordinate_space": "normalized_pdf_points"
+    }
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+  "normalized_pdf_to_m_matrix": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1684.0,
+        1191.0
+      ],
+      "title": "平面布置/家具定位候选",
+      "method": "vision",
+      "crop_policy": "full_page_evidence",
+      "independent_frame_count": 1
+    }
+  ],
+  "extraction_revision": "geometry8.py",
+  "visual_decisions_script": "package_pilot.py",
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "version_date": null,
+  "revision_number": null
+}

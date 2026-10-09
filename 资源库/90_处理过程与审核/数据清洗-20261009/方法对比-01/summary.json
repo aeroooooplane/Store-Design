@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:38:02.127259+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "cases": [
+    {
+      "source_id": "PDF-043",
+      "reference_objects": 8,
+      "reference_localizable": 8,
+      "baseline_geometry_records": 0,
+      "baseline_spatial_matches": 0,
+      "assisted_vector_matches": 6,
+      "overlays": {
+        "A": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-A.png",
+        "B": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-B.png"
+      }
+    },
+    {
+      "source_id": "PDF-051",
+      "reference_objects": 7,
+      "reference_localizable": 7,
+      "baseline_geometry_records": 6,
+      "baseline_spatial_matches": 6,
+      "assisted_vector_matches": 6,
+      "overlays": {
+        "A": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-A.png",
+        "B": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-B.png"
+      }
+    },
+    {
+      "source_id": "PDF-239",
+      "reference_objects": 8,
+      "reference_localizable": 8,
+      "baseline_geometry_records": 8,
+      "baseline_spatial_matches": 5,
+      "assisted_vector_matches": 7,
+      "overlays": {
+        "A": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-A.png",
+        "B": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-B.png"
+      }
+    },
+    {
+      "source_id": "PDF-293",
+      "reference_objects": 7,
+      "reference_localizable": 6,
+      "baseline_geometry_records": 5,
+      "baseline_spatial_matches": 3,
+      "assisted_vector_matches": 3,
+      "overlays": {
+        "A": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-A.png",
+        "B": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-B.png"
+      }
+    },
+    {
+      "source_id": "PDF-353",
+      "reference_objects": 9,
+      "reference_localizable": 9,
+      "baseline_geometry_records": 3,
+      "baseline_spatial_matches": 3,
+      "assisted_vector_matches": 8,
+      "overlays": {
+        "A": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-A.png",
+        "B": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-B.png"
+      }
+    }
+  ],
+  "training_eligible": false,
+  "status": "pending_visual_audit"
+}

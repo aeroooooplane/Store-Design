@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-035",
+  "store_id": "store-0035",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "f4e6e05cb0ae48615e30bcbec2fa64436c6ee51b3717dd48c8326c4f6d9d083e",
+  "evidence_sha256": "813c4a71cac06046fb8291d0ce3aeae3e0ae0266ae4f30883ea0bc07041a4d65",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "已从尼康使用区中分离影石展示区；配件柜误匹配储物开箱桌，另一配件柜未定位。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:48.466380+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

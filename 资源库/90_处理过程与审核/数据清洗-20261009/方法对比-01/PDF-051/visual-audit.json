@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "aligned_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "unresolved_ids": [
+    1
+  ],
+  "boundary_alignment": true,
+  "observations": [
+    "两张桌、右侧配件柜、收银、开箱及水牌轮廓均对齐。",
+    "左侧配件柜在现有候选库中缺失，视觉选择也没有解决。",
+    "与A相比无数量提升，说明应改进轮廓构建而非继续放宽文字匹配。"
+  ],
+  "method": "vision",
+  "source_id": "PDF-051",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "version_confirmed": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "inspected_images": [
+    {
+      "method": "A",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-A.png",
+      "sha256": "b8da10598805cc4df5159a1d7c624e3c30a460df71b0bca68118c1e099e4180c"
+    },
+    {
+      "method": "B",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-B.png",
+      "sha256": "5039e3d0e28ebce5cc64e321c18d2b9befe6192e0d1d60cab1bd6c1c5bc7c43d"
+    }
+  ],
+  "scope": "本轮助手打开A/B完整叠加图逐页目视检查；不是人工审批或独立盲测。",
+  "needs_human": [
+    "完整道具清点、边界语义、入口障碍物、尺寸双轴验证、版本及资产对应尚未全部完成。"
+  ]
+}

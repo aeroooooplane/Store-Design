@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "bf5a8bea976c6be39fffd2e43547ae49a6bad26cbe6e39319197bb8e633cb98c",
+  "evidence_sha256": "cb59b24dfcdf96cf6faa1f0a275a186ac118a04961a24218513db1b55615e926",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "两张中岛和配件柜可见；专区边界、圆洽谈桌及椅子未提取，屏幕未定位。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:54.374795+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

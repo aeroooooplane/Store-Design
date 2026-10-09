@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:46.934132+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-003",
+  "store_id": "store-0003",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\上海万象城授权体验店（边厅）.pdf",
+  "sha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+  "physical_page": 7,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 151.13350125944586,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0990764063811924,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1106.699951171875,
+          368.1675109863281,
+          1144.7467041015625,
+          377.7059326171875
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "上海万象城专卖店",
+        "bbox": [
+          1095.2999267578125,
+          308.2275085449219,
+          1156.1746826171875,
+          317.76593017578125
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [
+      {
+        "text": "2025.10.24",
+        "bbox": [
+          1106.3399658203125,
+          525.5475463867188,
+          1145.6805419921875,
+          535.0859375
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PL-03",
+        "bbox": [
+          1116.239990234375,
+          607.3875732421875,
+          1137.0135498046875,
+          616.9259643554688
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+  "normalized_pdf_to_m_matrix": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "title": "平面布置/家具定位候选",
+      "method": "vision",
+      "crop_policy": "full_page_evidence",
+      "independent_frame_count": 1
+    }
+  ],
+  "extraction_revision": "geometry8.py",
+  "visual_decisions_script": "package_pilot.py",
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "version_date": null,
+  "revision_number": null
+}

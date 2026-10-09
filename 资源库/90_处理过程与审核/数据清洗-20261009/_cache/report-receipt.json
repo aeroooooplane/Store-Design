@@ -1,0 +1,28 @@
+{
+  "files": {
+    "00_文件清单.json": "892db908598c2041e708f973966fb2acaca7d81eab46903aeca1e05b19ef8f7e",
+    "00_文件清单_最终复核.json": "049400c80bbce072a04e39f60e826a021951eb8063407611162032de6365bc44",
+    "00_文件类型复核.json": "ab15dcb5a485a7e7472131fc5e248e96e1559fdc6bbdd44678113916543fef76",
+    "01_页面分类.jsonl": "63d3a1451ce55d15382770013dd9d4552a3e32fcbf26cde7aa6f83f3101026f2",
+    "02_门店与版本.json": "2098e08fd2c7a72824df606802735ae992c532bb1acbcf958ddeea48bed35862",
+    "03_试点提取审核.json": "93dfca9cb4a23dd32d864551c33e89c97f0677b4eab08f4b81f34a242756cb1c",
+    "04_效果图引用.json": "c8852e500a086cd3479ef54c4a86626cdd84aa829f0cc953edd46a64846bc9be",
+    "05_道具名称映射.json": "5596a2d47d1416a9a8335a2fb4830d78e845132c259a19830ab0c8688ea09d29",
+    "06_候选训练门店.json": "b39b21d0c538a5e19d05ee14b49d11de6cbe082769ffa37939e813104ed34f33",
+    "06_统计依据.json": "59737e3cb1c0bb964fcc4c9d83d6a2c0f1396aea0f372a5423fd8f8e39fe31fa",
+    "06_质检报告.md": "34db51e8ce294a116629a303bfa538e5664c2c112a0df3d828c99f9e7cd878ff",
+    "06_问题清单.csv": "235a18feceeecb6033e6d3172591678167ffa64c8fa6a7e8acd9e709e3ff78eb",
+    "07_源文件完整性复核.json": "6d0065ef09375bc919660d23f0cbcd550434a21295384aef4b496e96cc20bfcb"
+  },
+  "coverage_complete": false,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:03:01.978976+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

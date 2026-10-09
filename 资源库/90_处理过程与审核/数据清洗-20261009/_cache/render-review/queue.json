@@ -1,0 +1,368 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:58:00.254720+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "items": [
+    {
+      "source_id": "PDF-001",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-001-p003.png",
+      "sha256": "3769360407850f1c212941ef1a9356666da7c8b560dd999d78104cedd7dc18d5",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-001-p004.png",
+      "sha256": "3483647b2126830105b571f3ed4d3fdaf9394e7cfc5ce4818c9a0d923ab6bb94",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-001-p005.png",
+      "sha256": "c47c7aedd919e02b83f478cc1597a0d2f0f801a3fdde323174bba183950f83e5",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 6,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-001-p006.png",
+      "sha256": "2bdc3504538783acbca697b959e298e8354f8957502442aa03b18c84aadb18bf",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 7,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-001-p007.png",
+      "sha256": "cee39d9947225a6b2ce5143da3a30702718732cddf4d1c1cc7ad4060d4561630",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-002-p002.png",
+      "sha256": "d5a8243f41506272a6494060478f8e3036f1268b44137b638b5f4d6d350c4ece",
+      "contact_batch": 1
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-002-p003.png",
+      "sha256": "5052d990efc02fe60ed65d2d1a2e48865b5d0813436f884772a80af6bd12f14e",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-002-p004.png",
+      "sha256": "051ff47ce8bf06016873b31c4bf6f7cf9d603ade29599d44d81b4f80d944e636",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-002-p005.png",
+      "sha256": "b8c2c71202c77e9127f38f367d0c72a83465e721271bd7eab4f2f35fb5980fdb",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-005-p002.png",
+      "sha256": "a59628202395431035034a1e43ae8ca37efc5c82961e24054c2e49ef46014254",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-005-p003.png",
+      "sha256": "6f794f928a978046a6caa29a38a516c8625e5bf088b600a8ffd911a96007d13f",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-005-p004.png",
+      "sha256": "b003a56bdd5b401c4edbc35b38878a61345952eae0166aeab93e95e3624d1b2f",
+      "contact_batch": 2
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-005-p005.png",
+      "sha256": "e9a319da96e4797552c3ba5da239436a80944711240831f972189b9f093b66ce",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p003.png",
+      "sha256": "27c9c0196df7d53f46d7f2e78901e81809cda1d5345376898e2614e822a0a4c7",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p005.png",
+      "sha256": "c8bc7b0687336b7894ccd47d0c983a07a762198c135280b82377d982e3aae195",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 6,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p006.png",
+      "sha256": "532ddd64320cf9f27c5874618cbccb1e70abb7268b221d2874eb9828ae84b02c",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 7,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p007.png",
+      "sha256": "2f49498bd74e347d532db1462ebd8a93ab614693228f90ff22dcfffa64859c6c",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 8,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p008.png",
+      "sha256": "148d01965e70582b99d5639d84f7013fd8fd9abab0ffa85a5babde27fee330b1",
+      "contact_batch": 3
+    },
+    {
+      "source_id": "PDF-029",
+      "page": 9,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-029-p009.png",
+      "sha256": "ce0b5d163a887939c475d60c8dbf6adbead1fc783ea4e73cb96660ef45169c5e",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-043",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-043-p002.png",
+      "sha256": "c7042be727725e5dd45a0fecc7e2959ce11225c7ac193b69fccfe660fe664278",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-043",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-043-p003.png",
+      "sha256": "b27bc259b1b0a3e11c5532515b8ad5570599c3d7121122c47c16c1cf448c0d92",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-043",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-043-p004.png",
+      "sha256": "27142de62707c4baf973b2dceb17ee932422914422e1639ad4ac3a711e159865",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-043",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-043-p005.png",
+      "sha256": "17264f4000ab8a1cca3bb5a26b945274ceb2940fa62ecbe97dfcc92993c5aef1",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-051",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-051-p002.png",
+      "sha256": "0090e55145a53303bdb20be7bd735f130976d4b14125e20ba98b0246204c67e9",
+      "contact_batch": 4
+    },
+    {
+      "source_id": "PDF-051",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-051-p003.png",
+      "sha256": "972cac611c8137d086a85ac813de1e685d8acfb6d68e2081cdb354c459c2d50b",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-051",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-051-p004.png",
+      "sha256": "2b44fe7abfdb02177f9fe5c57c16b2716d32e6a17477b6521b0d5975c07bdf8a",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-088",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-088-p004.png",
+      "sha256": "10f3d313d8f51e8120ccc959c9b02fe498b24ceeb81d962f0afe3e80ebc603cc",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-088",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-088-p005.png",
+      "sha256": "c8c5af1725acfd8e6dafe33090ec91e74449656a63ce66b820a83d22255671d6",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-088",
+      "page": 6,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-088-p006.png",
+      "sha256": "0f6269bd6d7a0eea8872f03dd82fcb96e2baaf66fb7c6c3a132097869d4a222d",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-088",
+      "page": 7,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-088-p007.png",
+      "sha256": "4564c8d504d730b0257c59602322fb7f5e7a49ab08e1bc38f2879b1bfbbcdd73",
+      "contact_batch": 5
+    },
+    {
+      "source_id": "PDF-090",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-090-p002.png",
+      "sha256": "31d5e3068fe9a46e3476aede30267db31405f1cc3544c9ea5df774a687bd6ec9",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-090",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-090-p003.png",
+      "sha256": "53525fb3314dc6019370d1bed5b246a7e1586299007f812fb01accf185c9aa48",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-239",
+      "page": 2,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-239-p002.png",
+      "sha256": "4e4e79e6861554b6aa7792fb7e21f2ba9c61c3f1b800fc91cfc3991371d1d143",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-239",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-239-p003.png",
+      "sha256": "839cbcc7128951db91a16ff93949c23be3b0df395ce345194de55b09643f1ca9",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-239",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-239-p004.png",
+      "sha256": "ccec13baf2efafc29497226d6a3ef80f6d7493d8c1f34c5165306526b92c7e60",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p003.png",
+      "sha256": "9f0ee86b57db937c14d473778c9a855de0be9d90292a7f0207e22bf7b3eeb1c3",
+      "contact_batch": 6
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p004.png",
+      "sha256": "460ec20598ab269ccacababaa778c9cec6d4ea6f59ecea70c0e658d8ae19fc8d",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p005.png",
+      "sha256": "5bfd08e117be6ceb2c662f248570173245c14ba613bc20f5fbf9d3ff687814f1",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 6,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p006.png",
+      "sha256": "d5ae20f5c9d0a9bcc2e181dbedc47b598e330bfbbf63caa0d2d6c3858eab773e",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 7,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p007.png",
+      "sha256": "05c3dbc18857e6c4176b39b79172da0bbc65ec301d82fe522ac9670ae5c0a0a8",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-293",
+      "page": 8,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-293-p008.png",
+      "sha256": "cf2e132172b0572e2ec5dbae272e9e9392f8339bea046040b1f922516805f1e4",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 3,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p003.png",
+      "sha256": "0fe52821ff1be38498e09189454782fc579248d82fd5e5936fea1bc83f4e2ea7",
+      "contact_batch": 7
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 4,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p004.png",
+      "sha256": "3b6472f271fef3fb8f72ce747a2ffa778c2395e355740636a31f7c0411ce5b3a",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 5,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p005.png",
+      "sha256": "858d25c4bdcc0a0a27f708ad16cfd789e0740903ebf2079d679750a8c1bdc600",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 6,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p006.png",
+      "sha256": "cfc5d608c79072ee065aef0e625b49693848af4d8ce7e04778ef1fbc69bac0fa",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 7,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p007.png",
+      "sha256": "62cf4116855f65d13610afbca7a465da240b4ed916b29187c107f2bde0ac7d0b",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-296",
+      "page": 8,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-296-p008.png",
+      "sha256": "69f4f85bf17e98ac5885dc5ea55b7ef0c88a8489f90f01c8a96bfaab9be92ced",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-353",
+      "page": 18,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-353-p018.png",
+      "sha256": "08ac41bb73e357acda0d12961b72dca2708da7ab4ec7ebf2c9551a2836ce1a08",
+      "contact_batch": 8
+    },
+    {
+      "source_id": "PDF-353",
+      "page": 19,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-353-p019.png",
+      "sha256": "c8ee33ce599f7ad9bff7ef18fc815e489d0dc7b72e4b80fe4cdabe71e95a27ed",
+      "contact_batch": 9
+    },
+    {
+      "source_id": "PDF-353",
+      "page": 20,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-353-p020.png",
+      "sha256": "54917b11aed092046fcb902a8774ddee600e5ea6a273ee74c735728d6e722827",
+      "contact_batch": 9
+    },
+    {
+      "source_id": "PDF-353",
+      "page": 21,
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\render-review\\PDF-353-p021.png",
+      "sha256": "9af6edaabaf63fed59e40b346b60598232206db6999054bf574110e3915c79a4",
+      "contact_batch": 9
+    }
+  ],
+  "note": "Raster-heavy queue: needs actual visual inspection; no automatic render label."
+}

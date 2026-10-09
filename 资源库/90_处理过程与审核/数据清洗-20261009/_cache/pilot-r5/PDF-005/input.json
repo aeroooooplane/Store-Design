@@ -1,0 +1,399 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:40:21.096916+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-002",
+      "label_text": "强弱电箱",
+      "function": "other",
+      "x": 236.6,
+      "z": 96.76,
+      "w": 20.400000000000006,
+      "d": 31.08,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 246.8,
+      "center_z": 112.30000000000001,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          237.32000732421875,
+          110.47262573242188,
+          256.0755920410156,
+          115.4662857055664
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            257.0,
+            127.84
+          ],
+          [
+            257.0,
+            96.76
+          ],
+          [
+            236.6,
+            96.76
+          ],
+          [
+            236.6,
+            127.84
+          ],
+          [
+            257.0,
+            127.84
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          308.3599853515625,
+          95.47262573242188,
+          321.8968200683594,
+          100.4662857055664
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-003",
+      "label_text": "内嵌灯箱",
+      "function": "other",
+      "x": 500.84,
+      "z": 70.36,
+      "w": 5.28000000000003,
+      "d": 75.36,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 503.48,
+      "center_z": 108.03999999999999,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          507.9200134277344,
+          122.40322875976562,
+          528.2077026367188,
+          127.47515106201172
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            506.12,
+            70.36
+          ],
+          [
+            500.84,
+            70.36
+          ],
+          [
+            500.84,
+            145.72
+          ],
+          [
+            506.12,
+            145.72
+          ],
+          [
+            506.12,
+            70.36
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-007",
+      "label_text": "内嵌灯箱",
+      "function": "other",
+      "x": 251.6,
+      "z": 195.64,
+      "w": 5.400000000000006,
+      "d": 75.36000000000001,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 254.3,
+      "center_z": 233.32,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          257.84002685546875,
+          224.52322387695312,
+          278.1277160644531,
+          229.5951385498047
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            257.0,
+            195.64
+          ],
+          [
+            251.6,
+            195.64
+          ],
+          [
+            251.6,
+            271.0
+          ],
+          [
+            257.0,
+            271.0
+          ],
+          [
+            257.0,
+            195.64
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-008",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          538.52001953125,
+          243.36322021484375,
+          548.6638793945312,
+          248.4351348876953
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-016",
+      "label_text": "内嵌竖向灯箱",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          522.5599975585938,
+          412.9232177734375,
+          552.9915771484375,
+          417.9951477050781
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-017",
+      "label_text": "内嵌竖向灯箱",
+      "function": "other",
+      "x": 460.88,
+      "z": 466.96,
+      "w": 53.15999999999997,
+      "d": 5.400000000000034,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 487.46,
+      "center_z": 469.65999999999997,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          470.3600158691406,
+          474.24322509765625,
+          500.7915954589844,
+          479.3151550292969
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            460.88,
+            466.96
+          ],
+          [
+            460.88,
+            472.36
+          ],
+          [
+            514.04,
+            472.36
+          ],
+          [
+            514.04,
+            466.96
+          ],
+          [
+            460.88,
+            466.96
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-019",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          421.2799987792969,
+          509.11260986328125,
+          434.8168029785156,
+          514.1062622070312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 55.9,
+    "evidence": [
+      {
+        "value": 55.9,
+        "text": "SITE:55.9㎡",
+        "bbox": [
+          779.8400268554688,
+          291.2615051269531,
+          810.8992309570312,
+          297.58135986328125
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

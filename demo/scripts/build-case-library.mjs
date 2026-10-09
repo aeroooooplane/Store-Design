@@ -24,7 +24,7 @@ for(const id of [...new Set(layouts.map(row=>row.store_id))]){
   if(plans.length!==3||!views.length)throw Error('Incomplete reference index: '+id)
   if([...plans,...views].some(row=>row.training_eligible!==false||row.source_sha256!==first.source_sha256))throw Error('Evidence contract mismatch: '+id)
   stores.push({
-    id,name:path.basename(first.source_pdf,'.pdf'),sourcePdf:first.source_pdf,sourceSha256:first.source_sha256,
+    id,name:path.basename(first.source_pdf,'.pdf'),sourcePdf:`资源库/01_各门店原图纸/${path.basename(first.source_pdf)}`,sourceSha256:first.source_sha256,
     reviewPath:`${source}/${id}/case.json`,si:first.si,versionStatus:'本地历史 PDF；最终版本及远程最新状态未确认',
     completeGeometry:false,sameCameraPair:false,trainingEligible:false,
     issues:first.source_conflicts,

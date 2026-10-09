@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:41:24.988428+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-043",
+  "store_id": "store-0043",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\保定北国先天下授权体验店.pdf",
+  "sha256": "d40d829cb5655bfdb03fada4eb9fb1660c9663607d4e15f2a8aa59bc3c8edc75",
+  "physical_page": 11,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 151.13350125944586,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0990764063811924,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": [],
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "试点临时分组，尚未证实来源内各方案和日期的版本关系。"
+}

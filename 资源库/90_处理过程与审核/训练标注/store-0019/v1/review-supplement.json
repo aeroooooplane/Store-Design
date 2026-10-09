@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-019",
+  "store_id": "store-0019",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "25e14b118e6a8453d6e3bf13022379e3b09e4fb029278880ea61ac0d8c04b9b0",
+  "evidence_sha256": "970fd320f35a9b704b1ad49ef67ffac2fba226bf76c1d0357a7ea57b15d186c2",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "外轮廓与桌柜基本相符；斜向屏幕和电子水牌无可靠包围框，消防设施未完整提取。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:46.817775+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}
