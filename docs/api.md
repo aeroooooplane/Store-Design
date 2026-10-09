@@ -61,6 +61,19 @@
 | GET | `/assets/{assetId}` | 单个模型 |
 | GET | `/files/{fileId}` | 按编号读取已登记文件（GLB、预览图等），支持 `If-None-Match` 返回 304；文件只是未下载的 LFS 指针时返回 404，`details.reason = "lfs_pointer"` |
 
+### 历史节点、草稿、导入导出
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/projects/{id}/nodes` | 历史树（节点摘要，按创建顺序；`includeHidden=true` 含隐藏节点） |
+| POST | `/projects/{id}/nodes` | 新建节点。空间节点须为合法多边形（自动转为顺时针、毫米精度）；其他节点继承最近的空间祖先。模型必须存在且保持真实尺寸，否则 400；越界、重叠等问题随结果返回，白模确认与渲染节点不允许有错误级问题 |
+| GET | `/nodes/{id}` | 节点详情（含空间与布局） |
+| PATCH | `/nodes/{id}` | 重命名（节点内容不可修改） |
+| POST | `/nodes/{id}/hide`、`/nodes/{id}/restore` | 在树图中隐藏 / 恢复，不删除 |
+| GET / PUT / DELETE | `/projects/{id}/draft` | 共享编辑草稿；首次 PUT 不带 If-Match，之后必须带；过期版本 409 |
+| POST | `/projects/import` | 导入项目文件为**新项目**：新格式或旧版工作台备份（v1/v2）。旧版矩形转多边形、左上角坐标转中心点、结构占位转障碍物；与当前模型不符的道具改为占位；逐条返回 `warnings` |
+| GET | `/projects/{id}/export` | 导出全部节点（含隐藏）与草稿，格式 `store-design-project` v1 |
+
 模型目录只读，由 `pnpm catalog:import` 从资源库导入或刷新（可重复运行，GLB 哈希须与转换记录一致才会挂接）。
 
 ## 修改接口后

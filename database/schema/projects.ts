@@ -1,5 +1,6 @@
 import { sql } from 'drizzle-orm'
 import {
+  bigint,
   check,
   foreignKey,
   index,
@@ -62,6 +63,8 @@ export const designNodes = pgTable(
     originRef: uuid('origin_ref'),
     importedFrom: text('imported_from'),
     hiddenAt: timestamp('hidden_at', { withTimezone: true }),
+    /** Insertion order; rows created in one transaction share created_at. */
+    seq: bigint('seq', { mode: 'number' }).generatedAlwaysAsIdentity(),
     ...timestamps,
   },
   (t) => [
@@ -72,7 +75,7 @@ export const designNodes = pgTable(
       columns: [t.projectId, t.parentId],
       foreignColumns: [t.projectId, t.id],
     }),
-    index('design_nodes_project_idx').on(t.projectId, t.createdAt),
+    index('design_nodes_project_idx').on(t.projectId, t.seq),
     index('design_nodes_parent_idx').on(t.parentId),
     check(
       'design_nodes_payload_matches_kind',
