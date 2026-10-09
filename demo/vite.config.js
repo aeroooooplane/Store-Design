@@ -15,6 +15,7 @@ export default defineConfig({
     'three',
     'three/addons/libs/fflate.module.js',
     'three/addons/loaders/GLTFLoader.js',
+    'three/addons/libs/meshopt_decoder.module.js',
     'three/addons/controls/OrbitControls.js',
     'three/addons/environments/RoomEnvironment.js',
     'three/addons/postprocessing/EffectComposer.js',

@@ -1,0 +1,57 @@
+{
+  "id": "asset-16469753",
+  "name": "开箱洽谈桌椅组合 · asset-16469753",
+  "category": "开箱洽谈桌椅组合",
+  "siVersion": null,
+  "facing": null,
+  "url": "/assets/su/asset-16469753/model.glb",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "dimensions": {
+    "w": 1.8000000137437364,
+    "h": 0.9019999779937538,
+    "d": 1.6299886411302829
+  },
+  "source": "资源库/90_处理过程与审核/模型拆分/dae-20261009/split-20260925-v2/asset-16469753/selected-20260925-212600/prop.dae",
+  "sourceSha256": "68818e624069e6f59bae33d951a21a5ac839040dde49b74ceff2779211f0143a",
+  "glbSha256": "5545b997a190a7d20d8baf52305395be80d7fce3bcab424c477826790edd8714",
+  "bytes": 35700876,
+  "expectedDimensions": {
+    "w": 1.8000000000108294,
+    "d": 1.6299885461274335,
+    "h": 0.902000000001267
+  },
+  "textures": {
+    "maxTextureSize": 2048,
+    "jpegForJpg": true,
+    "count": 4737,
+    "jpeg": 4736,
+    "downscaled": 2
+  },
+  "removedLineObjects": 0,
+  "warnings": [
+    "THREE.ColladaLoader: You are loading an asset with a Z-UP coordinate system. The loader just rotates the asset to transform it into Y-UP. The vertex data are not converted, see #24289.",
+    "GLTFExporter: Use MeshStandardMaterial or MeshBasicMaterial for best results."
+  ],
+  "status": "converted-dimensions-checked-visual-review-pending",
+  "convertedAt": "2026-10-09T09:09:44.886Z",
+  "compression": {
+    "tool": "@gltf-transform/core@4.5.1 + meshoptimizer@1.3.0",
+    "steps": [
+      "dedup",
+      "weld",
+      "prune",
+      "meshopt(level=medium, position=16bit)"
+    ],
+    "requires": "EXT_meshopt_compression, KHR_mesh_quantization",
+    "bytesBefore": 91338264,
+    "glbSha256Before": "a57fb8466119f40c253f2c8e37be1ad0c6948430b054d303e1001d04edfdd541",
+    "dimensionsAfter": {
+      "w": 1.800000013743738,
+      "h": 0.9020085688352957,
+      "d": 1.6299886411302829
+    },
+    "compressedAt": "2026-10-09T09:16:44.746Z"
+  }
+}

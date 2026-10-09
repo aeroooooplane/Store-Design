@@ -31,3 +31,6 @@ tools/data-cleaning/** -text
 # Verified DAE delivery: preserve audit bytes and store the archive in LFS.
 资源库/90_处理过程与审核/模型拆分/dae-20261009/** -text whitespace=cr-at-eol
 资源库/90_处理过程与审核/模型拆分/dae-20261009/zip-parts/*.part* filter=lfs diff=lfs merge=lfs -text
+
+# GLB visual review sheets (2026-10-09)
+资源库/90_处理过程与审核/模型拆分/glb-review-20261009/*.png filter=lfs diff=lfs merge=lfs -text
