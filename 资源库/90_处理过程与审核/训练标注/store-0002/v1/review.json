@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:46.776855+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-002",
+  "store_id": "store-0002",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": false,
+    "clockwise": false,
+    "kind": null,
+    "area_m2": null,
+    "stated_area": 57.8,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 11,
+    "item_count": 10,
+    "resolved_geometry_count": 8,
+    "rejected_geometry_ids": [],
+    "out_of_bounds": null,
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-002\\overlay.png",
+    "inspected_sha256": "cbe7a1a088afa13b1062ed1caa93ca59b2c0a07641aa087b6700da9b127c49e3",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "主要桌柜可见，但狭长异形店界未闭合；GO中岛与通用中岛文字指向同一实体。"
+  },
+  "needs_human": [
+    "主要桌柜可见，但狭长异形店界未闭合；GO中岛与通用中岛文字指向同一实体。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "LOGO墙"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-006",
+      "label_text": "灯箱(1930*1120mm)"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-014",
+      "label_text": "灯箱(2050*2800mm)"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-015",
+      "label_text": "灯箱(850*2800mm)"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-017",
+      "label_text": "灯箱(1560*2300mm)"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-018",
+      "label_text": "发光LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-019",
+      "label_text": "门楣做LED屏幕+发光LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-020",
+      "label_text": "LOGO指定高度：300mm"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-003",
+      "label_text": "强弱电箱位"
+    }
+  ]
+}

@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:17.512141+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-002",
+  "store_id": "store-0002",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-003",
+      "label_text": "强弱电箱位",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          362.29266357421875,
+          233.239990234375,
+          367.0381164550781,
+          255.51913452148438
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "LOGO墙",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          581.219970703125,
+          146.76185607910156,
+          598.539794921875,
+          151.50733947753906
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-006",
+      "label_text": "灯箱(1930*1120mm)",
+      "function": "other",
+      "x": 654.2,
+      "z": 277.8,
+      "w": 6.7999999999999545,
+      "d": 108.39999999999998,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 657.6,
+      "center_z": 332.0,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          647.3218383789062,
+          315.0653381347656,
+          652.0673217773438,
+          358.2200012207031
+        ],
+        "nominal_length_m": 1.12,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            661.0,
+            277.8
+          ],
+          [
+            654.2,
+            277.8
+          ],
+          [
+            654.2,
+            386.2
+          ],
+          [
+            661.0,
+            386.2
+          ],
+          [
+            661.0,
+            277.8
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-014",
+      "label_text": "灯箱(2050*2800mm)",
+      "function": "other",
+      "x": 657.8,
+      "z": 601.2,
+      "w": 115.20000000000005,
+      "d": 6.699999999999932,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 715.4,
+      "center_z": 604.55,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          692.9400024414062,
+          609.121826171875,
+          736.0946044921875,
+          613.8673095703125
+        ],
+        "nominal_length_m": 2.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            657.8,
+            601.2
+          ],
+          [
+            657.8,
+            607.9
+          ],
+          [
+            773.0,
+            607.9
+          ],
+          [
+            773.0,
+            601.2
+          ],
+          [
+            657.8,
+            601.2
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-015",
+      "label_text": "灯箱(850*2800mm)",
+      "function": "other",
+      "x": 773.0,
+      "z": 607.9,
+      "w": 6.7999999999999545,
+      "d": 47.80000000000007,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 776.4,
+      "center_z": 631.8,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          766.0926513671875,
+          613.52001953125,
+          770.838134765625,
+          654.063720703125
+        ],
+        "nominal_length_m": 2.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            779.8,
+            607.9
+          ],
+          [
+            773.0,
+            607.9
+          ],
+          [
+            773.0,
+            655.7
+          ],
+          [
+            779.8,
+            655.7
+          ],
+          [
+            779.8,
+            607.9
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-017",
+      "label_text": "灯箱(1560*2300mm)",
+      "function": "other",
+      "x": 343.3,
+      "z": 674.2,
+      "w": 87.69999999999999,
+      "d": 8.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 387.15,
+      "center_z": 678.2,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          362.879638671875,
+          676.0225830078125,
+          406.1075744628906,
+          681.4871826171875
+        ],
+        "nominal_length_m": 2.3,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            343.3,
+            675.4
+          ],
+          [
+            343.4,
+            682.2
+          ],
+          [
+            431.0,
+            680.9
+          ],
+          [
+            430.9,
+            674.2
+          ],
+          [
+            343.3,
+            675.4
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-018",
+      "label_text": "发光LOGO",
+      "function": "other",
+      "x": 531.2,
+      "z": 676.0,
+      "w": 57.0,
+      "d": 3.2000000000000455,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 559.7,
+      "center_z": 677.6,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          548.530029296875,
+          679.3814697265625,
+          570.369140625,
+          684.4271850585938
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            531.3,
+            679.2
+          ],
+          [
+            588.2,
+            678.3
+          ],
+          [
+            588.1,
+            676.0
+          ],
+          [
+            531.2,
+            676.9
+          ],
+          [
+            531.3,
+            679.2
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-019",
+      "label_text": "门楣做LED屏幕+发光LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          554.4599609375,
+          781.8504028320312,
+          646.9383544921875,
+          789.7586669921875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-020",
+      "label_text": "LOGO指定高度：300mm",
+      "function": "other",
+      "x": 47.9,
+      "z": 802.6,
+      "w": 19.000000000000007,
+      "d": 19.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 57.400000000000006,
+      "center_z": 812.1,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          50.279998779296875,
+          787.430419921875,
+          135.8154754638672,
+          795.3386840820312
+        ],
+        "nominal_length_m": 0.3,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            66.9,
+            812.1
+          ],
+          [
+            66.8,
+            810.8
+          ],
+          [
+            66.6,
+            809.6
+          ],
+          [
+            66.2,
+            808.4
+          ],
+          [
+            65.6,
+            807.3
+          ],
+          [
+            64.9,
+            806.3
+          ],
+          [
+            64.1,
+            805.4
+          ],
+          [
+            63.2,
+            804.6
+          ],
+          [
+            62.2,
+            803.9
+          ],
+          [
+            61.1,
+            803.3
+          ],
+          [
+            59.9,
+            802.9
+          ],
+          [
+            58.7,
+            802.7
+          ],
+          [
+            57.4,
+            802.6
+          ],
+          [
+            56.1,
+            802.7
+          ],
+          [
+            54.9,
+            802.9
+          ],
+          [
+            53.7,
+            803.3
+          ],
+          [
+            52.6,
+            803.9
+          ],
+          [
+            51.6,
+            804.6
+          ],
+          [
+            50.7,
+            805.4
+          ],
+          [
+            49.9,
+            806.3
+          ],
+          [
+            49.2,
+            807.3
+          ],
+          [
+            48.6,
+            808.4
+          ],
+          [
+            48.2,
+            809.6
+          ],
+          [
+            48.0,
+            810.8
+          ],
+          [
+            47.9,
+            812.1
+          ],
+          [
+            48.0,
+            813.4
+          ],
+          [
+            48.2,
+            814.6
+          ],
+          [
+            48.6,
+            815.8
+          ],
+          [
+            49.2,
+            816.9
+          ],
+          [
+            49.9,
+            817.9
+          ],
+          [
+            50.7,
+            818.8
+          ],
+          [
+            51.6,
+            819.6
+          ],
+          [
+            52.6,
+            820.3
+          ],
+          [
+            53.7,
+            820.9
+          ],
+          [
+            54.9,
+            821.3
+          ],
+          [
+            56.1,
+            821.5
+          ],
+          [
+            57.4,
+            821.6
+          ],
+          [
+            58.7,
+            821.5
+          ],
+          [
+            59.9,
+            821.3
+          ],
+          [
+            61.1,
+            820.9
+          ],
+          [
+            62.2,
+            820.3
+          ],
+          [
+            63.2,
+            819.6
+          ],
+          [
+            64.1,
+            818.8
+          ],
+          [
+            64.9,
+            817.9
+          ],
+          [
+            65.6,
+            816.9
+          ],
+          [
+            66.2,
+            815.8
+          ],
+          [
+            66.6,
+            814.6
+          ],
+          [
+            66.8,
+            813.4
+          ],
+          [
+            66.9,
+            812.1
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 57.8,
+    "evidence": [
+      {
+        "value": 57.8,
+        "text": "店铺实测面积：57.8㎡",
+        "bbox": [
+          50.939998626708984,
+          747.3504028320312,
+          125.18856811523438,
+          755.2586669921875
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": 2.9,
+    "evidence": [
+      {
+        "value": 2.9,
+        "text": "店铺天花高度：2.9m",
+        "bbox": [
+          50.939998626708984,
+          757.3704223632812,
+          120.36935424804688,
+          765.2786865234375
+        ]
+      }
+    ]
+  },
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

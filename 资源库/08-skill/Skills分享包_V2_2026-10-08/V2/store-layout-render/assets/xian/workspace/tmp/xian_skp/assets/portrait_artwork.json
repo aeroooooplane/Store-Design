@@ -1,0 +1,32 @@
+{
+  "id": "portrait_artwork",
+  "source": "portrait_artwork.skp",
+  "bounds_m": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.6700236797332764,
+      0.029999999329447746,
+      0.9330000281333923
+    ]
+  ],
+  "size_m": [
+    1.6700236797332764,
+    0.029999999329447746,
+    0.9330000281333923
+  ],
+  "meshes": 1,
+  "vertices": 8,
+  "triangles": 12,
+  "materials": [
+    "*20",
+    "DefaultMaterial",
+    "Dots Stroke",
+    "Material",
+    "电视框__Ceramic",
+    "黑钛不锈钢__Steel1"
+  ]
+}

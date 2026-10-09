@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-002",
+  "store_id": "store-0002",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "b37ff705eda98add8b2058bb0a7380598081ce6d80ed9807b487d35b592a239d",
+  "evidence_sha256": "39625e482ca424e6b08cb50e33bc549cb374d501380e822a992787fbca13074b",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "主要桌柜可见，但狭长异形店界未闭合；GO中岛与通用中岛文字指向同一实体。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:45.613504+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

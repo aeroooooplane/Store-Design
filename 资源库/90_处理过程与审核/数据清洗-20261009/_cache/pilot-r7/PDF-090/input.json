@@ -1,0 +1,241 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:43:23.914804+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-090",
+  "store_id": "store-0090",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": [
+      258.7200012207031,
+      389.010009765625
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": {
+    "points": [
+      [
+        258.7200012207031,
+        764.6099853515625
+      ],
+      [
+        1335.885009765625,
+        764.6099853515625
+      ],
+      [
+        1335.885009765625,
+        389.010009765625
+      ],
+      [
+        258.7200012207031,
+        389.010009765625
+      ],
+      [
+        258.7200012207031,
+        764.6099853515625
+      ]
+    ],
+    "kind": null,
+    "method": "enclosing_vector_polygon_candidate",
+    "confidence": 0.35,
+    "confirmed": false
+  },
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-003",
+      "label_text": "lightbox",
+      "function": "other",
+      "x": 958.8899536132812,
+      "z": 445.71002197265625,
+      "w": 283.45501708984375,
+      "d": 14.17498779296875,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 1100.6174621582031,
+      "center_z": 452.7975158691406,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1031.4149169921875,
+          461.00897216796875,
+          1094.1280517578125,
+          483.4316101074219
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            958.8899536132812,
+            459.885009765625
+          ],
+          [
+            1242.344970703125,
+            459.885009765625
+          ],
+          [
+            1242.344970703125,
+            445.71002197265625
+          ],
+          [
+            958.8899536132812,
+            445.71002197265625
+          ],
+          [
+            958.8899536132812,
+            459.885009765625
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-004",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 1290.344970703125,
+      "z": 540.4800415039062,
+      "w": 5.864990234375,
+      "d": 143.53497314453125,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 1293.2774658203125,
+      "center_z": 612.2475280761719,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1256.5799560546875,
+          595.5439453125,
+          1287.9365234375,
+          617.9666137695312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            1290.344970703125,
+            540.4800415039062
+          ],
+          [
+            1290.344970703125,
+            684.0150146484375
+          ],
+          [
+            1296.2099609375,
+            684.0150146484375
+          ],
+          [
+            1296.2099609375,
+            540.4800415039062
+          ],
+          [
+            1290.344970703125,
+            540.4800415039062
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-008",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 384.5099792480469,
+      "z": 764.6099853515625,
+      "w": 143.53500366210938,
+      "d": 5.864990234375,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 456.27748107910156,
+      "center_z": 767.54248046875,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          429.91497802734375,
+          769.3939819335938,
+          461.27166748046875,
+          791.816650390625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            528.0449829101562,
+            764.6099853515625
+          ],
+          [
+            384.5099792480469,
+            764.6099853515625
+          ],
+          [
+            384.5099792480469,
+            770.4749755859375
+          ],
+          [
+            528.0449829101562,
+            770.4749755859375
+          ],
+          [
+            528.0449829101562,
+            764.6099853515625
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "专区",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

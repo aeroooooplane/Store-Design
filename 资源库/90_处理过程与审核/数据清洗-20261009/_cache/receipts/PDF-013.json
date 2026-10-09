@@ -1,0 +1,22 @@
+{
+  "source_id": "PDF-013",
+  "source_sha256": "f80c47d673f740ff3dd47b7d3fc8dc0f2200cb7b627a8318b298cb1d825a0208",
+  "auto_status": "partial",
+  "artifacts": {
+    "evidence.png": "5d966b6a0da3ec3d063701924393174e23be4c531bc8bfeedf9d49e1e641a295",
+    "geometry.png": "7308795a671289c45ae5dc9b903a16ccd2845abaa60a59666735be4a0eb52d87",
+    "geometry.svg": "39d7a5b9dd02fef979ad361455ede4fc57e44d87ea2dc6b2c9256a67b26a543b",
+    "input.json": "4d61effe81ebcc6ed4cc4866e37f6a4e57b80648e33c75fbf8a785f17b31ef08",
+    "overlay.png": "1cf94f4c59bae311000cf5110ad175e6a5bd8f77f0440e38ca545cad34c3092a",
+    "review.json": "210a2a3449676e86a663f4cdbc36589a774a4a82f341b038f60ddea3deb9d83f",
+    "source.json": "d11ae1144f228773cb78bab0316b952991be8fb91b63f8f3dd020d91d4fdfc0d",
+    "target-layout.json": "c056218d034e09a43655c3ccbab936050aab180c1d6648086bad0860146f814d"
+  },
+  "output": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0013\\v1",
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:47.426873+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

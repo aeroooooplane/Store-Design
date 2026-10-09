@@ -1,0 +1,61 @@
+{
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "training_eligible": false,
+  "method": "vision",
+  "evidence_file": "evidence.png",
+  "evidence_sha256": "cb59b24dfcdf96cf6faa1f0a275a186ac118a04961a24218513db1b55615e926",
+  "source_page": 6,
+  "stated_area_m2": null,
+  "room_height_m": null,
+  "title_date_raw": "2025-4-23",
+  "version_confirmed": false,
+  "date_order_confirmed": false,
+  "region_note": "面积/高度位于左下红黑文字区或右侧AREA图签；日期位于右侧DATE图签。",
+  "source_city": null,
+  "prop_dimension_observations": [
+    {
+      "object_id": "object-004",
+      "text": "1800*1000*900mm",
+      "nominal_w_m": 1.8,
+      "nominal_d_m": 1.0,
+      "h_m": 0.9,
+      "method": "vision",
+      "text_bbox": [
+        755.6107788085938,
+        450.1705627441406,
+        781.4154663085938,
+        463.05133056640625
+      ],
+      "note": "图上三元组按长×宽×高读取；未用它单独换算平面坐标。"
+    },
+    {
+      "object_id": "object-005",
+      "text": "1800*1000*900mm",
+      "nominal_w_m": 1.8,
+      "nominal_d_m": 1.0,
+      "h_m": 0.9,
+      "method": "vision",
+      "text_bbox": [
+        495.5748291015625,
+        450.7237854003906,
+        521.3795166015625,
+        463.60455322265625
+      ],
+      "note": "图上三元组按长×宽×高读取；未用它单独换算平面坐标。"
+    }
+  ],
+  "boundary_area_check": {
+    "area_m2": null,
+    "stated_area_m2": null,
+    "difference_ratio": null,
+    "used_for_scale": false
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:08:05.037615+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

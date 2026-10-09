@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.524131+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-296",
+  "store_id": "store-0296",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "platform_outline",
+    "area_m2": null,
+    "stated_area": null,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 6,
+    "item_count": 6,
+    "resolved_geometry_count": 4,
+    "rejected_geometry_ids": [
+      "object-004",
+      "object-010"
+    ],
+    "out_of_bounds": [],
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-296\\overlay.png",
+    "inspected_sha256": "dc37990ce1fb5ba855f072f73e9bb3bf637ab8532015dd9e148f9c2f9a8be174",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "地台闭合轮廓相符；配件柜与屏幕包围框包含背墙/灯箱，予以置空。"
+  },
+  "needs_human": [
+    "地台闭合轮廓相符；配件柜与屏幕包围框包含背墙/灯箱，予以置空。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "海报灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-002",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-007",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-008",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-011",
+      "label_text": "海报灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-012",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-014",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-009",
+      "label_text": "配电箱"
+    }
+  ]
+}

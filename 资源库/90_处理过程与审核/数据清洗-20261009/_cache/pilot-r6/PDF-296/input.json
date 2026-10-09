@@ -1,0 +1,505 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:41:29.441361+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-296",
+  "store_id": "store-0296",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-009",
+      "label_text": "配电箱",
+      "function": "other",
+      "x": 644.280029296875,
+      "z": 390.1199951171875,
+      "w": 56.63995361328125,
+      "d": 170.15997314453125,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 672.6000061035156,
+      "center_z": 475.1999816894531,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          677.6971435546875,
+          420.9599914550781,
+          690.1051635742188,
+          449.0799865722656
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            644.52001953125,
+            392.27996826171875
+          ],
+          [
+            644.4000244140625,
+            392.9999694824219
+          ],
+          [
+            644.280029296875,
+            557.4000244140625
+          ],
+          [
+            644.52001953125,
+            558.1199951171875
+          ],
+          [
+            644.760009765625,
+            558.8399658203125
+          ],
+          [
+            645.239990234375,
+            559.3199462890625
+          ],
+          [
+            645.719970703125,
+            559.7999877929688
+          ],
+          [
+            646.4400024414062,
+            560.0399780273438
+          ],
+          [
+            647.1599731445312,
+            560.1599731445312
+          ],
+          [
+            698.1599731445312,
+            560.2799682617188
+          ],
+          [
+            698.8800048828125,
+            560.0399780273438
+          ],
+          [
+            699.5999755859375,
+            559.7999877929688
+          ],
+          [
+            700.0800170898438,
+            559.3199462890625
+          ],
+          [
+            700.5599975585938,
+            558.8399658203125
+          ],
+          [
+            700.7999877929688,
+            558.1199951171875
+          ],
+          [
+            700.9199829101562,
+            557.4000244140625
+          ],
+          [
+            700.9199829101562,
+            392.9999694824219
+          ],
+          [
+            700.7999877929688,
+            392.27996826171875
+          ],
+          [
+            700.5599975585938,
+            391.55999755859375
+          ],
+          [
+            700.0800170898438,
+            391.0799865722656
+          ],
+          [
+            699.5999755859375,
+            390.5999755859375
+          ],
+          [
+            698.8800048828125,
+            390.3599853515625
+          ],
+          [
+            698.1599731445312,
+            390.239990234375
+          ],
+          [
+            647.1599731445312,
+            390.1199951171875
+          ],
+          [
+            646.4400024414062,
+            390.3599853515625
+          ],
+          [
+            645.719970703125,
+            390.5999755859375
+          ],
+          [
+            645.239990234375,
+            391.0799865722656
+          ],
+          [
+            644.760009765625,
+            391.55999755859375
+          ],
+          [
+            644.52001953125,
+            392.27996826171875
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "海报灯箱",
+      "function": "other",
+      "x": 615.9600219726562,
+      "z": 239.03997802734375,
+      "w": 198.3599853515625,
+      "d": 56.6400146484375,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 715.1400146484375,
+      "center_z": 267.3599853515625,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          696.3599853515625,
+          216.2548065185547,
+          733.8800048828125,
+          228.66281127929688
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            615.9600219726562,
+            295.67999267578125
+          ],
+          [
+            814.3200073242188,
+            295.67999267578125
+          ],
+          [
+            814.3200073242188,
+            239.03997802734375
+          ],
+          [
+            615.9600219726562,
+            239.03997802734375
+          ],
+          [
+            615.9600219726562,
+            295.67999267578125
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-002",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          524.8800048828125,
+          218.29478454589844,
+          551.9821166992188,
+          230.70278930664062
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-007",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          242.3372039794922,
+          406.91998291015625,
+          254.74520874023438,
+          434.0220642089844
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-008",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 781.3200073242188,
+      "z": 412.79998779296875,
+      "w": 33.0,
+      "d": 189.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 797.8200073242188,
+      "center_z": 507.29998779296875,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          822.5371704101562,
+          406.91998291015625,
+          834.9451904296875,
+          434.0220642089844
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            814.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            601.7999877929688
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-011",
+      "label_text": "海报灯箱",
+      "function": "other",
+      "x": 781.3200073242188,
+      "z": 412.79998779296875,
+      "w": 33.0,
+      "d": 189.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 797.8200073242188,
+      "center_z": 507.29998779296875,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          824.6971435546875,
+          488.6399841308594,
+          837.1051635742188,
+          526.1599731445312
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            814.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            601.7999877929688
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-012",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 781.3200073242188,
+      "z": 412.79998779296875,
+      "w": 33.0,
+      "d": 189.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 797.8200073242188,
+      "center_z": 507.29998779296875,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          761.4571533203125,
+          543.47998046875,
+          773.8651733398438,
+          570.462646484375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            814.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            412.79998779296875
+          ],
+          [
+            781.3200073242188,
+            601.7999877929688
+          ],
+          [
+            814.3200073242188,
+            601.7999877929688
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-014",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          524.8800048828125,
+          609.6148071289062,
+          551.9821166992188,
+          622.0228271484375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI2.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

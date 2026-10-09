@@ -1,0 +1,477 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:43:25.836552+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-001",
+      "label_text": "配件柜",
+      "function": "accessory_cabinet",
+      "x": 691.8933715820312,
+      "z": 259.187744140625,
+      "w": 143.40716552734375,
+      "d": 38.0648193359375,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 763.5969543457031,
+      "center_z": 278.22015380859375,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-2595882",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.2,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-34320268",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          743.9922485351562,
+          272.2169189453125,
+          782.7432861328125,
+          285.1202697753906
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            835.1898193359375,
+            259.187744140625
+          ],
+          [
+            691.8933715820312,
+            259.187744140625
+          ],
+          [
+            691.8933715820312,
+            297.2525634765625
+          ],
+          [
+            835.300537109375,
+            297.2525634765625
+          ],
+          [
+            835.1898193359375,
+            259.187744140625
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-002",
+      "label_text": "80寸显示屏",
+      "function": "screen",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          523.0169067382812,
+          282.24139404296875,
+          587.4396362304688,
+          295.1897888183594
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-004",
+      "label_text": "中岛",
+      "function": "island_table",
+      "x": 682.930419921875,
+      "z": 419.52490234375,
+      "w": 161.3330078125,
+      "d": 89.74014282226562,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 763.596923828125,
+      "center_z": 464.3949737548828,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.55,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          755.6107788085938,
+          450.1705627441406,
+          781.4154663085938,
+          463.05133056640625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            684.8114624023438,
+            508.37982177734375
+          ],
+          [
+            686.0286865234375,
+            509.04376220703125
+          ],
+          [
+            687.3565063476562,
+            509.2650451660156
+          ],
+          [
+            839.8372802734375,
+            509.2650451660156
+          ],
+          [
+            841.1651611328125,
+            509.04376220703125
+          ],
+          [
+            842.4930419921875,
+            508.37982177734375
+          ],
+          [
+            843.4888916015625,
+            507.3839111328125
+          ],
+          [
+            844.0421142578125,
+            506.166748046875
+          ],
+          [
+            844.263427734375,
+            504.7282409667969
+          ],
+          [
+            844.263427734375,
+            424.06170654296875
+          ],
+          [
+            844.0421142578125,
+            422.62322998046875
+          ],
+          [
+            843.4888916015625,
+            421.4060363769531
+          ],
+          [
+            842.4930419921875,
+            420.41015625
+          ],
+          [
+            841.1651611328125,
+            419.7462158203125
+          ],
+          [
+            839.8372802734375,
+            419.52490234375
+          ],
+          [
+            687.3565063476562,
+            419.52490234375
+          ],
+          [
+            686.0286865234375,
+            419.7462158203125
+          ],
+          [
+            684.8114624023438,
+            420.41015625
+          ],
+          [
+            683.815673828125,
+            421.4060363769531
+          ],
+          [
+            683.1516723632812,
+            422.62322998046875
+          ],
+          [
+            682.930419921875,
+            424.06170654296875
+          ],
+          [
+            682.930419921875,
+            504.7282409667969
+          ],
+          [
+            683.1516723632812,
+            506.166748046875
+          ],
+          [
+            683.815673828125,
+            507.3839111328125
+          ],
+          [
+            684.8114624023438,
+            508.37982177734375
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-005",
+      "label_text": "中岛",
+      "function": "island_table",
+      "x": 422.89422607421875,
+      "z": 419.52490234375,
+      "w": 161.33306884765625,
+      "d": 89.74014282226562,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 503.5607604980469,
+      "center_z": 464.3949737548828,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.7,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.55,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          495.5748291015625,
+          450.7237854003906,
+          521.3795166015625,
+          463.60455322265625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            584.0060424804688,
+            506.166748046875
+          ],
+          [
+            584.227294921875,
+            504.7282409667969
+          ],
+          [
+            584.227294921875,
+            424.06170654296875
+          ],
+          [
+            584.0060424804688,
+            422.62322998046875
+          ],
+          [
+            583.4526977539062,
+            421.4060363769531
+          ],
+          [
+            582.4568481445312,
+            420.41015625
+          ],
+          [
+            581.1289672851562,
+            419.7462158203125
+          ],
+          [
+            579.8011474609375,
+            419.52490234375
+          ],
+          [
+            427.32037353515625,
+            419.52490234375
+          ],
+          [
+            425.99249267578125,
+            419.7462158203125
+          ],
+          [
+            424.77532958984375,
+            420.41015625
+          ],
+          [
+            423.77947998046875,
+            421.4060363769531
+          ],
+          [
+            423.11553955078125,
+            422.62322998046875
+          ],
+          [
+            422.89422607421875,
+            424.06170654296875
+          ],
+          [
+            422.89422607421875,
+            504.7282409667969
+          ],
+          [
+            423.11553955078125,
+            506.166748046875
+          ],
+          [
+            423.77947998046875,
+            507.3839111328125
+          ],
+          [
+            424.77532958984375,
+            508.37982177734375
+          ],
+          [
+            425.99249267578125,
+            509.04376220703125
+          ],
+          [
+            427.32037353515625,
+            509.2650451660156
+          ],
+          [
+            579.8011474609375,
+            509.2650451660156
+          ],
+          [
+            581.1289672851562,
+            509.04376220703125
+          ],
+          [
+            582.4568481445312,
+            508.37982177734375
+          ],
+          [
+            583.4526977539062,
+            507.3839111328125
+          ],
+          [
+            584.0060424804688,
+            506.166748046875
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

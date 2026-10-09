@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scene_file": "西安赛高_SI1.0_原模型复原场景.blend",
+  "asset_instances": 19,
+  "delivery_cameras": 9,
+  "left_boundary_wall_candidates": [],
+  "fascia_wall_separation_m": 0.0009999275207519531,
+  "image_count": 53,
+  "packed_image_count": 53,
+  "missing_image_paths": [],
+  "saved_scene_uses_original_materials": true
+}

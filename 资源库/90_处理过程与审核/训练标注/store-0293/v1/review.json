@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.375010+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-293",
+  "store_id": "store-0293",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "platform_outline",
+    "area_m2": null,
+    "stated_area": null,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 8,
+    "item_count": 7,
+    "resolved_geometry_count": 3,
+    "rejected_geometry_ids": [
+      "object-006"
+    ],
+    "out_of_bounds": [],
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [
+    {
+      "field": "cashier_nominal_length",
+      "values_m": [
+        0.9,
+        1.8
+      ],
+      "method": "vision",
+      "reason": "同一物体中文0.9米、英文1.8-Meter，不能自行裁决。",
+      "resolution": null
+    }
+  ],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-293\\overlay.png",
+    "inspected_sha256": "2798b73e4949110b71f0dfd6de0243b2280f0108142d8d7c9b2767711045727e",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "地台曲线候选与原图基本相符，曲线离散误差未评估；曲线配件柜未定位，屏幕错配，中英收银长度不一致。"
+  },
+  "needs_human": [
+    "地台曲线候选与原图基本相符，曲线离散误差未评估；曲线配件柜未定位，屏幕错配，中英收银长度不一致。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "550W973H灯箱+上加LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-002",
+      "label_text": "550W973H Built-in LigntBox+LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-007",
+      "label_text": "+上加LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-008",
+      "label_text": "+LOGO"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-004",
+      "label_text": "配电箱"
+    }
+  ]
+}

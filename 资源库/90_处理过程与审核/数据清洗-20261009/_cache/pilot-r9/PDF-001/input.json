@@ -1,0 +1,459 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:50:30.612315+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-001",
+  "store_id": "store-0001",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": [
+      183.9600067138672,
+      155.39996337890625
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": {
+    "points": [
+      [
+        183.9600067138672,
+        364.55999755859375
+      ],
+      [
+        217.1999969482422,
+        236.8800048828125
+      ],
+      [
+        290.8800048828125,
+        236.8800048828125
+      ],
+      [
+        290.8800048828125,
+        155.39996337890625
+      ],
+      [
+        501.7200012207031,
+        157.44000244140625
+      ],
+      [
+        521.1599731445312,
+        341.7599792480469
+      ],
+      [
+        890.4000244140625,
+        303.0
+      ],
+      [
+        922.9199829101562,
+        612.8399658203125
+      ],
+      [
+        183.9600067138672,
+        612.8399658203125
+      ],
+      [
+        183.9600067138672,
+        364.55999755859375
+      ]
+    ],
+    "kind": "lease_line",
+    "method": "explicit_red_lease_line",
+    "confidence": 0.85,
+    "confirmed": false
+  },
+  "entrances": null,
+  "obstacles": [
+    {
+      "id": "object-003",
+      "label_text": "配电箱",
+      "function": "other",
+      "x": 463.79998779296875,
+      "z": 344.27996826171875,
+      "w": 17.040008544921875,
+      "d": 5.6400146484375,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 472.3199920654297,
+      "center_z": 347.0999755859375,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          464.0399475097656,
+          349.99517822265625,
+          480.91949462890625,
+          357.3871765136719
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            463.79998779296875,
+            344.27996826171875
+          ],
+          [
+            463.79998779296875,
+            349.91998291015625
+          ],
+          [
+            480.8399963378906,
+            349.91998291015625
+          ],
+          [
+            480.8399963378906,
+            344.27996826171875
+          ],
+          [
+            463.79998779296875,
+            344.27996826171875
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-004",
+      "label_text": "管井暗门",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          842.52001953125,
+          349.63519287109375,
+          865.0391235351562,
+          357.0271911621094
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "2600W3770H内嵌灯箱",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          338.6400146484375,
+          237.4351806640625,
+          397.6414489746094,
+          244.82717895507812
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-006",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          197.50799560546875,
+          380.15997314453125,
+          205.42800903320312,
+          397.48199462890625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-010",
+      "label_text": "装吊楣+发光logo ",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          59.040000915527344,
+          421.53857421875,
+          126.77631378173828,
+          432.49456787109375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-011",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          908.2266845703125,
+          448.2445068359375,
+          917.8565063476562,
+          466.1666259765625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-016",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          544.7999877929688,
+          615.251953125,
+          562.1700439453125,
+          623.1719970703125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-017",
+      "label_text": "门楣装铝板+发光logo ",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          606.0,
+          715.5386352539062,
+          690.1776123046875,
+          726.49462890625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-018",
+      "label_text": "门楣装铝板+发光logo ",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          929.8800048828125,
+          715.5386352539062,
+          1014.0576171875,
+          726.49462890625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-019",
+      "label_text": "LOGO高度：500mm",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          48.1199951171875,
+          778.724609375,
+          152.7900848388672,
+          793.6405639648438
+        ],
+        "nominal_length_m": 0.5,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 78.9,
+    "evidence": [
+      {
+        "value": 78.9,
+        "text": "店铺实测面积：78.9m²",
+        "bbox": [
+          48.119998931884766,
+          719.20458984375,
+          162.19998168945312,
+          734.1205444335938
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": 3.77,
+    "evidence": [
+      {
+        "value": 3.77,
+        "text": "店铺天花高度：3770mm",
+        "bbox": [
+          48.1199951171875,
+          734.0845947265625,
+          172.2303924560547,
+          749.0005493164062
+        ]
+      }
+    ]
+  },
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI2.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

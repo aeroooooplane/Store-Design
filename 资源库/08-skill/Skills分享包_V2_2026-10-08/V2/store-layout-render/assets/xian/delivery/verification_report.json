@@ -1,0 +1,148 @@
+{
+  "status": "PASS",
+  "scope": "Output integrity, logged geometry/camera consistency, asset placement and scale. Does not certify drawing interpretation or product SKU mapping.",
+  "images_checked": 21,
+  "material_views": 10,
+  "white_views": 10,
+  "plan_checks": 1,
+  "asset_instances_checked": 19,
+  "chairs_checked": 4,
+  "same_scene_signatures": {
+    "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+    "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+    "camera_state_hash_per_matched_pair": {
+      "01_storefront": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "02_entry_overview": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "03_main_aisle": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "04_core_displays": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "05_cashier": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "06_feature_wall": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "07_front_relationship": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "08_back_relationship": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "09_right_relationship": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8"
+    }
+  },
+  "left_boundary": "用户确认：与临铺开放相连，无实体隔墙",
+  "image_checks": [
+    {
+      "file": "material\\01_storefront.png",
+      "bytes": 2269772,
+      "sha256": "945168fc8f92d6c87ae77d49aec181d5d837838345ca4c481a58d4ae55160eac",
+      "luminance_variance": 1077.559593980927
+    },
+    {
+      "file": "material\\02_entry_overview.png",
+      "bytes": 2399371,
+      "sha256": "63514fcea4ea24568aba8cc2043f6a896b349f9876df77d45ed9766fd957e152",
+      "luminance_variance": 1225.3137439687446
+    },
+    {
+      "file": "material\\03_main_aisle.png",
+      "bytes": 2221989,
+      "sha256": "b44dafc0586f6cd1ee43b0553801620816f2d3e9f62c78fbded011cac88903ca",
+      "luminance_variance": 1321.842348544202
+    },
+    {
+      "file": "material\\04_core_displays.png",
+      "bytes": 2422499,
+      "sha256": "8e462682fc7de4ac6ffb65a58c52c36b8eebb79b608bb5944bcea71c7f0b47d1",
+      "luminance_variance": 1373.8162166641023
+    },
+    {
+      "file": "material\\05_cashier.png",
+      "bytes": 2290320,
+      "sha256": "503d4e7eb420620b8e40e346649c1956ae0d3ae0e6398710b2ae66e366306ee3",
+      "luminance_variance": 1211.118295451355
+    },
+    {
+      "file": "material\\06_feature_wall.png",
+      "bytes": 2229193,
+      "sha256": "20f74418a8beddcddad8c9dd208a2c370a03b45ad8155f9de9ce6091c25c9e8c",
+      "luminance_variance": 1117.688378757544
+    },
+    {
+      "file": "material\\07_front_relationship.png",
+      "bytes": 2216000,
+      "sha256": "ba196c14f7b6891ccbdc0f3b0d13bd80439b2b85a61425f11206c5ef61d9874e",
+      "luminance_variance": 1194.5438369710287
+    },
+    {
+      "file": "material\\08_back_relationship.png",
+      "bytes": 2185555,
+      "sha256": "c155e7c2528311a95df3d955b26f75fd4ff8f89250fa0fe47e08107942227e39",
+      "luminance_variance": 1266.1810470167725
+    },
+    {
+      "file": "material\\09_right_relationship.png",
+      "bytes": 2179695,
+      "sha256": "6b575b31e0ef7c2cf184387fa09adb548381dc97139518d899a82b209a35fae3",
+      "luminance_variance": 1275.840970953362
+    },
+    {
+      "file": "white\\01_storefront.png",
+      "bytes": 2158747,
+      "sha256": "6a90f1f31a44b0be060e8c7441de9dfaa66de056c8dc19280f821fd1e4a2c7ea",
+      "luminance_variance": 1250.9395917734005
+    },
+    {
+      "file": "white\\02_entry_overview.png",
+      "bytes": 2188246,
+      "sha256": "95d7266acf1d360df95334d1f843a860fd9c13daadb365ac064857a04b7e391f",
+      "luminance_variance": 1188.322406490884
+    },
+    {
+      "file": "white\\03_main_aisle.png",
+      "bytes": 2132832,
+      "sha256": "b17312a1129077e4342064c72f956d7f4467739a201c399977fbbcf81762ecc2",
+      "luminance_variance": 1197.3424031899488
+    },
+    {
+      "file": "white\\04_core_displays.png",
+      "bytes": 2244270,
+      "sha256": "49122063e8dd5d1790516f33a10074ee8a6208cc69084cae766d16060ed8d6d6",
+      "luminance_variance": 1122.6752713782557
+    },
+    {
+      "file": "white\\05_cashier.png",
+      "bytes": 2183913,
+      "sha256": "6573e582d24be6320f69addeb2d5054772273b4d583d75eee6abcdd6c93a18fb",
+      "luminance_variance": 1269.0470582354792
+    },
+    {
+      "file": "white\\06_feature_wall.png",
+      "bytes": 2151810,
+      "sha256": "1c8f37c56cbedbe4abd3020f920ad29603e92a1514e6ab68fa6b883af5643270",
+      "luminance_variance": 1138.9805482021968
+    },
+    {
+      "file": "white\\07_front_relationship.png",
+      "bytes": 2118267,
+      "sha256": "938090624082f8cf0b61f0fb478a71497237157ef8cdbb754962a3114f326317",
+      "luminance_variance": 1346.3409350605575
+    },
+    {
+      "file": "white\\08_back_relationship.png",
+      "bytes": 2108348,
+      "sha256": "4c635a669271dda03b268c17f2e16b8ef3eb6c1ce0127aaf2bd50487b0eb5153",
+      "luminance_variance": 1422.5845228637272
+    },
+    {
+      "file": "white\\09_right_relationship.png",
+      "bytes": 2076983,
+      "sha256": "0c68afb3995406652f44120b6e7f57111c0ac3e76815e89819cdc43880a3e3df",
+      "luminance_variance": 1260.8127934396603
+    }
+  ],
+  "known_limitations": [
+    "三张中岛桌使用库内1800x1000mm原始几何；台面采用库内两套完整展示配置，尚未逐个核对产品型号。",
+    "收银台库内净模型宽1780mm，图纸标注名义1800mm，保留模型原尺寸；未拉伸。已排除模型内超出台体的二维构造辅助对象。",
+    "广告机和灯箱安装标高需立面确认，当前为临时定位。",
+    "本版为原模型复原与空间一致性验证，不作为施工放样依据。",
+    "墙面顶标高暂取天花高度；未提供墙体立面。",
+    "员工休息室门高暂按2100mm；平面图未注明门高。",
+    "轨道灯距地3200mm已标注，具体排布需照明图，当前为渲染布光假设。",
+    "门楣深200mm按图纸投影轮廓推定。",
+    "地面材料参考SI1.0，具体施工材料未在本张平面图列明。",
+    "广告内容与灯箱安装高度在缺少立面时采用模型自带内容和注明的临时定位。"
+  ]
+}

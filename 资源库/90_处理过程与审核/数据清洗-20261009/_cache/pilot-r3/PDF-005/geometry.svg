@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.0 595.0">
+<g id="walls_columns" fill="none" stroke="rgb(0, 150, 240)" stroke-width="1">
+</g>
+<g id="entrances" fill="none" stroke="rgb(255, 0, 180)" stroke-width="1">
+</g>
+<g id="obstacles" fill="none" stroke="rgb(255, 130, 0)" stroke-width="1">
+<rect x="467.2" y="236.6" width="31.0" height="20.400000000000006"/>
+</g>
+<g id="fixed" fill="none" stroke="rgb(150, 60, 200)" stroke-width="1">
+<rect x="324.0" y="251.6" width="75.39999999999998" height="5.400000000000006"/>
+<rect x="122.6" y="460.9" width="5.400000000000006" height="53.10000000000002"/>
+<rect x="449.3" y="500.8" width="75.30000000000001" height="5.300000000000011"/>
+</g>
+<g id="props" fill="none" stroke="rgb(0, 180, 80)" stroke-width="1">
+<rect x="156.1" y="236.6" width="70.6" height="20.400000000000006"/>
+<rect x="336.6" y="332.5" width="11.199999999999989" height="17.399999999999977"/>
+<rect x="241.2" y="332.4" width="11.200000000000017" height="17.5"/>
+<rect x="241.2" y="449.8" width="11.200000000000017" height="17.599999999999966"/>
+<rect x="340.0" y="426.1" width="17.19999999999999" height="17.299999999999955"/>
+</g>
+</svg>

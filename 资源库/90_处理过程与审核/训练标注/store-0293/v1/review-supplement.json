@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-293",
+  "store_id": "store-0293",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "73cb69ef07a017c5142f7c07b7b1a7f3f4bebd32bc53ede0affdcd0aec47afc4",
+  "evidence_sha256": "db949848893d745306fa1d13e0bc8baa70810e7e7149028aa0532bd81d7d39fc",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "地台曲线候选与原图基本相符，曲线离散误差未评估；曲线配件柜未定位，屏幕错配，中英收银长度不一致。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:51.824354+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,804 @@
+{
+  "source_plan": "C:/Users/insta360/Desktop/影石-西安赛高世纪金花照材店-复尺平面方案.pdf",
+  "source_assets": "D:/BaiduNetdiskDownload/影石通用模型.skp",
+  "assets": [
+    {
+      "id": "unbox_1800",
+      "asset": "unbox_table",
+      "native_dimensions": [
+        1.8000000715255737,
+        1.0000001192092896,
+        0.9074999690055847
+      ],
+      "placed_dimensions": [
+        1.000000238418579,
+        1.8000001907348633,
+        0.9074999690055847
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        1.0,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -2.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "ace_1800",
+      "asset": "island_a",
+      "native_dimensions": [
+        1.8000000715255737,
+        1.0000001192092896,
+        1.2320988178253174
+      ],
+      "placed_dimensions": [
+        1.000000238418579,
+        1.8000001907348633,
+        1.2320988178253174
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        1.0,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -5.336999893188477,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "go_1800",
+      "asset": "island_a",
+      "native_dimensions": [
+        1.8000000715255737,
+        1.0000001192092896,
+        1.2320988178253174
+      ],
+      "placed_dimensions": [
+        1.000000238418579,
+        1.8000001907348633,
+        1.2320988178253174
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        1.0,
+        0.0,
+        -1.1920928955078125e-07,
+        -1.0,
+        7.549790126404332e-08,
+        0.0,
+        -6.874000072479248,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "x_1800",
+      "asset": "island_b",
+      "native_dimensions": [
+        1.8000000715255737,
+        1.0000001192092896,
+        1.3268853425979614
+      ],
+      "placed_dimensions": [
+        1.000000238418579,
+        1.8000001907348633,
+        1.3268853425979614
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        3.4000000953674316,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -8.707000732421875,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "cashier_unbox_1800",
+      "asset": "cashier_body",
+      "native_dimensions": [
+        1.7799999713897705,
+        0.6010000109672546,
+        0.8999999761581421
+      ],
+      "placed_dimensions": [
+        1.7799999713897705,
+        0.601000189781189,
+        0.8999999761581421
+      ],
+      "transform": [
+        -1.0,
+        -8.742277657347586e-08,
+        0.0,
+        4.514999866485596,
+        8.742277657347586e-08,
+        -1.0,
+        0.0,
+        -0.8965001106262207,
+        0.0,
+        0.0,
+        1.0,
+        1.0258978176236474e-29,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "cashier_console",
+      "asset": "cashier_top",
+      "native_dimensions": [
+        0.699999988079071,
+        0.34419873356819153,
+        0.30454444885253906
+      ],
+      "placed_dimensions": [
+        0.7000000476837158,
+        0.3441987931728363,
+        0.30454444885253906
+      ],
+      "transform": [
+        -1.0,
+        -8.742277657347586e-08,
+        0.0,
+        3.5,
+        8.742277657347586e-08,
+        -1.0,
+        0.0,
+        -1.0249006748199463,
+        0.0,
+        0.0,
+        1.0,
+        0.8999999761581421,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "accessory_1600",
+      "asset": "accessory_1600",
+      "native_dimensions": [
+        0.45000016689300537,
+        1.600000023841858,
+        2.4000000953674316
+      ],
+      "placed_dimensions": [
+        1.600000023841858,
+        0.4500002861022949,
+        2.4000000953674316
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        4.425000190734863,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -5.802000045776367,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "digital_sign",
+      "asset": "digital_sign",
+      "native_dimensions": [
+        0.550000011920929,
+        0.3499999940395355,
+        1.6500005722045898
+      ],
+      "placed_dimensions": [
+        0.3500000238418579,
+        0.550000011920929,
+        1.6500005722045898
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        4.769999980926514,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -6.445000171661377,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "screen_75",
+      "asset": "screen_75_assembly",
+      "native_dimensions": [
+        1.6920000314712524,
+        0.05000000074505806,
+        0.9580000042915344
+      ],
+      "placed_dimensions": [
+        1.6920000314712524,
+        0.05000014975667,
+        0.9580000042915344
+      ],
+      "transform": [
+        -1.0,
+        -8.742277657347586e-08,
+        0.0,
+        4.4710001945495605,
+        8.742277657347586e-08,
+        -1.0,
+        0.0,
+        -2.2350001335144043,
+        0.0,
+        0.0,
+        1.0,
+        1.4420000314712524,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "left_lightbox",
+      "asset": "lightbox_artwork",
+      "native_dimensions": [
+        1.7000000476837158,
+        0.9800000190734863,
+        1.4360262111379196e-11
+      ],
+      "placed_dimensions": [
+        1.48311670500334e-07,
+        1.7000000476837158,
+        0.9800000190734863
+      ],
+      "transform": [
+        -4.371138828673793e-08,
+        7.549790126404332e-08,
+        -1.0,
+        2.3889999389648438,
+        -1.0,
+        -3.3001180777756647e-15,
+        4.371138828673793e-08,
+        -3.947000026702881,
+        0.0,
+        1.0,
+        7.549790126404332e-08,
+        1.100000023841858,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "north_fascia_logo",
+      "asset": "logo_full",
+      "native_dimensions": [
+        2.026848077774048,
+        0.05000000074505806,
+        0.3851321339607239
+      ],
+      "placed_dimensions": [
+        1.0525462627410889,
+        0.025965191423892975,
+        0.19999989867210388
+      ],
+      "transform": [
+        -0.5193020105361938,
+        -4.539882425547148e-08,
+        0.0,
+        2.7262730598449707,
+        4.539882425547148e-08,
+        -0.5193020105361938,
+        0.0,
+        0.024982504546642303,
+        0.0,
+        0.0,
+        0.5193020105361938,
+        3.190000057220459,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "south_fascia_logo",
+      "asset": "logo_full",
+      "native_dimensions": [
+        2.026848077774048,
+        0.05000000074505806,
+        0.3851321339607239
+      ],
+      "placed_dimensions": [
+        1.0525462627410889,
+        0.025965100154280663,
+        0.19999989867210388
+      ],
+      "transform": [
+        0.5193020105361938,
+        0.0,
+        0.0,
+        1.7737268209457397,
+        0.0,
+        0.5193020105361938,
+        0.0,
+        -8.814982414245605,
+        0.0,
+        0.0,
+        0.5193020105361938,
+        3.190000057220459,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "east_fascia_logo",
+      "asset": "logo_full",
+      "native_dimensions": [
+        2.026848077774048,
+        0.05000000074505806,
+        0.3851321339607239
+      ],
+      "placed_dimensions": [
+        0.02596518024802208,
+        1.0525462627410889,
+        0.19999989867210388
+      ],
+      "transform": [
+        3.9206213386933086e-08,
+        -0.5193020105361938,
+        0.0,
+        4.8749823570251465,
+        0.5193020105361938,
+        3.9206213386933086e-08,
+        0.0,
+        -6.686273097991943,
+        0.0,
+        0.0,
+        0.5193020105361938,
+        3.190000057220459,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "above_screen_logo",
+      "asset": "logo_full",
+      "native_dimensions": [
+        2.026848077774048,
+        0.05000000074505806,
+        0.3851321339607239
+      ],
+      "placed_dimensions": [
+        1.0525462627410889,
+        0.025965191423892975,
+        0.19999989867210388
+      ],
+      "transform": [
+        -0.5193020105361938,
+        -4.539882425547148e-08,
+        0.0,
+        4.151273250579834,
+        4.539882425547148e-08,
+        -0.5193020105361938,
+        0.0,
+        -2.2520174980163574,
+        0.0,
+        0.0,
+        0.5193020105361938,
+        2.5999999046325684,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "east_lightbox",
+      "asset": "portrait_artwork",
+      "native_dimensions": [
+        1.6700236797332764,
+        0.029999999329447746,
+        0.9330000281333923
+      ],
+      "placed_dimensions": [
+        0.05389157682657242,
+        1.676024317741394,
+        3.0
+      ],
+      "transform": [
+        -5.9282717894838105e-15,
+        -1.7963817119598389,
+        -1.35623054120515e-07,
+        4.864945411682129,
+        -7.85223406296609e-08,
+        1.35623054120515e-07,
+        -1.7963817119598389,
+        -4.051987648010254,
+        1.7963817119598389,
+        0.0,
+        -7.85223406296609e-08,
+        7.326134721097333e-08,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "unbox_chair_1",
+      "asset": "unbox_chair",
+      "native_dimensions": [
+        0.4401645362377167,
+        0.4381784200668335,
+        0.800000011920929
+      ],
+      "placed_dimensions": [
+        0.4381784498691559,
+        0.44016456604003906,
+        0.800000011920929
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        1.0,
+        0.0,
+        -0.3406812846660614,
+        -1.0,
+        7.549790126404332e-08,
+        0.0,
+        -0.45956093072891235,
+        0.0,
+        0.0,
+        1.0,
+        4.440892098500626e-16,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "unbox_chair_2",
+      "asset": "unbox_chair",
+      "native_dimensions": [
+        0.4401645362377167,
+        0.4381784200668335,
+        0.800000011920929
+      ],
+      "placed_dimensions": [
+        0.4381784498691559,
+        0.44016456604003906,
+        0.800000011920929
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        1.0,
+        0.0,
+        -0.3406812846660614,
+        -1.0,
+        7.549790126404332e-08,
+        0.0,
+        -1.2395609617233276,
+        0.0,
+        0.0,
+        1.0,
+        4.440892098500626e-16,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "unbox_chair_3",
+      "asset": "unbox_chair",
+      "native_dimensions": [
+        0.4401645362377167,
+        0.4381784200668335,
+        0.800000011920929
+      ],
+      "placed_dimensions": [
+        0.4381784498691559,
+        0.44016456604003906,
+        0.800000011920929
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        1.3406813144683838,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -0.9404391050338745,
+        0.0,
+        0.0,
+        1.0,
+        4.440892098500626e-16,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "id": "unbox_chair_4",
+      "asset": "unbox_chair",
+      "native_dimensions": [
+        0.4401645362377167,
+        0.4381784200668335,
+        0.800000011920929
+      ],
+      "placed_dimensions": [
+        0.4381784498691559,
+        0.44016456604003906,
+        0.800000011920929
+      ],
+      "transform": [
+        7.549790126404332e-08,
+        -1.0,
+        0.0,
+        1.3406813144683838,
+        1.0,
+        7.549790126404332e-08,
+        0.0,
+        -1.720439076423645,
+        0.0,
+        0.0,
+        1.0,
+        4.440892098500626e-16,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    }
+  ],
+  "assumptions": [
+    "墙面顶标高暂取天花高度；未提供墙体立面。",
+    "员工休息室门高暂按2100mm；平面图未注明门高。",
+    "轨道灯距地3200mm已标注，具体排布需照明图，当前为渲染布光假设。",
+    "门楣深200mm按图纸投影轮廓推定。",
+    "地面材料参考SI1.0，具体施工材料未在本张平面图列明。",
+    "广告内容与灯箱安装高度在缺少立面时采用模型自带内容和注明的临时定位。"
+  ],
+  "asset_notes": [
+    "三张中岛桌使用库内1800x1000mm原始几何；台面采用库内两套完整展示配置，尚未逐个核对产品型号。",
+    "收银台库内净模型宽1780mm，图纸标注名义1800mm，保留模型原尺寸；未拉伸。已排除模型内超出台体的二维构造辅助对象。",
+    "广告机和灯箱安装标高需立面确认，当前为临时定位。",
+    "本版为原模型复原与空间一致性验证，不作为施工放样依据。"
+  ],
+  "left_boundary": "用户确认：与临铺开放相连，无实体隔墙",
+  "coordinate_convention": "PDF X right Y down -> world X right Y up: (x,-y,z). Assets retain positive scale; front headings converted.",
+  "primary_view_plan_side": "图纸右下侧，GO/X中岛端",
+  "passes": [
+    {
+      "camera": "01_storefront",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "objects": 533
+    },
+    {
+      "camera": "01_storefront",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "objects": 533
+    },
+    {
+      "camera": "02_entry_overview",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "objects": 533
+    },
+    {
+      "camera": "02_entry_overview",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "5fc731ccc117086ac74f455803ee006ffae32abb649ddf27986f82fdd78cf1ea",
+      "objects": 533
+    },
+    {
+      "camera": "03_main_aisle",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "03_main_aisle",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "04_core_displays",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "04_core_displays",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "05_cashier",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "05_cashier",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "06_feature_wall",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "06_feature_wall",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "0b464b24e942c905fa53c8bd449785847b702fa966104df3f14d9af49c5e7bfe",
+      "objects": 533
+    },
+    {
+      "camera": "07_front_relationship",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "f275b6220c6a056fa8713e42ec7d87ac2e6ecc5ef3a06493fa695b2516dfb787",
+      "objects": 533
+    },
+    {
+      "camera": "07_front_relationship",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "f275b6220c6a056fa8713e42ec7d87ac2e6ecc5ef3a06493fa695b2516dfb787",
+      "objects": 533
+    },
+    {
+      "camera": "08_back_relationship",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "8e8a2be0a892c8d17a6ed4661537df0ea8f74fc5ec3776d9a3b454a418bbd1c0",
+      "objects": 533
+    },
+    {
+      "camera": "08_back_relationship",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "8e8a2be0a892c8d17a6ed4661537df0ea8f74fc5ec3776d9a3b454a418bbd1c0",
+      "objects": 533
+    },
+    {
+      "camera": "09_right_relationship",
+      "mode": "material",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "e8a91f244bbb395f33beacea7029ba27579ce94f2fe5f9436b2e4052d06079e8",
+      "objects": 533
+    },
+    {
+      "camera": "09_right_relationship",
+      "mode": "white",
+      "mesh_transforms_sha256": "efb2ee428c4dd2153ce575d7472db065eb83b819fef8724a88da648e3d20d129",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "e8a91f244bbb395f33beacea7029ba27579ce94f2fe5f9436b2e4052d06079e8",
+      "objects": 533
+    }
+  ],
+  "retained_views": "Completed views retained after verifying unchanged camera matrices, geometry and image hashes; remaining views follow the latest user framing request.",
+  "auxiliary_passes": [
+    {
+      "camera": "10_spatial_overview",
+      "mode": "material",
+      "mesh_transforms_sha256": "e593672616d7a454fd4a39a32712504cb61b941b087cb24aab0ef4fba61cb0c4",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "d6b107bfaa117788bcaf025506374fb490e99c29eb2052d042455d71250474b9",
+      "objects": 533
+    },
+    {
+      "camera": "10_spatial_overview",
+      "mode": "white",
+      "mesh_transforms_sha256": "e593672616d7a454fd4a39a32712504cb61b941b087cb24aab0ef4fba61cb0c4",
+      "geometry_sha256": "93552b579db825307aad7a85411e86046206d7d52685aa7a6522b991e5532d04",
+      "camera_sha256": "79813eaa7855cd09bb549de2bc25039bfa1a6ae78b6c3dca42a72183121cd1c8",
+      "active_camera_sha256": "d6b107bfaa117788bcaf025506374fb490e99c29eb2052d042455d71250474b9",
+      "objects": 533
+    }
+  ]
+}

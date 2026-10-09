@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:47.097256+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": false,
+    "clockwise": false,
+    "kind": null,
+    "area_m2": null,
+    "stated_area": 55.9,
+    "area_difference_ratio": null,
+    "rejected_candidate": {
+      "points": [
+        [
+          500.8399963378906,
+          87.8800048828125
+        ],
+        [
+          236.60003662109375,
+          87.8800048828125
+        ],
+        [
+          236.60003662109375,
+          440.44000244140625
+        ],
+        [
+          252.91998291015625,
+          440.44000244140625
+        ],
+        [
+          252.91998291015625,
+          465.6400146484375
+        ],
+        [
+          239.72003173828125,
+          464.32000732421875
+        ],
+        [
+          227.72003173828125,
+          464.32000732421875
+        ],
+        [
+          227.72003173828125,
+          505.6000061035156
+        ],
+        [
+          608.9600219726562,
+          505.6000061035156
+        ],
+        [
+          608.9600219726562,
+          470.08001708984375
+        ],
+        [
+          608.9600219726562,
+          463.96002197265625
+        ],
+        [
+          591.3200073242188,
+          464.08001708984375
+        ],
+        [
+          591.2000122070312,
+          451.0
+        ],
+        [
+          591.2000122070312,
+          447.52001953125
+        ],
+        [
+          591.2000122070312,
+          48.4000244140625
+        ],
+        [
+          500.8399963378906,
+          48.4000244140625
+        ],
+        [
+          500.8399963378906,
+          78.1600341796875
+        ],
+        [
+          456.44000244140625,
+          78.1600341796875
+        ],
+        [
+          500.8399963378906,
+          87.8800048828125
+        ]
+      ],
+      "kind": null,
+      "method": "enclosing_vector_polygon_candidate",
+      "confidence": 0.35,
+      "confirmed": false
+    }
+  },
+  "props": {
+    "source_label_count": 11,
+    "item_count": 10,
+    "resolved_geometry_count": 8,
+    "rejected_geometry_ids": [
+      "object-006"
+    ],
+    "out_of_bounds": null,
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-005\\overlay.png",
+    "inspected_sha256": "1ae541a27472b40a0e18222ba90c71a0c20a326f962bfb987552e614f920aefa",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "边界候选跨到图外；收银与开箱重复，屏幕候选错误；培训凳只识别一件，数量不全。"
+  },
+  "needs_human": [
+    "边界候选跨到图外；收银与开箱重复，屏幕候选错误；培训凳只识别一件，数量不全。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-003",
+      "label_text": "内嵌灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-007",
+      "label_text": "内嵌灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-008",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-016",
+      "label_text": "内嵌竖向灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-017",
+      "label_text": "内嵌竖向灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-019",
+      "label_text": "LOGO"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-002",
+      "label_text": "强弱电箱"
+    }
+  ]
+}

@@ -31,7 +31,9 @@ def write_json(path, data):
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf8')
 
 def reference_files(ref):
-    entries = git('ls-tree', '-rz', ref, '--', '各门店图纸').split(b'\0')
+    entries = git('ls-tree', '-rz', ref, '--', '资源库/01_各门店原图纸').split(b'\0')
+    if not any(entries):
+        entries = git('ls-tree', '-rz', ref, '--', '各门店图纸').split(b'\0')
     indexed = []
     for entry in entries:
         if entry:
@@ -40,7 +42,7 @@ def reference_files(ref):
                 indexed.append((info.split()[2], name))
     if not indexed:
         registry=json.loads((ROOT/'资源库/00_资源索引/门店资源索引.json').read_text(encoding='utf-8'))
-        return [{'path':e['historical_path'],'expected_sha256':e['sha256'],'expected_bytes':e['bytes']} for e in registry['sources']]
+        return [{'path':e['source_location'],'expected_sha256':e['sha256'],'expected_bytes':e['bytes']} for e in registry['sources']]
     batch = subprocess.check_output(['git', 'cat-file', '--batch'], cwd=ROOT,
                                     input=b''.join(oid+b'\n' for oid, _ in indexed))
     files = []

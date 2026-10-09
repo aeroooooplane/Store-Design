@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1191.0 842.0">
+<metadata>Automatic extraction draft; normalized PDF-point coordinates; see source.json for transforms.</metadata>
+<g id="walls_columns" fill="none" stroke="rgb(0,150,240)" stroke-width="1">
+</g>
+<g id="entrances" fill="none" stroke="rgb(255,0,180)" stroke-width="1">
+</g>
+<g id="obstacles" fill="none" stroke="rgb(255,130,0)" stroke-width="1">
+</g>
+<g id="fixed" fill="none" stroke="rgb(150,60,200)" stroke-width="1">
+</g>
+<g id="props" fill="none" stroke="rgb(0,180,80)" stroke-width="1">
+<rect id="object-002" x="750.47998046875" y="273.67999267578125" width="131.0400390625" height="15.60003662109375"/>
+<rect id="object-006" x="598.0800170898438" y="293.1199951171875" width="139.55999755859375" height="38.760009765625"/>
+<rect id="object-007" x="216.5999755859375" y="337.2799987792969" width="27.24005126953125" height="42.720001220703125"/>
+<rect id="object-008" x="298.08001708984375" y="267.55999755859375" width="77.51995849609375" height="139.55999755859375"/>
+<rect id="object-009" x="445.44000244140625" y="267.55999755859375" width="77.52001953125" height="139.55999755859375"/>
+</g>
+</svg>

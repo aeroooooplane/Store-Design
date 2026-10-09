@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:34:14.114102+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-035",
+  "store_id": "store-0035",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-002",
+      "label_text": "灯箱",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          834.9599609375,
+          273.31134033203125,
+          853.7006225585938,
+          283.2907409667969
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-007",
+      "label_text": "室内悬挂式发光LOGO,H=200mm",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1339.199951171875,
+          423.0712890625,
+          1482.33154296875,
+          433.0506896972656
+        ],
+        "nominal_length_m": 0.2,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-010",
+      "label_text": "2、悬挂式LOGO高度：200mm(吊挂于室内);",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          78.36000061035156,
+          1048.8243408203125,
+          453.3920593261719,
+          1068.7808837890625
+        ],
+        "nominal_length_m": 0.2,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 25.0,
+    "evidence": [
+      {
+        "value": 25.0,
+        "text": "1、店铺实测面积：25m²；",
+        "bbox": [
+          77.5199966430664,
+          1023.5043334960938,
+          304.1619873046875,
+          1043.4608154296875
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "专区",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

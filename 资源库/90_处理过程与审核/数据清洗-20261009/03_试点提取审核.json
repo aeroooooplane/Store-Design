@@ -1,0 +1,282 @@
+{
+  "scope": "20_source_pilot_only",
+  "base_revision": "geometry8.py",
+  "later_experiment": "geometry9.py_did_not_resolve_remaining_boundaries",
+  "gate": {
+    "required_rate": 0.8,
+    "numerator": 8,
+    "denominator": 19,
+    "passed": false,
+    "definition": "每店边界明确且主要道具自动候选与原图明显相符；不通过删除错误候选提高通过率。"
+  },
+  "stores": [
+    {
+      "source_id": "PDF-001",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-001\\overlay.png",
+        "inspected_sha256": "8e04b0837e6d1ade6fffd0fd081aeacf0adb387d34d7981b4a3265659e21d034",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "租赁线与主要桌柜相符；圆柱、凳子及入口线段仍不完整。第2页73㎡与第15页78.9㎡冲突。"
+      }
+    },
+    {
+      "source_id": "PDF-002",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-002\\overlay.png",
+        "inspected_sha256": "cbe7a1a088afa13b1062ed1caa93ca59b2c0a07641aa087b6700da9b127c49e3",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "主要桌柜可见，但狭长异形店界未闭合；GO中岛与通用中岛文字指向同一实体。"
+      }
+    },
+    {
+      "source_id": "PDF-003",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-003\\overlay.png",
+        "inspected_sha256": "56219fcf9c36d1c08a1855b46bd5e21e7dc6063ccbabba70d1f62e7ef1bacde4",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "屏幕误匹配到洽谈椅；收银台与开箱文字指向同一组合桌；墙界、椅子缺失。"
+      }
+    },
+    {
+      "source_id": "PDF-005",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-005\\overlay.png",
+        "inspected_sha256": "1ae541a27472b40a0e18222ba90c71a0c20a326f962bfb987552e614f920aefa",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "边界候选跨到图外；收银与开箱重复，屏幕候选错误；培训凳只识别一件，数量不全。"
+      }
+    },
+    {
+      "source_id": "PDF-008",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-008\\overlay.png",
+        "inspected_sha256": "641b0e392ec965e4ba1ad8dd346be8d01a2e9bca5cb3684374df8e1e7867675f",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "弧形店界未恢复；多个收银/开箱文字重复；4个凳子仅匹配一件；一个屏幕误匹配墙体。"
+      }
+    },
+    {
+      "source_id": "PDF-013",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-013\\overlay.png",
+        "inspected_sha256": "4968996f9c47b13e7fa3f6a48cd4971cd318db5c79a54c65370a5667e194a200",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "包围候选是玻璃内沿，不能作为店界；收银候选误匹配人形模特底座。"
+      }
+    },
+    {
+      "source_id": "PDF-019",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-019\\overlay.png",
+        "inspected_sha256": "fda48aab42f7635b1ea2a526aaf7df4619de04609f64c192f05c64b2cd1f3c34",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "外轮廓与桌柜基本相符；斜向屏幕和电子水牌无可靠包围框，消防设施未完整提取。"
+      }
+    },
+    {
+      "source_id": "PDF-029",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-029\\overlay.png",
+        "inspected_sha256": "fc5f74bb29db21f62573cf90d8e9aa031ac6b31230c7afcd33a359f91323b55d",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "深红色租赁虚线闭合正确；凳子只匹配一件，仓库两组货架未结构化。"
+      }
+    },
+    {
+      "source_id": "PDF-032",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-032\\overlay.png",
+        "inspected_sha256": "e5e76e8b298bc7681c3de043549d81b68fca7b1649aa6e0dd21a25b7acda1272",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "店界与主要桌子相符；两个配件柜标签误匹配中岛桌，收银/开箱重复，椅子未齐。"
+      }
+    },
+    {
+      "source_id": "PDF-035",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-035\\overlay.png",
+        "inspected_sha256": "9c63025ec9bd76c62faf5ef4ddb3c0f64a89797def6b663ee52d646b8fc43620",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "已从尼康使用区中分离影石展示区；配件柜误匹配储物开箱桌，另一配件柜未定位。"
+      }
+    },
+    {
+      "source_id": "PDF-043",
+      "auto_status": "failed",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-043\\overlay.png",
+        "inspected_sha256": "4a3f559d0f80abfc75899623ea451cfe910abdcae6c09faf37bd54c3d5e5afc8",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "平面标题和道具文字大部分转曲；自动提取为零件，不能作为结构化完成。"
+      }
+    },
+    {
+      "source_id": "PDF-049",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-049\\overlay.png",
+        "inspected_sha256": "e1d79b16ba7e657e6a91f9bdc80cd18a26dea92f286ac4941f34a46733e75c99",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "配件柜包围框包含柱子；储物柜误匹配桌上产品；屏幕误匹配储物柜，店界未恢复。"
+      }
+    },
+    {
+      "source_id": "PDF-051",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-051\\overlay.png",
+        "inspected_sha256": "98155bda340e79d87368f01e0e9f2c709eabcd7c50bf036d761a9640fc0b3fdc",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "店界及桌体相符；左侧配件柜未定位，LED屏未独立提取；完整固定设施仍待确认。"
+      }
+    },
+    {
+      "source_id": "PDF-071",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-071\\overlay.png",
+        "inspected_sha256": "7ac474dfa8a9caabd6052f14ffa7cb12cda9f3a4fef1b7ed0b41297c6ec9e256",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "只能读取组合收银/开箱桌；两张大桌及展示柜缺失，边界未恢复。"
+      }
+    },
+    {
+      "source_id": "PDF-088",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-088\\overlay.png",
+        "inspected_sha256": "befaa4bf65f02c6bd7fbbb1a69ea19a8fe4ab48707a16aa8a62a83abae4cc035",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "反向虚线链拼接后租赁轮廓相符；柱子、员工休息室、固定设施尚不完整。"
+      }
+    },
+    {
+      "source_id": "PDF-090",
+      "auto_status": "partial",
+      "gate_pass": true,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-090\\overlay.png",
+        "inspected_sha256": "a5ae9da4d71896a4a173faffe4de45c8a95538b3104efc47ac5a794e092576bd",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "地台边界和主要道具相符；配件柜未定位，座椅与入口未结构化。"
+      }
+    },
+    {
+      "source_id": "PDF-239",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-239\\overlay.png",
+        "inspected_sha256": "1421cb7b27d60299d666d1d08771c76558b8e5e4559b560e6371e7c0ac866457",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "文件名沈阳、图签深圳冲突；配件柜/屏幕/储物柜候选误匹配柱体组合，城市保持未知。"
+      }
+    },
+    {
+      "source_id": "PDF-293",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-293\\overlay.png",
+        "inspected_sha256": "2798b73e4949110b71f0dfd6de0243b2280f0108142d8d7c9b2767711045727e",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "地台曲线候选与原图基本相符，曲线离散误差未评估；曲线配件柜未定位，屏幕错配，中英收银长度不一致。"
+      }
+    },
+    {
+      "source_id": "PDF-296",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-296\\overlay.png",
+        "inspected_sha256": "dc37990ce1fb5ba855f072f73e9bb3bf637ab8532015dd9e148f9c2f9a8be174",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "地台闭合轮廓相符；配件柜与屏幕包围框包含背墙/灯箱，予以置空。"
+      }
+    },
+    {
+      "source_id": "PDF-353",
+      "auto_status": "partial",
+      "gate_pass": false,
+      "visual_check": {
+        "status": "filtered_after_source_overlay_inspection",
+        "method": "vision",
+        "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-353\\overlay.png",
+        "inspected_sha256": "a63b9fd972ace2d2b65a96144dfc87546ae8214f254a7f8797363aacd0b6a8be",
+        "final_overlay_status": "pending_separate_receipt",
+        "notes": "两张中岛和配件柜可见；专区边界、圆洽谈桌及椅子未提取，屏幕未定位。"
+      }
+    }
+  ],
+  "full_batch_status": "not_started_gate_not_met",
+  "training_eligible": false,
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.682088+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "79926e14ae220679414d3b99683671f79306d8308a059935489186ae7c847a3b",
+  "evidence_sha256": "389e0be2c3a213dae2d429aafd4ae5a64cef6955eb7c2351201b774bdb9586e2",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "图签高分辨率复核为“深航百脑汇店”；用户背景称深圳，文件名沈阳；三项证据冲突，城市仍为null。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "corrections": [
+    {
+      "file": "source.json",
+      "json_pointer": "/title_block/visual_project_name/text",
+      "old": "深圳百脑汇店",
+      "value": "深航百脑汇店",
+      "method": "vision",
+      "evidence": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\PDF-239-title-crop.png"
+    },
+    {
+      "file": "review.json",
+      "field": "conflicts.store_city.vision_text",
+      "value": "深航百脑汇店",
+      "reason": "高分辨率文字复核纠正首次误读，不覆盖原草稿。"
+    }
+  ],
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:51.379029+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

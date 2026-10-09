@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 842.0 595.0">
+<metadata>Automatic extraction draft; normalized PDF-point coordinates; see source.json for transforms.</metadata>
+<g id="walls_columns" fill="none" stroke="rgb(0,150,240)" stroke-width="1">
+</g>
+<g id="entrances" fill="none" stroke="rgb(255,0,180)" stroke-width="1">
+</g>
+<g id="obstacles" fill="none" stroke="rgb(255,130,0)" stroke-width="1">
+</g>
+<g id="fixed" fill="none" stroke="rgb(150,60,200)" stroke-width="1">
+</g>
+<g id="props" fill="none" stroke="rgb(0,180,80)" stroke-width="1">
+<rect id="object-004" x="256.8800048828125" y="141.04000854492188" width="79.92001342773438" height="26.6400146484375"/>
+<rect id="object-009" x="424.6400146484375" y="236.32000732421875" width="20.040008544921875" height="20.040008544921875"/>
+<rect id="object-010" x="294.5600280761719" y="218.68002319335938" width="79.79998779296875" height="44.399993896484375"/>
+<rect id="object-011" x="253.760009765625" y="282.1600036621094" width="3.239990234375" height="74.8800048828125"/>
+<rect id="object-012" x="294.55999755859375" y="313.9599914550781" width="79.80001831054688" height="44.4000244140625"/>
+<rect id="object-013" x="412.0400085449219" y="313.9599914550781" width="79.79998779296875" height="44.4000244140625"/>
+<rect id="object-014" x="236.60003662109375" y="368.08001708984375" width="20.39996337890625" height="71.03997802734375"/>
+<rect id="object-018" x="232.4000244140625" y="485.67999267578125" width="24.3599853515625" height="15.480010986328125"/>
+</g>
+</svg>

@@ -1,0 +1,4434 @@
+{
+  "scope": "pilot_only",
+  "stores": [
+    {
+      "store_id": "store-0001",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海TPY中心",
+      "name_normalized": "上海TPY中心",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-001"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            15
+          ],
+          "unassigned_plan_candidates": [
+            2,
+            16
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0001\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0002",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海七宝领展授权体验店",
+      "name_normalized": "上海七宝领展",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-002"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            10
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0002\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0003",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海万象城授权体验店（边厅）",
+      "name_normalized": "上海万象城授权体验店（边厅）",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-003"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025.10.24",
+              "bbox": [
+                1106.3399658203125,
+                525.5475463867188,
+                1145.6805419921875,
+                535.0859375
+              ],
+              "size": 8.255365371704102,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            7
+          ],
+          "unassigned_plan_candidates": [
+            6
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0003\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0005",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海五角场万达授权体验店",
+      "name_normalized": "上海五角场万达",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-005"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025.10.16",
+              "bbox": [
+                782.3599853515625,
+                371.34033203125,
+                810.162841796875,
+                378.0814208984375
+              ],
+              "size": 5.834298610687256,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            1
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0005\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0008",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海新嘉中心",
+      "name_normalized": "上海新嘉中心",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-008"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            16
+          ],
+          "unassigned_plan_candidates": [
+            15
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0008\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0013",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海港汇恒隆授权体验店",
+      "name_normalized": "上海港汇恒隆",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-013"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            6
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0013\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0019",
+      "identity_status": "provisional_source_group",
+      "name_original": "上海闵行凯德梦之龙照材专卖店",
+      "name_normalized": "上海闵行凯德梦之龙",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-019"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025.10.10",
+              "bbox": [
+                1106.3399658203125,
+                525.5475463867188,
+                1145.6805419921875,
+                535.0859375
+              ],
+              "size": 8.255365371704102,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            7
+          ],
+          "unassigned_plan_candidates": [
+            6
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0019\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0029",
+      "identity_status": "provisional_source_group",
+      "name_original": "临沂万象汇",
+      "name_normalized": "临沂万象汇",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-029"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            18
+          ],
+          "unassigned_plan_candidates": [
+            2,
+            17
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0029\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0032",
+      "identity_status": "provisional_source_group",
+      "name_original": "乌鲁木齐德汇万达（边厅改中岛）",
+      "name_normalized": "乌鲁木齐德汇万达（边厅改中岛）",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-032"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025.08.05",
+              "bbox": [
+                1106.0399169921875,
+                525.6114501953125,
+                1145.3587646484375,
+                535.1447143554688
+              ],
+              "size": 8.250885963439941,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            8
+          ],
+          "unassigned_plan_candidates": [
+            7
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0032\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0035",
+      "identity_status": "provisional_source_group",
+      "name_original": "云南曲靖店中店",
+      "name_normalized": "云南曲靖店中店",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-035"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            9
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0035\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "专区",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0043",
+      "identity_status": "provisional_source_group",
+      "name_original": "保定北国先天下授权体验店",
+      "name_normalized": "保定北国先天下",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-043"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            11
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0043\\v1",
+          "auto_status": "failed",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0049",
+      "identity_status": "provisional_source_group",
+      "name_original": "北京798创意园授权专卖店",
+      "name_normalized": "北京798创意园授权",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-049"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            6
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0049\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0051",
+      "identity_status": "provisional_source_group",
+      "name_original": "北京三里屯太古里授权体验店",
+      "name_normalized": "北京三里屯太古里",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-051"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025-07",
+              "bbox": [
+                1110.9599609375,
+                525.5475463867188,
+                1141.0093994140625,
+                535.0859375
+              ],
+              "size": 8.255365371704102,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            1
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0051\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0071",
+      "identity_status": "provisional_source_group",
+      "name_original": "北京首都机场T3授权体验店",
+      "name_normalized": "北京首都机场T3",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-071"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            7
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0071\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0088",
+      "identity_status": "provisional_source_group",
+      "name_original": "南昌武商mall",
+      "name_normalized": "南昌武商mall",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-088"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            16
+          ],
+          "unassigned_plan_candidates": [
+            2,
+            15
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0088\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "边厅店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0090",
+      "identity_status": "provisional_source_group",
+      "name_original": "印尼Ratu plaza",
+      "name_normalized": "印尼Ratu plaza",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-090"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2024.8.5",
+              "bbox": [
+                1478.72998046875,
+                559.54296875,
+                1532.673095703125,
+                573.4029541015625
+              ],
+              "size": 13.859969139099121,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            1
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0090\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "专区",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0239",
+      "identity_status": "provisional_source_group",
+      "name_original": "沈阳百脑汇照材专卖店",
+      "name_normalized": "沈阳百脑汇",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-239"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2024.6.18",
+              "bbox": [
+                1582.199951171875,
+                686.19091796875,
+                1635.8818359375,
+                698.662841796875
+              ],
+              "size": 11.710679054260254,
+              "direction": [
+                1.0,
+                0.0
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            1
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0239\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0293",
+      "identity_status": "provisional_source_group",
+      "name_original": "澳门威尼斯人",
+      "name_normalized": "澳门威尼斯人",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-293"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            16
+          ],
+          "unassigned_plan_candidates": [
+            2,
+            15
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0293\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0296",
+      "identity_status": "provisional_source_group",
+      "name_original": "珠海华发商都授权体验店",
+      "name_normalized": "珠海华发商都",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-296"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [],
+          "revision_number": null,
+          "source_pages": [
+            15
+          ],
+          "unassigned_plan_candidates": [
+            2,
+            14
+          ],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0296\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI2.0",
+      "shop_type": "中岛店",
+      "same_store_cross_source_resolved": false
+    },
+    {
+      "store_id": "store-0353",
+      "identity_status": "provisional_source_group",
+      "name_original": "贵阳新大陆数码广场照材专卖店",
+      "name_normalized": "贵阳新大陆数码广场",
+      "city": null,
+      "address": null,
+      "unit_number": null,
+      "source_ids": [
+        "PDF-353"
+      ],
+      "versions": [
+        {
+          "version_id": "v1",
+          "version_confirmed": false,
+          "date": null,
+          "date_evidence": [
+            {
+              "text": "2025-4-23",
+              "bbox": [
+                1083.814697265625,
+                582.5520629882812,
+                1126.599853515625,
+                592.032470703125
+              ],
+              "size": 9.516868591308594,
+              "direction": [
+                0.9999985098838806,
+                -0.0017456362256780267
+              ]
+            }
+          ],
+          "revision_number": null,
+          "source_pages": [
+            6
+          ],
+          "unassigned_plan_candidates": [],
+          "ordering_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+          "annotation_path": "D:\\text demo\\资源库\\90_处理过程与审核\\训练标注\\store-0353\\v1",
+          "auto_status": "partial",
+          "training_eligible": false
+        }
+      ],
+      "si_index_label": "SI1.0",
+      "shop_type": "专区",
+      "same_store_cross_source_resolved": false
+    }
+  ],
+  "provisional_store_count": 20,
+  "provisional_version_count": 20,
+  "confirmed_version_count": 0,
+  "total_store_count": null,
+  "total_version_count": null,
+  "pending_sources": [
+    {
+      "source_id": "PDF-004",
+      "path": "D:\\各门店图纸\\上海世博天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-006",
+      "path": "D:\\各门店图纸\\上海北外滩来福士授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-007",
+      "path": "D:\\各门店图纸\\上海嘉里合集授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-009",
+      "path": "D:\\各门店图纸\\上海新天地东台里授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-010",
+      "path": "D:\\各门店图纸\\上海星光摄影城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-011",
+      "path": "D:\\各门店图纸\\上海月星环球港授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-012",
+      "path": "D:\\各门店图纸\\上海浦东嘉里城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-014",
+      "path": "D:\\各门店图纸\\上海环龙商场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-015",
+      "path": "D:\\各门店图纸\\上海百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-016",
+      "path": "D:\\各门店图纸\\上海第一八佰伴授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-017",
+      "path": "D:\\各门店图纸\\上海长宁荟聚授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-018",
+      "path": "D:\\各门店图纸\\上海长宁龙之梦.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-020",
+      "path": "D:\\各门店图纸\\上海陆家嘴正大广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-021",
+      "path": "D:\\各门店图纸\\上海陆家嘴项目（改造）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-022",
+      "path": "D:\\各门店图纸\\上海黄埔日月光中心授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-023",
+      "path": "D:\\各门店图纸\\上海龙湖宝山天街.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-024",
+      "path": "D:\\各门店图纸\\上海龙湖闵行天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-025",
+      "path": "D:\\各门店图纸\\东莞万象滨海购物公园.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-026",
+      "path": "D:\\各门店图纸\\东莞悠兰里街区授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-027",
+      "path": "D:\\各门店图纸\\中山大信新都汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-028",
+      "path": "D:\\各门店图纸\\中山石歧万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-030",
+      "path": "D:\\各门店图纸\\临沂百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-031",
+      "path": "D:\\各门店图纸\\乌鲁木齐cc mall授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-033",
+      "path": "D:\\各门店图纸\\乌鲁木齐经开万达授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-034",
+      "path": "D:\\各门店图纸\\乌鲁木齐高新万达广场.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-036",
+      "path": "D:\\各门店图纸\\佛山创意产业园授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-037",
+      "path": "D:\\各门店图纸\\佛山千灯湖环宇城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-038",
+      "path": "D:\\各门店图纸\\佛山欢乐海岸Plus.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-039",
+      "path": "D:\\各门店图纸\\佛山禅城NOVA岭南站授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-040",
+      "path": "D:\\各门店图纸\\佛山禅西环宇城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-041",
+      "path": "D:\\各门店图纸\\佛山金铂中心授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-042",
+      "path": "D:\\各门店图纸\\佛山顺德万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-044",
+      "path": "D:\\各门店图纸\\保定爱情广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-045",
+      "path": "D:\\各门店图纸\\保定西大街照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-046",
+      "path": "D:\\各门店图纸\\兰州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-047",
+      "path": "D:\\各门店图纸\\兰州苏宁MAX照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-048",
+      "path": "D:\\各门店图纸\\包河万象汇.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-050",
+      "path": "D:\\各门店图纸\\北京万柳华联授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-052",
+      "path": "D:\\各门店图纸\\北京东坝万达授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-053",
+      "path": "D:\\各门店图纸\\北京中关村大融城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-054",
+      "path": "D:\\各门店图纸\\北京五棵松万达授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-055",
+      "path": "D:\\各门店图纸\\北京五棵松照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-056",
+      "path": "D:\\各门店图纸\\北京亦庄龙湖天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-057",
+      "path": "D:\\各门店图纸\\北京合生汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-058",
+      "path": "D:\\各门店图纸\\北京悠唐广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-059",
+      "path": "D:\\各门店图纸\\北京房山熙悦天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-060",
+      "path": "D:\\各门店图纸\\北京望京凯德授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-061",
+      "path": "D:\\各门店图纸\\北京朝阳大悦城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-062",
+      "path": "D:\\各门店图纸\\北京清河万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-063",
+      "path": "D:\\各门店图纸\\北京王府井银泰IN88授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-064",
+      "path": "D:\\各门店图纸\\北京荟聚授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-065",
+      "path": "D:\\各门店图纸\\北京蓝色港湾授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-066",
+      "path": "D:\\各门店图纸\\北京西三旗万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-067",
+      "path": "D:\\各门店图纸\\北京西单大悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-068",
+      "path": "D:\\各门店图纸\\北京超极合生汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-069",
+      "path": "D:\\各门店图纸\\北京通州万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-070",
+      "path": "D:\\各门店图纸\\北京顺义华联授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-072",
+      "path": "D:\\各门店图纸\\北京马连道照材专区.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-073",
+      "path": "D:\\各门店图纸\\北京龙湖丽泽天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-074",
+      "path": "D:\\各门店图纸\\华强北电子世界二店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-075",
+      "path": "D:\\各门店图纸\\南京万象天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-076",
+      "path": "D:\\各门店图纸\\南京仙林金鹰授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-077",
+      "path": "D:\\各门店图纸\\南京华海3c照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-078",
+      "path": "D:\\各门店图纸\\南京城北万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-079",
+      "path": "D:\\各门店图纸\\南京德基广场直营店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-080",
+      "path": "D:\\各门店图纸\\南京桥北弘阳广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-081",
+      "path": "D:\\各门店图纸\\南京江北虹悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-082",
+      "path": "D:\\各门店图纸\\南京金陵天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-083",
+      "path": "D:\\各门店图纸\\南宁万象城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-084",
+      "path": "D:\\各门店图纸\\南宁惠工电子科技城（迁址）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-085",
+      "path": "D:\\各门店图纸\\南昌T16授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-086",
+      "path": "D:\\各门店图纸\\南昌万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-087",
+      "path": "D:\\各门店图纸\\南昌和昌里街区授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-089",
+      "path": "D:\\各门店图纸\\南阳万悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-091",
+      "path": "D:\\各门店图纸\\印尼雅加达 kota kasablanka.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-092",
+      "path": "D:\\各门店图纸\\厦门SM授权体验店（扩铺）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-093",
+      "path": "D:\\各门店图纸\\厦门大悦城授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-094",
+      "path": "D:\\各门店图纸\\厦门百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-095",
+      "path": "D:\\各门店图纸\\台湾三创生活（换址）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-096",
+      "path": "D:\\各门店图纸\\台湾台中汉神洲际中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-097",
+      "path": "D:\\各门店图纸\\台湾台南市南纺购物中心.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-098",
+      "path": "D:\\各门店图纸\\台湾新北板桥大远百.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-099",
+      "path": "D:\\各门店图纸\\台湾新北裕隆城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-100",
+      "path": "D:\\各门店图纸\\台湾桃园大江国际.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-101",
+      "path": "D:\\各门店图纸\\台湾远东新竹Big City中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-102",
+      "path": "D:\\各门店图纸\\台湾高雄Nova中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-103",
+      "path": "D:\\各门店图纸\\台湾高雄汉神巨蛋中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-104",
+      "path": "D:\\各门店图纸\\合肥万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-105",
+      "path": "D:\\各门店图纸\\合肥大蜀山半边街授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-106",
+      "path": "D:\\各门店图纸\\合肥新粮仓授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-107",
+      "path": "D:\\各门店图纸\\合肥瑶海万象天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-108",
+      "path": "D:\\各门店图纸\\合肥百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-109",
+      "path": "D:\\各门店图纸\\合肥罍街照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-110",
+      "path": "D:\\各门店图纸\\呼和浩特万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-111",
+      "path": "D:\\各门店图纸\\呼和浩特诚信数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-112",
+      "path": "D:\\各门店图纸\\哈尔滨教化电子大世界照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-113",
+      "path": "D:\\各门店图纸\\哈尔滨松雷广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-114",
+      "path": "D:\\各门店图纸\\哈尔滨红博授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-115",
+      "path": "D:\\各门店图纸\\哈尔滨船舶电子大世界照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-116",
+      "path": "D:\\各门店图纸\\哈尔滨金安国际授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-117",
+      "path": "D:\\各门店图纸\\唐山硅谷数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-118",
+      "path": "D:\\各门店图纸\\商丘正弘汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-119",
+      "path": "D:\\各门店图纸\\嘉兴八佰伴授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-120",
+      "path": "D:\\各门店图纸\\大庆百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-121",
+      "path": "D:\\各门店图纸\\大连东关街授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-122",
+      "path": "D:\\各门店图纸\\大连中央大道照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-123",
+      "path": "D:\\各门店图纸\\大连华南万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-124",
+      "path": "D:\\各门店图纸\\大连奥林匹克照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-125",
+      "path": "D:\\各门店图纸\\大连柏威年授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-126",
+      "path": "D:\\各门店图纸\\大连罗斯福授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-127",
+      "path": "D:\\各门店图纸\\天津万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-128",
+      "path": "D:\\各门店图纸\\天津南开大悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-129",
+      "path": "D:\\各门店图纸\\天津天河城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-130",
+      "path": "D:\\各门店图纸\\天津梅江天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-131",
+      "path": "D:\\各门店图纸\\天津百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-132",
+      "path": "D:\\各门店图纸\\天津西青大悦汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-133",
+      "path": "D:\\各门店图纸\\太原万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-134",
+      "path": "D:\\各门店图纸\\太原天美新天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-135",
+      "path": "D:\\各门店图纸\\威海威高广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "NEW-001",
+      "path": "D:\\各门店图纸\\宁波万象城授权体验店（边厅）.pptx",
+      "format": "pptx",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-136",
+      "path": "D:\\各门店图纸\\宁波余姚五彩城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-137",
+      "path": "D:\\各门店图纸\\宁波明州里授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-138",
+      "path": "D:\\各门店图纸\\宜兴八佰伴.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-139",
+      "path": "D:\\各门店图纸\\宜宾万象天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-140",
+      "path": "D:\\各门店图纸\\宜昌国贸授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-141",
+      "path": "D:\\各门店图纸\\宝鸡开元商城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-142",
+      "path": "D:\\各门店图纸\\山东菏泽佳和城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-143",
+      "path": "D:\\各门店图纸\\山西临汾生龙国际.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-144",
+      "path": "D:\\各门店图纸\\常州万象城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-145",
+      "path": "D:\\各门店图纸\\常州武进吾悦授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-146",
+      "path": "D:\\各门店图纸\\平顶山丹尼斯照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-147",
+      "path": "D:\\各门店图纸\\广州万民星光城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-148",
+      "path": "D:\\各门店图纸\\广州万菱汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-149",
+      "path": "D:\\各门店图纸\\广州保利时光里.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-150",
+      "path": "D:\\各门店图纸\\广州天环广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-151",
+      "path": "D:\\各门店图纸\\广州广州塔广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-152",
+      "path": "D:\\各门店图纸\\广州正佳广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-153",
+      "path": "D:\\各门店图纸\\广州琶洲保利授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-154",
+      "path": "D:\\各门店图纸\\广州番禺天河城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-155",
+      "path": "D:\\各门店图纸\\广州百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-156",
+      "path": "D:\\各门店图纸\\广州美林MLIVE天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-157",
+      "path": "D:\\各门店图纸\\广州融创授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-158",
+      "path": "D:\\各门店图纸\\徐州中山南路格派照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-159",
+      "path": "D:\\各门店图纸\\徐州苏宁授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-160",
+      "path": "D:\\各门店图纸\\德国汉堡市Saturn店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-161",
+      "path": "D:\\各门店图纸\\恩施星光里购物中心照材店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-162",
+      "path": "D:\\各门店图纸\\惠州华贸授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-163",
+      "path": "D:\\各门店图纸\\成都A世界照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-164",
+      "path": "D:\\各门店图纸\\成都万象城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-165",
+      "path": "D:\\各门店图纸\\成都华凌摄影城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-166",
+      "path": "D:\\各门店图纸\\成都大悦城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-167",
+      "path": "D:\\各门店图纸\\成都天府和悦广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-168",
+      "path": "D:\\各门店图纸\\成都天府大悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-169",
+      "path": "D:\\各门店图纸\\成都天府艺术公园授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-170",
+      "path": "D:\\各门店图纸\\成都太古里授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-171",
+      "path": "D:\\各门店图纸\\成都数码广场恒驰照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-172",
+      "path": "D:\\各门店图纸\\成都数码广场虎一心照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-173",
+      "path": "D:\\各门店图纸\\成都来福士授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-174",
+      "path": "D:\\各门店图纸\\成都滨江天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-175",
+      "path": "D:\\各门店图纸\\成都环球中心授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-176",
+      "path": "D:\\各门店图纸\\成都环球中心授权体验店（2F）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-177",
+      "path": "D:\\各门店图纸\\成都百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-178",
+      "path": "D:\\各门店图纸\\成都科华王府井授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-179",
+      "path": "D:\\各门店图纸\\成都西宸天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-180",
+      "path": "D:\\各门店图纸\\成都西村大院授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-181",
+      "path": "D:\\各门店图纸\\成都金楠天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-182",
+      "path": "D:\\各门店图纸\\成都金牛凯德授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-183",
+      "path": "D:\\各门店图纸\\成都龙泉世茂广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-184",
+      "path": "D:\\各门店图纸\\扬州万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-185",
+      "path": "D:\\各门店图纸\\拉萨王府井授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-186",
+      "path": "D:\\各门店图纸\\新乡大桥照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-187",
+      "path": "D:\\各门店图纸\\新乡胖东来授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-188",
+      "path": "D:\\各门店图纸\\新加坡Jewel中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-189",
+      "path": "D:\\各门店图纸\\新加坡suntec city.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-190",
+      "path": "D:\\各门店图纸\\新加坡建店Plaza Singapura.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-191",
+      "path": "D:\\各门店图纸\\新疆伊犁环球港授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-192",
+      "path": "D:\\各门店图纸\\新疆克拉玛依市汇嘉时代广场.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-193",
+      "path": "D:\\各门店图纸\\新疆喀什数码街照材店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-194",
+      "path": "D:\\各门店图纸\\新疆宏景数码广场二店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-195",
+      "path": "D:\\各门店图纸\\新疆宏景数码广场授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-196",
+      "path": "D:\\各门店图纸\\新疆石河子万达授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-197",
+      "path": "D:\\各门店图纸\\无锡百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-198",
+      "path": "D:\\各门店图纸\\无锡荟聚.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-199",
+      "path": "D:\\各门店图纸\\日照万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-200",
+      "path": "D:\\各门店图纸\\昆山商厦家电市场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-201",
+      "path": "D:\\各门店图纸\\昆山商厦家电市场照材专卖店（扩店）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-202",
+      "path": "D:\\各门店图纸\\昆明万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-203",
+      "path": "D:\\各门店图纸\\昆明五华吾悦授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-204",
+      "path": "D:\\各门店图纸\\昆明佰腾数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-205",
+      "path": "D:\\各门店图纸\\昆明南亚风情第壹城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-206",
+      "path": "D:\\各门店图纸\\昆明恒隆授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-207",
+      "path": "D:\\各门店图纸\\昆明顺城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-208",
+      "path": "D:\\各门店图纸\\晋江SM授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-209",
+      "path": "D:\\各门店图纸\\杭州EFC广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-210",
+      "path": "D:\\各门店图纸\\杭州EIC广场授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-211",
+      "path": "D:\\各门店图纸\\杭州IN77授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-212",
+      "path": "D:\\各门店图纸\\杭州万象城（迁址）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-213",
+      "path": "D:\\各门店图纸\\杭州东部数码港照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-214",
+      "path": "D:\\各门店图纸\\杭州临平银泰授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-215",
+      "path": "D:\\各门店图纸\\杭州亚奥万象天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-216",
+      "path": "D:\\各门店图纸\\杭州大悦城悦街授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-217",
+      "path": "D:\\各门店图纸\\杭州奥体印象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-218",
+      "path": "D:\\各门店图纸\\杭州学院路照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-219",
+      "path": "D:\\各门店图纸\\杭州百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "NEW-002",
+      "path": "D:\\各门店图纸\\杭州西溪天街授权体验店.rar",
+      "format": "rar",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-220",
+      "path": "D:\\各门店图纸\\柳州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-221",
+      "path": "D:\\各门店图纸\\桂林万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-222",
+      "path": "D:\\各门店图纸\\武昌万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-223",
+      "path": "D:\\各门店图纸\\武汉光谷世界城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-224",
+      "path": "D:\\各门店图纸\\武汉大悦城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-225",
+      "path": "D:\\各门店图纸\\武汉天地壹方授权体验店（迁址）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-226",
+      "path": "D:\\各门店图纸\\武汉婚纱摄影照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-227",
+      "path": "D:\\各门店图纸\\武汉梦时代授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-228",
+      "path": "D:\\各门店图纸\\武汉武商MALL授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-229",
+      "path": "D:\\各门店图纸\\武汉电脑大世界照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-230",
+      "path": "D:\\各门店图纸\\武汉荟聚.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-231",
+      "path": "D:\\各门店图纸\\武汉银泰创意城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-232",
+      "path": "D:\\各门店图纸\\武汉销品茂授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-233",
+      "path": "D:\\各门店图纸\\汕头万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-234",
+      "path": "D:\\各门店图纸\\江西赣州京东授权专区.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-235",
+      "path": "D:\\各门店图纸\\江门汇悦大融城（迁址）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-236",
+      "path": "D:\\各门店图纸\\沈阳三台子万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-237",
+      "path": "D:\\各门店图纸\\沈阳东软科技城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-238",
+      "path": "D:\\各门店图纸\\沈阳中街恒隆授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-240",
+      "path": "D:\\各门店图纸\\沈阳百脑汇照材专卖店二店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-241",
+      "path": "D:\\各门店图纸\\沈阳铁西万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-242",
+      "path": "D:\\各门店图纸\\沈阳长白万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-243",
+      "path": "D:\\各门店图纸\\泉州浦西万达授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-244",
+      "path": "D:\\各门店图纸\\泰国Central Phuket.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-246",
+      "path": "D:\\各门店图纸\\泰国central westgate.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-245",
+      "path": "D:\\各门店图纸\\泰国Mega Bangna.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-247",
+      "path": "D:\\各门店图纸\\泰国曼谷central world.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-248",
+      "path": "D:\\各门店图纸\\泰国曼谷dusit central park.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-249",
+      "path": "D:\\各门店图纸\\泰国芭提雅central Pattaya.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-250",
+      "path": "D:\\各门店图纸\\泰安三源照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-251",
+      "path": "D:\\各门店图纸\\泰州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-252",
+      "path": "D:\\各门店图纸\\洛阳大卫天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-253",
+      "path": "D:\\各门店图纸\\洛阳王城公园照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-254",
+      "path": "D:\\各门店图纸\\济南万象城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-255",
+      "path": "D:\\各门店图纸\\济南华强电子科技照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-256",
+      "path": "D:\\各门店图纸\\济南恒隆授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-257",
+      "path": "D:\\各门店图纸\\济宁万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "NEW-003",
+      "path": "D:\\各门店图纸\\海口吾悦广场授权体验店.pptx",
+      "format": "pptx",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-258",
+      "path": "D:\\各门店图纸\\海口天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-259",
+      "path": "D:\\各门店图纸\\海口远大购物中心授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-260",
+      "path": "D:\\各门店图纸\\淄博万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-261",
+      "path": "D:\\各门店图纸\\淄博百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-262",
+      "path": "D:\\各门店图纸\\淮安万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "NEW-004",
+      "path": "D:\\各门店图纸\\深圳KK ONE授权体验店.rar",
+      "format": "rar",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-263",
+      "path": "D:\\各门店图纸\\深圳万丰海岸城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-264",
+      "path": "D:\\各门店图纸\\深圳万象前海授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-265",
+      "path": "D:\\各门店图纸\\深圳光明蓝鲸世界授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-266",
+      "path": "D:\\各门店图纸\\深圳华发冰雪世界授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-267",
+      "path": "D:\\各门店图纸\\深圳华强北改造项目.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-268",
+      "path": "D:\\各门店图纸\\深圳华强北赛格科技园照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-269",
+      "path": "D:\\各门店图纸\\深圳华强北（华强一店）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-270",
+      "path": "D:\\各门店图纸\\深圳卓悦中心.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-271",
+      "path": "D:\\各门店图纸\\深圳壹方城直营旗舰店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-272",
+      "path": "D:\\各门店图纸\\深圳壹方汇直营店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-273",
+      "path": "D:\\各门店图纸\\深圳大悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-274",
+      "path": "D:\\各门店图纸\\深圳宝安大仟里.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-275",
+      "path": "D:\\各门店图纸\\深圳布吉万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-276",
+      "path": "D:\\各门店图纸\\深圳新华强照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-277",
+      "path": "D:\\各门店图纸\\深圳机场直营店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-278",
+      "path": "D:\\各门店图纸\\深圳海岸城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-279",
+      "path": "D:\\各门店图纸\\深圳海雅缤纷城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-280",
+      "path": "D:\\各门店图纸\\深圳深业上城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-281",
+      "path": "D:\\各门店图纸\\深圳福田COCOPARK授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-282",
+      "path": "D:\\各门店图纸\\深圳福田中航城君尚.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-283",
+      "path": "D:\\各门店图纸\\深圳福田卓悦汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-284",
+      "path": "D:\\各门店图纸\\深圳罗湖万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-285",
+      "path": "D:\\各门店图纸\\深圳罗湖金光华.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-286",
+      "path": "D:\\各门店图纸\\深圳龙华天虹授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-287",
+      "path": "D:\\各门店图纸\\温州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-288",
+      "path": "D:\\各门店图纸\\温州开太百货照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-289",
+      "path": "D:\\各门店图纸\\温州滨江万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-290",
+      "path": "D:\\各门店图纸\\湖南摄影城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-291",
+      "path": "D:\\各门店图纸\\潍坊泰华城新天地.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-292",
+      "path": "D:\\各门店图纸\\潍坊益家园照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-294",
+      "path": "D:\\各门店图纸\\烟台振华商厦授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-295",
+      "path": "D:\\各门店图纸\\珠海万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-297",
+      "path": "D:\\各门店图纸\\盐城聚龙湖金鹰授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-298",
+      "path": "D:\\各门店图纸\\石家庄万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-299",
+      "path": "D:\\各门店图纸\\石家庄太和电子城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-300",
+      "path": "D:\\各门店图纸\\石家庄织音1953授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-301",
+      "path": "D:\\各门店图纸\\福州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-302",
+      "path": "D:\\各门店图纸\\福州东二泰禾（换铺）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-303",
+      "path": "D:\\各门店图纸\\福州中骏世界城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-304",
+      "path": "D:\\各门店图纸\\福州大利嘉城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-305",
+      "path": "D:\\各门店图纸\\福州烟台山授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-306",
+      "path": "D:\\各门店图纸\\福建龙岩万宝授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-307",
+      "path": "D:\\各门店图纸\\秦皇岛茂业天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-308",
+      "path": "D:\\各门店图纸\\绍兴金帝银泰城迁址边厅.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-309",
+      "path": "D:\\各门店图纸\\绵阳数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-310",
+      "path": "D:\\各门店图纸\\聊城万达照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-311",
+      "path": "D:\\各门店图纸\\芜湖银泰inpark.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-312",
+      "path": "D:\\各门店图纸\\苏州东吴天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-313",
+      "path": "D:\\各门店图纸\\苏州中心授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-314",
+      "path": "D:\\各门店图纸\\苏州人民商场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-315",
+      "path": "D:\\各门店图纸\\苏州吴江万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-316",
+      "path": "D:\\各门店图纸\\苏州昆山万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-317",
+      "path": "D:\\各门店图纸\\英国westfield中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-318",
+      "path": "D:\\各门店图纸\\茂名东荟城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-319",
+      "path": "D:\\各门店图纸\\莆田万象汇.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-320",
+      "path": "D:\\各门店图纸\\菲律宾 SM Aura.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-321",
+      "path": "D:\\各门店图纸\\菲律宾 SM City Grand Central.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-322",
+      "path": "D:\\各门店图纸\\菲律宾Festival mall 边厅.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-323",
+      "path": "D:\\各门店图纸\\菲律宾MOA（换址).pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-324",
+      "path": "D:\\各门店图纸\\菲律宾ONE Ayala.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-325",
+      "path": "D:\\各门店图纸\\菲律宾Robinsons Place Manila.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-326",
+      "path": "D:\\各门店图纸\\菲律宾SM City Clark 中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-327",
+      "path": "D:\\各门店图纸\\菲律宾SM City Dasmarinas 中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-328",
+      "path": "D:\\各门店图纸\\菲律宾SM City Davao边厅.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-329",
+      "path": "D:\\各门店图纸\\菲律宾SM City Fairview.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-330",
+      "path": "D:\\各门店图纸\\菲律宾SM City La Union.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-331",
+      "path": "D:\\各门店图纸\\菲律宾SM City Pampanga 中岛.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-332",
+      "path": "D:\\各门店图纸\\菲律宾SM City San Pablo.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-333",
+      "path": "D:\\各门店图纸\\菲律宾SM Megamall 边厅.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-334",
+      "path": "D:\\各门店图纸\\菲律宾SM North EDSA.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-335",
+      "path": "D:\\各门店图纸\\菲律宾SM South mall.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-336",
+      "path": "D:\\各门店图纸\\西宁王府井授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-337",
+      "path": "D:\\各门店图纸\\西安DT51授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-338",
+      "path": "D:\\各门店图纸\\西安SKP授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-339",
+      "path": "D:\\各门店图纸\\西安万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-340",
+      "path": "D:\\各门店图纸\\西安东新科贸照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-341",
+      "path": "D:\\各门店图纸\\西安北部赛格广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-342",
+      "path": "D:\\各门店图纸\\西安开元商场.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-343",
+      "path": "D:\\各门店图纸\\西安曲江创意谷授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-344",
+      "path": "D:\\各门店图纸\\西安百瑞未来城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-345",
+      "path": "D:\\各门店图纸\\西安百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-346",
+      "path": "D:\\各门店图纸\\西安荟聚授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-347",
+      "path": "D:\\各门店图纸\\西安赛格授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-348",
+      "path": "D:\\各门店图纸\\西安鹏博大厦照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-349",
+      "path": "D:\\各门店图纸\\西安龙湖长乐天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-350",
+      "path": "D:\\各门店图纸\\西安龙首印象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-351",
+      "path": "D:\\各门店图纸\\贵阳万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-352",
+      "path": "D:\\各门店图纸\\贵阳中华南路照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-354",
+      "path": "D:\\各门店图纸\\赣州万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-355",
+      "path": "D:\\各门店图纸\\赤峰商厦照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-356",
+      "path": "D:\\各门店图纸\\遵义吾悦广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-357",
+      "path": "D:\\各门店图纸\\邯郸万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-358",
+      "path": "D:\\各门店图纸\\郑州东万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-359",
+      "path": "D:\\各门店图纸\\郑州信万广场授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-360",
+      "path": "D:\\各门店图纸\\郑州大卫城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-361",
+      "path": "D:\\各门店图纸\\郑州探十里授权专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "NEW-005",
+      "path": "D:\\各门店图纸\\郑州智汇城照材专卖店.rar",
+      "format": "rar",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-362",
+      "path": "D:\\各门店图纸\\郑州正弘汇授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-363",
+      "path": "D:\\各门店图纸\\郑州赛博数码港照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-364",
+      "path": "D:\\各门店图纸\\郑州金融岛授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-365",
+      "path": "D:\\各门店图纸\\郴州解放路照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-366",
+      "path": "D:\\各门店图纸\\鄂尔多斯金峰电子城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-367",
+      "path": "D:\\各门店图纸\\重庆万象城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-368",
+      "path": "D:\\各门店图纸\\重庆光环花园城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-369",
+      "path": "D:\\各门店图纸\\重庆光环购物广场.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-370",
+      "path": "D:\\各门店图纸\\重庆北城天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-371",
+      "path": "D:\\各门店图纸\\重庆国泰广场授权专卖店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-372",
+      "path": "D:\\各门店图纸\\重庆大悦城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-373",
+      "path": "D:\\各门店图纸\\重庆时代天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-374",
+      "path": "D:\\各门店图纸\\重庆来福士授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-375",
+      "path": "D:\\各门店图纸\\重庆百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-376",
+      "path": "D:\\各门店图纸\\重庆石桥铺赛博数码广场照材店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-377",
+      "path": "D:\\各门店图纸\\重庆观音桥赛博数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-378",
+      "path": "D:\\各门店图纸\\重庆龙湖U城天街.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-379",
+      "path": "D:\\各门店图纸\\重庆龙湖江岸天街.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-380",
+      "path": "D:\\各门店图纸\\重庆龙湖金沙天街授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-381",
+      "path": "D:\\各门店图纸\\金华永盛授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-382",
+      "path": "D:\\各门店图纸\\银川新华百货CCMALL授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-383",
+      "path": "D:\\各门店图纸\\银川阅彩城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-384",
+      "path": "D:\\各门店图纸\\长春万象城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-385",
+      "path": "D:\\各门店图纸\\长春百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-386",
+      "path": "D:\\各门店图纸\\长沙IFS授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-387",
+      "path": "D:\\各门店图纸\\长沙万象城授权体验店（边厅）.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-388",
+      "path": "D:\\各门店图纸\\长沙星城天地授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-389",
+      "path": "D:\\各门店图纸\\长沙永旺梦乐城授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-390",
+      "path": "D:\\各门店图纸\\长沙科佳电脑城照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-391",
+      "path": "D:\\各门店图纸\\长沙荟聚授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-392",
+      "path": "D:\\各门店图纸\\长沙高桥数码广场照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-393",
+      "path": "D:\\各门店图纸\\青岛万象城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-394",
+      "path": "D:\\各门店图纸\\青岛凯德MALL授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-395",
+      "path": "D:\\各门店图纸\\青岛城阳万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-396",
+      "path": "D:\\各门店图纸\\青岛崂山万象汇授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-397",
+      "path": "D:\\各门店图纸\\青岛永旺梦乐城.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-398",
+      "path": "D:\\各门店图纸\\青岛海信广场授权体验店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-399",
+      "path": "D:\\各门店图纸\\青岛百脑汇照材专卖店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-400",
+      "path": "D:\\各门店图纸\\韩国galleria光教店-광교점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-401",
+      "path": "D:\\各门店图纸\\韩国乐天百货蚕室店- 롯데잠실점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-402",
+      "path": "D:\\各门店图纸\\韩国新世界大田店-신세계대전점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-403",
+      "path": "D:\\各门店图纸\\韩国现代百货忠清店-현대충청점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-404",
+      "path": "D:\\各门店图纸\\韩国现代百货新村店-현대신촌점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-405",
+      "path": "D:\\各门店图纸\\韩国现代百货板桥店-현대판교점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-406",
+      "path": "D:\\各门店图纸\\韩国现代百货蔚山店-현대울산점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-407",
+      "path": "D:\\各门店图纸\\韩国釜山乐天百货-롯데 부산본점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-408",
+      "path": "D:\\各门店图纸\\韩国首尔江南旗舰店-도산점.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-409",
+      "path": "D:\\各门店图纸\\香港旺角郎豪坊.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-410",
+      "path": "D:\\各门店图纸\\香港油尖旺柏丽大道街边店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-411",
+      "path": "D:\\各门店图纸\\香港铜锣湾百德新街.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-412",
+      "path": "D:\\各门店图纸\\马来西亚1Utama Shopping Center.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-413",
+      "path": "D:\\各门店图纸\\马来西亚Gurney Plaza.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-414",
+      "path": "D:\\各门店图纸\\马来西亚IOI Citymall中岛店.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-415",
+      "path": "D:\\各门店图纸\\马来西亚IOI Damasara边厅.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-416",
+      "path": "D:\\各门店图纸\\马来西亚Pavilion Bukit Jalil.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-417",
+      "path": "D:\\各门店图纸\\马来西亚Pavilion Damansara Heights.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    },
+    {
+      "source_id": "PDF-418",
+      "path": "D:\\各门店图纸\\马来西亚Pavilion KL.pdf",
+      "format": "pdf",
+      "status": "not_structured_pilot_gate_not_met",
+      "store_id": null,
+      "version_id": null,
+      "training_eligible": false
+    }
+  ],
+  "note": "418份来源不能直接宣称418家独立门店；全量门店合并与版本排序未完成。",
+  "training_eligible": false,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:54.922519+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

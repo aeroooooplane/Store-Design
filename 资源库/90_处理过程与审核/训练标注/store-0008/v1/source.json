@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:47.271454+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-008",
+  "store_id": "store-0008",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\上海新嘉中心.pdf",
+  "sha256": "ff031704958d19f6ea7f5f8bf0be4437c823daeac574137f2a095395e52ed73c",
+  "physical_page": 16,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 106.88836104513065,
+  "pdf_to_pixel_matrix": [
+    1.484560570071259,
+    0,
+    0,
+    1.484560570071259,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1541.4000244140625,
+          977.510986328125,
+          1602.570068359375,
+          989.7449951171875
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "影石-上海新嘉中心边厅店",
+        "bbox": [
+          1501.6199951171875,
+          302.5110168457031,
+          1642.3111572265625,
+          314.7450256347656
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "P-03",
+        "bbox": [
+          1559.760009765625,
+          1130.6309814453125,
+          1584.227783203125,
+          1142.864990234375
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "v1仅为所选试点页的临时样本编号；同来源其他候选方案/版本尚未建立关系，不能认定唯一或最早版本。",
+  "normalized_pdf_to_m_matrix": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1684.0,
+        1191.0
+      ],
+      "title": "平面布置/家具定位候选",
+      "method": "vision",
+      "crop_policy": "full_page_evidence",
+      "independent_frame_count": 1
+    }
+  ],
+  "extraction_revision": "geometry8.py",
+  "visual_decisions_script": "package_pilot.py",
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "version_date": null,
+  "revision_number": null
+}

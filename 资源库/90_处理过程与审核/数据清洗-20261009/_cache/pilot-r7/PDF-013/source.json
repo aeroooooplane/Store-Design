@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:43:16.128773+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-013",
+  "store_id": "store-0013",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\上海港汇恒隆授权体验店.pdf",
+  "sha256": "f80c47d673f740ff3dd47b7d3fc8dc0f2200cb7b627a8318b298cb1d825a0208",
+  "physical_page": 6,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "page_rotation": 0,
+  "render_dpi": 151.13350125944586,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0990764063811924,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": [
+    {
+      "text": "Main passenger flow",
+      "bbox": [
+        983.5283813476562,
+        287.6941833496094,
+        996.992431640625,
+        389.47998046875
+      ],
+      "size": 10.199999809265137,
+      "direction": [
+        0.0,
+        -1.0
+      ]
+    },
+    {
+      "text": "directions",
+      "bbox": [
+        996.9683837890625,
+        340.7125244140625,
+        1010.4324340820312,
+        388.9999694824219
+      ],
+      "size": 10.199999809265137,
+      "direction": [
+        0.0,
+        -1.0
+      ]
+    }
+  ],
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "试点临时分组，尚未证实来源内各方案和日期的版本关系。"
+}

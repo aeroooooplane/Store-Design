@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:34:17.411974+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": [
+      175.74,
+      293.6
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-006",
+      "label_text": "1.55米配件柜",
+      "function": "accessory_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 1.3,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.9,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 1.55,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          233.45999145507812,
+          373.9873352050781,
+          287.1900329589844,
+          383.5260009765625
+        ],
+        "nominal_length_m": 1.55,
+        "height_text": {
+          "text": "H:1300mm",
+          "bbox": [
+            233.51998901367188,
+            385.3873291015625,
+            280.3804016113281,
+            394.9259948730469
+          ],
+          "size": 8.956499099731445,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-007",
+      "label_text": "1.55米配件柜",
+      "function": "accessory_cabinet",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 1.3,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.9,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": 1.55,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          824.5799560546875,
+          373.9873352050781,
+          878.3101806640625,
+          383.5260009765625
+        ],
+        "nominal_length_m": 1.55,
+        "height_text": {
+          "text": "H:1300mm",
+          "bbox": [
+            824.6399536132812,
+            385.3873291015625,
+            871.50048828125,
+            394.9259948730469
+          ],
+          "size": 8.956499099731445,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-008",
+      "label_text": "边桌收银",
+      "function": "cashier",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-2360478",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24488377",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.942,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        },
+        {
+          "asset_id": "asset-24498456",
+          "score": 0.7,
+          "basis": {
+            "function": "cashier",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          419.03997802734375,
+          376.6273498535156,
+          454.8659973144531,
+          386.166015625
+        ],
+        "nominal_length_m": null,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            418.2599792480469,
+            388.02734375,
+            459.8718566894531,
+            397.5660095214844
+          ],
+          "size": 8.956499099731445,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-009",
+      "label_text": "开箱桌",
+      "function": "unboxing_table",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": 0.9,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.55,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          632.8200073242188,
+          376.9273376464844,
+          659.6895141601562,
+          386.46600341796875
+        ],
+        "nominal_length_m": null,
+        "height_text": {
+          "text": "H:900mm",
+          "bbox": [
+            632.0999755859375,
+            388.32733154296875,
+            673.7119750976562,
+            397.8659973144531
+          ],
+          "size": 8.956499099731445,
+          "direction": [
+            1.0,
+            0.0
+          ]
+        },
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-010",
+      "label_text": "电子水牌",
+      "function": "screen",
+      "x": 861.06,
+      "z": 516.02,
+      "w": 62.10000000000002,
+      "d": 39.48000000000002,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 892.1099999999999,
+      "center_z": 535.76,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          874.3800048828125,
+          539.6473388671875,
+          910.2060546875,
+          549.18603515625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            861.06,
+            555.5
+          ],
+          [
+            923.16,
+            555.5
+          ],
+          [
+            923.16,
+            516.02
+          ],
+          [
+            861.06,
+            516.02
+          ],
+          [
+            861.06,
+            555.5
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

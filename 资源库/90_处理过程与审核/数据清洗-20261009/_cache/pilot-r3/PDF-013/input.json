@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:19.619251+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-013",
+  "store_id": "store-0013",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-001",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          58.850399017333984,
+          67.0799560546875,
+          73.10639953613281,
+          98.322021484375
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-005",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          423.196533203125,
+          560.280029296875,
+          431.2749328613281,
+          577.98779296875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-006",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          579.5565185546875,
+          560.280029296875,
+          587.6349487304688,
+          577.98779296875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-008",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 510.1,
+      "z": 598.1,
+      "w": 38.799999999999955,
+      "d": 139.5,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 529.5,
+      "center_z": 667.85,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          571.5165405273438,
+          660.719970703125,
+          579.594970703125,
+          678.4277954101562
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            510.1,
+            735.4
+          ],
+          [
+            510.1,
+            735.7
+          ],
+          [
+            510.2,
+            736.2
+          ],
+          [
+            510.5,
+            736.6
+          ],
+          [
+            510.7,
+            736.9
+          ],
+          [
+            511.0,
+            737.2
+          ],
+          [
+            511.3,
+            737.4
+          ],
+          [
+            511.7,
+            737.5
+          ],
+          [
+            512.0,
+            737.6
+          ],
+          [
+            548.9,
+            737.6
+          ],
+          [
+            548.9,
+            598.1
+          ],
+          [
+            512.4,
+            598.1
+          ],
+          [
+            512.0,
+            598.2
+          ],
+          [
+            511.7,
+            598.3
+          ],
+          [
+            511.3,
+            598.4
+          ],
+          [
+            511.0,
+            598.7
+          ],
+          [
+            510.7,
+            598.9
+          ],
+          [
+            510.5,
+            599.3
+          ],
+          [
+            510.2,
+            599.6
+          ],
+          [
+            510.1,
+            600.0
+          ],
+          [
+            510.1,
+            735.4
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    },
+    {
+      "id": "object-009",
+      "label_text": "LOGO",
+      "function": "other",
+      "x": 510.1,
+      "z": 598.1,
+      "w": 38.799999999999955,
+      "d": 139.5,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 529.5,
+      "center_z": 667.85,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          536.4765625,
+          737.6400146484375,
+          544.5549926757812,
+          755.3477783203125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            510.1,
+            735.4
+          ],
+          [
+            510.1,
+            735.7
+          ],
+          [
+            510.2,
+            736.2
+          ],
+          [
+            510.5,
+            736.6
+          ],
+          [
+            510.7,
+            736.9
+          ],
+          [
+            511.0,
+            737.2
+          ],
+          [
+            511.3,
+            737.4
+          ],
+          [
+            511.7,
+            737.5
+          ],
+          [
+            512.0,
+            737.6
+          ],
+          [
+            548.9,
+            737.6
+          ],
+          [
+            548.9,
+            598.1
+          ],
+          [
+            512.4,
+            598.1
+          ],
+          [
+            512.0,
+            598.2
+          ],
+          [
+            511.7,
+            598.3
+          ],
+          [
+            511.3,
+            598.4
+          ],
+          [
+            511.0,
+            598.7
+          ],
+          [
+            510.7,
+            598.9
+          ],
+          [
+            510.5,
+            599.3
+          ],
+          [
+            510.2,
+            599.6
+          ],
+          [
+            510.1,
+            600.0
+          ],
+          [
+            510.1,
+            735.4
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

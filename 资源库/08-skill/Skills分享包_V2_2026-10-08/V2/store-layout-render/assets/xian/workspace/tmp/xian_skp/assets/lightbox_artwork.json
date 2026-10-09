@@ -1,0 +1,30 @@
+{
+  "id": "lightbox_artwork",
+  "source": "lightbox_artwork.skp",
+  "bounds_m": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      1.7000000476837158,
+      0.9800000190734863,
+      1.4360262111379196e-11
+    ]
+  ],
+  "size_m": [
+    1.7000000476837158,
+    0.9800000190734863,
+    1.4360262111379196e-11
+  ],
+  "meshes": 1,
+  "vertices": 4,
+  "triangles": 2,
+  "materials": [
+    "1700x980灯箱 2",
+    "DefaultMaterial",
+    "Dots Stroke",
+    "Material"
+  ]
+}

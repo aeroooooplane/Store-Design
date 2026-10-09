@@ -1,0 +1,23 @@
+{
+  "brand_text_by_market": {"domestic":"影石Insta360","overseas":"Insta360"},
+  "effective_date": "2026-10-08",
+  "source_package_date": "2026-09-23",
+  "authority": "用户明确要求区分国内与海外Logo；保留所提供官方原稿的字形字距",
+  "market_required": true,
+  "defaults_by_market": {
+    "domestic": {"file":"originals/影石Insta360.ai", "layout":"horizontal_without_slogan", "black_reference_page":2, "white_reference_page":3, "black_import_candidate_page":4, "white_import_candidate_page":5, "page_index_base":1},
+    "overseas": {"file":"originals/Insta360.ai", "layout":"horizontal_without_slogan", "black_reference_page":2, "black_import_candidate_page":4, "page_index_base":1}
+  },
+  "status": "official_sources_and_skill_rules_updated; historical_3d_scenes_unchanged; no_new_3d_logo_claimed",
+  "sha256": {
+    "影石新logo.zip":"3C762211E4C0D0AA28A35F41BB52D4AC624E06499F4A86794173B19A57302216",
+    "originals/影石Insta360.ai":"7C7FC34188E1CEBA8D02CAED887C56534F4DFACF234EF8F2CF8BD50176C0A85E",
+    "originals/CN-logo-black-on- transparent-rgb-mid6.pdf":"416A5533C6CB36E1F30566C9D4EAC4F13B7D07FAEFA8C2EBFCE7C094474073DF",
+    "originals/CN-logo-black-on- transparent-rgb5.pdf":"A2E6296F7DBCA007EE4056FAB666AA55C76B67CF39E3017F6D7A5F6ACA854914",
+    "originals/Insta360.ai":"B0C900BB3868818DB29C5A248D3814DDF04A86092E537801D2BB4EF56A184EF8",
+    "originals/logo-black-on- transparent-rgb-mid2.pdf":"73108D965E6369E4483A3960E3EFB43B9A0625BE65AAF41E705442A94729005E",
+    "originals/logo-black-on-transparent-rgb1.pdf":"0C98CAFDFA546830E3D3328DA1D83431AAC3C6160A4E90A8E4BE586C7471ED6F",
+    "originals/logo-slogan-black-on-%20transparent-rgb3.pdf":"33DF5EA503C19FECDD84670B666D73C64B3C2969A397F16230957656F11DE592",
+    "originals/slogan-black-on- transparent-rgb-mid4.pdf":"DBA9B862765E658A8FC9FB11337BC8B9B2A6EF11E3EBC7236C10FD8570F421CC"
+  }
+}

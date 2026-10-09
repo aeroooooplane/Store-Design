@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:27.200880+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\各门店图纸\\贵阳新大陆数码广场照材专卖店.pdf",
+  "sha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+  "physical_page": 6,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1190.550048828125,
+    841.8900146484375
+  ],
+  "page_rotation": 270,
+  "render_dpi": 151.19061998038345,
+  "pdf_to_pixel_matrix": [
+    2.09986972194977,
+    0,
+    0,
+    2.09986972194977,
+    0,
+    0
+  ],
+  "pdf_to_m_matrix": null,
+  "title_block": [],
+  "reviewer": null,
+  "reviewedAt": null,
+  "version_order_reason": "试点临时分组，尚未证实来源内各方案和日期的版本关系。"
+}

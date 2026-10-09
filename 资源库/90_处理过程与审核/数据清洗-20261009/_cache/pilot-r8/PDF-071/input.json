@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:49:39.546711+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-071",
+  "store_id": "store-0071",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "x_check": null,
+    "z_check": null,
+    "error": null,
+    "unit": "pdf_point",
+    "pdf_to_m_matrix": null
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "object-003",
+      "label_text": "LOGO指定高度：300mm",
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          74.52001953125,
+          780.9615478515625,
+          162.12376403808594,
+          790.9407348632812
+        ],
+        "nominal_length_m": 0.3,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": false
+    }
+  ],
+  "stated_area": {
+    "value": 38.0,
+    "evidence": [
+      {
+        "value": 38.0,
+        "text": "店铺实测面积：38m²",
+        "bbox": [
+          75.239990234375,
+          739.9215087890625,
+          147.6239776611328,
+          749.9006958007812
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": 3.34,
+    "evidence": [
+      {
+        "value": 3.34,
+        "text": "店铺现有吊顶高度：3.34m",
+        "bbox": [
+          75.239990234375,
+          750.1215209960938,
+          165.96372985839844,
+          760.1007080078125
+        ]
+      }
+    ]
+  },
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "si_index_label": "SI2.0",
+  "si_evidence": null,
+  "requirements": null,
+  "rules_source": null
+}

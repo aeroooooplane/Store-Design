@@ -1,0 +1,1126 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:33:26.061687+08:00",
+  "generator": {
+    "script": "pipeline.py",
+    "version": "0.1.0"
+  },
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "pdf_page_top_left",
+    "required_boundary_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "note": "比例和边界未经确认；未转换为网页米制坐标。"
+  },
+  "items": [
+    {
+      "id": "object-002",
+      "label_text": "边桌（收银、开箱)+储物柜",
+      "function": "unboxing_table",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-666964",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-1788391",
+          "score": 0.7,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-16469753",
+          "score": 0.55,
+          "basis": {
+            "function": "unboxing_table",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          648.4199829101562,
+          379.1668701171875,
+          785.2987060546875,
+          395.48016357421875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-003",
+      "label_text": "边桌+储物柜",
+      "function": "side_cabinet",
+      "x": 953.0,
+      "z": 372.5,
+      "w": 52.39999999999998,
+      "d": 31.19999999999999,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 979.2,
+      "center_z": 388.1,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-752992",
+          "score": 0.7,
+          "basis": {
+            "function": "side_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          973.3800048828125,
+          379.22686767578125,
+          1036.115966796875,
+          395.5401611328125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            1005.4,
+            402.3
+          ],
+          [
+            1005.4,
+            374.0
+          ],
+          [
+            1005.4,
+            373.8
+          ],
+          [
+            1005.4,
+            373.6
+          ],
+          [
+            1005.3,
+            373.4
+          ],
+          [
+            1005.2,
+            373.2
+          ],
+          [
+            1005.1,
+            373.1
+          ],
+          [
+            1005.0,
+            373.0
+          ],
+          [
+            1004.9,
+            372.8
+          ],
+          [
+            1004.7,
+            372.7
+          ],
+          [
+            1004.6,
+            372.7
+          ],
+          [
+            1004.4,
+            372.6
+          ],
+          [
+            1004.2,
+            372.6
+          ],
+          [
+            1004.0,
+            372.5
+          ],
+          [
+            954.4,
+            372.5
+          ],
+          [
+            954.2,
+            372.6
+          ],
+          [
+            954.0,
+            372.6
+          ],
+          [
+            953.8,
+            372.7
+          ],
+          [
+            953.7,
+            372.7
+          ],
+          [
+            953.5,
+            372.8
+          ],
+          [
+            953.4,
+            373.0
+          ],
+          [
+            953.3,
+            373.1
+          ],
+          [
+            953.2,
+            373.2
+          ],
+          [
+            953.1,
+            373.4
+          ],
+          [
+            953.0,
+            373.6
+          ],
+          [
+            953.0,
+            373.8
+          ],
+          [
+            953.0,
+            374.0
+          ],
+          [
+            953.0,
+            402.3
+          ],
+          [
+            953.0,
+            402.5
+          ],
+          [
+            953.0,
+            402.6
+          ],
+          [
+            953.1,
+            402.8
+          ],
+          [
+            953.2,
+            403.0
+          ],
+          [
+            953.3,
+            403.1
+          ],
+          [
+            953.4,
+            403.3
+          ],
+          [
+            953.5,
+            403.4
+          ],
+          [
+            953.7,
+            403.5
+          ],
+          [
+            953.8,
+            403.6
+          ],
+          [
+            954.0,
+            403.6
+          ],
+          [
+            954.2,
+            403.7
+          ],
+          [
+            954.4,
+            403.7
+          ],
+          [
+            1004.0,
+            403.7
+          ],
+          [
+            1004.2,
+            403.7
+          ],
+          [
+            1004.4,
+            403.6
+          ],
+          [
+            1004.6,
+            403.6
+          ],
+          [
+            1004.7,
+            403.5
+          ],
+          [
+            1004.9,
+            403.4
+          ],
+          [
+            1005.0,
+            403.3
+          ],
+          [
+            1005.1,
+            403.1
+          ],
+          [
+            1005.2,
+            403.0
+          ],
+          [
+            1005.3,
+            402.8
+          ],
+          [
+            1005.4,
+            402.6
+          ],
+          [
+            1005.4,
+            402.5
+          ],
+          [
+            1005.4,
+            402.3
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-004",
+      "label_text": "电子水牌",
+      "function": "screen",
+      "x": 1135.1,
+      "z": 347.0,
+      "w": 7.100000000000136,
+      "d": 78.0,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 1138.65,
+      "center_z": 386.0,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1111.679931640625,
+          379.046875,
+          1157.30615234375,
+          395.36016845703125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            1142.2,
+            347.0
+          ],
+          [
+            1135.1,
+            347.0
+          ],
+          [
+            1135.1,
+            425.0
+          ],
+          [
+            1142.2,
+            425.0
+          ],
+          [
+            1142.2,
+            347.0
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-005",
+      "label_text": "H1300mm储物柜",
+      "function": "storage",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": null,
+      "center_z": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          412.1999816894531,
+          381.62689208984375,
+          486.3426513671875,
+          397.940185546875
+        ],
+        "nominal_length_m": 1.3,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-008",
+      "label_text": "75寸广告机",
+      "function": "screen",
+      "x": 541.0,
+      "z": 447.0,
+      "w": 21.299999999999955,
+      "d": 236.79999999999995,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 551.65,
+      "center_z": 565.4,
+      "asset_id": null,
+      "asset_candidates": [],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          540.1799926757812,
+          551.6668701171875,
+          597.2127685546875,
+          567.9801635742188
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            541.0,
+            683.8
+          ],
+          [
+            562.3,
+            683.8
+          ],
+          [
+            562.3,
+            447.0
+          ],
+          [
+            541.0,
+            447.0
+          ],
+          [
+            541.0,
+            683.8
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-009",
+      "label_text": "配件柜",
+      "function": "accessory_cabinet",
+      "x": 363.8,
+      "z": 624.2,
+      "w": 170.09999999999997,
+      "d": 65.19999999999993,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 448.85,
+      "center_z": 656.8,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-323015",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.6,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-2595882",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.2,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-34320268",
+          "score": 0.7,
+          "basis": {
+            "function": "accessory_cabinet",
+            "nominal_m": null,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": false
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          431.5799865722656,
+          644.6668701171875,
+          465.7996826171875,
+          660.9801635742188
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            363.8,
+            689.4
+          ],
+          [
+            533.9,
+            689.4
+          ],
+          [
+            533.9,
+            624.2
+          ],
+          [
+            363.8,
+            624.2
+          ],
+          [
+            363.8,
+            689.4
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-010",
+      "label_text": "1.8米中岛桌",
+      "function": "island_table",
+      "x": 795.8,
+      "z": 685.7,
+      "w": 31.200000000000045,
+      "d": 52.39999999999998,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 811.4,
+      "center_z": 711.9000000000001,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.75,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          736.6799926757812,
+          692.2468872070312,
+          799.4160766601562,
+          708.5601806640625
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            825.6,
+            685.7
+          ],
+          [
+            797.2,
+            685.7
+          ],
+          [
+            797.1,
+            685.7
+          ],
+          [
+            796.9,
+            685.7
+          ],
+          [
+            796.7,
+            685.8
+          ],
+          [
+            796.5,
+            685.9
+          ],
+          [
+            796.4,
+            686.0
+          ],
+          [
+            796.3,
+            686.1
+          ],
+          [
+            796.1,
+            686.2
+          ],
+          [
+            796.0,
+            686.4
+          ],
+          [
+            796.0,
+            686.5
+          ],
+          [
+            795.9,
+            686.7
+          ],
+          [
+            795.9,
+            686.9
+          ],
+          [
+            795.8,
+            687.1
+          ],
+          [
+            795.8,
+            736.7
+          ],
+          [
+            795.9,
+            736.9
+          ],
+          [
+            795.9,
+            737.1
+          ],
+          [
+            796.0,
+            737.3
+          ],
+          [
+            796.0,
+            737.4
+          ],
+          [
+            796.1,
+            737.6
+          ],
+          [
+            796.3,
+            737.7
+          ],
+          [
+            796.4,
+            737.8
+          ],
+          [
+            796.5,
+            737.9
+          ],
+          [
+            796.7,
+            738.0
+          ],
+          [
+            796.9,
+            738.1
+          ],
+          [
+            797.1,
+            738.1
+          ],
+          [
+            797.2,
+            738.1
+          ],
+          [
+            825.6,
+            738.1
+          ],
+          [
+            825.8,
+            738.1
+          ],
+          [
+            826.0,
+            738.1
+          ],
+          [
+            826.2,
+            738.0
+          ],
+          [
+            826.3,
+            737.9
+          ],
+          [
+            826.5,
+            737.8
+          ],
+          [
+            826.6,
+            737.7
+          ],
+          [
+            826.7,
+            737.6
+          ],
+          [
+            826.8,
+            737.4
+          ],
+          [
+            826.9,
+            737.3
+          ],
+          [
+            827.0,
+            737.1
+          ],
+          [
+            827.0,
+            736.9
+          ],
+          [
+            827.0,
+            736.7
+          ],
+          [
+            827.0,
+            687.1
+          ],
+          [
+            827.0,
+            686.9
+          ],
+          [
+            827.0,
+            686.7
+          ],
+          [
+            826.9,
+            686.5
+          ],
+          [
+            826.8,
+            686.4
+          ],
+          [
+            826.7,
+            686.2
+          ],
+          [
+            826.6,
+            686.1
+          ],
+          [
+            826.5,
+            686.0
+          ],
+          [
+            826.3,
+            685.9
+          ],
+          [
+            826.2,
+            685.8
+          ],
+          [
+            826.0,
+            685.7
+          ],
+          [
+            825.8,
+            685.7
+          ],
+          [
+            825.6,
+            685.7
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    },
+    {
+      "id": "object-011",
+      "label_text": "1.8米中岛桌",
+      "function": "island_table",
+      "x": 993.6,
+      "z": 545.5,
+      "w": 141.80000000000007,
+      "d": 255.20000000000005,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "center_x": 1064.5,
+      "center_z": 673.1,
+      "asset_id": null,
+      "asset_candidates": [
+        {
+          "asset_id": "asset-408124",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-408125",
+          "score": 0.9,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        },
+        {
+          "asset_id": "asset-24312623",
+          "score": 0.75,
+          "basis": {
+            "function": "island_table",
+            "nominal_m": 1.8,
+            "asset_nominal_m": 1.8,
+            "si_priority": "si_index_label"
+          },
+          "web_available": true
+        }
+      ],
+      "confidence": 0.45,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          1027.3199462890625,
+          692.2468872070312,
+          1090.0560302734375,
+          708.5601806640625
+        ],
+        "nominal_length_m": 1.8,
+        "height_text": null,
+        "pdf_polygon": [
+          [
+            1128.3,
+            545.5
+          ],
+          [
+            1000.7,
+            545.5
+          ],
+          [
+            999.6,
+            545.9
+          ],
+          [
+            998.6,
+            546.3
+          ],
+          [
+            997.7,
+            546.9
+          ],
+          [
+            996.9,
+            547.6
+          ],
+          [
+            996.1,
+            548.4
+          ],
+          [
+            995.5,
+            549.2
+          ],
+          [
+            994.9,
+            550.1
+          ],
+          [
+            994.4,
+            551.1
+          ],
+          [
+            994.0,
+            552.1
+          ],
+          [
+            993.8,
+            553.2
+          ],
+          [
+            993.6,
+            554.3
+          ],
+          [
+            993.6,
+            555.4
+          ],
+          [
+            993.6,
+            793.6
+          ],
+          [
+            993.7,
+            794.6
+          ],
+          [
+            993.9,
+            795.5
+          ],
+          [
+            994.2,
+            796.4
+          ],
+          [
+            994.6,
+            797.2
+          ],
+          [
+            995.1,
+            797.9
+          ],
+          [
+            995.7,
+            798.6
+          ],
+          [
+            996.4,
+            799.2
+          ],
+          [
+            997.1,
+            799.7
+          ],
+          [
+            997.9,
+            800.1
+          ],
+          [
+            998.8,
+            800.4
+          ],
+          [
+            999.7,
+            800.6
+          ],
+          [
+            1000.7,
+            800.7
+          ],
+          [
+            1128.3,
+            800.7
+          ],
+          [
+            1129.3,
+            800.6
+          ],
+          [
+            1130.2,
+            800.4
+          ],
+          [
+            1131.1,
+            800.1
+          ],
+          [
+            1131.9,
+            799.7
+          ],
+          [
+            1132.7,
+            799.2
+          ],
+          [
+            1133.4,
+            798.6
+          ],
+          [
+            1134.0,
+            797.9
+          ],
+          [
+            1134.5,
+            797.2
+          ],
+          [
+            1134.9,
+            796.4
+          ],
+          [
+            1135.2,
+            795.5
+          ],
+          [
+            1135.4,
+            794.6
+          ],
+          [
+            1135.4,
+            793.6
+          ],
+          [
+            1135.4,
+            552.6
+          ],
+          [
+            1135.4,
+            551.6
+          ],
+          [
+            1135.2,
+            550.7
+          ],
+          [
+            1134.9,
+            549.8
+          ],
+          [
+            1134.5,
+            549.0
+          ],
+          [
+            1134.0,
+            548.2
+          ],
+          [
+            1133.4,
+            547.5
+          ],
+          [
+            1132.7,
+            546.9
+          ],
+          [
+            1131.9,
+            546.4
+          ],
+          [
+            1131.1,
+            546.0
+          ],
+          [
+            1130.2,
+            545.7
+          ],
+          [
+            1129.3,
+            545.5
+          ],
+          [
+            1128.3,
+            545.5
+          ]
+        ],
+        "geometry_status": "candidate_unverified"
+      },
+      "movable": true
+    }
+  ],
+  "unlabelled_objects_complete": false
+}

@@ -6,3 +6,24 @@
 *.fbx filter=lfs diff=lfs merge=lfs -text
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.blend filter=lfs diff=lfs merge=lfs -text
+*.ai filter=lfs diff=lfs merge=lfs -text
+
+# Preserve byte-level checksums in packaged assets and audit receipts.
+资源库/07_平面简图/** -text
+资源库/08-skill/** -text
+资源库/90_处理过程与审核/数据清洗-20261009/** -text
+资源库/90_处理过程与审核/训练标注/** -text
+tools/data-cleaning/** -text
+
+# New resource deliveries and review images; keep JSON/Markdown in regular Git.
+资源库/07_平面简图/**/*.png filter=lfs diff=lfs merge=lfs -text
+资源库/07_平面简图/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+资源库/08-skill/**/*.png filter=lfs diff=lfs merge=lfs -text
+资源库/08-skill/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+资源库/08-skill/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+资源库/08-skill/**/*.zip filter=lfs diff=lfs merge=lfs -text
+资源库/90_处理过程与审核/数据清洗-20261009/**/*.png filter=lfs diff=lfs merge=lfs -text
+资源库/90_处理过程与审核/数据清洗-20261009/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+资源库/90_处理过程与审核/数据清洗-20261009/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+资源库/90_处理过程与审核/训练标注/**/*.png filter=lfs diff=lfs merge=lfs -text
+资源库/90_处理过程与审核/训练标注/**/*.jpg filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:48.270509+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-043",
+  "store_id": "store-0043",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "failed",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": false,
+    "clockwise": false,
+    "kind": null,
+    "area_m2": null,
+    "stated_area": null,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 0,
+    "item_count": 0,
+    "resolved_geometry_count": 0,
+    "rejected_geometry_ids": [],
+    "out_of_bounds": null,
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-043\\overlay.png",
+    "inspected_sha256": "4a3f559d0f80abfc75899623ea451cfe910abdcae6c09faf37bd54c3d5e5afc8",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "平面标题和道具文字大部分转曲；自动提取为零件，不能作为结构化完成。"
+  },
+  "needs_human": [
+    "平面标题和道具文字大部分转曲；自动提取为零件，不能作为结构化完成。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": []
+}

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "aligned_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "unresolved_ids": [
+    7,
+    8
+  ],
+  "boundary_alignment": true,
+  "observations": [
+    "6件家具轮廓与原图明显一致，圆角平台外边线也对齐。",
+    "两个广告机尚无可靠闭合候选；本页没有从文字抽取获得家具定位，视觉选择提供了增益。",
+    "平台外边线类型仍待确认，不能据此宣称租赁边界已认证。"
+  ],
+  "method": "vision",
+  "source_id": "PDF-043",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "version_confirmed": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "inspected_images": [
+    {
+      "method": "A",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-A.png",
+      "sha256": "4a3f559d0f80abfc75899623ea451cfe910abdcae6c09faf37bd54c3d5e5afc8"
+    },
+    {
+      "method": "B",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-B.png",
+      "sha256": "40c575d94710f8364d5cfe7acaf2dde9fc4d6a65dbd8758e1d99263b0de76d3b"
+    }
+  ],
+  "scope": "本轮助手打开A/B完整叠加图逐页目视检查；不是人工审批或独立盲测。",
+  "needs_human": [
+    "完整道具清点、边界语义、入口障碍物、尺寸双轴验证、版本及资产对应尚未全部完成。"
+  ]
+}

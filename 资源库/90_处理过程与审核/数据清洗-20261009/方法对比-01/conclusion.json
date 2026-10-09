@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "status": "experiment_completed",
+  "method": "vision_audit",
+  "training_eligible": false,
+  "cases": [
+    {
+      "source_id": "PDF-043",
+      "objects": 8,
+      "A": 0,
+      "B": 6
+    },
+    {
+      "source_id": "PDF-051",
+      "objects": 7,
+      "A": 6,
+      "B": 6
+    },
+    {
+      "source_id": "PDF-239",
+      "objects": 8,
+      "A": 5,
+      "B": 7
+    },
+    {
+      "source_id": "PDF-293",
+      "objects": 7,
+      "A": 3,
+      "B": 3
+    },
+    {
+      "source_id": "PDF-353",
+      "objects": 9,
+      "A": 3,
+      "B": 8
+    }
+  ],
+  "object_scope_total": 39,
+  "A_spatial_recovery": 17,
+  "B_spatial_recovery": 30,
+  "recommended_method": "vision_semantics_then_vector_geometry_then_independent_scale_check",
+  "complete": 0,
+  "partial": 5,
+  "failed": 0,
+  "candidate_training_versions": 0,
+  "caution": "空间找回数不是独立准确率，不是门店完成率；五张问题页不能外推418家。",
+  "next_priority": [
+    "分割/重组柜体矢量轮廓",
+    "尺寸文字视觉读取与两方向尺寸线配对",
+    "扩展回20家完整试点并重新验收"
+  ]
+}

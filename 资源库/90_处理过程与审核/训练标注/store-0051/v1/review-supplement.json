@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "1532bf74a63cf2887a1dc5da21d56a81b1ab604f3834b1a3ccaa6f0c87f73a5c",
+  "evidence_sha256": "19d1c1871fe433607465f4075d9d796a5a64735cabc42792f1601da348a66c56",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "店界及桌体相符；左侧配件柜未定位，LED屏未独立提取；完整固定设施仍待确认。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:49.133702+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

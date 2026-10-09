@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "dccdae5efe701018d017789844e17f6c9ab74fd8b819197420e63adb5ab18cba",
+  "evidence_sha256": "e61046518bdaa3652994c59da8f616e7b5ea61d3f9637f64e8b51777a78769fe",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "边界候选跨到图外；收银与开箱重复，屏幕候选错误；培训凳只识别一件，数量不全。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:45.964312+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

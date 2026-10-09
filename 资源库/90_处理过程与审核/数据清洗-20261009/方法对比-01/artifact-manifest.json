@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "files": [
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\conclusion.json",
+      "sha256": "015e54c1bfacfd7657d4e8168a955e7d38f3a1ba0569978682a75d85f51fe77b"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-043\\comparison.json",
+      "sha256": "103d708c8c2706d7af5258276a10e4d6b5ff5b5ae5d248971e1a49ba93f0003b"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-043\\visual-audit.json",
+      "sha256": "8ce8db18bfc3a2099ae69c510f9321f305f543fc0f7115d89263ce0d438265d2"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-051\\comparison.json",
+      "sha256": "f1f1bb12cd395ac2225a4ffbec1ac564978b4ccf2c402c4180c4411eea36a14d"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-051\\visual-audit.json",
+      "sha256": "12801208550e3fe5e68b5b728bf68955b581250ac96e06293d0e1ecf60d2f964"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-239\\comparison.json",
+      "sha256": "a54022d1bf059c5ff4f9828d6fa9618739d70a9f5c449073f2dec4624e1e105c"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-239\\visual-audit.json",
+      "sha256": "f13bcd66e1dd926aad1fad912a2a4972a8af5076e0a35b095e05c37afb5e2bb1"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-293\\comparison.json",
+      "sha256": "ef8a022cb500991b8e27c9dab5e48fce631940f4f55d5ddd24b5b2d8bf50cd19"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-293\\visual-audit.json",
+      "sha256": "d5c1a56aa4b2e755b392df6d28c17c1ec1f3f9999087561d62bc149a35eb101e"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-353\\comparison.json",
+      "sha256": "7869eb54b0db382270e2370dc6c8ae79791a3d7dba729116344e816560d98d97"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\PDF-353\\visual-audit.json",
+      "sha256": "0d3f1bd56fe40e41f84ba27ae003fc1850ee52cda1f0a54971bb8a776473ba02"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\progress.jsonl",
+      "sha256": "b6a238127816905bd7dd5872698b4fdb5f20c51fbfbf8349e046ebace5448b76"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\README.md",
+      "sha256": "d271b5d320df423d765e8453d9aeb50eb637ca34d0a14449736e6dcb40477e47"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\summary.json",
+      "sha256": "5d63b3cb24ee9501b93578d68254d3d39b63364c0258b33fbb3fde44d8ac0775"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\vision-selections.json",
+      "sha256": "a032cc02ee8dc9e290c515b6d221c283212d17b1043565e5d318da912d61a341"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\方法对比-01\\对比查看.html",
+      "sha256": "bac5dd56912c8e74546fb83eb7255ae86f14425e85aee828676009595b862902"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-A.png",
+      "sha256": "4a3f559d0f80abfc75899623ea451cfe910abdcae6c09faf37bd54c3d5e5afc8"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-043-B.png",
+      "sha256": "40c575d94710f8364d5cfe7acaf2dde9fc4d6a65dbd8758e1d99263b0de76d3b"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-A.png",
+      "sha256": "b8da10598805cc4df5159a1d7c624e3c30a460df71b0bca68118c1e099e4180c"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-051-B.png",
+      "sha256": "5039e3d0e28ebce5cc64e321c18d2b9befe6192e0d1d60cab1bd6c1c5bc7c43d"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-A.png",
+      "sha256": "ebfc6e0f2deb5edb9dd4bfb63b9244ada28dd375516b8fd24c8352c4736107a9"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-B.png",
+      "sha256": "45176e11c627f32bf0d0bcafbcf8c28ede657949cb6cf47bc36ff3fc005d91f1"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-A.png",
+      "sha256": "120814d430abf2c698cf22bcda59c17c26ed6675e87460094458db8e2160726c"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-293-B.png",
+      "sha256": "01c67a46e97a8bade6767ef4cae10b745f3ed2439192104e9b33268f2a7dea2d"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-A.png",
+      "sha256": "028b1ab98dfbb6f41b6319759b32526c992864d801f24a19652eb8c52786d3b4"
+    },
+    {
+      "path": "资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-353-B.png",
+      "sha256": "85eda72f722515675fa285e130626687b79069d1018914d1b8fbcb55ec5b3fa4"
+    },
+    {
+      "path": "tools\\data-cleaning\\method-comparison-01\\compare.py",
+      "sha256": "ff83d95192a92fdcf8490057d787d0a95d1015bafe93d6196a6d891b24c3de0c"
+    },
+    {
+      "path": "tools\\data-cleaning\\method-comparison-01\\finalize.py",
+      "sha256": "0d38d28ac052b77cfdccc3039546b361641d9e02a141080da6fbb6d7b8193624"
+    },
+    {
+      "path": "tools\\data-cleaning\\method-comparison-01\\README.md",
+      "sha256": "9e6456ad4e8fbb62b197cfc5804a7aa48e14ba50d08befbedb9b546446d9c0af"
+    },
+    {
+      "path": "tools\\data-cleaning\\method-comparison-01\\requirements.txt",
+      "sha256": "41b54a6fb2918667ca47a61d73b522629d84490f3d78f0f20b21135faba10d35"
+    }
+  ],
+  "training_eligible": false
+}

@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:49.191679+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "platform_outline",
+    "area_m2": null,
+    "stated_area": 19.1,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 8,
+    "item_count": 8,
+    "resolved_geometry_count": 5,
+    "rejected_geometry_ids": [
+      "object-005",
+      "object-008",
+      "object-009"
+    ],
+    "out_of_bounds": [
+      {
+        "object_id": "object-011",
+        "outside_area": 73.73276,
+        "area_unit": "pdf_point2",
+        "note": "包围框测试；曲面道具可能出现矩形过界。"
+      }
+    ],
+    "overlaps": [
+      {
+        "objects": [
+          "object-002",
+          "object-003"
+        ],
+        "intersection_area": 7.213637,
+        "area_unit": "pdf_point2"
+      }
+    ],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [
+    {
+      "field": "store_name",
+      "filename": "沈阳百脑汇照材专卖店",
+      "title_evidence": [],
+      "resolution": null
+    },
+    {
+      "field": "store_city",
+      "filename": "沈阳百脑汇照材专卖店.pdf",
+      "extracted_text": "深航百脑汇店",
+      "vision_text": {
+        "method": "vision",
+        "text": "深圳百脑汇店",
+        "page": 1,
+        "bbox": [
+          1505.28,
+          609.69,
+          1575.54,
+          622.16
+        ],
+        "coordinate_space": "normalized_pdf_points"
+      },
+      "value": null,
+      "resolution": null
+    }
+  ],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-239\\overlay.png",
+    "inspected_sha256": "1421cb7b27d60299d666d1d08771c76558b8e5e4559b560e6371e7c0ac866457",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "文件名沈阳、图签深圳冲突；配件柜/屏幕/储物柜候选误匹配柱体组合，城市保持未知。"
+  },
+  "needs_human": [
+    "文件名沈阳、图签深圳冲突；配件柜/屏幕/储物柜候选误匹配柱体组合，城市保持未知。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": false,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "发光LOGO"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-007",
+      "label_text": "灯箱"
+    },
+    {
+      "layer": "obstacles",
+      "id": "object-006",
+      "label_text": "柱子现场三面灯箱，"
+    }
+  ]
+}

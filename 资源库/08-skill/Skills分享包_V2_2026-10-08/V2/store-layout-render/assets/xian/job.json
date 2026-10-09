@@ -1,0 +1,79 @@
+{
+  "scene": "scene.blend",
+  "project": "西安赛高 SI1.0",
+  "view_groups": {
+    "preview": ["07_front_relationship", "08_back_relationship", "03_main_aisle", "09_right_relationship", "11_plan_check"]
+  },
+  "view_labels": {
+    "07_front_relationship": "前视角 · 中岛端看向店内",
+    "08_back_relationship": "后视角 · 收银台端看向中岛",
+    "03_main_aisle": "左视角 · 开放相连侧",
+    "09_right_relationship": "右视角 · 广告墙侧",
+    "11_plan_check": "俯视校核 · 已隐藏天花与门楣"
+  },
+  "views": [
+    {
+      "id": "01_storefront",
+      "camera": "01_storefront"
+    },
+    {
+      "id": "02_entry_overview",
+      "camera": "02_entry_overview"
+    },
+    {
+      "id": "03_main_aisle",
+      "camera": "03_main_aisle"
+    },
+    {
+      "id": "04_core_displays",
+      "camera": "04_core_displays"
+    },
+    {
+      "id": "05_cashier",
+      "camera": "05_cashier"
+    },
+    {
+      "id": "06_feature_wall",
+      "camera": "06_feature_wall"
+    },
+    {
+      "id": "07_front_relationship",
+      "camera": "07_front_relationship"
+    },
+    {
+      "id": "08_back_relationship",
+      "camera": "08_back_relationship"
+    },
+    {
+      "id": "09_right_relationship",
+      "camera": "09_right_relationship"
+    },
+    {
+      "id": "10_spatial_overview",
+      "camera": "10_spatial_overview",
+      "hide_prefixes": [
+        "保留天花",
+        "金属门楣",
+        "轨道",
+        "右侧轨道",
+        "射灯",
+        "右侧射灯"
+      ]
+    },
+    {
+      "id": "11_plan_check",
+      "camera": "11_plan_check",
+      "hide_prefixes": [
+        "保留天花",
+        "金属门楣",
+        "轨道",
+        "右侧轨道",
+        "射灯",
+        "右侧射灯"
+      ],
+      "modes": [
+        "material"
+      ]
+    }
+  ]
+}

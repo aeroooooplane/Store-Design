@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-008",
+  "store_id": "store-0008",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "b3ae1ca40f5d805e9bc9ea37cc4ee3623d4da126530d994756560df133395fa7",
+  "evidence_sha256": "3f9fb1738dc7aa4dc501631c0542eef53c060ad29a2186ac7dcaf7a1cdb053fb",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "弧形店界未恢复；多个收银/开箱文字重复；4个凳子仅匹配一件；一个屏幕误匹配墙体。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:46.710287+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

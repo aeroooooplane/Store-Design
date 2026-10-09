@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T11:54:48.090729+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-035",
+  "store_id": "store-0035",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": null,
+    "checks": null,
+    "error": null,
+    "two_axes_verified": false,
+    "m_per_pdf_point": null,
+    "reason": "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。"
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "display_zone",
+    "area_m2": null,
+    "stated_area": 25.0,
+    "area_difference_ratio": null,
+    "rejected_candidate": null
+  },
+  "props": {
+    "source_label_count": 6,
+    "item_count": 6,
+    "resolved_geometry_count": 4,
+    "rejected_geometry_ids": [
+      "object-003"
+    ],
+    "out_of_bounds": [],
+    "overlaps": [],
+    "count_agreement": null
+  },
+  "unrecognized": [
+    "入口线段及朝向",
+    "完整墙柱和固定设施",
+    "未带文字的家具/椅子",
+    "图签版本及其他候选布局的归属"
+  ],
+  "conflicts": [],
+  "visual_check": {
+    "status": "filtered_after_source_overlay_inspection",
+    "method": "vision",
+    "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\pilot-r8\\PDF-035\\overlay.png",
+    "inspected_sha256": "9c63025ec9bd76c62faf5ef4ddb3c0f64a89797def6b663ee52d646b8fc43620",
+    "final_overlay_status": "pending_separate_receipt",
+    "notes": "已从尼康使用区中分离影石展示区；配件柜误匹配储物开箱桌，另一配件柜未定位。"
+  },
+  "needs_human": [
+    "已从尼康使用区中分离影石展示区；配件柜误匹配储物开箱桌，另一配件柜未定位。",
+    "尚未建立两个方向尺寸数字与对应尺寸线端点的可靠关联；不得按图框、图签比例或面积换算。",
+    "入口/墙柱/固定设施/道具数量尚不完整；不得用于训练。",
+    "版本未经确认，同店其他来源与候选页尚未归并。"
+  ],
+  "pilot_gate_pass": true,
+  "fixed_obstacle_geometry_withheld": [
+    {
+      "layer": "fixed",
+      "id": "object-001",
+      "label_text": "灯箱"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-006",
+      "label_text": "室内悬挂式发光LOGO,H=200mm"
+    },
+    {
+      "layer": "fixed",
+      "id": "object-009",
+      "label_text": "2、悬挂式LOGO高度：200mm(吊挂于室内);"
+    }
+  ]
+}

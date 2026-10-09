@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-049",
+  "store_id": "store-0049",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "24a6c8a6b46fdbb17458091f4e339a7ccbf5ee47b482d8c01cdf668565a21664",
+  "evidence_sha256": "a00678b0739ffe985627beac376a4e44399b62e01ac76d19fa63d47dffb721b8",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "配件柜包围框包含柱子；储物柜误匹配桌上产品；屏幕误匹配储物柜，店界未恢复。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:49.086698+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

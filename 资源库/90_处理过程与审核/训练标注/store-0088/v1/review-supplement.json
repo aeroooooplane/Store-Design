@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-088",
+  "store_id": "store-0088",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "7490f8f75d690a371f3fee918b581f07174762b5871b976ee4d81ab322eb2dab",
+  "evidence_sha256": "55a362090b012862f4e91145ce384327d67e0a0fc10313d51ea0c3c2b70b5b1c",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "反向虚线链拼接后租赁轮廓相符；柱子、员工休息室、固定设施尚不完整。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:49.792115+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}

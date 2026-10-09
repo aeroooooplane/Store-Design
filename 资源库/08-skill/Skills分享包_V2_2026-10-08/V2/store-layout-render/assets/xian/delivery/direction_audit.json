@@ -1,0 +1,136 @@
+{
+  "status": "PASS",
+  "version": "xian_si10_v3",
+  "plan_top_to_bottom": [
+    "收银台/开箱桌",
+    "ACE中岛桌",
+    "GO/X中岛桌"
+  ],
+  "projected_top_view_positions": {
+    "cashier_unbox_1800": [
+      0.5799999833106995,
+      0.8198000192642212,
+      15.550000190734863
+    ],
+    "unbox_1800": [
+      0.37166666984558105,
+      0.8295000195503235,
+      15.546250343322754
+    ],
+    "ace_1800": [
+      0.37166666984558105,
+      0.4958000183105469,
+      15.383950233459473
+    ],
+    "go_1800": [
+      0.37166666984558105,
+      0.16209998726844788,
+      15.383950233459473
+    ],
+    "x_1800": [
+      0.5316666960716248,
+      0.1587999314069748,
+      15.336557388305664
+    ]
+  },
+  "all_assets_positive_handedness": true,
+  "primary_view": "图纸右下侧",
+  "cashier_occluded_samples": [
+    {
+      "counter_sample": [
+        2.74,
+        -0.9,
+        0.9
+      ],
+      "first_hit": "中部员工休息室及柱体外包墙",
+      "hit_distance": 10.802770261096265,
+      "target_distance": 16.112719006526
+    },
+    {
+      "counter_sample": [
+        2.74,
+        -1.2,
+        0.9
+      ],
+      "first_hit": "G-Object.150",
+      "hit_distance": 10.840914682634416,
+      "target_distance": 15.835899228772899
+    },
+    {
+      "counter_sample": [
+        2.74,
+        -1.49,
+        0.9
+      ],
+      "first_hit": "G-Object.153",
+      "hit_distance": 11.235898568482867,
+      "target_distance": 15.56912350935885
+    },
+    {
+      "counter_sample": [
+        3.625,
+        -0.9,
+        0.9
+      ],
+      "first_hit": "_(Loose Entity).014",
+      "hit_distance": 11.35491809749923,
+      "target_distance": 15.845905977387398
+    },
+    {
+      "counter_sample": [
+        3.625,
+        -1.2,
+        0.9
+      ],
+      "first_hit": "_(Loose Entity).014",
+      "hit_distance": 11.153154600899905,
+      "target_distance": 15.564341516581663
+    },
+    {
+      "counter_sample": [
+        3.625,
+        -1.49,
+        0.9
+      ],
+      "first_hit": "_(Loose Entity).014",
+      "hit_distance": 10.9585920286405,
+      "target_distance": 15.292829342885113
+    },
+    {
+      "counter_sample": [
+        4.51,
+        -0.9,
+        0.9
+      ],
+      "first_hit": "中部员工休息室及柱体外包墙",
+      "hit_distance": 14.102550457189757,
+      "target_distance": 15.624730710570088
+    },
+    {
+      "counter_sample": [
+        4.51,
+        -1.2,
+        0.9
+      ],
+      "first_hit": "中部员工休息室及柱体外包墙",
+      "hit_distance": 13.844753737045261,
+      "target_distance": 15.339106896374963
+    },
+    {
+      "counter_sample": [
+        4.51,
+        -1.49,
+        0.9
+      ],
+      "first_hit": "配电间检修门 | 高度待立面确认",
+      "hit_distance": 13.565816201367669,
+      "target_distance": 15.063535535996795
+    }
+  ],
+  "cardinal_camera_map": {
+    "front": "07_front_relationship",
+    "back": "08_back_relationship",
+    "left": "03_main_aisle",
+    "right": "09_right_relationship"
+  }
+}

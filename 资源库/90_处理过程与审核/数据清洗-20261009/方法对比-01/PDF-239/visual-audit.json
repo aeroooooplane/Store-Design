@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T04:40:01.030565+00:00",
+  "generator": {
+    "script": "method-comparison-01/compare.py",
+    "version": "1.0.0"
+  },
+  "aligned_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "unresolved_ids": [
+    1
+  ],
+  "boundary_alignment": true,
+  "observations": [
+    "7件物体对齐，广告机与配件柜已分离，未再将柱体组合框当作家具。",
+    "上侧H1300mm储物柜仍缺闭合候选。",
+    "柱内净尺寸不详，平台外线对齐不等于柱和障碍物已完成。"
+  ],
+  "method": "vision",
+  "source_id": "PDF-239",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "version_confirmed": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "inspected_images": [
+    {
+      "method": "A",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-A.png",
+      "sha256": "ebfc6e0f2deb5edb9dd4bfb63b9244ada28dd375516b8fd24c8352c4736107a9"
+    },
+    {
+      "method": "B",
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\方法对比-01\\PDF-239-B.png",
+      "sha256": "45176e11c627f32bf0d0bcafbcf8c28ede657949cb6cf47bc36ff3fc005d91f1"
+    }
+  ],
+  "scope": "本轮助手打开A/B完整叠加图逐页目视检查；不是人工审批或独立盲测。",
+  "needs_human": [
+    "完整道具清点、边界语义、入口障碍物、尺寸双轴验证、版本及资产对应尚未全部完成。"
+  ]
+}

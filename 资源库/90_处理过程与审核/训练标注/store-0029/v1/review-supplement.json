@@ -1,0 +1,26 @@
+{
+  "source_id": "PDF-029",
+  "store_id": "store-0029",
+  "version_id": "v1",
+  "method": "vision",
+  "overlay_sha256": "7c78d5f0c8a3fd0dc603fb8d1134de277f160df5328c4f2f985b5ee8e57fc235",
+  "evidence_sha256": "9a82e4542bec61cd8df8f3e4249f821df9d5340042871dec15185a4193b03f36",
+  "status": "inspected_draft_partial",
+  "alignment": "retained_geometry_aligned_with_visible_source",
+  "completeness": false,
+  "notes": "深红色租赁虚线闭合正确；凳子只匹配一件，仓库两组货架未结构化。",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "reviewer": null,
+  "reviewedAt": null,
+  "orchestration_generator": {
+    "script": "build_report.py",
+    "version": "1.0.0"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T12:02:46.874390+08:00",
+  "generator": {
+    "script": "package_pilot.py",
+    "version": "1.0.0"
+  }
+}
