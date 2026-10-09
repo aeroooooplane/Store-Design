@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T07:30:56.433Z",
+  "generator": {
+    "script": "light-handoff-validation",
+    "version": "3.0.0"
+  },
+  "passed": [
+    "package_hash_preflight",
+    "syntax_and_import_of_stdlib_entrypoints",
+    "corrupt_scan_receipt_not_skipped_as_complete",
+    "classified_without_receipt_reported_failed",
+    "fresh_run_directory_isolation",
+    "stable_source_ids",
+    "no_overwrite_of_existing_run",
+    "source_hash_mismatch_prevents_output_creation"
+  ],
+  "real_pdf_opened": false,
+  "ocr_started": false,
+  "full_pipeline_executed": false,
+  "source_files_modified": false,
+  "training_eligible": false,
+  "fixture_cache_dirs": [
+    "资源库/90_处理过程与审核/数据清洗-20261009/_cache/light-handoff-validation-01",
+    "资源库/90_处理过程与审核/数据清洗-20261009/_cache/light-handoff-validation-02"
+  ],
+  "limitations": [
+    "full pipeline not rerun in this migration turn",
+    "recovering a damaged OCR/page cache may require a new revision/run name",
+    "visual acceptance must be repeated on rebuilt images"
+  ]
+}

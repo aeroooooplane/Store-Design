@@ -1,0 +1,189 @@
+{
+  "source_id": "PDF-088",
+  "store_id": "store-0088",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\南昌武商mall.pdf",
+  "sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+  "physical_page": 16,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "render_dpi": 151.19443356431117,
+  "pdf_to_m_matrix": [
+    0.014052972197532654,
+    0.0,
+    0.0,
+    0.014052972197532654,
+    -3.1130144596099854,
+    -3.145055055618286
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.014052972138102946,
+    0,
+    0,
+    0.014052972138102946,
+    -3.113014448073339,
+    -3.1450549929623692
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1084.68017578125,
+          599.414794921875,
+          1131.6802978515625,
+          611.8228149414062
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "影石-南昌武商mall",
+        "bbox": [
+          1068.60009765625,
+          539.894775390625,
+          1147.9027099609375,
+          552.3027954101562
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "text": "【边厅店】",
+        "bbox": [
+          1084.6800537109375,
+          551.1748046875,
+          1131.68017578125,
+          563.5828247070312
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "PL-03",
+        "bbox": [
+          1095.360107421875,
+          677.2947998046875,
+          1121.01171875,
+          689.7028198242188
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-088-pilot-r10.png",
+    "r10_overlay_sha256": "00d4ae0edead6511561e58c88842096ed6c13de95d2a049e3b9b2df3af79014f",
+    "notes": "租赁线及主要桌柜对齐；开箱旁虚线座椅与障碍物未完整。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-088",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-088.json",
+      "draft_sha256": "745ea724494668ed08da5f50f2bf2a7552fdc4631d86c03f00f268545d8f91f6",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-088-pilot-r10.png",
+      "overlay_sha256": "00d4ae0edead6511561e58c88842096ed6c13de95d2a049e3b9b2df3af79014f",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "租赁线及主要桌柜对齐；开箱旁虚线座椅与障碍物未完整。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1190.52001953125,
+          841.9199829101562
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1190.52001953125,
+        841.9199829101562
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0999226883932107,
+    0,
+    0,
+    2.0999620342645655,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:23.534600+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

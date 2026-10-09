@@ -1,0 +1,161 @@
+{
+  "source_id": "PDF-008",
+  "store_id": "store-0008",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\上海新嘉中心.pdf",
+  "sha256": "ff031704958d19f6ea7f5f8bf0be4437c823daeac574137f2a095395e52ed73c",
+  "physical_page": 16,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "render_dpi": 106.88836104513065,
+  "pdf_to_m_matrix": null,
+  "normalized_pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1541.4000244140625,
+          977.510986328125,
+          1602.570068359375,
+          989.7449951171875
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "影石-上海新嘉中心边厅店",
+        "bbox": [
+          1501.6199951171875,
+          302.5110168457031,
+          1642.3111572265625,
+          314.7450256347656
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "P-03",
+        "bbox": [
+          1559.760009765625,
+          1130.6309814453125,
+          1584.227783203125,
+          1142.864990234375
+        ],
+        "size": 12.233999252319336,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-008-pilot-r10.png",
+    "r10_overlay_sha256": "35f46e9c55a3afb845c9ede56be51493bb734d96daa52137e7ece7718d76ad94",
+    "notes": "主要道具及8个凳子对齐；曲线租赁边界尚未恢复。",
+    "boundary_alignment": false,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-008",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-008.json",
+      "draft_sha256": "8a0445551e4c4aace49444651ee20e7c56ee199d471c7d0a2f12304effa849e5",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-008-pilot-r10.png",
+      "overlay_sha256": "35f46e9c55a3afb845c9ede56be51493bb734d96daa52137e7ece7718d76ad94",
+      "method": "vision",
+      "boundary_alignment": false,
+      "major_props_alignment": true,
+      "gate_pass": false,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "主要道具及8个凳子对齐；曲线租赁边界尚未恢复。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1684.0,
+          1191.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1684.0,
+        1191.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    1.484560570071259,
+    0,
+    0,
+    1.4853064651553316,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:14.960818+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

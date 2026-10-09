@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:14:14.473830+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "packages": 20,
+  "coordinate_max_rounding_error_m": 0.0004991918954395658,
+  "checks": [
+    "required_metadata",
+    "all_training_eligible_false",
+    "rotation_enum",
+    "asset_candidate_limit_3",
+    "clockwise_closed_boundary",
+    "pdf_to_m_roundtrip_below_half_millimeter"
+  ],
+  "errors": [],
+  "limitation": "程序一致性核验不能替代缺失元素和门店版本的视觉/人工审核。"
+}

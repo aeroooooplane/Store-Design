@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T05:29:24.498723+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-002",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "scale": {
+    "status": "unverified",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 5640,
+        "endpoints_canvas": [
+          [
+            553,
+            97
+          ],
+          [
+            1055,
+            97
+          ]
+        ],
+        "method": "vision",
+        "endpoints_pdf": null,
+        "m_per_point": null,
+        "reason": "未匹配到两端均相符的完整尺寸线"
+      },
+      {
+        "axis": "z",
+        "value_mm": 9900,
+        "endpoints_canvas": [
+          [
+            465,
+            199
+          ],
+          [
+            465,
+            1080
+          ]
+        ],
+        "path_id": 507,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            292.97998046875,
+            681.739990234375
+          ],
+          [
+            292.97998046875,
+            125.72003173828125
+          ]
+        ],
+        "length_pdf": 556.0199584960938,
+        "m_per_point": 0.017805116252979886,
+        "selection_delta_pdf": 0.372230145742683,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": null,
+    "m_per_point": null
+  },
+  "boundary": {
+    "present": false,
+    "closed": false,
+    "semantic_confirmed": false
+  },
+  "props": {
+    "records": 16,
+    "located": 14
+  },
+  "visual_check": "pending",
+  "needs_human": [
+    "入口、障碍物、固定设施及全量道具清点未完整；必须另行检查。",
+    "版本未确认；原索引SI仅为弱标签。"
+  ]
+}

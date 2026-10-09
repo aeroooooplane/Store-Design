@@ -1,0 +1,166 @@
+{
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 5930,
+        "endpoints_canvas": [
+          [
+            361,
+            267
+          ],
+          [
+            1305,
+            267
+          ]
+        ],
+        "path_id": 182,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            1159.5599365234375,
+            239.10003662109375
+          ],
+          [
+            326.6999816894531,
+            239.10003662109375
+          ]
+        ],
+        "length_pdf": 832.8599548339844,
+        "m_per_point": 0.007120044571217304,
+        "selection_delta_pdf": 4.791626000464719,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 3400,
+        "endpoints_canvas": [
+          [
+            274,
+            357
+          ],
+          [
+            274,
+            898
+          ]
+        ],
+        "path_id": 2810,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            243.47999572753906,
+            796.739990234375
+          ],
+          [
+            243.47999572753906,
+            322.6199951171875
+          ]
+        ],
+        "length_pdf": 474.1199951171875,
+        "m_per_point": 0.007171180365762949,
+        "selection_delta_pdf": 4.491092773156836,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.007156250744234593,
+    "m_per_point": 0.007145612468490126,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "platform_outline",
+    "area_m2": 20.014,
+    "stated_area": 19.1,
+    "area_difference_ratio": 0.04785827225130877
+  },
+  "props": {
+    "item_count": 8,
+    "located_count": 8,
+    "out_of_bounds": [
+      {
+        "object_id": "object-008",
+        "area": 0.003727,
+        "basis": "axis_aligned_bounding_box"
+      }
+    ],
+    "overlaps": [],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [
+    {
+      "field": "store_name_city",
+      "filename": "沈阳百脑汇照材专卖店.pdf",
+      "title_text": "深航百脑汇店",
+      "value": null,
+      "reason": "文件名与图签冲突；此前深圳的视觉读取已撤回，见原试点review-supplement。"
+    },
+    {
+      "field": "stated_area_vs_boundary",
+      "stated": 19.1,
+      "measured": 20.014,
+      "resolution": null
+    }
+  ],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-pilot-r10.png",
+      "r10_overlay_sha256": "f53fe476751d74240cbdce976022e2f0eb8da5df124676eb827476a9b9a4839c",
+      "notes": "平台及8件道具对齐；柱子组合不再误当家具，柱净尺寸仍未知。",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": false,
+      "final_gate_record": {
+        "source_id": "PDF-239",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-239.json",
+        "draft_sha256": "0f24a3265a2d30cca93c7fc97f870f5a728b8e4aff2d29b32b5ebfb50760cfee",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-pilot-r10.png",
+        "overlay_sha256": "f53fe476751d74240cbdce976022e2f0eb8da5df124676eb827476a9b9a4839c",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "平台及8件道具对齐；柱子组合不再误当家具，柱净尺寸仍未知。",
+        "correction_note": null
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-pilot-r10.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:26.258996+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

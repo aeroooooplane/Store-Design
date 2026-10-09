@@ -1,0 +1,146 @@
+{
+  "source_id": "PDF-035",
+  "store_id": "store-0035",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 6120,
+        "endpoints_canvas": [
+          [
+            854,
+            266
+          ],
+          [
+            1340,
+            266
+          ]
+        ],
+        "path_id": 1172,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            1197.0,
+            238.20001220703125
+          ],
+          [
+            759.719970703125,
+            238.20001220703125
+          ]
+        ],
+        "length_pdf": 437.280029296875,
+        "m_per_point": 0.013995608282959234,
+        "selection_delta_pdf": 2.194167227399277,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 2980,
+        "endpoints_canvas": [
+          [
+            1458,
+            424
+          ],
+          [
+            1458,
+            661
+          ]
+        ],
+        "path_id": 1224,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            1301.6400146484375,
+            376.55999755859375
+          ],
+          [
+            1301.6400146484375,
+            591.239990234375
+          ]
+        ],
+        "length_pdf": 214.67999267578125,
+        "m_per_point": 0.013881125869519296,
+        "selection_delta_pdf": 2.072594042606858,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.00821347384623668,
+    "m_per_point": 0.013938367076239265,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "display_zone",
+    "area_m2": 24.629,
+    "stated_area": 25.0,
+    "area_difference_ratio": 0.01485112000000001
+  },
+  "props": {
+    "item_count": 8,
+    "located_count": 6,
+    "out_of_bounds": [],
+    "overlaps": [],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-035-pilot-r10.png",
+      "r10_overlay_sha256": "bc20aae0ba7db133082b5b0d06e9fc20f85443aee6d5e97234fc8da02a02dffa",
+      "notes": "影石展示区轮廓与6件桌柜屏对齐；同物体重复的未定位旧标签待归并。",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": false,
+      "final_gate_record": {
+        "source_id": "PDF-035",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-035.json",
+        "draft_sha256": "c6a711d629a38d4c5bb57f539e412831878d06f6fb409d70345a15161932d8a5",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-035-pilot-r10.png",
+        "overlay_sha256": "bc20aae0ba7db133082b5b0d06e9fc20f85443aee6d5e97234fc8da02a02dffa",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "影石展示区轮廓与6件桌柜屏对齐；同物体重复的未定位旧标签待归并。",
+        "correction_note": null
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-035-pilot-r10.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:17.789140+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

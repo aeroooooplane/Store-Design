@@ -1,0 +1,161 @@
+{
+  "source_id": "PDF-049",
+  "store_id": "store-0049",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 2850,
+        "endpoints_canvas": [
+          [
+            724,
+            155
+          ],
+          [
+            980,
+            155
+          ]
+        ],
+        "path_id": 4482,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            619.5599975585938,
+            98.36004638671875
+          ],
+          [
+            455.1600341796875,
+            98.36004638671875
+          ]
+        ],
+        "length_pdf": 164.39996337890625,
+        "m_per_point": 0.017335770285005287,
+        "selection_delta_pdf": 1.6447211268631683,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 9200,
+        "endpoints_canvas": [
+          [
+            638,
+            225
+          ],
+          [
+            638,
+            1052
+          ]
+        ],
+        "path_id": 4448,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            402.60003662109375,
+            665.719970703125
+          ],
+          [
+            402.60003662109375,
+            141.32000732421875
+          ]
+        ],
+        "length_pdf": 524.3999633789062,
+        "m_per_point": 0.017543860874285607,
+        "selection_delta_pdf": 1.7191165684854999,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.011931926018941913,
+    "m_per_point": 0.017439815579645447,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "inner_wall_and_entrance_threshold",
+    "area_m2": 26.166,
+    "stated_area": 26.4,
+    "area_difference_ratio": 0.008873901515151638
+  },
+  "props": {
+    "item_count": 9,
+    "located_count": 7,
+    "out_of_bounds": [
+      {
+        "object_id": "object-008",
+        "area": 0.019502,
+        "basis": "axis_aligned_bounding_box"
+      }
+    ],
+    "overlaps": [
+      {
+        "objects": [
+          "object-004",
+          "object-005"
+        ],
+        "area": 0.000988,
+        "basis": "axis_aligned_bounding_boxes"
+      }
+    ],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-049-pilot-r10.png",
+      "r10_overlay_sha256": "a60eb0ac91c79daa30e9493bee93324e5c9128de6562b4dfe8775885699da1eb",
+      "notes": "r10选中了U形墙带，不能作为房间边界；r11改按明确内净尺寸边线定位。7件道具框对齐，仍缺2柜。",
+      "boundary_alignment": false,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": true,
+      "final_gate_record": {
+        "source_id": "PDF-049",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r12-PDF-049.json",
+        "draft_sha256": "0e520e24f4e2ba510fd8303c6df6972bf506be861ead62a2ced8d702aa978e80",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-049-pilot-r12.png",
+        "overlay_sha256": "80ad97cbdefa891802659cf16fa0c59f482041f588fa548f2b8c0085c4b9a5b7",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "r10选中了U形墙带，不能作为房间边界；r11改按明确内净尺寸边线定位。7件道具框对齐，仍缺2柜。",
+        "correction_note": "内墙线与入口门槛围合，左前柱位置折入；顶点取原始路径端点。"
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-049-pilot-r12.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:19.712736+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

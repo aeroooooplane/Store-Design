@@ -1,0 +1,189 @@
+{
+  "source_id": "PDF-001",
+  "store_id": "store-0001",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\上海TPY中心.pdf",
+  "sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+  "physical_page": 15,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "render_dpi": 151.19443356431117,
+  "pdf_to_m_matrix": [
+    0.017642894759774208,
+    0.0,
+    0.0,
+    0.017642894759774208,
+    -3.245587110519409,
+    -2.7417051792144775
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.017642894819500442,
+    0,
+    0,
+    0.017642894819500442,
+    -3.245587049447354,
+    -2.7417052088482636
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布置图",
+        "bbox": [
+          1084.68017578125,
+          599.414794921875,
+          1131.6802978515625,
+          611.8228149414062
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "影石-上海TPY中心",
+        "bbox": [
+          1069.6800537109375,
+          539.894775390625,
+          1146.640625,
+          552.3027954101562
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "text": "【边厅店】",
+        "bbox": [
+          1084.6800537109375,
+          551.1748046875,
+          1131.68017578125,
+          563.5828247070312
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "PL-02",
+        "bbox": [
+          1095.360107421875,
+          677.2947998046875,
+          1121.01171875,
+          689.7028198242188
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-001-pilot-r10.png",
+    "r10_overlay_sha256": "c5019b8a447a8c858237e528377a5fef79716b99d1938ffa69b05c2088515c32",
+    "notes": "租赁线、9件主要道具对齐；虚线座椅仍缺少闭合轮廓。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-001",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-001.json",
+      "draft_sha256": "943410a10f97e16327bebfb36c878243a83638193df7fc8dab852fabb8c84b89",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-001-pilot-r10.png",
+      "overlay_sha256": "c5019b8a447a8c858237e528377a5fef79716b99d1938ffa69b05c2088515c32",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified",
+      "training_eligible": false,
+      "notes": "租赁线、9件主要道具对齐；虚线座椅仍缺少闭合轮廓。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1190.52001953125,
+          841.9199829101562
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1190.52001953125,
+        841.9199829101562
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0999226883932107,
+    0,
+    0,
+    2.0999620342645655,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:12.609955+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

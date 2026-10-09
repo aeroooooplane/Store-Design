@@ -1,0 +1,179 @@
+{
+  "source_id": "PDF-353",
+  "store_id": "store-0353",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 8845,
+        "endpoints_canvas": [
+          [
+            300,
+            286
+          ],
+          [
+            1558,
+            286
+          ]
+        ],
+        "path_id": 12355,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            187.3125,
+            180.84490966796875
+          ],
+          [
+            985.2362060546875,
+            180.84490966796875
+          ]
+        ],
+        "length_pdf": 797.9237060546875,
+        "m_per_point": 0.011085019699106156,
+        "selection_delta_pdf": 2.802093602903929,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 3835,
+        "endpoints_canvas": [
+          [
+            1623,
+            411
+          ],
+          [
+            1623,
+            956
+          ]
+        ],
+        "path_id": 12348,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            1021.5306396484375,
+            256.75335693359375
+          ],
+          [
+            1021.5306396484375,
+            605.423095703125
+          ]
+        ],
+        "length_pdf": 348.66973876953125,
+        "m_per_point": 0.010998947065305582,
+        "selection_delta_pdf": 3.2521378608314926,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.007795033810617747,
+    "m_per_point": 0.01104198338220587,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "display_zone_envelope",
+    "area_m2": 33.251,
+    "stated_area": null,
+    "area_difference_ratio": null
+  },
+  "props": {
+    "item_count": 9,
+    "located_count": 9,
+    "out_of_bounds": [],
+    "overlaps": [
+      {
+        "objects": [
+          "object-005",
+          "object-006"
+        ],
+        "area": 0.048048,
+        "basis": "axis_aligned_bounding_boxes"
+      },
+      {
+        "objects": [
+          "object-005",
+          "object-007"
+        ],
+        "area": 0.047817,
+        "basis": "axis_aligned_bounding_boxes"
+      },
+      {
+        "objects": [
+          "object-005",
+          "object-008"
+        ],
+        "area": 0.048464,
+        "basis": "axis_aligned_bounding_boxes"
+      },
+      {
+        "objects": [
+          "object-005",
+          "object-009"
+        ],
+        "area": 0.048231,
+        "basis": "axis_aligned_bounding_boxes"
+      }
+    ],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-353-pilot-r10.png",
+      "r10_overlay_sha256": "91434be6950481ea317a3e70b3d3531844f56a1b7950422e5510c1eb5f547ca9",
+      "notes": "r10轮廓包含左侧图纸截断符，拒绝；r11按尺寸与虚线明确的专区外包区域恢复；9件物体位置对齐。",
+      "boundary_alignment": false,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": true,
+      "final_gate_record": {
+        "source_id": "PDF-353",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-353.json",
+        "draft_sha256": "b7a79a21e6f8b18209c4bf451f70e15a25dec3466afefd2e27a0e3c77ce5d456",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-353-pilot-r11.png",
+        "overlay_sha256": "dbf69735bbabaff5c85faf33f5a3538c7d4237694861392c7567b18717a507e3",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "r10轮廓包含左侧图纸截断符，拒绝；r11按尺寸与虚线明确的专区外包区域恢复；9件物体位置对齐。",
+        "correction_note": "专区外包范围已排除左侧截断符；柱和装饰墙仍需独立标注。"
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-353-pilot-r11.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:28.294389+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

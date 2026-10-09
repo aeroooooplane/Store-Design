@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:50:43.266715+00:00",
+  "generator": {
+    "script": "visual_session_record",
+    "version": "003"
+  },
+  "records": [
+    {
+      "source_id": "PDF-006",
+      "page": 7,
+      "method": "vision",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-006-p007-vision-r3.png",
+      "overlay_sha256": "cd89347e0858e35770f74c764725446888dd4f33a92c66ae3c68e9045ff7d136",
+      "overlay_opened": true,
+      "scale_two_axes_aligned": true,
+      "located_props_aligned": 20,
+      "boundary_aligned": false,
+      "auto_status": "partial",
+      "reject_items": [],
+      "reject_obstacles": [
+        "object-001"
+      ],
+      "notes": [
+        "柱子被重组成半个矩形的三角面，必须撤回该障碍物几何。"
+      ]
+    },
+    {
+      "source_id": "PDF-010",
+      "page": 1,
+      "method": "vision",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-010-p001-vision-r3.png",
+      "overlay_sha256": "31944c106e1f8f204880f508f24aa2bbfc4b96b985e0a32cbb50a2ab637182ee",
+      "overlay_opened": true,
+      "scale_two_axes_aligned": true,
+      "located_props_aligned": 8,
+      "boundary_aligned": true,
+      "auto_status": "partial",
+      "reject_items": [],
+      "reject_obstacles": [],
+      "notes": [
+        "下方右侧75寸屏幕未定位；净边界排除了左右柱体。"
+      ]
+    },
+    {
+      "source_id": "PDF-009",
+      "page": 1,
+      "method": "vision",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-009-p001-vision-r3.png",
+      "overlay_sha256": "d57734ce510bc2d858eae9b1dba41145032ac3c8be178ee5c7d558ca9c266bde",
+      "overlay_opened": true,
+      "scale_two_axes_aligned": true,
+      "located_props_aligned": 11,
+      "boundary_aligned": false,
+      "auto_status": "partial",
+      "reject_items": [],
+      "reject_obstacles": [],
+      "notes": [
+        "倾斜屏幕、4个椅子均没有可靠重组；边界保持null。"
+      ]
+    }
+  ],
+  "field_updates": [
+    {
+      "source_id": "PDF-006",
+      "page": 7,
+      "field": "room_height",
+      "value": 4.7,
+      "unit": "m",
+      "text": "店内天花：4700mm",
+      "method": "vision",
+      "bbox_canvas": [
+        865,
+        970,
+        951,
+        995
+      ],
+      "canvas": [
+        1888,
+        1335
+      ]
+    },
+    {
+      "source_id": "PDF-010",
+      "page": 1,
+      "field": "boundary.kind",
+      "value": "inner_wall_excluding_column_footprints",
+      "method": "vision"
+    }
+  ],
+  "training_eligible": false
+}

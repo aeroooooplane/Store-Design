@@ -1,0 +1,155 @@
+{
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 6700,
+        "endpoints_canvas": [
+          [
+            278,
+            388
+          ],
+          [
+            1478,
+            388
+          ]
+        ],
+        "path_id": 1385,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            175.739990234375,
+            245.05999755859375
+          ],
+          [
+            932.219970703125,
+            245.05999755859375
+          ]
+        ],
+        "length_pdf": 756.47998046875,
+        "m_per_point": 0.008856810719364139,
+        "selection_delta_pdf": 0.40355383053088245,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 2400,
+        "endpoints_canvas": [
+          [
+            1547,
+            465
+          ],
+          [
+            1547,
+            894
+          ]
+        ],
+        "path_id": 1352,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            973.5599975585938,
+            293.60003662109375
+          ],
+          [
+            973.5599975585938,
+            564.5599975585938
+          ]
+        ],
+        "length_pdf": 270.9599609375,
+        "m_per_point": 0.008857397202509883,
+        "selection_delta_pdf": 2.3451562795677217,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 6.621612982424444e-05,
+    "m_per_point": 0.008857103960937012,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "outer_outline",
+    "area_m2": 16.08,
+    "stated_area": null,
+    "area_difference_ratio": null
+  },
+  "props": {
+    "item_count": 7,
+    "located_count": 7,
+    "out_of_bounds": [],
+    "overlaps": [
+      {
+        "objects": [
+          "object-003",
+          "object-004"
+        ],
+        "area": 0.0005,
+        "basis": "axis_aligned_bounding_boxes"
+      }
+    ],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-051-pilot-r10.png",
+      "r10_overlay_sha256": "950d61ea3ad15141e81efd0826296df1d22cf4d51824c80403f23037da6b668a",
+      "notes": "地台及7件主要家具全部对齐；LED和固定设施未全部完成。",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": false,
+      "final_gate_record": {
+        "source_id": "PDF-051",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-051.json",
+        "draft_sha256": "4a82a7fb16dfbfc6e670d5af25542671fe56c4e68c1cffdb9822e10c61770409",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-051-pilot-r10.png",
+        "overlay_sha256": "950d61ea3ad15141e81efd0826296df1d22cf4d51824c80403f23037da6b668a",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "地台及7件主要家具全部对齐；LED和固定设施未全部完成。",
+        "correction_note": null
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-051-pilot-r10.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:20.888271+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

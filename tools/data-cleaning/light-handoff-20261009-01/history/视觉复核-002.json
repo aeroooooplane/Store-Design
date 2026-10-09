@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:02:15.234539+00:00",
+  "generator": {
+    "script": "vision final inspection",
+    "version": "1.0.0"
+  },
+  "method": "vision",
+  "records": [
+    {
+      "source_id": "NEW-007",
+      "page": 1,
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\平面候选-视觉修订-r3\\NEW-007\\p001\\draft.json",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\NEW-007-p001-vision-r3.png",
+      "boundary_alignment": true,
+      "props_alignment": "partial",
+      "reject_items": [],
+      "scale_visual_check": true,
+      "auto_status": "partial",
+      "training_eligible": false,
+      "notes": "七件有形体物件对齐，虚线凳子仍为null。蓝线只记录净轮廓候选，不等同前方红色租赁线；电子水牌投影跨净轮廓，必须记越界争议。"
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 11,
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\平面候选-视觉修订-r3\\PDF-004\\p011\\draft.json",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-004-p011-vision-r3.png",
+      "boundary_alignment": false,
+      "props_alignment": "partial",
+      "reject_items": [],
+      "scale_visual_check": true,
+      "auto_status": "partial",
+      "training_eligible": false,
+      "notes": "十七件已定位物件和菱形柱对齐，两个斜向屏幕未可靠定位；边界保持null。8455横向和5310纵向尺寸线位置核对通过。"
+    }
+  ]
+}

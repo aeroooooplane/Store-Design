@@ -1,0 +1,2038 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T07:30:56.433Z",
+  "generator": {
+    "script": "light-handoff-20261009-01",
+    "version": "1.0.0"
+  },
+  "base_git_commit": "5b53d1a0",
+  "mode": "rebuild_machine_caches_preserve_human_history",
+  "original_output": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02",
+  "training_eligible": false,
+  "payloads": [
+    {
+      "path": "history/00_同步与文件清单.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/00_同步与文件清单.json",
+      "bytes": 840766,
+      "sha256": "0aa0b9d478f71667e9a67834e93f56193f90cd7561304b8a62b29c69add0493f",
+      "historical_only": true
+    },
+    {
+      "path": "history/07_试点标准标注字段核验.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/07_试点标准标注字段核验.json",
+      "bytes": 596,
+      "sha256": "b4388d0de8a65459f33506a76f4b24cbd8273cbef6c405431921a8781939b6d0",
+      "historical_only": true
+    },
+    {
+      "path": "history/PDF-239-图签最终读数.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/PDF-239-图签最终读数.json",
+      "bytes": 776,
+      "sha256": "691d4943a200a5c4f49c64e63ec8a19c6a3204bc9bd1d1bb320b6fcdb4f9f783",
+      "historical_only": true
+    },
+    {
+      "path": "history/progress.jsonl",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/progress.jsonl",
+      "bytes": 716927,
+      "sha256": "0120503011c902b051e9712358d67e5c114cb421e13a892f268b5425c600e276",
+      "historical_only": true
+    },
+    {
+      "path": "history/尺寸刻线匹配-视觉核验.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/尺寸刻线匹配-视觉核验.json",
+      "bytes": 2233,
+      "sha256": "a81a1cff8011d0421be86cdd0fe159733f8354aa1db894f33e76e0daa2cb7320",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订/NEW-006/p016/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订/NEW-006/p016/draft.json",
+      "bytes": 40928,
+      "sha256": "ffd593cf84cf9dbee72f6297fa84e49907665d5a67a028aec777892b2173544e",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订/NEW-006/p016/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订/NEW-006/p016/receipt.json",
+      "bytes": 350,
+      "sha256": "08795a8963b24e145cf62a10ba540fb1552546aa8d5cc42637f7abb86af94a2c",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r2/NEW-006/p016/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r2/NEW-006/p016/draft.json",
+      "bytes": 69370,
+      "sha256": "5dbdc7575a0fb5c7a3073fef84d31c491d59c30e01c3355d55764b7f98f5d430",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r2/NEW-006/p016/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r2/NEW-006/p016/receipt.json",
+      "bytes": 350,
+      "sha256": "5bde525fee4493cb0463aed77a060e3d3f5534e59212387bfeb583bad117846e",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/NEW-007/p001/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/NEW-007/p001/draft.json",
+      "bytes": 63010,
+      "sha256": "f7da23afe930a63df83f2bd33ddd6e45ee96a45e5898b1cbe8f7ff1488c4470f",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/NEW-007/p001/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/NEW-007/p001/receipt.json",
+      "bytes": 350,
+      "sha256": "bf8f711a6cf8816cefad5854862969820715a70718fc1bbe23e0cad0d100edc9",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-004/p011/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-004/p011/draft.json",
+      "bytes": 153467,
+      "sha256": "29d8fc5f9e74043ece6074466c50c2ecfd7fc0c547a7cfb19808fb7e4cb7da5e",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-004/p011/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-004/p011/receipt.json",
+      "bytes": 350,
+      "sha256": "ba2ca3c1e58328a8cfcf15b95de4c05aa1e514b0c84dd32538e60610c6ad117a",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-006/p007/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-006/p007/draft.json",
+      "bytes": 137929,
+      "sha256": "acfef0d8997c1cee6626bc4c1f6916b24e93b0d2ca3a263bfc07ee995ca3a784",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-006/p007/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-006/p007/receipt.json",
+      "bytes": 350,
+      "sha256": "d7885f33389e70ab188aaa1d3d50126f95f04de735fe9b384194882cf402833b",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-009/p001/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-009/p001/draft.json",
+      "bytes": 155323,
+      "sha256": "5361c8ce607e24cf99858f9563c7dbf23f2d919f663aa7a6405a00cac9d5ecf2",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-009/p001/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-009/p001/receipt.json",
+      "bytes": 350,
+      "sha256": "b22be2b2f5ca53995afd96845e352083fbc41cf19ef16681e0c7d89d2dd64496",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-010/p001/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-010/p001/draft.json",
+      "bytes": 94860,
+      "sha256": "140564d7026c46d5f3b4f8af569b39ca0725b3c09b26f08217e4940885595e71",
+      "historical_only": true
+    },
+    {
+      "path": "history/平面候选-视觉修订-r3/PDF-010/p001/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/平面候选-视觉修订-r3/PDF-010/p001/receipt.json",
+      "bytes": 350,
+      "sha256": "a9a0465cc682282d37746e015b75e114ed39f7b271846ae4bb0a8f290fd82e0e",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉复核-001.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉复核-001.json",
+      "bytes": 961,
+      "sha256": "75b84d49734d6efb340ef971d394aeb86af9d737125add6aa10858ecb996cb7d",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉复核-002.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉复核-002.json",
+      "bytes": 1747,
+      "sha256": "8e84addf07ef116e719c638c47795533b5a76da1c421a31befcb31f91a1c403c",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉复核-003.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉复核-003.json",
+      "bytes": 2823,
+      "sha256": "44e206a45a06fa156377780dace47077c2b9737d30e35e322c39ff016e5bedd1",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉批次-001.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉批次-001.json",
+      "bytes": 4055,
+      "sha256": "0817cbd35026054fdefac02d85e7426dcedcdaff523f648b21b0828921a6a159",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉批次-002.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉批次-002.json",
+      "bytes": 8534,
+      "sha256": "c5d33c9be7e6dda0d11f0a9dfe6d0effad83ce037a060c7447f87ce8b8209ebd",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉批次-003.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉批次-003.json",
+      "bytes": 14932,
+      "sha256": "f909847ef3d0154172d0203726069b9192a64f781318ccc4af3468a7e24e88c3",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉批次-004.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉批次-004.json",
+      "bytes": 10154,
+      "sha256": "af504021bdbf9e717552fe6cc42ceecf3a1b53fabcc9b00e3fb7e4b018483a92",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉页面复核-003.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉页面复核-003.json",
+      "bytes": 10803,
+      "sha256": "8ae45eb55d69125bf2d69659efdc5f45ec883db6e33af71b8498b638848ec6c6",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉页面复核-004.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉页面复核-004.json",
+      "bytes": 22682,
+      "sha256": "dcc3ac092c68138fc0783b4c6e56339b72f91d14d59b3bc2542108c0b1048f2b",
+      "historical_only": true
+    },
+    {
+      "path": "history/视觉页面复核-005.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/视觉页面复核-005.json",
+      "bytes": 25498,
+      "sha256": "72a5227e673a6d6ef81dd6abd8f9d170043084f82ddc1b4b2c93da73c193ada3",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-001/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-001/draft.json",
+      "bytes": 59443,
+      "sha256": "4b49100f927d239c689ff81b92fda013009fe27b506c4bbd98356f3e9a7f8f52",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-001/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-001/receipt.json",
+      "bytes": 395,
+      "sha256": "72277cd3963ef31d1d651c92ee2c5b2c4386abfff94201cd9d3e7345f84a91a5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-001/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-001/review.json",
+      "bytes": 2352,
+      "sha256": "fd6a9f7a1212cae4152aaa0517ae8dbc31618cb8267bed51b3ebe28d194729cf",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-002/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-002/draft.json",
+      "bytes": 93554,
+      "sha256": "e982803f829286416a00cefcd1c84807e2f1436249a162a1a47cf6a40ce0fe91",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-002/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-002/receipt.json",
+      "bytes": 395,
+      "sha256": "688ecf4f1b7b1eb4e0afac237cee32e6169da89ceaf911fd306d3f6ad24ff418",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-002/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-002/review.json",
+      "bytes": 1926,
+      "sha256": "e79ee70344d9efede597980fc6d08b583659c9ac733b8ad898bfc2bf2cf9cedb",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-003/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-003/draft.json",
+      "bytes": 114930,
+      "sha256": "1f77cee94e22c247556eb8dfaab7b17ffd405d06b77220ab945364cd42c5150b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-003/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-003/receipt.json",
+      "bytes": 395,
+      "sha256": "437da3045aef9601d431e3a25ca8218d51cdd94a5b14a203818b26dc31c1b344",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-003/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-003/review.json",
+      "bytes": 2277,
+      "sha256": "b053a57d6d3a8c864a39942693106aa642b928c517be97569d1b1834050aa2f5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-005/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-005/draft.json",
+      "bytes": 86414,
+      "sha256": "1d641237cb107c6f028ad0d89e39b51b5055e90fcbf54acd199148b75873f9a3",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-005/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-005/receipt.json",
+      "bytes": 395,
+      "sha256": "421487a21504e1d9c882e60116f74d14fe3a0477a738629a3726b9e77083e5c6",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-005/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-005/review.json",
+      "bytes": 2281,
+      "sha256": "ef1643f13545d5b07284e8ea859736a175df996cf482b160ef2784ffa2e26e5d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-008/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-008/draft.json",
+      "bytes": 144307,
+      "sha256": "bed9dff0da10ac59cbeb1dc49d2afd7ab54a2c1035960f38caafc458db32049b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-008/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-008/receipt.json",
+      "bytes": 395,
+      "sha256": "8cf8fb768fef290d39beabbec4b03da1be36d92e036b1d7cf2fc0d8d93299a8a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-008/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-008/review.json",
+      "bytes": 2284,
+      "sha256": "b7ac0dd2d02d59008565c7d69caf457f994f19eac453e30d52bbac7b4b100572",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-013/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-013/draft.json",
+      "bytes": 31721,
+      "sha256": "f43e516d4beb2f72502e0ef36fed11a986e43b63a925b046a1adcbdea01b8070",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-013/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-013/receipt.json",
+      "bytes": 395,
+      "sha256": "b5f8d8d95cb0e4f7a4b84f1c5f323d6db680941704c2a13fd226af30711b4633",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-013/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-013/review.json",
+      "bytes": 2275,
+      "sha256": "7f200f6b0fc415bb96bf7d751ae82850f95df5e036619c186defe69f19f08b38",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-019/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-019/draft.json",
+      "bytes": 70619,
+      "sha256": "3ecade6bdf0cda97c5110ace09be5f4fd90754a8907a2ec8948a2ef9be6cbe6c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-019/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-019/receipt.json",
+      "bytes": 395,
+      "sha256": "5e0e7adb389e8c88b3aeaf9f53a117e3cd1d067e86e7c7c7b17a811294790784",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-019/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-019/review.json",
+      "bytes": 2310,
+      "sha256": "b3b16047fbf5fb2c305405b3d00e088ec0e901dc4eded41d3cf293253091e30d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-029/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-029/draft.json",
+      "bytes": 63566,
+      "sha256": "192f3d60866a03592b6f5a8d51971f37e771dbe6c0ee43f4c32b06283420c8d0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-029/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-029/receipt.json",
+      "bytes": 395,
+      "sha256": "98595febc3d55447006d99dbba4c068e6a6ffc0d520a692b27b19c91ef5b988e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-029/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-029/review.json",
+      "bytes": 2274,
+      "sha256": "ad7aaea0a304a1060b2970f3994e18771025251c70963a68c1a21f93f6fc5703",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-032/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-032/draft.json",
+      "bytes": 126224,
+      "sha256": "b7c1e17792c7c548feeef1a24f1b542d4a28f3f8fe2811300724dda30744c4de",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-032/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-032/receipt.json",
+      "bytes": 395,
+      "sha256": "20eea304710fbc75c5396ed3b663a0015dd8e846fa88324ec0d8a19010630978",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-032/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-032/review.json",
+      "bytes": 2283,
+      "sha256": "4a9e8d84285121aea9337e6631b023944245342a78730b4eda3ef01c35e97182",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-035/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-035/draft.json",
+      "bytes": 44066,
+      "sha256": "858d1c5c34eb3aa9ef2547d7558004e362c329c8395bab8e028609e2f2c98ca5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-035/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-035/receipt.json",
+      "bytes": 395,
+      "sha256": "190c6d78cd20cbbca59fa38916529831a8b805b9467dce219954e0e8a8ed261d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-035/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-035/review.json",
+      "bytes": 2270,
+      "sha256": "661ac938683a6dc53108b7cbd8a388094881628b355e75888e96b44a7e930c1d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-043/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-043/draft.json",
+      "bytes": 40188,
+      "sha256": "2eb550f221d8c67411b0c59a67233786ee37b6be238e0825e82c97eb05ebc10b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-043/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-043/receipt.json",
+      "bytes": 395,
+      "sha256": "740803b59d7c2f869affa7c6ec5c15403b1f4845ae4b9c2447345315b3381acb",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-043/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-043/review.json",
+      "bytes": 2277,
+      "sha256": "f93365f431ed2f333bd48b33ff1207323346dcfa97069d1833e59a230b4702f2",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-049/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-049/draft.json",
+      "bytes": 38658,
+      "sha256": "cc1d47b6fb29618b497f74f47fb7738d482231fd4f9200f40ff53bdf0937f5ea",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-049/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-049/receipt.json",
+      "bytes": 395,
+      "sha256": "53f4c2aed20e3a52eb078706ce8111a493b503195a9ce29821087ebf2aeefe78",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-049/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-049/review.json",
+      "bytes": 2282,
+      "sha256": "db4c65528b1bf2ef98e4f1e5b451a5a7636a8a3e587d25f441dce0fd8882bb6b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-051/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-051/draft.json",
+      "bytes": 45863,
+      "sha256": "a9f80602fde74b11ef609931719ca06f58a8039711868253898f1da7caaf8b99",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-051/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-051/receipt.json",
+      "bytes": 395,
+      "sha256": "e4a5e37599c70e397959c638d8fdf53dabbf8cde3478dd32f8e6f030c0cea6f0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-051/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-051/review.json",
+      "bytes": 2279,
+      "sha256": "da58527865c717ec16f5df7a41f48d1270098aa62553f35fd913ac78f6134084",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-071/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-071/draft.json",
+      "bytes": 42319,
+      "sha256": "e7b511e9406ef26293d48186854811454205d66622dc296cf4e80b90793a2ef9",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-071/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-071/receipt.json",
+      "bytes": 395,
+      "sha256": "0b79754a25800b5e074a48a318b42bfb86307276c3adef5be1cae1ebef2ec49e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-071/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-071/review.json",
+      "bytes": 2282,
+      "sha256": "6a8e925a792d494196be7674878a7c9a2e78ab3824b8e692ac2dad61c0eeb7b7",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-088/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-088/draft.json",
+      "bytes": 49773,
+      "sha256": "aeac9ed739998b35b8effb0b9999956fd906e41dfd08a594f746a4afd03f6b1e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-088/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-088/receipt.json",
+      "bytes": 395,
+      "sha256": "1a8be2f698c0a540003b090e845dcb390f73ae172bcbb7ac699d2875fbf52a12",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-088/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-088/review.json",
+      "bytes": 2258,
+      "sha256": "fd9e13abe72fdec6ec1ed81e9d49a5d817d4353d06ea9bda4ae74f87ab584f83",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-090/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-090/draft.json",
+      "bytes": 66425,
+      "sha256": "5db2c83969dc99ab71ffcef616b1d018ca09af89cd249e84fe6d28a0953c8376",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-090/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-090/receipt.json",
+      "bytes": 395,
+      "sha256": "fd7b51a3828d6beb9407ad9ed42087fa48950b8163eea86f5ec429722f7b601b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-090/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-090/review.json",
+      "bytes": 2281,
+      "sha256": "ffd0644324bd63693d7506b2aaf4998024910989727a9a477bfd797c9329973f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-239/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-239/draft.json",
+      "bytes": 50000,
+      "sha256": "5ff3ad6e1c6fe41ffdd512030e0cc8eeba352e6755e615f860f3d7c1001986f6",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-239/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-239/receipt.json",
+      "bytes": 395,
+      "sha256": "6755f9283f22b4be7e499da7d121ee013cfee1a29061730bfac12b5cc6b81882",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-239/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-239/review.json",
+      "bytes": 2280,
+      "sha256": "05a5af1a9c95567715cdad3df920aba25eb3d71c21be6d567fe00e0a67d1098b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-293/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-293/draft.json",
+      "bytes": 46053,
+      "sha256": "d5ac7b7e0fae7ccb9ab60db9cf3ce874805dc06fe66fc722a303b3a4f72cfab1",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-293/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-293/receipt.json",
+      "bytes": 395,
+      "sha256": "10f76d8135fd305f6ad1704258e8d76e825b187699a393458a84fa9057af94c8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-293/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-293/review.json",
+      "bytes": 2277,
+      "sha256": "0c7cd29c466882d32c1e31c4ccb0212114078985f14ced716620869e973992d1",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-296/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-296/draft.json",
+      "bytes": 37235,
+      "sha256": "478cc36dd81935f8493a75e798e936098baf651417dc67c0e6257cb445170c41",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-296/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-296/receipt.json",
+      "bytes": 395,
+      "sha256": "6fb4851dd9d1c5f5e34fb8b38904ee4f48f5d93f673e19b40a269785297afd1f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-296/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-296/review.json",
+      "bytes": 2278,
+      "sha256": "cec15b6d2e5162aaccbfd78b92f5a72045a68e251ac91fc2f54e8a03d0ffb596",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-353/draft.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-353/draft.json",
+      "bytes": 146027,
+      "sha256": "d8183df69810d4bae61cb4a47931accfa575f27b653566f5abee1255b36ec1ab",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-353/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-353/receipt.json",
+      "bytes": 395,
+      "sha256": "3c99b6dd8627ec6c9e1f1ad451dcc8363e457e260b62669f4ef90da7199c4643",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10/PDF-353/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10/PDF-353/review.json",
+      "bytes": 2277,
+      "sha256": "5c20d1299154b2b57e94d6a98a960b9ac66e1a1a672031e222590569ee3ee4d0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r10-视觉核对.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r10-视觉核对.json",
+      "bytes": 2838,
+      "sha256": "72bea76cce8ed64f9b9a25cda0c98496688723dfa89448dc48f3d020bced29d8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-001.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-001.json",
+      "bytes": 59938,
+      "sha256": "943410a10f97e16327bebfb36c878243a83638193df7fc8dab852fabb8c84b89",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-002.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-002.json",
+      "bytes": 94061,
+      "sha256": "2694881b6e58e96e740053ccb9e770da9b50a29f01a2e7a0a5468ee57442ad00",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-003.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-003.json",
+      "bytes": 115428,
+      "sha256": "b56c04fc4b0d79834e31983862227c5f371888956d557baadc7aeb4455f8185a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-005.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-005.json",
+      "bytes": 86954,
+      "sha256": "b9187a5e4c3910397c6fc5f8dda12e64d2bc12dc5e27116ad560e04bf6246ad5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-008.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-008.json",
+      "bytes": 144797,
+      "sha256": "8a0445551e4c4aace49444651ee20e7c56ee199d471c7d0a2f12304effa849e5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-013.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-013.json",
+      "bytes": 32209,
+      "sha256": "af24cdac19938748aa00016625d5627c611e8dc69cba0f6f13e45483dba00f2f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-019.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-019.json",
+      "bytes": 71119,
+      "sha256": "1c548878c98a1a2b8cae77b340d9f5ceeed6605629d1b37f77461b272772d67d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-029.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-029.json",
+      "bytes": 64065,
+      "sha256": "884c8c18f26263e4e467fc42cf4c5be9ae778b2fff57853a8699c20cc9d633a4",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-032.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-032.json",
+      "bytes": 126737,
+      "sha256": "f817c1a81b95a6373713807f5d73736a301265ff42ca5e763c39845d4bf466d7",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-035.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-035.json",
+      "bytes": 44582,
+      "sha256": "c6a711d629a38d4c5bb57f539e412831878d06f6fb409d70345a15161932d8a5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-043.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-043.json",
+      "bytes": 40718,
+      "sha256": "e3f0ebf9c6864419331825b4d89684e9e67fdb843d6f26e6591001c229eeaccb",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-049.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-049.json",
+      "bytes": 39404,
+      "sha256": "b5e90b5bbe1fbaab29df98341b14473cbc1d3ecef8c8887375d33d68360b99dd",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-051.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-051.json",
+      "bytes": 46361,
+      "sha256": "4a82a7fb16dfbfc6e670d5af25542671fe56c4e68c1cffdb9822e10c61770409",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-071.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-071.json",
+      "bytes": 42809,
+      "sha256": "fc71b62e98fe3047f4648c3aabd6fa110b8f35cf44f199618745034eaec282b8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-088.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-088.json",
+      "bytes": 50273,
+      "sha256": "745ea724494668ed08da5f50f2bf2a7552fdc4631d86c03f00f268545d8f91f6",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-090.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-090.json",
+      "bytes": 66914,
+      "sha256": "2064803b24aee9252bf1c64e84a8e32495231fdb9f8b65600797f772473ea500",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-239.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-239.json",
+      "bytes": 50507,
+      "sha256": "0f24a3265a2d30cca93c7fc97f870f5a728b8e4aff2d29b32b5ebfb50760cfee",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-293.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-293.json",
+      "bytes": 46585,
+      "sha256": "0a2cc1e1dd1f0a123a7cab3abfc9921423f65cbff80698388298ec6dc87de58c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-296.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-296.json",
+      "bytes": 37736,
+      "sha256": "896a89a37e8fa81e91bb4715ed0799074b1091ea14db59001b7960e06448bab6",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r11/PDF-353.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r11/PDF-353.json",
+      "bytes": 148190,
+      "sha256": "b7a79a21e6f8b18209c4bf451f70e15a25dec3466afefd2e27a0e3c77ce5d456",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点-r12-PDF-049.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点-r12-PDF-049.json",
+      "bytes": 41854,
+      "sha256": "0e520e24f4e2ba510fd8303c6df6972bf506be861ead62a2ced8d702aa978e80",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/geometry.svg",
+      "bytes": 7769,
+      "sha256": "bca68c990ce4626f5eb3b5acac990ec6850519a2a821dd01b39bb868ffad7a13",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/input.json",
+      "bytes": 17399,
+      "sha256": "ce3f8445456f022e5293b9b3ca5a0efb388e2017d5586023be5bc484ddb4797f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "dc331b18c94ddb7b3ff9797f5c433c8bf25d5c7c27813f9217a22004a77a05c0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/review.json",
+      "bytes": 4596,
+      "sha256": "aa1389a393164f139a3ee9e3d99e49b836681df321d07780be8619b68b757372",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/source.json",
+      "bytes": 5005,
+      "sha256": "51848a77b1d5b8ccd730adb7f5ef86d45952ec22a5015398f8489edb855b2a3f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0001/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0001/v1/target-layout.json",
+      "bytes": 70282,
+      "sha256": "ff34c20a822d00b9aa6ae4d9de75f1cdacc122360bff6527addd1d3f8a518882",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/geometry.svg",
+      "bytes": 13324,
+      "sha256": "c4f154b3914e370f1a81613ed40233debdd1d79921d6c39e68bba58342ce487c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/input.json",
+      "bytes": 25915,
+      "sha256": "739c8bbba3253a8d7a2b6f1e2d3b9258159a0acd92a3584edcd8e919f5d50535",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "f150d5a293583e6ce74f8aeeccdd2dd849c3758bc8021a5fd792e9323913da9f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/review.json",
+      "bytes": 4254,
+      "sha256": "0d90984fd4b19181b603adab28e7337c6481bf031fcaa4d7d637ae4c7420db08",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/source.json",
+      "bytes": 4429,
+      "sha256": "504b5e6c4dac8106a9bff4f40af9f842bbf5039cd1ae38af62de19438fd6d12d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0002/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0002/v1/target-layout.json",
+      "bytes": 133226,
+      "sha256": "9ea5516cd977312c498636dc65ce49d75b4a7fd013e00219f413c4a0389ef8f2",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/geometry.svg",
+      "bytes": 18872,
+      "sha256": "f72d3c634ccebbbc85ae3623528cc70b4386189d87f74c80240df23cd704558a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/input.json",
+      "bytes": 7415,
+      "sha256": "0092323e1e592171b0b08cc51cd2b9971f1886c56449675af032cbad5315f29c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "676917c67318c4c8ded685205ef3b3e8d4a97b789e749f49b5fd650426c8d2b5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/review.json",
+      "bytes": 4593,
+      "sha256": "39cb9cf045ada77d319e8d00f395d863042b40276f9b29d5f179a8ae555d5d13",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/source.json",
+      "bytes": 4728,
+      "sha256": "73d327add46cd0d280625f65379d45c779a29c2a14fab467e01bfd077ec99db8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0003/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0003/v1/target-layout.json",
+      "bytes": 163735,
+      "sha256": "c6561879b220563800e04b151c37ee1a414259e77b653fa78d3b9729cbb5f858",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/geometry.svg",
+      "bytes": 13381,
+      "sha256": "c4ed50acf82a29222033bde9cafaa5f3a7d9175bbbf8023ddbef978da3c6ca8f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/input.json",
+      "bytes": 15348,
+      "sha256": "403107879d7845ce6c5dfc695771a04487ddaba63b5ada98e692133d4bfa5efe",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "4a07a9452c31226aedda5ba7af439647b7de5dd943aa801d9759638684b59f13",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/review.json",
+      "bytes": 4616,
+      "sha256": "2d8296b133e5570b3056f8dd8d92b894d57d6278ff7c9d4333ff32d11d44b989",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/source.json",
+      "bytes": 4411,
+      "sha256": "63c335c839ce0577c51fce57f6b1e76d94953c7d233d0a6f6143419c845604dc",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0005/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0005/v1/target-layout.json",
+      "bytes": 118308,
+      "sha256": "5d87b96cbb1f95d4f0550fbc1d55ac329746d3ed21c70fafa7c0c16202b2bc02",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/geometry.svg",
+      "bytes": 22485,
+      "sha256": "f61f547b39accc147b6cb9c708b8de8c8021b5d67fd4492e4c84cb0fb22aab33",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/input.json",
+      "bytes": 12567,
+      "sha256": "d8f0c15d3ad856dafdce93f2d3fab2163c447a59d5f7576428c3915364b9ae9b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "b9da4666eb34aac4ba907f1c526840746a35a6111394ec089b2b24220db2d5b3",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/review.json",
+      "bytes": 4584,
+      "sha256": "d39240b21b53df52d5c05f3a0b51bd0c1a674d91a7faeb8faa2300fd3232aa8e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/source.json",
+      "bytes": 4399,
+      "sha256": "8596139b1fcae5d6ed4e22e60d3be69425fd820436083146799f62336e75c0a4",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0008/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0008/v1/target-layout.json",
+      "bytes": 208974,
+      "sha256": "2af33e524a434ddea1b3c991d1ded837fd516e685507c558cbb3cb364fcbca49",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/geometry.svg",
+      "bytes": 4904,
+      "sha256": "5bd56da45af1b6bad264cd926a9d961e2a986c063cbc7eb4badf34d526e188d1",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/input.json",
+      "bytes": 15237,
+      "sha256": "0c84e1d478d7d5c0d81222356af722bc6ec4e4c20c4118f5ea0d7debc727d8f7",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "9f51a9137dddef9e8eca0f01429b3c60bc7a49dfa23732d53c3dcaa8ea5ef69b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/review.json",
+      "bytes": 4839,
+      "sha256": "1252ba03acb7600e4ac65bd52c712b69bacdbe2e41f14c1a5e0df865f32e8082",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/source.json",
+      "bytes": 3708,
+      "sha256": "247c43e1169afda52a5f4f12f3f41f8f113bdc7c2d3ee453eae8ce401483bcda",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0013/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0013/v1/target-layout.json",
+      "bytes": 40137,
+      "sha256": "ff9952e3550140f4f9394d9d99bfe593cd4ed3e41e062100e50777256ca4ff4e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/geometry.svg",
+      "bytes": 11504,
+      "sha256": "a16caf9d4c05b28cec8af4311c43806b08f77e2d66fd1bfb63a017ce63098d62",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/input.json",
+      "bytes": 16335,
+      "sha256": "6afcd808dfc41be655827726807247047d7c6328f4e299bbc24153ed57dc0259",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "1c0850b438860d4c586d5c767b3f9d251ec6b3a6653b3e73eea64d0ce6ff465b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/review.json",
+      "bytes": 4680,
+      "sha256": "eb2f65a053be20a4b648832ac0d20415982ffb1bcef8da1600477ecd463a7057",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/source.json",
+      "bytes": 4648,
+      "sha256": "20d3deb30404302cea73873de42f9e6a25ac32a17b7d9a914914b55f71cad404",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0019/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0019/v1/target-layout.json",
+      "bytes": 86001,
+      "sha256": "902c2917b5b6735fc374ac6eee160b0a223bfbc2c669b1744a294a7523bb287e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/geometry.svg",
+      "bytes": 8393,
+      "sha256": "55d149fdee2d184918485066350816722795509eb42fa7b3cb1893c0a0017c8f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/input.json",
+      "bytes": 9587,
+      "sha256": "9a3c5cb0cf464786b28dd494658b7f33b64ac51d27d878dad10925857d77232f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "a3fdb75ddadf7f89d24baea2f6a68d2ccac91dfbc92389a61fe9b87598c2a863",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/review.json",
+      "bytes": 4591,
+      "sha256": "82091f1d32e6157e4b84a29bd99376cd82b55cba2820be5bb818e058d881ef62",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/source.json",
+      "bytes": 4721,
+      "sha256": "8228661f7e12e41196140343f1d76d19d3dd60d2aadba41ec50d1affb42ac60a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0029/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0029/v1/target-layout.json",
+      "bytes": 75908,
+      "sha256": "92823fe7edfe42c40f220675db5a67d2c43507689c04ab7d440957904e8eca1f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/geometry.svg",
+      "bytes": 21374,
+      "sha256": "f1cc8f13dede79f63497bb2e8f03d82c377b54dcce23daace9ed74b21deca339",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/input.json",
+      "bytes": 11288,
+      "sha256": "d547b11956aaceca29b2ea831bfefe0b638fa98483c2ef9e2bd3227792a38f56",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "52a6ea1d14ec4f169eff29f61cae8cbc8218badb1384a4e5358ed677f04c4c0d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/review.json",
+      "bytes": 4631,
+      "sha256": "87f140cb74e6c38bc9660e32abc0b7714c762b70d350606da3b2f6c1843733e6",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/source.json",
+      "bytes": 5010,
+      "sha256": "1dfcd6f82f767738f975f12880bcc071cf42eba5da954705af9a842af61b2812",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0032/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0032/v1/target-layout.json",
+      "bytes": 167801,
+      "sha256": "ede825e01530dc0024ffc6fa2994df5e8d0d1a8c7a7cff07cbbe7d8d8361ef83",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/geometry.svg",
+      "bytes": 5889,
+      "sha256": "d564c63fae233766b8701eadaf438cd7912c202b44f31fdd9683a5ad16a5ca53",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/input.json",
+      "bytes": 7567,
+      "sha256": "ae40bfae2d4bbda242f652804504eb7081e49eef6e31b362be5b8b0c2fdc77b2",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "8d8947cd84a82047bd5a33b04140603b2dce23becdc8713c04acde921e664e92",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/review.json",
+      "bytes": 4638,
+      "sha256": "d7c1abdf2adc02b25dfc5cd7bc80c30868faf077a113fe77508dea40a8ee6802",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/source.json",
+      "bytes": 4684,
+      "sha256": "47bff7304529a100f1018ab5f32ce132dc34963ed99af919618665fbf805f6ba",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0035/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0035/v1/target-layout.json",
+      "bytes": 53603,
+      "sha256": "3e0ef08ca7124bae699fe9b2dc7acd757970cac400404b6e8f26c0f2c2d3e066",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/geometry.svg",
+      "bytes": 7180,
+      "sha256": "066750cc04c0c5059379054db700ba7a0bdaeee3f3bb278f3e8045500f9cdcbd",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/input.json",
+      "bytes": 6221,
+      "sha256": "3195f51048dc102fbec13774024ad4353506434a22a577613846c20d3e61c176",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "3ed446d085c740693a205481ad31479dcea68e5e58347a0a062bb71e25ff3443",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/review.json",
+      "bytes": 4648,
+      "sha256": "60f6f2b35512ec4d612483a14d5639800e4b872e3e8f3bd11373c905710b92e8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/source.json",
+      "bytes": 3794,
+      "sha256": "25c9e4dc11848a69e4e43f25cb820333fae7266bcddeed0be66ad8d9120f901a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0043/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0043/v1/target-layout.json",
+      "bytes": 50452,
+      "sha256": "75cc26a8e151e5b2f03f1161df4dfde9f0ec809d8f9c4d9009d3fa5af0cc03ee",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/geometry.svg",
+      "bytes": 5188,
+      "sha256": "0231077c4073f89f69b8ad2aaab9a81f18b35554789594af8d21d0a74a531e26",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/input.json",
+      "bytes": 13541,
+      "sha256": "03f29cf4ad42044479ea6adc301becc93b95911df3bfb9bdbb18b99c754ade73",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "7b58c15b3ffa210cdab59a212febc8637bec78e00e5e3fa1fe4cb0de8d2fc513",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/review.json",
+      "bytes": 5141,
+      "sha256": "04bff244dd241f4fdde5e243a4a5f6135271aac159fea73058ad875428947293",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/source.json",
+      "bytes": 4840,
+      "sha256": "2d2c9b471aa72024a43f60b8c521481bcbbb625234d7386222a97191e11e16c5",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0049/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0049/v1/target-layout.json",
+      "bytes": 46532,
+      "sha256": "352ee1a6c8477c7808a954000840023f967218be99669738765ec88d4cd69a00",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/geometry.svg",
+      "bytes": 7302,
+      "sha256": "e3400493118c3e8912e16bbeafbb6b53a72f11f6b731aed7b029e42001c6a8c8",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/input.json",
+      "bytes": 12414,
+      "sha256": "2fedf71910757905e6cee9337411d310b1d43a284caa22d6cf880496520b0109",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "d9ba9687a51203ea92b83d3bd4b90e4618163646f5696d59ae3f1e2878cbb252",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/review.json",
+      "bytes": 4776,
+      "sha256": "b98951de1c1e8e9d35b59f09f94461168fb59ab46fbc20a175d15514ad190bfa",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/source.json",
+      "bytes": 4970,
+      "sha256": "b86ce93ba38844340d7a35c926009be1c309365708cfb813dd1419cb2794a759",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0051/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0051/v1/target-layout.json",
+      "bytes": 61167,
+      "sha256": "4636668528057d686c04f17843ad76ab45bbbdced9a9cce191987808c6f9a71e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/geometry.svg",
+      "bytes": 4849,
+      "sha256": "a4d0914fd43c504c5a1e32535fe214945736c8b8d437f0d21d77a1fab887a799",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/input.json",
+      "bytes": 6086,
+      "sha256": "3b931a313207f0c68a654c4ac2f0fb9bd7b36363d1c296086eeee338271e2adc",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "591ab25dead05f6ff6e6b74fc6748a94f98215f6633daee51f0a7fd49d7df1ee",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/review.json",
+      "bytes": 4741,
+      "sha256": "144f62ca7484e3719c773dd49ef04f6c5caa7245648e98823c8453dc7d2b4e8f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/source.json",
+      "bytes": 3711,
+      "sha256": "d023685c7389167233cbb02b576a807d299a79e008686fea1b2b4a823d53e6ae",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0071/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0071/v1/target-layout.json",
+      "bytes": 57367,
+      "sha256": "df4578af2255bd8d27bb6bc89d1b609323b1af885cc651282f4ae12ee50962f9",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/geometry.svg",
+      "bytes": 6841,
+      "sha256": "dea39cf9f6e1c43bfe1813653699cb17605038d083ebf00821bb098577d9e965",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/input.json",
+      "bytes": 9577,
+      "sha256": "9c43a1e2a206663f94db38a7289a0c3fa05b3706c1ba764aad8bdd00de1e96ca",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "14ffb116ad012d83abe1577cc7dc8e77e48810477a6c84522b395a77ad380fb4",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/review.json",
+      "bytes": 4577,
+      "sha256": "ed2f0e2f6c908a484ecf8ab9a0711de4633f70e3d97aa69d3ac2a4e70e65905d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/source.json",
+      "bytes": 5031,
+      "sha256": "cb694c0b66f455bc481ee92f594c8c55de8e90fd23e4b147d925b8aa04975524",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0088/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0088/v1/target-layout.json",
+      "bytes": 57092,
+      "sha256": "0ccba8938d21b16bc3ac1c235ee51cc911a9b8216545cbc7f0fbafdff45b5529",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/geometry.svg",
+      "bytes": 10751,
+      "sha256": "eae611e36a5aa5b83e250856ddc6c1f109ee1863e6dbba1b073e414df518186a",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/input.json",
+      "bytes": 8801,
+      "sha256": "7a152e805c369acfd1d7fe3d0b56df3923ef3a042d3670f7cf51873d2ecc065d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "f45e00a6208a2dedd253b25e848b9d7f44f430cabcb3814f6fefa4f36b8df3f9",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/review.json",
+      "bytes": 4581,
+      "sha256": "588f3befca4a66d4e2641cd272bf282de6864fde42051415a025d750e74b6fca",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/source.json",
+      "bytes": 4297,
+      "sha256": "c460341f28925011f97a416a0e4300e74d21d09ea4aa9bd05d22affbcfcbbe1c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0090/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0090/v1/target-layout.json",
+      "bytes": 85433,
+      "sha256": "940c6318f7bd4277511d8fab375be31c5ce7b963a0cd7a09174586510090efe7",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/geometry.svg",
+      "bytes": 8245,
+      "sha256": "d54c5104b778b3c95ce12e9b257e5b8bcff5571963c9cf97ce3aae30bdaab178",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/input.json",
+      "bytes": 12639,
+      "sha256": "9e6200adb4929fb2d8959bf7128a9e81a5de1ee2a4af35d03972e158c71e5b36",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "c218c7576678cd38198b48f770de18c90201b93942352cfb3aa843d470fa4f4e",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/review.json",
+      "bytes": 5194,
+      "sha256": "e19f3dcd2fed0fdd49f7137f44e5c3bd597645a99f0d88e0bf377b4aa3517553",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/source-correction.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/source-correction.json",
+      "bytes": 934,
+      "sha256": "08c5feffe0ffca2d7f99a01c009f204c2543d89eac71af6d6b5496ed66043ed4",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/source.json",
+      "bytes": 5533,
+      "sha256": "11024cf83dd4d82f7e1a3f44f63b32132aaa85fb783936d7e5c6df4a3142fc91",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0239/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0239/v1/target-layout.json",
+      "bytes": 62550,
+      "sha256": "97f580a4b89b9e34fddf977edced5bfbe3355b82ee6b154b6185743b980af708",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/geometry.svg",
+      "bytes": 8666,
+      "sha256": "d795c3a940fcf874f15eaa5c031cb3b1ed6da0002c8e6fce42b58ed97a4da87b",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/input.json",
+      "bytes": 20135,
+      "sha256": "afb345cc8740959cc4222405ce989e1170abd6d6cedbf3452de594c64b0ebd9c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "27e651edce40f51437b719260e145a04aad76af903ebdd525dcbb36ecf6040a0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/review.json",
+      "bytes": 5557,
+      "sha256": "154579d9af2b3e219be0697257f28ba78e20f3b86ec138037de493ce97de5f0f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/source.json",
+      "bytes": 5127,
+      "sha256": "3000aebad3384afbd2dc17092c8168296282c27413987c27cde4914bd3a49ea0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0293/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0293/v1/target-layout.json",
+      "bytes": 55402,
+      "sha256": "4bb6018e29a575e0e3c11bef8b300f8c9aa83ebbc9e1bc00d888267dbc940bde",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/geometry.svg",
+      "bytes": 4785,
+      "sha256": "f47ae7c61e57c9c086194ae1fe54ce3477540726038a0c7bfe85ce9d8b9d6771",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/input.json",
+      "bytes": 19212,
+      "sha256": "0d8a38d79119c95232f88ef52f79dcd980f9ca7bcfdfefa7f9ae85ce65d0518c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "ff06875cba99865a411a258c5601ca14d1d333d3ca1db974c749405cf5a4fed9",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/review.json",
+      "bytes": 4605,
+      "sha256": "81e7ffc07acfcc6f3f5b1f100fc6aae0ba0011f16863461a7600cfccc20fcc97",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/source.json",
+      "bytes": 4733,
+      "sha256": "edc6960c13e06e2b09f4757e32dce4c39413febb9c5a50c05b13af51ec9fcddd",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0296/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0296/v1/target-layout.json",
+      "bytes": 41901,
+      "sha256": "6ae816ac7361ebeb7c328e66e96e5e90d98bb4c68a44bf7f40a2cd78c7a8fa10",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/geometry.svg",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/geometry.svg",
+      "bytes": 14959,
+      "sha256": "9ea3c8411939e22536c512142c545bcc9eb242753ba27718f9db3cabb4d6cbc7",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/input.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/input.json",
+      "bytes": 6124,
+      "sha256": "fb76bb51bd6b1acc591990cb00f017a9704a05d1724b56f6342e3b9f68f3b069",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/receipt.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/receipt.json",
+      "bytes": 1051,
+      "sha256": "1cac67de166105feb13900db5dd1a40d0c3f7e6a2eba8aae37dce1a26f09a33d",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/review.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/review.json",
+      "bytes": 5503,
+      "sha256": "65e53107b7b3436961d302a9cae1447770ede489fcbbcde7436bcb65a3b898c0",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/source.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/source.json",
+      "bytes": 5041,
+      "sha256": "cd7842febb96ba64f7d6819283334fd164d489c98f1fc82ca0e8f82c9d18a478",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13/store-0353/v1/target-layout.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13/store-0353/v1/target-layout.json",
+      "bytes": 163835,
+      "sha256": "c0850393eaff684beaa18ad3a1b8b95243e4e873c5713e8ce4705c08d990bd6c",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点标准标注-r13-视觉核对.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点标准标注-r13-视觉核对.json",
+      "bytes": 5110,
+      "sha256": "8452ed829ce89c714d51376314e00774a2c651bebb9b3da380f9ca98fe37239f",
+      "historical_only": true
+    },
+    {
+      "path": "history/试点验收-r12.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/试点验收-r12.json",
+      "bytes": 19179,
+      "sha256": "5076b7284a4d2e577b52ede0df7113baf8dd9925e6c6da5747040dca4bd51aa6",
+      "historical_only": true
+    },
+    {
+      "path": "previous-handoff/checkpoint.json",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/checkpoint.json",
+      "bytes": 242702,
+      "sha256": "9f3ba3713bcdadb3e5f88fdbecb6f9cb69e3a8b40883b2fae4367f0bdb0abbe7",
+      "historical_only": true
+    },
+    {
+      "path": "previous-handoff/给另一台Codex的接续指令.txt",
+      "original_path": "资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/给另一台Codex的接续指令.txt",
+      "bytes": 9350,
+      "sha256": "51f80cd4304ff9e633b72f11ae3bbec12a3816cc05163e786ecefae36e2466bc",
+      "historical_only": true
+    }
+  ],
+  "scripts": [
+    {
+      "path": "tools/data-cleaning/full-run-02/apply_vision.py",
+      "bytes": 3829,
+      "sha256": "9ec8d976efba69214dedaf00cec7a48cb14e9560eef6dcfdbd0cfeafecab6951"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/apply_vision_v2.py",
+      "bytes": 3990,
+      "sha256": "6777d06d7aec94e06af96ef7538befb960719e661e8469bb4ef08a428beb34a4"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/apply_vision_v3.py",
+      "bytes": 4007,
+      "sha256": "66a4ac0fb63e2aea1dc98009de90ffe95dab2816b399d058b1d516be78d01c52"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/catalog.py",
+      "bytes": 9226,
+      "sha256": "1f406e0b9f21e95fce1fbe07e1614058e129ac2194cb887cbc7bfc9a61bf6391"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/catalog_v2.py",
+      "bytes": 9391,
+      "sha256": "f0a29a171349d14101f304e02baa7dc4157b3e938609a9d62fada4404fd0c99c"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/checkpoint_handoff.py",
+      "bytes": 4634,
+      "sha256": "152a7bff4c4c67b295829f1376450b534d45973fb87bb0d8ea9db31da9ca64fc"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/classification.py",
+      "bytes": 2849,
+      "sha256": "bcac0012a76c4edb911e208b19881af19aacd1668b11fa9112acd856798b1ab2"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/classification_v3.py",
+      "bytes": 1804,
+      "sha256": "b15347c9ce0ad5acf6189908f285bfa37e78b43118ccb5822614cf220ea9d297"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/classification_v4.py",
+      "bytes": 1733,
+      "sha256": "9552e8d2124468c78ad978def07243a1f2821a74054b9a5c8cf0eb20a7a9fe42"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/classification_v5.py",
+      "bytes": 1840,
+      "sha256": "ffe4b2a4641a4f756da108306db1c15f2d13c304bfc3a8622174158ab6fdc28d"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/continue_all.py",
+      "bytes": 3478,
+      "sha256": "1b83ffbdd3607d1fe2680eec7981c05de6994428754999acf785fa22cef4f6c8"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/experiment.py",
+      "bytes": 3674,
+      "sha256": "0e3f0dfe6d4523dd80451b15a3d5de180e05ee39bbfd603e81a85f798fe72d31"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/extract_candidates.py",
+      "bytes": 10756,
+      "sha256": "adbb8fb87b32bfae3d1f27e042e4fb5518161cd4c596321c30bb2f9cdc4d58a6"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/extract_enriched.py",
+      "bytes": 2861,
+      "sha256": "6e0fb45986174667b06ddde389a9326e45ec160f7eaae9074444a1d09a5579b0"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/extract_enriched_v4.py",
+      "bytes": 246,
+      "sha256": "9d46800e7c5ea16b49da216c2e275ba1711edf26f32df96be6dafc4212ce58e1"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/extract_final.py",
+      "bytes": 1078,
+      "sha256": "f08e1906ec141d839d5c1daffce00686a3bba0f3ea23e861e78a385fd580d877"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/finalize_pilot.py",
+      "bytes": 1950,
+      "sha256": "7a03704123490368abdf2e6e3ae30d379da49a1efef3ff6a2a5f25491afe8e47"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/geometry_engine.py",
+      "bytes": 4293,
+      "sha256": "e97ff55e7910a3770e0668ce25405c4f15ebb456822ef2702f255b463c702696"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/network_geometry.py",
+      "bytes": 2387,
+      "sha256": "8dc08a10e5771e55ac548e9fe67fd9b8ad8d0a95b5e0f1617144f89c15fbdee1"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/ocr_fast.py",
+      "bytes": 698,
+      "sha256": "f489f5529d341c8961f7976a5d28ac91ba1a1232cfca69cd07d4d11d3f13d307"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/ocr_fast_v4.py",
+      "bytes": 219,
+      "sha256": "c20ea0b280d4bc13589fb9996486f8169213ba5bbf7d16cae9309553f6f80a88"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/ocr_pages.py",
+      "bytes": 3794,
+      "sha256": "d9360beee2a2e76716115a4707587086a0dc991d3df9d57eff4a85d2606a6e89"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/package_draft.py",
+      "bytes": 11062,
+      "sha256": "56b66f368996eecf58dcd7ca7d8e1a99787e394727fdfc53f3e8847c0ea4a097"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/package_draft_v2.py",
+      "bytes": 1393,
+      "sha256": "e9115c946a3ad7c6b387edd08843cdb002511997b2b08fc1ab44f4e698cca80f"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/pilot11.py",
+      "bytes": 4228,
+      "sha256": "addd635f12792019ce06544dd849761ce20d6bafd232892398e8a8fd35bbf62d"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/pilot20.py",
+      "bytes": 7197,
+      "sha256": "be3a14618d8ff3e307bf3ef72a3b5948796556c560a8ce9bb5343924b4327868"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/pilot_seeds.py",
+      "bytes": 5537,
+      "sha256": "e28e60c66e476f4efc6b08c24dd6207e78d41b3bb2d3bdb68a429efda9e9e2de"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/propose_scales_all.py",
+      "bytes": 3493,
+      "sha256": "498a5c18f225efae4fdf18dba42d282304f0b8ad97b0d16b1d99baa7abfb9943"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/raster_pages.py",
+      "bytes": 3535,
+      "sha256": "5a8a32f74879de69c52350d4c88d34089b9649926e73645dbfac27e3d571c8e1"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/README.md",
+      "bytes": 7663,
+      "sha256": "8f98ac4351db964f7ecac6f63349123a175debc8964140dffd23856b263e262d"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/requirements.txt",
+      "bytes": 273,
+      "sha256": "a7084746694543578a69a722bb751176059553436335a7e8cb671110277cf2a6"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/resume_checkpoint.py",
+      "bytes": 5699,
+      "sha256": "1e4eff086c4c6dbe6a43352f14540b69cd47b0f9cb968efe21df68d6ab9a5b30"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/resume_checkpoint_v2.py",
+      "bytes": 6085,
+      "sha256": "5972c652bd04b1e1996deac00c1f2691e6e1c9ae0f1c5f214cf6dc1f2fcd91bf"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/review_gallery.py",
+      "bytes": 3227,
+      "sha256": "02c90b9ea5fb1f7a21c5268cd848f63625212a6858229e3dc0db8e9349ddc682"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/save_visual_round003.py",
+      "bytes": 2609,
+      "sha256": "d332b522f4dfd8061a03a79a96df9f7ac2d3627b04fc56d315e382785fc071e8"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/scale_candidates.py",
+      "bytes": 4145,
+      "sha256": "1e3af05ed35bacd01d4b41f274848011526d86cca96cd65de2f6526c5302b0be"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/scale_candidates_v2.py",
+      "bytes": 3178,
+      "sha256": "507e640796305c1ad4c9ab1b3ba2eee9178d0f1f38ccd562fdbcb33b1721ea05"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/scale_candidates_v3.py",
+      "bytes": 3264,
+      "sha256": "28e1b4edd2223522a37d6887236ea65e210c8ba07e18d73464098e1f1b874b81"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/scan_all.py",
+      "bytes": 5531,
+      "sha256": "34db9e6bf95c354bd67648529cfaec1660a65c9ce15afd1f70066fb5ed49d193"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/sync_sources.py",
+      "bytes": 4482,
+      "sha256": "cecffce4ea941f4deac3c25548a549419b8a717b1ec938f442bc3522581009f4"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/vision_batch001.py",
+      "bytes": 2032,
+      "sha256": "84f07873c1c7b3685e4aa294547be554559631b8508344b1b71cd621b1156575"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/vision_batch002.py",
+      "bytes": 3405,
+      "sha256": "e2e20cd082d3a0ee03e0f944f180dc373b5dfeccd14d70801df7aae55cd3c3db"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/vision_batch003.py",
+      "bytes": 4107,
+      "sha256": "459662596b625d06358774ac85c4819e42e20d91a3ea9fee36c33e27dc6a90a8"
+    },
+    {
+      "path": "tools/data-cleaning/full-run-02/vision_batch004.py",
+      "bytes": 3113,
+      "sha256": "6929f20494fe42971a9fa07e9f7387e07319a409ed209ffe9643c7b25f4fb298"
+    }
+  ],
+  "dependencies": [
+    {
+      "path": "tools/data-cleaning/artifact_manifest.py",
+      "bytes": 1227,
+      "sha256": "b4c08475de8ac2a168790f6d051e4fcb7d61c54cd4cb0cfd273c0d1c2eed710d"
+    },
+    {
+      "path": "tools/data-cleaning/build_report.py",
+      "bytes": 19697,
+      "sha256": "e8db8d14da423e8b35a1bb1c5b42c9f024f86eed955587261f67476e66d859d3"
+    },
+    {
+      "path": "tools/data-cleaning/final_audit.py",
+      "bytes": 6103,
+      "sha256": "1db37b107ff2379b7e5530d1afee403c880da5e077286203a0f646d346783859"
+    },
+    {
+      "path": "tools/data-cleaning/geometry3.py",
+      "bytes": 14060,
+      "sha256": "4f37d0ee5c24bbc481fb3737ae67d6cb00be5a9584baf082d353265c5385d4fe"
+    },
+    {
+      "path": "tools/data-cleaning/geometry4.py",
+      "bytes": 1428,
+      "sha256": "a52071e87302f3cc56293483fe32c89bb42b378ecf6d48bb22ffc8cc91d72701"
+    },
+    {
+      "path": "tools/data-cleaning/geometry5.py",
+      "bytes": 1345,
+      "sha256": "d3d0fe863e40de682cafee7cf7a9acc1a3ff75c21e3c8c3e2184f55f858cb0ee"
+    },
+    {
+      "path": "tools/data-cleaning/geometry6.py",
+      "bytes": 1589,
+      "sha256": "2d87388b1a38ddf9cb92f10be6150cfcd3dbbbd05de58eb4bf9d925595843a44"
+    },
+    {
+      "path": "tools/data-cleaning/geometry7.py",
+      "bytes": 1480,
+      "sha256": "7ecb16998f884c000bc4dac52da469891da5a9043191a63dbd6a62fbd5b12d07"
+    },
+    {
+      "path": "tools/data-cleaning/geometry8.py",
+      "bytes": 2348,
+      "sha256": "bd183ba90134c3456dff8aeeec12b48fa2091cf88d27a14530c27dbedbbe73fa"
+    },
+    {
+      "path": "tools/data-cleaning/geometry9.py",
+      "bytes": 1331,
+      "sha256": "cc4fdcab2f6826bd4da80881bd4593c6e85212b059c35dec4284e6722d25d02b"
+    },
+    {
+      "path": "tools/data-cleaning/inspect_dimensions.py",
+      "bytes": 857,
+      "sha256": "99c3d6de3f6ba90bcd2ed54b2f12339daef7a34a97044cb8c97821df4a31fcda"
+    },
+    {
+      "path": "tools/data-cleaning/inspect_vectors.py",
+      "bytes": 730,
+      "sha256": "20dcc2b6efb9dc0da1cc31ef43c9073c7b861ec5d5476f78fb005bb524cda904"
+    },
+    {
+      "path": "tools/data-cleaning/inventory_review.py",
+      "bytes": 3559,
+      "sha256": "863fae6e76d765803a41a1fcfe35cf2b8e389faab8cddc8bf33d329be3f2e64f"
+    },
+    {
+      "path": "tools/data-cleaning/package_pilot.py",
+      "bytes": 19700,
+      "sha256": "8d5e06d2844634dd66d08df5d296087edf8ba6e165b86650e38a078bf4281ed6"
+    },
+    {
+      "path": "tools/data-cleaning/pipeline.py",
+      "bytes": 8524,
+      "sha256": "bfcaaa285104ed122ebe759400c400e06208779edfd7a513a8a17f56e076923a"
+    },
+    {
+      "path": "tools/data-cleaning/render_contact.py",
+      "bytes": 745,
+      "sha256": "6652bf56b3f422a6d0f6e5e1144449107424450754c20f4d3c1ab38291708fb0"
+    },
+    {
+      "path": "tools/data-cleaning/render_review_queue.py",
+      "bytes": 1905,
+      "sha256": "3a7a69acd7bb56c63a798327ae66101ba53264cdc5183a964c3f478561bfe72b"
+    },
+    {
+      "path": "tools/data-cleaning/revision2.py",
+      "bytes": 3448,
+      "sha256": "8ba4add8a8a3561f785e4112d2d074d77d8a10ab5a2e1216997b866bfc76f345"
+    },
+    {
+      "path": "tools/resource_library.py",
+      "bytes": 624,
+      "sha256": "0f7a326acacbe0af892df2963b32ea0427bb24b1d51f19ed6f3c34b7ce16566d"
+    },
+    {
+      "path": "资源库/00_资源索引/门店资源索引.json",
+      "bytes": 340179,
+      "sha256": "797cf497ca93d66b698ac654bad6ac2b94f85e15051509052bff4364de3ebc49"
+    },
+    {
+      "path": "资源库/00_资源索引/资源使用说明.md",
+      "bytes": 2595,
+      "sha256": "cbd23f5ffbe827508ca2d61cebec06ecf2557c78328a190a90e29bc6b8b3da4c"
+    },
+    {
+      "path": "资源库/06_生成流程文档/02_平面图与效果图提取.md",
+      "bytes": 4934,
+      "sha256": "dadaa0f7b2d83146e0975711c7c406d9caf2a081e15d3c2bf235a001062c14f7"
+    },
+    {
+      "path": "资源库/04_软装道具模型/单件模型/manifest.json",
+      "bytes": 331016,
+      "sha256": "77081324b59458c5cfbf51b13285be9191a81839c5c44693e0e6944cd292e3d3"
+    },
+    {
+      "path": "demo/src/data/placement-manifest.json",
+      "bytes": 23857,
+      "sha256": "c7ea30c07d58703461df8206a565206924d918e424c161c597c11ff6c8f3cfd2"
+    },
+    {
+      "path": "demo/src/data/placement-policy.json",
+      "bytes": 561,
+      "sha256": "2b8472794addc26f2880704d6741d7d2d35f625e1fafb2cc42a90b1b29200132"
+    },
+    {
+      "path": "demo/src/asset-contract.js",
+      "bytes": 2198,
+      "sha256": "c2a4c3d5a1c01ec1a1dcd00ccefc3eb68d0470095f5e7de8b36df05ed02a4b4c"
+    },
+    {
+      "path": "demo/src/space-planner.js",
+      "bytes": 3760,
+      "sha256": "c42019b37581b3a9898d37d883b7fa248277fa21b26631a8faadc2bd2ec09ecb"
+    }
+  ],
+  "summary": {
+    "payload_files": 236,
+    "payload_bytes": 8031726,
+    "scripts_files": 44,
+    "scripts_bytes": 173995
+  },
+  "known_limits": [
+    "No PDF/PNG/cache/venv included",
+    "Historical receipts are not resumed",
+    "Visual batch 004 is not applied",
+    "All new renders need visual verification",
+    "Unused scale_candidates_v2.py prototype has known syntax error; runner uses v3"
+  ]
+}

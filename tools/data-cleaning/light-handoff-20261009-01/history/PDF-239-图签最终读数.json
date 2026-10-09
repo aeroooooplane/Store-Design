@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:24:06.433026+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-239",
+  "method": "vision",
+  "physical_page": 1,
+  "title_text": "深航百脑汇店",
+  "filename_text": "沈阳百脑汇照材专卖店",
+  "store_city": null,
+  "previous_visual_reading": "深圳百脑汇店",
+  "previous_reading_status": "retracted",
+  "evidence_image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-title-final-check.png",
+  "reason": "本轮2200像素图签局部放大核对，第二字是航。店名/城市冲突保持未解决，不自行改名。",
+  "training_eligible": false
+}
