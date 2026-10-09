@@ -4,5 +4,11 @@
   "planningDefaults": {"table": "asset-408124", "display": "asset-323015", "counter": "asset-752992"},
   "categoryOverrides": {"asset-666964": "table", "asset-752992": "counter"},
   "installation": "floor",
-  "note": "仅开放已转换的落地软装；不包含墙画、标识或悬挂屏。偏好编号固定已有生成方案的规格，不规定模型尺寸。SI归属沿用目录判断，制造合规、正面与材质仍待验收。"
+  "webAssets": [
+    "asset-408124", "asset-323015", "asset-752992", "asset-666964", "asset-408125", "asset-1788391",
+    "asset-2360478", "asset-2595882", "asset-6799167", "asset-15903179", "asset-15903874", "asset-16469753",
+    "asset-16510684", "asset-24312623", "asset-24432224", "asset-24482600", "asset-24498456", "asset-33819654",
+    "asset-34327615", "asset-36882381", "asset-41053706", "asset-41277543"
+  ],
+  "note": "仅开放已转换的落地软装；不包含墙画、标识或悬挂屏。webAssets 是旧版工作台开放摆放的编号，与 asset-library.json 的 webReady 对应；网页模型目录中的其余 GLB 留给新版模型目录导入。偏好编号固定已有生成方案的规格，不规定模型尺寸。SI归属沿用目录判断；正面方向见 资源库/04_软装道具模型/网页模型/facing.json，材质仍待验收。"
 }

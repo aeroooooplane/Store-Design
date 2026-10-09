@@ -1,5 +1,6 @@
 import * as T from 'three'
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js'
+import {MeshoptDecoder} from 'three/addons/libs/meshopt_decoder.module.js'
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js'
 import {validateAsset} from './asset-contract.js'
 import {meshBounds} from './asset-normalization.js'
@@ -32,7 +33,8 @@ export async function loadVerifiedAsset(asset,signal){
   validateAsset(asset)
   const response=await fetch(asset.url,{signal})
   if(!response.ok)throw Error(`真实资产加载失败（${response.status}）：${asset.name}`)
-  const gltf=await new GLTFLoader().parseAsync(await response.arrayBuffer(),'')
+  // Web models are meshopt-compressed (scripts/compress-glb.mjs); uncompressed GLBs load unchanged.
+  const gltf=await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(await response.arrayBuffer(),'')
   const model=gltf.scene
   try{
     if(signal?.aborted)throw Error('模型加载已取消')

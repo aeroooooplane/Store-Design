@@ -1,0 +1,57 @@
+{
+  "id": "asset-37747691",
+  "name": "展台 · asset-37747691",
+  "category": "展台",
+  "siVersion": null,
+  "facing": null,
+  "url": "/assets/su/asset-37747691/model.glb",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "dimensions": {
+    "w": 0.6000000530242922,
+    "h": 1.1625317831568425,
+    "d": 0.6028500437597755
+  },
+  "source": "资源库/90_处理过程与审核/模型拆分/dae-20261009/split-20260925-v2/asset-37747691/selected-20260925-215700/prop.dae",
+  "sourceSha256": "dca5003baf48553bb92d8337738a348553c1128536ee33b79635c7c2d823227f",
+  "glbSha256": "0ab0a622c44e56583b1f7a1ff06518d4f93bd1b017711908d33b2835f45410a3",
+  "bytes": 3094428,
+  "expectedDimensions": {
+    "w": 0.5999999999999907,
+    "d": 0.6028500000000059,
+    "h": 1.16253183924966
+  },
+  "textures": {
+    "maxTextureSize": 2048,
+    "jpegForJpg": true,
+    "count": 6,
+    "jpeg": 3,
+    "downscaled": 1
+  },
+  "removedLineObjects": 3,
+  "warnings": [
+    "THREE.ColladaLoader: You are loading an asset with a Z-UP coordinate system. The loader just rotates the asset to transform it into Y-UP. The vertex data are not converted, see #24289.",
+    "GLTFExporter: Use MeshStandardMaterial or MeshBasicMaterial for best results."
+  ],
+  "status": "converted-dimensions-checked-visual-review-pending",
+  "convertedAt": "2026-10-09T09:11:14.090Z",
+  "compression": {
+    "tool": "@gltf-transform/core@4.5.1 + meshoptimizer@1.3.0",
+    "steps": [
+      "dedup",
+      "weld",
+      "prune",
+      "meshopt(level=medium, position=16bit)"
+    ],
+    "requires": "EXT_meshopt_compression, KHR_mesh_quantization",
+    "bytesBefore": 8697400,
+    "glbSha256Before": "527a8dd921770bb3dd7e69d19ffd782fe7a923119480bf41675d7266127282b4",
+    "dimensionsAfter": {
+      "w": 0.6000001014709475,
+      "h": 1.1625326489517356,
+      "d": 0.6028501543856952
+    },
+    "compressedAt": "2026-10-09T09:16:57.648Z"
+  }
+}
