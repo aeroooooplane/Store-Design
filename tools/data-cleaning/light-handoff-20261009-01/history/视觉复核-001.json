@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T05:54:13.076516+00:00",
+  "generator": {
+    "script": "vision final inspection",
+    "version": "1.0.0"
+  },
+  "method": "vision",
+  "records": [
+    {
+      "source_id": "NEW-006",
+      "page": 16,
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\平面候选-视觉修订-r2\\NEW-006\\p016\\draft.json",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\NEW-006-p016-vision-r2.png",
+      "boundary_alignment": true,
+      "props_alignment": "partial",
+      "reject_items": [
+        "object-007"
+      ],
+      "reason": "屏幕候选仍混入标注引线，不能作为可靠柜体占地；其余七个家具/电子水牌轮廓对齐。",
+      "scale_visual_check": true,
+      "auto_status": "partial",
+      "training_eligible": false
+    }
+  ]
+}

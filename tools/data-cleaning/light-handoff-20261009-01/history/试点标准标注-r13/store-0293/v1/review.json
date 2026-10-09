@@ -1,0 +1,188 @@
+{
+  "source_id": "PDF-293",
+  "store_id": "store-0293",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 4760,
+        "endpoints_canvas": [
+          [
+            482,
+            959
+          ],
+          [
+            1195,
+            959
+          ]
+        ],
+        "path_id": 224,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            302.2799987792969,
+            604.3199462890625
+          ],
+          [
+            754.9199829101562,
+            604.3199462890625
+          ]
+        ],
+        "length_pdf": 452.6399841308594,
+        "m_per_point": 0.010516083790387973,
+        "selection_delta_pdf": 1.8982399023353849,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 1800,
+        "endpoints_canvas": [
+          [
+            914,
+            590
+          ],
+          [
+            914,
+            859
+          ]
+        ],
+        "path_id": 842,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            576.5999755859375,
+            370.79998779296875
+          ],
+          [
+            576.5999755859375,
+            543.719970703125
+          ]
+        ],
+        "length_pdf": 172.91998291015625,
+        "m_per_point": 0.01040943891912841,
+        "selection_delta_pdf": 1.6048222335372513,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.010192803567201973,
+    "m_per_point": 0.010462761354758193,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": "platform_outline",
+    "area_m2": 11.727,
+    "stated_area": null,
+    "area_difference_ratio": null
+  },
+  "props": {
+    "item_count": 7,
+    "located_count": 6,
+    "out_of_bounds": [
+      {
+        "object_id": "object-004",
+        "area": 0.134876,
+        "basis": "axis_aligned_bounding_box"
+      },
+      {
+        "object_id": "object-005",
+        "area": 0.218031,
+        "basis": "axis_aligned_bounding_box"
+      },
+      {
+        "object_id": "object-006",
+        "area": 0.122844,
+        "basis": "axis_aligned_bounding_box"
+      }
+    ],
+    "overlaps": [
+      {
+        "objects": [
+          "object-004",
+          "object-005"
+        ],
+        "area": 0.040672,
+        "basis": "axis_aligned_bounding_boxes"
+      },
+      {
+        "objects": [
+          "object-005",
+          "object-006"
+        ],
+        "area": 0.03906,
+        "basis": "axis_aligned_bounding_boxes"
+      }
+    ],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [
+    {
+      "field": "cashier_nominal_length",
+      "values_m": [
+        0.9,
+        1.8
+      ],
+      "resolution": null
+    }
+  ],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-293-pilot-r10.png",
+      "r10_overlay_sha256": "921d36b66a2590f72a5399aaca5a35bfe6f30f530c119ccb363f3fb893643c61",
+      "notes": "平台曲线及6件家具对齐，3段弧形柜已定位；显示屏位置仍未知，中英文柜长冲突。",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": false,
+      "final_gate_record": {
+        "source_id": "PDF-293",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-293.json",
+        "draft_sha256": "0a2cc1e1dd1f0a123a7cab3abfc9921423f65cbff80698388298ec6dc87de58c",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-293-pilot-r10.png",
+        "overlay_sha256": "921d36b66a2590f72a5399aaca5a35bfe6f30f530c119ccb363f3fb893643c61",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "平台曲线及6件家具对齐，3段弧形柜已定位；显示屏位置仍未知，中英文柜长冲突。",
+        "correction_note": null
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-293-pilot-r10.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:26.939985+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

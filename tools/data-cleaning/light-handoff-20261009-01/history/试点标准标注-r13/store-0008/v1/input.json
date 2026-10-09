@@ -1,0 +1,499 @@
+{
+  "source_id": "PDF-008",
+  "store_id": "store-0008",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "pdf_point",
+    "origin": "normalized_pdf_page_top_left",
+    "boundary_bbox_origin_pdf": null,
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "height_unit": "m",
+    "precision_decimals": null,
+    "origin_unresolved": true,
+    "unit_reason": "比例或边界原点尚不可靠，保留原始PDF点坐标。"
+  },
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 10700,
+        "endpoints_canvas": [
+          [
+            537,
+            121
+          ],
+          [
+            1291,
+            121
+          ]
+        ],
+        "path_id": 2479,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            481.55999755859375,
+            108.239990234375
+          ],
+          [
+            1149.47998046875,
+            108.239990234375
+          ]
+        ],
+        "length_pdf": 667.9199829101562,
+        "m_per_point": 0.016019883030568477,
+        "selection_delta_pdf": 2.5997167574257327,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 11928,
+        "endpoints_canvas": [
+          [
+            468,
+            170
+          ],
+          [
+            468,
+            1011
+          ]
+        ],
+        "path_id": 2547,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            419.5799865722656,
+            154.739990234375
+          ],
+          [
+            419.5799865722656,
+            900.0599975585938
+          ]
+        ],
+        "length_pdf": 745.3200073242188,
+        "m_per_point": 0.016003863954790157,
+        "selection_delta_pdf": 3.7525092309429455,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.0010004498090522734,
+    "m_per_point": 0.016011873492679317,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": null,
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "fixed-001",
+      "label_text": "LOGO（H=150mm）",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          532.514892578125,
+          366.5831298828125,
+          541.3878173828125,
+          450.17999267578125
+        ],
+        "nominal_length_m": 0.15,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 516.239990234375,
+          "z": 356.70001220703125,
+          "w": 12.5999755859375,
+          "d": 106.55999755859375,
+          "pdf_polygon": [
+            [
+              516.239990234375,
+              463.260009765625
+            ],
+            [
+              528.8399658203125,
+              463.260009765625
+            ],
+            [
+              528.8399658203125,
+              356.70001220703125
+            ],
+            [
+              516.239990234375,
+              356.70001220703125
+            ],
+            [
+              516.239990234375,
+              463.260009765625
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-002",
+      "label_text": "灯箱",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          731.865234375,
+          700.0785522460938,
+          752.6300659179688,
+          717.1968994140625
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 777.96728515625,
+          "z": 706.1473388671875,
+          "w": 75.6453857421875,
+          "d": 75.6453857421875,
+          "pdf_polygon": [
+            [
+              842.0089416503906,
+              716.6996154785156
+            ],
+            [
+              838.3137295334427,
+              713.5738381279839
+            ],
+            [
+              834.2378381799767,
+              710.9359809027777
+            ],
+            [
+              829.8272190093994,
+              708.8302230834961
+            ],
+            [
+              825.127823441117,
+              707.3007439507378
+            ],
+            [
+              820.1856028945358,
+              706.391722785102
+            ],
+            [
+              815.0465087890625,
+              706.1473388671875
+            ],
+            [
+              809.9209895663789,
+              706.5934945918895
+            ],
+            [
+              805.0183122422962,
+              707.6960361621998
+            ],
+            [
+              800.3826560974121,
+              709.4090127944946
+            ],
+            [
+              796.0582004123265,
+              711.6864737051504
+            ],
+            [
+              792.0891244676376,
+              714.4824681105436
+            ],
+            [
+              788.5196075439453,
+              717.7510452270508
+            ],
+            [
+              785.3938289218478,
+              721.4462542710481
+            ],
+            [
+              782.7559678819445,
+              725.522144458912
+            ],
+            [
+              780.650203704834,
+              729.932765007019
+            ],
+            [
+              779.1207156711155,
+              734.6321651317455
+            ],
+            [
+              778.2116830613878,
+              739.5743940494679
+            ],
+            [
+              777.96728515625,
+              744.7135009765625
+            ],
+            [
+              778.4134420818751,
+              749.8390330208672
+            ],
+            [
+              779.5159869723851,
+              754.7417187160917
+            ],
+            [
+              781.2289686203003,
+              759.3773794174194
+            ],
+            [
+              783.5064358181424,
+              763.7018364800347
+            ],
+            [
+              786.3024373584323,
+              767.6709112591212
+            ],
+            [
+              789.5710220336914,
+              771.2404251098633
+            ],
+            [
+              793.2662386364408,
+              774.3661993874445
+            ],
+            [
+              797.3421359592013,
+              777.0040554470486
+            ],
+            [
+              801.7527627944946,
+              779.1098146438599
+            ],
+            [
+              806.4521679348416,
+              780.639298333062
+            ],
+            [
+              811.3944001727634,
+              781.5483278698392
+            ],
+            [
+              816.5335083007812,
+              781.792724609375
+            ],
+            [
+              821.65901350092,
+              781.3465560630515
+            ],
+            [
+              826.5616791336626,
+              780.2440061216003
+            ],
+            [
+              831.1973257064819,
+              778.5310249328613
+            ],
+            [
+              835.521773726852,
+              776.253562644676
+            ],
+            [
+              839.4908437022453,
+              773.4575694048845
+            ],
+            [
+              843.0603561401367,
+              770.1889953613281
+            ],
+            [
+              846.1861315479985,
+              766.4937906618471
+            ],
+            [
+              848.8239904333043,
+              762.4179054542824
+            ],
+            [
+              850.9297533035278,
+              758.0072898864746
+            ],
+            [
+              852.4592406661423,
+              753.3078941062645
+            ],
+            [
+              853.3682730286209,
+              748.3656682614927
+            ],
+            [
+              853.6126708984375,
+              743.2265625
+            ],
+            [
+              853.1665140081334,
+              738.1010292900932
+            ],
+            [
+              852.0639693648728,
+              733.1983405219186
+            ],
+            [
+              850.3509883880615,
+              728.5626754760742
+            ],
+            [
+              848.0735224971066,
+              724.2382134331598
+            ],
+            [
+              845.2775231114139,
+              720.2691336737738
+            ],
+            [
+              842.0089416503906,
+              716.6996154785156
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-003",
+      "label_text": "灯箱",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          530.33837890625,
+          792.450927734375,
+          540.0985717773438,
+          810.780029296875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 522.5399780273438,
+          "z": 719.0400390625,
+          "w": 6.29998779296875,
+          "d": 107.15997314453125,
+          "pdf_polygon": [
+            [
+              522.5399780273438,
+              719.0400390625
+            ],
+            [
+              522.5399780273438,
+              826.2000122070312
+            ],
+            [
+              528.8399658203125,
+              826.2000122070312
+            ],
+            [
+              528.8399658203125,
+              719.0400390625
+            ],
+            [
+              522.5399780273438,
+              719.0400390625
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "si_index_label": "SI2.0",
+  "si_evidence": null,
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "requirements": null,
+  "rules_source": null,
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:14.965818+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

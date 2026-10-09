@@ -1,0 +1,175 @@
+{
+  "source_id": "PDF-019",
+  "store_id": "store-0019",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\上海闵行凯德梦之龙照材专卖店.pdf",
+  "sha256": "8180a52e5e78375a5ee96eddfda2a154b39b603c5008cef8a223f405896f5de7",
+  "physical_page": 7,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "render_dpi": 151.13350125944586,
+  "pdf_to_m_matrix": [
+    0.010630317032337189,
+    0.0,
+    0.0,
+    0.010630317032337189,
+    -3.8709232807159424,
+    -1.2197223901748657
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.010630316615573409,
+    0,
+    0,
+    0.010630316615573409,
+    -3.8709233237009117,
+    -1.2197224246592073
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1106.699951171875,
+          368.1675109863281,
+          1144.7467041015625,
+          377.7059326171875
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [],
+    "date_evidence": [
+      {
+        "text": "2025.10.10",
+        "bbox": [
+          1106.3399658203125,
+          525.5475463867188,
+          1145.6805419921875,
+          535.0859375
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PL-03",
+        "bbox": [
+          1116.239990234375,
+          607.3875732421875,
+          1137.0135498046875,
+          616.9259643554688
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-019-pilot-r10.png",
+    "r10_overlay_sha256": "56b5947478526d3a5676fdca6bf3fb2b8cadf6bca9ab026b850a352236c99925",
+    "notes": "外边线和桌柜对齐，新增斜向屏幕；消防物仍待完整标注。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-019",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-019.json",
+      "draft_sha256": "1c548878c98a1a2b8cae77b340d9f5ceeed6605629d1b37f77461b272772d67d",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-019-pilot-r10.png",
+      "overlay_sha256": "56b5947478526d3a5676fdca6bf3fb2b8cadf6bca9ab026b850a352236c99925",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified",
+      "training_eligible": false,
+      "notes": "外边线和桌柜对齐，新增斜向屏幕；消防物仍待完整标注。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1191.0,
+          842.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0997624703087885,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:16.089513+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

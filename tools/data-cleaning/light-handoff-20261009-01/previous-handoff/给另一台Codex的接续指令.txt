@@ -1,0 +1,61 @@
+请从保留节点继续“影石门店空间设计工作台”的全量门店 PDF 清洗，不要重新开始。
+
+先读：
+1. 资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/README.md
+2. 同目录 checkpoint.json、transfer-files.json
+3. 资源库/06_生成流程文档/02_平面图与效果图提取.md（权威规范）
+4. 资源库/00_资源索引/资源使用说明.md、门店资源索引.json
+5. 资源库/04_软装道具模型/单件模型/manifest.json
+6. demo/src/data/placement-manifest.json、placement-policy.json，demo/src/asset-contract.js、space-planner.js
+7. tools/resource-library/export_store_pdfs.py（只读，不运行批准导出）
+8. tools/data-cleaning/full-run-02/README.md，以及下面列出的最新模块和视觉记录。
+
+原目标：处理 D:\各门店图纸 的所有新旧图纸，重点是每店每版本的边界、入口、柱子/固定设施、移动道具的尺寸与位置，然后才是逐页分类和效果图整理。原索引418份，已同步新增95份PDF+1份Excel，现在项目有513份PDF、16820页、511个不同PDF哈希。NEW-001…005已在此前分配给2PPTX+3RAR，本批新PDF从NEW-006开始，NEW-027是Excel。源文件在项目的资源库/01_各门店原图纸/，下载源不能修改。Excel已原样同步，未解析表内标签。
+
+用户因电脑卡顿要求保留当前节点并迁移；原电脑清洗进程已经全停。不要再恢复高并发。默认单进程、逐阶段顺序运行。只读预检和续跑入口：tools/data-cleaning/full-run-02/resume_checkpoint_v2.py。先不带参数做预检，通过后加 --execute --stage all。保持项目 D:\text demo；如果路径不同，先在新代码中做读取时路径映射，不改写旧证据。虚拟环境需要重建，requirements.txt在full-run-02。
+
+绝对约束：不改/删/移原图纸；不覆盖已有文件（脚本修订也用新文件）；不改原资源索引、不改demo和已有tools文件；不执行git add/commit/push、不改.gitignore；所有training_eligible=false，version_confirmed=false；不写approved:true或审核人姓名；未知尺寸/文字/版本null并解释；不用图片长宽比或面积猜尺寸；不使用AI生成或补画图纸。所有JSON带schemaVersion=1/generatedAt/generator。只产生自动提取草稿。
+
+准确的节点统计见checkpoint：501份/16399页完成原始逐页扫描；338份完成图签阶段；319份位图补识别阶段；89份r2几何来源凭据、176页草稿，r3另2份（与r2有重合）；116页自动比例候选；48份363页生成查阅图。不是全量清洗已完成。保存JSON无损坏。5个未结束目录保留，OCR和位图逐页缓存可复用；NEW-015 r2目录只有未完成p002，续跑入口会写新r4命名空间，不覆盖。
+
+已过20份试点门槛：试点验收-r12.json记录16/20=80%主要边界和已定位道具对齐；19/20双方向核验，PDF-002仍未可靠确定x方向。所有20份partial，complete0、failed0、训练候选0。标准封装在全量续跑-02/试点标准标注-r13，20张最终overlay也已实际打开，见试点标准标注-r13-视觉核对.json；数值/字段核验见07_试点标准标注字段核验.json。80%是视觉辅助矢量重组工作流，不是纯自动准确率。
+
+当前路径简称：
+OUT=资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02
+CACHE=资源库/90_处理过程与审核/数据清洗-20261009/_cache/全量续跑-02
+SCRIPTS=tools/data-cleaning/full-run-02
+旧试点规范文件在资源库/90_处理过程与审核/训练标注，必须随项目复制。
+
+关键代码：
+- geometry_engine.py、network_geometry.py：原始矢量路径/同色端点网络重组，视觉ROI选原有闭合面；snap_trace只吸附真实原始矢量顶点，保留path/item和偏差。
+- scan_all.py缓存每页原生文字、矢量数、位图区域/像素/SHA256。最早分类规则不可靠，不能当最终类型。
+- ocr_fast_v4.py、本地RapidOCR；extract_enriched_v4.py补全布局整页OCR；raster_pages.py识别位图平面；extract_final.py补提取r3。
+- classification_v5.py新修正砌墙/硬装平面、节点图、稀疏封面；尚未用于全部旧草稿。catalog_v2.py还加入实际目录标题优先和已保存视觉决定。
+- scale_candidates_v3.py与propose_scales_all.py：数字配对尺寸线，并找两端斜刻线真实交点，两个方向误差<=2%，仅产candidate_two_axes_pending_vision，不可直接视作验证。scale_candidates_v2.py是有语法错误的历史未使用原型，不要导入。
+- package_draft_v2.py修正了混合单位：米制boundary的旧bounds/area改为bounds_pdf/area_pdf_point2，数值保留三位，只有比例可靠且边界原点明确才转米。入口/固定/障碍物缺失继续partial。
+- continue_all.py是旧高并发调度器，不要恢复它。catalog.py有重复generator参数错误，是已保留原型；用catalog_v2.py。
+- resume_checkpoint.py v1会错误地要求追加进度日志全文件hash不变，已被resume_checkpoint_v2.py取代；v2校验原日志前缀，允许追加。
+
+已实际视觉复核的新增案例（不在原20份中）：
+- 视觉批次-001、002及视觉复核-001、002：NEW-006 p16（p2几何对应已目视），NEW-007 p1，PDF-004 p11；已生成并打开修正overlay。NEW-006需要撤回误选的screen object-007；NEW-007虚线凳未定位；PDF004边界未知，两条斜向屏幕未定位。
+- 视觉批次-003 + 平面候选-视觉修订-r3 + 视觉复核-003：PDF006p7（20件定位，9个无文字坐凳补记）、PDF010p1（8/9定位，边界净线）、PDF009p1（11/19定位，两个柱子）。三份双轴核验已实际打开确认。PDF006障碍物object-001只重组了柱子半个矩形的三角面，必须撤回该障碍物几何；room_height=4.7m来自“店内天花4700mm”，证据见视觉复核003。PDF009斜向柜体保留真实外包矩形，rotation=null。
+- 视觉批次-004.json已创建，覆盖NEW008p2、NEW010p1、NEW011p1，原overlay已实际打开并选择ROI/尺寸线，但尚未运行apply_vision_v3.py生成修正，也未打开修正图。不能把这批写成已通过复核。
+
+逐页视觉决定已保存：视觉页面复核-003/004/005.json。覆盖NEW006、NEW007、NEW008和PDF001..013的部分不确定/效果/封面/专业页。已记录实际视角、日期/面积冲突。只对这些记录宣称看过；不能把page-review目录所有生成图都标为已读。
+
+PDF-239重要纠错：文件名“沈阳百脑汇”，原用户说图签深圳、此前也误读深圳；最新打开图签高清裁片明确读到“深航百脑汇店”，与原生文字一致。OUT/PDF-239-图签最终读数.json、CACHE/PDF-239-title-final-check.png及试点r13的source-correction.json。最终source应写深航原文、城市null，保留与沈阳文件名冲突。不能沿用旧source里的深圳。
+
+其他已知冲突：PDF001概念页73㎡、施工图78.9㎡；PDF006封面正文41㎡但图签49.9㎡；PDF293收银标注名义尺寸0.9/1.8m冲突。不要自主裁决。NEW039与NEW040文件名无框/框架但PDF哈希完全相同；PDF175与176哈希也相同。同哈希及同店/近重复必须同split_group。
+
+catalog_v2.py开始过“身份与分类快照-02”，在内存整理时被停止，尚无已完成快照。它按严格归一化文件名/哈希建临时门店家族，同名迁址/铺型变化保留待核，不宣称确认店铺。版本仅为临时来源bundle，仍需按图签日期、修订号、同页多楼层/多方案实际拆分。不要把这个脚本的初步分组当作用户要求已经完全完成。
+
+剩余工作：
+1. 用低负载入口续完扫描、OCR、位图恢复、候选几何和比例候选；单来源失败记日志，保留所有旧文件。整机阶段完成后仍有视觉工作。
+2. 修复误匹配：自动就近文字法会选尺寸网格或产品小图标，不能无审核转正式坐标。按视觉ROI重组选真实柜体；重复“收银”和“1.8米收银台”要按同一图形去重；无字凳子照常记录。
+3. 实际打开每个门店/版本的overlay、双方向尺寸线；不确定页面逐页看图。自动比例候选确认后才可用；面积只能核验。错误提取撤回null并写原因。
+4. 做所有门店/版本结构化草稿，边界/入口/障碍/固定/道具分层；source追溯PDF哈希/物理页/图框/旋转/转换矩阵。未确认版本、未知字段不猜。轮廓未可靠闭合时明确PDF点坐标；所有height单位单列米。
+5. 效果页逐图区域、像素、SHA、视角、same_layout，无法证明同版保持null。不向03效果图目录做批准导出。
+6. 完整final分类JSONL、门店版本、名称映射、质检报告/CSV/候选训练清单、README及校验。最终标准标注需要选择新的无冲突目录，旧训练标注已有v1不可覆盖；当前试点采用OUT内独立命名空间，不能把算法修订号伪装成真实设计版本。
+7. 如最终全部auto_status仍partial，要如实统计，不为达标写complete。最终中文说明实际处理量、状态、候选按SI/铺型、困难、5类问题、路径与未完成项。
+
+本机已停止计算，迁移预检已通过；在确认迁移副本和环境后继续，不要消耗原电脑资源。

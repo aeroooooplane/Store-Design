@@ -1,0 +1,161 @@
+{
+  "source_id": "PDF-005",
+  "store_id": "store-0005",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\上海五角场万达授权体验店.pdf",
+  "sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    842.0,
+    595.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    842.0,
+    595.0
+  ],
+  "render_dpi": 213.7767220902613,
+  "pdf_to_m_matrix": null,
+  "normalized_pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          782.5999755859375,
+          260.100341796875,
+          809.4886474609375,
+          266.8414306640625
+        ],
+        "size": 5.834298610687256,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [],
+    "date_evidence": [
+      {
+        "text": "2025.10.16",
+        "bbox": [
+          782.3599853515625,
+          371.34033203125,
+          810.162841796875,
+          378.0814208984375
+        ],
+        "size": 5.834298610687256,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PL-03",
+        "bbox": [
+          789.4400024414062,
+          429.1803283691406,
+          804.1212158203125,
+          435.9214172363281
+        ],
+        "size": 5.834298610687256,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-005-pilot-r10.png",
+    "r10_overlay_sha256": "fac84a324ff46ef5b573b3cea054a62cf40c2a457baf66e0d9a77ecb232a0476",
+    "notes": "桌柜及三凳对齐；r10边界误沿外部尺寸延伸区闭合，必须拒绝。",
+    "boundary_alignment": false,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": true,
+    "final_gate_record": {
+      "source_id": "PDF-005",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-005.json",
+      "draft_sha256": "b9187a5e4c3910397c6fc5f8dda12e64d2bc12dc5e27116ad560e04bf6246ad5",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-005-pilot-r11.png",
+      "overlay_sha256": "5ab9388a52c7aa8430df482b42849c7f9e2540bcdc13f387dfddd822900dc914",
+      "method": "vision",
+      "boundary_alignment": false,
+      "major_props_alignment": true,
+      "gate_pass": false,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "桌柜及三凳对齐；r10边界误沿外部尺寸延伸区闭合，必须拒绝。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          842.0,
+          595.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        842.0,
+        595.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 270,
+  "original_pdf_to_normalized_pdf_matrix": [
+    0.0,
+    -1.0,
+    1.0,
+    0.0,
+    0.0,
+    595.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.969121140142518,
+    0,
+    0,
+    2.969747899159664,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:14.410238+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

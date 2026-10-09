@@ -1,0 +1,590 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:34:52.633093+00:00",
+  "generator": {
+    "script": "visual_session_record",
+    "version": "004"
+  },
+  "pages": [
+    {
+      "source_id": "PDF-002",
+      "page": 1,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p001.png",
+      "image_sha256": "5b2273dbe21acd11c6287a2307fff902a86e85d75fdf0e1aabc739849a653480",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 2,
+      "type": "elevation",
+      "view_description": "带尺寸的入口正立面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p002.png",
+      "image_sha256": "8528e5444078fc20284b38fe44c30e95f9d228eb9bca5ee627266f527e82d034",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 3,
+      "type": "render",
+      "view_description": "入口正面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p003.png",
+      "image_sha256": "a0f80f56e1808511588c2c738d40d1f4754c6e67a0765ba73cadd6f0c643f9f7",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 4,
+      "type": "render",
+      "view_description": "入口看向室内",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p004.png",
+      "image_sha256": "1350564e5944763307d2b7cf538f346e223a61f51644c0481554068c44956b5d",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 5,
+      "type": "render",
+      "view_description": "室内斜侧面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p005.png",
+      "image_sha256": "07f5e3794d2e79dcbe25b2b7240a133d44729ed3ec476f256acb4608f223fc75",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 12,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p012.png",
+      "image_sha256": "2fbf4abbfc24bfd774155c533e5a84ad369b00b6dbb704c1508ca875f9e3bfa4",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-002",
+      "page": 35,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-002\\p035.png",
+      "image_sha256": "ecfe2b9d4f671fbc762ec5a030dde44f2c6ef89e0d0e0b5f084ee3f9a7c14935",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 1,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p001.png",
+      "image_sha256": "92ea553556b24e24bc2249fd78458b479d86230465d39e3b646ab702c4037996",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 3,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p003.png",
+      "image_sha256": "5f6d8136c68b013ba55e3672bfe7e796bc80c29705d4b66bfec25e182fcd0327",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 4,
+      "type": "material",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p004.png",
+      "image_sha256": "f5376e546476e4663e6e3458d56ef9cace83c40fbd70b2a010d81173fefddb50",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 8,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p008.png",
+      "image_sha256": "e9b6dccf1566d32900c13f1b24e284c00e5e9d63ced4593aee294c83290422b2",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 19,
+      "type": "elevation",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p019.png",
+      "image_sha256": "d7b87c8403d2ec38473d3de315e98b92e353f08a3ff8061a3f66b6ac3eb44049",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 20,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p020.png",
+      "image_sha256": "db1c6036e6c933461e1c6a33e1307a2e4d1f9fc1dc2f7b58fe08dc3e5520cacc",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 21,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p021.png",
+      "image_sha256": "e01df49d1c1d7aa66ae5de84778858dc61d38d256934297914779367cf168ce3",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 22,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p022.png",
+      "image_sha256": "661633cc8f59ea6153024725ac236288377c5e0708d3292c0d7c968a0141233a",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 26,
+      "type": "other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p026.png",
+      "image_sha256": "519f0a1ba425767f4f58603c0ea8f1416824e4f5a3bc1229ed20242b9f06030a",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-003",
+      "page": 30,
+      "type": "elevation",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-003\\p030.png",
+      "image_sha256": "c00e2dfa174a71a3226cf4cb20195ed45a472c9b12bc131272b0ecbe8f5bbfbf",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 1,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p001.png",
+      "image_sha256": "bf56755b60c1c4e1e205b82cd73475496cf251d60c488a8cd8c2300581e3eab7",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 2,
+      "type": "render",
+      "view_description": "入口正面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p002.png",
+      "image_sha256": "36aba3da90703e649258ad4199aa2daf7f316e49fe66104c7d48a931d952f714",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 3,
+      "type": "render",
+      "view_description": "入口看向室内",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p003.png",
+      "image_sha256": "ed8b03706cc8116f4c2ca5c471b8cc3b21ef6d41a0d9ceab07dd4557f806543b",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 4,
+      "type": "render",
+      "view_description": "入口斜侧面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p004.png",
+      "image_sha256": "04b3783e1f7a197dcf339c2040829cafb4da6bea4c74c2cbc8410796ccf932b9",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 5,
+      "type": "render",
+      "view_description": "收银及配件柜局部",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p005.png",
+      "image_sha256": "7d72f450e79bbae6374c28f0ce986b81ab23217c7e26491cd6c2b3b6099d67a8",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 6,
+      "type": "render",
+      "view_description": "开箱与培训区局部",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p006.png",
+      "image_sha256": "ef8016d5117229188f803f354d5576d42adc4d276b23b60a92f75eeeb132d0d9",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 13,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p013.png",
+      "image_sha256": "c45d68b4a5b08f56531bc8e1b0d230327b20d4ed28369c1568524cded07290d1",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-004",
+      "page": 32,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-004\\p032.png",
+      "image_sha256": "2797eb7fefd99cb17be16f66eedea7fd70172ad1237a2f6c482d26232c25e3f4",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 2,
+      "type": "render",
+      "view_description": "玻璃门面斜侧面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-005\\p002.png",
+      "image_sha256": "08ef58e813499cad62b30977c592d5ed8bd753e6a03d2d1fa86872e8cd83fabb",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 3,
+      "type": "render",
+      "view_description": "另一开口正面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-005\\p003.png",
+      "image_sha256": "ef41d925bed16cb9174af9b15bfa4ec9397049a80d4718924129612582ea6ffa",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 4,
+      "type": "render",
+      "view_description": "室内展示区斜侧面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-005\\p004.png",
+      "image_sha256": "3fd45c48a7c31f84045f6851b53ce27226b7e60dbfb1a13471d66c2a9f39c858",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-005",
+      "page": 5,
+      "type": "render",
+      "view_description": "入口看向展示区与配件墙",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-005\\p005.png",
+      "image_sha256": "f56494086dad0e6282d3599c3e585e5cc4c76117414813f24a6c14ddaa3e308a",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 1,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p001.png",
+      "image_sha256": "3cd405452b3340e4715260ef4d5b166376cd4e693c6de10e6568e929ecd8fb12",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 4,
+      "type": "material",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p004.png",
+      "image_sha256": "58aca984d4294f87d244bc598edbbe8b3dc2701d12fd28ce3a3526ee65d937a7",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 5,
+      "type": "plan_original",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p005.png",
+      "image_sha256": "230f3e61b2ff6d5d62860dbdd76bfe6e4c5b6fe76d5b742e3453cae6d6cfdaa9",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 8,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p008.png",
+      "image_sha256": "895e73d04f4e6f9513ddcd9326089cdb92157c32d71e3345a6c7c8c589d633ee",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 12,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p012.png",
+      "image_sha256": "c2cbaec082f49a2f61d12759dd42743ab4d96416b996fcb657aa7865830c6c78",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 13,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p013.png",
+      "image_sha256": "8a2430039777db3d77ebe1dd69355f63b207234f80521a1e1af5a955c0dceaf7",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 20,
+      "type": "elevation",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p020.png",
+      "image_sha256": "9fb1f68012fd2de8468b165ff0a391bd6d5194920a7f051a17d3f257c74b94ad",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 23,
+      "type": "elevation",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p023.png",
+      "image_sha256": "1877ef79a56afbf87eb7fa8347ff559d75879807ce99400fc16dedc95337edd3",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 28,
+      "type": "cover_index",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p028.png",
+      "image_sha256": "ccef8ceda14ee7ef10ddc505b28a81263c2f0d5c62f842e4f128d2ee9c321a9a",
+      "frames_count": null
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 30,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p030.png",
+      "image_sha256": "8191a4a6131558548b7801ca659b5534a7f936b3b42e52518f1066d8b9cefbd8",
+      "frames_count": 1
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 33,
+      "type": "plan_other",
+      "view_description": null,
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-006\\p033.png",
+      "image_sha256": "a39f471f85fd1f5d5603c9cd07528abce413f3f7eccb30410a00f5d4a2b8f6c4",
+      "frames_count": 1
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 2,
+      "type": "render",
+      "view_description": "入口正面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p002.png",
+      "image_sha256": "3cf5ca457575c75482d84250f18b311ce715cce482a3e62aa1a66246a0d514cb",
+      "frames_count": null
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 3,
+      "type": "render",
+      "view_description": "狭长店内纵深视角",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p003.png",
+      "image_sha256": "d442bea94f66c06d3f62496058ed17ce784dba2cfe7dc54a2ef1146f98b198d9",
+      "frames_count": null
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 4,
+      "type": "render",
+      "view_description": "柜台与配件墙正面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p004.png",
+      "image_sha256": "555c15c62f96c1fc9e07217aeb1e6692178aa3e7cd9e42df77e1ba887e19588f",
+      "frames_count": null
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 5,
+      "type": "render",
+      "view_description": "俯视轴测",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p005.png",
+      "image_sha256": "60de0334097491b09485de1f5ee1571a7df0915e484d693c4a7d863b93b6bb1c",
+      "frames_count": null
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 6,
+      "type": "render",
+      "view_description": "商场实景背景中的店铺效果合成，不能确认是建成照片",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p006.png",
+      "image_sha256": "dc76bda8a89bc437582cab2805fe5ab16c8205b796b912b45b9a23f0d39d5a12",
+      "frames_count": null
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 7,
+      "type": "elevation",
+      "view_description": "带尺寸的门面效果立面",
+      "same_layout": null,
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-007\\p007.png",
+      "image_sha256": "529fb5380cf85d2aa1c8067beb28809db0f723b540ce8e839814f129cf4ce127",
+      "frames_count": null
+    }
+  ],
+  "date_evidence": [
+    {
+      "source_id": "PDF-002",
+      "pages": [
+        1,
+        35
+      ],
+      "text": "2026.01",
+      "method": "vision"
+    },
+    {
+      "source_id": "PDF-003",
+      "pages": [
+        1,
+        20
+      ],
+      "text": "2025.10.24",
+      "revision": "第二版",
+      "method": "vision"
+    },
+    {
+      "source_id": "PDF-004",
+      "pages": [
+        1,
+        32
+      ],
+      "text": "2024.11",
+      "method": "vision"
+    },
+    {
+      "source_id": "PDF-006",
+      "pages": [
+        1
+      ],
+      "text": "2024.8.22",
+      "method": "vision"
+    }
+  ],
+  "conflicts": [
+    {
+      "source_id": "PDF-006",
+      "page": 1,
+      "field": "stated_area",
+      "values": [
+        41,
+        49.9
+      ],
+      "evidence": "封面正文41m²，右图签SITE49.9m²",
+      "resolution": null
+    }
+  ],
+  "notes": [
+    {
+      "source_id": "PDF-003",
+      "page": 26,
+      "note": "电气系统接线示意，非空间平面，归other"
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 13,
+      "note": "立面索引平面；不当作软装布局"
+    },
+    {
+      "source_id": "PDF-006",
+      "page": 20,
+      "note": "同页两个节点剖面"
+    },
+    {
+      "source_id": "NEW-007",
+      "page": 6,
+      "note": "照片背景与效果图合成；不是可确认的施工现场照片"
+    }
+  ],
+  "training_eligible": false
+}

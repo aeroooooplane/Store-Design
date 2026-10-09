@@ -1,0 +1,160 @@
+{
+  "source_id": "PDF-090",
+  "store_id": "store-0090",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\印尼Ratu plaza.pdf",
+  "sha256": "5cbff81c4037d6f8eb9b384a1d8ae42e989287cbe1644b7d9658dbf0eb0499d7",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "render_dpi": 106.88836104513065,
+  "pdf_to_m_matrix": [
+    0.007157931104302406,
+    0.0,
+    0.0,
+    0.007157931104302406,
+    -1.8518999814987183,
+    -2.7845067977905273
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.007157931186345438,
+    0,
+    0,
+    0.007157931186345438,
+    -1.8518999652690007,
+    -2.784506880701911
+  ],
+  "title_block": {
+    "drawing_title": [],
+    "project_name": [],
+    "date_evidence": [
+      {
+        "text": "2024.8.5",
+        "bbox": [
+          1478.72998046875,
+          559.54296875,
+          1532.673095703125,
+          573.4029541015625
+        ],
+        "size": 13.859969139099121,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PE-03",
+        "bbox": [
+          1475.699951171875,
+          1038.4180908203125,
+          1514.2166748046875,
+          1052.278076171875
+        ],
+        "size": 13.859969139099121,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-090-pilot-r10.png",
+    "r10_overlay_sha256": "243f9fb2147345c95da4fed59b8e2b3ba57dd451ee3b3d58227c2c4ca9a7c3ba",
+    "notes": "地台、配件柜、桌体及2椅对齐；固定设施未完整。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-090",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-090.json",
+      "draft_sha256": "2064803b24aee9252bf1c64e84a8e32495231fdb9f8b65600797f772473ea500",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-090-pilot-r10.png",
+      "overlay_sha256": "243f9fb2147345c95da4fed59b8e2b3ba57dd451ee3b3d58227c2c4ca9a7c3ba",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "地台、配件柜、桌体及2椅对齐；固定设施未完整。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1684.0,
+          1191.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1684.0,
+        1191.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    1.484560570071259,
+    0,
+    0,
+    1.4853064651553316,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:24.986331+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

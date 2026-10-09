@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:48:31.948947+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "draft_sha256": "5361c8ce607e24cf99858f9563c7dbf23f2d919f663aa7a6405a00cac9d5ecf2",
+  "overlay_sha256": "d57734ce510bc2d858eae9b1dba41145032ac3c8be178ee5c7d558ca9c266bde"
+}

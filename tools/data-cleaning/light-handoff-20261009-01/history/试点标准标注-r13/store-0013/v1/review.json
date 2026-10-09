@@ -1,0 +1,157 @@
+{
+  "source_id": "PDF-013",
+  "store_id": "store-0013",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "auto_status": "partial",
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 9000,
+        "endpoints_canvas": [
+          [
+            324,
+            340
+          ],
+          [
+            1431,
+            340
+          ]
+        ],
+        "path_id": 1266,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            902.52001953125,
+            214.52001953125
+          ],
+          [
+            205.32000732421875,
+            214.52001953125
+          ]
+        ],
+        "length_pdf": 697.2000122070312,
+        "m_per_point": 0.012908777743003653,
+        "selection_delta_pdf": 0.9359544119105614,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 1800,
+        "endpoints_canvas": [
+          [
+            1475,
+            424
+          ],
+          [
+            1475,
+            644
+          ]
+        ],
+        "path_id": 1051,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            930.719970703125,
+            406.760009765625
+          ],
+          [
+            930.719970703125,
+            267.79998779296875
+          ]
+        ],
+        "length_pdf": 138.96002197265625,
+        "m_per_point": 0.012953365827433401,
+        "selection_delta_pdf": 0.3741390637805429,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.003448135248983487,
+    "m_per_point": 0.012931071785218528,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "closed": true,
+    "clockwise": true,
+    "kind": null,
+    "area_m2": 16.275,
+    "stated_area": 16.2,
+    "area_difference_ratio": 0.0046152777777780036
+  },
+  "props": {
+    "item_count": 6,
+    "located_count": 5,
+    "out_of_bounds": [
+      {
+        "object_id": "object-001",
+        "area": 0.00163,
+        "basis": "axis_aligned_bounding_box"
+      },
+      {
+        "object_id": "object-002",
+        "area": 0.001204,
+        "basis": "axis_aligned_bounding_box"
+      }
+    ],
+    "overlaps": [],
+    "area_unit": "m2",
+    "count_agreement": null
+  },
+  "circulation": {
+    "checked": false,
+    "reason": "入口/完整障碍物尚未确认；未采用未经批准的通道阈值。"
+  },
+  "unrecognized": [
+    "入口朝向与宽度",
+    "完整固定设施和墙柱",
+    "未标文字道具",
+    "版本与多图框归属"
+  ],
+  "conflicts": [],
+  "needs_human": [
+    "入口、墙柱、固定设施与无文字道具尚未完整；不得用于训练。",
+    "图签版本、同店跨来源对应关系未经确认。"
+  ],
+  "visual_check": {
+    "source_audit": {
+      "method": "vision",
+      "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-013-pilot-r10.png",
+      "r10_overlay_sha256": "b19aafaf3ba47d05baecde72af5f95bb5fd02bbf1702ce418134d69761d6e4ee",
+      "notes": "展示外框与主要道具对齐；收银柜仍无可靠轮廓。",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "corrected_overlay_pending": false,
+      "final_gate_record": {
+        "source_id": "PDF-013",
+        "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-013.json",
+        "draft_sha256": "af24cdac19938748aa00016625d5627c611e8dc69cba0f6f13e45483dba00f2f",
+        "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-013-pilot-r10.png",
+        "overlay_sha256": "b19aafaf3ba47d05baecde72af5f95bb5fd02bbf1702ce418134d69761d6e4ee",
+        "method": "vision",
+        "boundary_alignment": true,
+        "major_props_alignment": true,
+        "gate_pass": true,
+        "auto_status": "partial",
+        "scale_status": "verified_two_axes",
+        "training_eligible": false,
+        "notes": "展示外框与主要道具对齐；收银柜仍无可靠轮廓。",
+        "correction_note": null
+      }
+    },
+    "final_overlay_status": "pending",
+    "source_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-013-pilot-r10.png"
+  },
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:15.535942+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

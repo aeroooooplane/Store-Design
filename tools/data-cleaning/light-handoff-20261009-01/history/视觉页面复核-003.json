@@ -1,0 +1,283 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:33:31.344287+00:00",
+  "generator": {
+    "script": "save_visual_round003.py",
+    "version": "1.0.0"
+  },
+  "pages": [
+    {
+      "source_id": "NEW-006",
+      "page": 2,
+      "type": "plan_layout",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p002.png",
+      "image_sha256": "445bc19e5e9c739f7165ca6c190960afffe76802778c3d26aa436a511d3a0d47",
+      "frames_count": 1,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 3,
+      "type": "elevation",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p003.png",
+      "image_sha256": "d43b9f43ef5f1d52b47f8894fa54e35f6a748738ee8b822e583fdf9fa8364bd0",
+      "frames_count": null,
+      "view_description": "带尺寸的正面效果立面",
+      "same_layout": null,
+      "note": "实际打开接触表阅读；尺寸标注的效果立面按其立面用途保留elevation。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 4,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p004.png",
+      "image_sha256": "b744656b06865ed3f2a9a1ad622a0e00c5712b7490a2d00c5b529e270e718a59",
+      "frames_count": null,
+      "view_description": "A面正面",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 5,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p005.png",
+      "image_sha256": "20f845cf2c1ed4eac105887023902b02628643d902f01e9b74d4644c2e8369ea",
+      "frames_count": null,
+      "view_description": "B面侧后方，Logo与屏幕墙",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 6,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p006.png",
+      "image_sha256": "0f960e4e03bfdec1f21854bed30a610998f69e2840239e46f1d9ea70d2fc9f0f",
+      "frames_count": null,
+      "view_description": "C面，展示与收银侧",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 7,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p007.png",
+      "image_sha256": "eede552e4c1ec563318172e2520af5fa4e7ce8203dd8dc0119ebf895e5ea7d07",
+      "frames_count": null,
+      "view_description": "D面，水牌与屏幕侧",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 8,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p008.png",
+      "image_sha256": "0358809a394227463f1ab6eabed252021f486a9f3cd4f747313f468646329467",
+      "frames_count": null,
+      "view_description": "俯视轴测布局",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 9,
+      "type": "cover_index",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p009.png",
+      "image_sha256": "96f3785f9847f046d7ae77add2a72730f2e3f8aa6eae2c2d7a9afefa4c72bde0",
+      "frames_count": null,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 18,
+      "type": "plan_other",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p018.png",
+      "image_sha256": "6b8c8cb7b511f636ca5b24f8b1caf2e38bf0e8de88bec7b07d84b1478bd8e8e8",
+      "frames_count": 1,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "NEW-006",
+      "page": 29,
+      "type": "cover_index",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\NEW-006\\p029.png",
+      "image_sha256": "45920f9e958bc540907e78dc1f5588f3c8e942dc3a2d51fc7a6c62c189832803",
+      "frames_count": null,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 2,
+      "type": "plan_layout",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p002.png",
+      "image_sha256": "fd8a9379630ae9559bfe892484ac0d7b7f017e91e892ab36cb08425be208fec6",
+      "frames_count": 1,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 3,
+      "type": "elevation",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p003.png",
+      "image_sha256": "18383e8d5ba50abfa6106dc32dce21c4fdb8efd70e9ca81b42df2ebda57985d8",
+      "frames_count": null,
+      "view_description": "带尺寸的门头正面效果立面",
+      "same_layout": null,
+      "note": "实际打开接触表阅读；尺寸标注的效果立面按其立面用途保留elevation。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 4,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p004.png",
+      "image_sha256": "e01b6a184574fcf803ee5a3da0c71a60bd09b12bdbc8b6d63226cf7897a0493e",
+      "frames_count": null,
+      "view_description": "门店正面",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 5,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p005.png",
+      "image_sha256": "abfba65a3d632f86a0436b6cc835ac80c8ae15b5894dca4466c70aa423f4ac71",
+      "frames_count": null,
+      "view_description": "门头及入口斜侧面",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 6,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p006.png",
+      "image_sha256": "1f3cb2052341a82ae2409f42229b152cfdb7644d3d64af3fe6f9d0caeb6713cc",
+      "frames_count": null,
+      "view_description": "侧入口看向室内",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 7,
+      "type": "render",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p007.png",
+      "image_sha256": "abe568caddf0643e4a2c74a54072d37aa77e5c95d2456268d265e08507c967e3",
+      "frames_count": null,
+      "view_description": "室内俯视轴测布局",
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 8,
+      "type": "cover_index",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p008.png",
+      "image_sha256": "36b82b1a4558b0254602c9cceb02e4e4790ef8b412a9546a437d08e39194418e",
+      "frames_count": null,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 17,
+      "type": "plan_other",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p017.png",
+      "image_sha256": "a19ae4ac6a1ba582cbd54d2d85794f7eeefa3bccc5ca57b1272b2a38e144300e",
+      "frames_count": 1,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 42,
+      "type": "cover_index",
+      "method": "vision",
+      "image": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\page-review\\PDF-001\\p042.png",
+      "image_sha256": "f52c056f4a6431c3fd252b7356b932e80c450ca5fdd85d354ce5d3b12209da30",
+      "frames_count": null,
+      "view_description": null,
+      "same_layout": null,
+      "note": "实际打开接触表阅读。"
+    }
+  ],
+  "date_evidence": [
+    {
+      "source_id": "NEW-006",
+      "pages": [
+        9,
+        29
+      ],
+      "text": "2026.08",
+      "method": "vision",
+      "date_precision": "month"
+    },
+    {
+      "source_id": "PDF-001",
+      "pages": [
+        8,
+        42
+      ],
+      "text": "2026.04",
+      "method": "vision",
+      "date_precision": "month"
+    }
+  ],
+  "conflicts": [
+    {
+      "source_id": "PDF-001",
+      "field": "stated_area",
+      "evidence": [
+        {
+          "page": 2,
+          "value": 73
+        },
+        {
+          "page": 8,
+          "value": 78.9
+        },
+        {
+          "page": 42,
+          "value": 78.9
+        }
+      ],
+      "unit": "m2",
+      "resolution": null
+    }
+  ],
+  "training_eligible": false
+}

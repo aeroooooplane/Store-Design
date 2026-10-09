@@ -1,0 +1,175 @@
+{
+  "source_id": "PDF-029",
+  "store_id": "store-0029",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\临沂万象汇.pdf",
+  "sha256": "d777b05068216ca00dc68aa20ab6d584ed507ba5234a976eca4bd4b89e6f62e9",
+  "physical_page": 18,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1190.52001953125,
+    841.9199829101562
+  ],
+  "render_dpi": 151.19443356431117,
+  "pdf_to_m_matrix": [
+    0.014037905260920525,
+    0.0,
+    0.0,
+    0.014037905260920525,
+    -4.475845813751221,
+    -1.2802571058273315
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.014037905543801712,
+    0,
+    0,
+    0.014037905543801712,
+    -4.475845752177392,
+    -1.2802571569558678
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "家具定位图",
+        "bbox": [
+          1084.6800537109375,
+          599.414794921875,
+          1131.68017578125,
+          611.8228149414062
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "【边厅店】",
+        "bbox": [
+          1084.679931640625,
+          551.1748046875,
+          1131.6800537109375,
+          563.5828247070312
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "PL-03",
+        "bbox": [
+          1095.3599853515625,
+          677.2947998046875,
+          1121.0115966796875,
+          689.7028198242188
+        ],
+        "size": 9.399999618530273,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-029-pilot-r10.png",
+    "r10_overlay_sha256": "bd430c43b93220bd458946d969959247c266e509c08ede02145606e81a9435f8",
+    "notes": "租赁线、桌柜、4凳及2货架对齐；开箱旁虚线座椅未完整。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-029",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-029.json",
+      "draft_sha256": "884c8c18f26263e4e467fc42cf4c5be9ae778b2fff57853a8699c20cc9d633a4",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-029-pilot-r10.png",
+      "overlay_sha256": "bd430c43b93220bd458946d969959247c266e509c08ede02145606e81a9435f8",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "租赁线、桌柜、4凳及2货架对齐；开箱旁虚线座椅未完整。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1190.52001953125,
+          841.9199829101562
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1190.52001953125,
+        841.9199829101562
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0999226883932107,
+    0,
+    0,
+    2.0999620342645655,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:16.675691+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

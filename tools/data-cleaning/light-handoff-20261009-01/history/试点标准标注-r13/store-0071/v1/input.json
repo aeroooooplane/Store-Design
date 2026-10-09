@@ -1,0 +1,263 @@
+{
+  "source_id": "PDF-071",
+  "store_id": "store-0071",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "m",
+    "origin": "boundary_bbox_top_left",
+    "boundary_bbox_origin_pdf": [
+      364.55999755859375,
+      203.1199951171875
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "height_unit": "m",
+    "precision_decimals": 3,
+    "origin_unresolved": false,
+    "unit_reason": null
+  },
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 5950,
+        "endpoints_canvas": [
+          [
+            578,
+            264
+          ],
+          [
+            1181,
+            264
+          ]
+        ],
+        "path_id": 1689,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            744.9599609375,
+            166.8800048828125
+          ],
+          [
+            364.79998779296875,
+            166.8800048828125
+          ]
+        ],
+        "length_pdf": 380.15997314453125,
+        "m_per_point": 0.015651305819452743,
+        "selection_delta_pdf": 0.30730873692145383,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 6490,
+        "endpoints_canvas": [
+          [
+            539,
+            309
+          ],
+          [
+            539,
+            966
+          ]
+        ],
+        "path_id": 1580,
+        "item_id": 2,
+        "endpoints_pdf": [
+          [
+            340.32000732421875,
+            610.0399780273438
+          ],
+          [
+            340.32000732421875,
+            195.44000244140625
+          ]
+        ],
+        "length_pdf": 414.5999755859375,
+        "m_per_point": 0.01565364298641828,
+        "selection_delta_pdf": 0.5060063227754771,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.00014931613400999324,
+    "m_per_point": 0.01565247440293551,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "points": [
+      [
+        0.0,
+        0.002
+      ],
+      [
+        5.958,
+        0.0
+      ],
+      [
+        5.958,
+        6.773
+      ],
+      [
+        0.0,
+        6.773
+      ],
+      [
+        0.0,
+        0.002
+      ]
+    ],
+    "method": "vision_boundary_trace_snapped_to_vector_vertices",
+    "vertex_evidence": [
+      {
+        "path_id": 1822,
+        "item_id": 0,
+        "snap_distance_pdf": 0.05760393786958583,
+        "vision_point": [
+          578,
+          322
+        ]
+      },
+      {
+        "path_id": 1834,
+        "item_id": 17,
+        "snap_distance_pdf": 0.22900283847227557,
+        "vision_point": [
+          1181,
+          322
+        ]
+      },
+      {
+        "path_id": 1775,
+        "item_id": 0,
+        "snap_distance_pdf": 0.889896803021205,
+        "vision_point": [
+          1181,
+          1006
+        ]
+      },
+      {
+        "path_id": 1777,
+        "item_id": 0,
+        "snap_distance_pdf": 0.8703587918057072,
+        "vision_point": [
+          578,
+          1006
+        ]
+      }
+    ],
+    "kind": "boundary_candidate",
+    "note": "顶点来自原矢量，门洞段按图中门面/租赁线语义连接；需审查每条边，非自动闭合证明。",
+    "confirmed": false,
+    "bounds_pdf": [
+      364.55999755859375,
+      203.1199951171875,
+      745.2000122070312,
+      635.8399658203125
+    ],
+    "area_pdf_point2": 164687.69851552695
+  },
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "fixed-001",
+      "label_text": "LOGO指定高度：300mm",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          74.52001953125,
+          780.9615478515625,
+          162.12376403808594,
+          790.9407348632812
+        ],
+        "nominal_length_m": 0.3,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": null,
+          "z": null,
+          "w": null,
+          "d": null,
+          "pdf_polygon": null
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    }
+  ],
+  "stated_area": {
+    "value": 38.0,
+    "evidence": [
+      {
+        "value": 38.0,
+        "text": "店铺实测面积：38m²",
+        "bbox": [
+          75.239990234375,
+          739.9215087890625,
+          147.6239776611328,
+          749.9006958007812
+        ]
+      }
+    ]
+  },
+  "room_height": {
+    "value": 3.34,
+    "evidence": [
+      {
+        "value": 3.34,
+        "text": "店铺现有吊顶高度：3.34m",
+        "bbox": [
+          75.239990234375,
+          750.1215209960938,
+          165.96372985839844,
+          760.1007080078125
+        ]
+      }
+    ]
+  },
+  "si_index_label": "SI2.0",
+  "si_evidence": null,
+  "shop_type": {
+    "value": "边厅店",
+    "source": "门店资源索引.json"
+  },
+  "requirements": null,
+  "rules_source": null,
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:22.416762+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T05:29:27.092133+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-005",
+  "files": {
+    "draft.json": "1d641237cb107c6f028ad0d89e39b51b5055e90fcbf54acd199148b75873f9a3",
+    "review.json": "ef1643f13545d5b07284e8ea859736a175df996cf482b160ef2784ffa2e26e5d"
+  }
+}

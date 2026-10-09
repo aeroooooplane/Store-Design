@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T05:29:48.266192+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "source_id": "PDF-239",
+  "auto_status": "partial",
+  "training_eligible": false,
+  "training_ready_auto": false,
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 5930,
+        "endpoints_canvas": [
+          [
+            361,
+            267
+          ],
+          [
+            1305,
+            267
+          ]
+        ],
+        "path_id": 182,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            1159.5599365234375,
+            239.10003662109375
+          ],
+          [
+            326.6999816894531,
+            239.10003662109375
+          ]
+        ],
+        "length_pdf": 832.8599548339844,
+        "m_per_point": 0.007120044571217304,
+        "selection_delta_pdf": 4.791626000464719,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 3400,
+        "endpoints_canvas": [
+          [
+            274,
+            357
+          ],
+          [
+            274,
+            898
+          ]
+        ],
+        "path_id": 2810,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            243.47999572753906,
+            796.739990234375
+          ],
+          [
+            243.47999572753906,
+            322.6199951171875
+          ]
+        ],
+        "length_pdf": 474.1199951171875,
+        "m_per_point": 0.007171180365762949,
+        "selection_delta_pdf": 4.491092773156836,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 0.007156250744234593,
+    "m_per_point": 0.007145612468490126
+  },
+  "boundary": {
+    "present": true,
+    "closed": true,
+    "semantic_confirmed": false
+  },
+  "props": {
+    "records": 8,
+    "located": 8
+  },
+  "visual_check": "pending",
+  "needs_human": [
+    "入口、障碍物、固定设施及全量道具清点未完整；必须另行检查。",
+    "版本未确认；原索引SI仅为弱标签。"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "source_id": "PDF-019",
+  "sha256": "8180a52e5e78375a5ee96eddfda2a154b39b603c5008cef8a223f405896f5de7",
+  "artifacts": {
+    "evidence.png": "970fd320f35a9b704b1ad49ef67ffac2fba226bf76c1d0357a7ea57b15d186c2",
+    "geometry.png": "808d44876060d7946870332bdf1ae48a5745ecca4c728fe94d22d60c1cdeb457",
+    "geometry.svg": "a16caf9d4c05b28cec8af4311c43806b08f77e2d66fd1bfb63a017ce63098d62",
+    "input.json": "6afcd808dfc41be655827726807247047d7c6328f4e299bbc24153ed57dc0259",
+    "overlay.png": "47bf4ad179fa7696fafeb13e819008770e3662cc24027a5308cbea5267120409",
+    "review.json": "eb2f65a053be20a4b648832ac0d20415982ffb1bcef8da1600477ecd463a7057",
+    "source.json": "20d3deb30404302cea73873de42f9e6a25ac32a17b7d9a914914b55f71cad404",
+    "target-layout.json": "902c2917b5b6735fc374ac6eee160b0a223bfbc2c669b1744a294a7523bb287e"
+  },
+  "auto_status": "partial",
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:16.183785+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

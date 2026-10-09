@@ -1,0 +1,216 @@
+{
+  "source_id": "PDF-239",
+  "store_id": "store-0239",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\沈阳百脑汇照材专卖店.pdf",
+  "sha256": "01a8b48af89bc634d610682ff3be146593b633737b45806cec81d9c54f0d91b7",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1684.0,
+    1191.0
+  ],
+  "render_dpi": 106.88836104513065,
+  "pdf_to_m_matrix": [
+    0.007145612500607967,
+    0.0,
+    0.0,
+    0.007145612500607967,
+    -2.3061749935150146,
+    -2.3782026767730713
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.007145612468490126,
+    0,
+    0,
+    0.007145612468490126,
+    -2.3061748982991315,
+    -2.3782027940989128
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布置图",
+        "bbox": [
+          1522.97998046875,
+          789.2347412109375,
+          1605.7816162109375,
+          805.7950439453125
+        ],
+        "size": 16.560300827026367,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "深航百脑汇店",
+        "bbox": [
+          1505.2799072265625,
+          609.69091796875,
+          1575.5439453125,
+          622.162841796875
+        ],
+        "size": 11.710679054260254,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      },
+      {
+        "text": "店型",
+        "bbox": [
+          1469.760009765625,
+          938.9774780273438,
+          1495.2373046875,
+          951.7161254882812
+        ],
+        "size": 12.738659858703613,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [
+      {
+        "text": "2024.6.18",
+        "bbox": [
+          1582.199951171875,
+          686.19091796875,
+          1635.8818359375,
+          698.662841796875
+        ],
+        "size": 11.710679054260254,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PE-02",
+        "bbox": [
+          1592.52001953125,
+          649.1575317382812,
+          1639.96630859375,
+          668.135986328125
+        ],
+        "size": 18.97842025756836,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "visual_project_name": {
+      "method": "vision",
+      "text": "深圳百脑汇店",
+      "page": 1,
+      "bbox": [
+        1505.28,
+        609.69,
+        1575.54,
+        622.16
+      ],
+      "coordinate_space": "normalized_pdf_points"
+    }
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-pilot-r10.png",
+    "r10_overlay_sha256": "f53fe476751d74240cbdce976022e2f0eb8da5df124676eb827476a9b9a4839c",
+    "notes": "平台及8件道具对齐；柱子组合不再误当家具，柱净尺寸仍未知。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-239",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-239.json",
+      "draft_sha256": "0f24a3265a2d30cca93c7fc97f870f5a728b8e4aff2d29b32b5ebfb50760cfee",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-239-pilot-r10.png",
+      "overlay_sha256": "f53fe476751d74240cbdce976022e2f0eb8da5df124676eb827476a9b9a4839c",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "平台及8件道具对齐；柱子组合不再误当家具，柱净尺寸仍未知。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1684.0,
+          1191.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1684.0,
+        1191.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    1.484560570071259,
+    0,
+    0,
+    1.4853064651553316,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:26.234977+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

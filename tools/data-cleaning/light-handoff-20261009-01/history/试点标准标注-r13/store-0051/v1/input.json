@@ -1,0 +1,495 @@
+{
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "coordinates": {
+    "unit": "m",
+    "origin": "boundary_bbox_top_left",
+    "boundary_bbox_origin_pdf": [
+      175.739990234375,
+      293.60003662109375
+    ],
+    "axes": {
+      "x": "right",
+      "z": "down",
+      "y": "up"
+    },
+    "height_unit": "m",
+    "precision_decimals": 3,
+    "origin_unresolved": false,
+    "unit_reason": null
+  },
+  "scale": {
+    "status": "verified_two_axes",
+    "method": "vision_number_and_vector_dimension_line",
+    "checks": [
+      {
+        "axis": "x",
+        "value_mm": 6700,
+        "endpoints_canvas": [
+          [
+            278,
+            388
+          ],
+          [
+            1478,
+            388
+          ]
+        ],
+        "path_id": 1385,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            175.739990234375,
+            245.05999755859375
+          ],
+          [
+            932.219970703125,
+            245.05999755859375
+          ]
+        ],
+        "length_pdf": 756.47998046875,
+        "m_per_point": 0.008856810719364139,
+        "selection_delta_pdf": 0.40355383053088245,
+        "method": "vision_number_and_vector_dimension_line"
+      },
+      {
+        "axis": "z",
+        "value_mm": 2400,
+        "endpoints_canvas": [
+          [
+            1547,
+            465
+          ],
+          [
+            1547,
+            894
+          ]
+        ],
+        "path_id": 1352,
+        "item_id": 0,
+        "endpoints_pdf": [
+          [
+            973.5599975585938,
+            293.60003662109375
+          ],
+          [
+            973.5599975585938,
+            564.5599975585938
+          ]
+        ],
+        "length_pdf": 270.9599609375,
+        "m_per_point": 0.008857397202509883,
+        "selection_delta_pdf": 2.3451562795677217,
+        "method": "vision_number_and_vector_dimension_line"
+      }
+    ],
+    "error": 6.621612982424444e-05,
+    "m_per_point": 0.008857103960937012,
+    "two_axes_verified": true,
+    "area_used_for_calibration": false
+  },
+  "boundary": {
+    "points": [
+      [
+        6.7,
+        0.0
+      ],
+      [
+        6.7,
+        2.4
+      ],
+      [
+        0.0,
+        2.4
+      ],
+      [
+        0.0,
+        0.0
+      ],
+      [
+        6.7,
+        0.0
+      ]
+    ],
+    "kind": "outer_outline",
+    "method": "retained_previous_visual_boundary",
+    "confirmed": false,
+    "bounds_pdf": [
+      175.739990234375,
+      293.60003662109375,
+      932.1949251148269,
+      564.568968518569
+    ],
+    "area_pdf_point2": 204975.78573313027
+  },
+  "entrances": null,
+  "obstacles": null,
+  "fixed": [
+    {
+      "id": "fixed-001",
+      "label_text": "LOGO",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          562.260009765625,
+          267.8473205566406,
+          588.117431640625,
+          277.385986328125
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 472.1399841308594,
+          "z": 287.9000244140625,
+          "w": 163.68002319335938,
+          "d": 5.70001220703125,
+          "pdf_polygon": [
+            [
+              472.1399841308594,
+              287.9000244140625
+            ],
+            [
+              472.1399841308594,
+              293.60003662109375
+            ],
+            [
+              635.8200073242188,
+              293.60003662109375
+            ],
+            [
+              635.8200073242188,
+              287.9000244140625
+            ],
+            [
+              472.1399841308594,
+              287.9000244140625
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-002",
+      "label_text": "灯箱",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          255.6599884033203,
+          296.4073181152344,
+          273.572998046875,
+          305.94598388671875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 181.37998962402344,
+          "z": 293.60003662109375,
+          "w": 163.74000549316406,
+          "d": 13.5,
+          "pdf_polygon": [
+            [
+              181.37998962402344,
+              307.10003662109375
+            ],
+            [
+              345.1199951171875,
+              307.10003662109375
+            ],
+            [
+              345.1199951171875,
+              293.60003662109375
+            ],
+            [
+              181.37998962402344,
+              293.60003662109375
+            ],
+            [
+              181.37998962402344,
+              307.10003662109375
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-003",
+      "label_text": "灯箱",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          834.5399780273438,
+          296.4073181152344,
+          852.4530029296875,
+          305.94598388671875
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 762.8399658203125,
+          "z": 293.60003662109375,
+          "w": 163.739990234375,
+          "d": 13.5,
+          "pdf_polygon": [
+            [
+              762.8399658203125,
+              307.10003662109375
+            ],
+            [
+              926.5799560546875,
+              307.10003662109375
+            ],
+            [
+              926.5799560546875,
+              293.60003662109375
+            ],
+            [
+              762.8399658203125,
+              293.60003662109375
+            ],
+            [
+              762.8399658203125,
+              307.10003662109375
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-004",
+      "label_text": "LOGO",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          245.87998962402344,
+          326.52734375,
+          271.7374267578125,
+          336.0660095214844
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 175.739990234375,
+          "z": 316.34002685546875,
+          "w": 175.01998901367188,
+          "d": 3.29998779296875,
+          "pdf_polygon": [
+            [
+              175.739990234375,
+              319.6400146484375
+            ],
+            [
+              350.7599792480469,
+              319.6400146484375
+            ],
+            [
+              350.7599792480469,
+              316.34002685546875
+            ],
+            [
+              175.739990234375,
+              316.34002685546875
+            ],
+            [
+              175.739990234375,
+              319.6400146484375
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    },
+    {
+      "id": "fixed-005",
+      "label_text": "LOGO",
+      "label_aliases": [],
+      "function": "other",
+      "x": null,
+      "z": null,
+      "w": null,
+      "d": null,
+      "h": null,
+      "height_unit": "m",
+      "rotation": null,
+      "yaw": null,
+      "center_x": null,
+      "center_z": null,
+      "footprint": null,
+      "asset_id": null,
+      "asset_candidates": [],
+      "movable": false,
+      "fixed": true,
+      "confidence": 0.2,
+      "evidence": {
+        "method": "vector_text_proximity",
+        "text_bbox": [
+          827.3399658203125,
+          326.52734375,
+          853.1973876953125,
+          336.0660095214844
+        ],
+        "nominal_length_m": null,
+        "height_text": null,
+        "pdf_polygon": null,
+        "geometry_status": "unresolved",
+        "rejected_geometry": {
+          "x": 757.2000122070312,
+          "z": 316.1600341796875,
+          "w": 175.01995849609375,
+          "d": 56.579986572265625,
+          "pdf_polygon": [
+            [
+              757.2000122070312,
+              316.1600341796875
+            ],
+            [
+              757.2000122070312,
+              372.7400207519531
+            ],
+            [
+              932.219970703125,
+              372.7400207519531
+            ],
+            [
+              932.219970703125,
+              316.34002685546875
+            ],
+            [
+              757.2000122070312,
+              316.1600341796875
+            ]
+          ]
+        },
+        "rejection_reason": "固定物/障碍物语义或精确范围尚未独立确认，保留文字证据，坐标置空。",
+        "pdf_bbox": null,
+        "geometry": null
+      },
+      "training_eligible": false,
+      "polygon": null
+    }
+  ],
+  "stated_area": {
+    "value": null,
+    "evidence": []
+  },
+  "room_height": {
+    "value": null,
+    "evidence": []
+  },
+  "si_index_label": "SI1.0",
+  "si_evidence": null,
+  "shop_type": {
+    "value": "中岛店",
+    "source": "门店资源索引.json"
+  },
+  "requirements": null,
+  "rules_source": null,
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:20.818422+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

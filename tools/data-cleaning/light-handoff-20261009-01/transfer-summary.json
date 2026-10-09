@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T07:30:56.433Z",
+  "generator": {
+    "script": "light-handoff-20261009-01",
+    "version": "1.0.0"
+  },
+  "branch": "progress/cleaning-light-20261009",
+  "base_commit": "5b53d1a02ce03badd65fd564bb4b4dcfa4e78a1d",
+  "scope": "this package plus full-run-02 top-level sources only",
+  "files_before_this_summary": 298,
+  "bytes_before_this_summary": 8485303,
+  "pdf_included": false,
+  "png_included": false,
+  "cache_included": false,
+  "venv_included": false,
+  "main_changes_included": false,
+  "source_ids_preserved": true,
+  "machine_stages_restart": true
+}

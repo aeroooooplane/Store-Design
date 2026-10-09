@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:33:31.386624+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "method": "vision",
+  "contact_sheets": [
+    {
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\pilot-r13-contact-1.png",
+      "sha256": "4625b5f942207729538ae5e87a1f377e3b5e0d017e2a7d1b48eab8138e76c42e"
+    },
+    {
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\pilot-r13-contact-2.png",
+      "sha256": "69624490af452f0ae5def61de018991a87440381e9a3e43b5a8f9886da2596ef"
+    },
+    {
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\pilot-r13-contact-3.png",
+      "sha256": "3c6bd52e34abb06d5685ada937b15e6d34693a5f532586047d229294430c726e"
+    },
+    {
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\pilot-r13-contact-4.png",
+      "sha256": "8b3c5d6f7bf28ca835e6f29549f24dff6b0cd89a947e55edbf79556a6a819a40"
+    },
+    {
+      "path": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\pilot-r13-contact-5.png",
+      "sha256": "d27d4fcf8853839f71f80ca443b119e6a70f30d41c83dbd35a97696232c6ac76"
+    }
+  ],
+  "stores": [
+    {
+      "store_id": "store-0001",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0002",
+      "overlay_opened": true,
+      "geometry_alignment": "partial",
+      "complete": false
+    },
+    {
+      "store_id": "store-0003",
+      "overlay_opened": true,
+      "geometry_alignment": "partial",
+      "complete": false
+    },
+    {
+      "store_id": "store-0005",
+      "overlay_opened": true,
+      "geometry_alignment": "partial",
+      "complete": false
+    },
+    {
+      "store_id": "store-0008",
+      "overlay_opened": true,
+      "geometry_alignment": "partial",
+      "complete": false
+    },
+    {
+      "store_id": "store-0013",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0019",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0029",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0032",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0035",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0043",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0049",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0051",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0071",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0088",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0090",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0239",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0293",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0296",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    },
+    {
+      "store_id": "store-0353",
+      "overlay_opened": true,
+      "geometry_alignment": "main_boundary_and_located_props_aligned",
+      "complete": false
+    }
+  ],
+  "note": "标准封装后的20张overlay已再次实际打开；位置与先前逐张复核一致。缺边界、未定位道具、入口及设施尚未完成，不改变partial状态。PDF-239图签更正见source-correction.json。",
+  "training_eligible": false
+}

@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:18:31.390798+00:00",
+  "generator": {
+    "script": "full-run-02/sync_sources.py",
+    "version": "1.0.0"
+  },
+  "records": [
+    {
+      "source_id": "NEW-006",
+      "page": 16,
+      "candidates_file": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\比例候选-r2\\NEW-006-p016.json",
+      "candidates_sha256": "307cf3af21105bb6d8d88f047ad21ba276fe8d746a3936ce2ce1b17381603e54",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\NEW-006-p016-scale-ticks.png",
+      "method": "vision",
+      "numbers_and_tick_intersections_aligned": true,
+      "error": 0.00041475071355107367,
+      "selected_dimensions": [
+        {
+          "axis": "x",
+          "value_mm": 7000
+        },
+        {
+          "axis": "z",
+          "value_mm": 4500
+        }
+      ],
+      "training_eligible": false,
+      "note": "实际打开核对，刻线位置与图上数字对应；保留之前已核验的长尺寸标定结果，不自动覆盖。"
+    },
+    {
+      "source_id": "PDF-001",
+      "page": 15,
+      "candidates_file": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\比例候选-r2\\PDF-001-p015.json",
+      "candidates_sha256": "0055d9258b982d1dc6f9f58be1844455814a8fa7158fb281d18908f9f785809f",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-001-p015-scale-ticks.png",
+      "method": "vision",
+      "numbers_and_tick_intersections_aligned": true,
+      "error": 0.0019310646387469476,
+      "selected_dimensions": [
+        {
+          "axis": "x",
+          "value_mm": 13037
+        },
+        {
+          "axis": "z",
+          "value_mm": 4010
+        }
+      ],
+      "training_eligible": false,
+      "note": "实际打开核对，刻线位置与图上数字对应；保留之前已核验的长尺寸标定结果，不自动覆盖。"
+    }
+  ],
+  "automatic_candidate_examples_passed": 2,
+  "limitation": "只验证这两页，不能外推为全量自动准确率。"
+}

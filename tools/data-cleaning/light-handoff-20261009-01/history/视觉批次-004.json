@@ -1,0 +1,520 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:57:41.915552+00:00",
+  "generator": {
+    "script": "vision_batch004.py",
+    "version": "1.0.0"
+  },
+  "records": [
+    {
+      "source_id": "NEW-008",
+      "page": 2,
+      "canvas": [
+        1888,
+        1334
+      ],
+      "replace_items": [
+        [
+          "1.8米收银+开箱储物柜",
+          "cashier",
+          [
+            491,
+            428,
+            697,
+            535
+          ],
+          null
+        ],
+        [
+          "1.8米边桌+储物柜",
+          "side_cabinet",
+          [
+            681,
+            477,
+            891,
+            583
+          ],
+          null
+        ],
+        [
+          "1.8米中岛桌",
+          "island_table",
+          [
+            409,
+            555,
+            630,
+            719
+          ],
+          null
+        ],
+        [
+          "1.8米中岛桌",
+          "island_table",
+          [
+            701,
+            643,
+            915,
+            786
+          ],
+          null
+        ],
+        [
+          "1.6米配件柜",
+          "accessory_cabinet",
+          [
+            1009,
+            556,
+            1061,
+            732
+          ],
+          null
+        ],
+        [
+          "98寸屏幕(竖向)+钢化玻璃",
+          "screen",
+          [
+            1333,
+            575,
+            1355,
+            713
+          ],
+          null
+        ],
+        [
+          "电子水牌",
+          "screen",
+          [
+            1286,
+            757,
+            1346,
+            805
+          ],
+          null
+        ]
+      ],
+      "dimensions": [
+        {
+          "axis": "x",
+          "value_mm": 2840,
+          "endpoints_canvas": [
+            [
+              697,
+              828
+            ],
+            [
+              1009,
+              828
+            ]
+          ]
+        },
+        {
+          "axis": "z",
+          "value_mm": 2500,
+          "endpoints_canvas": [
+            [
+              1406,
+              537
+            ],
+            [
+              1406,
+              812
+            ]
+          ]
+        }
+      ],
+      "boundary_action": "reject",
+      "boundary_kind": null,
+      "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\geometry-r2\\plan-overlays\\NEW-008\\p002.png",
+      "needs_human": [
+        "原图边界口径与入口线段需确认。",
+        "道具朝向、高度与固定设施缺项保留null。",
+        "未审核的版本和商场铺位信息不得用于训练。"
+      ],
+      "training_eligible": false,
+      "obstacle_seeds": [
+        [
+          "包柱",
+          "other",
+          [
+            1084,
+            512,
+            1288,
+            717
+          ],
+          null
+        ]
+      ],
+      "fixed_seeds": [
+        [
+          "灯箱",
+          "other",
+          [
+            1072,
+            740,
+            1292,
+            752
+          ],
+          null
+        ]
+      ]
+    },
+    {
+      "source_id": "NEW-010",
+      "page": 1,
+      "canvas": [
+        1888,
+        1334
+      ],
+      "replace_items": [
+        [
+          "1.8M中岛桌",
+          "island_table",
+          [
+            655,
+            140,
+            894,
+            273
+          ],
+          null
+        ],
+        [
+          "1.8M中岛桌",
+          "island_table",
+          [
+            655,
+            418,
+            894,
+            551
+          ],
+          null
+        ],
+        [
+          "1.8M开箱桌",
+          "unboxing_table",
+          [
+            708,
+            696,
+            842,
+            935
+          ],
+          null
+        ],
+        [
+          "成品电子水牌",
+          "screen",
+          [
+            983,
+            156,
+            1029,
+            230
+          ],
+          null
+        ],
+        [
+          "储物柜",
+          "storage",
+          [
+            963,
+            924,
+            1029,
+            1163
+          ],
+          null
+        ],
+        [
+          "配件柜",
+          "accessory_cabinet",
+          [
+            549,
+            1093,
+            735,
+            1154
+          ],
+          2.0
+        ],
+        [
+          "全息风扇",
+          "other",
+          [
+            834,
+            1098,
+            927,
+            1163
+          ],
+          null
+        ],
+        [
+          null,
+          "seating",
+          [
+            661,
+            708,
+            702,
+            769
+          ],
+          null
+        ],
+        [
+          null,
+          "seating",
+          [
+            661,
+            787,
+            702,
+            846
+          ],
+          null
+        ],
+        [
+          null,
+          "seating",
+          [
+            847,
+            708,
+            887,
+            769
+          ],
+          null
+        ],
+        [
+          null,
+          "seating",
+          [
+            847,
+            787,
+            887,
+            846
+          ],
+          null
+        ],
+        [
+          null,
+          "seating",
+          [
+            745,
+            941,
+            804,
+            982
+          ],
+          null
+        ]
+      ],
+      "dimensions": [
+        {
+          "axis": "x",
+          "value_mm": 4000,
+          "endpoints_canvas": [
+            [
+              509,
+              76
+            ],
+            [
+              1039,
+              76
+            ]
+          ]
+        },
+        {
+          "axis": "z",
+          "value_mm": 8000,
+          "endpoints_canvas": [
+            [
+              1099,
+              129
+            ],
+            [
+              1099,
+              1190
+            ]
+          ]
+        }
+      ],
+      "boundary_action": "retain",
+      "boundary_kind": "inner_platform_outline",
+      "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\geometry-r2\\plan-overlays\\NEW-010\\p001.png",
+      "needs_human": [
+        "原图边界口径与入口线段需确认。",
+        "道具朝向、高度与固定设施缺项保留null。",
+        "未审核的版本和商场铺位信息不得用于训练。"
+      ],
+      "training_eligible": false,
+      "obstacle_seeds": [
+        [
+          "120*120立柱",
+          "other",
+          [
+            520,
+            651,
+            536,
+            668
+          ],
+          null
+        ],
+        [
+          "120*120立柱",
+          "other",
+          [
+            1013,
+            651,
+            1029,
+            668
+          ],
+          null
+        ]
+      ],
+      "fixed_seeds": []
+    },
+    {
+      "source_id": "NEW-011",
+      "page": 1,
+      "canvas": [
+        1888,
+        1335
+      ],
+      "replace_items": [
+        [
+          "配件柜",
+          "accessory_cabinet",
+          [
+            712,
+            446,
+            813,
+            503
+          ],
+          null
+        ],
+        [
+          "配件柜",
+          "accessory_cabinet",
+          [
+            813,
+            446,
+            913,
+            503
+          ],
+          null
+        ],
+        [
+          "成品电子水牌",
+          "screen",
+          [
+            238,
+            463,
+            284,
+            535
+          ],
+          null
+        ],
+        [
+          "98寸广告机",
+          "screen",
+          [
+            947,
+            477,
+            1225,
+            503
+          ],
+          null
+        ],
+        [
+          "1.8米中岛桌",
+          "island_table",
+          [
+            396,
+            655,
+            625,
+            783
+          ],
+          null
+        ],
+        [
+          "1.8米中岛桌",
+          "island_table",
+          [
+            815,
+            655,
+            1045,
+            783
+          ],
+          null
+        ],
+        [
+          null,
+          "other",
+          [
+            1235,
+            600,
+            1312,
+            829
+          ],
+          null
+        ],
+        [
+          "底部储物柜",
+          "storage",
+          [
+            1413,
+            608,
+            1477,
+            821
+          ],
+          null
+        ]
+      ],
+      "dimensions": [
+        {
+          "axis": "x",
+          "value_mm": 9830,
+          "endpoints_canvas": [
+            [
+              226,
+              253
+            ],
+            [
+              1477,
+              253
+            ]
+          ]
+        },
+        {
+          "axis": "z",
+          "value_mm": 3910,
+          "endpoints_canvas": [
+            [
+              1547,
+              439
+            ],
+            [
+              1547,
+              935
+            ]
+          ]
+        }
+      ],
+      "boundary_action": "retain",
+      "boundary_kind": "outer_platform_edging_outline",
+      "inspected_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\geometry-r2\\plan-overlays\\NEW-011\\p001.png",
+      "needs_human": [
+        "原图边界口径与入口线段需确认。",
+        "道具朝向、高度与固定设施缺项保留null。",
+        "未审核的版本和商场铺位信息不得用于训练。"
+      ],
+      "training_eligible": false,
+      "obstacle_seeds": [
+        [
+          "配电箱",
+          "other",
+          [
+            1257,
+            439,
+            1348,
+            503
+          ],
+          null
+        ]
+      ],
+      "fixed_seeds": []
+    }
+  ],
+  "method": "vision"
+}

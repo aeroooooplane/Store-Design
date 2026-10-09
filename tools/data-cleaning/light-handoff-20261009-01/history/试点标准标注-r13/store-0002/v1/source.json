@@ -1,0 +1,161 @@
+{
+  "source_id": "PDF-002",
+  "store_id": "store-0002",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\上海七宝领展授权体验店.pdf",
+  "sha256": "94c5c78ed1408f2f32ecb99d7811a3d0dfd593e7eb19518235d9a76d06a9bd4f",
+  "physical_page": 10,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "render_dpi": 151.13350125944586,
+  "pdf_to_m_matrix": null,
+  "normalized_pdf_to_m_matrix": null,
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布置图",
+        "bbox": [
+          1077.5399169921875,
+          706.2467651367188,
+          1128.0242919921875,
+          716.3436279296875
+        ],
+        "size": 10.0968599319458,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "影石-上海七宝领展边厅店",
+        "bbox": [
+          1061.280029296875,
+          663.20361328125,
+          1152.46826171875,
+          671.6978759765625
+        ],
+        "size": 7.975859642028809,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [],
+    "drawing_number": [
+      {
+        "text": "P-01",
+        "bbox": [
+          1108.199951171875,
+          784.9067993164062,
+          1128.4368896484375,
+          795.003662109375
+        ],
+        "size": 10.0968599319458,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-002-pilot-r10.png",
+    "r10_overlay_sha256": "23926a8248324975f4c3cd6f5aae9965b3b9749bb88d6824ce03252b437cc5d5",
+    "notes": "桌柜椅定位改善；异形店界尚未恢复，横向尺寸线未可靠配对。",
+    "boundary_alignment": false,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-002",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-002.json",
+      "draft_sha256": "2694881b6e58e96e740053ccb9e770da9b50a29f01a2e7a0a5468ee57442ad00",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-002-pilot-r10.png",
+      "overlay_sha256": "23926a8248324975f4c3cd6f5aae9965b3b9749bb88d6824ce03252b437cc5d5",
+      "method": "vision",
+      "boundary_alignment": false,
+      "major_props_alignment": true,
+      "gate_pass": false,
+      "auto_status": "partial",
+      "scale_status": "unverified",
+      "training_eligible": false,
+      "notes": "桌柜椅定位改善；异形店界尚未恢复，横向尺寸线未可靠配对。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1191.0,
+          842.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0997624703087885,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:13.188813+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

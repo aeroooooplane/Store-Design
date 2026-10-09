@@ -1,0 +1,130 @@
+{
+  "source_id": "PDF-071",
+  "store_id": "store-0071",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\北京首都机场T3授权体验店.pdf",
+  "sha256": "2a24a5f54edeae7dfbc05f71e45507f92c93ad0702260c4622096495ad4f4b5f",
+  "physical_page": 7,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "render_dpi": 151.13350125944586,
+  "pdf_to_m_matrix": [
+    0.0,
+    -0.015652474015951157,
+    0.015652474015951157,
+    0.0,
+    -5.706265926361084,
+    10.000052452087402
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.01565247440293551,
+    0,
+    0,
+    0.01565247440293551,
+    -5.706266030120121,
+    -3.179330524296163
+  ],
+  "title_block": {
+    "drawing_title": [],
+    "project_name": [],
+    "date_evidence": [],
+    "drawing_number": []
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-071-pilot-r10.png",
+    "r10_overlay_sha256": "d174020e49db01c14faf22ae8ad2d106f46aed7926a75b7e9f5dc1d13663a0bf",
+    "notes": "租赁虚线范围及5件主要桌柜对齐；2张高椅未闭合。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-071",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-071.json",
+      "draft_sha256": "fc71b62e98fe3047f4648c3aabd6fa110b8f35cf44f199618745034eaec282b8",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-071-pilot-r10.png",
+      "overlay_sha256": "d174020e49db01c14faf22ae8ad2d106f46aed7926a75b7e9f5dc1d13663a0bf",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "租赁虚线范围及5件主要桌柜对齐；2张高椅未闭合。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1191.0,
+          842.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 270,
+  "original_pdf_to_normalized_pdf_matrix": [
+    0.0,
+    -1.0,
+    1.0,
+    0.0,
+    0.0,
+    842.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0997624703087885,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:22.351642+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}

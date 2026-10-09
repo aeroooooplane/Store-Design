@@ -1,0 +1,190 @@
+{
+  "source_id": "PDF-051",
+  "store_id": "store-0051",
+  "version_id": "v1",
+  "version_confirmed": false,
+  "training_eligible": false,
+  "draft": true,
+  "source_pdf": "D:\\text demo\\资源库\\01_各门店原图纸\\北京三里屯太古里授权体验店.pdf",
+  "sha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+  "physical_page": 1,
+  "frame_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "crop_bbox": [
+    0.0,
+    0.0,
+    1191.0,
+    842.0
+  ],
+  "render_dpi": 151.13350125944586,
+  "pdf_to_m_matrix": [
+    0.008857103995978832,
+    0.0,
+    0.0,
+    0.008857103995978832,
+    -1.5565474033355713,
+    -2.6004459857940674
+  ],
+  "normalized_pdf_to_m_matrix": [
+    0.008857103960937012,
+    0,
+    0,
+    0.008857103960937012,
+    -1.5565473635999147,
+    -2.6004460472879414
+  ],
+  "title_block": {
+    "drawing_title": [
+      {
+        "text": "平面布置图",
+        "bbox": [
+          1106.699951171875,
+          368.1075134277344,
+          1144.7467041015625,
+          377.64593505859375
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "project_name": [
+      {
+        "text": "北京三里屯太古里店",
+        "bbox": [
+          1091.52001953125,
+          308.2275085449219,
+          1160.0040283203125,
+          317.76593017578125
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "date_evidence": [
+      {
+        "text": "2025-07",
+        "bbox": [
+          1110.9599609375,
+          525.5475463867188,
+          1141.0093994140625,
+          535.0859375
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ],
+    "drawing_number": [
+      {
+        "text": "PL-01",
+        "bbox": [
+          1116.239990234375,
+          607.3875732421875,
+          1137.0135498046875,
+          616.9259643554688
+        ],
+        "size": 8.255365371704102,
+        "direction": [
+          1.0,
+          0.0
+        ]
+      }
+    ]
+  },
+  "version_date": null,
+  "revision_number": null,
+  "version_order_reason": "临时未确认版本编号，不能认定唯一、最早或已审批版本。",
+  "reviewer": null,
+  "reviewedAt": null,
+  "annotation_status": "automatic_draft_with_vision_audit",
+  "visual_evidence": {
+    "method": "vision",
+    "r10_overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-051-pilot-r10.png",
+    "r10_overlay_sha256": "950d61ea3ad15141e81efd0826296df1d22cf4d51824c80403f23037da6b668a",
+    "notes": "地台及7件主要家具全部对齐；LED和固定设施未全部完成。",
+    "boundary_alignment": true,
+    "major_props_alignment": true,
+    "corrected_overlay_pending": false,
+    "final_gate_record": {
+      "source_id": "PDF-051",
+      "draft": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点-r11\\PDF-051.json",
+      "draft_sha256": "4a82a7fb16dfbfc6e670d5af25542671fe56c4e68c1cffdb9822e10c61770409",
+      "overlay": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\_cache\\全量续跑-02\\PDF-051-pilot-r10.png",
+      "overlay_sha256": "950d61ea3ad15141e81efd0826296df1d22cf4d51824c80403f23037da6b668a",
+      "method": "vision",
+      "boundary_alignment": true,
+      "major_props_alignment": true,
+      "gate_pass": true,
+      "auto_status": "partial",
+      "scale_status": "verified_two_axes",
+      "training_eligible": false,
+      "notes": "地台及7件主要家具全部对齐；LED和固定设施未全部完成。",
+      "correction_note": null
+    }
+  },
+  "provenance": {
+    "pilot_gate": "D:\\text demo\\资源库\\90_处理过程与审核\\数据清洗-20261009\\全量续跑-02\\试点验收-r12.json",
+    "frames": [
+      {
+        "frame_id": "frame-1",
+        "bbox": [
+          0.0,
+          0.0,
+          1191.0,
+          842.0
+        ],
+        "method": "vision",
+        "independent_frame_count": 1
+      }
+    ]
+  },
+  "frames": [
+    {
+      "frame_id": "frame-1",
+      "bbox": [
+        0.0,
+        0.0,
+        1191.0,
+        842.0
+      ],
+      "method": "vision",
+      "independent_frame_count": 1
+    }
+  ],
+  "original_page_rotation": 0,
+  "original_pdf_to_normalized_pdf_matrix": [
+    1.0,
+    0.0,
+    0.0,
+    1.0,
+    0.0,
+    0.0
+  ],
+  "page_rotation": 0,
+  "pdf_to_pixel_matrix": [
+    2.0990764063811924,
+    0,
+    0,
+    2.0997624703087885,
+    0,
+    0
+  ],
+  "schemaVersion": 1,
+  "generatedAt": "2026-10-09T06:05:20.812420+00:00",
+  "generator": {
+    "script": "full-run-02/package_draft_v2.py",
+    "version": "2.0.0"
+  }
+}
