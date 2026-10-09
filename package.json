@@ -17,7 +17,8 @@
     "check": "pnpm lint && pnpm typecheck && pnpm test",
     "db:generate": "pnpm --filter @store/database generate",
     "db:migrate": "pnpm --filter @store/database migrate",
-    "api:openapi": "pnpm --filter @store/api openapi && pnpm --filter @store/web gen:api"
+    "api:openapi": "pnpm --filter @store/api openapi && pnpm --filter @store/web gen:api",
+    "catalog:import": "pnpm --filter @store/api catalog:import"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

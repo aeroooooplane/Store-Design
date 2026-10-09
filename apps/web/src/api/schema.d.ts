@@ -623,6 +623,303 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/assets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 模型目录（按用途、可摆放、SI 归属筛选，按编号或名称搜索） */
+        get: {
+            parameters: {
+                query?: {
+                    q?: string;
+                    function?: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                    placeable?: "true" | "false";
+                    siFamily?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            items: {
+                                id: string;
+                                name: string;
+                                standardName: string;
+                                variant: string;
+                                materialCategory: string;
+                                siFamily: string;
+                                /** @enum {string} */
+                                function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                installation: ("floor" | "wall") | null;
+                                footprint: {
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                };
+                                /** @enum {string} */
+                                footprintSource: "glb" | "source";
+                                front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
+                                staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
+                                facingConfidence: ("high" | "medium" | "low") | null;
+                                placeable: boolean;
+                                judgment: string | null;
+                                glb: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
+                                preview: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
+                            }[];
+                            total: number;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/assets/{assetId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 单个模型 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    assetId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            id: string;
+                            name: string;
+                            standardName: string;
+                            variant: string;
+                            materialCategory: string;
+                            siFamily: string;
+                            /** @enum {string} */
+                            function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                            installation: ("floor" | "wall") | null;
+                            footprint: {
+                                w: number;
+                                d: number;
+                                h: number;
+                            };
+                            /** @enum {string} */
+                            footprintSource: "glb" | "source";
+                            front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
+                            staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
+                            facingConfidence: ("high" | "medium" | "low") | null;
+                            placeable: boolean;
+                            judgment: string | null;
+                            glb: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                            preview: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/files/{fileId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 读取已登记的文件（模型、预览图、渲染图、交付文件） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    fileId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description 文件内容（二进制） */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description 未修改 */
+                304: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                403: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {

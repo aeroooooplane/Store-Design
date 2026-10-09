@@ -1,6 +1,7 @@
 import { pgEnum } from 'drizzle-orm/pg-core'
 import {
   ACTOR_KINDS,
+  ITEM_FUNCTIONS,
   JOB_STATUSES,
   JOB_TYPES,
   MARKETS,
@@ -25,3 +26,4 @@ export const renderEngine = pgEnum('render_engine', RENDER_ENGINES)
 export const jobType = pgEnum('job_type', JOB_TYPES)
 export const jobStatus = pgEnum('job_status', JOB_STATUSES)
 export const actorKind = pgEnum('actor_kind', ACTOR_KINDS)
+export const itemFunction = pgEnum('item_function', ITEM_FUNCTIONS)

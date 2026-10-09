@@ -7,6 +7,8 @@ export type Action =
   | 'project:update'
   | 'project:delete'
   | 'project:restore'
+  | 'asset:read'
+  | 'file:read'
 
 export interface ResourceRef {
   projectId?: string
