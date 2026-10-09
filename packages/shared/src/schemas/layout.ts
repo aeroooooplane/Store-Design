@@ -108,7 +108,7 @@ export interface AssetFit {
 
 /** Footprint of a real model after a quarter-turn rotation (props are never scaled). */
 export function rotatedFootprint(
-  asset: AssetFit,
+  asset: Pick<AssetFit, 'footprint'>,
   rotation: Rotation,
 ): { w: number; d: number; h: number } {
   const swap = rotation === 90 || rotation === 270

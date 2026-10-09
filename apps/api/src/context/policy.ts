@@ -14,6 +14,8 @@ export type Action =
   | 'node:update'
   | 'draft:read'
   | 'draft:write'
+  | 'layout:generate'
+  | 'layout:validate'
   | 'asset:read'
   | 'file:read'
 

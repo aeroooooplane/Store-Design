@@ -2526,6 +2526,392 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/layouts/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 为空间生成候选布局（尽量多放 / 按面积推荐 / 尽量少放）
+         * @description 不保存。收银台靠后墙，中岛桌避开入口缓冲与主通道并保留通道，配件柜沿墙。通道、间距为指导值，放不下时逐级让步并记录在 planning.relaxations。
+         */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        space: {
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            height: number;
+                            /** @default [] */
+                            entrances?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            /** @default [] */
+                            openEdges?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                            }[];
+                            /** @default [] */
+                            obstacles?: {
+                                /** @enum {string} */
+                                kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                polygon: [
+                                    number,
+                                    number
+                                ][];
+                                /** @default null */
+                                height?: number | null;
+                                /** @default null */
+                                label?: string | null;
+                            }[];
+                            /** @default null */
+                            calibration?: {
+                                /** @enum {string} */
+                                method: "manual" | "dimension" | "item_label" | "area";
+                                reference: string;
+                                verified: boolean;
+                            } | null;
+                        };
+                        /** @enum {string} */
+                        shopType: "side_hall" | "island" | "zone";
+                        /**
+                         * @default SI1.0
+                         * @enum {string}
+                         */
+                        siStyle?: "SI1.0" | "SI2.0";
+                        /**
+                         * @default [
+                         *       "max",
+                         *       "area",
+                         *       "min"
+                         *     ]
+                         */
+                        strategies?: ("max" | "area" | "min")[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            space: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                boundary: [
+                                    number,
+                                    number
+                                ][];
+                                height: number;
+                                /** @default [] */
+                                entrances: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    /** @enum {string} */
+                                    kind: "main" | "side";
+                                }[];
+                                /** @default [] */
+                                openEdges: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                }[];
+                                /** @default [] */
+                                obstacles: {
+                                    /** @enum {string} */
+                                    kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                    polygon: [
+                                        number,
+                                        number
+                                    ][];
+                                    /** @default null */
+                                    height: number | null;
+                                    /** @default null */
+                                    label: string | null;
+                                }[];
+                                /** @default null */
+                                calibration: {
+                                    /** @enum {string} */
+                                    method: "manual" | "dimension" | "item_label" | "area";
+                                    reference: string;
+                                    verified: boolean;
+                                } | null;
+                            };
+                            candidates: {
+                                /** @enum {string} */
+                                strategy: "max" | "area" | "min";
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: 0 | 90 | 180 | 270;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                };
+                                issues: {
+                                    code: string;
+                                    /** @enum {string} */
+                                    severity: "error" | "warning";
+                                    message: string;
+                                    itemIds?: string[];
+                                    path?: (string | number)[];
+                                }[];
+                                notes: string[];
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/layouts/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 检查布局：越界、重叠、压障碍物或入口、超高、模型尺寸不符 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        space: {
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            height: number;
+                            /** @default [] */
+                            entrances?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            /** @default [] */
+                            openEdges?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                            }[];
+                            /** @default [] */
+                            obstacles?: {
+                                /** @enum {string} */
+                                kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                polygon: [
+                                    number,
+                                    number
+                                ][];
+                                /** @default null */
+                                height?: number | null;
+                                /** @default null */
+                                label?: string | null;
+                            }[];
+                            /** @default null */
+                            calibration?: {
+                                /** @enum {string} */
+                                method: "manual" | "dimension" | "item_label" | "area";
+                                reference: string;
+                                verified: boolean;
+                            } | null;
+                        };
+                        layout: {
+                            /** @enum {number} */
+                            schemaVersion: 3;
+                            items: {
+                                id: string;
+                                assetId: string | null;
+                                /** @enum {string} */
+                                function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                name: string;
+                                cx: number;
+                                cz: number;
+                                rotation: 0 | 90 | 180 | 270;
+                                w: number;
+                                d: number;
+                                h: number;
+                                /** @default false */
+                                placeholder?: boolean;
+                                /** @default false */
+                                locked?: boolean;
+                            }[];
+                            /** @default null */
+                            planning?: {
+                                /** @enum {string} */
+                                strategy: "max" | "area" | "min" | "case";
+                                requested: number;
+                                placed: number;
+                                /** @default [] */
+                                relaxations?: {
+                                    rule: string;
+                                    target: number;
+                                    actual: number;
+                                }[];
+                                /** @default null */
+                                note?: string | null;
+                            } | null;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            issues: {
+                                code: string;
+                                /** @enum {string} */
+                                severity: "error" | "warning";
+                                message: string;
+                                itemIds?: string[];
+                                path?: (string | number)[];
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/assets": {
         parameters: {
             query?: never;

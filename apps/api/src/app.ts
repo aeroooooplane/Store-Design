@@ -9,6 +9,7 @@ import { draftRoutes } from './modules/drafts/routes.ts'
 import { exchangeRoutes } from './modules/exchange/routes.ts'
 import { fileRoutes } from './modules/files/routes.ts'
 import { healthRoutes } from './modules/health/routes.ts'
+import { layoutRoutes } from './modules/layouts/routes.ts'
 import { nodeRoutes } from './modules/nodes/routes.ts'
 import { projectRoutes } from './modules/projects/routes.ts'
 import { installErrorHandling } from './plugins/errors.ts'
@@ -47,6 +48,7 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await app.register(exchangeRoutes, { prefix: API_PREFIX, db })
   await app.register(nodeRoutes, { prefix: API_PREFIX, db })
   await app.register(draftRoutes, { prefix: API_PREFIX, db })
+  await app.register(layoutRoutes, { prefix: API_PREFIX, db })
   await app.register(assetRoutes, { prefix: API_PREFIX, db })
   await app.register(fileRoutes, { prefix: API_PREFIX, db, roots })
   return app
