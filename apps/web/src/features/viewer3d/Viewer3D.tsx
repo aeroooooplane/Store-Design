@@ -1,17 +1,25 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { VIEW_ASPECT } from '@store/shared'
-import type { Asset, Camera, Layout, ShopType, Space } from '@store/shared'
+import type { Asset, Camera, Layout, ShopType, SiStyle, Space } from '@store/shared'
 import { WhiteScene } from './white-scene.ts'
-import type { LoadStatus, ViewPose } from './white-scene.ts'
+import type { LoadStatus, Look, ViewPose } from './white-scene.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
 export interface Viewer3DHandle {
   currentView: () => ViewPose
   showView: (view: View) => void
-  /** Waits for models still loading, then renders each view to a PNG data URL. */
-  renderViews: (views: readonly View[], width: number, height: number) => Promise<string[]>
+  /**
+   * Waits for models still loading, then renders each view to a PNG data URL, in the given look
+   * (default: the one on screen).
+   */
+  renderViews: (
+    views: readonly View[],
+    width: number,
+    height: number,
+    look?: Look,
+  ) => Promise<string[]>
 }
 
 interface Viewer3DProps {
@@ -21,13 +29,14 @@ interface Viewer3DProps {
   assets: ReadonlyMap<string, Asset>
   selectedId: string | null
   flaggedIds: ReadonlySet<string>
+  /** White model (default) or the material look of the renders. */
+  look?: Look | undefined
+  siStyle?: SiStyle | undefined
   onSelect: (itemId: string | null) => void
-  onMove: (
-    itemId: string,
-    cx: number,
-    cz: number,
-    gesture: { group: string; snap: boolean },
-  ) => void
+  /** Leave out for a read-only view: props can be selected but not dragged. */
+  onMove?:
+    | ((itemId: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) => void)
+    | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   ref?: Ref<Viewer3DHandle> | undefined
@@ -45,6 +54,8 @@ export function Viewer3D({
   assets,
   selectedId,
   flaggedIds,
+  look = 'white',
+  siStyle = 'SI1.0',
   onSelect,
   onMove,
   onReady,
@@ -100,6 +111,10 @@ export function Viewer3D({
   }, [layout, assets])
 
   useEffect(() => {
+    sceneRef.current?.setLook(look, siStyle)
+  }, [look, siStyle])
+
+  useEffect(() => {
     sceneRef.current?.setMarks(selectedId, flaggedIds)
   }, [selectedId, flaggedIds, layout])
 
@@ -109,11 +124,11 @@ export function Viewer3D({
       currentView: () =>
         sceneRef.current?.currentView() ?? { position: [0, 1, 0], target: [0, 0, 0], fovDeg: 48 },
       showView: (view) => sceneRef.current?.showView(view),
-      renderViews: async (views, width, height) => {
+      renderViews: async (views, width, height, look) => {
         const scene = sceneRef.current
         if (!scene) return []
         await scene.whenLoaded()
-        return sceneRef.current === scene ? await scene.renderViews(views, width, height) : []
+        return sceneRef.current === scene ? await scene.renderViews(views, width, height, look) : []
       },
     }),
     [],

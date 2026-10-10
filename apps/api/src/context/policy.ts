@@ -16,6 +16,8 @@ export type Action =
   | 'draft:write'
   | 'camera:read'
   | 'camera:write'
+  | 'render:read'
+  | 'render:write'
   | 'layout:generate'
   | 'layout:validate'
   | 'asset:read'

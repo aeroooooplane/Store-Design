@@ -13,6 +13,7 @@ import { healthRoutes } from './modules/health/routes.ts'
 import { layoutRoutes } from './modules/layouts/routes.ts'
 import { nodeRoutes } from './modules/nodes/routes.ts'
 import { projectRoutes } from './modules/projects/routes.ts'
+import { renderRoutes } from './modules/renders/routes.ts'
 import { installErrorHandling } from './plugins/errors.ts'
 import { registerOpenApi } from './plugins/openapi.ts'
 import { generateRequestId, installRequestContext } from './plugins/request-context.ts'
@@ -50,6 +51,7 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await app.register(nodeRoutes, { prefix: API_PREFIX, db })
   await app.register(draftRoutes, { prefix: API_PREFIX, db })
   await app.register(cameraRoutes, { prefix: API_PREFIX, db })
+  await app.register(renderRoutes, { prefix: API_PREFIX, db, roots })
   await app.register(layoutRoutes, { prefix: API_PREFIX, db })
   await app.register(assetRoutes, { prefix: API_PREFIX, db })
   await app.register(fileRoutes, { prefix: API_PREFIX, db, roots })

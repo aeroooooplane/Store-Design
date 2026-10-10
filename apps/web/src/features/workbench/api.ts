@@ -7,8 +7,10 @@ import {
   NodeCameraListSchema,
   NodeCameraSchema,
   NodeCreatedSchema,
+  NodeRenderListSchema,
   NodeSchema,
   NodeTreeSchema,
+  RenderImageSchema,
 } from '@store/shared'
 import type {
   CameraCreate,
@@ -18,6 +20,9 @@ import type {
   Layout,
   LayoutGenerate,
   NodeCreateInput,
+  NodeRenderList,
+  RenderImage,
+  RenderMode,
 } from '@store/shared'
 import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
 
@@ -28,6 +33,7 @@ export const workbenchKeys = {
   draft: (projectId: string) => ['workbench', projectId, 'draft'] as const,
   assets: ['workbench', 'assets'] as const,
   cameras: (nodeId: string) => ['workbench', 'cameras', nodeId] as const,
+  renders: (nodeId: string) => ['workbench', 'renders', nodeId] as const,
 }
 
 export function useTree(projectId: string) {
@@ -216,6 +222,55 @@ export function useCameraAction(nodeId: string) {
         ),
       )
     },
-    onSettled: () => client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) }),
+    onSettled: async () => {
+      await client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) })
+      // A re-aimed view makes its images stale.
+      await client.invalidateQueries({ queryKey: workbenchKeys.renders(nodeId) })
+    },
   })
 }
+
+/** The newest image of every view and mode of a render node. */
+export function useRenders(nodeId: string) {
+  return useQuery({
+    queryKey: workbenchKeys.renders(nodeId),
+    queryFn: async () =>
+      NodeRenderListSchema.parse(
+        unwrap(await api.GET('/api/v1/nodes/{nodeId}/renders', { params: { path: { nodeId } } })),
+      ),
+  })
+}
+
+/** Uploads one rendered view (PNG bytes) and returns the stored image. */
+export async function uploadRender(
+  nodeId: string,
+  cameraId: string,
+  mode: RenderMode,
+  png: Blob,
+): Promise<RenderImage> {
+  return RenderImageSchema.parse(
+    unwrap(
+      await api.PUT('/api/v1/nodes/{nodeId}/renders/{cameraId}/{mode}', {
+        params: { path: { nodeId, cameraId, mode } },
+        body: png,
+        bodySerializer: (body) => body as Blob,
+        headers: { 'content-type': 'image/png' },
+      }),
+    ),
+  )
+}
+
+/** The list with a just-uploaded image in place of the older one of its view and mode. */
+export function withImage(
+  list: NodeRenderList | undefined,
+  nodeId: string,
+  image: RenderImage,
+): NodeRenderList {
+  const others = (list?.images ?? []).filter(
+    (i) => !(i.cameraId === image.cameraId && i.mode === image.mode),
+  )
+  return { nodeId, images: [...others, image] }
+}
+
+/** ZIP of the current images, served by the API as a download. */
+export const renderArchiveUrl = (nodeId: string) => `/api/v1/nodes/${nodeId}/renders/archive`
