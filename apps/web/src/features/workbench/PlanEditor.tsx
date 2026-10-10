@@ -8,7 +8,7 @@ import {
   useRef,
   useState,
 } from 'react'
-import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from 'react'
+import type { KeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { checkAssetFit, mToMm, mmToM, validateLayout } from '@store/shared'
 import type {
@@ -29,6 +29,8 @@ import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
 import { CameraPanel } from './CameraPanel.tsx'
 import { StagePanel } from './StagePanel.tsx'
+import { TrashIcon } from '../../components/icons.tsx'
+import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { copyName, freshName, stageOf, stageParentId } from './tree.ts'
 import type { Stage } from './tree.ts'
 import { ModelPicker } from './ModelPicker.tsx'
@@ -54,6 +56,8 @@ interface PlanEditorProps {
   baseNode: DesignNode
   space: Space
   shopType: ShopType
+  /** Project card and history tree for the left column. */
+  left: ReactNode
   /** The project's history, to place copies next to their original. */
   nodes: NodeSummary[]
   /** Furniture of this SI style is offered in the model picker. */
@@ -108,6 +112,7 @@ export function PlanEditor({
   baseNode,
   space,
   shopType,
+  left,
   nodes,
   siStyle,
   draft,
@@ -128,7 +133,8 @@ export function PlanEditor({
   const isWhite = baseNode.kind === 'white'
   const [view, setView] = useState<'plan' | '3d'>(isWhite ? '3d' : 'plan')
   /** The 3D scene stays mounted once opened (white models always), so switching is instant. */
-  const [show3d, setShow3d] = useState(isWhite)
+  // The 3D view is always mounted: it is the mini view while the plan is the main one.
+  const show3d = true
   const [viewerReady, setViewerReady] = useState(false)
   const onViewerReady = useCallback(() => setViewerReady(true), [])
   const drag = useRef<{ id: string; dx: number; dz: number; group: string } | null>(null)
@@ -385,7 +391,6 @@ export function PlanEditor({
 
   function switchView(next: 'plan' | '3d') {
     setView(next)
-    if (next === '3d') setShow3d(true)
   }
 
   function showCamera(camera: Camera) {
@@ -401,232 +406,308 @@ export function PlanEditor({
     error: '草稿保存失败',
   }
 
+  const rotateSelected = (by: 90 | -90) => {
+    if (!selected) return
+    dispatch({
+      type: 'rotate',
+      id: selected.id,
+      by,
+      asset: selected.assetId ? assetMap.get(selected.assetId) : undefined,
+    })
+  }
+
+  const planMain = view === 'plan'
   return (
-    <section className="plan-editor" aria-label="平面编辑">
-      <div className="toolbar">
-        <div className="tabs" role="group" aria-label="视图">
-          <button type="button" aria-pressed={view === 'plan'} onClick={() => switchView('plan')}>
-            平面
-          </button>
-          <button type="button" aria-pressed={view === '3d'} onClick={() => switchView('3d')}>
-            三维
-          </button>
-        </div>
-        <span className="history-buttons">
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="撤回"
-            title="撤回（Ctrl+Z）"
-            disabled={state.past.length === 0}
-            onClick={() => dispatch({ type: 'undo' })}
-          >
-            <ArcArrow direction="left" />
-          </button>
-          <button
-            type="button"
-            className="icon-button"
-            aria-label="重做"
-            title="重做（Ctrl+Y）"
-            disabled={state.future.length === 0}
-            onClick={() => dispatch({ type: 'redo' })}
-          >
-            <ArcArrow direction="right" />
-          </button>
-        </span>
-        <button
-          type="button"
-          disabled={!selected}
-          onClick={() =>
-            selected &&
-            dispatch({
-              type: 'rotate',
-              id: selected.id,
-              asset: selected.assetId ? assetMap.get(selected.assetId) : undefined,
-            })
-          }
-        >
-          旋转 90°
-        </button>
-        <button
-          type="button"
-          disabled={!selected}
-          onClick={() => selected && dispatch({ type: 'remove', id: selected.id })}
-        >
-          删除
-        </button>
-        <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
-        <span className={`save-state ${saveState}`} role="status">
-          {SAVE_LABELS[saveState]}
-        </span>
-      </div>
-
-      {saveState === 'conflict' && (
-        <div className="error" role="alert">
-          草稿已在其他窗口被修改，本窗口已停止自动保存。
-          <button type="button" onClick={() => void reloadDraft()}>
-            载入最新草稿（放弃本窗口未保存的修改）
-          </button>
-        </div>
-      )}
-      {saveState === 'error' && <ErrorMessage error={saveError} />}
-
-      <div className="plan-editor-body">
-        <div
-          className="plan-canvas"
-          tabIndex={0}
-          aria-label={
-            view === 'plan'
-              ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-              : '三维白模：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
-          }
-          onPointerMove={onPointerMove}
-          onPointerUp={() => (drag.current = null)}
-          onPointerCancel={() => (drag.current = null)}
-          onKeyDown={onKeyDown}
-        >
-          {show3d && (
-            <div hidden={view !== '3d'}>
-              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
-                <Viewer3D
-                  ref={viewerRef}
-                  space={space}
-                  shopType={shopType}
-                  layout={state.layout}
-                  assets={assetMap}
-                  selectedId={state.selectedId}
-                  flaggedIds={flaggedIds}
-                  onSelect={select}
-                  onMove={move}
-                  onReady={onViewerReady}
-                  title={`${baseNode.name} 三维白模`}
-                />
-              </Suspense>
+    <WorkbenchLayout
+      left={
+        <>
+          {left}
+          <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
+        </>
+      }
+      center={
+        <section className="plan-editor wb-card" aria-label="平面编辑">
+          <h2 className="node-heading">{baseNode.name}</h2>
+          <div className="toolbar">
+            <div className="tabs" role="group" aria-label="视图">
+              <button
+                type="button"
+                aria-pressed={view === 'plan'}
+                onClick={() => switchView('plan')}
+              >
+                平面
+              </button>
+              <button type="button" aria-pressed={view === '3d'} onClick={() => switchView('3d')}>
+                三维
+              </button>
             </div>
-          )}
-          <div hidden={view !== 'plan'}>
-            <PlanView
-              svgRef={svgRef}
-              space={space}
-              shopType={shopType}
-              layout={state.layout}
-              issues={issues}
-              assets={assetMap}
-              selectedId={state.selectedId}
-              onItemPointerDown={onItemPointerDown}
-              onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
-              title={`${baseNode.name} 平面`}
-            />
+            <span className="history-buttons">
+              <button
+                type="button"
+                className="icon-button"
+                aria-label="撤回"
+                title="撤回（Ctrl+Z）"
+                disabled={state.past.length === 0}
+                onClick={() => dispatch({ type: 'undo' })}
+              >
+                <ArcArrow direction="left" />
+              </button>
+              <button
+                type="button"
+                className="icon-button"
+                aria-label="重做"
+                title="重做（Ctrl+Y）"
+                disabled={state.future.length === 0}
+                onClick={() => dispatch({ type: 'redo' })}
+              >
+                <ArcArrow direction="right" />
+              </button>
+            </span>
+            <span className={`save-state ${saveState}`} role="status">
+              {SAVE_LABELS[saveState]}
+            </span>
           </div>
-        </div>
-        <aside className="plan-side">
-          <StagePanel
-            title={STAGE_TITLES[stage]}
-            status={
-              saveState !== 'idle' || state.dirty ? <span className="tag">有未保存修改</span> : null
-            }
-            first={[
-              stage === 'space'
-                ? {
-                    label: '保存为方案',
-                    onClick: advance,
-                    disabled: create.isPending,
-                    primary: true,
-                  }
-                : {
-                    label: '新建副本',
-                    title: '在同一层另存一份，原来的保留，之后在副本上修改',
-                    onClick: copyNode,
-                    disabled: create.isPending,
-                  },
-              {
-                label: '丢弃草稿',
-                onClick: () => void discard(),
-                disabled: saveState === 'idle' && !state.dirty,
-              },
-            ]}
-            second={
-              stage === 'plan' || stage === 'white'
-                ? {
-                    label: stage === 'plan' ? '确认白模' : '开始渲染',
-                    onClick: advance,
-                    primary: true,
-                    disabled: create.isPending || errors.length > 0,
-                  }
-                : undefined
-            }
-            hint={
-              errors.length > 0 && stage !== 'space'
-                ? `解决检查中的问题后才能${stage === 'plan' ? '确认白模' : '开始渲染'}。`
-                : undefined
-            }
-          />
-          {selected ? (
-            <div className="properties" aria-label="选中道具">
-              <h3>{selected.name}</h3>
-              <p className="hint">
-                {mToMm(selected.w)} × {mToMm(selected.d)} × {mToMm(selected.h)} mm · 旋转{' '}
-                {selected.rotation}°{selected.placeholder ? ' · 参数化占位' : ''}
-              </p>
-              <label className="field">
-                中心 x（mm）
-                <input
-                  type="number"
-                  step={10}
-                  value={mToMm(selected.cx)}
-                  onChange={(e) =>
-                    dispatch({
-                      type: 'move',
-                      id: selected.id,
-                      cx: mmToM(Number(e.target.value)),
-                      cz: selected.cz,
-                    })
-                  }
-                />
-              </label>
-              <label className="field">
-                中心 z（mm）
-                <input
-                  type="number"
-                  step={10}
-                  value={mToMm(selected.cz)}
-                  onChange={(e) =>
-                    dispatch({
-                      type: 'move',
-                      id: selected.id,
-                      cx: selected.cx,
-                      cz: mmToM(Number(e.target.value)),
-                    })
-                  }
-                />
-              </label>
+
+          {saveState === 'conflict' && (
+            <div className="error" role="alert">
+              草稿已在其他窗口被修改，本窗口已停止自动保存。
+              <button type="button" onClick={() => void reloadDraft()}>
+                载入最新草稿（放弃本窗口未保存的修改）
+              </button>
             </div>
-          ) : (
-            <p className="hint">
-              点击道具选中；拖动移动，方向键微调 10 mm（Shift 100 mm），R 旋转，Delete 删除。
-            </p>
           )}
-          <h3>检查（{errors.length} 个问题）</h3>
-          <ul className="issues">
-            {issues.length === 0 && <li className="hint">没有越界、重叠或模型尺寸问题</li>}
-            {issues.map((issue, i) => (
-              <li key={i} className={issue.severity}>
-                {issue.message}
-              </li>
-            ))}
-          </ul>
-          <ErrorMessage error={create.error} />
-        </aside>
-      </div>
-      {isWhite && (
-        <CameraPanel
-          nodeId={baseNode.id}
-          viewer={viewerRef}
-          viewerReady={viewerReady}
-          layout={state.layout}
-          onShow={showCamera}
-        />
-      )}
-    </section>
+          {saveState === 'error' && <ErrorMessage error={saveError} />}
+
+          <div
+            className="plan-canvas"
+            tabIndex={0}
+            aria-label={
+              planMain
+                ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
+                : '三维白模：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+            }
+            onPointerMove={onPointerMove}
+            onPointerUp={() => (drag.current = null)}
+            onPointerCancel={() => (drag.current = null)}
+            onKeyDown={onKeyDown}
+          >
+            {show3d && (
+              <div className={planMain ? 'view-mini' : 'view-main'}>
+                <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                  <Viewer3D
+                    ref={viewerRef}
+                    space={space}
+                    shopType={shopType}
+                    layout={state.layout}
+                    assets={assetMap}
+                    selectedId={state.selectedId}
+                    flaggedIds={flaggedIds}
+                    onSelect={select}
+                    onMove={move}
+                    onReady={onViewerReady}
+                    title={`${baseNode.name} 三维白模`}
+                  />
+                </Suspense>
+                {planMain && (
+                  <button
+                    type="button"
+                    className="view-switch"
+                    aria-label="切换到三维"
+                    title="点击切换到三维"
+                    onClick={() => switchView('3d')}
+                  />
+                )}
+              </div>
+            )}
+            <div className={planMain ? 'view-main' : 'view-mini'}>
+              <PlanView
+                svgRef={svgRef}
+                space={space}
+                shopType={shopType}
+                layout={state.layout}
+                issues={issues}
+                assets={assetMap}
+                selectedId={state.selectedId}
+                onItemPointerDown={onItemPointerDown}
+                onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
+                compact={!planMain}
+                title={`${baseNode.name} 平面`}
+              />
+              {!planMain && (
+                <button
+                  type="button"
+                  className="view-switch"
+                  aria-label="切换到平面"
+                  title="点击切换到平面"
+                  onClick={() => switchView('plan')}
+                />
+              )}
+            </div>
+          </div>
+        </section>
+      }
+      right={
+        <>
+          <div className="wb-card">
+            <StagePanel
+              title={STAGE_TITLES[stage]}
+              status={
+                saveState !== 'idle' || state.dirty ? (
+                  <span className="tag">有未保存修改</span>
+                ) : null
+              }
+              first={[
+                stage === 'space'
+                  ? {
+                      label: '保存为方案',
+                      onClick: advance,
+                      disabled: create.isPending,
+                      primary: true,
+                    }
+                  : {
+                      label: '新建副本',
+                      title: '在同一层另存一份，原来的保留，之后在副本上修改',
+                      onClick: copyNode,
+                      disabled: create.isPending,
+                    },
+                {
+                  label: '丢弃草稿',
+                  onClick: () => void discard(),
+                  disabled: saveState === 'idle' && !state.dirty,
+                },
+              ]}
+              second={
+                stage === 'plan' || stage === 'white'
+                  ? {
+                      label: stage === 'plan' ? '确认白模' : '开始渲染',
+                      onClick: advance,
+                      primary: true,
+                      disabled: create.isPending || errors.length > 0,
+                    }
+                  : undefined
+              }
+              hint={
+                errors.length > 0 && stage !== 'space'
+                  ? `解决检查中的问题后才能${stage === 'plan' ? '确认白模' : '开始渲染'}。`
+                  : undefined
+              }
+            />
+            <ErrorMessage error={create.error} />
+          </div>
+
+          <div className="wb-card properties" aria-label="选中道具">
+            {selected ? (
+              <>
+                <div className="properties-head">
+                  <h3>{assetMap.get(selected.assetId ?? '')?.standardName ?? selected.name}</h3>
+                  <button
+                    type="button"
+                    className="icon-button"
+                    aria-label="删除道具"
+                    title="删除（Delete）"
+                    onClick={() => dispatch({ type: 'remove', id: selected.id })}
+                  >
+                    <TrashIcon />
+                  </button>
+                </div>
+                <div className="field-row">
+                  道具尺寸
+                  <output>
+                    {mToMm(selected.w)} × {mToMm(selected.d)} × {mToMm(selected.h)} mm
+                    {selected.placeholder ? '（占位）' : ''}
+                  </output>
+                </div>
+                <label className="field-row">
+                  水平位置
+                  <input
+                    type="number"
+                    step={10}
+                    value={mToMm(selected.cx)}
+                    onChange={(e) =>
+                      dispatch({
+                        type: 'move',
+                        id: selected.id,
+                        cx: mmToM(Number(e.target.value)),
+                        cz: selected.cz,
+                      })
+                    }
+                  />
+                </label>
+                <label className="field-row">
+                  垂直位置
+                  <input
+                    type="number"
+                    step={10}
+                    value={mToMm(selected.cz)}
+                    onChange={(e) =>
+                      dispatch({
+                        type: 'move',
+                        id: selected.id,
+                        cx: selected.cx,
+                        cz: mmToM(Number(e.target.value)),
+                      })
+                    }
+                  />
+                </label>
+                <div className="field-row">
+                  旋转角度
+                  <output>{selected.rotation}°</output>
+                  <span className="history-buttons">
+                    <button
+                      type="button"
+                      className="icon-button"
+                      aria-label="逆时针旋转 90°"
+                      onClick={() => rotateSelected(-90)}
+                    >
+                      <ArcArrow direction="left" />
+                    </button>
+                    <button
+                      type="button"
+                      className="icon-button"
+                      aria-label="顺时针旋转 90°"
+                      onClick={() => rotateSelected(90)}
+                    >
+                      <ArcArrow direction="right" />
+                    </button>
+                  </span>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3>选中道具</h3>
+                <p className="hint">
+                  点击道具选中；拖动移动（靠近墙或道具会吸附，按住 Alt 关闭），方向键微调 10
+                  mm（Shift 100 mm），R 旋转，Delete 删除。
+                </p>
+              </>
+            )}
+          </div>
+
+          <div className="wb-card">
+            <h3>检查（{errors.length} 个问题）</h3>
+            <ul className="issues">
+              {issues.length === 0 && <li className="hint">没有越界、重叠或模型尺寸问题</li>}
+              {issues.map((issue, i) => (
+                <li key={i} className={issue.severity}>
+                  {issue.message}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {isWhite && (
+            <div className="wb-card">
+              <CameraPanel
+                nodeId={baseNode.id}
+                viewer={viewerRef}
+                viewerReady={viewerReady}
+                layout={state.layout}
+                onShow={showCamera}
+              />
+            </div>
+          )}
+        </>
+      }
+    />
   )
 }

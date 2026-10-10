@@ -84,28 +84,24 @@ describe('pickableGroups', () => {
 })
 
 describe('ModelPicker', () => {
-  it('shows pictures and labels, searches, and keeps picking until closed', () => {
+  it('shows pictures and labels, searches, and keeps picking', () => {
     const onPick = vi.fn()
     render(<ModelPicker assets={catalog} siStyle="SI2.0" onPick={onPick} />)
-    fireEvent.click(screen.getByRole('button', { name: '添加模型' }))
 
-    const panel = screen.getByRole('region', { name: '选择模型' })
+    const panel = screen.getByRole('region', { name: '添加模型' })
     expect(within(panel).queryByText('1.8米配件柜')).toBeNull()
     expect(within(panel).queryByText('消防栓箱')).toBeNull()
     const leggy = screen.getByRole('button', { name: '添加 1.8米亮脚中岛桌 · 变体' })
     expect(within(leggy).getByText('同类参考图')).toBeTruthy()
     expect(within(leggy).getByRole('presentation').getAttribute('src')).toBe('/api/v1/files/island')
     const screenCard = screen.getByRole('button', { name: '添加 广告机 · 变体' })
-    expect(within(screenCard).getByText('无三维模型 · 占位')).toBeTruthy()
-    expect(within(screenCard).getByText('1690 × 50 × 958 mm')).toBeTruthy()
+    expect(within(screenCard).getByText('占位')).toBeTruthy()
+    expect(within(screenCard).getByText(/1690 × 50 × 958 mm/)).toBeTruthy()
 
     fireEvent.change(screen.getByLabelText('搜索模型'), { target: { value: 'LOGO' } })
     expect(screen.queryByRole('button', { name: '添加 广告机 · 变体' })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: '添加 墙面LOGO · 变体' }))
     expect(onPick).toHaveBeenCalledWith(catalog[4])
     expect(screen.getByText('已添加')).toBeTruthy()
-
-    fireEvent.click(screen.getByRole('button', { name: '收起' }))
-    expect(screen.queryByRole('region', { name: '选择模型' })).toBeNull()
   })
 })

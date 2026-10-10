@@ -13,13 +13,15 @@ import {
   useTree,
   workbenchKeys,
 } from './api.ts'
-import { CandidateGallery } from './CandidateGallery.tsx'
+import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
 import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
+import { ProjectCard } from './ProjectCard.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree, spaceAncestor } from './tree.ts'
+import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
 
@@ -37,8 +39,9 @@ export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string
 }
 
 /**
- * The project workbench: history tree on the left, the selected step on the right. The
- * selected node lives in the URL (`?node=`) so a reload or a shared link opens the same step.
+ * The project workbench in three columns: project, history and model list on the left, the
+ * selected step in the middle, its stage actions and details on the right. The selected node
+ * lives in the URL (`?node=`) so a reload or a shared link opens the same step.
  */
 export function Workbench({ project }: { project: Project }) {
   const tree = useTree(project.id)
@@ -70,6 +73,7 @@ export function Workbench({ project }: { project: Project }) {
 
   // A panel opened for one node closes when another node is selected.
   const activePanel = panel.nodeId === selectedId ? panel.kind : 'view'
+  const cardSpace = useNode(selectedId ? spaceAncestor(nodes, selectedId) : null)
 
   function select(nodeId: string) {
     setParams({ node: nodeId })
@@ -83,9 +87,9 @@ export function Workbench({ project }: { project: Project }) {
   }
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
-
-  return (
-    <div className="workbench">
+  const left = (
+    <>
+      <ProjectCard project={project} space={cardSpace.data?.space ?? null} />
       <HistoryTree
         projectId={project.id}
         projectName={project.name}
@@ -96,30 +100,40 @@ export function Workbench({ project }: { project: Project }) {
         onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
         newSpaceDisabled={creatingSpace}
       />
-      <section className="workbench-main">
-        {creatingSpace ? (
-          <NewSpace
-            projectId={project.id}
-            first={nodes.length === 0}
-            onCreated={select}
-            onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
-          />
-        ) : selectedId ? (
-          <NodePanel
-            key={selectedId}
-            project={project}
-            nodeId={selectedId}
-            nodes={nodes}
-            draft={draft.data ?? null}
-            assets={assets.data}
-            panel={activePanel}
-            setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
-            onSelect={select}
-          />
-        ) : null}
-      </section>
-    </div>
+    </>
   )
+
+  if (creatingSpace) {
+    return (
+      <WorkbenchLayout
+        left={left}
+        center={
+          <div className="wb-card">
+            <NewSpace
+              projectId={project.id}
+              first={nodes.length === 0}
+              onCreated={select}
+              onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
+            />
+          </div>
+        }
+      />
+    )
+  }
+  return selectedId ? (
+    <NodePanel
+      key={selectedId}
+      left={left}
+      project={project}
+      nodeId={selectedId}
+      nodes={nodes}
+      draft={draft.data ?? null}
+      assets={assets.data}
+      panel={activePanel}
+      setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
+      onSelect={select}
+    />
+  ) : null
 }
 
 function NewSpace({
@@ -154,6 +168,7 @@ function NewSpace({
 }
 
 interface NodePanelProps {
+  left: ReactNode
   project: Project
   nodeId: string
   nodes: NodeSummary[]
@@ -165,6 +180,7 @@ interface NodePanelProps {
 }
 
 function NodePanel({
+  left,
   project,
   nodeId,
   nodes,
@@ -180,48 +196,73 @@ function NodePanel({
   const assetMap = useMemo(() => new Map(assets.map((a) => [a.id, a])), [assets])
 
   const error = node.error ?? spaceNode.error
-  if (error) return <ErrorMessage error={error} />
   const space = spaceNode.data?.space
-  if (!node.data || !space) return <p className="notice">正在加载节点…</p>
+  if (error || !node.data || !space) {
+    return (
+      <WorkbenchLayout
+        left={left}
+        center={error ? <ErrorMessage error={error} /> : <p className="notice">正在加载节点…</p>}
+      />
+    )
+  }
   const current = node.data
 
   if (current.kind === 'render') {
     const later = '渲染图与交付文件将在下一步接入'
     return (
-      <>
-        <StagePanel
-          title="渲染阶段"
-          first={[
-            { label: '重新渲染', onClick: () => undefined, disabled: true, title: later },
-            { label: '下载图片', onClick: () => undefined, disabled: true, title: later },
-          ]}
-          second={{
-            label: '生成交付文件',
-            onClick: () => undefined,
-            disabled: true,
-            primary: true,
-            title: later,
-          }}
-          hint={`${later}。渲染节点保存了确认时的布局与视角；如需修改，请回到它的白模继续编辑。`}
-        />
-        <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
-          渲染节点是输出结果，不能直接编辑。
-        </ReadOnly>
-      </>
+      <WorkbenchLayout
+        left={left}
+        center={
+          <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap} />
+        }
+        right={
+          <div className="wb-card">
+            <StagePanel
+              title="渲染阶段"
+              first={[
+                { label: '重新渲染', onClick: () => undefined, disabled: true, title: later },
+                { label: '下载图片', onClick: () => undefined, disabled: true, title: later },
+              ]}
+              second={{
+                label: '生成交付文件',
+                onClick: () => undefined,
+                disabled: true,
+                primary: true,
+                title: later,
+              }}
+              hint={`${later}。渲染节点保存了确认时的布局与视角，不能直接编辑；如需修改，请回到它的白模。`}
+            />
+          </div>
+        }
+      />
     )
   }
 
   // One shared draft per project: editing another step first needs the draft resolved.
   if (draft && draft.baseNodeId !== current.id) {
     return (
-      <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
-        <DraftElsewhere projectId={project.id} draft={draft} nodes={nodes} onSelect={onSelect} />
-      </ReadOnly>
+      <WorkbenchLayout
+        left={left}
+        center={
+          <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap} />
+        }
+        right={
+          <div className="wb-card">
+            <DraftElsewhere
+              projectId={project.id}
+              draft={draft}
+              nodes={nodes}
+              onSelect={onSelect}
+            />
+          </div>
+        }
+      />
     )
   }
 
   const editor = (
     <PlanEditor
+      left={left}
       projectId={project.id}
       baseNode={current}
       space={space}
@@ -234,75 +275,117 @@ function NodePanel({
     />
   )
 
-  if (current.kind !== 'space') {
-    return (
-      <>
-        <NodeHeading node={current} />
-        {editor}
-      </>
-    )
-  }
+  if (current.kind !== 'space') return editor
 
   if (panel === 'edit-space') {
     return (
-      <>
-        <h2>修改空间</h2>
-        <p className="hint">修改会保存为新的空间节点，原空间及其方案保持不变。</p>
-        <ErrorMessage error={create.error} />
-        <SpaceEditor
-          initial={space}
-          submitting={create.isPending}
-          onCancel={() => setPanel('view')}
-          onSubmit={(edited, name) =>
-            create.mutate(
-              { parentId: current.id, kind: 'space', name, space: edited },
-              { onSuccess: (created) => onSelect(created.node.id) },
-            )
-          }
-        />
-      </>
+      <WorkbenchLayout
+        left={left}
+        center={
+          <div className="wb-card">
+            <h2>修改空间</h2>
+            <p className="hint">修改会保存为新的空间节点，原空间及其方案保持不变。</p>
+            <ErrorMessage error={create.error} />
+            <SpaceEditor
+              initial={space}
+              submitting={create.isPending}
+              onCancel={() => setPanel('view')}
+              onSubmit={(edited, name) =>
+                create.mutate(
+                  { parentId: current.id, kind: 'space', name, space: edited },
+                  { onSuccess: (created) => onSelect(created.node.id) },
+                )
+              }
+            />
+          </div>
+        }
+      />
     )
   }
 
-  if (panel === 'manual' || draft) {
-    return (
-      <>
-        <NodeHeading node={current} />
-        {editor}
-      </>
-    )
-  }
+  if (panel === 'manual' || draft) return editor
 
   return (
-    <>
-      <NodeHeading node={current} />
-      <div className="toolbar">
-        <button type="button" onClick={() => setPanel('edit-space')}>
-          修改空间
-        </button>
-        <button type="button" onClick={() => setPanel('manual')}>
-          手动排布
-        </button>
-      </div>
-      <div className="space-summary">
-        <PlanView
-          space={space}
-          shopType={project.shopType}
-          layout={current.layout}
-          assets={assetMap}
-          title={`${current.name} 平面`}
-        />
-      </div>
-      <CandidateGallery
-        projectId={project.id}
-        spaceNode={{ ...current, space }}
-        shopType={project.shopType}
-        siStyle={project.siStyle}
-        assets={assetMap}
-        existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
-        onChosen={onSelect}
-      />
-    </>
+    <SpaceStage
+      left={left}
+      project={project}
+      spaceNode={{ ...current, space }}
+      assets={assetMap}
+      existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
+      setPanel={setPanel}
+      onSelect={onSelect}
+    />
+  )
+}
+
+/** A space: its plan in the middle; edit it, lay out by hand or generate three plans. */
+function SpaceStage({
+  left,
+  project,
+  spaceNode,
+  assets,
+  existingNames,
+  setPanel,
+  onSelect,
+}: {
+  left: ReactNode
+  project: Project
+  spaceNode: DesignNode & { space: Space }
+  assets: ReadonlyMap<string, Asset>
+  existingNames: readonly string[]
+  setPanel: (panel: Panel) => void
+  onSelect: (nodeId: string) => void
+}) {
+  const generation = usePlanGeneration({
+    projectId: project.id,
+    spaceNode,
+    shopType: project.shopType,
+    siStyle: project.siStyle,
+    existingNames,
+  })
+  return (
+    <WorkbenchLayout
+      left={left}
+      center={
+        <div className="wb-card">
+          <NodeHeading node={spaceNode} />
+          <div className="space-summary">
+            <PlanView
+              space={spaceNode.space}
+              shopType={project.shopType}
+              layout={spaceNode.layout}
+              assets={assets}
+              title={`${spaceNode.name} 平面`}
+            />
+          </div>
+          <CandidateGallery
+            generation={generation}
+            shopType={project.shopType}
+            siStyle={project.siStyle}
+            assets={assets}
+            onChosen={onSelect}
+          />
+        </div>
+      }
+      right={
+        <div className="wb-card">
+          <StagePanel
+            title="空间阶段"
+            first={[
+              { label: '修改空间', onClick: () => setPanel('edit-space') },
+              { label: '手动排布', onClick: () => setPanel('manual') },
+            ]}
+            second={{
+              label: generation.busy ? '正在生成…' : generation.label,
+              onClick: generation.run,
+              disabled: generation.busy,
+              primary: true,
+            }}
+            hint="三个方案（尽量多放、按面积推荐、尽量少放）都会保存到方案层。"
+          />
+        </div>
+      }
+    />
   )
 }
 
@@ -315,18 +398,15 @@ function ReadOnly({
   space,
   shopType,
   assets,
-  children,
 }: {
   node: DesignNode
   space: Space
   shopType: ShopType
   assets: ReadonlyMap<string, Asset>
-  children: ReactNode
 }) {
   return (
-    <>
+    <div className="wb-card">
       <NodeHeading node={node} />
-      <div className="notice">{children}</div>
       <div className="space-summary">
         <PlanView
           space={space}
@@ -336,7 +416,7 @@ function ReadOnly({
           title={`${node.name} 平面`}
         />
       </div>
-    </>
+    </div>
   )
 }
 
@@ -362,11 +442,12 @@ function DraftElsewhere({
 
   return (
     <div className="draft-elsewhere">
+      <h3>当前节点只读</h3>
       <p>
         项目里有一份基于「{base?.name ?? '未知节点'}」的草稿还没保存为版本。每个项目只保留一份草稿，
         处理后才能编辑当前节点。
       </p>
-      <div className="toolbar">
+      <div className="stage-row">
         <button type="button" className="primary" onClick={() => onSelect(draft.baseNodeId)}>
           转到草稿
         </button>

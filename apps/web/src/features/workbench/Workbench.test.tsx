@@ -249,10 +249,10 @@ describe('Workbench', () => {
     renderWorkbench(`?node=${P2}`)
 
     expect(await screen.findByText(/基于「方案 A」的草稿/)).toBeTruthy()
-    expect(screen.queryByRole('button', { name: '旋转 90°' })).toBeNull()
+    expect(screen.queryByRole('button', { name: '撤回' })).toBeNull()
 
     fireEvent.click(screen.getByRole('button', { name: '丢弃草稿' }))
-    expect(await screen.findByRole('button', { name: '旋转 90°' })).toBeTruthy()
+    expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
     expect(confirm).toHaveBeenCalledOnce()
     expect(server.calls.find((c) => c.method === 'DELETE')?.ifMatch).toBe('"3"')
   })
@@ -262,14 +262,12 @@ describe('Workbench', () => {
     vi.stubGlobal('fetch', server.fetchMock)
     const { container } = renderWorkbench(`?node=${P1}`)
 
-    await screen.findByRole('button', { name: '旋转 90°' })
+    await screen.findByRole('button', { name: '撤回' })
     const item = container.querySelector('[data-item-id="island_table-1"]') as Element
     fireEvent.pointerDown(item)
     fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'ArrowRight', shiftKey: true })
 
-    await waitFor(() => expect(screen.getByRole('status').textContent).toBe('草稿已保存'), {
-      timeout: 3000,
-    })
+    expect(await screen.findByText('草稿已保存', {}, { timeout: 3000 })).toBeTruthy()
     const put = server.calls.find((c) => c.method === 'PUT')
     expect(put).toMatchObject({ ifMatch: null, body: { baseNodeId: P1 } })
     expect((put?.body as { layout: Layout }).layout.items[0]?.cx).toBe(4.1)
