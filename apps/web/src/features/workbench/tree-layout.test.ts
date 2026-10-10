@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
-import { ROOT_ID, TREE_STYLE, groupEllipse, layoutTree, textWidth } from './tree-layout.ts'
+import { ROOT_ID, TREE_STYLE, applyOffsets, layoutTree, textWidth } from './tree-layout.ts'
 
 let seq = 0
 function node(id: string, parentId: string | null, overrides: Partial<NodeSummary> = {}) {
@@ -88,22 +88,21 @@ describe('layoutTree', () => {
   })
 })
 
-describe('groupEllipse', () => {
-  it('encloses the node and its children', () => {
+describe('applyOffsets', () => {
+  it('moves dragged nodes, re-routes their branches and grows the drawing to fit', () => {
     const layout = layoutTree('项目', nodes, label, false)
-    const ellipse = groupEllipse(layout, 's1')
-    expect(ellipse).not.toBeNull()
-    for (const id of ['s1', 'p1', 'p2', 'p3']) {
-      const b = layout.boxes.find((x) => x.id === id)
-      if (!b || !ellipse) continue
-      for (const [dx, dy] of [
-        [-b.width / 2, -b.height / 2],
-        [b.width / 2, b.height / 2],
-      ]) {
-        const nx = (b.x + (dx ?? 0) - ellipse.cx) / ellipse.rx
-        const ny = (b.y + (dy ?? 0) - ellipse.cy) / ellipse.ry
-        expect(nx * nx + ny * ny).toBeLessThanOrEqual(1)
-      }
-    }
+    const moved = applyOffsets(layout, { p1: [-500, 40] })
+    const before = layout.boxes.find((b) => b.id === 'p1')
+    const after = moved.boxes.find((b) => b.id === 'p1')
+    expect(after?.x).toBe((before?.x ?? 0) - 500)
+    expect(after?.y).toBe((before?.y ?? 0) + 40)
+    expect(moved.edges.find((e) => e.to === 'p1')?.d).not.toBe(
+      layout.edges.find((e) => e.to === 'p1')?.d,
+    )
+    expect(moved.edges.find((e) => e.from === 'p1')?.d).toMatch(new RegExp(`^M${after?.x} `))
+    // Dragged past the left margin: the drawing starts further left.
+    expect(moved.x).toBeLessThan(0)
+    expect(moved.width).toBeGreaterThan(layout.width)
+    expect(applyOffsets(layout, {})).toMatchObject({ x: 0, y: 0, width: layout.width })
   })
 })
