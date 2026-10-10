@@ -143,61 +143,113 @@ legend {
   margin-right: 4px;
 }
 
-/* Plan drawing */
+/* Plan drawing (store-drawing style) */
 svg.plan {
   display: block;
   width: 100%;
   height: auto;
   max-height: 70vh;
-  background: var(--plan-paper);
+  background: var(--paper);
   user-select: none;
   touch-action: none;
 }
 svg.plan * {
   vector-effect: non-scaling-stroke;
 }
-.plan-boundary {
+svg.plan pattern * {
+  vector-effect: none;
+}
+.plan-hatch-line {
+  stroke: var(--line-strong);
+  stroke-width: 0.006;
+  fill: none;
+}
+.plan-floor {
   fill: var(--paper);
+}
+.plan-wall {
+  stroke: none;
+}
+.plan-wall-line {
   stroke: var(--ink);
-  stroke-width: 2px;
+  stroke-width: 1.2px;
+}
+.plan-lease {
+  fill: none;
+  stroke: #d0021b;
+  stroke-width: 1px;
 }
 .plan-obstacle {
-  fill: var(--line-strong);
   stroke: var(--ink);
   stroke-width: 1px;
 }
 .plan-entrance {
   stroke: var(--paper);
-  stroke-width: 6px;
+  stroke-width: 3px;
 }
 .plan-open-edge {
-  stroke: var(--paper);
-  stroke-width: 4px;
+  stroke: var(--line-strong);
+  stroke-width: 1px;
   stroke-dasharray: 6 4;
 }
-.plan-item rect {
+.plan-entrance-label,
+.plan-info {
+  fill: var(--muted);
+}
+.plan-symbol {
+  stroke: var(--ink);
+}
+.plan-block rect,
+.plan-block path {
+  fill: var(--paper);
   stroke: var(--ink);
   stroke-width: 1px;
 }
-.plan-item.placeholder rect {
+.plan-block rect + rect {
+  fill: none;
+  stroke-width: 0.6px;
+}
+.plan-block.placeholder rect,
+.plan-block.placeholder path {
+  fill: none;
+  stroke: var(--line-strong);
   stroke-dasharray: 4 3;
 }
-.plan-item.has-issue rect {
+.plan-item-frame {
+  fill: transparent;
+  stroke: none;
+}
+.plan-item.selected .plan-item-frame {
+  stroke: var(--ink);
+  stroke-width: 2px;
+  stroke-dasharray: 5 3;
+}
+.plan-item.has-issue .plan-item-frame {
   stroke: var(--danger);
   stroke-width: 2px;
+  fill: rgb(176 0 32 / 8%);
 }
-.plan-item.selected rect {
-  stroke-width: 3px;
-}
-.plan-item text {
+.plan-label {
   fill: var(--ink);
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+  stroke-linejoin: round;
   pointer-events: none;
 }
 .plan-front {
   stroke: var(--ink);
   stroke-width: 3px;
 }
-.plan-dimensions text {
+.plan-dim line {
+  stroke: var(--line-strong);
+  stroke-width: 1px;
+}
+.plan-dim line.plan-dim-tick {
+  stroke: var(--ink);
+  stroke-width: 1.4px;
+}
+.plan-dim text {
   fill: var(--muted);
 }
 .plan-editor .plan-item {

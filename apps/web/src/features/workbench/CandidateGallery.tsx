@@ -62,6 +62,7 @@ export function CandidateGallery({
                 <h3>{label}</h3>
                 <PlanView
                   space={generate.data.space}
+                  shopType={shopType}
                   layout={candidate.layout}
                   issues={candidate.issues}
                   assets={assets}

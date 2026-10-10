@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { Asset, DesignNode, Draft, NodeSummary, Project, Space } from '@store/shared'
+import type { Asset, DesignNode, Draft, NodeSummary, Project, ShopType, Space } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import {
   deleteDraft,
@@ -180,7 +180,7 @@ function NodePanel({
 
   if (current.kind === 'render') {
     return (
-      <ReadOnly node={current} space={space} assets={assetMap}>
+      <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
         渲染节点是输出结果；如需修改，请选择它的上一步继续编辑。
       </ReadOnly>
     )
@@ -189,7 +189,7 @@ function NodePanel({
   // One shared draft per project: editing another step first needs the draft resolved.
   if (draft && draft.baseNodeId !== current.id) {
     return (
-      <ReadOnly node={current} space={space} assets={assetMap}>
+      <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
         <DraftElsewhere projectId={project.id} draft={draft} nodes={nodes} onSelect={onSelect} />
       </ReadOnly>
     )
@@ -261,6 +261,7 @@ function NodePanel({
       <div className="space-summary">
         <PlanView
           space={space}
+          shopType={project.shopType}
           layout={current.layout}
           assets={assetMap}
           title={`${current.name} 平面`}
@@ -285,11 +286,13 @@ function NodeHeading({ node }: { node: DesignNode }) {
 function ReadOnly({
   node,
   space,
+  shopType,
   assets,
   children,
 }: {
   node: DesignNode
   space: Space
+  shopType: ShopType
   assets: ReadonlyMap<string, Asset>
   children: ReactNode
 }) {
@@ -298,7 +301,13 @@ function ReadOnly({
       <NodeHeading node={node} />
       <div className="notice">{children}</div>
       <div className="space-summary">
-        <PlanView space={space} layout={node.layout} assets={assets} title={`${node.name} 平面`} />
+        <PlanView
+          space={space}
+          shopType={shopType}
+          layout={node.layout}
+          assets={assets}
+          title={`${node.name} 平面`}
+        />
       </div>
     </>
   )
