@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -52,12 +52,18 @@ export function Workbench({ project }: { project: Project }) {
 
   const nodes = useMemo(() => tree.data?.nodes ?? [], [tree.data])
   const requested = params.get('node')
-  const selectedId =
-    requested && nodes.some((n) => n.id === requested)
-      ? requested
+  // The automatic choice is made once, from the first loaded history, so nodes created later
+  // (e.g. three generated plans) never move the selection away from what is on screen.
+  const firstChoice = useRef<string | null>(null)
+  if (firstChoice.current === null && nodes.length > 0 && draft.data !== undefined) {
+    firstChoice.current = defaultNodeId(nodes, draft.data)
+  }
+  const fallback =
+    firstChoice.current && nodes.some((n) => n.id === firstChoice.current)
+      ? firstChoice.current
       : defaultNodeId(nodes, draft.data ?? null)
-  // Pin the automatic choice in the URL, so new nodes (e.g. three generated plans) do not
-  // move the selection away from what is on screen.
+  const selectedId = requested && nodes.some((n) => n.id === requested) ? requested : fallback
+  // Also pin it in the URL, so a reload or a shared link opens the same step.
   useEffect(() => {
     if (!requested && selectedId) setParams({ node: selectedId }, { replace: true })
   }, [requested, selectedId, setParams])
