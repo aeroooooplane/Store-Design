@@ -73,22 +73,16 @@ export function Workbench({ project }: { project: Project }) {
 
   return (
     <div className="workbench">
-      <aside className="workbench-side">
-        <HistoryTree
-          projectId={project.id}
-          nodes={nodes}
-          selectedId={selectedId}
-          draftBaseId={draft.data?.baseNodeId ?? null}
-          onSelect={select}
-        />
-        <button
-          type="button"
-          disabled={creatingSpace}
-          onClick={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
-        >
-          新建空间
-        </button>
-      </aside>
+      <HistoryTree
+        projectId={project.id}
+        projectName={project.name}
+        nodes={nodes}
+        selectedId={selectedId}
+        draftBaseId={draft.data?.baseNodeId ?? null}
+        onSelect={select}
+        onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
+        newSpaceDisabled={creatingSpace}
+      />
       <section className="workbench-main">
         {creatingSpace ? (
           <NewSpace
