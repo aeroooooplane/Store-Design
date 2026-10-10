@@ -36,6 +36,9 @@ const ATTRIBUTES: Record<string, string> = {
   'fill-rule': 'fillRule',
   opacity: 'opacity',
 }
+/** Scale of the symbol files' stroke widths (read as screen pixels). */
+const LINE_WEIGHT = 0.5
+
 /** Only colours, numbers, path data and simple transforms; nothing that can reference a URL. */
 const SAFE_VALUE = /^[\w\s.,#%()+-]*$/
 
@@ -59,7 +62,9 @@ function readShape(element: Element): SymbolShape | null {
   const attrs: Record<string, string> = {}
   for (const { name, value } of Array.from(element.attributes)) {
     const prop = ATTRIBUTES[name]
-    if (prop && SAFE_VALUE.test(value) && !/url\s*\(/i.test(value)) attrs[prop] = value
+    if (!prop || !SAFE_VALUE.test(value) || /url\s*\(/i.test(value)) continue
+    // Drawn at half the file's weight: symbols read lighter than walls and furniture blocks.
+    attrs[prop] = prop === 'strokeWidth' ? String(Number(value) * LINE_WEIGHT) : value
   }
   const children = Array.from(element.children)
     .map(readShape)

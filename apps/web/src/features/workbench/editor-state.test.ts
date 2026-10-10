@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { rectangleSpace } from '@store/shared'
 import type { Asset, Layout, LayoutItem } from '@store/shared'
-import { editorReducer, nextItemId, snap } from './editor-state.ts'
+import { editorReducer, initialEditorState, nextItemId, snap } from './editor-state.ts'
 import type { EditorState } from './editor-state.ts'
 
 function item(overrides: Partial<LayoutItem> = {}): LayoutItem {
@@ -23,7 +24,7 @@ function item(overrides: Partial<LayoutItem> = {}): LayoutItem {
 
 function state(items: LayoutItem[]): EditorState {
   const layout: Layout = { schemaVersion: 3, items, planning: null }
-  return { layout, selectedId: null, dirty: false }
+  return initialEditorState(layout)
 }
 
 const asset = {
@@ -143,5 +144,72 @@ describe('nextItemId', () => {
     const layout = state([item({ id: 'cashier-2', function: 'cashier' })]).layout
     expect(nextItemId(layout, 'cashier')).toBe('cashier-3')
     expect(nextItemId(layout, 'storage')).toBe('storage-1')
+  })
+})
+
+describe('undo / redo', () => {
+  it('undoes and redoes edits, and a new edit clears the redo list', () => {
+    let s = editorReducer(state([item()]), { type: 'nudge', id: 'island_table-1', dx: 1, dz: 0 })
+    s = editorReducer(s, { type: 'rotate', id: 'island_table-1' })
+    expect(s.past).toHaveLength(2)
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.items[0]).toMatchObject({ cx: 3, rotation: 0 })
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.items[0]?.cx).toBe(2)
+    expect(editorReducer(s, { type: 'undo' })).toBe(s)
+    s = editorReducer(s, { type: 'redo' })
+    expect(s.layout.items[0]?.cx).toBe(3)
+    s = editorReducer(s, { type: 'remove', id: 'island_table-1' })
+    expect(s.future).toEqual([])
+    expect(s.layout.items).toEqual([])
+  })
+
+  it('treats one drag and a run of nudges as one step each', () => {
+    let s = state([item()])
+    for (const cx of [2.2, 2.4, 2.6]) {
+      s = editorReducer(s, { type: 'move', id: 'island_table-1', cx, cz: 2, group: 'drag-1' })
+    }
+    for (let i = 0; i < 3; i++)
+      s = editorReducer(s, { type: 'nudge', id: 'island_table-1', dx: 0.01, dz: 0 })
+    expect(s.past).toHaveLength(2)
+    expect(editorReducer(s, { type: 'undo' }).layout.items[0]?.cx).toBe(2.6)
+    expect(
+      editorReducer(editorReducer(s, { type: 'undo' }), { type: 'undo' }).layout.items[0]?.cx,
+    ).toBe(2)
+  })
+
+  it('keeps at most 100 steps', () => {
+    let s = state([item()])
+    for (let i = 0; i < 120; i++) {
+      s = editorReducer(s, { type: 'move', id: 'island_table-1', cx: 1 + i * 0.01, cz: 2 })
+    }
+    expect(s.past).toHaveLength(100)
+  })
+})
+
+describe('magnetic snapping while moving', () => {
+  const room = rectangleSpace(8, 6, 3)
+
+  it('sticks a prop to a nearby wall and keeps millimetres there', () => {
+    // 1.8 × 0.9 table, left edge 60 mm from the left wall → touches the wall.
+    const s = editorReducer(state([item()]), {
+      type: 'move',
+      id: 'island_table-1',
+      cx: 0.96,
+      cz: 3,
+      snapTo: room,
+    })
+    expect(s.layout.items[0]).toMatchObject({ cx: 0.9, cz: 3 })
+  })
+
+  it('sticks to a neighbour side by side, and not when Alt turns snapping off', () => {
+    const neighbour = item({ id: 'island_table-2', cx: 5, cz: 3 })
+    const start = state([item({ cz: 3 }), neighbour])
+    const near = { type: 'move' as const, id: 'island_table-1', cx: 3.15, cz: 3.05 }
+    expect(editorReducer(start, { ...near, snapTo: room }).layout.items[0]).toMatchObject({
+      cx: 3.2,
+      cz: 3,
+    })
+    expect(editorReducer(start, near).layout.items[0]).toMatchObject({ cx: 3.15, cz: 3.05 })
   })
 })

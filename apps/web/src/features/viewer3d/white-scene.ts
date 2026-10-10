@@ -20,7 +20,13 @@ export interface ViewPose {
 
 export interface SceneHandlers {
   onSelect: (itemId: string | null) => void
-  onMove: (itemId: string, cx: number, cz: number) => void
+  /** `group` is the same for every move of one drag; `snap` is off while Alt is held. */
+  onMove: (
+    itemId: string,
+    cx: number,
+    cz: number,
+    gesture: { group: string; snap: boolean },
+  ) => void
 }
 
 export interface LoadStatus {
@@ -281,7 +287,7 @@ export class WhiteScene {
   private readonly floor = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0)
   private handlers: SceneHandlers | null = null
   private statusListener: ((status: LoadStatus) => void) | null = null
-  private drag: { id: string; dx: number; dz: number } | null = null
+  private drag: { id: string; dx: number; dz: number; group: string } | null = null
   private frame = 0
   private disposed = false
 
@@ -611,7 +617,12 @@ export class WhiteScene {
     if (!placed || placed.item.locked) return
     const point = this.floorPoint(event)
     if (!point) return
-    this.drag = { id: placed.item.id, dx: point[0] - placed.item.cx, dz: point[1] - placed.item.cz }
+    this.drag = {
+      id: placed.item.id,
+      dx: point[0] - placed.item.cx,
+      dz: point[1] - placed.item.cz,
+      group: `drag3d:${placed.item.id}:${event.timeStamp}`,
+    }
     this.controls.enabled = false
     this.canvas.setPointerCapture(event.pointerId)
   }
@@ -619,7 +630,12 @@ export class WhiteScene {
   private readonly onPointerMove = (event: PointerEvent) => {
     if (!this.drag) return
     const point = this.floorPoint(event)
-    if (point) this.handlers?.onMove(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz)
+    if (point) {
+      this.handlers?.onMove(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz, {
+        group: this.drag.group,
+        snap: !event.altKey,
+      })
+    }
   }
 
   private readonly endDrag = () => {

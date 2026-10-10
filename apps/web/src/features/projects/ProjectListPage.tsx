@@ -12,6 +12,21 @@ const STATUS_TABS: { value: ProjectListParams['status']; label: string }[] = [
   { value: 'deleted', label: '回收站' },
 ]
 
+function TrashIcon() {
+  return (
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+      <path
+        d="M4 6h12M8 6V4.5h4V6M6 6l.7 9.5h6.6L14 6M8.5 9v4M11.5 9v4"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
 export function ProjectListPage() {
   const [status, setStatus] = useState<ProjectListParams['status']>('active')
   const [search, setSearch] = useState('')
@@ -91,13 +106,26 @@ export function ProjectListPage() {
                 <td className="actions">
                   {project.deletedAt === null ? (
                     <>
-                      <Link to={`/projects/${project.id}`}>打开</Link>
+                      <Link className="button primary" to={`/projects/${project.id}`}>
+                        打开
+                      </Link>
                       <button
                         type="button"
+                        className="icon-button"
+                        aria-label="移入回收站"
+                        title="移入回收站"
                         disabled={setDeleted.isPending}
-                        onClick={() => setDeleted.mutate({ project, deleted: true })}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `确定把「${project.name}」移入回收站吗？之后可在“回收站”中恢复。`,
+                            )
+                          ) {
+                            setDeleted.mutate({ project, deleted: true })
+                          }
+                        }}
                       >
-                        移入回收站
+                        <TrashIcon />
                       </button>
                     </>
                   ) : (

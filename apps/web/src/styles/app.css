@@ -33,6 +33,13 @@ button:disabled {
   opacity: 0.4;
   cursor: wait;
 }
+a.button {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+}
+a.button.primary,
 button.primary {
   background: var(--ink);
   color: var(--paper);

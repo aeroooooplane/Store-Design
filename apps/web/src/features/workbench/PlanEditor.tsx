@@ -28,7 +28,7 @@ import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
 import { CameraPanel } from './CameraPanel.tsx'
 import { ModelPicker } from './ModelPicker.tsx'
-import { editorReducer } from './editor-state.ts'
+import { editorReducer, initialEditorState } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
 
 // Three.js is only downloaded when a 3D view is first opened.
@@ -50,6 +50,31 @@ interface PlanEditorProps {
   draft: Draft | null
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
+}
+
+/** Curved arrow for undo (left) and redo (right). */
+function ArcArrow({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
+      <g transform={direction === 'right' ? 'translate(20 0) scale(-1 1)' : undefined}>
+        <path
+          d="M5 8h7a4 4 0 0 1 0 8H9"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+        />
+        <path
+          d="M8 4.5 4.5 8 8 11.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
+    </svg>
+  )
 }
 
 function toWorld(
@@ -79,11 +104,7 @@ export function PlanEditor({
   const client = useQueryClient()
   const create = useCreateNode(projectId)
   const startLayout = draft?.layout ?? baseNode.layout ?? EMPTY_LAYOUT
-  const [state, dispatch] = useReducer(editorReducer, {
-    layout: startLayout,
-    selectedId: null,
-    dirty: false,
-  })
+  const [state, dispatch] = useReducer(editorReducer, startLayout, initialEditorState)
   const revision = useRef<number | null>(draft?.revision ?? null)
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'conflict' | 'error'>(
     draft ? 'saved' : 'idle',
@@ -97,7 +118,7 @@ export function PlanEditor({
   const [show3d, setShow3d] = useState(isWhite)
   const [viewerReady, setViewerReady] = useState(false)
   const onViewerReady = useCallback(() => setViewerReady(true), [])
-  const drag = useRef<{ id: string; dx: number; dz: number } | null>(null)
+  const drag = useRef<{ id: string; dx: number; dz: number; group: string } | null>(null)
   /** The save in flight, so the draft is never removed underneath it. */
   const saving = useRef<Promise<void> | null>(null)
   /** Layout whose save failed; autosave resumes with the next edit. */
@@ -116,11 +137,44 @@ export function PlanEditor({
     [issues],
   )
   const select = useCallback((id: string | null) => dispatch({ type: 'select', id }), [])
+  // 3D drags: one undo step per drag, magnetic snapping unless Alt is held.
   const move = useCallback(
-    (id: string, cx: number, cz: number) => dispatch({ type: 'move', id, cx, cz }),
+    (id: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) =>
+      dispatch({
+        type: 'move',
+        id,
+        cx,
+        cz,
+        group: gesture.group,
+        snapTo: gesture.snap ? space : null,
+      }),
     [],
   )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
+
+  // Ctrl+Z / Ctrl+Y (and Ctrl+Shift+Z) anywhere on the page, except while typing in a field.
+  useEffect(() => {
+    function onKey(event: globalThis.KeyboardEvent) {
+      if (!(event.ctrlKey || event.metaKey) || event.altKey) return
+      const target = event.target as HTMLElement | null
+      if (
+        target &&
+        (/^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName) || target.isContentEditable)
+      ) {
+        return
+      }
+      const key = event.key.toLowerCase()
+      if (key === 'z' && !event.shiftKey) {
+        event.preventDefault()
+        dispatch({ type: 'undo' })
+      } else if (key === 'y' || (key === 'z' && event.shiftKey)) {
+        event.preventDefault()
+        dispatch({ type: 'redo' })
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
 
   // Fetch the 3D code while the user is still on the plan, so switching to 3D is quick.
   useEffect(() => {
@@ -215,7 +269,12 @@ export function PlanEditor({
     dispatch({ type: 'select', id: item.id })
     const world = toWorld(svgRef.current, event)
     if (!world || item.locked) return
-    drag.current = { id: item.id, dx: world[0] - item.cx, dz: world[1] - item.cz }
+    drag.current = {
+      id: item.id,
+      dx: world[0] - item.cx,
+      dz: world[1] - item.cz,
+      group: `drag:${item.id}:${event.timeStamp}`,
+    }
     svgRef.current?.setPointerCapture(event.pointerId)
   }
 
@@ -228,6 +287,9 @@ export function PlanEditor({
         id: drag.current.id,
         cx: world[0] - drag.current.dx,
         cz: world[1] - drag.current.dz,
+        group: drag.current.group,
+        // Hold Alt to place freely without sticking to walls and neighbours.
+        snapTo: event.altKey ? null : space,
       })
   }
 
@@ -297,6 +359,28 @@ export function PlanEditor({
             三维
           </button>
         </div>
+        <span className="history-buttons">
+          <button
+            type="button"
+            className="icon-button"
+            aria-label="撤回"
+            title="撤回（Ctrl+Z）"
+            disabled={state.past.length === 0}
+            onClick={() => dispatch({ type: 'undo' })}
+          >
+            <ArcArrow direction="left" />
+          </button>
+          <button
+            type="button"
+            className="icon-button"
+            aria-label="重做"
+            title="重做（Ctrl+Y）"
+            disabled={state.future.length === 0}
+            onClick={() => dispatch({ type: 'redo' })}
+          >
+            <ArcArrow direction="right" />
+          </button>
+        </span>
         <button
           type="button"
           disabled={!selected}

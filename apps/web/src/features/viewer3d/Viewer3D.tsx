@@ -22,7 +22,12 @@ interface Viewer3DProps {
   selectedId: string | null
   flaggedIds: ReadonlySet<string>
   onSelect: (itemId: string | null) => void
-  onMove: (itemId: string, cx: number, cz: number) => void
+  onMove: (
+    itemId: string,
+    cx: number,
+    cz: number,
+    gesture: { group: string; snap: boolean },
+  ) => void
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   ref?: Ref<Viewer3DHandle> | undefined

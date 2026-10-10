@@ -19,8 +19,8 @@ describe('parsePlanSymbol', () => {
       attrs: { fill: 'none', stroke: '#000000', strokeLinecap: 'round' },
     })
     expect(group?.children.map((c) => [c.tag, c.attrs])).toEqual([
-      ['rect', { x: '0', y: '0', width: '1800', height: '1000', rx: '50', strokeWidth: '2' }],
-      ['circle', { cx: '275', cy: '230', r: '12', strokeWidth: '1.2' }],
+      ['rect', { x: '0', y: '0', width: '1800', height: '1000', rx: '50', strokeWidth: '1' }],
+      ['circle', { cx: '275', cy: '230', r: '12', strokeWidth: '0.6' }],
     ])
   })
 

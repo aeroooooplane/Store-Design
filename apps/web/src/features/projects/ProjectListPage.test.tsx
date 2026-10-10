@@ -159,8 +159,11 @@ describe('ProjectListPage', () => {
 
   it('moves a project to the bin with its current revision as If-Match', async () => {
     renderPage()
+    const confirm = vi.fn(() => true)
+    vi.stubGlobal('confirm', confirm)
     const row = (await screen.findByText('南京德基')).closest('tr') as HTMLElement
     fireEvent.click(within(row).getByRole('button', { name: '移入回收站' }))
+    expect(confirm).toHaveBeenCalledWith(expect.stringContaining('南京德基'))
     await waitFor(() => expect(screen.queryByText('南京德基')).toBeNull())
     const removal = server.calls.find((c) => c.method === 'DELETE')
     expect(removal).toMatchObject({
