@@ -176,7 +176,7 @@ svg.plan pattern * {
 .plan-block path {
   fill: var(--paper);
   stroke: var(--ink);
-  stroke-width: 1px;
+  stroke-width: 0.8px;
 }
 .plan-block rect + rect {
   fill: none;
@@ -509,4 +509,27 @@ ul.issues li.warning {
 .tag.done {
   border-color: var(--ink);
   color: var(--ink);
+}
+
+/* Icon buttons (undo / redo, delete) */
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  padding: 6px;
+  line-height: 0;
+  color: var(--muted);
+}
+.icon-button:hover:not(:disabled) {
+  color: var(--ink);
+}
+.history-buttons {
+  display: inline-flex;
+  gap: 2px;
+}
+.history-buttons .icon-button {
+  border-color: transparent;
+  background: transparent;
+}
+.plan-symbol {
+  stroke-width: 0.6px;
 }
