@@ -12,7 +12,7 @@ const GROUPS: { category: AssetCategory; title: (si: SiStyle) => string }[] = [
 
 /**
  * The models a project may use: furniture of its own SI style, plus every 信息化物料, 品牌标识
- * and 非标陈列 model, which are not tied to a style.
+ * and 非标陈列 model, which are not tied to a style. Retired models (模型选用表 删除) are left out.
  */
 export function pickableGroups(assets: readonly Asset[], si: SiStyle) {
   const order = (a: Asset) => ITEM_FUNCTIONS.indexOf(a.function)
@@ -20,14 +20,23 @@ export function pickableGroups(assets: readonly Asset[], si: SiStyle) {
     category,
     title: title(si),
     assets: assets
-      .filter((a) => a.category === category && (category !== '软装道具' || a.siFamily === si))
+      .filter(
+        (a) =>
+          !a.retired && a.category === category && (category !== '软装道具' || a.siFamily === si),
+      )
       .sort(
         (a, b) =>
-          order(a) - order(b) ||
-          a.standardName.localeCompare(b.standardName, 'zh') ||
-          a.id.localeCompare(b.id),
+          order(a) - order(b) || a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
       ),
   })).filter((group) => group.assets.length > 0)
+}
+
+/** Models that share a name in one group are told apart by their manual variant. */
+function sharedNames(assets: readonly Asset[]): Set<string> {
+  const seen = new Set<string>()
+  const shared = new Set<string>()
+  for (const a of assets) (seen.has(a.name) ? shared : seen).add(a.name)
+  return shared
 }
 
 const size = (a: Asset) =>
@@ -48,7 +57,12 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
     const all = pickableGroups(assets, siStyle)
     if (!query) return all
     return all
-      .map((g) => ({ ...g, assets: g.assets.filter((a) => `${a.id} ${a.name}`.includes(query)) }))
+      .map((g) => ({
+        ...g,
+        assets: g.assets.filter((a) =>
+          `${a.id} ${a.name} ${a.standardName} ${a.variant}`.includes(query),
+        ),
+      }))
       .filter((g) => g.assets.length > 0)
   }, [assets, siStyle, query])
 
@@ -65,50 +79,54 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
       <p className="hint">点击放到空间中央；没有三维模型的以真实尺寸方框占位。</p>
       <div className="model-list">
         {groups.length === 0 && <p className="hint">没有符合条件的模型。</p>}
-        {groups.map((group) => (
-          <div key={group.category} className="model-group">
-            <h4>
-              {group.title}（{group.assets.length}）
-            </h4>
-            <ul>
-              {group.assets.map((asset) => {
-                const image = asset.productImage ?? asset.preview
-                return (
-                  <li key={asset.id}>
-                    <button
-                      type="button"
-                      className="model-row"
-                      aria-label={`添加 ${asset.name}`}
-                      onClick={() => {
-                        onPick(asset)
-                        setLastPicked(asset.id)
-                      }}
-                    >
-                      {image ? (
-                        <img src={image.url} alt="" loading="lazy" />
-                      ) : (
-                        <span className="model-row-empty" />
-                      )}
-                      <span className="model-row-text">
-                        <span className="model-row-name">{asset.standardName}</span>
-                        <span className="hint">
-                          {asset.variant} · {size(asset)}
+        {groups.map((group) => {
+          const shared = sharedNames(group.assets)
+          return (
+            <div key={group.category} className="model-group">
+              <h4>
+                {group.title}（{group.assets.length}）
+              </h4>
+              <ul>
+                {group.assets.map((asset) => {
+                  const image = asset.productImage ?? asset.preview
+                  return (
+                    <li key={asset.id}>
+                      <button
+                        type="button"
+                        className="model-row"
+                        aria-label={`添加 ${asset.name}`}
+                        onClick={() => {
+                          onPick(asset)
+                          setLastPicked(asset.id)
+                        }}
+                      >
+                        {image ? (
+                          <img src={image.url} alt="" loading="lazy" />
+                        ) : (
+                          <span className="model-row-empty" />
+                        )}
+                        <span className="model-row-text">
+                          <span className="model-row-name">{asset.name}</span>
+                          <span className="hint">
+                            {shared.has(asset.name) ? `${asset.variant} · ` : ''}
+                            {size(asset)}
+                          </span>
+                          <span className="model-card-tags">
+                            {!asset.placeable && <span className="tag">占位</span>}
+                            {asset.productImageMatch === 'approximate' && (
+                              <span className="tag">同类参考图</span>
+                            )}
+                            {lastPicked === asset.id && <span className="tag done">已添加</span>}
+                          </span>
                         </span>
-                        <span className="model-card-tags">
-                          {!asset.placeable && <span className="tag">占位</span>}
-                          {asset.productImageMatch === 'approximate' && (
-                            <span className="tag">同类参考图</span>
-                          )}
-                          {lastPicked === asset.id && <span className="tag done">已添加</span>}
-                        </span>
-                      </span>
-                    </button>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        ))}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        })}
       </div>
     </section>
   )

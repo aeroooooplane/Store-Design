@@ -21,7 +21,8 @@
     "catalog:import": "pnpm --filter @store/api catalog:import",
     "catalog:white": "pnpm --filter @store/api catalog:white",
     "library:refresh": "node tools/library/refresh-library.mjs",
-    "library:table": "node tools/library/build-selection-table.mjs"
+    "library:table": "node tools/library/build-selection-table.mjs",
+    "library:apply-table": "node tools/library/apply-selection-table.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

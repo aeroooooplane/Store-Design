@@ -35,7 +35,8 @@ function toAsset(
 ): Asset {
   return {
     id: row.id,
-    name: row.variant ? `${row.standardName} · ${row.variant}` : row.standardName,
+    name:
+      row.displayName ?? (row.variant ? `${row.standardName} · ${row.variant}` : row.standardName),
     standardName: row.standardName,
     variant: row.variant,
     materialCategory: row.materialCategory,
@@ -49,6 +50,7 @@ function toAsset(
     staffSide: row.staffSide as FrontAxis | null,
     facingConfidence: row.facingConfidence as Asset['facingConfidence'],
     placeable: row.placeable,
+    retired: row.retired,
     judgment: row.judgment,
     glb: fileRef(glb),
     whiteGlb: fileRef(white),
@@ -98,6 +100,7 @@ export async function listAssets(
     const pattern = escapeLike(query.q)
     const match = or(
       ilike(assets.id, pattern),
+      ilike(assets.displayName, pattern),
       ilike(assets.standardName, pattern),
       ilike(assets.variant, pattern),
     )

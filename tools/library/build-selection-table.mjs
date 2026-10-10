@@ -1,20 +1,16 @@
 // 生成 资源库/模型选用表.xlsx：所有可选模型（不含环境设施）及品类图库中尚无 SU 模型的品类，
-// 带效果图与平面图缩略图，供用户勾选“是否保留”和填写修改意见。
+// 带效果图与平面图缩略图，供用户改名称、勾选“是否保留”和填写修改意见；改完用
+// pnpm library:apply-table 回读到 manifest.json。“处理说明”列是对修改意见的答复。
 // 用法（仓库根目录）：pnpm library:table
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync } from 'node:fs'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { fileURLToPath } from 'node:url'
 import ExcelJS from 'exceljs'
 import sharp from 'sharp'
-import { galleryOf } from './refresh-library.mjs'
+import { LIBRARY, ROOT, selectionRows } from './selection-rows.mjs'
 
-const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const LIBRARY = path.join(ROOT, '资源库/04_模型库')
-const OUTPUT = path.join(ROOT, '资源库/模型选用表.xlsx')
-const CATEGORY_ORDER = ['软装道具', '信息化物料', '品牌标识', '非标陈列']
+const OUTPUT = process.argv[2] ? path.resolve(process.argv[2]) : path.join(ROOT, '资源库/模型选用表.xlsx')
 const THUMB = { width: 200, height: 140 }
-const MATCH = { exact: '同款效果图', approximate: '同类参考效果图' }
 
 const readText = async (file) => (await readFile(file, 'utf8')).replace(/^﻿/, '')
 
@@ -32,85 +28,22 @@ async function thumbnail(file, kind) {
   return { buffer, width, height }
 }
 
-function galleryTypes(gallery, aliases) {
-  const names = new Map()
-  for (const [sub, re] of [
-    ['01_道具图片PNG', /^(.+)\.png$/],
-    ['03_平面图SVG', /^(.+?)(平面图)?\.svg$/],
-  ]) {
-    const dir = path.join(LIBRARY, gallery, sub)
-    if (!existsSync(dir)) continue
-    for (const file of readdirSync(dir)) {
-      const match = re.exec(file)
-      if (!match || match[1].endsWith('-背面') || /^asset-\d+$/.test(match[1])) continue
-      const name = aliases[match[1]] ?? match[1]
-      names.set(name, true)
-    }
-  }
-  return [...names.keys()].sort((a, b) => a.localeCompare(b, 'zh'))
-}
-
 const manifest = JSON.parse(await readText(path.join(LIBRARY, 'manifest.json')))
-const aliases = manifest.type_aliases ?? {}
-const models = manifest.assets
-  .filter((a) => a.category !== '环境设施')
-  .sort(
-    (a, b) =>
-      CATEGORY_ORDER.indexOf(a.category) - CATEGORY_ORDER.indexOf(b.category) ||
-      String(a.category_si).localeCompare(String(b.category_si)) ||
-      a.standard_name.localeCompare(b.standard_name, 'zh') ||
-      a.asset_id.localeCompare(b.asset_id),
-  )
-
-const rows = models.map((a) => ({
-  name: `${a.standard_name} · ${a.variant}`,
-  image: a.product_image ?? a.preview,
-  imageNote: a.product_image ? MATCH[a.product_image_match] : a.preview ? 'SketchUp 预览（缺效果图）' : '无',
-  plan: a.plan_symbol?.png ?? null,
-  su: '有',
-  id: a.asset_id,
-  category: a.category,
-  si: a.category_si ?? '',
-  size: a.tight_face_bounds_xyz_mm.map((v) => Math.round(v)).join(' × '),
-  folder: a.folder,
-}))
-
-// Gallery types without a SketchUp model.
-const linked = new Set(manifest.assets.map((a) => `${galleryOf(a)}|${a.type_name}`))
-for (const gallery of [...new Set(models.map(galleryOf))]) {
-  for (const name of galleryTypes(gallery, aliases)) {
-    if (linked.has(`${gallery}|${name}`)) continue
-    const image = `${gallery}/01_道具图片PNG/${name}.png`
-    const planName = Object.entries(aliases).find(([, v]) => v === name)?.[0] ?? name
-    const plan = `${gallery}/02_平面图PNG/${planName}平面图.png`
-    const [category, si] = gallery.split('/')
-    rows.push({
-      name,
-      image: existsSync(path.join(LIBRARY, image)) ? image : null,
-      imageNote: existsSync(path.join(LIBRARY, image)) ? '品类效果图' : '无',
-      plan: existsSync(path.join(LIBRARY, plan)) ? plan : null,
-      su: '无',
-      id: '',
-      category,
-      si: si === '品类图库' ? '' : si,
-      size: '',
-      folder: gallery,
-    })
-  }
-}
+const rows = selectionRows(manifest)
 
 const workbook = new ExcelJS.Workbook()
 workbook.creator = 'store-design'
 const sheet = workbook.addWorksheet('模型选用', { views: [{ state: 'frozen', ySplit: 1 }] })
 sheet.columns = [
   { header: '序号', key: 'n', width: 6 },
-  { header: '模型名称', key: 'name', width: 34 },
+  { header: '模型名称', key: 'name', width: 30 },
   { header: '模型效果图', key: 'image', width: 30 },
   { header: '效果图说明', key: 'imageNote', width: 16 },
   { header: '模型平面图', key: 'plan', width: 30 },
   { header: '是否有SU', key: 'su', width: 10 },
   { header: '是否保留', key: 'keep', width: 10 },
   { header: '修改意见', key: 'note', width: 30 },
+  { header: '处理说明', key: 'reply', width: 40 },
   { header: '编号', key: 'id', width: 16 },
   { header: '大类', key: 'category', width: 12 },
   { header: 'SI', key: 'si', width: 8 },
@@ -126,11 +59,14 @@ header.eachCell((cell) => {
 })
 
 for (const [i, row] of rows.entries()) {
-  const r = sheet.addRow({ n: i + 1, ...row, image: '', plan: '', keep: '保留', note: '' })
+  const { key: _key, asset: _asset, gallery: _gallery, files: _files, ...cells } = row
+  const r = sheet.addRow({ n: i + 1, ...cells, image: '', plan: '' })
   r.height = 112
   r.alignment = { vertical: 'middle', wrapText: true }
   r.getCell('n').alignment = { vertical: 'middle', horizontal: 'center' }
   for (const key of ['su', 'keep']) r.getCell(key).alignment = { vertical: 'middle', horizontal: 'center' }
+  // Retired models stay listed (greyed) so the decision can be reversed.
+  if (row.keep === '删除') r.font = { color: { argb: 'FF999999' } }
   r.getCell('keep').dataValidation = {
     type: 'list',
     allowBlank: false,
@@ -154,8 +90,11 @@ for (const [i, row] of rows.entries()) {
     })
   }
 }
-sheet.autoFilter = { from: 'A1', to: 'M1' }
+sheet.autoFilter = { from: 'A1', to: 'N1' }
 
 await workbook.xlsx.writeFile(OUTPUT)
 const withSu = rows.filter((r) => r.su === '有').length
-console.log(`模型选用表：${rows.length} 行（有 SU ${withSu}，无 SU ${rows.length - withSu}）→ ${path.relative(ROOT, OUTPUT)}`)
+const retired = rows.filter((r) => r.keep === '删除').length
+console.log(
+  `模型选用表：${rows.length} 行（有 SU ${withSu}，无 SU ${rows.length - withSu}，标为删除 ${retired}）→ ${path.relative(ROOT, OUTPUT)}`,
+)

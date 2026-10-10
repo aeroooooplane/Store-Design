@@ -15,6 +15,8 @@ export const assets = pgTable(
     id: text('id').primaryKey(),
     standardName: text('standard_name').notNull(),
     variant: text('variant').notNull(),
+    /** The user's own name for the model (模型选用表); the manual name stays in standard_name. */
+    displayName: text('display_name'),
     materialCategory: text('material_category').notNull(),
     siFamily: text('si_family').notNull(),
     category: text('category').notNull().default('非标陈列'),
@@ -28,6 +30,8 @@ export const assets = pgTable(
     staffSide: text('staff_side'),
     facingConfidence: text('facing_confidence'),
     placeable: boolean('placeable').notNull(),
+    /** Marked 删除 in 模型选用表: kept for old layouts, no longer offered or planned. */
+    retired: boolean('retired').notNull().default(false),
     judgment: text('judgment'),
     glbFileId: uuid('glb_file_id').references(() => storedFiles.id),
     /** Simplified, untextured copy for the white model (see apps/api assets/white-models.ts). */

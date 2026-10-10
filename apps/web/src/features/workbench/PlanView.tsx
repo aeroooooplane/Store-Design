@@ -238,7 +238,8 @@ export function PlanView({
           flagged.has(item.id) ? 'has-issue' : '',
           item.id === selectedId ? 'selected' : '',
         ]
-        const name = asset?.standardName ?? item.name.split(' · ')[0] ?? item.name
+        // The catalogue name (模型选用表) wins over the name saved with older layouts.
+        const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
         return (
           <g
             key={item.id}

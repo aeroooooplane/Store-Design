@@ -2,7 +2,7 @@
 
 更新：2026-10-09。PostgreSQL 16 及以上（开发与测试使用 PGlite / PostgreSQL 17），由 `database/schema/` 中的 Drizzle 定义与 `database/migrations/` 中的 SQL 迁移管理。
 
-**实现状态**：第 1–5 节中的 `projects`、`design_nodes`、`project_drafts`、`node_cameras`、`renders`、`deliveries`、`stored_files`、`jobs`、`app_settings`、`ai_usage`、`audit_events` 已建表（迁移 `0000_init`）；目录域的 `assets` 已建表（迁移 `0001_catalog`，用途枚举 `item_function`，正面方向与安装方式来自 `网页模型/facing.json`，资产图片与模型通过 `stored_files` 挂接）；白模轻量版 `assets.white_glb_file_id`（迁移 `0003_white_models`）；分类 `assets.category`、效果图 `product_image_file_id` / `product_image_match`、平面图 `plan_symbol_file_id`（迁移 `0004_asset_categories`）；门店资料、识别、Agent 各表在对应阶段加入。
+**实现状态**：第 1–5 节中的 `projects`、`design_nodes`、`project_drafts`、`node_cameras`、`renders`、`deliveries`、`stored_files`、`jobs`、`app_settings`、`ai_usage`、`audit_events` 已建表（迁移 `0000_init`）；目录域的 `assets` 已建表（迁移 `0001_catalog`，用途枚举 `item_function`，正面方向与安装方式来自 `网页模型/facing.json`，资产图片与模型通过 `stored_files` 挂接）；白模轻量版 `assets.white_glb_file_id`（迁移 `0003_white_models`）；分类 `assets.category`、效果图 `product_image_file_id` / `product_image_match`、平面图 `plan_symbol_file_id`（迁移 `0004_asset_categories`）；模型选用表的名称 `display_name` 与停用 `retired`（迁移 `0005_asset_selection`）；门店资料、识别、Agent 各表在对应阶段加入。
 
 约定：
 - 主键为 `uuid`（`gen_random_uuid()`）；目录类数据沿用业务编号（如 `asset-408124`、`PDF-001`）。
@@ -214,7 +214,8 @@
 | 列 | 说明 |
 |---|---|
 | id `asset-xxxxxx` PK | |
-| standard_name / variant | 模型库命名 |
+| standard_name / variant | 模型库命名（手册名称） |
+| display_name | 模型选用表中用户定的名称，网站显示用；空则显示手册名称加变体 |
 | material_category | 软装物料 / 信息化物料 / 展陈物料 |
 | si_family | SI1.0 / SI2.0 / 通用 / 非标 |
 | function | item_function |
@@ -222,6 +223,7 @@
 | bounds_w / bounds_d / bounds_h | 可见包围盒（含产品、凳子） |
 | front_axis | 原生正面方向，未校准为 null |
 | placeable | 是否已有通过校验的 GLB |
+| retired | 模型选用表标为删除：不再供添加与自动排布，已有布局照常引用 |
 | status / judgment | 校验与判断说明 |
 
 ### asset_files

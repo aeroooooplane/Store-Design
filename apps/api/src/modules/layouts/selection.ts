@@ -24,12 +24,12 @@ const toPlanner = (asset: Asset): PlannerAsset => ({
 })
 
 /**
- * Chooses planner models from the placeable catalogue: the project's SI family first, then 通用,
- * then the standard model names; rotated-instance variants last. One cabinet per length, so a
- * wall is not lined with mixed display variants of the same size.
+ * Chooses planner models from the placeable catalogue (retired models left out): the project's
+ * SI family first, then 通用, then the standard model names; rotated-instance variants last. One
+ * cabinet per length, so a wall is not lined with mixed display variants of the same size.
  */
 export function plannerCatalog(assets: Iterable<Asset>, style: SiStyle): PlannerCatalog {
-  const all = [...assets].filter((a) => a.placeable)
+  const all = [...assets].filter((a) => a.placeable && !a.retired)
   const sorted = (list: Asset[], names: RegExp[]) =>
     [...list].sort(
       (a, b) =>

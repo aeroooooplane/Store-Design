@@ -225,6 +225,7 @@ describe('plannerCatalog', () => {
     staffSide: null,
     facingConfidence: 'high',
     placeable: true,
+    retired: false,
     judgment: null,
     glb: null,
     whiteGlb: null,
@@ -253,5 +254,16 @@ describe('plannerCatalog', () => {
       'asset-14',
       'asset-13',
     ])
+  })
+
+  it('never plans with models retired in 模型选用表', () => {
+    const catalog = plannerCatalog(
+      [
+        { ...asset('asset-20', '1.8米普通中岛桌', 'SI2.0', 'island_table'), retired: true },
+        asset('asset-21', '1.8米普通中岛桌', 'SI2.0', 'island_table'),
+      ],
+      'SI2.0',
+    )
+    expect(catalog.island.map((a) => a.id)).toEqual(['asset-21'])
   })
 })

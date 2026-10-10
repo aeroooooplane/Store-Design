@@ -599,7 +599,7 @@ export function PlanEditor({
             {selected ? (
               <>
                 <div className="properties-head">
-                  <h3>{assetMap.get(selected.assetId ?? '')?.standardName ?? selected.name}</h3>
+                  <h3>{assetMap.get(selected.assetId ?? '')?.name ?? selected.name}</h3>
                   <button
                     type="button"
                     className="icon-button"
