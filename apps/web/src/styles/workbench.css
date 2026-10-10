@@ -1,0 +1,315 @@
+/* Project workbench: history tree, space editor, layout candidates and the plan editor. */
+.page.page-wide {
+  max-width: 1600px;
+}
+h2,
+h3 {
+  margin: 0 0 var(--space-1);
+}
+h2 {
+  font-size: 18px;
+}
+h3 {
+  font-size: 14px;
+}
+.hint {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 4px 0;
+}
+.field {
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.field.inline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.field input,
+.field select {
+  color: var(--ink);
+}
+fieldset {
+  border: 1px solid var(--line);
+  padding: var(--space-2);
+  margin: 0 0 var(--space-2);
+  display: grid;
+  gap: var(--space-1);
+}
+legend {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 0 4px;
+}
+
+.workbench {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+.workbench-side {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: var(--space-1);
+  position: sticky;
+  top: var(--space-2);
+}
+.workbench-main {
+  min-width: 0;
+}
+
+/* History tree */
+.history {
+  border: 1px solid var(--line);
+}
+.history-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-1);
+  border-bottom: 1px solid var(--ink);
+}
+.history-head h2 {
+  margin: 0;
+  font-size: 14px;
+}
+.history ol {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0;
+  max-height: 70vh;
+  overflow: auto;
+}
+.history li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding-right: 4px;
+}
+.history li.selected {
+  background: var(--surface);
+}
+.history li.hidden-node {
+  opacity: 0.5;
+}
+.history-node {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+  border: 0;
+  background: transparent;
+  padding: 6px var(--space-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.history li.selected .history-node {
+  font-weight: 700;
+}
+.history-actions {
+  display: none;
+  gap: 2px;
+}
+.history li:hover .history-actions,
+.history li:focus-within .history-actions {
+  display: flex;
+}
+.history-actions button,
+.history form button {
+  padding: 2px 6px;
+  font-size: 12px;
+}
+.history form {
+  display: flex;
+  gap: 2px;
+  padding: 2px var(--space-1);
+}
+.history form input {
+  flex: 1;
+  min-width: 0;
+  padding: 2px 6px;
+}
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+/* Plan drawing */
+svg.plan {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 70vh;
+  background: var(--plan-paper);
+  user-select: none;
+  touch-action: none;
+}
+svg.plan * {
+  vector-effect: non-scaling-stroke;
+}
+.plan-boundary {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 2px;
+}
+.plan-obstacle {
+  fill: var(--line-strong);
+  stroke: var(--ink);
+  stroke-width: 1px;
+}
+.plan-entrance {
+  stroke: var(--paper);
+  stroke-width: 6px;
+}
+.plan-open-edge {
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-dasharray: 6 4;
+}
+.plan-item rect {
+  stroke: var(--ink);
+  stroke-width: 1px;
+}
+.plan-item.placeholder rect {
+  stroke-dasharray: 4 3;
+}
+.plan-item.has-issue rect {
+  stroke: var(--danger);
+  stroke-width: 2px;
+}
+.plan-item.selected rect {
+  stroke-width: 3px;
+}
+.plan-item text {
+  fill: var(--ink);
+  pointer-events: none;
+}
+.plan-front {
+  stroke: var(--ink);
+  stroke-width: 3px;
+}
+.plan-dimensions text {
+  fill: var(--muted);
+}
+.plan-editor .plan-item {
+  cursor: grab;
+}
+.plan-compact {
+  max-height: 260px;
+}
+.space-summary {
+  border: 1px solid var(--line);
+  margin-bottom: var(--space-2);
+}
+
+/* Space editor */
+.space-editor {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: start;
+}
+.space-editor-preview {
+  position: sticky;
+  top: var(--space-2);
+  border: 1px solid var(--line);
+}
+table.rows {
+  border-collapse: collapse;
+  width: 100%;
+}
+table.rows th {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted);
+  text-align: left;
+}
+table.rows input {
+  width: 100%;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  align-items: end;
+}
+.row .field input {
+  width: 96px;
+}
+
+/* Layout candidates */
+.candidate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-2);
+}
+.candidate {
+  border: 1px solid var(--line);
+  padding: var(--space-2);
+  display: grid;
+  gap: var(--space-1);
+  align-content: start;
+}
+.candidate p {
+  margin: 0;
+}
+
+/* Plan editor */
+.plan-editor-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: var(--space-2);
+  align-items: start;
+}
+.plan-canvas {
+  border: 1px solid var(--line);
+}
+.plan-side {
+  display: grid;
+  gap: var(--space-1);
+}
+.properties {
+  display: grid;
+  gap: var(--space-1);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line-soft);
+}
+ul.issues {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 12px;
+  max-height: 240px;
+  overflow: auto;
+}
+ul.issues li.error {
+  color: var(--danger);
+}
+ul.issues li.warning {
+  color: var(--muted);
+}
+.toolbar.vertical {
+  flex-direction: column;
+  align-items: stretch;
+}
+.save-state {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+.save-state.conflict,
+.save-state.error {
+  color: var(--danger);
+}
+.draft-elsewhere p {
+  margin: 0 0 var(--space-1);
+  color: var(--ink);
+}

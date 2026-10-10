@@ -1,6 +1,6 @@
 # 架构说明
 
-更新：2026-10-09。第一阶段骨架已实现：shared、database、api（健康检查与项目接口）、web（项目列表）；其余模块按分期实现。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
+更新：2026-10-09。第一期已实现：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、项目导入导出、排布生成与校验；web 的项目列表与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存）。三维白模、视角、渲染与交付按分期继续实现。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
 
 ## 1. 总体结构
 
@@ -22,8 +22,9 @@ apps/
   web/                React 前端
     src/app/          路由、布局壳、Provider
     src/api/          由 OpenAPI 生成的类型和请求客户端（唯一的数据通道）
-    src/features/     projects / space-editor / planner / viewer-3d / cameras /
-                      renders / delivery / recognition / agent / assets / settings
+    src/features/     projects / workbench（历史树、空间录入、方案生成、平面编辑）/
+                      viewer-3d / cameras / renders / delivery / recognition / agent /
+                      assets / settings
     src/components/   通用 UI
     src/styles/       沿用 tokens.css 的瑞士风格
   api/                Fastify 后端
@@ -82,6 +83,8 @@ tools/  资源库/        原样保留；资源库 由 API 通过白名单读取
 
 ### 4.2 编辑与白模
 平面编辑或三维拖拽都修改同一份 Layout（草稿）。前端每次操作调用 `shared` 做即时校验；保存时后端权威校验。确认后创建 white 节点，后端生成默认 8 个相机。
+
+网页工作台（`apps/web/src/features/workbench`）的草稿规则：停止操作 800 ms 后自动保存到项目唯一的共享草稿，同一时间只发一个请求，保存途中的修改留待下一次保存；版本冲突时停止自动保存，由用户载入最新草稿。草稿属于其他节点时，当前节点只读，需先“转到草稿”或丢弃草稿。“保存为新版本”创建 edit 节点，“确认白模”创建 white 节点（存在错误时不可确认），成功后删除草稿。选中的节点记录在地址栏 `?node=`，刷新后保持。
 
 ### 4.3 渲染
 浏览器按节点的相机列表渲染白模图与材质图（同一场景、同一相机，只切换材质），逐张上传。后端记录布局签名与相机签名；布局或相机变化后旧图标记为过期，不覆盖。
