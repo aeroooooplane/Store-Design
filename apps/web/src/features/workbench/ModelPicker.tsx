@@ -1,0 +1,134 @@
+import { useDeferredValue, useMemo, useState } from 'react'
+import { ITEM_FUNCTIONS, mToMm } from '@store/shared'
+import type { Asset, AssetCategory, SiStyle } from '@store/shared'
+
+/** Picker groups in order; 环境设施 (fire boxes, spotlights) are not placed by hand. */
+const GROUPS: { category: AssetCategory; title: (si: SiStyle) => string }[] = [
+  { category: '软装道具', title: (si) => `软装道具 · ${si}` },
+  { category: '信息化物料', title: () => '信息化物料' },
+  { category: '品牌标识', title: () => '品牌标识' },
+  { category: '非标陈列', title: () => '非标陈列' },
+]
+
+/**
+ * The models a project may use: furniture of its own SI style, plus every 信息化物料, 品牌标识
+ * and 非标陈列 model, which are not tied to a style.
+ */
+export function pickableGroups(assets: readonly Asset[], si: SiStyle) {
+  const order = (a: Asset) => ITEM_FUNCTIONS.indexOf(a.function)
+  return GROUPS.map(({ category, title }) => ({
+    category,
+    title: title(si),
+    assets: assets
+      .filter((a) => a.category === category && (category !== '软装道具' || a.siFamily === si))
+      .sort(
+        (a, b) =>
+          order(a) - order(b) ||
+          a.standardName.localeCompare(b.standardName, 'zh') ||
+          a.id.localeCompare(b.id),
+      ),
+  })).filter((group) => group.assets.length > 0)
+}
+
+const size = (a: Asset) =>
+  `${mToMm(a.footprint.w)} × ${mToMm(a.footprint.d)} × ${mToMm(a.footprint.h)} mm`
+
+interface ModelPickerProps {
+  assets: readonly Asset[]
+  siStyle: SiStyle
+  onPick: (asset: Asset) => void
+}
+
+/** "添加模型": product pictures grouped by category; picking places the model in the middle. */
+export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const [lastPicked, setLastPicked] = useState<string | null>(null)
+  const query = useDeferredValue(search.trim())
+  const groups = useMemo(() => {
+    const all = pickableGroups(assets, siStyle)
+    if (!query) return all
+    return all
+      .map((g) => ({
+        ...g,
+        assets: g.assets.filter((a) => `${a.id} ${a.name}`.includes(query)),
+      }))
+      .filter((g) => g.assets.length > 0)
+  }, [assets, siStyle, query])
+
+  return (
+    <div className="model-picker">
+      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)}>
+        添加模型
+      </button>
+      {open && (
+        <section
+          className="model-picker-panel"
+          aria-label="选择模型"
+          onKeyDown={(event) => {
+            if (event.key === 'Escape') setOpen(false)
+          }}
+        >
+          <div className="toolbar">
+            <input
+              type="search"
+              aria-label="搜索模型"
+              placeholder="按名称或编号搜索"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <span className="hint">
+              点击放到空间中央，可连续添加；没有三维模型的以真实尺寸方框占位。
+            </span>
+            <button type="button" className="model-picker-close" onClick={() => setOpen(false)}>
+              收起
+            </button>
+          </div>
+          {groups.length === 0 && <p className="hint">没有符合条件的模型。</p>}
+          {groups.map((group) => (
+            <div key={group.category} className="model-group">
+              <h3>
+                {group.title}（{group.assets.length}）
+              </h3>
+              <ul className="model-grid">
+                {group.assets.map((asset) => {
+                  const image = asset.productImage ?? asset.preview
+                  return (
+                    <li key={asset.id}>
+                      <button
+                        type="button"
+                        className="model-card"
+                        aria-label={`添加 ${asset.name}`}
+                        onClick={() => {
+                          onPick(asset)
+                          setLastPicked(asset.id)
+                        }}
+                      >
+                        {image ? (
+                          <img src={image.url} alt="" loading="lazy" />
+                        ) : (
+                          <span className="model-card-empty">无图片</span>
+                        )}
+                        <span className="model-card-name">{asset.standardName}</span>
+                        <span className="hint">{asset.variant}</span>
+                        <span className="hint">{size(asset)}</span>
+                        <span className="model-card-tags">
+                          {!asset.placeable && <span className="tag">无三维模型 · 占位</span>}
+                          {asset.productImageMatch === 'approximate' && (
+                            <span className="tag">同类参考图</span>
+                          )}
+                          {!asset.productImage && <span className="tag">SketchUp 预览</span>}
+                          {lastPicked === asset.id && <span className="tag done">已添加</span>}
+                        </span>
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ))}
+        </section>
+      )}
+    </div>
+  )
+}

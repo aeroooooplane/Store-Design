@@ -6,7 +6,7 @@ import type { ProjectExport, ProjectImported } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
-import { placeableAssets } from '../assets/service.ts'
+import { catalogAssets } from '../assets/service.ts'
 import { recordAudit } from '../audit/record.ts'
 import { checkSpace } from '../nodes/service.ts'
 import { toProject } from '../projects/service.ts'
@@ -23,7 +23,7 @@ export async function importProject(
   input: { name?: string | undefined; data: unknown },
 ): Promise<ProjectImported> {
   authorize(ctx.actor, 'project:import')
-  const assets = await placeableAssets(db)
+  const assets = await catalogAssets(db)
   const native = isNativeExport(input.data)
   const planned: PlannedProject = native
     ? convertNative(input.data, assets, input.name)

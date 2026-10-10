@@ -396,3 +396,92 @@ ul.issues li.warning {
   text-underline-offset: 3px;
   font-size: 12px;
 }
+
+/* Project settings (SI switch) */
+.project-settings {
+  margin-top: calc(-1 * var(--space-1));
+}
+
+/* Model picker */
+.model-picker-panel {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  max-height: 70vh;
+  overflow: auto;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: var(--space-2);
+}
+.plan-editor > .toolbar {
+  position: relative;
+}
+.model-picker-panel .toolbar input[type='search'] {
+  min-width: 240px;
+}
+.model-picker-close {
+  margin-left: auto;
+}
+.model-group h3 {
+  margin: var(--space-2) 0 var(--space-1);
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.model-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space-1);
+}
+.model-card {
+  display: grid;
+  gap: 2px;
+  width: 100%;
+  height: 100%;
+  text-align: left;
+  padding: var(--space-1);
+  align-content: start;
+}
+.model-card:hover {
+  border-color: var(--ink);
+}
+.model-card img,
+.model-card-empty {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background: var(--surface);
+}
+.model-card-empty {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 12px;
+}
+.model-card-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+.model-card .hint {
+  margin: 0;
+}
+.model-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tag {
+  font-size: 11px;
+  padding: 0 4px;
+  border: 1px solid var(--line-strong);
+  color: var(--muted);
+}
+.tag.done {
+  border-color: var(--ink);
+  color: var(--ink);
+}

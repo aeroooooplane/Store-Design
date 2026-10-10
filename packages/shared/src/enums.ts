@@ -57,6 +57,19 @@ export const ITEM_FUNCTIONS = [
 ] as const
 export const ItemFunctionSchema = z.enum(ITEM_FUNCTIONS)
 export type ItemFunction = z.infer<typeof ItemFunctionSchema>
+export const ITEM_FUNCTION_LABELS: Record<ItemFunction, string> = {
+  island_table: '中岛桌',
+  unboxing_table: '开箱桌',
+  cashier: '收银',
+  accessory_cabinet: '配件柜',
+  side_cabinet: '配件边柜',
+  display_stand: '展示台',
+  screen: '屏幕',
+  signage: '灯箱与标识',
+  seating: '坐凳',
+  storage: '储物柜',
+  other: '其他',
+}
 
 export const RENDER_MODES = ['white', 'material'] as const
 export const RenderModeSchema = z.enum(RENDER_MODES)

@@ -119,8 +119,27 @@ export function rotatedFootprint(
   }
 }
 
+/** Why an item cannot use a catalogue model, or null when it fits. */
+export type AssetFitProblem = 'unknown' | 'not_placeable' | 'size'
+
 /**
- * Items that reference a catalogue model must use a placeable model at its true size.
+ * An item that references a catalogue model must keep the model's true size. Models without
+ * a web model (信息化物料 for now) may only be used as placeholders.
+ */
+export function assetFitProblem(
+  item: Pick<LayoutItem, 'placeholder' | 'rotation' | 'w' | 'd' | 'h'>,
+  asset: AssetFit | undefined,
+): AssetFitProblem | null {
+  if (!asset) return 'unknown'
+  if (!asset.placeable && !item.placeholder) return 'not_placeable'
+  const expected = rotatedFootprint(asset, item.rotation)
+  return (['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - expected[k]) > EPSILON_M)
+    ? 'size'
+    : null
+}
+
+/**
+ * Items must reference known catalogue models at their true size (see assetFitProblem).
  * This is a contract violation rather than a design issue, so callers reject such layouts.
  */
 export function checkAssetFit(
@@ -130,18 +149,18 @@ export function checkAssetFit(
   const issues: LayoutIssue[] = []
   for (const item of layout.items) {
     if (item.assetId === null) continue
-    const asset = assets.get(item.assetId)
-    if (!asset?.placeable) {
+    const problem = assetFitProblem(item, assets.get(item.assetId))
+    if (problem === 'unknown' || problem === 'not_placeable') {
       issues.push({
         code: 'item_asset_unknown',
         severity: 'error',
-        message: `${item.name}引用的模型 ${item.assetId} 不存在或不可摆放`,
+        message:
+          problem === 'unknown'
+            ? `${item.name}引用的模型 ${item.assetId} 不存在`
+            : `${item.name}引用的模型 ${item.assetId} 还没有网页模型，只能作为占位摆放`,
         itemIds: [item.id],
       })
-      continue
-    }
-    const expected = rotatedFootprint(asset, item.rotation)
-    if ((['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - expected[k]) > EPSILON_M)) {
+    } else if (problem === 'size') {
       issues.push({
         code: 'item_asset_size_mismatch',
         severity: 'error',

@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { Project, ProjectCreate } from '@store/shared'
+import type { Project, ProjectCreate, ProjectUpdate } from '@store/shared'
 import { api, ifMatch, unwrap } from '../../api/client.ts'
 
 export interface ProjectListParams {
@@ -51,6 +51,22 @@ export function useCreateProject() {
   return useMutation({
     mutationFn: async (body: ProjectCreate) => unwrap(await api.POST('/api/v1/projects', { body })),
     onSuccess: () => client.invalidateQueries({ queryKey: keys.all }),
+  })
+}
+
+/** Changes project settings (e.g. SI style), guarded by the revision the page loaded. */
+export function useUpdateProject() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ project, patch }: { project: Project; patch: ProjectUpdate }) =>
+      unwrap(
+        await api.PATCH('/api/v1/projects/{projectId}', {
+          params: { path: { projectId: project.id }, header: ifMatch(project.revision) },
+          body: patch,
+        }),
+      ),
+    onSuccess: (updated) => client.setQueryData(keys.detail(updated.id), updated),
+    onSettled: () => client.invalidateQueries({ queryKey: keys.all }),
   })
 }
 

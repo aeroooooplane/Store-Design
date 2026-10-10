@@ -3,7 +3,7 @@ import { checkAssetFit, planLayout, validateLayout } from '@store/shared'
 import type { Issue, Layout, LayoutCandidates, LayoutGenerate, Space } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
-import { placeableAssets } from '../assets/service.ts'
+import { catalogAssets, placeableAssets } from '../assets/service.ts'
 import { checkSpace } from '../nodes/service.ts'
 import { plannerCatalog } from './selection.ts'
 
@@ -35,8 +35,7 @@ export async function validateDraftLayout(
   layout: Layout,
 ): Promise<Issue[]> {
   authorize(ctx.actor, 'layout:validate')
-  return [
-    ...checkAssetFit(layout, await placeableAssets(db)),
-    ...validateLayout(space, layout),
-  ].map((issue) => ({ ...issue }))
+  return [...checkAssetFit(layout, await catalogAssets(db)), ...validateLayout(space, layout)].map(
+    (issue) => ({ ...issue }),
+  )
 }

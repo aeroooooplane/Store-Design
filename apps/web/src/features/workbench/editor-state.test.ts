@@ -31,6 +31,7 @@ const asset = {
   name: '配件柜',
   function: 'accessory_cabinet',
   footprint: { w: 1.2, d: 0.45, h: 2.1 },
+  placeable: true,
 } as Asset
 
 describe('editorReducer', () => {
@@ -96,6 +97,24 @@ describe('editorReducer', () => {
       d: 0.45,
       h: 2.1,
       placeholder: false,
+    })
+  })
+
+  it('adds a model without a web model as a true-size placeholder', () => {
+    const screenAsset = {
+      ...asset,
+      id: 'asset-8',
+      function: 'screen',
+      placeable: false,
+      footprint: { w: 1.69, d: 0.05, h: 0.958 },
+    } as Asset
+    const added = editorReducer(state([]), { type: 'add', asset: screenAsset, cx: 1, cz: 1 })
+    expect(added.layout.items[0]).toMatchObject({
+      assetId: 'asset-8',
+      placeholder: true,
+      w: 1.69,
+      d: 0.05,
+      h: 0.958,
     })
   })
 

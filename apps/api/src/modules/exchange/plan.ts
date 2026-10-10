@@ -1,4 +1,4 @@
-import { EPSILON_M, rotatedFootprint } from '@store/shared'
+import { assetFitProblem } from '@store/shared'
 import type {
   AssetFit,
   Layout,
@@ -82,17 +82,14 @@ export function reconcileAssets(
 ): LayoutItem[] {
   return items.map((item) => {
     if (item.assetId === null) return item
-    const asset = assets.get(item.assetId)
-    const fits =
-      asset?.placeable === true &&
-      (() => {
-        const expected = rotatedFootprint(asset, item.rotation)
-        return (['w', 'd', 'h'] as const).every((k) => Math.abs(item[k] - expected[k]) <= EPSILON_M)
-      })()
-    if (fits) return item
-    warnings.push(
-      `${where}：${item.name}（${item.assetId}）${asset?.placeable ? '尺寸与当前模型不符' : '在当前模型目录中不可用'}，改为参数化占位`,
-    )
+    const problem = assetFitProblem(item, assets.get(item.assetId))
+    if (problem === null) return item
+    const reason = {
+      unknown: '在当前模型目录中不存在',
+      not_placeable: '在当前模型目录中没有网页模型',
+      size: '尺寸与当前模型不符',
+    }[problem]
+    warnings.push(`${where}：${item.name}（${item.assetId}）${reason}，改为参数化占位`)
     return { ...item, assetId: null, placeholder: true }
   })
 }

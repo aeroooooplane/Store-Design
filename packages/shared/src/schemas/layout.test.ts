@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { LayoutSchema, validateLayout } from './layout.ts'
+import { LayoutSchema, assetFitProblem, checkAssetFit, validateLayout } from './layout.ts'
 import type { LayoutInput } from './layout.ts'
 import { SpaceSchema, rectangleSpace } from './space.ts'
 
@@ -95,5 +95,77 @@ describe('validateLayout', () => {
     const rect = rectangleSpace(6, 4, 3)
     const parsed = LayoutSchema.parse(layout([item('a', 3, 3.75)]))
     expect(validateLayout(rect, parsed)).toEqual([])
+  })
+})
+
+describe('assetFitProblem / checkAssetFit', () => {
+  const screen = { footprint: { w: 1.69, d: 0.05, h: 0.958 }, placeable: false }
+  const table = { footprint: { w: 1, d: 1.8, h: 1.327 }, placeable: true }
+  const item = (overrides: object) => ({
+    placeholder: false,
+    rotation: 0 as const,
+    w: 1,
+    d: 1.8,
+    h: 1.327,
+    ...overrides,
+  })
+
+  it('lets a model without a web model stand in only as a placeholder, at true size', () => {
+    expect(
+      assetFitProblem(item({ placeholder: true, w: 1.69, d: 0.05, h: 0.958 }), screen),
+    ).toBeNull()
+    expect(assetFitProblem(item({ w: 1.69, d: 0.05, h: 0.958 }), screen)).toBe('not_placeable')
+    expect(assetFitProblem(item({ placeholder: true, w: 2, d: 0.05, h: 0.958 }), screen)).toBe(
+      'size',
+    )
+    expect(
+      assetFitProblem(
+        item({ rotation: 90, w: 0.05, d: 1.69, h: 0.958, placeholder: true }),
+        screen,
+      ),
+    ).toBeNull()
+  })
+
+  it('still requires placeable models at their true size and known ids', () => {
+    expect(assetFitProblem(item({}), table)).toBeNull()
+    expect(assetFitProblem(item({ w: 1.2 }), table)).toBe('size')
+    expect(assetFitProblem(item({}), undefined)).toBe('unknown')
+  })
+
+  it('explains each problem in the issue list', () => {
+    const layout = LayoutSchema.parse({
+      schemaVersion: 3,
+      items: [
+        {
+          id: 'a',
+          assetId: 'asset-1',
+          function: 'screen',
+          name: '广告机',
+          cx: 1,
+          cz: 1,
+          rotation: 0,
+          w: 1.69,
+          d: 0.05,
+          h: 0.958,
+        },
+        {
+          id: 'b',
+          assetId: 'asset-9',
+          function: 'other',
+          name: '未知',
+          cx: 3,
+          cz: 3,
+          rotation: 0,
+          w: 1,
+          d: 1,
+          h: 1,
+        },
+      ],
+    })
+    const issues = checkAssetFit(layout, new Map([['asset-1', screen]]))
+    expect(issues.map((i) => i.message)).toEqual([
+      '广告机引用的模型 asset-1 还没有网页模型，只能作为占位摆放',
+      '未知引用的模型 asset-9 不存在',
+    ])
   })
 })

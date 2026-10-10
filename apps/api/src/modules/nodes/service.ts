@@ -22,7 +22,7 @@ import type {
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
-import { placeableAssets } from '../assets/service.ts'
+import { catalogAssets } from '../assets/service.ts'
 import { initialCameras, insertCameras } from '../cameras/service.ts'
 
 const { designNodes, projects } = schema
@@ -93,7 +93,7 @@ export async function checkLayout(
   layout: Layout,
   kind: NodeKind | 'draft',
 ): Promise<Issue[]> {
-  const fit = checkAssetFit(layout, await placeableAssets(db))
+  const fit = checkAssetFit(layout, await catalogAssets(db))
   if (fit.length) throw new AppError('VALIDATION_FAILED', '布局中的模型引用无效', asIssues(fit))
   const issues = asIssues(validateLayout(space, layout))
   if ((kind === 'white' || kind === 'render') && issues.some((i) => i.severity === 'error')) {
