@@ -6,13 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import type { GLTF } from 'three/addons/loaders/GLTFLoader.js'
 import { WALL_THICKNESS_M, defaultCameras, wallSegments } from '@store/shared'
 import type { Asset, Camera, LayoutItem, Point, ShopType, SiStyle, Space } from '@store/shared'
-import {
-  RENDER_LOOK,
-  disposeRoomMaterials,
-  finishMaterial,
-  floorStyle,
-  roomMaterials,
-} from './render-look.ts'
+import { RENDER_LOOK, disposeRoomMaterials, finishMaterial, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 
 /** Legacy white-mode look (demo/src/scene.js). */
@@ -330,7 +324,9 @@ export class WhiteScene {
   private look: Look = 'white'
   private siStyle: SiStyle = 'SI1.0'
   private shopType: ShopType = 'side_hall'
+  private space: Space | null = null
   private readonly roomWhite = surface()
+  /** Material-look room materials of the current room, per SI style (the floor follows the room). */
   private readonly roomLooks = new Map<SiStyle, Record<RoomSurface, THREE.MeshStandardMaterial>>()
   /** Textured models with adjusted finishes; per scene because metals use its environment. */
   private readonly finishes = new Map<string, Promise<THREE.Object3D>>()
@@ -386,7 +382,10 @@ export class WhiteScene {
   setRoom(space: Space, shopType: ShopType, resetView: boolean) {
     this.room.children.forEach(disposeGeometry)
     this.room.clear()
+    this.roomLooks.forEach(disposeRoomMaterials)
+    this.roomLooks.clear()
     this.shopType = shopType
+    this.space = space
 
     const floor = new THREE.Mesh(
       prism(space.boundary, -FLOOR_THICKNESS_M, FLOOR_THICKNESS_M),
@@ -497,12 +496,11 @@ export class WhiteScene {
 
   private paintRoom() {
     let materials: Record<RoomSurface, THREE.MeshStandardMaterial> | undefined
-    if (this.look === 'material') {
-      const style = floorStyle(this.siStyle, this.shopType)
-      materials = this.roomLooks.get(style)
+    if (this.look === 'material' && this.space) {
+      materials = this.roomLooks.get(this.siStyle)
       if (!materials) {
-        materials = roomMaterials(style)
-        this.roomLooks.set(style, materials)
+        materials = roomMaterials(this.siStyle, this.shopType, this.space)
+        this.roomLooks.set(this.siStyle, materials)
       }
     }
     for (const mesh of this.room.children) {
