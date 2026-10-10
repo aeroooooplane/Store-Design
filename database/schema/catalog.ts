@@ -17,6 +17,7 @@ export const assets = pgTable(
     variant: text('variant').notNull(),
     materialCategory: text('material_category').notNull(),
     siFamily: text('si_family').notNull(),
+    category: text('category').notNull().default('非标陈列'),
     function: itemFunction('function').notNull(),
     installation: text('installation'),
     width: metres('width').notNull(),
@@ -32,6 +33,9 @@ export const assets = pgTable(
     /** Simplified, untextured copy for the white model (see apps/api assets/white-models.ts). */
     whiteGlbFileId: uuid('white_glb_file_id').references(() => storedFiles.id),
     previewFileId: uuid('preview_file_id').references(() => storedFiles.id),
+    productImageFileId: uuid('product_image_file_id').references(() => storedFiles.id),
+    productImageMatch: text('product_image_match'),
+    planSymbolFileId: uuid('plan_symbol_file_id').references(() => storedFiles.id),
     sourceSha256: text('source_sha256'),
     importedAt: timestamp('imported_at', { withTimezone: true }).notNull().defaultNow(),
   },
@@ -43,6 +47,14 @@ export const assets = pgTable(
       sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall')`,
     ),
     check('assets_footprint_source_known', sql`${t.footprintSource} IN ('glb', 'source')`),
+    check(
+      'assets_category_known',
+      sql`${t.category} IN ('软装道具', '信息化物料', '品牌标识', '非标陈列', '环境设施')`,
+    ),
+    check(
+      'assets_image_match_known',
+      sql`${t.productImageMatch} IS NULL OR ${t.productImageMatch} IN ('exact', 'approximate')`,
+    ),
     check(
       'assets_front_known',
       sql`${t.front} IS NULL OR ${t.front} IN ('+Z', '-Z', '+X', '-X', 'any')`,

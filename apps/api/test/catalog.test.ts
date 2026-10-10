@@ -8,12 +8,7 @@ import { schema } from '@store/database'
 import type { Asset } from '@store/shared'
 import { storageRoots } from '../src/app.ts'
 import { loadConfig } from '../src/config/env.ts'
-import {
-  LIBRARY_DIR,
-  WEB_MODEL_DIR,
-  functionFor,
-  importCatalog,
-} from '../src/modules/assets/importer.ts'
+import { LIBRARY_DIR, functionFor, importCatalog } from '../src/modules/assets/importer.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -44,12 +39,26 @@ async function put(relative: string, content: Buffer | string) {
   await writeFile(file, content)
 }
 
-function entry(id: string, standardName: string, category: string, previewName?: string) {
+/** Web model folder of a test asset, relative to the library. */
+const webModel = (id: string) => `软装道具/SI1.0/${id}/网页模型`
+const webDir = (id: string) => `${LIBRARY_DIR}/${webModel(id)}`
+const symbol =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-18 -18 1836 1036"><rect width="1800" height="1000"/></svg>'
+
+function entry(
+  id: string,
+  standardName: string,
+  materialCategory: string,
+  previewName?: string,
+  category = '软装道具',
+) {
   return {
     asset_id: id,
     standard_name: standardName,
     variant: '测试变体',
-    material_category: category,
+    material_category: materialCategory,
+    category,
+    web_model: webModel(id),
     si_family: 'SI1.0',
     judgment: '测试',
     preview: previewName,
@@ -70,31 +79,41 @@ beforeAll(async () => {
     '﻿' +
       JSON.stringify({
         assets: [
-          entry('asset-1', '1800mm普通中岛桌', '软装物料', '预览/asset-1.jpg'),
+          {
+            ...entry('asset-1', '1800mm普通中岛桌', '软装物料', '预览/asset-1.jpg'),
+            product_image: '软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png',
+            product_image_match: 'exact',
+            plan_symbol: {
+              svg: '软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg',
+              png: null,
+            },
+          },
           entry('asset-2', '徕卡墙画面与标识组合', '软装物料'),
-          entry('asset-3', '广告机', '信息化物料', '预览/missing.jpg'),
+          entry('asset-3', '广告机', '信息化物料', '预览/missing.jpg', '信息化物料'),
           entry('asset-4', '1.8米收银边柜', '软装物料'),
         ],
       }),
   )
   await put(`${LIBRARY_DIR}/预览/asset-1.jpg`, preview)
+  await put(`${LIBRARY_DIR}/软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png`, preview)
+  await put(`${LIBRARY_DIR}/软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg`, symbol)
   for (const id of ['asset-1', 'asset-2']) {
-    await put(`${WEB_MODEL_DIR}/${id}/model.glb`, glb)
-    await put(`${WEB_MODEL_DIR}/${id}/conversion.json`, JSON.stringify(conversion(id, glb)))
+    await put(`${webDir(id)}/model.glb`, glb)
+    await put(`${webDir(id)}/conversion.json`, JSON.stringify(conversion(id, glb)))
   }
   // asset-1 has a current light white model; asset-2's was built from an older model.glb.
-  await put(`${WEB_MODEL_DIR}/asset-1/white.glb`, white)
-  await put(`${WEB_MODEL_DIR}/asset-1/white.json`, JSON.stringify(whiteRecord(sha(glb))))
-  await put(`${WEB_MODEL_DIR}/asset-2/white.glb`, white)
-  await put(`${WEB_MODEL_DIR}/asset-2/white.json`, JSON.stringify(whiteRecord('b'.repeat(64))))
+  await put(`${webDir('asset-1')}/white.glb`, white)
+  await put(`${webDir('asset-1')}/white.json`, JSON.stringify(whiteRecord(sha(glb))))
+  await put(`${webDir('asset-2')}/white.glb`, white)
+  await put(`${webDir('asset-2')}/white.json`, JSON.stringify(whiteRecord('b'.repeat(64))))
   // asset-4 has a conversion record but only an un-pulled LFS pointer.
   await put(
-    `${WEB_MODEL_DIR}/asset-4/model.glb`,
+    `${webDir('asset-4')}/model.glb`,
     'version https://git-lfs.github.com/spec/v1\noid sha256:abc\nsize 9\n',
   )
-  await put(`${WEB_MODEL_DIR}/asset-4/conversion.json`, JSON.stringify(conversion('asset-4', glb)))
+  await put(`${webDir('asset-4')}/conversion.json`, JSON.stringify(conversion('asset-4', glb)))
   await put(
-    `${WEB_MODEL_DIR}/facing.json`,
+    `${LIBRARY_DIR}/facing.json`,
     JSON.stringify({
       assets: {
         'asset-1': { front: 'any', confidence: 'high' },
@@ -143,6 +162,8 @@ describe('importCatalog', () => {
       withWhite: 1,
       placeable: 1,
       withPreview: 1,
+      withProductImage: 1,
+      withPlanSymbol: 1,
     })
     expect(report.problems).toEqual([
       expect.stringContaining('asset-2: 白模轻量版已过期'),
@@ -154,11 +175,11 @@ describe('importCatalog', () => {
   it('is idempotent and refreshes rows in place', async () => {
     await importCatalog(t.database.db, roots())
     expect(await t.database.db.select().from(schema.assets)).toHaveLength(4)
-    expect(await t.database.db.select().from(schema.storedFiles)).toHaveLength(4)
+    expect(await t.database.db.select().from(schema.storedFiles)).toHaveLength(6)
   })
 
   it('refuses a model whose bytes differ from its conversion record', async () => {
-    await put(`${WEB_MODEL_DIR}/asset-1/model.glb`, Buffer.from('tampered'))
+    await put(`${webDir('asset-1')}/model.glb`, Buffer.from('tampered'))
     const report = await importCatalog(t.database.db, roots())
     expect(report.problems).toContainEqual(
       expect.stringContaining('asset-1: model.glb 与 conversion.json'),
@@ -168,7 +189,7 @@ describe('importCatalog', () => {
       .from(schema.assets)
       .where(eq(schema.assets.id, 'asset-1'))
     expect(row).toMatchObject({ placeable: false, glbFileId: null })
-    await put(`${WEB_MODEL_DIR}/asset-1/model.glb`, glb)
+    await put(`${webDir('asset-1')}/model.glb`, glb)
     await importCatalog(t.database.db, roots())
   })
 })
@@ -190,6 +211,26 @@ describe('GET /assets', () => {
     })
     expect(island?.glb?.url).toMatch(/^\/api\/v1\/files\/[0-9a-f-]{36}$/)
     expect(island?.whiteGlb).toMatchObject({ bytes: white.length, sha256: sha(white) })
+    expect(island).toMatchObject({ category: '软装道具', productImageMatch: 'exact' })
+    expect(island?.productImage?.sha256).toBe(sha(preview))
+    expect(items.find((a) => a.id === 'asset-3')).toMatchObject({
+      category: '信息化物料',
+      productImage: null,
+      productImageMatch: null,
+      planSymbol: null,
+    })
+
+    // The plan symbol is served as SVG that may not run anything when opened on its own.
+    const svg = await t.app.inject({ method: 'GET', url: island?.planSymbol?.url ?? '' })
+    expect(svg.statusCode).toBe(200)
+    expect(svg.headers['content-type']).toBe('image/svg+xml')
+    expect(svg.headers['content-security-policy']).toBe(
+      "default-src 'none'; style-src 'unsafe-inline'",
+    )
+    expect(svg.body).toBe(symbol)
+
+    const digital = await t.app.inject({ method: 'GET', url: '/api/v1/assets?category=信息化物料' })
+    expect(digital.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-3'])
     expect(items.find((a) => a.id === 'asset-2')).toMatchObject({
       installation: 'wall',
       placeable: false,
@@ -242,7 +283,7 @@ describe('GET /files/:id', () => {
       .insert(schema.storedFiles)
       .values({
         root: 'resource',
-        storageKey: `${WEB_MODEL_DIR}/asset-4/model.glb`,
+        storageKey: `${webDir('asset-4')}/model.glb`,
         kind: 'glb',
         contentType: 'model/gltf-binary',
         bytes: 1,

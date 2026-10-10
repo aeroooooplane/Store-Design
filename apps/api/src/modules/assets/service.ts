@@ -12,6 +12,16 @@ const { assets, storedFiles } = schema
 const glbFiles = aliasedTable(storedFiles, 'glb_files')
 const previewFiles = aliasedTable(storedFiles, 'preview_files')
 const whiteFiles = aliasedTable(storedFiles, 'white_files')
+const imageFiles = aliasedTable(storedFiles, 'image_files')
+const symbolFiles = aliasedTable(storedFiles, 'symbol_files')
+
+interface AssetFiles {
+  glb: FileRow | null
+  preview: FileRow | null
+  white: FileRow | null
+  image: FileRow | null
+  symbol: FileRow | null
+}
 
 type FileRow = typeof storedFiles.$inferSelect
 
@@ -21,9 +31,7 @@ function fileRef(row: FileRow | null): FileRef | null {
 
 function toAsset(
   row: typeof assets.$inferSelect,
-  glb: FileRow | null,
-  preview: FileRow | null,
-  white: FileRow | null,
+  { glb, preview, white, image, symbol }: AssetFiles,
 ): Asset {
   return {
     id: row.id,
@@ -32,6 +40,7 @@ function toAsset(
     variant: row.variant,
     materialCategory: row.materialCategory,
     siFamily: row.siFamily,
+    category: row.category as Asset['category'],
     function: row.function,
     installation: row.installation as Asset['installation'],
     footprint: { w: row.width, d: row.depth, h: row.height },
@@ -44,6 +53,9 @@ function toAsset(
     glb: fileRef(glb),
     whiteGlb: fileRef(white),
     preview: fileRef(preview),
+    productImage: fileRef(image),
+    productImageMatch: image ? (row.productImageMatch as Asset['productImageMatch']) : null,
+    planSymbol: fileRef(symbol),
   }
 }
 
@@ -53,11 +65,20 @@ function escapeLike(text: string): string {
 
 function selectAssets(db: Database, where: SQL | undefined) {
   return db
-    .select({ asset: assets, glb: glbFiles, preview: previewFiles, white: whiteFiles })
+    .select({
+      asset: assets,
+      glb: glbFiles,
+      preview: previewFiles,
+      white: whiteFiles,
+      image: imageFiles,
+      symbol: symbolFiles,
+    })
     .from(assets)
     .leftJoin(glbFiles, eq(assets.glbFileId, glbFiles.id))
     .leftJoin(previewFiles, eq(assets.previewFileId, previewFiles.id))
     .leftJoin(whiteFiles, eq(assets.whiteGlbFileId, whiteFiles.id))
+    .leftJoin(imageFiles, eq(assets.productImageFileId, imageFiles.id))
+    .leftJoin(symbolFiles, eq(assets.planSymbolFileId, symbolFiles.id))
     .where(where)
     .orderBy(asc(assets.function), asc(assets.standardName), asc(assets.id))
 }
@@ -72,6 +93,7 @@ export async function listAssets(
   if (query.function) filters.push(eq(assets.function, query.function))
   if (query.placeable !== undefined) filters.push(eq(assets.placeable, query.placeable))
   if (query.siFamily) filters.push(eq(assets.siFamily, query.siFamily))
+  if (query.category) filters.push(eq(assets.category, query.category))
   if (query.q) {
     const pattern = escapeLike(query.q)
     const match = or(
@@ -82,7 +104,7 @@ export async function listAssets(
     if (match) filters.push(match)
   }
   const rows = await selectAssets(db, filters.length ? and(...filters) : undefined)
-  const items = rows.map((r) => toAsset(r.asset, r.glb, r.preview, r.white))
+  const items = rows.map((r) => toAsset(r.asset, r))
   return { items, total: items.length }
 }
 
@@ -90,11 +112,11 @@ export async function getAsset(db: Database, ctx: RequestContext, id: string): P
   authorize(ctx.actor, 'asset:read')
   const [row] = await selectAssets(db, eq(assets.id, id))
   if (!row) throw notFound('资产')
-  return toAsset(row.asset, row.glb, row.preview, row.white)
+  return toAsset(row.asset, row)
 }
 
 /** Placeable assets by id, for validating and planning layouts on the server. */
 export async function placeableAssets(db: Database): Promise<Map<string, Asset>> {
   const rows = await selectAssets(db, eq(assets.placeable, true))
-  return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r.glb, r.preview, r.white)]))
+  return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r)]))
 }

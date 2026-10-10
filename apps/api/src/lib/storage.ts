@@ -16,6 +16,7 @@ export type StorageRootName = keyof StorageRoots
 export const CONTENT_TYPES: Record<string, string> = {
   '.glb': 'model/gltf-binary',
   '.png': 'image/png',
+  '.svg': 'image/svg+xml',
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.pdf': 'application/pdf',

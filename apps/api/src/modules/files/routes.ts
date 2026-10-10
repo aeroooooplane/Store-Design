@@ -60,6 +60,10 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
       reply.header('etag', etag).header('cache-control', 'private, max-age=3600')
       if (request.headers['if-none-match'] === etag) return reply.code(304).send(undefined)
       reply.header('content-type', row.contentType).header('content-length', bytes)
+      // A plan symbol is a drawing; even opened on its own it may not run anything.
+      if (row.contentType.startsWith('image/svg+xml')) {
+        reply.header('content-security-policy', "default-src 'none'; style-src 'unsafe-inline'")
+      }
       if (row.originalName) {
         reply.header(
           'content-disposition',

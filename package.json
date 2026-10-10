@@ -19,7 +19,8 @@
     "db:migrate": "pnpm --filter @store/database migrate",
     "api:openapi": "pnpm --filter @store/api openapi && pnpm --filter @store/web gen:api",
     "catalog:import": "pnpm --filter @store/api catalog:import",
-    "catalog:white": "pnpm --filter @store/api catalog:white"
+    "catalog:white": "pnpm --filter @store/api catalog:white",
+    "library:refresh": "node tools/library/refresh-library.mjs"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

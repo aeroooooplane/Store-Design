@@ -3,7 +3,9 @@ from pathlib import Path
 from collections import Counter
 import json,html,csv,re
 ROOT=Path(__file__).resolve().parents[2]
-BASE=ROOT/'资源库/04_软装道具模型/单件模型'
+import sys
+sys.exit('模型目录页与清单已改由 tools/library/refresh-library.mjs 生成：pnpm library:refresh（2026-10-10 模型库重排）')
+BASE=ROOT/'资源库/04_模型库'
 m=json.loads((BASE/'manifest.json').read_text('utf-8'));rows=m['assets'];e=lambda v:html.escape(str(v),quote=True)
 cats=['软装物料','信息化物料','展陈物料'];counts=Counter(a['material_category'] for a in rows)
 rows=sorted(rows,key=lambda a:(cats.index(a['material_category']),{'SI1.0':0,'SI2.0':1,'SI待确认':2,None:0}[a['material_si']],a['material_sort'],a['standard_name'],a['n']))
