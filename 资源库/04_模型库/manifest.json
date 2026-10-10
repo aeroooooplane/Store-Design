@@ -31,7 +31,7 @@
     "展陈物料"
   ],
   "classification_updated": "2026-10-02",
-  "plan_legend_note": "原PDF裁片，不是模型生成俯视图；普通与亮脚在原图不能区分时共用图例并标注",
+  "plan_legend_note": "2026-10-10 用户确认：旧平面图例（SketchUp 正投影纯净图）已删除，平面图统一使用品类图库的平面图；原记录见各模型 plan_legend_removed_20261010，PDF 裁片保留在 _图例来源/",
   "restructured": "2026-10-10",
   "library_root": "资源库/04_模型库",
   "path_note": "所有路径相对 资源库/04_模型库；migrated_from_20261010 记录原 单件模型/ 下的路径",
@@ -81,7 +81,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_滑雪画面__asset-316267",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面__asset-316267.skp",
+        "preview": "预览/asset-316267.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-316267",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_滑雪画面__asset-316267/平面图例.png",
@@ -114,36 +145,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_滑雪画面__asset-316267",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面__asset-316267.skp",
-        "preview": "预览/asset-316267.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 2,
@@ -174,7 +177,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-cab1600",
+        "label": "1.6米配件柜",
+        "file": "_图例来源/si1-cab1600.png",
+        "context": "_图例来源/si1-cab1600-source-p7.jpg",
+        "source_pdf": "各门店图纸/上海万象城授权体验店（边厅）.pdf",
+        "source_sha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+        "page": 7,
+        "crop_pdf_points": [
+          419.88248461108003,
+          324.6666666666667,
+          463.20369334079464,
+          430.66666666666663
+        ],
+        "note": "原图明确1600与H2400，同规格平面外轮廓",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/网页模型",
+      "type_name": "1.6米配件柜",
+      "product_image": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/平面图.svg",
+        "png": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1600mm配件柜_浅灰款__asset-323015.skp",
+        "preview": "预览/asset-323015.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-323015",
         "label": "1600mm配件柜",
         "file": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/平面图例.png",
@@ -207,38 +244,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-cab1600",
-        "label": "1.6米配件柜",
-        "file": "_图例来源/si1-cab1600.png",
-        "context": "_图例来源/si1-cab1600-source-p7.jpg",
-        "source_pdf": "各门店图纸/上海万象城授权体验店（边厅）.pdf",
-        "source_sha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
-        "page": 7,
-        "crop_pdf_points": [
-          419.88248461108003,
-          324.6666666666667,
-          463.20369334079464,
-          430.66666666666663
-        ],
-        "note": "原图明确1600与H2400，同规格平面外轮廓",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015/网页模型",
-      "type_name": "1.6米配件柜",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.6米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.6米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.6米配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.6米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1600mm配件柜_浅灰款__asset-323015",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1600mm配件柜_浅灰款__asset-323015.skp",
-        "preview": "预览/asset-323015.jpg"
       }
     },
     {
@@ -277,7 +286,40 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-island",
+        "label": "SI1.0中岛桌",
+        "file": "_图例来源/si1-island.png",
+        "context": "_图例来源/PDF-201-p10.jpg",
+        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "page": 10,
+        "crop_pdf_points": [
+          685.0169491525425,
+          680.6988764044944,
+          872.3262711864406,
+          785.0786516853932
+        ],
+        "note": "同类图例；清单与定位图深度存在800/1000冲突，以原图记录为准",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/网页模型",
+      "type_name": "1.8米中岛桌",
+      "product_image": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/平面图.png"
+      },
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列A__asset-408124.skp",
+        "preview": "预览/asset-408124.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-408124",
         "label": "1800mm普通中岛桌",
         "file": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/平面图例.png",
@@ -831,37 +873,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-island",
-        "label": "SI1.0中岛桌",
-        "file": "_图例来源/si1-island.png",
-        "context": "_图例来源/PDF-201-p10.jpg",
-        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
-        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
-        "page": 10,
-        "crop_pdf_points": [
-          685.0169491525425,
-          680.6988764044944,
-          872.3262711864406,
-          785.0786516853932
-        ],
-        "note": "同类图例；清单与定位图深度存在800/1000冲突，以原图记录为准",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124/网页模型",
-      "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      },
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列A__asset-408124",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列A__asset-408124.skp",
-        "preview": "预览/asset-408124.jpg"
       }
     },
     {
@@ -895,7 +910,40 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-island",
+        "label": "SI1.0中岛桌",
+        "file": "_图例来源/si1-island.png",
+        "context": "_图例来源/PDF-201-p10.jpg",
+        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "page": 10,
+        "crop_pdf_points": [
+          685.0169491525425,
+          680.6988764044944,
+          872.3262711864406,
+          785.0786516853932
+        ],
+        "note": "同类图例；清单与定位图深度存在800/1000冲突，以原图记录为准",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/网页模型",
+      "type_name": "1.8米中岛桌",
+      "product_image": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/平面图.png"
+      },
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列B__asset-408125.skp",
+        "preview": "预览/asset-408125.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-408125",
         "label": "1800mm普通中岛桌",
         "file": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/平面图例.png",
@@ -1319,37 +1367,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-island",
-        "label": "SI1.0中岛桌",
-        "file": "_图例来源/si1-island.png",
-        "context": "_图例来源/PDF-201-p10.jpg",
-        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
-        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
-        "page": 10,
-        "crop_pdf_points": [
-          685.0169491525425,
-          680.6988764044944,
-          872.3262711864406,
-          785.0786516853932
-        ],
-        "note": "同类图例；清单与定位图深度存在800/1000冲突，以原图记录为准",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125/网页模型",
-      "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      },
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm普通中岛桌_产品陈列B__asset-408125",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm普通中岛桌_产品陈列B__asset-408125.skp",
-        "preview": "预览/asset-408125.jpg"
       }
     },
     {
@@ -1399,7 +1420,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_双面侧招_影石Insta360_600mm方牌__asset-568756.skp",
         "preview": "预览/asset-568756.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 6,
@@ -1435,7 +1458,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 10,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-stool",
+        "label": "培训坐凳（单凳图例）",
+        "file": "_图例来源/si1-stool.png",
+        "context": "_图例来源/si1-stool-source-p1.jpg",
+        "source_pdf": "各门店图纸/上海五角场万达授权体验店.pdf",
+        "source_sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+        "page": 1,
+        "crop_pdf_points": [
+          422,
+          234.535274356103,
+          448,
+          258.521836506159
+        ],
+        "note": "原图单个450方凳；模型为4件组合且高350变体，不作为组合占地",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/网页模型",
+      "type_name": "培训坐凳",
+      "product_image": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/平面图.svg",
+        "png": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
+        "preview": "预览/asset-569180.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-569180",
         "label": "培训坐凳",
         "file": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/平面图例.png",
@@ -1468,38 +1525,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-stool",
-        "label": "培训坐凳（单凳图例）",
-        "file": "_图例来源/si1-stool.png",
-        "context": "_图例来源/si1-stool-source-p1.jpg",
-        "source_pdf": "各门店图纸/上海五角场万达授权体验店.pdf",
-        "source_sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
-        "page": 1,
-        "crop_pdf_points": [
-          422,
-          234.535274356103,
-          448,
-          258.521836506159
-        ],
-        "note": "原图单个450方凳；模型为4件组合且高350变体，不作为组合占地",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/网页模型",
-      "type_name": "培训坐凳",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/培训坐凳.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/培训坐凳.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/培训坐凳平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/培训坐凳平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
-        "preview": "预览/asset-569180.jpg"
       }
     },
     {
@@ -1544,7 +1573,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_KV画面_AcePro2_1200x1500_平面__asset-569211.skp",
         "preview": "预览/asset-569211.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 8,
@@ -1580,7 +1611,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 9,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-storage-unbox",
+        "label": "SI1.0 1.8米开箱储物柜及2凳",
+        "file": "_图例来源/si1-storage-unbox.png",
+        "context": "_图例来源/PDF-201-p10.jpg",
+        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "page": 10,
+        "crop_pdf_points": [
+          957.9533898305084,
+          444.2831460674157,
+          1144.3707627118645,
+          557.5842696629213
+        ],
+        "note": "同用途图例；原图双垫简化为台面轮廓",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/网页模型",
+      "type_name": "1.8米储物柜+开箱桌",
+      "product_image": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm开箱储物柜_含2把白色高脚凳__asset-666964.skp",
+        "preview": "预览/asset-666964.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-666964",
         "label": "1800mm开箱储物柜",
         "file": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/平面图例.png",
@@ -1613,38 +1678,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-storage-unbox",
-        "label": "SI1.0 1.8米开箱储物柜及2凳",
-        "file": "_图例来源/si1-storage-unbox.png",
-        "context": "_图例来源/PDF-201-p10.jpg",
-        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
-        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
-        "page": 10,
-        "crop_pdf_points": [
-          957.9533898305084,
-          444.2831460674157,
-          1144.3707627118645,
-          557.5842696629213
-        ],
-        "note": "同用途图例；原图双垫简化为台面轮廓",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964/网页模型",
-      "type_name": "1.8米储物柜+开箱桌",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米储物柜+开箱桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米储物柜+开箱桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米储物柜+开箱桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米储物柜+开箱桌平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm开箱储物柜_含2把白色高脚凳__asset-666964",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm开箱储物柜_含2把白色高脚凳__asset-666964.skp",
-        "preview": "预览/asset-666964.jpg"
       }
     },
     {
@@ -1681,7 +1718,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 7,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-storage",
+        "label": "SI1.0 1.8米边桌储物柜",
+        "file": "_图例来源/si1-storage.png",
+        "context": "_图例来源/PDF-201-p10.jpg",
+        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "page": 10,
+        "crop_pdf_points": [
+          775.9957627118644,
+          444.2831460674157,
+          961.521186440678,
+          500.4876404494382
+        ],
+        "note": "同用途和名义长度，产品陈列不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/网页模型",
+      "type_name": "1.8米边桌+储物柜",
+      "product_image": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm边桌储物柜_带托盘及背面画面__asset-752992.skp",
+        "preview": "预览/asset-752992.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-752992",
         "label": "1800mm边桌储物柜",
         "file": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/平面图例.png",
@@ -1714,38 +1785,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-storage",
-        "label": "SI1.0 1.8米边桌储物柜",
-        "file": "_图例来源/si1-storage.png",
-        "context": "_图例来源/PDF-201-p10.jpg",
-        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
-        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
-        "page": 10,
-        "crop_pdf_points": [
-          775.9957627118644,
-          444.2831460674157,
-          961.521186440678,
-          500.4876404494382
-        ],
-        "note": "同用途和名义长度，产品陈列不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992/网页模型",
-      "type_name": "1.8米边桌+储物柜",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米边桌+储物柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米边桌+储物柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米边桌+储物柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米边桌+储物柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm边桌储物柜_带托盘及背面画面__asset-752992",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm边桌储物柜_带托盘及背面画面__asset-752992.skp",
-        "preview": "预览/asset-752992.jpg"
       }
     },
     {
@@ -1790,7 +1833,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_KV画面_AcePro2_1700x980_平面__asset-754006.skp",
         "preview": "预览/asset-754006.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 11,
@@ -1834,7 +1879,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_轨道射灯_单灯_灰色__asset-754909.skp",
         "preview": "预览/asset-754909.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 12,
@@ -1878,7 +1925,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_轨道射灯组合_1500mm轨道__asset-775543.skp",
         "preview": "预览/asset-775543.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 13,
@@ -1909,7 +1958,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_旋转实例A__asset-957634",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_旋转实例A__asset-957634.skp",
+        "preview": "预览/asset-957634.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-957634",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_旋转实例A__asset-957634/平面图例.png",
@@ -1942,36 +2022,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_旋转实例A__asset-957634",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_旋转实例A__asset-957634.skp",
-        "preview": "预览/asset-957634.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 14,
@@ -2007,7 +2059,41 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 1,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "water-sign",
+        "label": "电子水牌",
+        "file": "_图例来源/water-sign.png",
+        "context": "_图例来源/PDF-342-p11.jpg",
+        "source_pdf": "各门店图纸/西安开元商场.pdf",
+        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "page": 11,
+        "crop_pdf_points": [
+          677.5074152542372,
+          700.7205992509363,
+          712.833686440678,
+          725.3183520599251
+        ],
+        "note": "同类落地屏平面符号，具体型号与高度仍以模型为准",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": "电子水牌",
+      "product_image": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185/平面图.svg",
+        "png": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185/平面图.png"
+      },
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_电子水牌_43寸_H1650_旋转实例__asset-958185.skp",
+        "preview": "预览/asset-958185.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-958185",
         "label": "电子水牌",
         "file": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185/平面图例.png",
@@ -2040,38 +2126,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "water-sign",
-        "label": "电子水牌",
-        "file": "_图例来源/water-sign.png",
-        "context": "_图例来源/PDF-342-p11.jpg",
-        "source_pdf": "各门店图纸/西安开元商场.pdf",
-        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
-        "page": 11,
-        "crop_pdf_points": [
-          677.5074152542372,
-          700.7205992509363,
-          712.833686440678,
-          725.3183520599251
-        ],
-        "note": "同类落地屏平面符号，具体型号与高度仍以模型为准",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": "电子水牌",
-      "product_image": "信息化物料/品类图库/01_道具图片PNG/电子水牌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "信息化物料/品类图库/01_道具图片PNG/电子水牌.png",
+      "plan_symbol_source": {
         "svg": "信息化物料/品类图库/03_平面图SVG/电子水牌平面图.svg",
         "png": "信息化物料/品类图库/02_平面图PNG/电子水牌平面图.png"
-      },
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/电子水牌_43寸_H1650_旋转实例__asset-958185",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_电子水牌_43寸_H1650_旋转实例__asset-958185.skp",
-        "preview": "预览/asset-958185.jpg"
       }
     },
     {
@@ -2116,7 +2174,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_吊挂LOGO_影石Insta360始于敢想_1267mm__asset-1129848.skp",
         "preview": "预览/asset-1129848.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 16,
@@ -2160,7 +2220,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_KV灯箱_GO3S竖版_933x1670__asset-1156409.skp",
         "preview": "预览/asset-1156409.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 17,
@@ -2204,7 +2266,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_橱窗场景道具_柯基犬_带运动相机__asset-1567211.skp",
         "preview": "预览/asset-1567211.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 18,
@@ -2248,7 +2312,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_橱窗模特_头盔赛车服人台__asset-1688589.skp",
         "preview": "预览/asset-1688589.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 19,
@@ -2292,7 +2358,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_产品标识_X5立体字__asset-1688590.skp",
         "preview": "预览/asset-1688590.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 20,
@@ -2336,7 +2404,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_产品放大模型_X3相机__asset-1691382.skp",
         "preview": "预览/asset-1691382.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 21,
@@ -2369,7 +2439,40 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 2,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-unbox",
+        "label": "SI1.0开箱桌及4凳",
+        "file": "_图例来源/si1-unbox.png",
+        "context": "_图例来源/PDF-235-p15.jpg",
+        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+        "page": 15,
+        "crop_pdf_points": [
+          542.9225300934355,
+          289.4691177196717,
+          657.0560701014632,
+          397.31055373288274
+        ],
+        "note": "同类图例；原图操作垫和陈列细节与模型可能不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/网页模型",
+      "type_name": "1.8米开箱桌",
+      "product_image": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/平面图.png"
+      },
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm普通开箱桌_含4把白色高脚凳__asset-1788391.skp",
+        "preview": "预览/asset-1788391.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-1788391",
         "label": "1800mm普通开箱桌",
         "file": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/平面图例.png",
@@ -2402,37 +2505,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-unbox",
-        "label": "SI1.0开箱桌及4凳",
-        "file": "_图例来源/si1-unbox.png",
-        "context": "_图例来源/PDF-235-p15.jpg",
-        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
-        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
-        "page": 15,
-        "crop_pdf_points": [
-          542.9225300934355,
-          289.4691177196717,
-          657.0560701014632,
-          397.31055373288274
-        ],
-        "note": "同类图例；原图操作垫和陈列细节与模型可能不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391/网页模型",
-      "type_name": "1.8米开箱桌",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      },
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm普通开箱桌_含4把白色高脚凳__asset-1788391",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm普通开箱桌_含4把白色高脚凳__asset-1788391.skp",
-        "preview": "预览/asset-1788391.jpg"
       }
     },
     {
@@ -2464,7 +2540,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_滑雪画面B__asset-2245165",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面B__asset-2245165.skp",
+        "preview": "预览/asset-2245165.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2245165",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_滑雪画面B__asset-2245165/平面图例.png",
@@ -2497,36 +2604,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_滑雪画面B__asset-2245165",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面B__asset-2245165.skp",
-        "preview": "预览/asset-2245165.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 23,
@@ -2562,7 +2641,38 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 7,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "edge-cash",
+        "label": "收银边桌储物柜",
+        "file": "_图例来源/edge-cash.png",
+        "context": "_图例来源/edge-cash-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          453.8729714605484,
+          283.3333333333333,
+          602.4980414101847,
+          346.6666666666667
+        ],
+        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/网页模型",
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_边桌收银柜_1800mm变体_带电脑__asset-2360478.skp",
+        "preview": "预览/asset-2360478.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2360478",
         "label": "边桌收银柜",
         "file": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/平面图例.png",
@@ -2595,36 +2705,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "edge-cash",
-        "label": "收银边桌储物柜",
-        "file": "_图例来源/edge-cash.png",
-        "context": "_图例来源/edge-cash-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          453.8729714605484,
-          283.3333333333333,
-          602.4980414101847,
-          346.6666666666667
-        ],
-        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/网页模型",
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_边桌收银柜_1800mm变体_带电脑__asset-2360478.skp",
-        "preview": "预览/asset-2360478.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 24,
@@ -2668,7 +2750,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_LED门头屏_约7000mm_滑雪全景__asset-2463847.skp",
         "preview": "预览/asset-2463847.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 25,
@@ -2699,7 +2783,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen98",
+        "label": "98寸横向广告机",
+        "file": "_图例来源/screen98.png",
+        "context": "_图例来源/screen98-source-p1.jpg",
+        "source_pdf": "各门店图纸/上海五角场万达授权体验店.pdf",
+        "source_sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
+        "page": 1,
+        "crop_pdf_points": [
+          374,
+          158.5778275475924,
+          490.66666666666663,
+          185.89585666293394
+        ],
+        "note": "原图标注98寸横向，门店嵌入条件随原图保留",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
+        "preview": "预览/asset-2500908.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2500908",
         "label": "广告机",
         "file": "信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/平面图例.png",
@@ -2732,36 +2847,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen98",
-        "label": "98寸横向广告机",
-        "file": "_图例来源/screen98.png",
-        "context": "_图例来源/screen98-source-p1.jpg",
-        "source_pdf": "各门店图纸/上海五角场万达授权体验店.pdf",
-        "source_sha256": "491a8c76cc90bc86a7021b9e67ec2f41d7951c070c78ca27d7f9f535f7b1b772",
-        "page": 1,
-        "crop_pdf_points": [
-          374,
-          158.5778275475924,
-          490.66666666666663,
-          185.89585666293394
-        ],
-        "note": "原图标注98寸横向，门店嵌入条件随原图保留",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
-        "preview": "预览/asset-2500908.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 26,
@@ -2805,7 +2892,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_KV灯箱_GO3S横版_2200x1250__asset-2587203.skp",
         "preview": "预览/asset-2587203.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 27,
@@ -2836,7 +2925,41 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 1,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "water-sign",
+        "label": "电子水牌",
+        "file": "_图例来源/water-sign.png",
+        "context": "_图例来源/PDF-342-p11.jpg",
+        "source_pdf": "各门店图纸/西安开元商场.pdf",
+        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "page": 11,
+        "crop_pdf_points": [
+          677.5074152542372,
+          700.7205992509363,
+          712.833686440678,
+          725.3183520599251
+        ],
+        "note": "同类落地屏平面符号，具体型号与高度仍以模型为准",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": "电子水牌",
+      "product_image": "信息化物料/电子水牌_43寸_H1650__asset-2587726/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "信息化物料/电子水牌_43寸_H1650__asset-2587726/平面图.svg",
+        "png": "信息化物料/电子水牌_43寸_H1650__asset-2587726/平面图.png"
+      },
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/电子水牌_43寸_H1650__asset-2587726",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_电子水牌_43寸_H1650__asset-2587726.skp",
+        "preview": "预览/asset-2587726.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2587726",
         "label": "电子水牌",
         "file": "信息化物料/电子水牌_43寸_H1650__asset-2587726/平面图例.png",
@@ -2869,38 +2992,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "water-sign",
-        "label": "电子水牌",
-        "file": "_图例来源/water-sign.png",
-        "context": "_图例来源/PDF-342-p11.jpg",
-        "source_pdf": "各门店图纸/西安开元商场.pdf",
-        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
-        "page": 11,
-        "crop_pdf_points": [
-          677.5074152542372,
-          700.7205992509363,
-          712.833686440678,
-          725.3183520599251
-        ],
-        "note": "同类落地屏平面符号，具体型号与高度仍以模型为准",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": "电子水牌",
-      "product_image": "信息化物料/品类图库/01_道具图片PNG/电子水牌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "信息化物料/品类图库/01_道具图片PNG/电子水牌.png",
+      "plan_symbol_source": {
         "svg": "信息化物料/品类图库/03_平面图SVG/电子水牌平面图.svg",
         "png": "信息化物料/品类图库/02_平面图PNG/电子水牌平面图.png"
-      },
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/电子水牌_43寸_H1650__asset-2587726",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_电子水牌_43寸_H1650__asset-2587726.skp",
-        "preview": "预览/asset-2587726.jpg"
       }
     },
     {
@@ -2932,7 +3027,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75v",
+        "label": "75寸竖向广告机",
+        "file": "_图例来源/screen75v.png",
+        "context": "_图例来源/screen75v-source-p8.jpg",
+        "source_pdf": "各门店图纸/乌鲁木齐德汇万达（边厅改中岛）.pdf",
+        "source_sha256": "05b7f2398df0f71834caae2353e81024be14ba49276e03653ca3bad25f9e844a",
+        "page": 8,
+        "crop_pdf_points": [
+          894.4163402350307,
+          238.66666666666666,
+          1024.3799664241747,
+          335.33333333333337
+        ],
+        "note": "原图明确75寸竖向，保留引线和标注",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
+        "preview": "预览/asset-2595839.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2595839",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/平面图例.png",
@@ -2965,36 +3091,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75v",
-        "label": "75寸竖向广告机",
-        "file": "_图例来源/screen75v.png",
-        "context": "_图例来源/screen75v-source-p8.jpg",
-        "source_pdf": "各门店图纸/乌鲁木齐德汇万达（边厅改中岛）.pdf",
-        "source_sha256": "05b7f2398df0f71834caae2353e81024be14ba49276e03653ca3bad25f9e844a",
-        "page": 8,
-        "crop_pdf_points": [
-          894.4163402350307,
-          238.66666666666666,
-          1024.3799664241747,
-          335.33333333333337
-        ],
-        "note": "原图明确75寸竖向，保留引线和标注",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
-        "preview": "预览/asset-2595839.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 29,
@@ -3025,7 +3123,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-cab1200",
+        "label": "SI1.0 1.2米配件柜",
+        "file": "_图例来源/si1-cab1200.png",
+        "context": "_图例来源/PDF-235-p15.jpg",
+        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+        "page": 15,
+        "crop_pdf_points": [
+          681.0178077827067,
+          305.2354095344686,
+          710.024121817896,
+          374.60709351957513
+        ],
+        "note": "同规格平面符号",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/网页模型",
+      "type_name": "1.2米配件柜",
+      "product_image": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/平面图.svg",
+        "png": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1200mm配件柜_浅灰款__asset-2595882.skp",
+        "preview": "预览/asset-2595882.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2595882",
         "label": "1200mm配件柜",
         "file": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/平面图例.png",
@@ -3058,38 +3190,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-cab1200",
-        "label": "SI1.0 1.2米配件柜",
-        "file": "_图例来源/si1-cab1200.png",
-        "context": "_图例来源/PDF-235-p15.jpg",
-        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
-        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
-        "page": 15,
-        "crop_pdf_points": [
-          681.0178077827067,
-          305.2354095344686,
-          710.024121817896,
-          374.60709351957513
-        ],
-        "note": "同规格平面符号",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882/网页模型",
-      "type_name": "1.2米配件柜",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1200mm配件柜_浅灰款__asset-2595882",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1200mm配件柜_浅灰款__asset-2595882.skp",
-        "preview": "预览/asset-2595882.jpg"
       }
     },
     {
@@ -3121,7 +3225,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen55v",
+        "label": "55寸竖向广告机",
+        "file": "_图例来源/screen55v.png",
+        "context": "_图例来源/screen55v-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          163.9541130386122,
+          252,
+          219.27196418578623,
+          328
+        ],
+        "note": "同方向同尺寸图例，文字及靠墙关系保留",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_55寸竖屏__asset-2597250",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_55寸竖屏__asset-2597250.skp",
+        "preview": "预览/asset-2597250.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2597250",
         "label": "广告机",
         "file": "信息化物料/广告机_55寸竖屏__asset-2597250/平面图例.png",
@@ -3154,36 +3289,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen55v",
-        "label": "55寸竖向广告机",
-        "file": "_图例来源/screen55v.png",
-        "context": "_图例来源/screen55v-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          163.9541130386122,
-          252,
-          219.27196418578623,
-          328
-        ],
-        "note": "同方向同尺寸图例，文字及靠墙关系保留",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_55寸竖屏__asset-2597250",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_55寸竖屏__asset-2597250.skp",
-        "preview": "预览/asset-2597250.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 31,
@@ -3227,7 +3334,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_轨道射灯组合_750mm轨道__asset-2908609.skp",
         "preview": "预览/asset-2908609.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 32,
@@ -3271,7 +3380,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_轨道射灯组合_四轨组合__asset-2932358.skp",
         "preview": "预览/asset-2932358.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 33,
@@ -3302,7 +3413,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen86",
+        "label": "86寸横向广告机",
+        "file": "_图例来源/screen86.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          498.151914952165,
+          346.2277682529407,
+          613.5465990486791,
+          372.08448682920766
+        ],
+        "note": "原图明确86寸横向；边框与嵌入墙条件属门店做法",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_86寸横屏_滑雪画面__asset-2932497",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_86寸横屏_滑雪画面__asset-2932497.skp",
+        "preview": "预览/asset-2932497.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-2932497",
         "label": "广告机",
         "file": "信息化物料/广告机_86寸横屏_滑雪画面__asset-2932497/平面图例.png",
@@ -3335,36 +3477,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen86",
-        "label": "86寸横向广告机",
-        "file": "_图例来源/screen86.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          498.151914952165,
-          346.2277682529407,
-          613.5465990486791,
-          372.08448682920766
-        ],
-        "note": "原图明确86寸横向；边框与嵌入墙条件属门店做法",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_86寸横屏_滑雪画面__asset-2932497",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_86寸横屏_滑雪画面__asset-2932497.skp",
-        "preview": "预览/asset-2932497.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 34,
@@ -3395,7 +3509,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen65",
+        "label": "65寸横向广告机",
+        "file": "_图例来源/screen65.png",
+        "context": "_图例来源/screen65-source-p10.jpg",
+        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
+        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
+        "page": 10,
+        "crop_pdf_points": [
+          462.02966101694915,
+          437.14606741573033,
+          622.5805084745763,
+          496.9191011235955
+        ],
+        "note": "原图标注原有设备，同规格平面参考",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
+        "preview": "预览/asset-3021147.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-3021147",
         "label": "广告机",
         "file": "信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/平面图例.png",
@@ -3428,36 +3573,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen65",
-        "label": "65寸横向广告机",
-        "file": "_图例来源/screen65.png",
-        "context": "_图例来源/screen65-source-p10.jpg",
-        "source_pdf": "各门店图纸/昆山商厦家电市场照材专卖店（扩店）.pdf",
-        "source_sha256": "4205c229ec4e1bf321c9afad265736bc77f059b2866e202864ce7d2a8115bfb3",
-        "page": 10,
-        "crop_pdf_points": [
-          462.02966101694915,
-          437.14606741573033,
-          622.5805084745763,
-          496.9191011235955
-        ],
-        "note": "原图标注原有设备，同规格平面参考",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
-        "preview": "预览/asset-3021147.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 35,
@@ -3501,7 +3618,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_LOGO画面_Insta360_500x100_平面__asset-3147733.skp",
         "preview": "预览/asset-3147733.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 36,
@@ -3545,7 +3664,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_休闲沙发_黑色双人款_2000mm__asset-3356837.skp",
         "preview": "预览/asset-3356837.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 37,
@@ -3594,7 +3715,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_L形挡板_银灰圆角_900mm_用途未定__asset-3356988.skp",
         "preview": "预览/asset-3356988.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 38,
@@ -3625,7 +3748,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-cab2400",
+        "label": "SI2.0 2.4米配件柜",
+        "file": "_图例来源/si2-cab2400.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          250.96767360881222,
+          364.5166667581051,
+          288.1714242191638,
+          537.3152250482796
+        ],
+        "note": "同规格外轮廓，场景产品布局不在俯视图中表达",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/网页模型",
+      "type_name": "2.4米配件柜(场景)",
+      "product_image": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/平面图.svg",
+        "png": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_2.4米配件柜(场景)_陈列变体A__asset-6799167.skp",
+        "preview": "预览/asset-6799167.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-6799167",
         "label": "2.4米配件柜(场景)",
         "file": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/平面图例.png",
@@ -3658,38 +3815,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-cab2400",
-        "label": "SI2.0 2.4米配件柜",
-        "file": "_图例来源/si2-cab2400.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          250.96767360881222,
-          364.5166667581051,
-          288.1714242191638,
-          537.3152250482796
-        ],
-        "note": "同规格外轮廓，场景产品布局不在俯视图中表达",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167/网页模型",
-      "type_name": "2.4米配件柜(场景)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(场景).png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(场景).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(场景)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(场景)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/2.4米配件柜(场景)_陈列变体A__asset-6799167",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_2.4米配件柜(场景)_陈列变体A__asset-6799167.skp",
-        "preview": "预览/asset-6799167.jpg"
       }
     },
     {
@@ -3734,7 +3863,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影石Insta360始于敢想_1267mm_A__asset-6952129.skp",
         "preview": "预览/asset-6952129.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 40,
@@ -3778,7 +3909,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_KV灯箱_水下画面_933x2300_A__asset-11478950.skp",
         "preview": "预览/asset-11478950.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 41,
@@ -3809,7 +3942,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_无人机画面__asset-11479197",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
+        "preview": "预览/asset-11479197.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-11479197",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/平面图例.png",
@@ -3842,36 +4006,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_无人机画面__asset-11479197",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
-        "preview": "预览/asset-11479197.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 42,
@@ -3902,7 +4038,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_建筑画面__asset-11479198",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_建筑画面__asset-11479198.skp",
+        "preview": "预览/asset-11479198.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-11479198",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_建筑画面__asset-11479198/平面图例.png",
@@ -3935,36 +4102,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_建筑画面__asset-11479198",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_建筑画面__asset-11479198.skp",
-        "preview": "预览/asset-11479198.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 43,
@@ -4008,7 +4147,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影翎ANTIGRAVITY_3155mm__asset-11483499.skp",
         "preview": "预览/asset-11483499.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 44,
@@ -4052,7 +4193,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_曲面LED屏_冰川画面_长条弯折款__asset-11511980.skp",
         "preview": "预览/asset-11511980.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 45,
@@ -4083,7 +4226,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen86",
+        "label": "86寸横向广告机",
+        "file": "_图例来源/screen86.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          498.151914952165,
+          346.2277682529407,
+          613.5465990486791,
+          372.08448682920766
+        ],
+        "note": "原图明确86寸横向；边框与嵌入墙条件属门店做法",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
+        "preview": "预览/asset-11525433.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-11525433",
         "label": "广告机",
         "file": "信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/平面图例.png",
@@ -4116,36 +4290,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen86",
-        "label": "86寸横向广告机",
-        "file": "_图例来源/screen86.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          498.151914952165,
-          346.2277682529407,
-          613.5465990486791,
-          372.08448682920766
-        ],
-        "note": "原图明确86寸横向；边框与嵌入墙条件属门店做法",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
-        "preview": "预览/asset-11525433.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 46,
@@ -4189,7 +4335,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_KV灯箱_水下画面_933x2300_B__asset-11525436.skp",
         "preview": "预览/asset-11525436.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 47,
@@ -4233,7 +4381,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_LED门头屏_4614mm_落日画面__asset-11525629.skp",
         "preview": "预览/asset-11525629.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 48,
@@ -4264,7 +4414,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-cab3600",
+        "label": "SI2.0 3.6米配件柜",
+        "file": "_图例来源/si2-cab3600.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          620.482891535355,
+          332.35343145591935,
+          827.941094091383,
+          361.99406006773756
+        ],
+        "note": "同规格外轮廓；不表达柜面陈列版本",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/网页模型",
+      "type_name": "3.6米配件柜",
+      "product_image": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/平面图.svg",
+        "png": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_3.6米配件柜_陈列变体A__asset-15903179.skp",
+        "preview": "预览/asset-15903179.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-15903179",
         "label": "3.6米配件柜",
         "file": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/平面图例.png",
@@ -4297,38 +4481,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-cab3600",
-        "label": "SI2.0 3.6米配件柜",
-        "file": "_图例来源/si2-cab3600.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          620.482891535355,
-          332.35343145591935,
-          827.941094091383,
-          361.99406006773756
-        ],
-        "note": "同规格外轮廓；不表达柜面陈列版本",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179/网页模型",
-      "type_name": "3.6米配件柜",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/3.6米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/3.6米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/3.6米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/3.6米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/3.6米配件柜_陈列变体A__asset-15903179",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_3.6米配件柜_陈列变体A__asset-15903179.skp",
-        "preview": "预览/asset-15903179.jpg"
       }
     },
     {
@@ -4360,7 +4516,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 10,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-stool",
+        "label": "字母凳（4件图例）",
+        "file": "_图例来源/si2-stool.png",
+        "context": "_图例来源/si2-stool-source-p13.jpg",
+        "source_pdf": "各门店图纸/深圳卓悦中心.pdf",
+        "source_sha256": "5dcc5a29caef217c9b112e09985a41a63471456e23e6569f9cb3ee2cf44a1820",
+        "page": 13,
+        "crop_pdf_points": [
+          688.4739787353105,
+          408.66666666666663,
+          747.1242305540011,
+          460.66666666666663
+        ],
+        "note": "原图文字为子母凳4个；对应标准字母凳用途，模型排布方向不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/网页模型",
+      "type_name": "字母凳",
+      "product_image": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/平面图.svg",
+        "png": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/字母凳_4件组合__asset-15903874",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_字母凳_4件组合__asset-15903874.skp",
+        "preview": "预览/asset-15903874.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-15903874",
         "label": "字母凳",
         "file": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/平面图例.png",
@@ -4393,38 +4583,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-stool",
-        "label": "字母凳（4件图例）",
-        "file": "_图例来源/si2-stool.png",
-        "context": "_图例来源/si2-stool-source-p13.jpg",
-        "source_pdf": "各门店图纸/深圳卓悦中心.pdf",
-        "source_sha256": "5dcc5a29caef217c9b112e09985a41a63471456e23e6569f9cb3ee2cf44a1820",
-        "page": 13,
-        "crop_pdf_points": [
-          688.4739787353105,
-          408.66666666666663,
-          747.1242305540011,
-          460.66666666666663
-        ],
-        "note": "原图文字为子母凳4个；对应标准字母凳用途，模型排布方向不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/字母凳_4件组合__asset-15903874/网页模型",
-      "type_name": "字母凳",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/字母凳.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/字母凳.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/字母凳平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/字母凳平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/字母凳_4件组合__asset-15903874",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_字母凳_4件组合__asset-15903874.skp",
-        "preview": "预览/asset-15903874.jpg"
       }
     },
     {
@@ -4463,7 +4625,40 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 2,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-unbox",
+        "label": "SI2.0 1.8米开箱桌及4凳",
+        "file": "_图例来源/si2-unbox.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          683.5400959596795,
+          382.80556526326956,
+          790.7373434810314,
+          460.37572099207046
+        ],
+        "note": "同类俯视图；普通和亮脚共用平面表达，桌腿差异由模型确认",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/网页模型",
+      "type_name": "1.8米开箱桌",
+      "product_image": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/平面图.png"
+      },
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753.skp",
+        "preview": "预览/asset-16469753.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-16469753",
         "label": "1.8米普通开箱桌",
         "file": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/平面图例.png",
@@ -4496,37 +4691,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-unbox",
-        "label": "SI2.0 1.8米开箱桌及4凳",
-        "file": "_图例来源/si2-unbox.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          683.5400959596795,
-          382.80556526326956,
-          790.7373434810314,
-          460.37572099207046
-        ],
-        "note": "同类俯视图；普通和亮脚共用平面表达，桌腿差异由模型确认",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753/网页模型",
-      "type_name": "1.8米开箱桌",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      },
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米普通开箱桌_含4把黑色高脚凳__asset-16469753.skp",
-        "preview": "预览/asset-16469753.jpg"
       }
     },
     {
@@ -4558,7 +4726,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 12,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "flight",
+        "label": "圆形试飞台",
+        "file": "_图例来源/flight.png",
+        "context": "_图例来源/flight-source-p6.jpg",
+        "source_pdf": "各门店图纸/佛山禅西环宇城授权体验店.pdf",
+        "source_sha256": "5aad0140601a0bae5aee0478550eea7388a2d7ec9f8407599d9db083bf82d109",
+        "page": 6,
+        "crop_pdf_points": [
+          837.5402542372881,
+          318.4921348314607,
+          891.949152542373,
+          383.6179775280899
+        ],
+        "note": "同类圆形图例；原图H600+320，模型总高921。文件名佛山而图签广州，保留该来源冲突",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684/网页模型",
+      "type_name": "试飞台",
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684/平面图.svg",
+        "png": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_试飞台_直径800_H921变体__asset-16510684.skp",
+        "preview": "预览/asset-16510684.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-16510684",
         "label": "试飞台",
         "file": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684/平面图例.png",
@@ -4591,38 +4793,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "flight",
-        "label": "圆形试飞台",
-        "file": "_图例来源/flight.png",
-        "context": "_图例来源/flight-source-p6.jpg",
-        "source_pdf": "各门店图纸/佛山禅西环宇城授权体验店.pdf",
-        "source_sha256": "5aad0140601a0bae5aee0478550eea7388a2d7ec9f8407599d9db083bf82d109",
-        "page": 6,
-        "crop_pdf_points": [
-          837.5402542372881,
-          318.4921348314607,
-          891.949152542373,
-          383.6179775280899
-        ],
-        "note": "同类圆形图例；原图H600+320，模型总高921。文件名佛山而图签广州，保留该来源冲突",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684/网页模型",
-      "type_name": "试飞台",
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": {
+      "product_image_source": null,
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/试飞台平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/试飞台平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/试飞台_直径800_H921变体__asset-16510684",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_试飞台_直径800_H921变体__asset-16510684.skp",
-        "preview": "预览/asset-16510684.jpg"
       }
     },
     {
@@ -4667,7 +4841,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影石Insta360_3453mm__asset-20533337.skp",
         "preview": "预览/asset-20533337.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 53,
@@ -4700,7 +4876,40 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-island",
+        "label": "SI2.0 1.8米中岛桌",
+        "file": "_图例来源/si2-island.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          320.9611705198126,
+          397.31055373288274,
+          427.5278459969213,
+          445.8707325224573
+        ],
+        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/网页模型",
+      "type_name": "1.8米中岛桌",
+      "product_image": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/平面图.png"
+      },
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列A__asset-24312623.skp",
+        "preview": "预览/asset-24312623.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-24312623",
         "label": "1.8米普通中岛桌",
         "file": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/平面图例.png",
@@ -5735,37 +5944,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-island",
-        "label": "SI2.0 1.8米中岛桌",
-        "file": "_图例来源/si2-island.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          320.9611705198126,
-          397.31055373288274,
-          427.5278459969213,
-          445.8707325224573
-        ],
-        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623/网页模型",
-      "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      },
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列A__asset-24312623",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列A__asset-24312623.skp",
-        "preview": "预览/asset-24312623.jpg"
       }
     },
     {
@@ -5802,7 +5984,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 4,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-cash-left",
+        "label": "SI2.0 1.8米收银桌左款",
+        "file": "_图例来源/si2-cash-left.png",
+        "context": "_图例来源/PDF-342-p11.jpg",
+        "source_pdf": "各门店图纸/西安开元商场.pdf",
+        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "page": 11,
+        "crop_pdf_points": [
+          473.1197033898305,
+          261.114606741573,
+          580.3601694915254,
+          299.5880149812734
+        ],
+        "note": "左侧收银挡板，右侧操作垫，与已命名左款对应",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/网页模型",
+      "type_name": "1.8米收银桌(左)",
+      "product_image": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米收银桌(左)_带电脑__asset-24432224.skp",
+        "preview": "预览/asset-24432224.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-24432224",
         "label": "1.8米收银桌(左)",
         "file": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/平面图例.png",
@@ -5835,38 +6051,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-cash-left",
-        "label": "SI2.0 1.8米收银桌左款",
-        "file": "_图例来源/si2-cash-left.png",
-        "context": "_图例来源/PDF-342-p11.jpg",
-        "source_pdf": "各门店图纸/西安开元商场.pdf",
-        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
-        "page": 11,
-        "crop_pdf_points": [
-          473.1197033898305,
-          261.114606741573,
-          580.3601694915254,
-          299.5880149812734
-        ],
-        "note": "左侧收银挡板，右侧操作垫，与已命名左款对应",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224/网页模型",
-      "type_name": "1.8米收银桌(左)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米收银桌(左).png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米收银桌(左).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米收银桌(左)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米收银桌(左)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米收银桌(左)_带电脑__asset-24432224",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米收银桌(左)_带电脑__asset-24432224.skp",
-        "preview": "预览/asset-24432224.jpg"
       }
     },
     {
@@ -5898,7 +6086,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-cab1200",
+        "label": "1.2米配件柜通用外轮廓",
+        "file": "_图例来源/si1-cab1200.png",
+        "context": "_图例来源/PDF-235-p15.jpg",
+        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+        "page": 15,
+        "crop_pdf_points": [
+          681.0178077827067,
+          305.2354095344686,
+          710.024121817896,
+          374.60709351957513
+        ],
+        "note": "借用SI1门店的1200宽、H2400配件柜俯视符号；仅表达同规格外轮廓，不表达SI2配色、无人机或骑行陈列，也不作为SI2版本判断依据",
+        "status": "跨SI同规格轮廓参考"
+      },
+      "web_model": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/网页模型",
+      "type_name": "1.2米配件柜",
+      "product_image": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/平面图.svg",
+        "png": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.2米配件柜_无人机画面变体__asset-24482600.skp",
+        "preview": "预览/asset-24482600.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-24482600",
         "label": "1.2米配件柜",
         "file": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/平面图例.png",
@@ -5931,38 +6153,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-cab1200",
-        "label": "1.2米配件柜通用外轮廓",
-        "file": "_图例来源/si1-cab1200.png",
-        "context": "_图例来源/PDF-235-p15.jpg",
-        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
-        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
-        "page": 15,
-        "crop_pdf_points": [
-          681.0178077827067,
-          305.2354095344686,
-          710.024121817896,
-          374.60709351957513
-        ],
-        "note": "借用SI1门店的1200宽、H2400配件柜俯视符号；仅表达同规格外轮廓，不表达SI2配色、无人机或骑行陈列，也不作为SI2版本判断依据",
-        "status": "跨SI同规格轮廓参考"
-      },
-      "web_model": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600/网页模型",
-      "type_name": "1.2米配件柜",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.2米配件柜_无人机画面变体__asset-24482600",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.2米配件柜_无人机画面变体__asset-24482600.skp",
-        "preview": "预览/asset-24482600.jpg"
       }
     },
     {
@@ -6007,7 +6201,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_消防栓箱_红色设备箱__asset-24488049.skp",
         "preview": "预览/asset-24488049.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 57,
@@ -6047,11 +6243,11 @@
       "plan_legend_missing_reason": "本轮未找到可确认的同规格、同用途平面图例；不使用相近尺寸冒充",
       "web_model": "软装道具/SI1.0/收银台_白色圆角_约1942mm变体__asset-24488377/网页模型",
       "type_name": "1.8米收银台",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米收银台.png",
+      "product_image": "软装道具/SI1.0/收银台_白色圆角_约1942mm变体__asset-24488377/效果图.png",
       "product_image_match": "exact",
       "plan_symbol": {
-        "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米收银台平面图.svg",
-        "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米收银台平面图.png"
+        "svg": "软装道具/SI1.0/收银台_白色圆角_约1942mm变体__asset-24488377/平面图.svg",
+        "png": "软装道具/SI1.0/收银台_白色圆角_约1942mm变体__asset-24488377/平面图.png"
       },
       "category": "软装道具",
       "category_si": "SI1.0",
@@ -6059,6 +6255,11 @@
       "migrated_from_20261010": {
         "named_skp": "SI1.0/SI1.0_收银台_白色圆角_约1942mm变体__asset-24488377.skp",
         "preview": "预览/asset-24488377.jpg"
+      },
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米收银台.png",
+      "plan_symbol_source": {
+        "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米收银台平面图.svg",
+        "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米收银台平面图.png"
       }
     },
     {
@@ -6095,7 +6296,38 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 7,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "edge-cash",
+        "label": "收银边桌储物柜",
+        "file": "_图例来源/edge-cash.png",
+        "context": "_图例来源/edge-cash-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          453.8729714605484,
+          283.3333333333333,
+          602.4980414101847,
+          346.6666666666667
+        ],
+        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/边桌收银柜_1800mm变体_带背面画面__asset-24498456/网页模型",
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/边桌收银柜_1800mm变体_带背面画面__asset-24498456",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_边桌收银柜_1800mm变体_带背面画面__asset-24498456.skp",
+        "preview": "预览/asset-24498456.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-24498456",
         "label": "边桌收银柜",
         "file": "软装道具/SI1.0/边桌收银柜_1800mm变体_带背面画面__asset-24498456/平面图例.png",
@@ -6128,36 +6360,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "edge-cash",
-        "label": "收银边桌储物柜",
-        "file": "_图例来源/edge-cash.png",
-        "context": "_图例来源/edge-cash-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          453.8729714605484,
-          283.3333333333333,
-          602.4980414101847,
-          346.6666666666667
-        ],
-        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/边桌收银柜_1800mm变体_带背面画面__asset-24498456/网页模型",
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/边桌收银柜_1800mm变体_带背面画面__asset-24498456",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_边桌收银柜_1800mm变体_带背面画面__asset-24498456.skp",
-        "preview": "预览/asset-24498456.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 59,
@@ -6206,7 +6410,9 @@
       "migrated_from_20261010": {
         "named_skp": "非标/非标_中岛陈列柜组合_白色_带配件柜及产品屏__asset-28034994.skp",
         "preview": "预览/asset-28034994.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 60,
@@ -6250,7 +6456,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_广告机_横屏_1142x645非标规格__asset-28104668.skp",
         "preview": "预览/asset-28104668.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 61,
@@ -6281,7 +6489,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_单板滑雪画面__asset-28115483",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_单板滑雪画面__asset-28115483.skp",
+        "preview": "预览/asset-28115483.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-28115483",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_单板滑雪画面__asset-28115483/平面图例.png",
@@ -6314,36 +6553,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_单板滑雪画面__asset-28115483",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_单板滑雪画面__asset-28115483.skp",
-        "preview": "预览/asset-28115483.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 62,
@@ -6383,11 +6594,11 @@
       "plan_legend_missing_reason": "本轮未找到可确认的同规格、同用途平面图例；不使用相近尺寸冒充",
       "web_model": "软装道具/SI2.0/1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911/网页模型",
       "type_name": "1.8米配件边柜(H1.3米)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米配件边柜(H1.3米).png",
+      "product_image": "软装道具/SI2.0/1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911/效果图.png",
       "product_image_match": "exact",
       "plan_symbol": {
-        "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米配件边柜(H1.3米)平面图.svg",
-        "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米配件边柜(H1.3米)平面图.png"
+        "svg": "软装道具/SI2.0/1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911/平面图.png"
       },
       "category": "软装道具",
       "category_si": "SI2.0",
@@ -6395,6 +6606,11 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_1.8米配件边柜(H1.3米)_背面品牌字__asset-28192911.skp",
         "preview": "预览/asset-28192911.jpg"
+      },
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米配件边柜(H1.3米).png",
+      "plan_symbol_source": {
+        "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米配件边柜(H1.3米)平面图.svg",
+        "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米配件边柜(H1.3米)平面图.png"
       }
     },
     {
@@ -6431,7 +6647,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 8,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "edge-accessory",
+        "label": "带托盘配件边柜",
+        "file": "_图例来源/edge-accessory.png",
+        "context": "_图例来源/edge-accessory-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          745.1247901510912,
+          283.3333333333333,
+          894.4163402350307,
+          346.6666666666667
+        ],
+        "note": "同用途俯视图；平面不区分SI配色及柜门立面，不作为SI版本证据",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/网页模型",
+      "type_name": "1.8米配件边柜(带托盘)",
+      "product_image": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米配件边柜(带托盘)_产品陈列款__asset-33660153.skp",
+        "preview": "预览/asset-33660153.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-33660153",
         "label": "1.8米配件边柜(带托盘)",
         "file": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/平面图例.png",
@@ -6464,38 +6714,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "edge-accessory",
-        "label": "带托盘配件边柜",
-        "file": "_图例来源/edge-accessory.png",
-        "context": "_图例来源/edge-accessory-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          745.1247901510912,
-          283.3333333333333,
-          894.4163402350307,
-          346.6666666666667
-        ],
-        "note": "同用途俯视图；平面不区分SI配色及柜门立面，不作为SI版本证据",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153/网页模型",
-      "type_name": "1.8米配件边柜(带托盘)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米配件边柜(带托盘).png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米配件边柜(带托盘).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米配件边柜(带托盘)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米配件边柜(带托盘)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米配件边柜(带托盘)_产品陈列款__asset-33660153",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米配件边柜(带托盘)_产品陈列款__asset-33660153.skp",
-        "preview": "预览/asset-33660153.jpg"
       }
     },
     {
@@ -6532,7 +6754,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 8,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "edge-cash",
+        "label": "收银边桌储物柜",
+        "file": "_图例来源/edge-cash.png",
+        "context": "_图例来源/edge-cash-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          453.8729714605484,
+          283.3333333333333,
+          602.4980414101847,
+          346.6666666666667
+        ],
+        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/网页模型",
+      "type_name": "1.8米收银边柜",
+      "product_image": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米收银边柜_单操作垫_未配电脑__asset-33819654.skp",
+        "preview": "预览/asset-33819654.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-33819654",
         "label": "1.8米收银边柜",
         "file": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/平面图例.png",
@@ -6565,38 +6821,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "edge-cash",
-        "label": "收银边桌储物柜",
-        "file": "_图例来源/edge-cash.png",
-        "context": "_图例来源/edge-cash-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          453.8729714605484,
-          283.3333333333333,
-          602.4980414101847,
-          346.6666666666667
-        ],
-        "note": "同用途平面位置参考；此图简化了电脑与操作垫，与模型台面细节不同",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654/网页模型",
-      "type_name": "1.8米收银边柜",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米收银边柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米收银边柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米收银边柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米收银边柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米收银边柜_单操作垫_未配电脑__asset-33819654",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米收银边柜_单操作垫_未配电脑__asset-33819654.skp",
-        "preview": "预览/asset-33819654.jpg"
       }
     },
     {
@@ -6641,7 +6869,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影石Insta360全景相机_4673mm__asset-33868332.skp",
         "preview": "预览/asset-33868332.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 66,
@@ -6685,7 +6915,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影石Insta360始于敢想_1266mm_B__asset-33868330.skp",
         "preview": "预览/asset-33868330.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 67,
@@ -6729,7 +6961,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_轨道射灯组合_3690mm轨道__asset-33908345.skp",
         "preview": "预览/asset-33908345.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 68,
@@ -6773,7 +7007,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_吊挂LOGO_影石Insta360_1867mm_短吊杆__asset-33917980.skp",
         "preview": "预览/asset-33917980.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 69,
@@ -6817,7 +7053,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_吊挂LOGO_影石Insta360_1778mm_长吊杆__asset-33937175.skp",
         "preview": "预览/asset-33937175.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 70,
@@ -6850,7 +7088,40 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-island",
+        "label": "SI2.0 1.8米中岛桌",
+        "file": "_图例来源/si2-island.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          320.9611705198126,
+          397.31055373288274,
+          427.5278459969213,
+          445.8707325224573
+        ],
+        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/网页模型",
+      "type_name": "1.8米中岛桌",
+      "product_image": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/平面图.png"
+      },
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
+        "preview": "预览/asset-34276510.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-34276510",
         "label": "1.8米普通中岛桌",
         "file": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/平面图例.png",
@@ -7885,37 +8156,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-island",
-        "label": "SI2.0 1.8米中岛桌",
-        "file": "_图例来源/si2-island.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          320.9611705198126,
-          397.31055373288274,
-          427.5278459969213,
-          445.8707325224573
-        ],
-        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510/网页模型",
-      "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      },
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米普通中岛桌_产品陈列B_旋转实例__asset-34276510.skp",
-        "preview": "预览/asset-34276510.jpg"
       }
     },
     {
@@ -7960,7 +8204,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_Insta360_Thinkbold_1092mm__asset-34293910.skp",
         "preview": "预览/asset-34293910.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 72,
@@ -7996,7 +8242,41 @@
       "material_category": "软装物料",
       "material_si": "SI1.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "edge-accessory",
+        "label": "带托盘配件边柜",
+        "file": "_图例来源/edge-accessory.png",
+        "context": "_图例来源/edge-accessory-source-p6.jpg",
+        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
+        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
+        "page": 6,
+        "crop_pdf_points": [
+          745.1247901510912,
+          283.3333333333333,
+          894.4163402350307,
+          346.6666666666667
+        ],
+        "note": "同用途俯视图；平面不区分SI配色及柜门立面，不作为SI版本证据",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/网页模型",
+      "type_name": "1.8米边桌+配件柜",
+      "product_image": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/平面图.svg",
+        "png": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI1.0",
+      "folder": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268",
+      "migrated_from_20261010": {
+        "named_skp": "SI1.0/SI1.0_1800mm边桌配件柜_带托盘及背面画面__asset-34320268.skp",
+        "preview": "预览/asset-34320268.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-34320268",
         "label": "1800mm边桌配件柜",
         "file": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/平面图例.png",
@@ -8029,38 +8309,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "edge-accessory",
-        "label": "带托盘配件边柜",
-        "file": "_图例来源/edge-accessory.png",
-        "context": "_图例来源/edge-accessory-source-p6.jpg",
-        "source_pdf": "各门店图纸/青岛城阳万象汇授权体验店.pdf",
-        "source_sha256": "e26afb09d3d9b3d70258ce670d243e2a5e5d8a8429a3357850fae4373069f3dd",
-        "page": 6,
-        "crop_pdf_points": [
-          745.1247901510912,
-          283.3333333333333,
-          894.4163402350307,
-          346.6666666666667
-        ],
-        "note": "同用途俯视图；平面不区分SI配色及柜门立面，不作为SI版本证据",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268/网页模型",
-      "type_name": "1.8米边桌+配件柜",
-      "product_image": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米边桌+配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米边桌+配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米边桌+配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米边桌+配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI1.0",
-      "folder": "软装道具/SI1.0/1800mm边桌配件柜_带托盘及背面画面__asset-34320268",
-      "migrated_from_20261010": {
-        "named_skp": "SI1.0/SI1.0_1800mm边桌配件柜_带托盘及背面画面__asset-34320268.skp",
-        "preview": "预览/asset-34320268.jpg"
       }
     },
     {
@@ -8092,7 +8344,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si1-cab1200",
+        "label": "1.2米配件柜通用外轮廓",
+        "file": "_图例来源/si1-cab1200.png",
+        "context": "_图例来源/PDF-235-p15.jpg",
+        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
+        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+        "page": 15,
+        "crop_pdf_points": [
+          681.0178077827067,
+          305.2354095344686,
+          710.024121817896,
+          374.60709351957513
+        ],
+        "note": "借用SI1门店的1200宽、H2400配件柜俯视符号；仅表达同规格外轮廓，不表达SI2配色、无人机或骑行陈列，也不作为SI2版本判断依据",
+        "status": "跨SI同规格轮廓参考"
+      },
+      "web_model": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/网页模型",
+      "type_name": "1.2米配件柜",
+      "product_image": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/平面图.svg",
+        "png": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.2米配件柜_骑行画面款__asset-34327615.skp",
+        "preview": "预览/asset-34327615.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-34327615",
         "label": "1.2米配件柜",
         "file": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/平面图例.png",
@@ -8125,38 +8411,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si1-cab1200",
-        "label": "1.2米配件柜通用外轮廓",
-        "file": "_图例来源/si1-cab1200.png",
-        "context": "_图例来源/PDF-235-p15.jpg",
-        "source_pdf": "各门店图纸/江门汇悦大融城（迁址）.pdf",
-        "source_sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
-        "page": 15,
-        "crop_pdf_points": [
-          681.0178077827067,
-          305.2354095344686,
-          710.024121817896,
-          374.60709351957513
-        ],
-        "note": "借用SI1门店的1200宽、H2400配件柜俯视符号；仅表达同规格外轮廓，不表达SI2配色、无人机或骑行陈列，也不作为SI2版本判断依据",
-        "status": "跨SI同规格轮廓参考"
-      },
-      "web_model": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615/网页模型",
-      "type_name": "1.2米配件柜",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.2米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.2米配件柜_骑行画面款__asset-34327615",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.2米配件柜_骑行画面款__asset-34327615.skp",
-        "preview": "预览/asset-34327615.jpg"
       }
     },
     {
@@ -8188,7 +8446,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-cab3600",
+        "label": "SI2.0 3.6米配件柜",
+        "file": "_图例来源/si2-cab3600.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          620.482891535355,
+          332.35343145591935,
+          827.941094091383,
+          361.99406006773756
+        ],
+        "note": "同规格外轮廓；不表达柜面陈列版本",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/网页模型",
+      "type_name": "3.6米配件柜",
+      "product_image": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/平面图.svg",
+        "png": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_3.6米配件柜_场景与AVBU陈列B__asset-36857093.skp",
+        "preview": "预览/asset-36857093.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-36857093",
         "label": "3.6米配件柜",
         "file": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/平面图例.png",
@@ -8221,38 +8513,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-cab3600",
-        "label": "SI2.0 3.6米配件柜",
-        "file": "_图例来源/si2-cab3600.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          620.482891535355,
-          332.35343145591935,
-          827.941094091383,
-          361.99406006773756
-        ],
-        "note": "同规格外轮廓；不表达柜面陈列版本",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093/网页模型",
-      "type_name": "3.6米配件柜",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/3.6米配件柜.png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/3.6米配件柜.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/3.6米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/3.6米配件柜平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/3.6米配件柜_场景与AVBU陈列B__asset-36857093",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_3.6米配件柜_场景与AVBU陈列B__asset-36857093.skp",
-        "preview": "预览/asset-36857093.jpg"
       }
     },
     {
@@ -8297,7 +8561,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_产品展示台_600mm方台_空台_非标延展__asset-36882381.skp",
         "preview": "预览/asset-36882381.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 76,
@@ -8333,7 +8599,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-avbu2400",
+        "label": "SI2.0 2.4米AVBU配件柜",
+        "file": "_图例来源/si2-avbu2400.png",
+        "context": "_图例来源/PDF-342-p11.jpg",
+        "source_pdf": "各门店图纸/西安开元商场.pdf",
+        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "page": 11,
+        "crop_pdf_points": [
+          393.0047669491525,
+          317.24794007490635,
+          423.2844279661017,
+          456.0044943820225
+        ],
+        "note": "原图明确AVBU；混合陈列型号仅作同外轮廓参考",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/网页模型",
+      "type_name": "2.4米配件柜(AVBU)",
+      "product_image": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/平面图.svg",
+        "png": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885.skp",
+        "preview": "预览/asset-36887885.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-36887885",
         "label": "2.4米配件柜(AVBU)",
         "file": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/平面图例.png",
@@ -8371,38 +8671,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-avbu2400",
-        "label": "SI2.0 2.4米AVBU配件柜",
-        "file": "_图例来源/si2-avbu2400.png",
-        "context": "_图例来源/PDF-342-p11.jpg",
-        "source_pdf": "各门店图纸/西安开元商场.pdf",
-        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
-        "page": 11,
-        "crop_pdf_points": [
-          393.0047669491525,
-          317.24794007490635,
-          423.2844279661017,
-          456.0044943820225
-        ],
-        "note": "原图明确AVBU；混合陈列型号仅作同外轮廓参考",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885/网页模型",
-      "type_name": "2.4米配件柜(AVBU)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(AVBU).png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(AVBU).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(AVBU)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(AVBU)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_2.4米配件柜(AVBU)_带原模型顶部标签__asset-36887885.skp",
-        "preview": "预览/asset-36887885.jpg"
       }
     },
     {
@@ -8439,7 +8711,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-cab2400",
+        "label": "SI2.0 2.4米配件柜",
+        "file": "_图例来源/si2-cab2400.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          250.96767360881222,
+          364.5166667581051,
+          288.1714242191638,
+          537.3152250482796
+        ],
+        "note": "同规格外轮廓，场景产品布局不在俯视图中表达",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/网页模型",
+      "type_name": "2.4米配件柜(场景)",
+      "product_image": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/平面图.svg",
+        "png": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_2.4米配件柜(场景)_带原模型顶部标签__asset-36890994.skp",
+        "preview": "预览/asset-36890994.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-36890994",
         "label": "2.4米配件柜(场景)",
         "file": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/平面图例.png",
@@ -8477,38 +8783,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-cab2400",
-        "label": "SI2.0 2.4米配件柜",
-        "file": "_图例来源/si2-cab2400.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          250.96767360881222,
-          364.5166667581051,
-          288.1714242191638,
-          537.3152250482796
-        ],
-        "note": "同规格外轮廓，场景产品布局不在俯视图中表达",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994/网页模型",
-      "type_name": "2.4米配件柜(场景)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(场景).png",
-      "product_image_match": "exact",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(场景).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(场景)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(场景)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/2.4米配件柜(场景)_带原模型顶部标签__asset-36890994",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_2.4米配件柜(场景)_带原模型顶部标签__asset-36890994.skp",
-        "preview": "预览/asset-36890994.jpg"
       }
     },
     {
@@ -8545,7 +8823,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 6,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-avbu2400",
+        "label": "SI2.0 2.4米AVBU配件柜",
+        "file": "_图例来源/si2-avbu2400.png",
+        "context": "_图例来源/PDF-342-p11.jpg",
+        "source_pdf": "各门店图纸/西安开元商场.pdf",
+        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+        "page": 11,
+        "crop_pdf_points": [
+          393.0047669491525,
+          317.24794007490635,
+          423.2844279661017,
+          456.0044943820225
+        ],
+        "note": "原图明确AVBU；混合陈列型号仅作同外轮廓参考；本模型为AVBU+影石混合陈列，仅外轮廓参考",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/网页模型",
+      "type_name": "2.4米配件柜(AVBU)",
+      "product_image": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/效果图-同类参考.png",
+      "product_image_match": "approximate",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/平面图.svg",
+        "png": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122.skp",
+        "preview": "预览/asset-36929122.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-36929122",
         "label": "2.4米配件柜(AVBU+影石Insta360)",
         "file": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/平面图例.png",
@@ -8583,38 +8895,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-avbu2400",
-        "label": "SI2.0 2.4米AVBU配件柜",
-        "file": "_图例来源/si2-avbu2400.png",
-        "context": "_图例来源/PDF-342-p11.jpg",
-        "source_pdf": "各门店图纸/西安开元商场.pdf",
-        "source_sha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
-        "page": 11,
-        "crop_pdf_points": [
-          393.0047669491525,
-          317.24794007490635,
-          423.2844279661017,
-          456.0044943820225
-        ],
-        "note": "原图明确AVBU；混合陈列型号仅作同外轮廓参考；本模型为AVBU+影石混合陈列，仅外轮廓参考",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122/网页模型",
-      "type_name": "2.4米配件柜(AVBU)",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(AVBU).png",
-      "product_image_match": "approximate",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/2.4米配件柜(AVBU).png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(AVBU)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(AVBU)平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_2.4米配件柜(AVBU+影石Insta360)_混合陈列_带原标签__asset-36929122.skp",
-        "preview": "预览/asset-36929122.jpg"
       }
     },
     {
@@ -8651,7 +8935,41 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 11,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "leica1200",
+        "label": "1.2米徕卡墙平面位置",
+        "file": "_图例来源/leica1200.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          830.463382268356,
+          513.3504614897881,
+          858.8391242593023,
+          603.5336506704266
+        ],
+        "note": "仅为墙面位置符号；对应组合模型中的1.2米部分，非完整组合轮廓",
+        "status": "局部对应（仅1.2米墙面位置）"
+      },
+      "web_model": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/网页模型",
+      "type_name": "1.99米徕卡墙",
+      "product_image": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/效果图-同类参考.png",
+      "product_image_match": "approximate",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/平面图.svg",
+        "png": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/平面图.png"
+      },
+      "category": "软装道具",
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204.skp",
+        "preview": "预览/asset-36929204.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-36929204",
         "label": "徕卡墙画面与标识组合",
         "file": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/平面图例.png",
@@ -8693,38 +9011,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "leica1200",
-        "label": "1.2米徕卡墙平面位置",
-        "file": "_图例来源/leica1200.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          830.463382268356,
-          513.3504614897881,
-          858.8391242593023,
-          603.5336506704266
-        ],
-        "note": "仅为墙面位置符号；对应组合模型中的1.2米部分，非完整组合轮廓",
-        "status": "局部对应（仅1.2米墙面位置）"
-      },
-      "web_model": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204/网页模型",
-      "type_name": "1.99米徕卡墙",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.99米徕卡墙.png",
-      "product_image_match": "approximate",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.99米徕卡墙.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.99米徕卡墙平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.99米徕卡墙平面图.png"
-      },
-      "category": "软装道具",
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_徕卡墙画面与标识组合_1.99米及1.2米_不含背墙__asset-36929204.skp",
-        "preview": "预览/asset-36929204.jpg"
       }
     },
     {
@@ -8769,7 +9059,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_产品展示台_600mm方台_GOULTRA_非标延展__asset-37747693.skp",
         "preview": "预览/asset-37747693.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 81,
@@ -8813,7 +9105,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_产品展示台_600mm方台_X5_非标延展__asset-37747692.skp",
         "preview": "预览/asset-37747692.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 82,
@@ -8857,7 +9151,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_产品展示台_600mm方台_ANTIGRAVITY_非标延展__asset-37747691.skp",
         "preview": "预览/asset-37747691.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 83,
@@ -8901,7 +9197,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_ANTIGRAVITY_2619mm__asset-37760531.skp",
         "preview": "预览/asset-37760531.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 84,
@@ -8945,7 +9243,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068.skp",
         "preview": "预览/asset-40808068.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 85,
@@ -8989,7 +9289,9 @@
       "migrated_from_20261010": {
         "named_skp": "SI2.0/SI2.0_橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228.skp",
         "preview": "预览/asset-40888228.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 86,
@@ -9033,7 +9335,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_影石Insta360_2930mm__asset-40896298.skp",
         "preview": "预览/asset-40896298.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 87,
@@ -9077,7 +9381,9 @@
       "migrated_from_20261010": {
         "named_skp": "通用/通用_墙面LOGO_Insta360_2027mm__asset-40910342.skp",
         "preview": "预览/asset-40910342.jpg"
-      }
+      },
+      "product_image_source": null,
+      "plan_symbol_source": null
     },
     {
       "n": 88,
@@ -9115,7 +9421,40 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 1,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-island",
+        "label": "SI2.0 1.8米中岛桌",
+        "file": "_图例来源/si2-island.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          320.9611705198126,
+          397.31055373288274,
+          427.5278459969213,
+          445.8707325224573
+        ],
+        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/网页模型",
+      "type_name": "1.8米中岛桌",
+      "product_image": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/效果图-同类参考.png",
+      "product_image_match": "approximate",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/平面图.png"
+      },
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米亮脚中岛桌_带产品托盘__asset-41053706.skp",
+        "preview": "预览/asset-41053706.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-41053706",
         "label": "1.8米亮脚中岛桌",
         "file": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/平面图例.png",
@@ -10007,37 +10346,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-island",
-        "label": "SI2.0 1.8米中岛桌",
-        "file": "_图例来源/si2-island.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          320.9611705198126,
-          397.31055373288274,
-          427.5278459969213,
-          445.8707325224573
-        ],
-        "note": "同类俯视图；仅凭本图不能证明普通或亮脚，二者共用并保留腿型说明",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/网页模型",
-      "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
-      "product_image_match": "approximate",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      },
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米亮脚中岛桌_带产品托盘__asset-41053706.skp",
-        "preview": "预览/asset-41053706.jpg"
       }
     },
     {
@@ -10076,7 +10388,40 @@
       "material_category": "软装物料",
       "material_si": "SI2.0",
       "material_sort": 3,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "si2-unbox",
+        "label": "SI2.0 1.8米开箱桌及4凳",
+        "file": "_图例来源/si2-unbox.png",
+        "context": "_图例来源/PDF-001-p15.jpg",
+        "source_pdf": "各门店图纸/上海TPY中心.pdf",
+        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
+        "page": 15,
+        "crop_pdf_points": [
+          683.5400959596795,
+          382.80556526326956,
+          790.7373434810314,
+          460.37572099207046
+        ],
+        "note": "同类俯视图；普通和亮脚共用平面表达，桌腿差异由模型确认",
+        "status": "同类平面图例"
+      },
+      "web_model": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/网页模型",
+      "type_name": "1.8米开箱桌",
+      "product_image": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/效果图-同类参考.png",
+      "product_image_match": "approximate",
+      "plan_symbol": {
+        "svg": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/平面图.svg",
+        "png": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/平面图.png"
+      },
+      "category_si": "SI2.0",
+      "folder": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543",
+      "migrated_from_20261010": {
+        "named_skp": "SI2.0/SI2.0_1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543.skp",
+        "preview": "预览/asset-41277543.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-41277543",
         "label": "1.8米亮脚开箱桌",
         "file": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/平面图例.png",
@@ -10109,37 +10454,10 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "si2-unbox",
-        "label": "SI2.0 1.8米开箱桌及4凳",
-        "file": "_图例来源/si2-unbox.png",
-        "context": "_图例来源/PDF-001-p15.jpg",
-        "source_pdf": "各门店图纸/上海TPY中心.pdf",
-        "source_sha256": "53d40b46b82d02f70b6e951408e4ff8634a53b8d5df142889716678a4870697b",
-        "page": 15,
-        "crop_pdf_points": [
-          683.5400959596795,
-          382.80556526326956,
-          790.7373434810314,
-          460.37572099207046
-        ],
-        "note": "同类俯视图；普通和亮脚共用平面表达，桌腿差异由模型确认",
-        "status": "同类平面图例"
-      },
-      "web_model": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/网页模型",
-      "type_name": "1.8米开箱桌",
-      "product_image": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
-      "product_image_match": "approximate",
-      "plan_symbol": {
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
+      "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      },
-      "category_si": "SI2.0",
-      "folder": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543",
-      "migrated_from_20261010": {
-        "named_skp": "SI2.0/SI2.0_1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543.skp",
-        "preview": "预览/asset-41277543.jpg"
       }
     },
     {
@@ -10176,7 +10494,38 @@
       "material_category": "信息化物料",
       "material_si": null,
       "material_sort": 0,
-      "plan_legend": {
+      "plan_legend": null,
+      "plan_legend_missing_reason": null,
+      "original_plan_legend": {
+        "id": "screen75",
+        "label": "75寸横向广告机",
+        "file": "_图例来源/screen75.png",
+        "context": "_图例来源/PDF-088-p15.jpg",
+        "source_pdf": "各门店图纸/南昌武商mall.pdf",
+        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+        "page": 15,
+        "crop_pdf_points": [
+          676.6038034730038,
+          309.6499712426118,
+          800.8264961889236,
+          337.39864483665434
+        ],
+        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
+        "status": "同类平面图例"
+      },
+      "web_model": null,
+      "type_name": null,
+      "product_image": null,
+      "product_image_match": null,
+      "plan_symbol": null,
+      "category": "信息化物料",
+      "category_si": null,
+      "folder": "信息化物料/广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059",
+      "migrated_from_20261010": {
+        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059.skp",
+        "preview": "预览/asset-37758059.jpg"
+      },
+      "plan_legend_removed_20261010": {
         "id": "clean-asset-37758059",
         "label": "广告机",
         "file": "信息化物料/广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059/平面图例.png",
@@ -10209,36 +10558,8 @@
         ],
         "updated": "2026-10-04"
       },
-      "plan_legend_missing_reason": null,
-      "original_plan_legend": {
-        "id": "screen75",
-        "label": "75寸横向广告机",
-        "file": "_图例来源/screen75.png",
-        "context": "_图例来源/PDF-088-p15.jpg",
-        "source_pdf": "各门店图纸/南昌武商mall.pdf",
-        "source_sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
-        "page": 15,
-        "crop_pdf_points": [
-          676.6038034730038,
-          309.6499712426118,
-          800.8264961889236,
-          337.39864483665434
-        ],
-        "note": "原图明确75寸横向；不对应竖屏或其他尺寸",
-        "status": "同类平面图例"
-      },
-      "web_model": null,
-      "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
-      "category": "信息化物料",
-      "category_si": null,
-      "folder": "信息化物料/广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059",
-      "migrated_from_20261010": {
-        "named_skp": "通用/通用_广告机_75寸横屏_滑雪画面C_精度保留实例__asset-37758059.skp",
-        "preview": "预览/asset-37758059.jpg"
-      }
+      "product_image_source": null,
+      "plan_symbol_source": null
     }
   ],
   "type_aliases": {
