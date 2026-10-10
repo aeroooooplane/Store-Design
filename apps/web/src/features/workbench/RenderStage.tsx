@@ -1,9 +1,10 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { RENDER_MODE_LABELS, RENDER_SIZE } from '@store/shared'
+import { RENDER_MODE_LABELS, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
   Asset,
+  Delivery,
   DesignNode,
   Layout,
   NodeCamera,
@@ -19,10 +20,14 @@ import {
   renderArchiveUrl,
   uploadRender,
   useCameras,
+  useCreateDelivery,
+  useDeliveries,
   useRenders,
   withImage,
   workbenchKeys,
 } from './api.ts'
+import { exportPlan } from './plan-export.ts'
+import { PlanView } from './PlanView.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 
@@ -69,6 +74,10 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
   const [error, setError] = useState<unknown>(null)
   const started = useRef(false)
+  const planRef = useRef<SVGSVGElement>(null)
+  const deliveries = useDeliveries(node.id)
+  const createDelivery = useCreateDelivery(node.id)
+  const [exporting, setExporting] = useState(false)
 
   const siStyle = node.siStyle ?? project.siStyle
   const views = useMemo(
@@ -87,6 +96,9 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const current = all.length - missing.length - stale.length
   const selected = views.find((c) => c.id === chosen) ?? views[0] ?? null
   const layout = node.layout ?? EMPTY_LAYOUT
+  // Same numbering as the PDF legend (the server runs deliveryLegend too).
+  const numbers = useMemo(() => deliveryLegend(layout.items, assets).numbers, [layout, assets])
+  const deliverable = all.length > 0 && missing.length === 0 && stale.length === 0
 
   async function render(targets: Target[]) {
     if (!viewer.current || progress || !targets.length) return
@@ -124,6 +136,21 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     if (missing.length) void render(missing)
   })
 
+  /** Draws the numbered plan at print size, then the server builds both PDFs and the ZIP. */
+  async function deliver() {
+    const svg = planRef.current
+    if (!svg || exporting) return
+    setExporting(true)
+    try {
+      const plan = await exportPlan(svg)
+      await createDelivery.mutateAsync({ planPng: plan.png, planSvg: plan.svg })
+    } catch (caught) {
+      if (!createDelivery.isError) setError(caught)
+    } finally {
+      setExporting(false)
+    }
+  }
+
   function choose(camera: NodeCamera) {
     setChosen(camera.id)
     if (show === '3d') viewer.current?.showView(camera.camera)
@@ -132,6 +159,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const shownMode: RenderMode = show === 'white' ? 'white' : 'material'
   const mainImage = selected && show !== '3d' ? imageOf(selected.id, show) : undefined
   const busy = progress !== null
+  const delivering = exporting || createDelivery.isPending
 
   return (
     <WorkbenchLayout
@@ -158,6 +186,18 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               ))}
             </div>
             {selected && <span className="hint">{selected.camera.name}</span>}
+          </div>
+          {/* The delivery plan, drawn off screen at a fixed width and exported as an image. */}
+          <div className="delivery-plan" aria-hidden="true">
+            <PlanView
+              svgRef={planRef}
+              space={space}
+              shopType={project.shopType}
+              layout={layout}
+              assets={assets}
+              numbers={numbers}
+              title={`${node.name} 交付平面`}
+            />
           </div>
 
           <div className="render-main">
@@ -230,50 +270,103 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
         </section>
       }
       right={
-        <div className="wb-card">
-          <StagePanel
-            title="渲染阶段"
-            status={
-              busy ? (
-                <span className="tag" role="status">
-                  正在渲染 {progress.done}/{progress.total}
-                </span>
-              ) : stale.length ? (
-                <span className="tag">{stale.length} 张过期</span>
-              ) : null
-            }
-            first={[
-              {
-                label: '重新渲染',
-                title: '按当前模型与视角重新渲染全部白模图和材质图',
-                onClick: () => void render(all),
-                disabled: busy || !viewerReady || !all.length,
-              },
-              {
-                label: '下载图片',
-                title: '下载当前（未过期）的全部渲染图（ZIP）',
-                onClick: () => window.location.assign(renderArchiveUrl(node.id)),
-                disabled: current <= 0,
-              },
-            ]}
-            second={{
-              label: '生成交付文件',
-              onClick: () => undefined,
-              disabled: true,
-              primary: true,
-              title: '双 PDF 交付将在下一步接入',
-            }}
-            hint={
-              <>
-                已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张白模图、一张材质图（
-                {RENDER_SIZE.width}×{RENDER_SIZE.height}
-                ），同一场景同一相机，只切换材质。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到它的白模。
-              </>
-            }
-          />
-          <ErrorMessage error={error ?? cameras.error ?? renders.error} />
-        </div>
+        <>
+          <div className="wb-card">
+            <StagePanel
+              title="渲染阶段"
+              status={
+                busy ? (
+                  <span className="tag" role="status">
+                    正在渲染 {progress.done}/{progress.total}
+                  </span>
+                ) : stale.length ? (
+                  <span className="tag">{stale.length} 张过期</span>
+                ) : null
+              }
+              first={[
+                {
+                  label: '重新渲染',
+                  title: '按当前模型与视角重新渲染全部白模图和材质图',
+                  onClick: () => void render(all),
+                  disabled: busy || !viewerReady || !all.length,
+                },
+                {
+                  label: '下载图片',
+                  title: '下载当前（未过期）的全部渲染图（ZIP）',
+                  onClick: () => window.location.assign(renderArchiveUrl(node.id)),
+                  disabled: current <= 0,
+                },
+              ]}
+              second={{
+                label: delivering ? '正在生成交付文件…' : '生成交付文件',
+                onClick: () => void deliver(),
+                disabled: busy || delivering || !deliverable,
+                primary: true,
+                title: deliverable
+                  ? '生成完整版与展示版 PDF 和交付目录 ZIP，并写入服务器归档目录'
+                  : '请先渲染全部视角（缺失或过期的图需重新渲染）',
+              }}
+              hint={
+                <>
+                  已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张白模图、一张材质图（
+                  {RENDER_SIZE.width}×{RENDER_SIZE.height}
+                  ），同一场景同一相机，只切换材质。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到它的白模。
+                </>
+              }
+            />
+            <ErrorMessage error={error ?? createDelivery.error ?? cameras.error ?? renders.error} />
+          </div>
+          <DeliveryList deliveries={deliveries.data ?? []} error={deliveries.error} />
+        </>
       }
     />
+  )
+}
+
+interface DeliveryListProps {
+  deliveries: Delivery[]
+  error: unknown
+}
+
+const sizeText = (bytes: number) =>
+  bytes > 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`
+
+/** Earlier deliveries of this render node; each keeps its two PDFs and the folder ZIP. */
+function DeliveryList({ deliveries, error }: DeliveryListProps) {
+  return (
+    <section className="wb-card delivery-list" aria-label="交付文件">
+      <h3>交付文件（{deliveries.length}）</h3>
+      <ErrorMessage error={error} />
+      {deliveries.length === 0 ? (
+        <p className="hint">
+          生成后这里列出每次交付：完整版 PDF、展示版 PDF 和交付目录 ZIP（同时写入服务器归档目录）。
+        </p>
+      ) : (
+        <ol>
+          {deliveries.map((d) => (
+            <li key={d.id}>
+              <span className="delivery-name" title={d.archivePath ?? '未写入归档目录'}>
+                {d.folderName}
+              </span>
+              <span className="hint">
+                {new Date(d.createdAt).toLocaleString('zh-CN', { hour12: false })} · {d.views}{' '}
+                个视角
+              </span>
+              <span className="delivery-links">
+                <a href={d.fullPdf.url} target="_blank" rel="noreferrer">
+                  完整版 PDF（{d.pages.full} 页）
+                </a>
+                <a href={d.showPdf.url} target="_blank" rel="noreferrer">
+                  展示版 PDF（{d.pages.show} 页）
+                </a>
+                <a href={d.zip.url} download={d.zip.name}>
+                  ZIP（{sizeText(d.zip.bytes)}）
+                </a>
+              </span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </section>
   )
 }

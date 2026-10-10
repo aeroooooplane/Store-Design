@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {
   AssetListSchema,
+  DeliveryListSchema,
+  DeliverySchema,
   DraftSavedSchema,
   DraftSchema,
   LayoutCandidatesSchema,
@@ -15,6 +17,7 @@ import {
 import type {
   CameraCreate,
   CameraUpdate,
+  DeliveryCreate,
   Draft,
   DraftSaved,
   Layout,
@@ -34,6 +37,7 @@ export const workbenchKeys = {
   assets: ['workbench', 'assets'] as const,
   cameras: (nodeId: string) => ['workbench', 'cameras', nodeId] as const,
   renders: (nodeId: string) => ['workbench', 'renders', nodeId] as const,
+  deliveries: (nodeId: string) => ['workbench', 'deliveries', nodeId] as const,
 }
 
 export function useTree(projectId: string) {
@@ -274,3 +278,33 @@ export function withImage(
 
 /** ZIP of the current images, served by the API as a download. */
 export const renderArchiveUrl = (nodeId: string) => `/api/v1/nodes/${nodeId}/renders/archive`
+
+/** Earlier deliveries of a render node, newest first. */
+export function useDeliveries(nodeId: string) {
+  return useQuery({
+    queryKey: workbenchKeys.deliveries(nodeId),
+    queryFn: async () =>
+      DeliveryListSchema.parse(
+        unwrap(
+          await api.GET('/api/v1/nodes/{nodeId}/deliveries', { params: { path: { nodeId } } }),
+        ),
+      ).deliveries,
+  })
+}
+
+/** Builds both PDFs and the ZIP on the server (the plan image comes from the browser). */
+export function useCreateDelivery(nodeId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async (input: DeliveryCreate) =>
+      DeliverySchema.parse(
+        unwrap(
+          await api.POST('/api/v1/nodes/{nodeId}/deliveries', {
+            params: { path: { nodeId } },
+            body: input,
+          }),
+        ),
+      ),
+    onSettled: () => client.invalidateQueries({ queryKey: workbenchKeys.deliveries(nodeId) }),
+  })
+}

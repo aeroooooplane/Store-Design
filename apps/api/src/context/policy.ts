@@ -18,6 +18,8 @@ export type Action =
   | 'camera:write'
   | 'render:read'
   | 'render:write'
+  | 'delivery:read'
+  | 'delivery:write'
   | 'layout:generate'
   | 'layout:validate'
   | 'asset:read'

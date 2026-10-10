@@ -900,3 +900,34 @@ ul.issues li.warning {
   font-size: 12px;
   color: var(--muted);
 }
+
+/* Delivery: the numbered plan is drawn off screen (it needs a real size to be exported). */
+.delivery-plan {
+  position: absolute;
+  left: -20000px;
+  top: 0;
+  width: 1200px;
+}
+.delivery-list ol {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.delivery-list li {
+  display: grid;
+  gap: 2px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.delivery-name {
+  font-size: 13px;
+  word-break: break-all;
+}
+.delivery-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 13px;
+}
