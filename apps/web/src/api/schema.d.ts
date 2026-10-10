@@ -1164,6 +1164,8 @@ export interface paths {
                         strategy?: "max" | "area" | "min" | "case";
                         /** @enum {string} */
                         siStyle?: "SI1.0" | "SI2.0";
+                        /** Format: uuid */
+                        sourceNodeId?: string;
                     };
                 };
             };

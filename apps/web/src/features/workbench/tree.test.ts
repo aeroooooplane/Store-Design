@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
-import { flattenTree, spaceAncestor } from './tree.ts'
+import { copyName, flattenTree, freshName, spaceAncestor, stageOf, stageParentId } from './tree.ts'
 import { defaultNodeId } from './Workbench.tsx'
 
 let seq = 0
@@ -76,5 +76,41 @@ describe('defaultNodeId', () => {
     expect(defaultNodeId(nodes, { ...draft, baseNodeId: 'gone' })).toBe('orphan')
     expect(defaultNodeId(nodes.slice(0, 4), null)).toBe('p1')
     expect(defaultNodeId([], null)).toBeNull()
+  })
+})
+
+describe('stages', () => {
+  it('maps kinds to stages, old edit nodes to the plan stage', () => {
+    expect(['space', 'plan', 'edit', 'white', 'render'].map((k) => stageOf(k as never))).toEqual([
+      'space',
+      'plan',
+      'plan',
+      'white',
+      'render',
+    ])
+  })
+
+  it('puts copies next to the original, lifting deeply nested old nodes back to their stage', () => {
+    const list = [
+      node('sp', null),
+      node('pl', 'sp'),
+      node('w1', 'pl', { kind: 'white' }),
+      node('ed', 'w1', { kind: 'edit' }),
+      node('w2', 'ed', { kind: 'white' }),
+      node('rd', 'w2', { kind: 'render' }),
+    ]
+    const at = (id: string) => list.find((n) => n.id === id) as NodeSummary
+    expect(stageParentId(list, at('pl'))).toBe('sp')
+    expect(stageParentId(list, at('w1'))).toBe('pl')
+    // The old chain white → edit → white: a copy of the inner white goes under the edit (plan level).
+    expect(stageParentId(list, at('w2'))).toBe('ed')
+    expect(stageParentId(list, at('rd'))).toBe('w2')
+  })
+
+  it('numbers copies and fresh names without clashing', () => {
+    expect(copyName('方案 A', [])).toBe('方案 A 副本2')
+    expect(copyName('方案 A 副本2', ['方案 A 副本2'])).toBe('方案 A 副本3')
+    expect(freshName('白模确认', [])).toBe('白模确认')
+    expect(freshName('白模确认', ['白模确认', '白模确认（2）'])).toBe('白模确认（3）')
   })
 })

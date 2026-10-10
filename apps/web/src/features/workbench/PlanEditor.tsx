@@ -18,6 +18,7 @@ import type {
   Draft,
   Layout,
   LayoutItem,
+  NodeSummary,
   ShopType,
   SiStyle,
   Space,
@@ -27,6 +28,9 @@ import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
 import { CameraPanel } from './CameraPanel.tsx'
+import { StagePanel } from './StagePanel.tsx'
+import { copyName, freshName, stageOf, stageParentId } from './tree.ts'
+import type { Stage } from './tree.ts'
 import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer, initialEditorState } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
@@ -37,6 +41,12 @@ const Viewer3D = lazy(() =>
 )
 
 const AUTOSAVE_DELAY_MS = 800
+const STAGE_TITLES: Record<Stage, string> = {
+  space: '空间阶段 · 手动排布',
+  plan: '方案阶段',
+  white: '白模阶段',
+  render: '渲染阶段',
+}
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
 interface PlanEditorProps {
@@ -44,6 +54,8 @@ interface PlanEditorProps {
   baseNode: DesignNode
   space: Space
   shopType: ShopType
+  /** The project's history, to place copies next to their original. */
+  nodes: NodeSummary[]
   /** Furniture of this SI style is offered in the model picker. */
   siStyle: SiStyle
   /** The shared draft, if it continues this node. */
@@ -96,6 +108,7 @@ export function PlanEditor({
   baseNode,
   space,
   shopType,
+  nodes,
   siStyle,
   draft,
   assets,
@@ -227,20 +240,60 @@ export function PlanEditor({
     revision.current = null
   }
 
-  function saveAs(kind: 'edit' | 'white') {
+  /** Creates a history node from the layout on screen (draft included), then drops the draft. */
+  function createFromLayout(input: {
+    kind: 'plan' | 'white' | 'render'
+    parentId: string
+    name: string
+    sourceNodeId?: string
+  }) {
     setPaused(true)
     create.mutate(
-      {
-        parentId: baseNode.id,
-        kind,
-        name: kind === 'white' ? '白模确认' : '编辑版本',
-        layout: state.layout,
-      },
+      { ...input, layout: state.layout, ...(input.kind === 'render' ? { siStyle } : {}) },
       {
         onSuccess: (created) => void finishDraft().then(() => onNodeCreated(created.node.id)),
         onError: () => setPaused(false),
       },
     )
+  }
+
+  const stage = stageOf(baseNode.kind)
+  const namesUnder = (parentId: string | null) =>
+    nodes.filter((n) => n.parentId === parentId).map((n) => n.name)
+
+  /** 新建副本: a sibling in the same stage with the current layout; editing goes on there. */
+  function copyNode() {
+    const parentId = stageParentId(nodes, baseNode)
+    if (!parentId || (stage !== 'plan' && stage !== 'white')) return
+    createFromLayout({
+      kind: stage,
+      parentId,
+      name: copyName(baseNode.name, namesUnder(parentId)),
+      sourceNodeId: baseNode.id,
+    })
+  }
+
+  /** The next stage, one level down: plan → white model → render. */
+  function advance() {
+    if (stage === 'plan') {
+      createFromLayout({
+        kind: 'white',
+        parentId: baseNode.id,
+        name: freshName('白模确认', namesUnder(baseNode.id)),
+      })
+    } else if (stage === 'white') {
+      createFromLayout({
+        kind: 'render',
+        parentId: baseNode.id,
+        name: freshName('渲染', namesUnder(baseNode.id)),
+      })
+    } else if (stage === 'space') {
+      createFromLayout({
+        kind: 'plan',
+        parentId: baseNode.id,
+        name: freshName('方案 · 手动排布', namesUnder(baseNode.id)),
+      })
+    }
   }
 
   async function discard() {
@@ -467,6 +520,47 @@ export function PlanEditor({
           </div>
         </div>
         <aside className="plan-side">
+          <StagePanel
+            title={STAGE_TITLES[stage]}
+            status={
+              saveState !== 'idle' || state.dirty ? <span className="tag">有未保存修改</span> : null
+            }
+            first={[
+              stage === 'space'
+                ? {
+                    label: '保存为方案',
+                    onClick: advance,
+                    disabled: create.isPending,
+                    primary: true,
+                  }
+                : {
+                    label: '新建副本',
+                    title: '在同一层另存一份，原来的保留，之后在副本上修改',
+                    onClick: copyNode,
+                    disabled: create.isPending,
+                  },
+              {
+                label: '丢弃草稿',
+                onClick: () => void discard(),
+                disabled: saveState === 'idle' && !state.dirty,
+              },
+            ]}
+            second={
+              stage === 'plan' || stage === 'white'
+                ? {
+                    label: stage === 'plan' ? '确认白模' : '开始渲染',
+                    onClick: advance,
+                    primary: true,
+                    disabled: create.isPending || errors.length > 0,
+                  }
+                : undefined
+            }
+            hint={
+              errors.length > 0 && stage !== 'space'
+                ? `解决检查中的问题后才能${stage === 'plan' ? '确认白模' : '开始渲染'}。`
+                : undefined
+            }
+          />
           {selected ? (
             <div className="properties" aria-label="选中道具">
               <h3>{selected.name}</h3>
@@ -521,27 +615,6 @@ export function PlanEditor({
               </li>
             ))}
           </ul>
-          <div className="toolbar vertical">
-            <button type="button" disabled={create.isPending} onClick={() => saveAs('edit')}>
-              保存为新版本
-            </button>
-            <button
-              type="button"
-              className="primary"
-              disabled={create.isPending || errors.length > 0}
-              onClick={() => saveAs('white')}
-            >
-              确认白模
-            </button>
-            {errors.length > 0 && <p className="hint">解决以上问题后才能确认白模。</p>}
-            <button
-              type="button"
-              disabled={saveState === 'idle' && !state.dirty}
-              onClick={() => void discard()}
-            >
-              丢弃草稿
-            </button>
-          </div>
           <ErrorMessage error={create.error} />
         </aside>
       </div>
