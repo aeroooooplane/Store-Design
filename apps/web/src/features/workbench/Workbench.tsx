@@ -200,6 +200,7 @@ function NodePanel({
       projectId={project.id}
       baseNode={current}
       space={space}
+      shopType={project.shopType}
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}

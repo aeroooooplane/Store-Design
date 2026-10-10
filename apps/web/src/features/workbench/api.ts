@@ -4,11 +4,21 @@ import {
   DraftSavedSchema,
   DraftSchema,
   LayoutCandidatesSchema,
+  NodeCameraListSchema,
+  NodeCameraSchema,
   NodeCreatedSchema,
   NodeSchema,
   NodeTreeSchema,
 } from '@store/shared'
-import type { Draft, DraftSaved, Layout, LayoutGenerate, NodeCreateInput } from '@store/shared'
+import type {
+  CameraCreate,
+  CameraUpdate,
+  Draft,
+  DraftSaved,
+  Layout,
+  LayoutGenerate,
+  NodeCreateInput,
+} from '@store/shared'
 import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
 
 /** Every response is parsed with the shared schemas, so runtime data matches the types. */
@@ -17,6 +27,7 @@ export const workbenchKeys = {
   node: (nodeId: string) => ['workbench', 'node', nodeId] as const,
   draft: (projectId: string) => ['workbench', projectId, 'draft'] as const,
   assets: ['workbench', 'assets'] as const,
+  cameras: (nodeId: string) => ['workbench', 'cameras', nodeId] as const,
 }
 
 export function useTree(projectId: string) {
@@ -161,5 +172,52 @@ export function useGenerateLayouts() {
     mutationFn: async (
       body: Partial<LayoutGenerate> & Pick<LayoutGenerate, 'space' | 'shopType'>,
     ) => LayoutCandidatesSchema.parse(unwrap(await api.POST('/api/v1/layouts/generate', { body }))),
+  })
+}
+
+/** All views of a white-model node, including removed ones (they can be restored). */
+export function useCameras(nodeId: string) {
+  return useQuery({
+    queryKey: workbenchKeys.cameras(nodeId),
+    queryFn: async () =>
+      NodeCameraListSchema.parse(
+        unwrap(
+          await api.GET('/api/v1/nodes/{nodeId}/cameras', {
+            params: { path: { nodeId }, query: { includeDeleted: 'true' } },
+          }),
+        ),
+      ).cameras,
+  })
+}
+
+export type CameraAction =
+  | { type: 'add'; camera: CameraCreate }
+  | { type: 'update'; cameraId: string; patch: CameraUpdate }
+  | { type: 'remove' | 'restore'; cameraId: string }
+
+export function useCameraAction(nodeId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async (action: CameraAction) => {
+      if (action.type === 'add') {
+        return unwrap(
+          await api.POST('/api/v1/nodes/{nodeId}/cameras', {
+            params: { path: { nodeId } },
+            body: action.camera,
+          }),
+        )
+      }
+      const params = { params: { path: { cameraId: action.cameraId } } }
+      return NodeCameraSchema.parse(
+        unwrap(
+          action.type === 'update'
+            ? await api.PATCH('/api/v1/cameras/{cameraId}', { ...params, body: action.patch })
+            : action.type === 'remove'
+              ? await api.DELETE('/api/v1/cameras/{cameraId}', params)
+              : await api.POST('/api/v1/cameras/{cameraId}/restore', params),
+        ),
+      )
+    },
+    onSettled: () => client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) }),
   })
 }
