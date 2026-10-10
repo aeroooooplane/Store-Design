@@ -1,0 +1,10 @@
+{
+  "tool": "@gltf-transform 4.5.1 + meshoptimizer 1.3.0",
+  "sourceSha256": "b2dacb6dffc363c6e6f7109b48c9a7e290a06b8af0141d3cce6b97810eec8562",
+  "sha256": "b3910b96de548e50f52f6d67ab2de6f2cc85673a4cf6ee9cd991aafa712d581a",
+  "bytes": 101048,
+  "sourceBytes": 2808228,
+  "trianglesBefore": 67494,
+  "trianglesAfter": 39356,
+  "driftM": 0.0001
+}

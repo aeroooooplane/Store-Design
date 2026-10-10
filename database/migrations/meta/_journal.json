@@ -22,6 +22,13 @@
       "when": 1791545910557,
       "tag": "0002_node_seq",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1791604494980,
+      "tag": "0003_white_models",
+      "breakpoints": true
     }
   ]
 }

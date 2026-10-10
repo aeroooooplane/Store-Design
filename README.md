@@ -21,6 +21,7 @@
 pnpm install                # 安装依赖
 copy .env.example .env      # 首次：复制环境变量模板，按需填写（.env 不提交）
 pnpm db:migrate             # 初始化 / 升级数据库
+pnpm catalog:white          # 生成白模轻量版（已是最新的会跳过；网页模型更新后重跑）
 pnpm catalog:import         # 从资源库导入模型目录（需先 git lfs pull 网页模型）
 pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（127.0.0.1:5173）
 ```

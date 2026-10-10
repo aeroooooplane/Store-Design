@@ -18,7 +18,8 @@
     "db:generate": "pnpm --filter @store/database generate",
     "db:migrate": "pnpm --filter @store/database migrate",
     "api:openapi": "pnpm --filter @store/api openapi && pnpm --filter @store/web gen:api",
-    "catalog:import": "pnpm --filter @store/api catalog:import"
+    "catalog:import": "pnpm --filter @store/api catalog:import",
+    "catalog:white": "pnpm --filter @store/api catalog:white"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

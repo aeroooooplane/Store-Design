@@ -43,6 +43,8 @@ export const AssetSchema = z.object({
   placeable: z.boolean(),
   judgment: z.string().nullable(),
   glb: FileRefSchema.nullable(),
+  /** Simplified, untextured copy used by the white model; falls back to `glb`. */
+  whiteGlb: FileRefSchema.nullable(),
   preview: FileRefSchema.nullable(),
 })
 export type Asset = z.infer<typeof AssetSchema>

@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+import type { GLTF } from 'three/addons/loaders/GLTFLoader.js'
 import { WALL_THICKNESS_M, defaultCameras, wallSegments } from '@store/shared'
 import type { Asset, Camera, LayoutItem, Point, ShopType, Space } from '@store/shared'
 
@@ -28,7 +29,7 @@ export interface LoadStatus {
   failed: string[]
 }
 
-// ---- model cache: one load per GLB per page; instances are cheap clones ----
+// ---- model cache: each GLB is fetched and decoded once per page ----
 
 type AnyMaterial = THREE.Material | THREE.Material[]
 type Drawable =
@@ -37,8 +38,23 @@ type Drawable =
 const isDrawable = (node: THREE.Object3D): node is Drawable =>
   node instanceof THREE.Mesh || node instanceof THREE.LineSegments
 
+// Meshopt decoding runs in workers instead of blocking the page.
+MeshoptDecoder.useWorkers(2)
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
-const models = new Map<string, Promise<THREE.Object3D>>()
+const sources = new Map<string, Promise<GLTF>>()
+const whiteModels = new Map<string, Promise<THREE.Object3D>>()
+
+/** The decoded GLB with its original materials (kept for the material renders). */
+export function loadSource(url: string): Promise<GLTF> {
+  let source = sources.get(url)
+  if (!source) {
+    source = loader.loadAsync(url)
+    // A failed load is retried next time.
+    source.catch(() => sources.delete(url))
+    sources.set(url, source)
+  }
+  return source
+}
 
 /**
  * Below this opacity a surface reads as glass and stays see-through; above it (frosted acrylic,
@@ -48,65 +64,143 @@ const models = new Map<string, Promise<THREE.Object3D>>()
 const GLASS_OPACITY = 0.4
 
 /**
- * Plain white, matte. Texture alpha is kept so perforated or cut-out parts stay open (the
- * colour is forced to white in the shader, as in the legacy viewer); glass stays faintly
- * see-through and is marked so it casts no shadow.
+ * White-model materials, shared by every model. Double-sided because SketchUp exports often
+ * contain reversed faces, and flat shaded because their normals often point against the face
+ * winding (tops lit as if facing down); flat shading derives normals from the geometry.
  */
-function whiteMaterial(source: THREE.Material): THREE.Material {
+const SOLID = new THREE.MeshStandardMaterial({
+  color: WHITE,
+  roughness: 1,
+  metalness: 0,
+  side: THREE.DoubleSide,
+  flatShading: true,
+})
+const GLASS = new THREE.MeshStandardMaterial({
+  color: WHITE,
+  roughness: 0.2,
+  metalness: 0,
+  side: THREE.DoubleSide,
+  flatShading: true,
+  transparent: true,
+  opacity: 0.3,
+  depthWrite: false,
+})
+const cutouts = new WeakMap<THREE.Material, THREE.Material>()
+
+type Kind = 'solid' | 'glass' | 'cutout'
+
+function kindOf(source: THREE.Material): Kind {
   const original = source as THREE.MeshStandardMaterial
-  const cutout =
-    !!original.alphaMap || (!!original.map && (source.transparent || source.alphaTest > 0))
-  const glass = !cutout && source.transparent && source.opacity < GLASS_OPACITY
-  const material = new THREE.MeshStandardMaterial({
-    color: WHITE,
-    roughness: glass ? 0.2 : 1,
-    metalness: 0,
-    // SketchUp exports often contain reversed faces; single-sided they would leave holes.
-    side: THREE.DoubleSide,
-    // Normals in SketchUp exports often point against the face winding (tops lit as if facing
-    // down); flat shading derives them from the geometry instead. The white model loses
-    // nothing by it.
-    flatShading: true,
-    transparent: glass || (cutout && source.transparent),
-    opacity: glass ? Math.max(source.opacity, 0.25) : cutout ? source.opacity : 1,
-    alphaTest: source.alphaTest,
-    depthWrite: !glass,
-  })
-  material.userData['glass'] = glass
-  if (original.alphaMap) material.alphaMap = original.alphaMap
-  if (cutout && original.map) {
-    material.map = original.map
-    material.onBeforeCompile = (shader) => {
+  if (original.alphaMap || (original.map && (source.transparent || source.alphaTest > 0))) {
+    return 'cutout'
+  }
+  return source.transparent && source.opacity < GLASS_OPACITY ? 'glass' : 'solid'
+}
+
+/**
+ * Perforated or cut-out parts keep their texture alpha; the colour is forced to white in the
+ * shader, as in the legacy viewer.
+ */
+function cutoutMaterial(source: THREE.Material): THREE.Material {
+  let material = cutouts.get(source)
+  if (!material) {
+    const original = source as THREE.MeshStandardMaterial
+    const white = SOLID.clone()
+    white.map = original.map
+    white.alphaMap = original.alphaMap
+    white.transparent = source.transparent
+    white.opacity = source.opacity
+    white.alphaTest = source.alphaTest
+    white.onBeforeCompile = (shader) => {
       shader.fragmentShader = shader.fragmentShader.replace(
         '#include <map_fragment>',
-        '#include <map_fragment>\ndiffuseColor.rgb = vec3(1.0);',
+        ['#include <map_fragment>', 'diffuseColor.rgb = vec3(1.0);'].join('\n'),
       )
     }
-    material.customProgramCacheKey = () => 'white-cutout'
+    white.customProgramCacheKey = () => 'white-cutout'
+    cutouts.set(source, white)
+    material = white
   }
   return material
 }
 
+/** One geometry from many parts, transforms baked in; flat shading needs positions only. */
+function mergeParts(parts: { geometry: THREE.BufferGeometry; matrix: THREE.Matrix4 }[]) {
+  let vertices = 0
+  let indices = 0
+  for (const { geometry } of parts) {
+    const count = geometry.getAttribute('position').count
+    vertices += count
+    indices += geometry.index?.count ?? count
+  }
+  const positions = new Float32Array(vertices * 3)
+  const index = new Uint32Array(indices)
+  const v = new THREE.Vector3()
+  let base = 0
+  let at = 0
+  for (const { geometry, matrix } of parts) {
+    const position = geometry.getAttribute('position')
+    for (let i = 0; i < position.count; i++) {
+      v.fromBufferAttribute(position, i).applyMatrix4(matrix)
+      positions.set([v.x, v.y, v.z], (base + i) * 3)
+    }
+    const source = geometry.index
+    const count = source?.count ?? position.count
+    for (let i = 0; i < count; i++) index[at + i] = base + (source ? source.getX(i) : i)
+    base += position.count
+    at += count
+  }
+  const merged = new THREE.BufferGeometry()
+  merged.setAttribute('position', new THREE.BufferAttribute(positions, 3))
+  merged.setIndex(new THREE.BufferAttribute(index, 1))
+  merged.computeBoundingSphere()
+  merged.computeBoundingBox()
+  return merged
+}
+
+/**
+ * The white version of a model: all solid parts in one mesh and all glass in another, so a
+ * prop costs one or two draw calls instead of hundreds. Cut-out parts stay separate.
+ */
+function buildWhite(gltf: GLTF): THREE.Object3D {
+  const root = gltf.scene
+  root.updateMatrixWorld(true)
+  const parts: Record<
+    'solid' | 'glass',
+    { geometry: THREE.BufferGeometry; matrix: THREE.Matrix4 }[]
+  > = { solid: [], glass: [] }
+  const model = new THREE.Group()
+  root.traverse((node) => {
+    if (!(node instanceof THREE.Mesh) || !isDrawable(node)) return
+    const source = Array.isArray(node.material) ? node.material[0] : node.material
+    if (!source) return
+    const kind = kindOf(source)
+    if (kind !== 'cutout') {
+      parts[kind].push({ geometry: node.geometry, matrix: node.matrixWorld })
+      return
+    }
+    const mesh = new THREE.Mesh(node.geometry, cutoutMaterial(source))
+    mesh.applyMatrix4(node.matrixWorld)
+    mesh.castShadow = true
+    mesh.receiveShadow = true
+    model.add(mesh)
+  })
+  for (const kind of ['solid', 'glass'] as const) {
+    if (!parts[kind].length) continue
+    const mesh = new THREE.Mesh(mergeParts(parts[kind]), kind === 'solid' ? SOLID : GLASS)
+    mesh.castShadow = kind === 'solid'
+    mesh.receiveShadow = true
+    model.add(mesh)
+  }
+  return model
+}
+
 function loadModel(url: string): Promise<THREE.Object3D> {
-  let model = models.get(url)
+  let model = whiteModels.get(url)
   if (!model) {
-    model = loader.loadAsync(url).then((gltf) => {
-      gltf.scene.traverse((node) => {
-        if (!(node instanceof THREE.Mesh) || !isDrawable(node)) return
-        // Kept for the material renders of the next stage.
-        node.userData['original'] = node.material
-        node.material = Array.isArray(node.material)
-          ? node.material.map(whiteMaterial)
-          : whiteMaterial(node.material)
-        const materials = Array.isArray(node.material) ? node.material : [node.material]
-        node.castShadow = !materials.every((m) => m.userData['glass'] === true)
-        node.receiveShadow = true
-      })
-      return gltf.scene
-    })
-    // A failed load is retried on the next scene.
-    model.catch(() => models.delete(url))
-    models.set(url, model)
+    model = loadSource(url).then(buildWhite)
+    model.catch(() => whiteModels.delete(url))
+    whiteModels.set(url, model)
   }
   return model
 }
@@ -201,6 +295,8 @@ export class WhiteScene {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.renderer.shadowMap.enabled = true
     this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    // Shadows depend on the scene, not the camera: recompute them only when something moves.
+    this.renderer.shadowMap.autoUpdate = false
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 0.82
 
@@ -292,7 +388,7 @@ export class WhiteScene {
       const [front] = defaultCameras(space)
       if (front) this.showView(front)
     }
-    this.requestRender()
+    this.sceneChanged()
   }
 
   /** Brings the props in line with the layout; models load in the background. */
@@ -301,7 +397,8 @@ export class WhiteScene {
     for (const item of items) {
       seen.add(item.id)
       const asset = item.assetId && !item.placeholder ? assets.get(item.assetId) : undefined
-      const url = asset?.glb?.url ?? null
+      // The light white-model copy when there is one (see pnpm catalog:white).
+      const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       const signature = url ?? `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
@@ -319,7 +416,7 @@ export class WhiteScene {
       group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
-    this.requestRender()
+    this.sceneChanged()
   }
 
   /** Floor marks under the selected prop and props with errors. */
@@ -368,30 +465,34 @@ export class WhiteScene {
   }
 
   /**
-   * Renders views to PNG data URLs at a fixed size. The canvas is resized and restored within
-   * one task, so the on-screen view never flickers.
+   * Renders views to PNG data URLs at a fixed size, one view per task so the page stays
+   * responsive. Within a task the canvas is resized, drawn, read and restored, so the on-screen
+   * view never flickers. Returns fewer images if the scene is disposed meanwhile.
    */
-  renderViews(
+  async renderViews(
     views: readonly Pick<Camera, 'position' | 'target' | 'fovDeg'>[],
     width: number,
     height: number,
-  ): string[] {
-    const size = this.renderer.getSize(new THREE.Vector2())
-    const ratio = this.renderer.getPixelRatio()
+  ): Promise<string[]> {
     const shot = new THREE.PerspectiveCamera(48, width / height, 0.05, 300)
-    this.renderer.setPixelRatio(1)
-    this.renderer.setSize(width, height, false)
-    const images = views.map((view) => {
+    const images: string[] = []
+    for (const view of views) {
+      await new Promise((resolve) => setTimeout(resolve, 0))
+      if (this.disposed) break
+      const size = this.renderer.getSize(new THREE.Vector2())
+      const ratio = this.renderer.getPixelRatio()
+      this.renderer.setPixelRatio(1)
+      this.renderer.setSize(width, height, false)
       shot.position.set(...view.position)
       shot.fov = view.fovDeg
       shot.updateProjectionMatrix()
       shot.lookAt(...view.target)
       this.renderer.render(this.scene, shot)
-      return this.canvas.toDataURL('image/png')
-    })
-    this.renderer.setPixelRatio(ratio)
-    this.renderer.setSize(size.x, size.y, false)
-    this.renderer.render(this.scene, this.camera)
+      images.push(this.canvas.toDataURL('image/png'))
+      this.renderer.setPixelRatio(ratio)
+      this.renderer.setSize(size.x, size.y, false)
+      this.renderer.render(this.scene, this.camera)
+    }
     return images
   }
 
@@ -400,6 +501,12 @@ export class WhiteScene {
     this.renderer.setSize(width, height, false)
     this.camera.aspect = width / height
     this.camera.updateProjectionMatrix()
+    this.requestRender()
+  }
+
+  /** Content moved, appeared or vanished: shadows must be recomputed on the next frame. */
+  private sceneChanged() {
+    this.renderer.shadowMap.needsUpdate = true
     this.requestRender()
   }
 
@@ -447,7 +554,7 @@ export class WhiteScene {
       .finally(() => {
         this.pending.delete(load)
         this.emitStatus()
-        this.requestRender()
+        this.sceneChanged()
       })
     this.pending.add(load)
     this.emitStatus()

@@ -118,6 +118,13 @@ export function PlanEditor({
   )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
+  // Fetch the 3D code while the user is still on the plan, so switching to 3D is quick.
+  useEffect(() => {
+    if (!('requestIdleCallback' in window)) return
+    const id = window.requestIdleCallback(() => void import('../viewer3d/Viewer3D.tsx'))
+    return () => window.cancelIdleCallback(id)
+  }, [])
+
   // Autosave the draft shortly after the last change, one request at a time. Edits made while a
   // save is in flight stay dirty and are saved next; a conflict stops autosaving.
   useEffect(() => {
