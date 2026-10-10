@@ -23,30 +23,26 @@ function count(candidate: LayoutCandidate, fn: string): number {
   return candidate.layout.items.filter((i) => i.function === fn).length
 }
 
-interface CandidateGalleryProps {
+interface PlanGenerationInput {
   projectId: string
   spaceNode: DesignNode & { space: NonNullable<DesignNode['space']> }
   shopType: ShopType
   siStyle: SiStyle
-  assets: ReadonlyMap<string, Asset>
   /** Names already used under this space, so a new set gets numbered names. */
   existingNames: readonly string[]
-  onChosen: (nodeId: string) => void
 }
 
 /**
  * Generates the three strategies for a space and keeps all of them as plan nodes (the plan
  * level of the history). Generating again adds another set; earlier plans stay.
  */
-export function CandidateGallery({
+export function usePlanGeneration({
   projectId,
   spaceNode,
   shopType,
   siStyle,
-  assets,
   existingNames,
-  onChosen,
-}: CandidateGalleryProps) {
+}: PlanGenerationInput) {
   const generate = useGenerateLayouts()
   const create = useCreateNode(projectId)
   const [saved, setSaved] = useState<Partial<Record<string, string>>>({})
@@ -76,39 +72,61 @@ export function CandidateGallery({
     }
   }
 
+  return {
+    run: () =>
+      generate.mutate(
+        { space: spaceNode.space, shopType, siStyle },
+        { onSuccess: (result) => void keepAll(result) },
+      ),
+    busy: generate.isPending || saving,
+    saving,
+    saved,
+    result: generate.data,
+    error: generate.error ?? create.error,
+    label: generate.data || existingNames.length ? '再生成一组方案' : '生成三个方案',
+  }
+}
+
+export type PlanGeneration = ReturnType<typeof usePlanGeneration>
+
+interface CandidateGalleryProps {
+  generation: PlanGeneration
+  shopType: ShopType
+  siStyle: SiStyle
+  assets: ReadonlyMap<string, Asset>
+  onChosen: (nodeId: string) => void
+}
+
+/** The plans just generated, side by side, each with a button to open it. */
+export function CandidateGallery({
+  generation,
+  shopType,
+  siStyle,
+  assets,
+  onChosen,
+}: CandidateGalleryProps) {
+  const { result, saved, saving } = generation
   return (
     <section className="candidates" aria-label="自动排布">
-      <div className="toolbar">
-        <button
-          type="button"
-          className="primary"
-          disabled={generate.isPending || saving}
-          onClick={() =>
-            generate.mutate(
-              { space: spaceNode.space, shopType, siStyle },
-              { onSuccess: (result) => void keepAll(result) },
-            )
-          }
-        >
-          {generate.data || existingNames.length ? '再生成一组方案' : '生成三个方案'}
-        </button>
-        <span className="hint">
-          三个方案都会保存到历史的方案层；按 {siStyle}{' '}
+      <ErrorMessage error={generation.error} />
+      {!result && (
+        <p className="hint">
+          点击右侧“{generation.label}”：三个方案都会保存到历史的方案层；按 {siStyle}{' '}
           选用模型，通道与间距为设计指导值，放不下时逐级让步并在方案中说明。
-        </span>
-      </div>
-      <ErrorMessage error={generate.error ?? create.error} />
-      {generate.data && (
+        </p>
+      )}
+      {result && (
         <div className="candidate-grid">
-          {generate.data.candidates.map((candidate) => {
+          {result.candidates.map((candidate) => {
             const label = PLAN_STRATEGY_LABELS[candidate.strategy]
             const errors = candidate.issues.filter((i) => i.severity === 'error')
             const relaxations = candidate.layout.planning?.relaxations ?? []
+            const id = saved[candidate.strategy]
             return (
               <article key={candidate.strategy} className="candidate">
                 <h3>{label}</h3>
                 <PlanView
-                  space={generate.data.space}
+                  space={result.space}
                   shopType={shopType}
                   layout={candidate.layout}
                   issues={candidate.issues}
@@ -134,15 +152,8 @@ export function CandidateGallery({
                   </p>
                 ))}
                 {errors.length > 0 && <p className="error">{errors.length} 个问题需要人工处理</p>}
-                <button
-                  type="button"
-                  disabled={!saved[candidate.strategy]}
-                  onClick={() => {
-                    const id = saved[candidate.strategy]
-                    if (id) onChosen(id)
-                  }}
-                >
-                  {saved[candidate.strategy] ? '打开此方案' : saving ? '正在保存…' : '未保存'}
+                <button type="button" disabled={!id} onClick={() => id && onChosen(id)}>
+                  {id ? '打开此方案' : saving ? '正在保存…' : '未保存'}
                 </button>
               </article>
             )

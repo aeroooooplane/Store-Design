@@ -8,7 +8,7 @@
   align-items: baseline;
   justify-content: space-between;
   gap: var(--space-2);
-  border-bottom: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
   padding-bottom: var(--space-2);
   margin-bottom: var(--space-3);
 }
@@ -27,29 +27,44 @@ button {
   background: var(--paper);
   color: var(--ink);
   border: 1px solid var(--line);
-  padding: 8px 14px;
+  border-radius: var(--radius);
+  padding: 7px 14px;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s;
+}
+button:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--surface);
 }
 button:disabled {
-  opacity: 0.4;
-  cursor: wait;
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 a.button {
   display: inline-block;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border: 1px solid var(--line);
+  border-radius: var(--radius);
   text-decoration: none;
 }
 a.button.primary,
 button.primary {
-  background: var(--ink);
+  background: var(--accent);
   color: var(--paper);
-  border-color: var(--ink);
-  font-weight: 700;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+a.button.primary:hover,
+button.primary:hover:not(:disabled) {
+  background: #2b3b4b;
+  border-color: #2b3b4b;
 }
 input,
 select {
   border: 1px solid var(--line);
-  padding: 8px 10px;
+  border-radius: var(--radius);
+  padding: 7px 10px;
   background: var(--paper);
 }
 
@@ -61,8 +76,10 @@ select {
   margin-bottom: var(--space-2);
 }
 .tabs button[aria-pressed='true'] {
-  border-color: var(--ink);
-  font-weight: 700;
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 600;
 }
 
 .create-form {

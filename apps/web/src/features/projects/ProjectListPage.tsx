@@ -2,6 +2,7 @@ import { useDeferredValue, useState } from 'react'
 import { Link } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { TrashIcon } from '../../components/icons.tsx'
 import { formatDateTime } from '../../lib/format.ts'
 import { CreateProjectForm } from './CreateProjectForm.tsx'
 import { PAGE_SIZE, useProjectList, useSetProjectDeleted } from './queries.ts'
@@ -11,21 +12,6 @@ const STATUS_TABS: { value: ProjectListParams['status']; label: string }[] = [
   { value: 'active', label: '项目' },
   { value: 'deleted', label: '回收站' },
 ]
-
-function TrashIcon() {
-  return (
-    <svg viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
-      <path
-        d="M4 6h12M8 6V4.5h4V6M6 6l.7 9.5h6.6L14 6M8.5 9v4M11.5 9v4"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
 
 export function ProjectListPage() {
   const [status, setStatus] = useState<ProjectListParams['status']>('active')

@@ -45,7 +45,7 @@ const isDrawable = (node: THREE.Object3D): node is Drawable =>
   node instanceof THREE.Mesh || node instanceof THREE.LineSegments
 
 // Meshopt decoding runs in workers instead of blocking the page.
-MeshoptDecoder.useWorkers(2)
+if (typeof Worker !== 'undefined') MeshoptDecoder.useWorkers(2)
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 const sources = new Map<string, Promise<GLTF>>()
 const whiteModels = new Map<string, Promise<THREE.Object3D>>()

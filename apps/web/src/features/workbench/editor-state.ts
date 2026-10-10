@@ -35,7 +35,7 @@ export type EditorAction =
       snapTo?: Space | null | undefined
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
-  | { type: 'rotate'; id: string; asset?: Asset | undefined }
+  | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
   | { type: 'remove'; id: string }
   | { type: 'add'; asset: Asset; cx: number; cz: number }
   | { type: 'undo' }
@@ -130,7 +130,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         action.id,
         (item) => {
           if (item.locked) return item
-          const rotation = ((item.rotation + 90) % 360) as Rotation
+          const rotation = ((((item.rotation + (action.by ?? 90)) % 360) + 360) % 360) as Rotation
           const size = action.asset
             ? rotatedFootprint(action.asset, rotation)
             : { w: item.d, d: item.w, h: item.h }
