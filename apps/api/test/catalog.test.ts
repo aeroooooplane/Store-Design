@@ -81,6 +81,8 @@ beforeAll(async () => {
         assets: [
           {
             ...entry('asset-1', '1800mm普通中岛桌', '软装物料', '预览/asset-1.jpg'),
+            // 模型选用表: the user's name; the manual name stays for search and records.
+            display_name: '1.8米普通中岛桌',
             product_image: '软装道具/SI1.0/品类图库/01_道具图片PNG/1.8米中岛桌.png',
             product_image_match: 'exact',
             plan_symbol: {
@@ -89,7 +91,10 @@ beforeAll(async () => {
             },
           },
           entry('asset-2', '徕卡墙画面与标识组合', '软装物料'),
-          entry('asset-3', '广告机', '信息化物料', '预览/missing.jpg', '信息化物料'),
+          {
+            ...entry('asset-3', '广告机', '信息化物料', '预览/missing.jpg', '信息化物料'),
+            retired: { date: '2026-10-10', reason: '重复了' },
+          },
           entry('asset-4', '1.8米收银边柜', '软装物料'),
         ],
       }),
@@ -202,6 +207,9 @@ describe('GET /assets', () => {
     expect(total).toBe(4)
     const island = items.find((a) => a.id === 'asset-1')
     expect(island).toMatchObject({
+      name: '1.8米普通中岛桌',
+      standardName: '1800mm普通中岛桌',
+      retired: false,
       function: 'island_table',
       installation: 'floor',
       placeable: true,
@@ -214,6 +222,8 @@ describe('GET /assets', () => {
     expect(island).toMatchObject({ category: '软装道具', productImageMatch: 'exact' })
     expect(island?.productImage?.sha256).toBe(sha(preview))
     expect(items.find((a) => a.id === 'asset-3')).toMatchObject({
+      name: '广告机 · 测试变体',
+      retired: true,
       category: '信息化物料',
       productImage: null,
       productImageMatch: null,
@@ -253,6 +263,11 @@ describe('GET /assets', () => {
       url: `/api/v1/assets?q=${encodeURIComponent('收银')}`,
     })
     expect(search.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-4'])
+    const byUserName = await t.app.inject({
+      method: 'GET',
+      url: `/api/v1/assets?q=${encodeURIComponent('1.8米普通')}`,
+    })
+    expect(byUserName.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-1'])
     const missing = await t.app.inject({ method: 'GET', url: '/api/v1/assets/asset-999' })
     expect(missing.statusCode).toBe(404)
   })

@@ -3831,6 +3831,7 @@ export interface paths {
                                 staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                                 facingConfidence: ("high" | "medium" | "low") | null;
                                 placeable: boolean;
+                                retired: boolean;
                                 judgment: string | null;
                                 glb: {
                                     /** Format: uuid */
@@ -3947,6 +3948,7 @@ export interface paths {
                             staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                             facingConfidence: ("high" | "medium" | "low") | null;
                             placeable: boolean;
+                            retired: boolean;
                             judgment: string | null;
                             glb: {
                                 /** Format: uuid */

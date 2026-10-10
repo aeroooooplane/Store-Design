@@ -146,7 +146,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 2,
@@ -248,7 +255,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.6米配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.6米配件柜平面图.png"
-      }
+      },
+      "display_name": "1.6米配件柜"
     },
     {
       "n": 3,
@@ -877,7 +885,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通中岛桌"
     },
     {
       "n": 4,
@@ -1371,7 +1380,14 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通中岛桌",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "保留一个就够了"
+      },
+      "user_note": "保留一个就够了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 5,
@@ -1422,7 +1438,8 @@
         "preview": "预览/asset-568756.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石双面侧招"
     },
     {
       "n": 6,
@@ -1529,7 +1546,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/培训坐凳平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/培训坐凳平面图.png"
-      }
+      },
+      "display_name": "培训坐凳"
     },
     {
       "n": 7,
@@ -1575,7 +1593,8 @@
         "preview": "预览/asset-569211.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "AcePro2竖版画面"
     },
     {
       "n": 8,
@@ -1682,7 +1701,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米储物柜+开箱桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米储物柜+开箱桌平面图.png"
-      }
+      },
+      "display_name": "1.8米开箱储物柜"
     },
     {
       "n": 9,
@@ -1789,7 +1809,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米边桌+储物柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米边桌+储物柜平面图.png"
-      }
+      },
+      "display_name": "1.8米边桌储物柜"
     },
     {
       "n": 10,
@@ -1835,7 +1856,8 @@
         "preview": "预览/asset-754006.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "AcePro2横版画面"
     },
     {
       "n": 11,
@@ -2023,7 +2045,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 14,
@@ -2130,7 +2159,14 @@
       "plan_symbol_source": {
         "svg": "信息化物料/品类图库/03_平面图SVG/电子水牌平面图.svg",
         "png": "信息化物料/品类图库/02_平面图PNG/电子水牌平面图.png"
-      }
+      },
+      "display_name": "43寸电子水牌",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 15,
@@ -2176,7 +2212,8 @@
         "preview": "预览/asset-1129848.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石始于敢想吊挂LOGO"
     },
     {
       "n": 16,
@@ -2222,7 +2259,8 @@
         "preview": "预览/asset-1156409.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "GO3S竖版灯箱"
     },
     {
       "n": 17,
@@ -2268,7 +2306,8 @@
         "preview": "预览/asset-1567211.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "柯基犬道具"
     },
     {
       "n": 18,
@@ -2314,7 +2353,8 @@
         "preview": "预览/asset-1688589.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "赛车服模特"
     },
     {
       "n": 19,
@@ -2360,7 +2400,8 @@
         "preview": "预览/asset-1688590.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "X5立体字"
     },
     {
       "n": 20,
@@ -2406,7 +2447,8 @@
         "preview": "预览/asset-1691382.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "X3相机放大模型"
     },
     {
       "n": 21,
@@ -2509,7 +2551,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通开箱桌"
     },
     {
       "n": 22,
@@ -2605,7 +2648,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 23,
@@ -2662,9 +2712,12 @@
       },
       "web_model": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/网页模型",
       "type_name": null,
-      "product_image": null,
-      "product_image_match": null,
-      "plan_symbol": null,
+      "product_image": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/效果图.png",
+      "product_image_match": "exact",
+      "plan_symbol": {
+        "svg": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/平面图.svg",
+        "png": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478/平面图.png"
+      },
       "category": "软装道具",
       "category_si": "SI1.0",
       "folder": "软装道具/SI1.0/边桌收银柜_1800mm变体_带电脑__asset-2360478",
@@ -2705,8 +2758,14 @@
         ],
         "updated": "2026-10-04"
       },
-      "product_image_source": null,
-      "plan_symbol_source": null
+      "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/asset-2360478.png",
+      "plan_symbol_source": {
+        "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/asset-2360478.svg",
+        "png": "软装道具/SI1.0/品类图库/02_平面图PNG/asset-2360478.png"
+      },
+      "display_name": "1.8米边桌收银柜",
+      "user_note": "参考其他软装绘制出效果图和平面图",
+      "reply_note": "已补：效果图用网页模型按材质渲染（品类图库/01_道具图片PNG/asset-2360478.png）；平面图按模型顶视实测绘制，外形与 1.8 米边桌系列一致（1800×500，前角 R20），左侧电脑、键盘、鼠标，右侧操作垫。"
     },
     {
       "n": 24,
@@ -2752,7 +2811,8 @@
         "preview": "预览/asset-2463847.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "约7米LED门头屏"
     },
     {
       "n": 25,
@@ -2848,7 +2908,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "98寸横屏广告机"
     },
     {
       "n": 26,
@@ -2894,7 +2955,8 @@
         "preview": "预览/asset-2587203.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "GO3S横版灯箱"
     },
     {
       "n": 27,
@@ -2996,7 +3058,8 @@
       "plan_symbol_source": {
         "svg": "信息化物料/品类图库/03_平面图SVG/电子水牌平面图.svg",
         "png": "信息化物料/品类图库/02_平面图PNG/电子水牌平面图.png"
-      }
+      },
+      "display_name": "43寸电子水牌"
     },
     {
       "n": 28,
@@ -3092,7 +3155,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸竖屏广告机"
     },
     {
       "n": 29,
@@ -3194,7 +3258,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      }
+      },
+      "display_name": "1.2米配件柜"
     },
     {
       "n": 30,
@@ -3290,7 +3355,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "55寸竖屏广告机"
     },
     {
       "n": 31,
@@ -3478,7 +3544,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "86寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 34,
@@ -3574,7 +3647,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "65寸横屏广告机"
     },
     {
       "n": 35,
@@ -3620,7 +3694,8 @@
         "preview": "预览/asset-3147733.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "Insta360标识画面"
     },
     {
       "n": 36,
@@ -3666,7 +3741,8 @@
         "preview": "预览/asset-3356837.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "2米双人沙发"
     },
     {
       "n": 37,
@@ -3717,7 +3793,13 @@
         "preview": "预览/asset-3356988.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "0.9米L形挡板",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "模型选用表中标为删除"
+      },
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 38,
@@ -3819,7 +3901,14 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(场景)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(场景)平面图.png"
-      }
+      },
+      "display_name": "2.4米配件柜(场景)",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 39,
@@ -3865,7 +3954,8 @@
         "preview": "预览/asset-6952129.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石始于敢想墙面LOGO"
     },
     {
       "n": 40,
@@ -3911,7 +4001,8 @@
         "preview": "预览/asset-11478950.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "水下KV灯箱"
     },
     {
       "n": 41,
@@ -4007,7 +4098,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机"
     },
     {
       "n": 42,
@@ -4103,7 +4195,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 43,
@@ -4149,7 +4248,8 @@
         "preview": "预览/asset-11483499.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影翎墙面LOGO"
     },
     {
       "n": 44,
@@ -4195,7 +4295,8 @@
         "preview": "预览/asset-11511980.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "曲面LED屏"
     },
     {
       "n": 45,
@@ -4291,7 +4392,8 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "86寸横屏广告机"
     },
     {
       "n": 46,
@@ -4337,7 +4439,8 @@
         "preview": "预览/asset-11525436.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "水下KV灯箱"
     },
     {
       "n": 47,
@@ -4383,7 +4486,8 @@
         "preview": "预览/asset-11525629.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "4.614米LED门头屏"
     },
     {
       "n": 48,
@@ -4485,7 +4589,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/3.6米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/3.6米配件柜平面图.png"
-      }
+      },
+      "display_name": "3.6米配件柜"
     },
     {
       "n": 49,
@@ -4587,7 +4692,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/字母凳平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/字母凳平面图.png"
-      }
+      },
+      "display_name": "字母凳"
     },
     {
       "n": 50,
@@ -4695,7 +4801,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通开箱桌"
     },
     {
       "n": 51,
@@ -4797,7 +4904,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/试飞台平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/试飞台平面图.png"
-      }
+      },
+      "display_name": "试飞台"
     },
     {
       "n": 52,
@@ -4843,7 +4951,8 @@
         "preview": "预览/asset-20533337.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石墙面LOGO"
     },
     {
       "n": 53,
@@ -5948,7 +6057,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通中岛桌"
     },
     {
       "n": 54,
@@ -6055,7 +6165,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米收银桌(左)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米收银桌(左)平面图.png"
-      }
+      },
+      "display_name": "1.8米收银桌(左)"
     },
     {
       "n": 55,
@@ -6157,7 +6268,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      }
+      },
+      "display_name": "1.2米配件柜(AVBU)"
     },
     {
       "n": 56,
@@ -6228,9 +6340,9 @@
         "软装道具/SI1.0/收银台_白色圆角_约1942mm变体__asset-24488377/预览-视角4.jpg"
       ],
       "tight_face_bounds_xyz_mm": [
-        1941.8,
-        647.9,
-        1204.54
+        1786,
+        602,
+        1205
       ],
       "source_sha256": "ddd5609583454c8dd0a838772a06de93f5a4827121298bf07a70bf52b25d4829",
       "named_sha256": "ddd5609583454c8dd0a838772a06de93f5a4827121298bf07a70bf52b25d4829",
@@ -6260,7 +6372,11 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米收银台平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米收银台平面图.png"
-      }
+      },
+      "display_name": "1.8米收银台",
+      "user_note": "为什么是1942mm？",
+      "reply_note": "1942mm 不是柜体尺寸：柜体实测 1780×600mm（即 1.8 米收银台，台高 900mm，含收银屏总高 1205mm）。多出的宽度来自模型离地 350mm 处一圈零厚度残留面，两侧各伸出约 81mm、前面约 46mm，是拆分 SketchUp 模型时留下的。已从网页模型中去掉并按柜体重新居中，占地现为 1786×602mm。",
+      "tight_face_bounds_note": "2026-10-10 网页模型去掉离地 350mm 一圈零厚度残留面后实测 1786×602×1205；SKP 原件仍含残留面，原面外包为 1941.8×647.9×1204.54"
     },
     {
       "n": 58,
@@ -6361,7 +6477,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "1.8米边桌收银柜",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "保留一个就够了"
+      },
+      "user_note": "保留一个就够了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 59,
@@ -6412,7 +6535,8 @@
         "preview": "预览/asset-28034994.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "中岛陈列柜组合"
     },
     {
       "n": 60,
@@ -6458,7 +6582,13 @@
         "preview": "预览/asset-28104668.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "非标横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "模型选用表中标为删除"
+      },
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 61,
@@ -6554,7 +6684,14 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 62,
@@ -6611,7 +6748,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米配件边柜(H1.3米)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米配件边柜(H1.3米)平面图.png"
-      }
+      },
+      "display_name": "1.8米配件边柜（高1.3米）"
     },
     {
       "n": 63,
@@ -6718,7 +6856,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米配件边柜(带托盘)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米配件边柜(带托盘)平面图.png"
-      }
+      },
+      "display_name": "1.8米配件边柜(带托盘)"
     },
     {
       "n": 64,
@@ -6825,7 +6964,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米收银边柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米收银边柜平面图.png"
-      }
+      },
+      "display_name": "1.8米收银边柜"
     },
     {
       "n": 65,
@@ -6871,7 +7011,8 @@
         "preview": "预览/asset-33868332.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石全景相机墙面LOGO"
     },
     {
       "n": 66,
@@ -6917,7 +7058,8 @@
         "preview": "预览/asset-33868330.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石始于敢想墙面LOGO"
     },
     {
       "n": 67,
@@ -7009,7 +7151,8 @@
         "preview": "预览/asset-33917980.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石吊挂LOGO（短吊杆）"
     },
     {
       "n": 69,
@@ -7055,7 +7198,8 @@
         "preview": "预览/asset-33937175.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石吊挂LOGO（长吊杆）"
     },
     {
       "n": 70,
@@ -8160,7 +8304,14 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      }
+      },
+      "display_name": "1.8米普通中岛桌",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     },
     {
       "n": 71,
@@ -8206,7 +8357,8 @@
         "preview": "预览/asset-34293910.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "Insta360墙面LOGO"
     },
     {
       "n": 72,
@@ -8313,7 +8465,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/1.8米边桌+配件柜平面图.svg",
         "png": "软装道具/SI1.0/品类图库/02_平面图PNG/1.8米边桌+配件柜平面图.png"
-      }
+      },
+      "display_name": "1.8米边桌配件柜"
     },
     {
       "n": 73,
@@ -8415,7 +8568,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.2米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.2米配件柜平面图.png"
-      }
+      },
+      "display_name": "1.2米配件柜"
     },
     {
       "n": 74,
@@ -8517,7 +8671,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/3.6米配件柜平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/3.6米配件柜平面图.png"
-      }
+      },
+      "display_name": "3.6米配件柜(AVBU)"
     },
     {
       "n": 75,
@@ -8563,7 +8718,8 @@
         "preview": "预览/asset-36882381.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "0.6米产品展示台"
     },
     {
       "n": 76,
@@ -8675,7 +8831,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(AVBU)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(AVBU)平面图.png"
-      }
+      },
+      "display_name": "2.4米配件柜(AVBU)"
     },
     {
       "n": 77,
@@ -8787,7 +8944,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(场景)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(场景)平面图.png"
-      }
+      },
+      "display_name": "2.4米配件柜(场景)"
     },
     {
       "n": 78,
@@ -8899,7 +9057,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/2.4米配件柜(AVBU)平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/2.4米配件柜(AVBU)平面图.png"
-      }
+      },
+      "display_name": "2.4米配件柜(AVBU+影石Insta360)"
     },
     {
       "n": 79,
@@ -9015,7 +9174,8 @@
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.99米徕卡墙平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.99米徕卡墙平面图.png"
-      }
+      },
+      "display_name": "徕卡墙画面标识组合"
     },
     {
       "n": 80,
@@ -9061,7 +9221,8 @@
         "preview": "预览/asset-37747693.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "0.6米产品展示台"
     },
     {
       "n": 81,
@@ -9107,7 +9268,8 @@
         "preview": "预览/asset-37747692.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "0.6米产品展示台"
     },
     {
       "n": 82,
@@ -9153,7 +9315,8 @@
         "preview": "预览/asset-37747691.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "0.6米产品展示台"
     },
     {
       "n": 83,
@@ -9199,7 +9362,8 @@
         "preview": "预览/asset-37760531.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "ANTIGRAVITY墙面LOGO"
     },
     {
       "n": 84,
@@ -9245,7 +9409,8 @@
         "preview": "预览/asset-40808068.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "骑行模特组合"
     },
     {
       "n": 85,
@@ -9291,7 +9456,8 @@
         "preview": "预览/asset-40888228.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "岩石道具组合"
     },
     {
       "n": 86,
@@ -9337,7 +9503,8 @@
         "preview": "预览/asset-40896298.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "影石墙面LOGO"
     },
     {
       "n": 87,
@@ -9383,7 +9550,8 @@
         "preview": "预览/asset-40910342.jpg"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "Insta360墙面LOGO"
     },
     {
       "n": 88,
@@ -9442,8 +9610,8 @@
       },
       "web_model": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/网页模型",
       "type_name": "1.8米中岛桌",
-      "product_image": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/效果图-同类参考.png",
-      "product_image_match": "approximate",
+      "product_image": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/效果图.png",
+      "product_image_match": "exact",
       "plan_symbol": {
         "svg": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/平面图.svg",
         "png": "软装道具/SI2.0/1.8米亮脚中岛桌_带产品托盘__asset-41053706/平面图.png"
@@ -10346,11 +10514,14 @@
         ],
         "updated": "2026-10-04"
       },
-      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米中岛桌.png",
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/asset-41053706.png",
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米中岛桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米中岛桌平面图.png"
-      }
+      },
+      "display_name": "1.8米亮脚中岛桌",
+      "user_note": "效果图我已放上，但是可能需要抠图，把背景去掉，背景与台面颜色较相似需要注意",
+      "reply_note": "已抠图：台面与平板电脑按轮廓保留，去掉地面和阴影，放到 3840×2160 透明画布，现为同款效果图。原图上的浅色水印去不掉，若有无水印原图可替换。"
     },
     {
       "n": 89,
@@ -10409,8 +10580,8 @@
       },
       "web_model": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/网页模型",
       "type_name": "1.8米开箱桌",
-      "product_image": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/效果图-同类参考.png",
-      "product_image_match": "approximate",
+      "product_image": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/效果图.png",
+      "product_image_match": "exact",
       "plan_symbol": {
         "svg": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/平面图.svg",
         "png": "软装道具/SI2.0/1.8米亮脚开箱桌_含4把黑色高脚凳__asset-41277543/平面图.png"
@@ -10454,11 +10625,14 @@
         ],
         "updated": "2026-10-04"
       },
-      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/1.8米开箱桌.png",
+      "product_image_source": "软装道具/SI2.0/品类图库/01_道具图片PNG/asset-41277543.png",
       "plan_symbol_source": {
         "svg": "软装道具/SI2.0/品类图库/03_平面图SVG/1.8米开箱桌平面图.svg",
         "png": "软装道具/SI2.0/品类图库/02_平面图PNG/1.8米开箱桌平面图.png"
-      }
+      },
+      "display_name": "1.8米亮脚开箱桌",
+      "user_note": "效果图我已放上，但是可能需要抠图，把背景去掉，背景与台面颜色较相似需要注意",
+      "reply_note": "已抠图：台面与地面同色处手工描出台面轮廓，去掉地面和阴影，放到 3840×2160 透明画布（与其他 SI2.0 效果图一致），现为同款效果图。原图上的浅色水印去不掉，若有无水印原图可替换。"
     },
     {
       "n": 90,
@@ -10559,11 +10733,24 @@
         "updated": "2026-10-04"
       },
       "product_image_source": null,
-      "plan_symbol_source": null
+      "plan_symbol_source": null,
+      "display_name": "75寸横屏广告机",
+      "retired": {
+        "date": "2026-10-10",
+        "reason": "重复了"
+      },
+      "user_note": "重复了",
+      "reply_note": "已停用：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”并回读表格即可恢复。"
     }
   ],
   "type_aliases": {
-    "1.2米边桌收银柜": "1.0米边桌+收银"
+    "1.2米边桌收银柜": "1米边桌+收银",
+    "1.0米边桌+收银": "1米边桌+收银",
+    "1.0米收银台": "1米收银台",
+    "1.8米储物边柜(H1.3米)": "1.8米储物边柜（高1.3米）",
+    "3.0米徕卡墙": "3米徕卡墙"
   },
-  "images_refreshed": "2026-10-10"
+  "images_refreshed": "2026-10-10",
+  "gallery_notes": {},
+  "selection_table_applied": "2026-10-10"
 }

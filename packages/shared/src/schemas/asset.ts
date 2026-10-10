@@ -46,6 +46,7 @@ const MetresSchema = z.number().finite().positive()
  */
 export const AssetSchema = z.object({
   id: z.string().regex(/^asset-\d+$/),
+  /** The user's name (模型选用表) when set, otherwise the manual name with its variant. */
   name: z.string(),
   standardName: z.string(),
   variant: z.string(),
@@ -61,6 +62,8 @@ export const AssetSchema = z.object({
   facingConfidence: z.enum(['high', 'medium', 'low']).nullable(),
   /** Has a verified web model and stands on the floor: the planner may use it. */
   placeable: z.boolean(),
+  /** Marked 删除 in 模型选用表: old layouts still show it; it is no longer offered or planned. */
+  retired: z.boolean(),
   judgment: z.string().nullable(),
   glb: FileRefSchema.nullable(),
   /** Simplified, untextured copy used by the white model; falls back to `glb`. */

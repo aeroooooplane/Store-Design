@@ -32,6 +32,7 @@ function asset(
     staffSide: null,
     facingConfidence: null,
     placeable: true,
+    retired: false,
     judgment: null,
     glb: null,
     whiteGlb: null,
@@ -103,5 +104,25 @@ describe('ModelPicker', () => {
     fireEvent.click(screen.getByRole('button', { name: '添加 墙面LOGO · 变体' }))
     expect(onPick).toHaveBeenCalledWith(catalog[4])
     expect(screen.getByText('已添加')).toBeTruthy()
+  })
+
+  it('uses the names from 模型选用表, hides retired models and tells twins apart', () => {
+    const named = [
+      asset('asset-11', '产品展示台', '非标陈列', { name: '0.6米产品展示台', variant: 'X5' }),
+      asset('asset-12', '产品展示台', '非标陈列', { name: '0.6米产品展示台', variant: '空台' }),
+      asset('asset-13', '广告机', '非标陈列', { name: '75寸横屏广告机', retired: true }),
+    ]
+    render(<ModelPicker assets={named} siStyle="SI1.0" onPick={vi.fn()} />)
+
+    const twins = screen.getAllByRole('button', { name: '添加 0.6米产品展示台' })
+    expect(twins.map((b) => within(b).getByText(/mm/).textContent)).toEqual([
+      'X5 · 1800 × 1000 × 900 mm',
+      '空台 · 1800 × 1000 × 900 mm',
+    ])
+    expect(screen.queryByText('75寸横屏广告机')).toBeNull()
+    expect(pickableGroups(named, 'SI1.0')[0]?.assets.map((a) => a.id)).toEqual([
+      'asset-11',
+      'asset-12',
+    ])
   })
 })

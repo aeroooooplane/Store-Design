@@ -24,6 +24,10 @@ const ManifestSchema = z.object({
       asset_id: z.string().regex(/^asset-\d+$/),
       standard_name: z.string().min(1),
       variant: z.string(),
+      /** 模型选用表 name; the manual name stays in standard_name / variant. */
+      display_name: z.string().min(1).nullish(),
+      /** 模型选用表 删除: kept for old layouts, no longer offered. */
+      retired: z.looseObject({ date: z.string() }).nullish(),
       material_category: z.string().min(1),
       si_family: z.string().min(1),
       judgment: z.string().nullish(),
@@ -254,6 +258,7 @@ export async function importCatalog(
         id,
         standardName: entry.standard_name,
         variant: entry.variant,
+        displayName: entry.display_name ?? null,
         materialCategory: entry.material_category,
         siFamily: entry.si_family,
         category: entry.category,
@@ -267,6 +272,7 @@ export async function importCatalog(
         staffSide: face?.staffSide ?? null,
         facingConfidence: face?.confidence ?? null,
         placeable,
+        retired: Boolean(entry.retired),
         judgment: entry.judgment ?? null,
         glbFileId,
         whiteGlbFileId,

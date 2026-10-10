@@ -44,12 +44,25 @@
 2. `品类对照.csv` 中该编号的品类名 → `品类图库/01_道具图片PNG/<品类名>.png`；
 3. 平面图同理：`03_平面图SVG/<编号>.svg` 或 `<品类名>平面图.svg`（1 单位 = 1 毫米，正面朝下）。
 
-补充效果图：按 `缺少效果图清单.csv` 把透明背景 PNG 命名为编号放入对应品类图库，然后运行 `pnpm library:refresh`（更新 manifest、清单与目录页）和 `pnpm catalog:import`（网站生效）。
+补充效果图：按 `缺少效果图清单.csv` 把透明背景 PNG 命名为编号放入对应品类图库，然后运行 `pnpm library:refresh`（更新 manifest、清单与目录页）和 `pnpm catalog:import`（网站生效）。照片背景与产品颜色接近时用 `node tools/library/cutout-photo.mjs` 抠图（可用 `--keep` 描出白色台面等轮廓）。
+
+## 模型选用表（`资源库/模型选用表.xlsx`）
+
+`pnpm library:table` 生成，列出全部可选模型和尚无 SU 模型的品类。用户在表中改“模型名称”、把“是否保留”改为“删除”、填写“修改意见”后，`pnpm library:apply-table` 回读到 manifest：
+
+- 模型名称 → `display_name`：网站上显示的名称；手册名称 `standard_name` / `variant` 不变，仍用于判断用途和搜索。
+- 删除 → `retired`（停用）：不再出现在“添加模型”列表和自动排布中；已有方案里用到的照常显示和渲染。改回“保留”再回读即可恢复。模型文件不删除。
+- 修改意见 → `user_note`；对意见的处理结果写在 `reply_note`，重新生成的表格“处理说明”列显示它。
+- 无 SU 的品类改名记入 `type_aliases`（图库文件不改名）。
+
+回读后运行 `pnpm library:table` 重新生成表格、`pnpm catalog:import` 让网站生效。2026-10-10 第一次回读：84 件改名、14 件停用（多为重复），收银台去掉残留面（1942 → 1786 mm 宽），三件补效果图、一件补平面图。
 
 ## 常用命令（仓库根目录）
 
 ```powershell
 pnpm library:refresh  # 补充效果图 / 平面图或修改 品类对照.csv 后刷新
+pnpm library:table    # 生成模型选用表
+pnpm library:apply-table  # 回读用户改过的模型选用表
 pnpm catalog:white    # 网页模型更新后重新生成白模轻量版
 pnpm catalog:import   # 刷新网站模型目录
 ```
