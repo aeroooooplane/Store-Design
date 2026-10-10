@@ -1,26 +1,31 @@
-import { readdir, readFile, writeFile } from 'node:fs/promises'
+import { readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { storageRoots } from '../app.ts'
 import { loadConfig } from '../config/env.ts'
-import { WEB_MODEL_DIR } from '../modules/assets/importer.ts'
+import { LIBRARY_DIR } from '../modules/assets/importer.ts'
 import { WhiteRecordSchema, buildWhiteModel, whitePaths } from '../modules/assets/white-models.ts'
 import { sha256File } from '../lib/storage.ts'
 
-// Builds the light white-model GLB next to every web model (资源库). Skips models whose
-// white.json already matches the current model.glb. Usage: [asset-id ...] (none = all).
+// Builds the light white-model GLB next to every web model listed in the library manifest
+// (资源库/04_模型库). Skips models whose white.json already matches the current model.glb.
+// Usage: [asset-id ...] (none = all).
 const config = loadConfig()
-const root = path.join(storageRoots(config).resource, WEB_MODEL_DIR)
+const root = path.join(storageRoots(config).resource, LIBRARY_DIR)
 const wanted = new Set(process.argv.slice(2))
-const ids = (await readdir(root, { withFileTypes: true }))
-  .filter((entry) => entry.isDirectory() && (wanted.size === 0 || wanted.has(entry.name)))
-  .map((entry) => entry.name)
-  .sort()
+const text = await readFile(path.join(root, 'manifest.json'), 'utf8')
+const manifest = JSON.parse(text.charCodeAt(0) === 0xfeff ? text.slice(1) : text) as {
+  assets: { asset_id: string; web_model?: string | null }[]
+}
+const models = manifest.assets
+  .filter((a) => a.web_model && (wanted.size === 0 || wanted.has(a.asset_id)))
+  .map((a) => ({ id: a.asset_id, dir: path.join(root, a.web_model ?? '') }))
+  .sort((a, b) => a.id.localeCompare(b.id))
 
 let built = 0
 let skipped = 0
 const failures: string[] = []
-for (const id of ids) {
-  const paths = whitePaths(path.join(root, id))
+for (const { id, dir } of models) {
+  const paths = whitePaths(dir)
   const sourceSha = await sha256File(paths.source).catch(() => null)
   if (!sourceSha) continue
   const existing = await readFile(paths.record, 'utf8')

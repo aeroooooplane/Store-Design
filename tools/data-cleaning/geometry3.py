@@ -67,7 +67,7 @@ def candidates(t,assets,si):
         if '亮脚' in t and '亮脚' in name:score+=.08
         result.append(dict(asset_id=a['asset_id'],score=round(score,2),basis=dict(function=fun,nominal_m=n,asset_nominal_m=an,si_priority='si_index_label' if si else None),web_available=a['asset_id'] in WEB))
     return sorted(result,key=lambda a:-a['score'])[:3]
-ASSETS=read(ROOT/'资源库/04_软装道具模型/单件模型/manifest.json')['assets']
+ASSETS=read(ROOT/'资源库/04_模型库/manifest.json')['assets']
 WEB={a['id'] for a in read(ROOT/'demo/src/data/placement-manifest.json')['assets']}
 def runone(row,num):
     sid=row['source_id'];dest=CACHE/'pilot-r3'/sid

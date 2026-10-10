@@ -1,8 +1,9 @@
-import {readFile, readdir, writeFile, rename} from 'node:fs/promises'
+import {readFile, writeFile, rename} from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 import path from 'node:path'
 import {fileURLToPath, pathToFileURL} from 'node:url'
 import {validateAsset} from '../src/asset-contract.js'
+import {readLibrary} from '../server/model-library-paths.mjs'
 
 const hash = bytes => createHash('sha256').update(bytes).digest('hex')
 const readJSON = async file => JSON.parse(await readFile(file, 'utf8'))
@@ -26,25 +27,26 @@ export function placementEntry(named, report, bytes, policy, facing = null) {
 }
 
 export async function buildPlacementManifest(repo) {
-  const demo=path.join(repo,'demo'),dir=path.join(repo,'资源库/04_软装道具模型/网页模型')
-  const named=await readJSON(path.join(repo,'资源库/04_软装道具模型/单件模型/manifest.json'))
+  const demo=path.join(repo,'demo'),library=await readLibrary(repo)
+  const named=library.manifest
   const policy=await readJSON(path.join(demo,'src/data/placement-policy.json'))
-  const facing=(await readJSON(path.join(dir,'facing.json'))).assets
+  const facing=(await readJSON(library.facingPath)).assets
   const byId=new Map(named.assets.map(a=>[a.asset_id,a]))
   if(byId.size!==named.assets.length) throw Error('命名清单含重复编号')
   // Only the IDs the legacy workbench enables; the other converted GLBs wait for the new catalogue.
   const enabled=new Set(policy.webAssets)
-  const folders=(await readdir(dir,{withFileTypes:true})).filter(e=>e.isDirectory()&&/^asset-\d+$/.test(e.name)).map(e=>e.name)
+  const folders=[...library.webModels.keys()]
   for(const id of enabled) if(!folders.includes(id)) throw Error('开放摆放的资产缺少 GLB：'+id)
   const assets=[]
   for(const folder of folders.filter(id=>enabled.has(id)).map(name=>({name}))){
-    const report=await readJSON(path.join(dir,folder.name,'conversion.json'))
+    const dir=library.webModels.get(folder.name)
+    const report=await readJSON(path.join(dir,'conversion.json'))
     if(report.id!==folder.name || !byId.has(report.id)) throw Error('转换记录没有唯一来源：'+folder.name)
     const source=path.resolve(repo,report.source),rel=path.relative(repo,source)
     if(rel.startsWith('..')||path.isAbsolute(rel)) throw Error('转换来源超出项目')
     if(hash(await readFile(source))!==report.sourceSha256) throw Error('源 DAE 已变化：'+report.id)
     if(report.url!==`/assets/su/${report.id}/model.glb`) throw Error('转换地址不匹配')
-    assets.push(placementEntry(byId.get(report.id),report,await readFile(path.join(dir,folder.name,'model.glb')),policy,facing[report.id]))
+    assets.push(placementEntry(byId.get(report.id),report,await readFile(path.join(dir,'model.glb')),policy,facing[report.id]))
   }
   const priority=id=>{const i=policy.preferredOrder.indexOf(id);return i<0?policy.preferredOrder.length:i}
   assets.sort((a,b)=>priority(a.id)-priority(b.id)||a.id.localeCompare(b.id,undefined,{numeric:true}))

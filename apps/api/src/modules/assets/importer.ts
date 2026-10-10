@@ -4,15 +4,18 @@ import { sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { FrontAxisSchema, roundM } from '@store/shared'
+import { AssetCategorySchema, FrontAxisSchema, ImageMatchSchema, roundM } from '@store/shared'
 import type { ItemFunction } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { WhiteRecordSchema } from './white-models.ts'
 
-/** Paths inside the resource root (资源库). */
-export const LIBRARY_DIR = '04_软装道具模型/单件模型'
-export const WEB_MODEL_DIR = '04_软装道具模型/网页模型'
+/**
+ * The model library inside the resource root (资源库). Every file is found through
+ * manifest.json, whose paths are relative to this folder (see 资源库/04_模型库/README.md).
+ */
+export const LIBRARY_DIR = '04_模型库'
+const inLibrary = (relative: string) => `${LIBRARY_DIR}/${relative}`
 const MIN_EXTENT_M = 0.001
 
 const ManifestSchema = z.object({
@@ -26,6 +29,12 @@ const ManifestSchema = z.object({
       judgment: z.string().nullish(),
       preview: z.string().nullish(),
       named_sha256: z.string().nullish(),
+      category: AssetCategorySchema,
+      /** Folder with model.glb, white.glb and their records; null without a web model. */
+      web_model: z.string().nullish(),
+      product_image: z.string().nullish(),
+      product_image_match: ImageMatchSchema.nullish(),
+      plan_symbol: z.object({ svg: z.string(), png: z.string().nullable() }).nullish(),
       // Flat artwork (KV/LOGO 画面) has a zero extent in one axis.
       tight_face_bounds_xyz_mm: z.tuple([z.number().min(0), z.number().min(0), z.number().min(0)]),
     }),
@@ -83,6 +92,8 @@ export interface CatalogImportReport {
   withWhite: number
   placeable: number
   withPreview: number
+  withProductImage: number
+  withPlanSymbol: number
   problems: string[]
 }
 
@@ -151,7 +162,7 @@ export async function importCatalog(
   const manifest = ManifestSchema.parse(
     await readJson(path.join(roots.resource, LIBRARY_DIR, 'manifest.json')),
   )
-  const facingRaw = await optionalJson(path.join(roots.resource, WEB_MODEL_DIR, 'facing.json'))
+  const facingRaw = await optionalJson(path.join(roots.resource, inLibrary('facing.json')))
   const facing = facingRaw === undefined ? {} : FacingSchema.parse(facingRaw).assets
   const report: CatalogImportReport = {
     assets: 0,
@@ -159,20 +170,23 @@ export async function importCatalog(
     withWhite: 0,
     placeable: 0,
     withPreview: 0,
+    withProductImage: 0,
+    withPlanSymbol: 0,
     problems: [],
   }
 
   for (const entry of manifest.assets) {
     const id = entry.asset_id
-    const conversionRaw = await optionalJson(
-      path.join(roots.resource, WEB_MODEL_DIR, id, 'conversion.json'),
-    )
+    const web = entry.web_model ? inLibrary(entry.web_model) : null
+    const conversionRaw = web
+      ? await optionalJson(path.join(roots.resource, web, 'conversion.json'))
+      : undefined
     const conversion =
       conversionRaw === undefined ? undefined : ConversionSchema.parse(conversionRaw)
 
     let glb: FileFacts | undefined
-    if (conversion) {
-      const facts = await inspect(roots, `${WEB_MODEL_DIR}/${id}/model.glb`)
+    if (web && conversion) {
+      const facts = await inspect(roots, `${web}/model.glb`)
       if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
       else if (facts.sha256 !== conversion.glbSha256 || facts.bytes !== conversion.bytes)
         report.problems.push(`${id}: model.glb 与 conversion.json 的哈希或字节数不一致，未挂接`)
@@ -180,13 +194,11 @@ export async function importCatalog(
     }
     // The light white model counts only if it was built from this exact model.glb.
     let white: FileFacts | undefined
-    if (glb) {
-      const recordRaw = await optionalJson(
-        path.join(roots.resource, WEB_MODEL_DIR, id, 'white.json'),
-      )
+    if (web && glb) {
+      const recordRaw = await optionalJson(path.join(roots.resource, web, 'white.json'))
       const record = recordRaw === undefined ? undefined : WhiteRecordSchema.safeParse(recordRaw)
       if (record?.success && record.data.sourceSha256 === glb.sha256) {
-        const facts = await inspect(roots, `${WEB_MODEL_DIR}/${id}/white.glb`)
+        const facts = await inspect(roots, `${web}/white.glb`)
         if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
         else if (facts.sha256 !== record.data.sha256)
           report.problems.push(`${id}: white.glb 与 white.json 的哈希不一致，未挂接`)
@@ -197,10 +209,20 @@ export async function importCatalog(
     }
     let preview: FileFacts | undefined
     if (entry.preview) {
-      const facts = await inspect(roots, `${LIBRARY_DIR}/${entry.preview}`)
+      const facts = await inspect(roots, inLibrary(entry.preview))
       if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
       else preview = facts
     }
+    // Product picture and plan symbol from the category gallery (品类图库).
+    const optionalFile = async (relative: string | null | undefined) => {
+      if (!relative) return undefined
+      const facts = await inspect(roots, inLibrary(relative))
+      if (typeof facts !== 'string') return facts
+      report.problems.push(`${id}: ${facts}`)
+      return undefined
+    }
+    const productImage = await optionalFile(entry.product_image)
+    const planSymbol = await optionalFile(entry.plan_symbol?.svg)
 
     const face = facing[id]
     // Facing review recorded wall pieces; other 软装 stand on the floor; the rest is unknown.
@@ -224,12 +246,17 @@ export async function importCatalog(
       const glbFileId = glb ? await registerFile(tx, glb, 'glb') : null
       const whiteGlbFileId = white ? await registerFile(tx, white, 'glb') : null
       const previewFileId = preview ? await registerFile(tx, preview, 'preview') : null
+      const productImageFileId = productImage
+        ? await registerFile(tx, productImage, 'product_image')
+        : null
+      const planSymbolFileId = planSymbol ? await registerFile(tx, planSymbol, 'plan_symbol') : null
       const values = {
         id,
         standardName: entry.standard_name,
         variant: entry.variant,
         materialCategory: entry.material_category,
         siFamily: entry.si_family,
+        category: entry.category,
         function: functionFor(entry.standard_name),
         installation,
         width: roundM(footprint.w),
@@ -244,6 +271,9 @@ export async function importCatalog(
         glbFileId,
         whiteGlbFileId,
         previewFileId,
+        productImageFileId,
+        productImageMatch: productImage ? (entry.product_image_match ?? null) : null,
+        planSymbolFileId,
         sourceSha256: entry.named_sha256 ?? null,
       }
       const { id: _id, ...update } = values
@@ -261,6 +291,8 @@ export async function importCatalog(
     if (white) report.withWhite++
     if (placeable) report.placeable++
     if (preview) report.withPreview++
+    if (productImage) report.withProductImage++
+    if (planSymbol) report.withPlanSymbol++
   }
   return report
 }

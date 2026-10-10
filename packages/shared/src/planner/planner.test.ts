@@ -8,7 +8,7 @@ import { facingAfter, rotationFacing } from './orientation.ts'
 import { planLayout, tablesForArea } from './planner.ts'
 import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
 
-// Real catalogue sizes (资源库/04_软装道具模型/网页模型).
+// Real catalogue sizes (资源库/04_模型库).
 const catalog: PlannerCatalog = {
   island: [
     {

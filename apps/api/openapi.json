@@ -11651,6 +11651,21 @@
             "in": "query",
             "name": "siFamily",
             "required": false
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "软装道具",
+                "信息化物料",
+                "品牌标识",
+                "非标陈列",
+                "环境设施"
+              ]
+            },
+            "in": "query",
+            "name": "category",
+            "required": false
           }
         ],
         "responses": {
@@ -11684,6 +11699,16 @@
                           },
                           "siFamily": {
                             "type": "string"
+                          },
+                          "category": {
+                            "type": "string",
+                            "enum": [
+                              "软装道具",
+                              "信息化物料",
+                              "品牌标识",
+                              "非标陈列",
+                              "环境设施"
+                            ]
                           },
                           "function": {
                             "type": "string",
@@ -11910,6 +11935,92 @@
                                 "type": "null"
                               }
                             ]
+                          },
+                          "productImage": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "fileId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "bytes": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "sha256": {
+                                    "type": "string",
+                                    "pattern": "^[0-9a-f]{64}$"
+                                  }
+                                },
+                                "required": [
+                                  "fileId",
+                                  "url",
+                                  "bytes",
+                                  "sha256"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "productImageMatch": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "exact",
+                                  "approximate"
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "planSymbol": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "fileId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "bytes": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "sha256": {
+                                    "type": "string",
+                                    "pattern": "^[0-9a-f]{64}$"
+                                  }
+                                },
+                                "required": [
+                                  "fileId",
+                                  "url",
+                                  "bytes",
+                                  "sha256"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
                           }
                         },
                         "required": [
@@ -11919,6 +12030,7 @@
                           "variant",
                           "materialCategory",
                           "siFamily",
+                          "category",
                           "function",
                           "installation",
                           "footprint",
@@ -11930,7 +12042,10 @@
                           "judgment",
                           "glb",
                           "whiteGlb",
-                          "preview"
+                          "preview",
+                          "productImage",
+                          "productImageMatch",
+                          "planSymbol"
                         ],
                         "additionalProperties": false
                       }
@@ -12033,6 +12148,16 @@
                     },
                     "siFamily": {
                       "type": "string"
+                    },
+                    "category": {
+                      "type": "string",
+                      "enum": [
+                        "软装道具",
+                        "信息化物料",
+                        "品牌标识",
+                        "非标陈列",
+                        "环境设施"
+                      ]
                     },
                     "function": {
                       "type": "string",
@@ -12259,6 +12384,92 @@
                           "type": "null"
                         }
                       ]
+                    },
+                    "productImage": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "fileId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "bytes": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            }
+                          },
+                          "required": [
+                            "fileId",
+                            "url",
+                            "bytes",
+                            "sha256"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "productImageMatch": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "exact",
+                            "approximate"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "planSymbol": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "fileId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "bytes": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            }
+                          },
+                          "required": [
+                            "fileId",
+                            "url",
+                            "bytes",
+                            "sha256"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
                     }
                   },
                   "required": [
@@ -12268,6 +12479,7 @@
                     "variant",
                     "materialCategory",
                     "siFamily",
+                    "category",
                     "function",
                     "installation",
                     "footprint",
@@ -12279,7 +12491,10 @@
                     "judgment",
                     "glb",
                     "whiteGlb",
-                    "preview"
+                    "preview",
+                    "productImage",
+                    "productImageMatch",
+                    "planSymbol"
                   ],
                   "additionalProperties": false
                 }

@@ -29,6 +29,13 @@
       "when": 1791604494980,
       "tag": "0003_white_models",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1791605533034,
+      "tag": "0004_asset_categories",
+      "breakpoints": true
     }
   ]
 }

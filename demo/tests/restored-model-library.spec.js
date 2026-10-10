@@ -3,7 +3,7 @@ import {readFile} from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 
 test('restored SI library serves all named models, previews and legends from canonical paths',async({request,page})=>{
-  const manifest=JSON.parse(await readFile('../资源库/04_软装道具模型/单件模型/manifest.json','utf8'))
+  const manifest=JSON.parse(await readFile('../资源库/04_模型库/manifest.json','utf8'))
   expect(manifest.assets).toHaveLength(90)
   const images=new Set()
   for(const asset of manifest.assets){

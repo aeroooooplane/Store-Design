@@ -3480,6 +3480,7 @@ export interface paths {
                     function?: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
                     placeable?: "true" | "false";
                     siFamily?: string;
+                    category?: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                 };
                 header?: never;
                 path?: never;
@@ -3501,6 +3502,8 @@ export interface paths {
                                 variant: string;
                                 materialCategory: string;
                                 siFamily: string;
+                                /** @enum {string} */
+                                category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                                 /** @enum {string} */
                                 function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
                                 installation: ("floor" | "wall") | null;
@@ -3531,6 +3534,21 @@ export interface paths {
                                     sha256: string;
                                 } | null;
                                 preview: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
+                                productImage: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
+                                productImageMatch: ("exact" | "approximate") | null;
+                                planSymbol: {
                                     /** Format: uuid */
                                     fileId: string;
                                     url: string;
@@ -3601,6 +3619,8 @@ export interface paths {
                             materialCategory: string;
                             siFamily: string;
                             /** @enum {string} */
+                            category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
+                            /** @enum {string} */
                             function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
                             installation: ("floor" | "wall") | null;
                             footprint: {
@@ -3630,6 +3650,21 @@ export interface paths {
                                 sha256: string;
                             } | null;
                             preview: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                            productImage: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                            productImageMatch: ("exact" | "approximate") | null;
+                            planSymbol: {
                                 /** Format: uuid */
                                 fileId: string;
                                 url: string;

@@ -10,6 +10,7 @@ import {NodeIO} from '@gltf-transform/core'
 import {ALL_EXTENSIONS} from '@gltf-transform/extensions'
 import {dedup,meshopt,prune,weld} from '@gltf-transform/functions'
 import {MeshoptDecoder,MeshoptEncoder} from 'meshoptimizer'
+import {readLibrary} from '../server/model-library-paths.mjs'
 
 const TOOL='@gltf-transform/core@4.5.1 + meshoptimizer@1.3.0'
 // 16-bit positions (≈0.03 mm over 2 m): the 14-bit default collapses the sub-0.1 mm gap between
@@ -19,7 +20,7 @@ const STEPS=['dedup','weld','prune',`meshopt(level=medium, position=${POSITION_B
 const TOLERANCE_M=.001
 
 const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
-const models=path.join(repo,'资源库/04_软装道具模型/网页模型')
+const {webModels}=await readLibrary(repo)
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex')
 
 await Promise.all([MeshoptDecoder.ready,MeshoptEncoder.ready])
@@ -59,10 +60,12 @@ function checkShape(bounds,expected,label){
 }
 
 const requested=process.argv.slice(2)
-const ids=requested.length?requested:(await readdir(models)).filter(name=>/^asset-\d+$/.test(name)).sort()
+const ids=requested.length?requested:[...webModels.keys()].sort()
 let before=0,after=0
 for(const id of ids){
-  const dir=path.join(models,id),glbPath=path.join(dir,'model.glb'),reportPath=path.join(dir,'conversion.json')
+  const dir=webModels.get(id)
+  if(!dir)throw Error(`${id} has no web model folder in the library manifest`)
+  const glbPath=path.join(dir,'model.glb'),reportPath=path.join(dir,'conversion.json')
   const report=JSON.parse(await readFile(reportPath,'utf8'))
   if(report.compression){if(requested.length)throw Error(`${id} is already compressed`);continue}
   // Temp files can only be left by a crash between write and rename; the originals are still valid.

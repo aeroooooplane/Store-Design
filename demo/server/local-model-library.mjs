@@ -2,7 +2,7 @@ import {readFile, realpath, stat} from 'node:fs/promises'
 import {createReadStream} from 'node:fs'
 import path from 'node:path'
 
-const library='资源库/04_软装道具模型/单件模型'
+import {LIBRARY as library} from './model-library-paths.mjs'
 const review='资源库/05_店铺形象设计标准/历史阅读记录'
 const guide='docs/si-standards-review-20261001.md'
 const localPeer=value=>['127.0.0.1','::1','::ffff:127.0.0.1'].includes(value)
@@ -26,11 +26,11 @@ export function localModelLibraryPlugin(root){
       // Resolve only explicitly indexed assets; never expose the whole project directory.
       const allowed=new Map()
       const add=(route,relative)=>allowed.set(route,path.resolve(root,relative))
-      for(const name of ['模型预览目录.html','命名对照.csv','使用指引.md','manifest.json','校验结果.json'])add('/model-library/'+name,library+'/'+name)
-      add('/model-library/',library+'/模型预览目录.html')
+      for(const name of ['模型目录.html','模型清单.csv','缺少效果图清单.csv','README.md','manifest.json'])add('/model-library/'+name,library+'/'+name)
+      add('/model-library/',library+'/模型目录.html')
       const manifest=JSON.parse(await readFile(path.join(root,library,'manifest.json'),'utf8'))
-      for(const asset of manifest.assets)for(const file of [asset.named_skp,asset.preview,...asset.additional_views||[]])add('/model-library/'+file,library+'/'+file)
-      add('/model-library/平面图例/index.json',library+'/平面图例/index.json')
+      for(const asset of manifest.assets)for(const file of [asset.named_skp,asset.preview,...asset.additional_views||[],asset.product_image,asset.plan_symbol?.svg,asset.plan_symbol?.png].filter(Boolean))add('/model-library/'+file,library+'/'+file)
+      add('/model-library/_图例来源/index.json',library+'/_图例来源/index.json')
       for(const asset of manifest.assets)if(asset.plan_legend){
         for(const file of [asset.plan_legend.file,asset.plan_legend.context,asset.plan_legend.raw_file].filter(Boolean))add('/model-library/'+file,library+'/'+file)
       }
@@ -53,10 +53,11 @@ export function localModelLibraryPlugin(root){
         let content=await readFile(file,'utf8')
         const back='<nav class="catalogue-nav" style="padding:16px 32px;border-bottom:1px solid #111;background:white;color:#111"><a style="color:inherit;margin-right:24px" href="/">← 返回设计工作台</a><a style="color:inherit" href="/model-library/">SI 模型库</a></nav>'
         if(ext==='.md')content='<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>模型库使用与命名记录</title>'+back+'<pre style="white-space:pre-wrap;max-width:1000px;margin:32px auto;padding:20px;font:16px/1.8 sans-serif">'+escape(content)+'</pre></html>'
-        else content=content.replace('<header>',back+'<header>').replaceAll('../../05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../资源库/05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../docs/','/si-guide/')
+        else content=content.replace('<header>',back+'<header>').replaceAll('../../05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../资源库/05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../../docs/','/si-guide/').replaceAll('../05_店铺形象设计标准/历史阅读记录/','/si-standards/').replaceAll('../../docs/','/si-guide/')
         res.setHeader('Content-Type','text/html; charset=utf-8');res.setHeader('Content-Length',Buffer.byteLength(content));return res.end(req.method==='HEAD'?undefined:content)
       }
-      const types={'.pdf':'application/pdf','.jpg':'image/jpeg','.png':'image/png','.json':'application/json; charset=utf-8','.csv':'text/csv; charset=utf-8','.skp':'application/octet-stream'}
+      if(ext==='.svg')res.setHeader('Content-Security-Policy',"default-src 'none'; style-src 'unsafe-inline'")
+      const types={'.pdf':'application/pdf','.jpg':'image/jpeg','.png':'image/png','.svg':'image/svg+xml','.json':'application/json; charset=utf-8','.csv':'text/csv; charset=utf-8','.skp':'application/octet-stream'}
       res.setHeader('Content-Type',types[ext]||'application/octet-stream')
       res.setHeader('Content-Length',info.size)
       if(ext==='.skp'||ext==='.csv')res.setHeader('Content-Disposition',`attachment; filename*=UTF-8''${encodeURIComponent(path.basename(file))}`)

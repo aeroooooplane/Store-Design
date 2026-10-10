@@ -5,6 +5,7 @@ import {fileURLToPath} from 'node:url'
 import {createHash} from 'node:crypto'
 import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
+import {readLibrary,webModelDirFor} from '../server/model-library-paths.mjs'
 
 const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
 // SU_SPLIT_DIR points at an unpacked DAE delivery (e.g. the dae-20261009 archive); relative to the repo.
@@ -76,7 +77,9 @@ try{
         return {base64:btoa(binary),dimensions,reloadedDimensions:sizes,textures,removedLineObjects:strays.length,warnings:[...new Set(warnings)]}
       }finally{console.warn=originalWarn}
     },{url:'/@fs/'+dae.replaceAll('\\','/'),expected:{w,d,h},maxTextureSize,jpegForJpg})
-    const output=path.join(repo,'资源库/04_软装道具模型/网页模型',id)
+    const library=await readLibrary(repo),named=library.manifest.assets.find(a=>a.asset_id===id)
+    if(!named)throw Error(`${id} is not in the model library manifest`)
+    const output=webModelDirFor(library.root,named)
     await mkdir(output,{recursive:true})
     const glb=Buffer.from(result.base64,'base64')
     await writeFile(path.join(output,'model.glb'),glb,{flag:'wx'})

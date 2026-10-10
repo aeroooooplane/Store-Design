@@ -1,11 +1,13 @@
 import {createReadStream} from 'node:fs'
 import {stat, realpath} from 'node:fs/promises'
 import path from 'node:path'
+import {readLibrary} from './model-library-paths.mjs'
 
 // Preserve the public asset URLs while keeping the canonical files in the resource library.
 export function resourceModelsPlugin(root, assets) {
   const ids = new Set(assets.map(a => a.id))
-  const base = path.resolve(root, '资源库/04_软装道具模型/网页模型')
+  // asset id → web model folder, read from the library manifest on first use.
+  let library = null
   const middleware = async (req, res, next) => {
     const url = req.url?.split('?')[0] || ''
     if (!url.startsWith('/assets/su/')) return next()
@@ -17,8 +19,11 @@ export function resourceModelsPlugin(root, assets) {
     if (!match || !ids.has(match[1])) return fail(404, '模型不在已核定清单中')
     if (!['GET','HEAD'].includes(req.method)) return fail(405, '仅支持读取模型')
     try {
-      const file = await realpath(path.join(base, match[1], 'model.glb'))
-      const resolvedBase = await realpath(base)
+      library ??= await readLibrary(root)
+      const folder = library.webModels.get(match[1])
+      if (!folder) return fail(404, '本机缺少对应GLB，请按资源补传清单恢复模型文件。')
+      const file = await realpath(path.join(folder, 'model.glb'))
+      const resolvedBase = await realpath(library.root)
       const relative = path.relative(resolvedBase, file)
       if (relative.startsWith('..') || path.isAbsolute(relative)) return fail(403, '模型超出资源目录')
       const info = await stat(file)

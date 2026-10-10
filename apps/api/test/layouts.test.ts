@@ -228,6 +228,10 @@ describe('plannerCatalog', () => {
     judgment: null,
     glb: null,
     whiteGlb: null,
+    category: '软装道具',
+    productImage: null,
+    productImageMatch: null,
+    planSymbol: null,
     preview: null,
   })
 

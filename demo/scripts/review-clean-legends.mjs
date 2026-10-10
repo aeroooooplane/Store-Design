@@ -2,9 +2,10 @@ import {chromium} from '@playwright/test'
 import {readFile,writeFile,access} from 'node:fs/promises'
 import {fileURLToPath,pathToFileURL} from 'node:url'
 import path from 'node:path'
+import {readLibrary} from '../server/model-library-paths.mjs'
 const root=fileURLToPath(new URL('../../',import.meta.url))
 const work=path.join(root,'tmp/clean-legends')
-const manifest=JSON.parse(await readFile(path.join(root,'资源库/04_软装道具模型/单件模型/manifest.json'),'utf8'))
+const {manifest}=await readLibrary(root)
 let cards=[]
 for(const a of manifest.assets.filter(a=>a.plan_legend)){
  const file=path.join(work,a.asset_id+'-proof.png')

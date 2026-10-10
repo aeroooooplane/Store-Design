@@ -6,14 +6,15 @@ import path from 'node:path'
 import {fileURLToPath} from 'node:url'
 import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
+import {readLibrary} from '../server/model-library-paths.mjs'
 
 const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
-const models=path.join(repo,'资源库/04_软装道具模型/网页模型')
+const library=await readLibrary(repo),webModels=library.webModels
 const [outputArg,...requested]=process.argv.slice(2)
 if(!outputArg)throw Error('Pass an output directory.')
 const output=path.resolve(repo,outputArg)
-const ids=requested.length?requested:(await readdir(models)).filter(name=>/^asset-\d+$/.test(name)).sort()
-const named=JSON.parse(await readFile(path.join(repo,'资源库/04_软装道具模型/单件模型/manifest.json'),'utf8'))
+const ids=requested.length?requested:[...webModels.keys()].sort()
+const named=library.manifest
 const nameOf=new Map(named.assets.map(a=>[a.asset_id,`${a.standard_name} · ${a.variant}`]))
 
 await mkdir(output,{recursive:true})
@@ -26,8 +27,8 @@ try{
   const page=await browser.newPage()
   await page.goto('http://127.0.0.1:5184/')
   for(const id of ids){
-    const conversion=JSON.parse(await readFile(path.join(models,id,'conversion.json'),'utf8'))
-    const url='/@fs/'+path.join(models,id,'model.glb').replaceAll('\\','/')
+    const conversion=JSON.parse(await readFile(path.join(webModels.get(id),'conversion.json'),'utf8'))
+    const url='/@fs/'+path.join(webModels.get(id),'model.glb').replaceAll('\\','/')
     const sheet=await page.evaluate(async({url,title})=>{
       const THREE=await import('/node_modules/three/build/three.module.js')
       const {GLTFLoader}=await import('/node_modules/three/examples/jsm/loaders/GLTFLoader.js')

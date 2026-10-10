@@ -21,6 +21,7 @@
 pnpm install                # 安装依赖
 copy .env.example .env      # 首次：复制环境变量模板，按需填写（.env 不提交）
 pnpm db:migrate             # 初始化 / 升级数据库
+pnpm library:refresh        # 模型库补充效果图或平面图后刷新清单与对应关系（见 资源库/04_模型库/README.md）
 pnpm catalog:white          # 生成白模轻量版（已是最新的会跳过；网页模型更新后重跑）
 pnpm catalog:import         # 从资源库导入模型目录（需先 git lfs pull 网页模型）
 pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（127.0.0.1:5173）
@@ -81,7 +82,7 @@ npm.cmd run preview -- --host 127.0.0.1 --port 64071 --strictPort
 ├─01_各门店原图纸/
 ├─02_各门店平面图/
 ├─03_各门店效果图/
-├─04_软装道具模型/
+├─04_模型库/
 ├─05_店铺形象设计标准/
 ├─06_生成流程文档/
 ├─90_处理过程与审核/
