@@ -371,6 +371,7 @@ export function PlanEditor({
             <PlanView
               svgRef={svgRef}
               space={space}
+              shopType={shopType}
               layout={state.layout}
               issues={issues}
               assets={assetMap}
