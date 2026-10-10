@@ -44,7 +44,7 @@ export function cameraSignature(camera: Camera): string {
   return hash({ position: camera.position, target: camera.target, fovDeg: camera.fovDeg })
 }
 
-interface RenderContext {
+export interface RenderContext {
   node: NodeRow
   siStyle: NonNullable<NodeRow['siStyle']>
   market: (typeof projects.$inferSelect)['market']
@@ -60,7 +60,7 @@ async function findNode(db: Database, nodeId: string): Promise<NodeRow> {
   return row
 }
 
-async function renderContext(db: Database, node: NodeRow): Promise<RenderContext> {
+export async function renderContext(db: Database, node: NodeRow): Promise<RenderContext> {
   if (node.kind !== 'render' || !node.layout || !node.siStyle) {
     throw new AppError('INVALID_STATE', '只有渲染节点可以保存渲染图')
   }
@@ -102,7 +102,7 @@ async function renderContext(db: Database, node: NodeRow): Promise<RenderContext
 }
 
 /** Newest image per active view and mode, in view order, each marked current or stale. */
-async function newestImages(
+export async function newestImages(
   db: Database,
   context: RenderContext,
 ): Promise<{ row: RenderRow; image: RenderImage; camera: Camera; sort: number }[]> {
@@ -159,18 +159,21 @@ export async function listRenders(
 }
 
 /** Width and height from the PNG header; anything that is not a PNG is refused. */
-export function pngSize(data: Buffer): { width: number; height: number } {
+export function pngSize(
+  data: Buffer,
+  { what = '渲染图', maxSide = MAX_SIDE }: { what?: string; maxSide?: number } = {},
+): { width: number; height: number } {
   if (
     data.length < 24 ||
     !data.subarray(0, 8).equals(PNG_SIGNATURE) ||
     data.toString('latin1', 12, 16) !== 'IHDR'
   ) {
-    throw new AppError('VALIDATION_FAILED', '渲染图必须是 PNG 图片')
+    throw new AppError('VALIDATION_FAILED', `${what}必须是 PNG 图片`)
   }
   const width = data.readUInt32BE(16)
   const height = data.readUInt32BE(20)
-  if ([width, height].some((side) => side < MIN_SIDE || side > MAX_SIDE)) {
-    throw new AppError('VALIDATION_FAILED', `渲染图边长须在 ${MIN_SIDE}–${MAX_SIDE} 像素之间`)
+  if ([width, height].some((side) => side < MIN_SIDE || side > maxSide)) {
+    throw new AppError('VALIDATION_FAILED', `${what}边长须在 ${MIN_SIDE}–${maxSide} 像素之间`)
   }
   return { width, height }
 }

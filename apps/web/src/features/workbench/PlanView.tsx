@@ -28,10 +28,98 @@ export interface PlanViewProps {
   svgRef?: Ref<SVGSVGElement> | undefined
   /** Compact thumbnails hide labels and dimensions. */
   compact?: boolean | undefined
+  /**
+   * Delivery drawing (manuals' style): numbered yellow badges instead of names, matching the
+   * legend (deliveryLegend), and the main customer-flow arrow.
+   */
+  numbers?: Readonly<Record<string, number>> | undefined
   title: string
 }
 
 const points = (polygon: readonly Point[]) => polygon.map((p) => p.join(',')).join(' ')
+
+/** Brand yellow (SI1.0 p.11), used for the numbered badges of delivery plans. */
+const BADGE_YELLOW = '#ffd200'
+
+/** Numbered badge of a prop; colours are attributes so an exported image keeps them. */
+function NumberBadge({ no, x, y, size }: { no: number; x: number; y: number; size: number }) {
+  return (
+    <g className="plan-badge">
+      <rect
+        x={x - size / 2}
+        y={y - size / 2}
+        width={size}
+        height={size}
+        rx={size * 0.2}
+        fill={BADGE_YELLOW}
+      />
+      <text
+        x={x}
+        y={y}
+        fontSize={size * 0.58}
+        fontWeight={700}
+        fill="#1f2328"
+        textAnchor="middle"
+        dominantBaseline="central"
+      >
+        {String(no).padStart(2, '0')}
+      </text>
+    </g>
+  )
+}
+
+/** 主客流方向: from the main entrance into the shop. */
+function FlowArrow({
+  from,
+  inward,
+  length,
+  fontSize,
+}: {
+  from: Point
+  inward: Point
+  length: number
+  fontSize: number
+}) {
+  const start: Point = [from[0] + inward[0] * 0.15, from[1] + inward[1] * 0.15]
+  const end: Point = [start[0] + inward[0] * length, start[1] + inward[1] * length]
+  const head = fontSize * 0.7
+  const side: Point = [-inward[1], inward[0]]
+  const tip = (k: number): Point => [
+    end[0] - inward[0] * head + side[0] * head * 0.5 * k,
+    end[1] - inward[1] * head + side[1] * head * 0.5 * k,
+  ]
+  // Beside the middle of the shaft, clear of it (five characters at 0.8 × fontSize).
+  const away = fontSize * 2.4
+  const label: Point = [
+    (start[0] + end[0]) / 2 + side[0] * away,
+    (start[1] + end[1]) / 2 + side[1] * away,
+  ]
+  const half = fontSize * 0.07
+  const neck: Point = [end[0] - inward[0] * head * 0.9, end[1] - inward[1] * head * 0.9]
+  const shaft: Point[] = [
+    [start[0] + side[0] * half, start[1] + side[1] * half],
+    [neck[0] + side[0] * half, neck[1] + side[1] * half],
+    [neck[0] - side[0] * half, neck[1] - side[1] * half],
+    [start[0] - side[0] * half, start[1] - side[1] * half],
+  ]
+  return (
+    <g className="plan-flow">
+      {/* A filled shaft: plan lines do not scale, which would make a stroked one vanish. */}
+      <polygon points={points(shaft)} fill="#36495c" />
+      <polygon points={points([end, tip(1), tip(-1)])} fill="#36495c" />
+      <text
+        x={label[0]}
+        y={label[1]}
+        fontSize={fontSize * 0.8}
+        fill="#36495c"
+        textAnchor="middle"
+        dominantBaseline="middle"
+      >
+        主客流方向
+      </text>
+    </g>
+  )
+}
 
 /** Short edge marker on the side the model faces (blocks only; symbols show it themselves). */
 function frontMarker(item: LayoutItem, asset: Asset | undefined) {
@@ -97,6 +185,7 @@ export function PlanView({
   onBackgroundPointerDown,
   svgRef,
   compact = false,
+  numbers,
   title,
 }: PlanViewProps) {
   const hatch = `hatch-${useId().replace(/:/g, '')}`
@@ -259,7 +348,15 @@ export function PlanView({
               width={item.w}
               height={item.d}
             />
-            {!compact && (
+            {!compact && numbers?.[item.id] !== undefined && (
+              <NumberBadge
+                no={numbers[item.id] ?? 0}
+                x={item.cx}
+                y={item.cz}
+                size={fontSize * 1.3}
+              />
+            )}
+            {!compact && !numbers && (
               <text
                 className="plan-label"
                 x={item.cx}
@@ -279,6 +376,14 @@ export function PlanView({
         )
       })}
 
+      {!compact && numbers && entrance && (
+        <FlowArrow
+          from={[(entrance.a[0] + entrance.b[0]) / 2, (entrance.a[1] + entrance.b[1]) / 2]}
+          inward={[-front[0], -front[1]]}
+          length={Math.min(1.4, Math.max(0.6, depth * 0.18))}
+          fontSize={fontSize}
+        />
+      )}
       {!compact && entranceLabel && (
         <text
           className="plan-entrance-label"

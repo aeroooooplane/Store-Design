@@ -3392,6 +3392,247 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/nodes/{nodeId}/deliveries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 渲染节点的历次交付（双 PDF 与 ZIP） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            nodeId: string;
+                            deliveries: {
+                                /** Format: uuid */
+                                id: string;
+                                /** Format: uuid */
+                                nodeId: string;
+                                folderName: string;
+                                archivePath: string | null;
+                                fullPdf: {
+                                    url: string;
+                                    name: string;
+                                    bytes: number;
+                                };
+                                showPdf: {
+                                    url: string;
+                                    name: string;
+                                    bytes: number;
+                                };
+                                zip: {
+                                    url: string;
+                                    name: string;
+                                    bytes: number;
+                                };
+                                pages: {
+                                    full: number;
+                                    show: number;
+                                };
+                                views: number;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        /** 生成交付文件：完整版与展示版 PDF、交付目录 ZIP，并写入归档目录 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        planPng: string;
+                        planSvg?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            nodeId: string;
+                            folderName: string;
+                            archivePath: string | null;
+                            fullPdf: {
+                                url: string;
+                                name: string;
+                                bytes: number;
+                            };
+                            showPdf: {
+                                url: string;
+                                name: string;
+                                bytes: number;
+                            };
+                            zip: {
+                                url: string;
+                                name: string;
+                                bytes: number;
+                            };
+                            pages: {
+                                full: number;
+                                show: number;
+                            };
+                            views: number;
+                            /** Format: date-time */
+                            createdAt: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                413: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/layouts/generate": {
         parameters: {
             query?: never;

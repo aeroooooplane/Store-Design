@@ -6,6 +6,7 @@ import type { AppConfig } from './config/env.ts'
 import type { StorageRoots } from './lib/storage.ts'
 import { assetRoutes } from './modules/assets/routes.ts'
 import { cameraRoutes } from './modules/cameras/routes.ts'
+import { deliveryRoutes } from './modules/deliveries/routes.ts'
 import { draftRoutes } from './modules/drafts/routes.ts'
 import { exchangeRoutes } from './modules/exchange/routes.ts'
 import { fileRoutes } from './modules/files/routes.ts'
@@ -52,6 +53,12 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await app.register(draftRoutes, { prefix: API_PREFIX, db })
   await app.register(cameraRoutes, { prefix: API_PREFIX, db })
   await app.register(renderRoutes, { prefix: API_PREFIX, db, roots })
+  await app.register(deliveryRoutes, {
+    prefix: API_PREFIX,
+    db,
+    roots,
+    archiveRoot: config.archiveRoot,
+  })
   await app.register(layoutRoutes, { prefix: API_PREFIX, db })
   await app.register(assetRoutes, { prefix: API_PREFIX, db })
   await app.register(fileRoutes, { prefix: API_PREFIX, db, roots })
