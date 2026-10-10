@@ -116,6 +116,13 @@ export async function getAsset(db: Database, ctx: RequestContext, id: string): P
 }
 
 /** Placeable assets by id, for validating and planning layouts on the server. */
+/** Every catalogue model: layouts may use models without a web model as placeholders. */
+export async function catalogAssets(db: Database): Promise<Map<string, Asset>> {
+  const rows = await selectAssets(db, undefined)
+  return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r)]))
+}
+
+/** Models with a verified web model; the planner only chooses among these. */
 export async function placeableAssets(db: Database): Promise<Map<string, Asset>> {
   const rows = await selectAssets(db, eq(assets.placeable, true))
   return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r)]))

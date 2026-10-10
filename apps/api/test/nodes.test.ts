@@ -413,7 +413,7 @@ describe('project import and export', () => {
     // Structure placeholders put the plan in a different space, so a space step is inserted.
     expect(imported.nodesImported).toBe(4)
     expect(imported.warnings).toEqual([
-      expect.stringContaining('已下架模型（asset-999）在当前模型目录中不可用'),
+      expect.stringContaining('已下架模型（asset-999）在当前模型目录中不存在'),
       expect.stringContaining('渲染风格“both”按 SI1.0 导入'),
     ])
 

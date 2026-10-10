@@ -59,14 +59,12 @@ export function useNode(nodeId: string | null) {
   })
 }
 
-export function usePlaceableAssets() {
+/** The whole catalogue: placeable models plus those that can only be placeholders. */
+export function useCatalog() {
   return useQuery({
     queryKey: workbenchKeys.assets,
     staleTime: 5 * 60_000,
-    queryFn: async () =>
-      AssetListSchema.parse(
-        unwrap(await api.GET('/api/v1/assets', { params: { query: { placeable: 'true' } } })),
-      ).items,
+    queryFn: async () => AssetListSchema.parse(unwrap(await api.GET('/api/v1/assets'))).items,
   })
 }
 

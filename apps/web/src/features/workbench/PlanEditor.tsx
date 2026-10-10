@@ -19,6 +19,7 @@ import type {
   Layout,
   LayoutItem,
   ShopType,
+  SiStyle,
   Space,
 } from '@store/shared'
 import { ApiRequestError } from '../../api/client.ts'
@@ -26,6 +27,7 @@ import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
 import { CameraPanel } from './CameraPanel.tsx'
+import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
 
@@ -42,6 +44,8 @@ interface PlanEditorProps {
   baseNode: DesignNode
   space: Space
   shopType: ShopType
+  /** Furniture of this SI style is offered in the model picker. */
+  siStyle: SiStyle
   /** The shared draft, if it continues this node. */
   draft: Draft | null
   assets: Asset[]
@@ -67,6 +71,7 @@ export function PlanEditor({
   baseNode,
   space,
   shopType,
+  siStyle,
   draft,
   assets,
   onNodeCreated,
@@ -84,7 +89,6 @@ export function PlanEditor({
     draft ? 'saved' : 'idle',
   )
   const [saveError, setSaveError] = useState<unknown>(null)
-  const [addAssetId, setAddAssetId] = useState('')
   const svgRef = useRef<SVGSVGElement>(null)
   const viewerRef = useRef<Viewer3DHandle>(null)
   const isWhite = baseNode.kind === 'white'
@@ -253,9 +257,7 @@ export function PlanEditor({
     }
   }
 
-  function addAsset() {
-    const asset = assetMap.get(addAssetId)
-    if (!asset) return
+  function addAsset(asset: Asset) {
     const xs = space.boundary.map((p) => p[0])
     const zs = space.boundary.map((p) => p[1])
     dispatch({
@@ -316,24 +318,7 @@ export function PlanEditor({
         >
           删除
         </button>
-        <label className="field inline">
-          添加模型
-          <select
-            aria-label="选择要添加的模型"
-            value={addAssetId}
-            onChange={(e) => setAddAssetId(e.target.value)}
-          >
-            <option value="">选择模型…</option>
-            {assets.map((asset) => (
-              <option key={asset.id} value={asset.id}>
-                {asset.siFamily} · {asset.name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <button type="button" disabled={!addAssetId} onClick={addAsset}>
-          放到中央
-        </button>
+        <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
         <span className={`save-state ${saveState}`} role="status">
           {SAVE_LABELS[saveState]}
         </span>

@@ -9,7 +9,7 @@ import {
   useCreateNode,
   useDraft,
   useNode,
-  usePlaceableAssets,
+  useCatalog,
   useTree,
   workbenchKeys,
 } from './api.ts'
@@ -42,7 +42,7 @@ export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string
 export function Workbench({ project }: { project: Project }) {
   const tree = useTree(project.id)
   const draft = useDraft(project.id)
-  const assets = usePlaceableAssets()
+  const assets = useCatalog()
   const [params, setParams] = useSearchParams()
   const [panel, setPanel] = useState<{ nodeId: string | null; kind: Panel }>({
     nodeId: null,
@@ -201,6 +201,7 @@ function NodePanel({
       baseNode={current}
       space={space}
       shopType={project.shopType}
+      siStyle={project.siStyle}
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}

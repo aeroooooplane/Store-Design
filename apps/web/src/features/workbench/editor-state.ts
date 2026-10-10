@@ -91,7 +91,8 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         w: roundM(size.w),
         d: roundM(size.d),
         h: roundM(size.h),
-        placeholder: false,
+        // Without a web model the item is a true-size placeholder (see assetFitProblem).
+        placeholder: !action.asset.placeable,
         locked: false,
       }
       return {
