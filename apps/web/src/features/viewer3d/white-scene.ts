@@ -5,7 +5,15 @@ import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import type { GLTF } from 'three/addons/loaders/GLTFLoader.js'
 import { WALL_THICKNESS_M, defaultCameras, wallSegments } from '@store/shared'
-import type { Asset, Camera, LayoutItem, Point, ShopType, Space } from '@store/shared'
+import type { Asset, Camera, LayoutItem, Point, ShopType, SiStyle, Space } from '@store/shared'
+import {
+  RENDER_LOOK,
+  disposeRoomMaterials,
+  finishMaterial,
+  floorStyle,
+  roomMaterials,
+} from './render-look.ts'
+import type { RoomSurface } from './render-look.ts'
 
 /** Legacy white-mode look (demo/src/scene.js). */
 const WHITE = '#f7f7f5'
@@ -18,10 +26,16 @@ export interface ViewPose {
   fovDeg: number
 }
 
+/** White model, or the material look of the renders (same scene, other materials). */
+export type Look = 'white' | 'material'
+
 export interface SceneHandlers {
   onSelect: (itemId: string | null) => void
-  /** `group` is the same for every move of one drag; `snap` is off while Alt is held. */
-  onMove: (
+  /**
+   * `group` is the same for every move of one drag; `snap` is off while Alt is held. Without
+   * it the props cannot be dragged (read-only views).
+   */
+  onMove?: (
     itemId: string,
     cx: number,
     cz: number,
@@ -226,6 +240,23 @@ function surface(): THREE.MeshStandardMaterial {
   return new THREE.MeshStandardMaterial({ color: WHITE, roughness: 0.8, metalness: 0 })
 }
 
+/** Room meshes share their materials, so only the geometry is freed with them. */
+function disposeGeometry(root: THREE.Object3D) {
+  root.traverse((node) => {
+    if (isDrawable(node)) node.geometry.dispose()
+  })
+}
+
+/** Signed area of a plan polygon; positive when the outward normal of a→b is (dz, −dx). */
+function signedArea(polygon: readonly Point[]): number {
+  let area = 0
+  polygon.forEach(([x1, z1], i) => {
+    const [x2, z2] = polygon[(i + 1) % polygon.length] ?? [x1, z1]
+    area += x1 * z2 - x2 * z1
+  })
+  return area / 2
+}
+
 function disposeTree(root: THREE.Object3D) {
   root.traverse((node) => {
     if (isDrawable(node)) {
@@ -257,6 +288,12 @@ interface PlacedItem {
   item: LayoutItem
   /** Rebuild when the model or the box size changes. */
   signature: string
+  /** The white model (or box). */
+  white: THREE.Group
+  /** The textured model for the material look, loaded the first time that look is used. */
+  finishUrl: string | null
+  finish: THREE.Object3D | null
+  finishState: 'none' | 'loading' | 'ready' | 'failed'
 }
 
 const toVec3 = (v: THREE.Vector3): [number, number, number] => [
@@ -290,6 +327,14 @@ export class WhiteScene {
   private drag: { id: string; dx: number; dz: number; group: string } | null = null
   private frame = 0
   private disposed = false
+  private look: Look = 'white'
+  private siStyle: SiStyle = 'SI1.0'
+  private shopType: ShopType = 'side_hall'
+  private readonly roomWhite = surface()
+  private readonly roomLooks = new Map<SiStyle, Record<RoomSurface, THREE.MeshStandardMaterial>>()
+  /** Textured models with adjusted finishes; per scene because metals use its environment. */
+  private readonly finishes = new Map<string, Promise<THREE.Object3D>>()
+  private readonly finishedMaterials = new Map<THREE.Material, THREE.Material>()
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
@@ -339,20 +384,24 @@ export class WhiteScene {
 
   /** Floor, walls and obstacles; also re-aims the sun and, on first use, the view. */
   setRoom(space: Space, shopType: ShopType, resetView: boolean) {
-    this.room.children.forEach(disposeTree)
+    this.room.children.forEach(disposeGeometry)
     this.room.clear()
+    this.shopType = shopType
 
     const floor = new THREE.Mesh(
       prism(space.boundary, -FLOOR_THICKNESS_M, FLOOR_THICKNESS_M),
-      surface(),
+      this.roomWhite,
     )
     floor.receiveShadow = true
+    floor.userData['surface'] = 'floor'
     this.room.add(floor)
+    if (shopType === 'island') this.addEdging(space.boundary)
 
     for (const wall of wallSegments(space, shopType)) {
       const length = Math.hypot(wall.b[0] - wall.a[0], wall.b[1] - wall.a[1])
       const geometry = new THREE.BoxGeometry(length, wall.height, WALL_THICKNESS_M)
-      const mesh = new THREE.Mesh(geometry, surface())
+      const mesh = new THREE.Mesh(geometry, this.roomWhite)
+      mesh.userData['surface'] = 'wall'
       const half = WALL_THICKNESS_M / 2
       mesh.position.set(
         (wall.a[0] + wall.b[0]) / 2 + wall.outward[0] * half,
@@ -367,7 +416,8 @@ export class WhiteScene {
 
     for (const obstacle of space.obstacles) {
       const height = obstacle.height ?? space.height
-      const mesh = new THREE.Mesh(prism(obstacle.polygon, 0, height), surface())
+      const mesh = new THREE.Mesh(prism(obstacle.polygon, 0, height), this.roomWhite)
+      mesh.userData['surface'] = 'wall'
       mesh.castShadow = true
       mesh.receiveShadow = true
       this.room.add(mesh)
@@ -394,7 +444,80 @@ export class WhiteScene {
       const [front] = defaultCameras(space)
       if (front) this.showView(front)
     }
+    this.paintRoom()
     this.sceneChanged()
+  }
+
+  /**
+   * 中岛店: continuous stainless edging around the raised floor, following the real outline
+   * (in the white model it is white like everything else).
+   */
+  private addEdging(boundary: readonly Point[]) {
+    const { width, height } = RENDER_LOOK.edging
+    const sign = signedArea(boundary) > 0 ? 1 : -1
+    boundary.forEach((a, i) => {
+      const b = boundary[(i + 1) % boundary.length] ?? a
+      const length = Math.hypot(b[0] - a[0], b[1] - a[1])
+      if (length < 1e-6) return
+      const out: Point = [(sign * (b[1] - a[1])) / length, (-sign * (b[0] - a[0])) / length]
+      const total = FLOOR_THICKNESS_M + height
+      // Lengthened by the strip width at both ends so the corners close.
+      const mesh = new THREE.Mesh(
+        new THREE.BoxGeometry(length + 2 * width, total, width),
+        this.roomWhite,
+      )
+      mesh.position.set(
+        (a[0] + b[0]) / 2 + (out[0] * width) / 2,
+        height - total / 2,
+        (a[1] + b[1]) / 2 + (out[1] * width) / 2,
+      )
+      mesh.rotation.y = -Math.atan2(b[1] - a[1], b[0] - a[0])
+      mesh.castShadow = true
+      mesh.receiveShadow = true
+      mesh.userData['surface'] = 'edging'
+      this.room.add(mesh)
+    })
+  }
+
+  /** White, or the material look; the props follow, loading textured models when needed. */
+  setLook(look: Look, siStyle: SiStyle) {
+    this.siStyle = siStyle
+    this.applyLook(look)
+  }
+
+  private applyLook(look: Look) {
+    this.look = look
+    this.paintRoom()
+    for (const placed of this.items.values()) {
+      if (look === 'material') this.loadFinish(placed)
+      this.showLook(placed)
+    }
+    this.sceneChanged()
+  }
+
+  private paintRoom() {
+    let materials: Record<RoomSurface, THREE.MeshStandardMaterial> | undefined
+    if (this.look === 'material') {
+      const style = floorStyle(this.siStyle, this.shopType)
+      materials = this.roomLooks.get(style)
+      if (!materials) {
+        materials = roomMaterials(style)
+        this.roomLooks.set(style, materials)
+      }
+    }
+    for (const mesh of this.room.children) {
+      const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
+      if (mesh instanceof THREE.Mesh && surfaceName) {
+        mesh.material = materials ? materials[surfaceName] : this.roomWhite
+      }
+    }
+  }
+
+  /** The textured model shows in the material look once it has loaded; otherwise the white. */
+  private showLook(placed: PlacedItem) {
+    const textured = this.look === 'material' && placed.finish !== null
+    placed.white.visible = !textured
+    if (placed.finish) placed.finish.visible = textured
   }
 
   /** Brings the props in line with the layout; models load in the background. */
@@ -405,15 +528,26 @@ export class WhiteScene {
       const asset = item.assetId && !item.placeholder ? assets.get(item.assetId) : undefined
       // The light white-model copy when there is one (see pnpm catalog:white).
       const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
-      const signature = url ?? `box:${item.w}:${item.d}:${item.h}`
+      const finishUrl = asset?.glb?.url ?? null
+      const signature = url ? `${url}|${finishUrl}` : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
-        placed = { group: new THREE.Group(), item, signature }
+        placed = {
+          group: new THREE.Group(),
+          item,
+          signature,
+          white: new THREE.Group(),
+          finishUrl,
+          finish: null,
+          finishState: 'none',
+        }
         placed.group.userData['itemId'] = item.id
+        placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
         this.fill(placed, url)
+        if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item
       const group = placed.group
@@ -479,6 +613,24 @@ export class WhiteScene {
     views: readonly Pick<Camera, 'position' | 'target' | 'fovDeg'>[],
     width: number,
     height: number,
+    look: Look = this.look,
+  ): Promise<string[]> {
+    const shown = this.look
+    if (look !== shown) {
+      this.applyLook(look)
+      await this.whenLoaded()
+    }
+    try {
+      return await this.shoot(views, width, height)
+    } finally {
+      if (!this.disposed && this.look !== shown) this.applyLook(shown)
+    }
+  }
+
+  private async shoot(
+    views: readonly Pick<Camera, 'position' | 'target' | 'fovDeg'>[],
+    width: number,
+    height: number,
   ): Promise<string[]> {
     const shot = new THREE.PerspectiveCamera(48, width / height, 0.05, 300)
     const images: string[] = []
@@ -533,7 +685,11 @@ export class WhiteScene {
     this.canvas.removeEventListener('pointercancel', this.endDrag)
     this.controls.dispose()
     for (const id of [...this.items.keys()]) this.removeItem(id)
-    this.room.children.forEach(disposeTree)
+    this.room.children.forEach(disposeGeometry)
+    this.roomWhite.dispose()
+    this.roomLooks.forEach(disposeRoomMaterials)
+    // Finished materials are clones; their textures belong to the shared model cache.
+    this.finishedMaterials.forEach((material) => material.dispose())
     this.marks.children.forEach(disposeTree)
     this.scene.environment?.dispose()
     this.renderer.dispose()
@@ -543,18 +699,18 @@ export class WhiteScene {
 
   private fill(placed: PlacedItem, url: string | null) {
     if (!url) {
-      placed.group.add(placeholderBox(placed.item))
+      placed.white.add(placeholderBox(placed.item))
       return
     }
     const load = loadModel(url)
       .then((model) => {
         if (this.items.get(placed.item.id) !== placed) return
-        placed.group.add(model.clone(true))
+        placed.white.add(model.clone(true))
         this.failed.delete(placed.item.id)
       })
       .catch(() => {
         if (this.items.get(placed.item.id) !== placed) return
-        placed.group.add(placeholderBox(placed.item))
+        placed.white.add(placeholderBox(placed.item))
         this.failed.add(placed.item.id)
       })
       .finally(() => {
@@ -564,6 +720,58 @@ export class WhiteScene {
       })
     this.pending.add(load)
     this.emitStatus()
+  }
+
+  /** Loads the textured model of a prop once; if it fails the white model stays in its place. */
+  private loadFinish(placed: PlacedItem) {
+    if (!placed.finishUrl || placed.finishState !== 'none') return
+    placed.finishState = 'loading'
+    const load = this.finished(placed.finishUrl)
+      .then((model) => {
+        if (this.items.get(placed.item.id) !== placed) return
+        placed.finish = model.clone(true)
+        placed.finishState = 'ready'
+        placed.group.add(placed.finish)
+        this.showLook(placed)
+      })
+      .catch(() => {
+        placed.finishState = 'failed'
+      })
+      .finally(() => {
+        this.pending.delete(load)
+        this.emitStatus()
+        this.sceneChanged()
+      })
+    this.pending.add(load)
+    this.emitStatus()
+  }
+
+  private finished(url: string): Promise<THREE.Object3D> {
+    let model = this.finishes.get(url)
+    if (!model) {
+      model = loadSource(url).then((gltf) => {
+        const root = gltf.scene.clone(true)
+        root.traverse((node) => {
+          if (!isDrawable(node)) return
+          const materials = Array.isArray(node.material) ? node.material : [node.material]
+          const finished = materials.map((source) => {
+            let material = this.finishedMaterials.get(source)
+            if (!material) {
+              material = finishMaterial(source, this.scene.environment)
+              if (material !== source) this.finishedMaterials.set(source, material)
+            }
+            return material
+          })
+          node.material = Array.isArray(node.material) ? finished : (finished[0] ?? node.material)
+          node.castShadow = true
+          node.receiveShadow = true
+        })
+        return root
+      })
+      model.catch(() => this.finishes.delete(url))
+      this.finishes.set(url, model)
+    }
+    return model
   }
 
   private removeItem(id: string) {
@@ -614,7 +822,7 @@ export class WhiteScene {
     if (event.button !== 0) return
     const placed = this.pick(event)
     this.handlers?.onSelect(placed?.item.id ?? null)
-    if (!placed || placed.item.locked) return
+    if (!placed || placed.item.locked || !this.handlers?.onMove) return
     const point = this.floorPoint(event)
     if (!point) return
     this.drag = {
@@ -631,7 +839,7 @@ export class WhiteScene {
     if (!this.drag) return
     const point = this.floorPoint(event)
     if (point) {
-      this.handlers?.onMove(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz, {
+      this.handlers?.onMove?.(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz, {
         group: this.drag.group,
         snap: !event.altKey,
       })

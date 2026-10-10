@@ -18,6 +18,7 @@ import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
 import { ProjectCard } from './ProjectCard.tsx'
+import { RenderStage } from './RenderStage.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree, spaceAncestor } from './tree.ts'
@@ -208,32 +209,13 @@ function NodePanel({
   const current = node.data
 
   if (current.kind === 'render') {
-    const later = '渲染图与交付文件将在下一步接入'
     return (
-      <WorkbenchLayout
+      <RenderStage
         left={left}
-        center={
-          <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap} />
-        }
-        right={
-          <div className="wb-card">
-            <StagePanel
-              title="渲染阶段"
-              first={[
-                { label: '重新渲染', onClick: () => undefined, disabled: true, title: later },
-                { label: '下载图片', onClick: () => undefined, disabled: true, title: later },
-              ]}
-              second={{
-                label: '生成交付文件',
-                onClick: () => undefined,
-                disabled: true,
-                primary: true,
-                title: later,
-              }}
-              hint={`${later}。渲染节点保存了确认时的布局与视角，不能直接编辑；如需修改，请回到它的白模。`}
-            />
-          </div>
-        }
+        project={project}
+        node={current}
+        space={space}
+        assets={assetMap}
       />
     )
   }
