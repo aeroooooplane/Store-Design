@@ -47,100 +47,73 @@ legend {
 
 .workbench {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr);
-  gap: var(--space-3);
-  align-items: start;
-}
-.workbench-side {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  min-width: 0;
-  gap: var(--space-1);
-  position: sticky;
-  top: var(--space-2);
+  gap: var(--space-2);
 }
 .workbench-main {
   min-width: 0;
 }
 
-/* History tree */
+/* History tree (colours and sizes: TREE_STYLE in tree-layout.ts) */
 .history {
   border: 1px solid var(--line);
 }
 .history-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
+  margin: 0;
   padding: var(--space-1);
-  border-bottom: 1px solid var(--ink);
+  border-bottom: 1px solid var(--line);
 }
 .history-head h2 {
-  margin: 0;
+  margin: 0 var(--space-1) 0 0;
   font-size: 14px;
 }
-.history ol {
-  list-style: none;
+.history-head .hint {
   margin: 0;
-  padding: 4px 0;
-  max-height: 70vh;
-  overflow: auto;
 }
-.history li {
+.history-tools {
+  margin-left: auto;
   display: flex;
+  gap: var(--space-1);
   align-items: center;
+}
+.history-rename {
+  display: flex;
   gap: 4px;
-  padding-right: 4px;
 }
-.history li.selected {
-  background: var(--surface);
+.history-canvas {
+  overflow: auto;
+  max-height: 460px;
+  padding: var(--space-1) 0;
 }
-.history li.hidden-node {
-  opacity: 0.5;
+.history-canvas svg {
+  display: block;
+  margin: 0 auto;
 }
-.history-node {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-  border: 0;
-  background: transparent;
-  padding: 6px var(--space-1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.tree-item {
+  cursor: pointer;
+  outline: none;
 }
-.history li.selected .history-node {
-  font-weight: 700;
+.tree-item .tree-node.current {
+  stroke: var(--ink);
+  stroke-width: 2px;
 }
-.history-actions {
-  display: none;
-  gap: 2px;
+.tree-item:hover .tree-node,
+.tree-item:focus-visible .tree-node {
+  stroke: var(--ink);
+  stroke-width: 1.5px;
 }
-.history li:hover .history-actions,
-.history li:focus-within .history-actions {
-  display: flex;
+.tree-item.hidden-node {
+  opacity: 0.45;
 }
-.history-actions button,
-.history form button {
-  padding: 2px 6px;
-  font-size: 12px;
+.tree-item.hidden-node .tree-node {
+  stroke: var(--ink);
+  stroke-dasharray: 4 3;
 }
-.history form {
-  display: flex;
-  gap: 2px;
-  padding: 2px var(--space-1);
+.tree-draft circle {
+  fill: var(--paper);
+  stroke: var(--ink);
 }
-.history form input {
-  flex: 1;
-  min-width: 0;
-  padding: 2px 6px;
-}
-.badge {
-  display: inline-block;
-  font-size: 11px;
-  padding: 0 4px;
-  border: 1px solid var(--line-strong);
-  color: var(--muted);
-  margin-right: 4px;
+.tree-draft text {
+  fill: var(--ink);
 }
 
 /* Plan drawing (store-drawing style) */
