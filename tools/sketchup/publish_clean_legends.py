@@ -3,6 +3,8 @@ from pathlib import Path
 import json, shutil, hashlib
 
 ROOT=Path(__file__).resolve().parents[2]
+import sys
+sys.exit('旧平面图例已于 2026-10-10 停用（用户确认）：平面图改用各大类 品类图库 的平面图，见 资源库/04_模型库/README.md')
 # Library restructured 2026-10-10: each model's clean legend is <folder>/平面图例.png.
 BASE=ROOT/'资源库/04_模型库'
 WORK=ROOT/'tmp/clean-legends'

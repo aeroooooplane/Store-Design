@@ -5,10 +5,12 @@
 //   2. 品类对照.csv 中该编号的品类名 → 品类图库/01_道具图片PNG/<品类名>.png（同款或同类参考）
 //   平面图同理：03_平面图SVG/<编号>.svg 或 <品类名>平面图.svg；02_平面图PNG 为同名 PNG。
 //   品类图库按大类：软装道具/<SI>/品类图库、信息化物料/品类图库、品牌标识/品类图库、非标陈列/品类图库。
+//   品类图库是原件；对应上的图另复制一份到每件模型目录：效果图.png（同类参考为 效果图-同类参考.png）、
+//   平面图.svg、平面图.png。manifest 指向模型目录里的副本，*_source 记录原件。
 //
 // 用法（仓库根目录）：pnpm library:refresh      补充效果图后运行，然后 pnpm catalog:import
 import { existsSync } from 'node:fs'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
+import { copyFile, mkdir, readFile, rm, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -77,16 +79,20 @@ export function linkImages(manifest, types, exists = has) {
     a.type_name = type?.name ?? null
     const own = `${gallery}/01_道具图片PNG/${a.asset_id}.png`
     const byType = type ? `${gallery}/01_道具图片PNG/${type.name}.png` : null
+    let source = null
     if (exists(own)) {
-      a.product_image = own
+      source = own
       a.product_image_match = 'exact'
     } else if (byType && exists(byType)) {
-      a.product_image = byType
+      source = byType
       a.product_image_match = type.match
     } else {
-      a.product_image = null
       a.product_image_match = null
     }
+    a.product_image_source = source
+    a.product_image = source
+      ? `${a.folder}/${a.product_image_match === 'approximate' ? '效果图-同类参考' : '效果图'}.png`
+      : null
     const symbol = [a.asset_id, type ? `${type.name}平面图` : null]
       .filter(Boolean)
       .map((name) => ({
@@ -94,8 +100,45 @@ export function linkImages(manifest, types, exists = has) {
         png: `${gallery}/02_平面图PNG/${name}.png`,
       }))
       .find((s) => exists(s.svg))
-    a.plan_symbol = symbol ? { svg: symbol.svg, png: exists(symbol.png) ? symbol.png : null } : null
+    a.plan_symbol_source = symbol
+      ? { svg: symbol.svg, png: exists(symbol.png) ? symbol.png : null }
+      : null
+    a.plan_symbol = a.plan_symbol_source
+      ? {
+          svg: `${a.folder}/平面图.svg`,
+          png: a.plan_symbol_source.png ? `${a.folder}/平面图.png` : null,
+        }
+      : null
   }
+}
+
+/** Copies the matched gallery pictures into each model folder and removes stale copies. */
+export async function syncCopies(manifest, root = LIBRARY) {
+  let copied = 0
+  for (const a of manifest.assets) {
+    const wanted = new Map()
+    if (a.product_image) wanted.set(a.product_image, a.product_image_source)
+    if (a.plan_symbol) {
+      wanted.set(a.plan_symbol.svg, a.plan_symbol_source.svg)
+      if (a.plan_symbol.png) wanted.set(a.plan_symbol.png, a.plan_symbol_source.png)
+    }
+    for (const name of ['效果图.png', '效果图-同类参考.png', '平面图.svg', '平面图.png']) {
+      const target = `${a.folder}/${name}`
+      const full = path.join(root, target)
+      const from = wanted.get(target)
+      if (from) {
+        const source = await readFile(path.join(root, from))
+        const current = existsSync(full) ? await readFile(full) : null
+        if (!current || !current.equals(source)) {
+          await copyFile(path.join(root, from), full)
+          copied++
+        }
+      } else if (existsSync(full)) {
+        await rm(full)
+      }
+    }
+  }
+  return copied
 }
 
 const SORT = (a, b) =>
@@ -106,7 +149,7 @@ const SORT = (a, b) =>
 
 function listCsv(assets) {
   return csv([
-    ['大类', 'SI', '编号', '标准名称', '变体', '品类', '目录', 'SU文件', '网页模型', '效果图', '效果图对应', '平面图SVG', '平面图例', '尺寸XYZ毫米'],
+    ['大类', 'SI', '编号', '标准名称', '变体', '品类', '目录', 'SU文件', '网页模型', '效果图', '效果图对应', '平面图SVG', '尺寸XYZ毫米'],
     ...assets.map((a) => [
       a.category,
       a.category_si ?? '',
@@ -120,7 +163,6 @@ function listCsv(assets) {
       a.product_image ?? '',
       MATCH_LABEL[a.product_image_match] ?? '',
       a.plan_symbol?.svg ?? '',
-      a.plan_legend?.file ?? '',
       a.tight_face_bounds_xyz_mm.join('×'),
     ]),
   ])
@@ -174,12 +216,12 @@ function cataloguePage(assets) {
   ].join('')
   const card = (a) => {
     const image = a.product_image ?? a.preview
-    const legend = a.plan_legend?.file
-    return `<article data-category="${html(a.category)}" data-si="${html(a.category_si ?? '')}" data-legend="${legend ? 1 : 0}" data-search="${html([a.asset_id, a.standard_name, a.variant, a.type_name].join(' '))}" id="${html(a.asset_id)}">
+    const plan = a.plan_symbol?.png ?? a.plan_symbol?.svg
+    return `<article data-category="${html(a.category)}" data-si="${html(a.category_si ?? '')}" data-plan="${plan ? 1 : 0}" data-search="${html([a.asset_id, a.standard_name, a.variant, a.type_name].join(' '))}" id="${html(a.asset_id)}">
 <img loading="lazy" src="${href(image)}" alt="">
 <h3>${html(a.standard_name)}</h3><p>${html(a.variant)}</p>
 <p class="meta">${html(a.asset_id)} · ${html(a.tight_face_bounds_xyz_mm.join('×'))} mm${a.web_model ? ' · 网页模型' : ''}${a.product_image_match === 'approximate' ? ' · 效果图为同类参考' : a.product_image ? '' : ' · SketchUp 预览'}</p>
-${legend ? `<img class="plan-image" loading="lazy" src="${href(legend)}" alt="平面图例">` : ''}
+${plan ? `<img class="plan-image" loading="lazy" src="${href(plan)}" alt="平面图">` : ''}
 <p class="links"><a class="file" href="${href(a.named_skp)}">SU 文件</a>${a.plan_symbol ? ` <a href="${href(a.plan_symbol.svg)}">平面图</a>` : ''}</p></article>`
   }
   const sections = []
@@ -197,15 +239,15 @@ ${legend ? `<img class="plan-image" loading="lazy" src="${href(legend)}" alt="�
 <p class="links"><a href="模型清单.csv">模型清单</a><a href="缺少效果图清单.csv">缺少效果图清单</a><a href="README.md">使用说明</a><a href="../05_店铺形象设计标准/历史阅读记录/标准阅读索引.html">两套标准 · 360页</a><a href="../../docs/si-standards-review-20261001.md">阅读与判断记录</a></p>
 <div class="tools"><span role="group" aria-label="大类">${buttons}</span>
 <label>软装 SI <select aria-label="软装SI版本"><option value="">全部</option><option>SI1.0</option><option>SI2.0</option></select></label>
-<label><input type="checkbox" aria-label="仅看已有图例"> 仅看已有图例</label>
+<label><input type="checkbox" aria-label="仅看有平面图"> 仅看有平面图</label>
 <input type="search" aria-label="搜索模型" placeholder="搜索编号或名称"></div></header>
 ${sections.join('\n')}
 <script>
-const state={category:'',si:'',legend:false,q:''}
-function apply(){for(const a of document.querySelectorAll('article')){const d=a.dataset;a.hidden=!((!state.category||d.category===state.category)&&(!state.si||d.si===state.si)&&(!state.legend||d.legend==='1')&&(!state.q||d.search.includes(state.q)))}for(const s of document.querySelectorAll('section'))s.hidden=!s.querySelector('article:not([hidden])')}
+const state={category:'',si:'',plan:false,q:''}
+function apply(){for(const a of document.querySelectorAll('article')){const d=a.dataset;a.hidden=!((!state.category||d.category===state.category)&&(!state.si||d.si===state.si)&&(!state.plan||d.plan==='1')&&(!state.q||d.search.includes(state.q)))}for(const s of document.querySelectorAll('section'))s.hidden=!s.querySelector('article:not([hidden])')}
 for(const b of document.querySelectorAll('[data-filter]'))b.onclick=()=>{state.category=b.dataset.filter;for(const o of document.querySelectorAll('[data-filter]'))o.setAttribute('aria-pressed',String(o===b));apply()}
 document.querySelector('select').onchange=e=>{state.si=e.target.value;apply()}
-document.querySelector('input[type=checkbox]').onchange=e=>{state.legend=e.target.checked;apply()}
+document.querySelector('input[type=checkbox]').onchange=e=>{state.plan=e.target.checked;apply()}
 document.querySelector('input[type=search]').oninput=e=>{state.q=e.target.value.trim();apply()}
 </script>
 </html>
@@ -223,6 +265,7 @@ export async function refreshLibrary() {
     types.set(id, { name, match: MATCH[match] ?? 'exact', gallery: galleryOf(asset) })
   }
   linkImages(manifest, types)
+  const copied = await syncCopies(manifest)
 
   const { readdirSync } = await import('node:fs')
   const listGallery = (gallery) => {
@@ -253,10 +296,10 @@ export async function refreshLibrary() {
   const exact = manifest.assets.filter((a) => a.product_image_match === 'exact').length
   const approximate = manifest.assets.filter((a) => a.product_image_match === 'approximate').length
   const symbols = manifest.assets.filter((a) => a.plan_symbol).length
-  return { assets: manifest.assets.length, exact, approximate, symbols }
+  return { assets: manifest.assets.length, exact, approximate, symbols, copied }
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const r = await refreshLibrary()
-  console.log(`模型 ${r.assets} 件：同款效果图 ${r.exact}，同类参考 ${r.approximate}，平面图 ${r.symbols}；已更新清单、缺少清单与目录页`)
+  console.log(`模型 ${r.assets} 件：同款效果图 ${r.exact}，同类参考 ${r.approximate}，平面图 ${r.symbols}；复制到模型目录 ${r.copied} 个文件；已更新清单、缺少清单与目录页`)
 }
