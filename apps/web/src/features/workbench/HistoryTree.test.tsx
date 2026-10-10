@@ -82,13 +82,32 @@ describe('HistoryTree', () => {
   it('draws the project as root and opens steps by click or keyboard', () => {
     const onSelect = renderTree()
     expect(document.querySelector('.tree-root text')?.textContent).toBe('南京德基')
-    fireEvent.click(screen.getByRole('button', { name: '空间 · 一层空间' }))
+    const space = screen.getByRole('button', { name: '空间 · 一层空间' })
+    fireEvent.pointerDown(space, { button: 0, clientX: 10, clientY: 10 })
+    fireEvent.pointerUp(space, { clientX: 10, clientY: 10 })
     expect(onSelect).toHaveBeenLastCalledWith(S1)
     fireEvent.keyDown(screen.getByRole('button', { name: '方案 · 按面积推荐（有草稿）' }), {
       key: 'Enter',
     })
     expect(onSelect).toHaveBeenLastCalledWith(P1)
-    expect(document.querySelector('ellipse.tree-group')).not.toBeNull()
+    expect(document.querySelector('ellipse')).toBeNull()
+  })
+
+  it('drags a node without opening it, remembers where, and resets', () => {
+    localStorage.clear()
+    const onSelect = renderTree()
+    const plan = screen.getByRole('button', { name: '方案 · 按面积推荐（有草稿）' })
+    const before = plan.querySelector('rect')?.getAttribute('x')
+    fireEvent.pointerDown(plan, { button: 0, clientX: 100, clientY: 100 })
+    fireEvent.pointerMove(plan, { clientX: 160, clientY: 120 })
+    fireEvent.pointerUp(plan, { clientX: 160, clientY: 120 })
+    expect(onSelect).not.toHaveBeenCalled()
+    expect(Number(plan.querySelector('rect')?.getAttribute('x'))).toBe(Number(before) + 60)
+    expect(JSON.parse(localStorage.getItem(`store-design:tree-offsets:${PID}`) ?? '{}')).toEqual({
+      [P1]: [60, 20],
+    })
+    fireEvent.click(screen.getByRole('button', { name: '重置位置' }))
+    expect(plan.querySelector('rect')?.getAttribute('x')).toBe(before)
   })
 
   it('renames the selected step and can fold the diagram away', async () => {

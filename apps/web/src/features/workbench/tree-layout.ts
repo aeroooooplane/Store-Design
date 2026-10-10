@@ -28,8 +28,10 @@ export const TREE_STYLE = {
     leaf: { fill: '#e3ea9b', text: '#1d1d1b' },
   },
   edge: { color: '#3a3a3a', width: 1.2, arrow: 6 },
-  /** Dashed ellipse around the selected node and its children. */
-  group: { color: '#5b9b2f', width: 2, dash: '8 6', padding: 12 },
+  /** A press that moves less than this (pixels) is a click, not a drag. */
+  dragThreshold: 4,
+  /** In a narrow column the tree may shrink, but not below this scale (then it scrolls). */
+  minScale: 0.7,
 } as const
 
 export type TreeLevel = keyof typeof TREE_STYLE.levels
@@ -175,23 +177,11 @@ export function layoutTree(
     box.y = style.orientation === 'down' ? y : height - y
   }
   const byId = new Map(boxes.map((b) => [b.id, b]))
-  const sign = style.orientation === 'down' ? 1 : -1
   const walk = (d: Draft) => {
     const parent = byId.get(d.id)
     for (const child of d.children) {
       const box = byId.get(child.id)
-      if (parent && box) {
-        const x1 = parent.x
-        const y1 = parent.y + (sign * parent.height) / 2
-        const x2 = box.x
-        const y2 = box.y - (sign * box.height) / 2 - sign * style.edge.arrow
-        const bend = (y2 - y1) * 0.55
-        edges.push({
-          from: d.id,
-          to: child.id,
-          d: `M${x1} ${y1}C${x1} ${y1 + bend} ${x2} ${y2 - bend} ${x2} ${y2}`,
-        })
-      }
+      if (parent && box) edges.push({ from: d.id, to: child.id, d: edgePath(parent, box, style) })
       walk(child)
     }
   }
@@ -204,20 +194,49 @@ export function layoutTree(
   }
 }
 
-/** Ellipse around a node and its direct children (the highlighted group). */
-export function groupEllipse(layout: TreeLayout, id: string, style = TREE_STYLE) {
-  const ids = new Set([id, ...layout.edges.filter((e) => e.from === id).map((e) => e.to)])
-  const members = layout.boxes.filter((b) => ids.has(b.id))
-  if (!members.length) return null
-  const left = Math.min(...members.map((b) => b.x - b.width / 2))
-  const right = Math.max(...members.map((b) => b.x + b.width / 2))
-  const top = Math.min(...members.map((b) => b.y - b.height / 2))
-  const bottom = Math.max(...members.map((b) => b.y + b.height / 2))
-  // An ellipse through the box corners is √2 times the half extents; then add the padding.
-  return {
-    cx: (left + right) / 2,
-    cy: (top + bottom) / 2,
-    rx: ((right - left) / 2) * Math.SQRT2 + style.group.padding,
-    ry: ((bottom - top) / 2) * Math.SQRT2 + style.group.padding,
-  }
+/**
+ * Smooth branch from the parent's bottom centre to the child's top centre (top-down), ending
+ * one arrow length short so the arrow head touches the child. A child straight below gets a
+ * straight line.
+ */
+export function edgePath(parent: TreeBox, child: TreeBox, style = TREE_STYLE): string {
+  const sign = style.orientation === 'down' ? 1 : -1
+  const x1 = parent.x
+  const y1 = parent.y + (sign * parent.height) / 2
+  const x2 = child.x
+  const y2 = child.y - (sign * child.height) / 2 - sign * style.edge.arrow
+  const bend = (y2 - y1) * 0.55
+  return `M${x1} ${y1}C${x1} ${y1 + bend} ${x2} ${y2 - bend} ${x2} ${y2}`
+}
+
+/** Where the user dragged nodes to, as offsets from the automatic layout (pixels). */
+export type TreeOffsets = Record<string, readonly [number, number]>
+
+export interface PlacedTree extends TreeLayout {
+  /** Top-left of the drawing, which moves when a node is dragged beyond the margin. */
+  x: number
+  y: number
+}
+
+/** The layout with dragged nodes moved; branches follow and the drawing grows to fit. */
+export function applyOffsets(
+  layout: TreeLayout,
+  offsets: TreeOffsets,
+  style = TREE_STYLE,
+): PlacedTree {
+  const boxes = layout.boxes.map((box) => {
+    const [dx, dy] = offsets[box.id] ?? [0, 0]
+    return dx || dy ? { ...box, x: box.x + dx, y: box.y + dy } : box
+  })
+  const byId = new Map(boxes.map((b) => [b.id, b]))
+  const edges = layout.edges.flatMap((e) => {
+    const from = byId.get(e.from)
+    const to = byId.get(e.to)
+    return from && to ? [{ ...e, d: edgePath(from, to, style) }] : []
+  })
+  const left = Math.min(0, ...boxes.map((b) => b.x - b.width / 2 - style.margin))
+  const top = Math.min(0, ...boxes.map((b) => b.y - b.height / 2 - style.margin))
+  const right = Math.max(layout.width, ...boxes.map((b) => b.x + b.width / 2 + style.margin))
+  const bottom = Math.max(layout.height, ...boxes.map((b) => b.y + b.height / 2 + style.margin))
+  return { boxes, edges, x: left, y: top, width: right - left, height: bottom - top }
 }
