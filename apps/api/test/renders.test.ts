@@ -145,7 +145,9 @@ describe('renders', () => {
     expect(Buffer.compare(file.rawPayload, picture)).toBe(0)
 
     // Uploading again replaces the newest image of that view and mode.
-    const again = (await upload(render.id, front.id, 'material', png(180, 120, 30))).json<RenderImage>()
+    const again = (
+      await upload(render.id, front.id, 'material', png(180, 120, 30))
+    ).json<RenderImage>()
     const relisted = await images(render.id)
     expect(relisted).toHaveLength(2)
     expect(relisted[0]?.url).toBe(again.url)
@@ -179,7 +181,12 @@ describe('renders', () => {
     const tiny = await upload(render.id, front.id, 'white', png(10, 10))
     expect(tiny.statusCode).toBe(400)
 
-    const unknown = await upload(render.id, '00000000-0000-4000-8000-000000000000', 'white', png(96, 64))
+    const unknown = await upload(
+      render.id,
+      '00000000-0000-4000-8000-000000000000',
+      'white',
+      png(96, 64),
+    )
     expect(unknown.statusCode).toBe(404)
 
     const whiteCameras = (await inject('GET', `/nodes/${white.id}/cameras`)).json<NodeCameraList>()

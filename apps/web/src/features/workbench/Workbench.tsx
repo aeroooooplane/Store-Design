@@ -210,13 +210,7 @@ function NodePanel({
 
   if (current.kind === 'render') {
     return (
-      <RenderStage
-        left={left}
-        project={project}
-        node={current}
-        space={space}
-        assets={assetMap}
-      />
+      <RenderStage left={left} project={project} node={current} space={space} assets={assetMap} />
     )
   }
 

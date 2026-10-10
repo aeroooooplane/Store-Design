@@ -84,7 +84,10 @@ export const renderRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageR
       )
       return reply
         .header('content-type', 'application/zip')
-        .header('content-disposition', `attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`)
+        .header(
+          'content-disposition',
+          `attachment; filename*=UTF-8''${encodeURIComponent(fileName)}`,
+        )
         .send(Buffer.from(zip))
     },
   )
