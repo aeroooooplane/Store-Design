@@ -124,20 +124,33 @@ describe('cameras', () => {
     expect(restored.json<NodeCamera>()).toMatchObject({ deletedAt: null, sort: 0 })
   })
 
-  it('carries the active views over when a white model is re-confirmed', async () => {
-    const { project, white } = await whiteModel()
+  it('carries the active views over to a copy of the white model and to its renders', async () => {
+    const { project, plan, white } = await whiteModel()
     const [first] = await list(white.id)
     await inject('DELETE', `/cameras/${first?.id}`)
     await inject('POST', `/nodes/${white.id}/cameras`, view)
 
-    const next = await inject('POST', `/projects/${project.id}/nodes`, {
-      parentId: white.id,
+    const copy = await inject('POST', `/projects/${project.id}/nodes`, {
+      parentId: plan.id,
       kind: 'white',
-      name: '白模确认（修改后）',
+      name: '白模确认 副本2',
+      sourceNodeId: white.id,
       layout,
     })
-    const names = (await list(next.json<NodeCreated>().node.id)).map((c) => c.camera.name)
-    expect(names).toEqual([...DEFAULT_VIEW_NAMES.slice(1), view.name])
+    const expected = [...DEFAULT_VIEW_NAMES.slice(1), view.name]
+    const names = (await list(copy.json<NodeCreated>().node.id)).map((c) => c.camera.name)
+    expect(names).toEqual(expected)
+
+    const render = await inject('POST', `/projects/${project.id}/nodes`, {
+      parentId: white.id,
+      kind: 'render',
+      name: '渲染',
+      siStyle: 'SI1.0',
+      layout,
+    })
+    expect((await list(render.json<NodeCreated>().node.id)).map((c) => c.camera.name)).toEqual(
+      expected,
+    )
   })
 
   it('validates input and refuses changes to binned projects', async () => {

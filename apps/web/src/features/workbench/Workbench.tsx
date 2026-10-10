@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -18,6 +18,7 @@ import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
+import { StagePanel } from './StagePanel.tsx'
 import { flattenTree, spaceAncestor } from './tree.ts'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
@@ -55,6 +56,12 @@ export function Workbench({ project }: { project: Project }) {
     requested && nodes.some((n) => n.id === requested)
       ? requested
       : defaultNodeId(nodes, draft.data ?? null)
+  // Pin the automatic choice in the URL, so new nodes (e.g. three generated plans) do not
+  // move the selection away from what is on screen.
+  useEffect(() => {
+    if (!requested && selectedId) setParams({ node: selectedId }, { replace: true })
+  }, [requested, selectedId, setParams])
+
   // A panel opened for one node closes when another node is selected.
   const activePanel = panel.nodeId === selectedId ? panel.kind : 'view'
 
@@ -173,10 +180,28 @@ function NodePanel({
   const current = node.data
 
   if (current.kind === 'render') {
+    const later = '渲染图与交付文件将在下一步接入'
     return (
-      <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
-        渲染节点是输出结果；如需修改，请选择它的上一步继续编辑。
-      </ReadOnly>
+      <>
+        <StagePanel
+          title="渲染阶段"
+          first={[
+            { label: '重新渲染', onClick: () => undefined, disabled: true, title: later },
+            { label: '下载图片', onClick: () => undefined, disabled: true, title: later },
+          ]}
+          second={{
+            label: '生成交付文件',
+            onClick: () => undefined,
+            disabled: true,
+            primary: true,
+            title: later,
+          }}
+          hint={`${later}。渲染节点保存了确认时的布局与视角；如需修改，请回到它的白模继续编辑。`}
+        />
+        <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap}>
+          渲染节点是输出结果，不能直接编辑。
+        </ReadOnly>
+      </>
     )
   }
 
@@ -195,6 +220,7 @@ function NodePanel({
       baseNode={current}
       space={space}
       shopType={project.shopType}
+      nodes={nodes}
       siStyle={project.siStyle}
       draft={draft}
       assets={assets}
@@ -267,6 +293,7 @@ function NodePanel({
         shopType={project.shopType}
         siStyle={project.siStyle}
         assets={assetMap}
+        existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
         onChosen={onSelect}
       />
     </>

@@ -141,6 +141,13 @@ export async function getNode(
   return toNode(row)
 }
 
+const STAGE_PARENTS: Partial<Record<NodeKind, { kinds: readonly string[]; message: string }>> = {
+  plan: { kinds: ['space'], message: '方案只能建在空间下' },
+  // 'edit' is the plan-level variant of earlier versions.
+  white: { kinds: ['plan', 'edit'], message: '白模只能建在方案下' },
+  render: { kinds: ['white'], message: '渲染只能建在白模下' },
+}
+
 export async function createNode(
   db: Database,
   ctx: RequestContext,
@@ -159,9 +166,17 @@ export async function createNode(
       `项目节点已达上限 ${MAX_NODES_PER_PROJECT}，请导出备份后新建项目`,
     )
   }
-  if (input.parentId) {
-    const parent = await findNode(db, input.parentId)
-    if (parent.projectId !== projectId) throw notFound('父节点')
+  const parent = input.parentId ? await findNode(db, input.parentId) : null
+  if (parent && parent.projectId !== projectId) throw notFound('父节点')
+  // Stages sit on fixed levels: plans under a space, white models under a plan, renders under a
+  // white model. Copies are siblings, so nothing nests deeper than its stage.
+  const allowed = STAGE_PARENTS[input.kind]
+  if (allowed && (!parent || !allowed.kinds.includes(parent.kind))) {
+    throw new AppError('VALIDATION_FAILED', allowed.message)
+  }
+  if (input.sourceNodeId) {
+    const source = await findNode(db, input.sourceNodeId)
+    if (source.projectId !== projectId) throw notFound('复制来源节点')
   }
 
   let space: Space | null = null
@@ -181,8 +196,8 @@ export async function createNode(
   }
 
   const cameras =
-    input.kind === 'white' && layoutSpace
-      ? await initialCameras(db, input.parentId, layoutSpace)
+    (input.kind === 'white' || input.kind === 'render') && layoutSpace
+      ? await initialCameras(db, input.sourceNodeId ?? input.parentId, layoutSpace)
       : []
 
   const row = await db.transaction(async (tx) => {

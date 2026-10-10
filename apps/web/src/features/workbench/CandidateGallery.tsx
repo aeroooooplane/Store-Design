@@ -1,8 +1,17 @@
+import { useState } from 'react'
 import { PLAN_STRATEGY_LABELS } from '@store/shared'
-import type { Asset, DesignNode, LayoutCandidate, ShopType, SiStyle } from '@store/shared'
+import type {
+  Asset,
+  DesignNode,
+  LayoutCandidate,
+  LayoutCandidates,
+  ShopType,
+  SiStyle,
+} from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useCreateNode, useGenerateLayouts } from './api.ts'
 import { PlanView } from './PlanView.tsx'
+import { freshName } from './tree.ts'
 
 const RULE_LABELS: Record<string, string> = {
   clearance: '道具间距',
@@ -20,20 +29,52 @@ interface CandidateGalleryProps {
   shopType: ShopType
   siStyle: SiStyle
   assets: ReadonlyMap<string, Asset>
+  /** Names already used under this space, so a new set gets numbered names. */
+  existingNames: readonly string[]
   onChosen: (nodeId: string) => void
 }
 
-/** Generates the three strategies for a space and saves the chosen one as a plan node. */
+/**
+ * Generates the three strategies for a space and keeps all of them as plan nodes (the plan
+ * level of the history). Generating again adds another set; earlier plans stay.
+ */
 export function CandidateGallery({
   projectId,
   spaceNode,
   shopType,
   siStyle,
   assets,
+  existingNames,
   onChosen,
 }: CandidateGalleryProps) {
   const generate = useGenerateLayouts()
   const create = useCreateNode(projectId)
+  const [saved, setSaved] = useState<Partial<Record<string, string>>>({})
+  const [saving, setSaving] = useState(false)
+
+  async function keepAll(result: LayoutCandidates) {
+    setSaving(true)
+    const taken = [...existingNames]
+    const ids: Partial<Record<string, string>> = {}
+    try {
+      for (const candidate of result.candidates) {
+        const name = freshName(`方案 · ${PLAN_STRATEGY_LABELS[candidate.strategy]}`, taken)
+        taken.push(name)
+        const created = await create.mutateAsync({
+          parentId: spaceNode.id,
+          kind: 'plan',
+          name,
+          strategy: candidate.strategy,
+          siStyle,
+          layout: candidate.layout,
+        })
+        ids[candidate.strategy] = created.node.id
+      }
+    } finally {
+      setSaved(ids)
+      setSaving(false)
+    }
+  }
 
   return (
     <section className="candidates" aria-label="自动排布">
@@ -41,13 +82,19 @@ export function CandidateGallery({
         <button
           type="button"
           className="primary"
-          disabled={generate.isPending}
-          onClick={() => generate.mutate({ space: spaceNode.space, shopType, siStyle })}
+          disabled={generate.isPending || saving}
+          onClick={() =>
+            generate.mutate(
+              { space: spaceNode.space, shopType, siStyle },
+              { onSuccess: (result) => void keepAll(result) },
+            )
+          }
         >
-          {generate.data ? '重新生成方案' : '生成三种方案'}
+          {generate.data || existingNames.length ? '再生成一组方案' : '生成三个方案'}
         </button>
         <span className="hint">
-          按 {siStyle} 选用模型；通道与间距为设计指导值，放不下时会逐级让步并在方案中说明。
+          三个方案都会保存到历史的方案层；按 {siStyle}{' '}
+          选用模型，通道与间距为设计指导值，放不下时逐级让步并在方案中说明。
         </span>
       </div>
       <ErrorMessage error={generate.error ?? create.error} />
@@ -89,22 +136,13 @@ export function CandidateGallery({
                 {errors.length > 0 && <p className="error">{errors.length} 个问题需要人工处理</p>}
                 <button
                   type="button"
-                  disabled={create.isPending}
-                  onClick={() =>
-                    create.mutate(
-                      {
-                        parentId: spaceNode.id,
-                        kind: 'plan',
-                        name: `方案 · ${label}`,
-                        strategy: candidate.strategy,
-                        siStyle,
-                        layout: candidate.layout,
-                      },
-                      { onSuccess: (created) => onChosen(created.node.id) },
-                    )
-                  }
+                  disabled={!saved[candidate.strategy]}
+                  onClick={() => {
+                    const id = saved[candidate.strategy]
+                    if (id) onChosen(id)
+                  }}
                 >
-                  选用此方案
+                  {saved[candidate.strategy] ? '打开此方案' : saving ? '正在保存…' : '未保存'}
                 </button>
               </article>
             )

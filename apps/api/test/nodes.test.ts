@@ -174,14 +174,55 @@ describe('history nodes', () => {
     expect(stretched.statusCode).toBe(400)
     expect(stretched.json().error.details[0].code).toBe('item_asset_size_mismatch')
 
-    const white = await post(project.id, {
+    const plan = await post(project.id, {
       parentId: root.id,
+      kind: 'plan',
+      name: '方案',
+      layout: layout(island('a', 2, 2)),
+    })
+    const white = await post(project.id, {
+      parentId: plan.json<NodeCreated>().node.id,
       kind: 'white',
       name: '白模',
       layout: layout(island('a', 2, 2), island('b', 2.5, 2)),
     })
     expect(white.statusCode).toBe(400)
     expect(white.json().error.message).toContain('确认白模前')
+  })
+
+  it('keeps every stage on its level: plans under a space, white under a plan, render under white', async () => {
+    const project = await newProject()
+    const root = await spaceNode(project.id)
+    const body = (parentId: string | null, kind: string) => ({
+      parentId,
+      kind,
+      name: kind,
+      layout: layout(island('a', 2, 2)),
+      ...(kind === 'render' ? { siStyle: 'SI1.0' } : {}),
+    })
+    const plan = await post(project.id, body(root.id, 'plan'))
+    const planId = plan.json<NodeCreated>().node.id
+    const refused = [
+      [planId, 'plan', '方案只能建在空间下'],
+      [root.id, 'white', '白模只能建在方案下'],
+      [planId, 'render', '渲染只能建在白模下'],
+    ] as const
+    for (const [parentId, kind, message] of refused) {
+      const response = await post(project.id, body(parentId, kind))
+      expect(response.statusCode).toBe(400)
+      expect(response.json().error.message).toBe(message)
+    }
+    const white = await post(project.id, body(planId, 'white'))
+    expect(white.statusCode).toBe(201)
+    // A copy of the white model is its sibling, still under the plan.
+    const copy = await post(project.id, {
+      ...body(planId, 'white'),
+      name: '白模 副本2',
+      sourceNodeId: white.json<NodeCreated>().node.id,
+    })
+    expect(copy.json<NodeCreated>().node.parentId).toBe(planId)
+    const render = await post(project.id, body(copy.json<NodeCreated>().node.id, 'render'))
+    expect(render.statusCode).toBe(201)
   })
 
   it('only accepts parents from the same project and refuses writes to binned projects', async () => {
@@ -287,8 +328,13 @@ describe('drafts', () => {
       'item_outside_boundary',
     ])
 
+    const stage = async (parentId: string, kind: 'plan' | 'white', name: string) =>
+      (
+        await post(project.id, { parentId, kind, name, layout: layout(island('a', 2, 2)) })
+      ).json<NodeCreated>().node.id
+    const white = await stage(await stage(root.id, 'plan', '方案'), 'white', '白模')
     const render = await post(project.id, {
-      parentId: root.id,
+      parentId: white,
       kind: 'render',
       name: '渲染',
       siStyle: 'SI1.0',

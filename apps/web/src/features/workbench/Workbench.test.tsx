@@ -187,7 +187,7 @@ describe('Workbench', () => {
     fireEvent.click(screen.getByRole('button', { name: '保存空间' }))
 
     expect(await screen.findByRole('button', { name: '修改空间' })).toBeTruthy()
-    expect(screen.getByRole('button', { name: '生成三种方案' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: '生成三个方案' })).toBeTruthy()
     const post = server.calls.find((c) => c.method === 'POST')
     expect(post?.body).toMatchObject({
       parentId: null,
@@ -206,20 +206,27 @@ describe('Workbench', () => {
     })
   })
 
-  it('saves a chosen candidate as a plan node under its space', async () => {
+  it('keeps all three generated plans under the space and opens one', async () => {
     server = fakeApi([designNode(S1, null, { name: '一层空间' })], null)
     vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench()
 
-    fireEvent.click(await screen.findByRole('button', { name: '生成三种方案' }))
-    expect(await screen.findByText('尽量多放')).toBeTruthy()
-    fireEvent.click(screen.getAllByRole('button', { name: '选用此方案' })[1] as HTMLElement)
-
-    expect(await screen.findByRole('heading', { name: '方案 · 按面积推荐' })).toBeTruthy()
+    fireEvent.click(await screen.findByRole('button', { name: '生成三个方案' }))
+    await waitFor(() =>
+      expect(screen.getAllByRole('button', { name: '打开此方案' })).toHaveLength(3),
+    )
     const generate = server.calls.find((c) => c.path === '/api/v1/layouts/generate')
     expect(generate?.body).toMatchObject({ shopType: 'side_hall', siStyle: 'SI1.0' })
-    const created = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
-    expect(created?.body).toMatchObject({ parentId: S1, kind: 'plan', strategy: 'area' })
+    const created = server.calls.filter((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
+    expect(created.map((c) => c.body)).toMatchObject([
+      { parentId: S1, kind: 'plan', strategy: 'max', name: '方案 · 尽量多放' },
+      { parentId: S1, kind: 'plan', strategy: 'area', name: '方案 · 按面积推荐' },
+      { parentId: S1, kind: 'plan', strategy: 'min', name: '方案 · 尽量少放' },
+    ])
+
+    fireEvent.click(screen.getAllByRole('button', { name: '打开此方案' })[1] as HTMLElement)
+    expect(await screen.findByRole('heading', { name: '方案 · 按面积推荐' })).toBeTruthy()
+    expect(screen.getByRole('region', { name: '方案阶段' })).toBeTruthy()
   })
 
   it('keeps other nodes read-only while the shared draft belongs to another step', async () => {
@@ -267,10 +274,17 @@ describe('Workbench', () => {
     expect(put).toMatchObject({ ifMatch: null, body: { baseNodeId: P1 } })
     expect((put?.body as { layout: Layout }).layout.items[0]?.cx).toBe(4.1)
 
-    fireEvent.click(screen.getByRole('button', { name: '保存为新版本' }))
-    expect(await screen.findByRole('heading', { name: '编辑版本' })).toBeTruthy()
-    const version = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
-    expect(version?.body).toMatchObject({ parentId: P1, kind: 'edit' })
+    // 新建副本: a sibling plan under the same space, carrying the edited layout.
+    fireEvent.click(screen.getByRole('button', { name: '新建副本' }))
+    expect(await screen.findByRole('heading', { name: '方案 A 副本2' })).toBeTruthy()
+    const copy = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
+    expect(copy?.body).toMatchObject({
+      parentId: S1,
+      kind: 'plan',
+      name: '方案 A 副本2',
+      sourceNodeId: P1,
+    })
+    expect((copy?.body as { layout: Layout }).layout.items[0]?.cx).toBe(4.1)
     expect(server.calls.find((c) => c.method === 'DELETE')?.ifMatch).toBe('"1"')
     expect(server.state.draft).toBeNull()
   })

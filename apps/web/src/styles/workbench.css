@@ -533,3 +533,32 @@ ul.issues li.warning {
 .plan-symbol {
   stroke-width: 0.6px;
 }
+
+/* Stage panel: two actions side by side, the next stage across the full width below */
+.stage-panel {
+  display: grid;
+  gap: var(--space-1);
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line-soft);
+  margin-bottom: var(--space-1);
+}
+.stage-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+}
+.stage-head h3 {
+  margin: 0;
+}
+.stage-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+}
+.stage-row.single {
+  grid-template-columns: 1fr;
+}
+.stage-panel .hint {
+  margin: 0;
+}

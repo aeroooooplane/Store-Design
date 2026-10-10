@@ -56,6 +56,8 @@ export const NodeCreateSchema = z
     layout: LayoutSchema.optional(),
     strategy: PlanStrategySchema.optional(),
     siStyle: SiStyleSchema.optional(),
+    /** The node this one copies (新建副本); its views carry over to a white model or render. */
+    sourceNodeId: z.uuid().optional(),
   })
   .superRefine((node, ctx) => {
     const issue = (message: string, path: string) =>
