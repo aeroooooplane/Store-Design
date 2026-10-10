@@ -12446,6 +12446,9 @@
                           "placeable": {
                             "type": "boolean"
                           },
+                          "retired": {
+                            "type": "boolean"
+                          },
                           "judgment": {
                             "type": [
                               "string",
@@ -12663,6 +12666,7 @@
                           "staffSide",
                           "facingConfidence",
                           "placeable",
+                          "retired",
                           "judgment",
                           "glb",
                           "whiteGlb",
@@ -12895,6 +12899,9 @@
                     "placeable": {
                       "type": "boolean"
                     },
+                    "retired": {
+                      "type": "boolean"
+                    },
                     "judgment": {
                       "type": [
                         "string",
@@ -13112,6 +13119,7 @@
                     "staffSide",
                     "facingConfidence",
                     "placeable",
+                    "retired",
                     "judgment",
                     "glb",
                     "whiteGlb",
