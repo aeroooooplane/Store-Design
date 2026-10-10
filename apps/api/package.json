@@ -8,7 +8,8 @@
     "openapi": "node src/scripts/export-openapi.ts",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "catalog:import": "node --env-file-if-exists=../../.env src/scripts/import-catalog.ts"
+    "catalog:import": "node --env-file-if-exists=../../.env src/scripts/import-catalog.ts",
+    "catalog:white": "node --env-file-if-exists=../../.env src/scripts/build-white-models.ts"
   },
   "dependencies": {
     "@fastify/cors": "11.3.1",
@@ -22,5 +23,11 @@
     "fastify": "5.12.5",
     "fastify-type-provider-zod": "7.0.0",
     "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@gltf-transform/core": "4.5.1",
+    "@gltf-transform/extensions": "4.5.1",
+    "@gltf-transform/functions": "4.5.1",
+    "meshoptimizer": "1.3.0"
   }
 }

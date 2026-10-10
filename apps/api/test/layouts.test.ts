@@ -227,6 +227,7 @@ describe('plannerCatalog', () => {
     placeable: true,
     judgment: null,
     glb: null,
+    whiteGlb: null,
     preview: null,
   })
 

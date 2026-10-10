@@ -108,7 +108,7 @@ export function Viewer3D({
         const scene = sceneRef.current
         if (!scene) return []
         await scene.whenLoaded()
-        return sceneRef.current === scene ? scene.renderViews(views, width, height) : []
+        return sceneRef.current === scene ? await scene.renderViews(views, width, height) : []
       },
     }),
     [],

@@ -8,6 +8,7 @@ import { FrontAxisSchema, roundM } from '@store/shared'
 import type { ItemFunction } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
+import { WhiteRecordSchema } from './white-models.ts'
 
 /** Paths inside the resource root (资源库). */
 export const LIBRARY_DIR = '04_软装道具模型/单件模型'
@@ -78,6 +79,8 @@ export function functionFor(standardName: string): ItemFunction {
 export interface CatalogImportReport {
   assets: number
   withGlb: number
+  /** Web models that also have a current light white-model copy. */
+  withWhite: number
   placeable: number
   withPreview: number
   problems: string[]
@@ -153,6 +156,7 @@ export async function importCatalog(
   const report: CatalogImportReport = {
     assets: 0,
     withGlb: 0,
+    withWhite: 0,
     placeable: 0,
     withPreview: 0,
     problems: [],
@@ -173,6 +177,23 @@ export async function importCatalog(
       else if (facts.sha256 !== conversion.glbSha256 || facts.bytes !== conversion.bytes)
         report.problems.push(`${id}: model.glb 与 conversion.json 的哈希或字节数不一致，未挂接`)
       else glb = facts
+    }
+    // The light white model counts only if it was built from this exact model.glb.
+    let white: FileFacts | undefined
+    if (glb) {
+      const recordRaw = await optionalJson(
+        path.join(roots.resource, WEB_MODEL_DIR, id, 'white.json'),
+      )
+      const record = recordRaw === undefined ? undefined : WhiteRecordSchema.safeParse(recordRaw)
+      if (record?.success && record.data.sourceSha256 === glb.sha256) {
+        const facts = await inspect(roots, `${WEB_MODEL_DIR}/${id}/white.glb`)
+        if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
+        else if (facts.sha256 !== record.data.sha256)
+          report.problems.push(`${id}: white.glb 与 white.json 的哈希不一致，未挂接`)
+        else white = facts
+      } else if (record) {
+        report.problems.push(`${id}: 白模轻量版已过期或记录无效，请运行 pnpm catalog:white`)
+      }
     }
     let preview: FileFacts | undefined
     if (entry.preview) {
@@ -201,6 +222,7 @@ export async function importCatalog(
 
     await db.transaction(async (tx) => {
       const glbFileId = glb ? await registerFile(tx, glb, 'glb') : null
+      const whiteGlbFileId = white ? await registerFile(tx, white, 'glb') : null
       const previewFileId = preview ? await registerFile(tx, preview, 'preview') : null
       const values = {
         id,
@@ -220,6 +242,7 @@ export async function importCatalog(
         placeable,
         judgment: entry.judgment ?? null,
         glbFileId,
+        whiteGlbFileId,
         previewFileId,
         sourceSha256: entry.named_sha256 ?? null,
       }
@@ -235,6 +258,7 @@ export async function importCatalog(
 
     report.assets++
     if (glb) report.withGlb++
+    if (white) report.withWhite++
     if (placeable) report.placeable++
     if (preview) report.withPreview++
   }

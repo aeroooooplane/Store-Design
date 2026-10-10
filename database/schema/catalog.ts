@@ -29,6 +29,8 @@ export const assets = pgTable(
     placeable: boolean('placeable').notNull(),
     judgment: text('judgment'),
     glbFileId: uuid('glb_file_id').references(() => storedFiles.id),
+    /** Simplified, untextured copy for the white model (see apps/api assets/white-models.ts). */
+    whiteGlbFileId: uuid('white_glb_file_id').references(() => storedFiles.id),
     previewFileId: uuid('preview_file_id').references(() => storedFiles.id),
     sourceSha256: text('source_sha256'),
     importedAt: timestamp('imported_at', { withTimezone: true }).notNull().defaultNow(),

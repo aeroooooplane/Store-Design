@@ -9,7 +9,7 @@ const database = createDatabase(config.databaseUrl)
 try {
   const report = await importCatalog(database.db, storageRoots(config))
   console.log(
-    `资产 ${report.assets} 件：有网页模型 ${report.withGlb}，可摆放 ${report.placeable}，有预览图 ${report.withPreview}`,
+    `资产 ${report.assets} 件：有网页模型 ${report.withGlb}（白模轻量版 ${report.withWhite}），可摆放 ${report.placeable}，有预览图 ${report.withPreview}`,
   )
   for (const problem of report.problems) console.warn(`  - ${problem}`)
 } finally {

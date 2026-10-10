@@ -11,6 +11,7 @@ import { fileUrl } from '../files/routes.ts'
 const { assets, storedFiles } = schema
 const glbFiles = aliasedTable(storedFiles, 'glb_files')
 const previewFiles = aliasedTable(storedFiles, 'preview_files')
+const whiteFiles = aliasedTable(storedFiles, 'white_files')
 
 type FileRow = typeof storedFiles.$inferSelect
 
@@ -22,6 +23,7 @@ function toAsset(
   row: typeof assets.$inferSelect,
   glb: FileRow | null,
   preview: FileRow | null,
+  white: FileRow | null,
 ): Asset {
   return {
     id: row.id,
@@ -40,6 +42,7 @@ function toAsset(
     placeable: row.placeable,
     judgment: row.judgment,
     glb: fileRef(glb),
+    whiteGlb: fileRef(white),
     preview: fileRef(preview),
   }
 }
@@ -50,10 +53,11 @@ function escapeLike(text: string): string {
 
 function selectAssets(db: Database, where: SQL | undefined) {
   return db
-    .select({ asset: assets, glb: glbFiles, preview: previewFiles })
+    .select({ asset: assets, glb: glbFiles, preview: previewFiles, white: whiteFiles })
     .from(assets)
     .leftJoin(glbFiles, eq(assets.glbFileId, glbFiles.id))
     .leftJoin(previewFiles, eq(assets.previewFileId, previewFiles.id))
+    .leftJoin(whiteFiles, eq(assets.whiteGlbFileId, whiteFiles.id))
     .where(where)
     .orderBy(asc(assets.function), asc(assets.standardName), asc(assets.id))
 }
@@ -78,7 +82,7 @@ export async function listAssets(
     if (match) filters.push(match)
   }
   const rows = await selectAssets(db, filters.length ? and(...filters) : undefined)
-  const items = rows.map((r) => toAsset(r.asset, r.glb, r.preview))
+  const items = rows.map((r) => toAsset(r.asset, r.glb, r.preview, r.white))
   return { items, total: items.length }
 }
 
@@ -86,11 +90,11 @@ export async function getAsset(db: Database, ctx: RequestContext, id: string): P
   authorize(ctx.actor, 'asset:read')
   const [row] = await selectAssets(db, eq(assets.id, id))
   if (!row) throw notFound('资产')
-  return toAsset(row.asset, row.glb, row.preview)
+  return toAsset(row.asset, row.glb, row.preview, row.white)
 }
 
 /** Placeable assets by id, for validating and planning layouts on the server. */
 export async function placeableAssets(db: Database): Promise<Map<string, Asset>> {
   const rows = await selectAssets(db, eq(assets.placeable, true))
-  return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r.glb, r.preview)]))
+  return new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r.glb, r.preview, r.white)]))
 }

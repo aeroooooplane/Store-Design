@@ -23,6 +23,20 @@ let resource: string
 let t: TestApp
 const glb = Buffer.from('glTF-fake-binary-for-tests')
 const preview = Buffer.from('jpeg-bytes')
+const white = Buffer.from('glTF-light-white-model')
+
+function whiteRecord(sourceSha256: string) {
+  return {
+    tool: 'test',
+    sourceSha256,
+    sha256: sha(white),
+    bytes: white.length,
+    sourceBytes: glb.length,
+    trianglesBefore: 100,
+    trianglesAfter: 10,
+    driftM: 0,
+  }
+}
 
 async function put(relative: string, content: Buffer | string) {
   const file = path.join(resource, relative)
@@ -68,6 +82,11 @@ beforeAll(async () => {
     await put(`${WEB_MODEL_DIR}/${id}/model.glb`, glb)
     await put(`${WEB_MODEL_DIR}/${id}/conversion.json`, JSON.stringify(conversion(id, glb)))
   }
+  // asset-1 has a current light white model; asset-2's was built from an older model.glb.
+  await put(`${WEB_MODEL_DIR}/asset-1/white.glb`, white)
+  await put(`${WEB_MODEL_DIR}/asset-1/white.json`, JSON.stringify(whiteRecord(sha(glb))))
+  await put(`${WEB_MODEL_DIR}/asset-2/white.glb`, white)
+  await put(`${WEB_MODEL_DIR}/asset-2/white.json`, JSON.stringify(whiteRecord('b'.repeat(64))))
   // asset-4 has a conversion record but only an un-pulled LFS pointer.
   await put(
     `${WEB_MODEL_DIR}/asset-4/model.glb`,
@@ -118,8 +137,15 @@ describe('functionFor', () => {
 describe('importCatalog', () => {
   it('attaches verified models, honours facing and reports missing files', async () => {
     const report = await importCatalog(t.database.db, roots())
-    expect(report).toMatchObject({ assets: 4, withGlb: 2, placeable: 1, withPreview: 1 })
+    expect(report).toMatchObject({
+      assets: 4,
+      withGlb: 2,
+      withWhite: 1,
+      placeable: 1,
+      withPreview: 1,
+    })
     expect(report.problems).toEqual([
+      expect.stringContaining('asset-2: 白模轻量版已过期'),
       expect.stringContaining('asset-3: 缺少文件'),
       expect.stringContaining('asset-4: 未下载的 LFS 指针'),
     ])
@@ -128,7 +154,7 @@ describe('importCatalog', () => {
   it('is idempotent and refreshes rows in place', async () => {
     await importCatalog(t.database.db, roots())
     expect(await t.database.db.select().from(schema.assets)).toHaveLength(4)
-    expect(await t.database.db.select().from(schema.storedFiles)).toHaveLength(3)
+    expect(await t.database.db.select().from(schema.storedFiles)).toHaveLength(4)
   })
 
   it('refuses a model whose bytes differ from its conversion record', async () => {
@@ -163,9 +189,11 @@ describe('GET /assets', () => {
       footprintSource: 'glb',
     })
     expect(island?.glb?.url).toMatch(/^\/api\/v1\/files\/[0-9a-f-]{36}$/)
+    expect(island?.whiteGlb).toMatchObject({ bytes: white.length, sha256: sha(white) })
     expect(items.find((a) => a.id === 'asset-2')).toMatchObject({
       installation: 'wall',
       placeable: false,
+      whiteGlb: null,
     })
     // Without a web model the SketchUp bounds (X, Y, Z-up in mm) give the footprint.
     expect(items.find((a) => a.id === 'asset-3')).toMatchObject({
