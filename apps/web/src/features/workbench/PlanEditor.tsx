@@ -1,13 +1,38 @@
-import { useEffect, useMemo, useReducer, useRef, useState } from 'react'
+import {
+  Suspense,
+  lazy,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react'
 import type { KeyboardEvent, PointerEvent as ReactPointerEvent } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { checkAssetFit, mToMm, mmToM, validateLayout } from '@store/shared'
-import type { Asset, DesignNode, Draft, Layout, LayoutItem, Space } from '@store/shared'
+import type {
+  Asset,
+  Camera,
+  DesignNode,
+  Draft,
+  Layout,
+  LayoutItem,
+  ShopType,
+  Space,
+} from '@store/shared'
 import { ApiRequestError } from '../../api/client.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
+import { CameraPanel } from './CameraPanel.tsx'
 import { editorReducer } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
+
+// Three.js is only downloaded when a 3D view is first opened.
+const Viewer3D = lazy(() =>
+  import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
+)
 
 const AUTOSAVE_DELAY_MS = 800
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
@@ -16,6 +41,7 @@ interface PlanEditorProps {
   projectId: string
   baseNode: DesignNode
   space: Space
+  shopType: ShopType
   /** The shared draft, if it continues this node. */
   draft: Draft | null
   assets: Asset[]
@@ -33,13 +59,14 @@ function toWorld(
 }
 
 /**
- * Edits a layout on the plan. Changes autosave to the shared draft (with optimistic locking);
+ * Edits a layout on the plan or in the 3D white model (one layout, two views). Changes autosave to the shared draft (with optimistic locking);
  * saving a version or confirming the white model creates a new history node.
  */
 export function PlanEditor({
   projectId,
   baseNode,
   space,
+  shopType,
   draft,
   assets,
   onNodeCreated,
@@ -59,6 +86,13 @@ export function PlanEditor({
   const [saveError, setSaveError] = useState<unknown>(null)
   const [addAssetId, setAddAssetId] = useState('')
   const svgRef = useRef<SVGSVGElement>(null)
+  const viewerRef = useRef<Viewer3DHandle>(null)
+  const isWhite = baseNode.kind === 'white'
+  const [view, setView] = useState<'plan' | '3d'>(isWhite ? '3d' : 'plan')
+  /** The 3D scene stays mounted once opened (white models always), so switching is instant. */
+  const [show3d, setShow3d] = useState(isWhite)
+  const [viewerReady, setViewerReady] = useState(false)
+  const onViewerReady = useCallback(() => setViewerReady(true), [])
   const drag = useRef<{ id: string; dx: number; dz: number } | null>(null)
   /** The save in flight, so the draft is never removed underneath it. */
   const saving = useRef<Promise<void> | null>(null)
@@ -73,6 +107,15 @@ export function PlanEditor({
     [state.layout, space, assetMap],
   )
   const errors = issues.filter((i) => i.severity === 'error')
+  const flaggedIds = useMemo(
+    () => new Set(issues.filter((i) => i.severity === 'error').flatMap((i) => i.itemIds ?? [])),
+    [issues],
+  )
+  const select = useCallback((id: string | null) => dispatch({ type: 'select', id }), [])
+  const move = useCallback(
+    (id: string, cx: number, cz: number) => dispatch({ type: 'move', id, cx, cz }),
+    [],
+  )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
   // Autosave the draft shortly after the last change, one request at a time. Edits made while a
@@ -216,6 +259,16 @@ export function PlanEditor({
     })
   }
 
+  function switchView(next: 'plan' | '3d') {
+    setView(next)
+    if (next === '3d') setShow3d(true)
+  }
+
+  function showCamera(camera: Camera) {
+    switchView('3d')
+    viewerRef.current?.showView(camera)
+  }
+
   const SAVE_LABELS = {
     idle: '未修改',
     saving: '正在保存草稿…',
@@ -227,6 +280,14 @@ export function PlanEditor({
   return (
     <section className="plan-editor" aria-label="平面编辑">
       <div className="toolbar">
+        <div className="tabs" role="group" aria-label="视图">
+          <button type="button" aria-pressed={view === 'plan'} onClick={() => switchView('plan')}>
+            平面
+          </button>
+          <button type="button" aria-pressed={view === '3d'} onClick={() => switchView('3d')}>
+            三维
+          </button>
+        </div>
         <button
           type="button"
           disabled={!selected}
@@ -285,23 +346,48 @@ export function PlanEditor({
         <div
           className="plan-canvas"
           tabIndex={0}
-          aria-label="平面画布：拖动移动，方向键微调，R 旋转，Delete 删除"
+          aria-label={
+            view === 'plan'
+              ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
+              : '三维白模：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+          }
           onPointerMove={onPointerMove}
           onPointerUp={() => (drag.current = null)}
           onPointerCancel={() => (drag.current = null)}
           onKeyDown={onKeyDown}
         >
-          <PlanView
-            svgRef={svgRef}
-            space={space}
-            layout={state.layout}
-            issues={issues}
-            assets={assetMap}
-            selectedId={state.selectedId}
-            onItemPointerDown={onItemPointerDown}
-            onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
-            title={`${baseNode.name} 平面`}
-          />
+          {show3d && (
+            <div hidden={view !== '3d'}>
+              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                <Viewer3D
+                  ref={viewerRef}
+                  space={space}
+                  shopType={shopType}
+                  layout={state.layout}
+                  assets={assetMap}
+                  selectedId={state.selectedId}
+                  flaggedIds={flaggedIds}
+                  onSelect={select}
+                  onMove={move}
+                  onReady={onViewerReady}
+                  title={`${baseNode.name} 三维白模`}
+                />
+              </Suspense>
+            </div>
+          )}
+          <div hidden={view !== 'plan'}>
+            <PlanView
+              svgRef={svgRef}
+              space={space}
+              layout={state.layout}
+              issues={issues}
+              assets={assetMap}
+              selectedId={state.selectedId}
+              onItemPointerDown={onItemPointerDown}
+              onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
+              title={`${baseNode.name} 平面`}
+            />
+          </div>
         </div>
         <aside className="plan-side">
           {selected ? (
@@ -382,6 +468,15 @@ export function PlanEditor({
           <ErrorMessage error={create.error} />
         </aside>
       </div>
+      {isWhite && (
+        <CameraPanel
+          nodeId={baseNode.id}
+          viewer={viewerRef}
+          viewerReady={viewerReady}
+          layout={state.layout}
+          onShow={showCamera}
+        />
+      )}
     </section>
   )
 }

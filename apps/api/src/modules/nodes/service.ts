@@ -23,6 +23,7 @@ import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import { placeableAssets } from '../assets/service.ts'
+import { initialCameras, insertCameras } from '../cameras/service.ts'
 
 const { designNodes, projects } = schema
 type NodeRow = typeof designNodes.$inferSelect
@@ -164,6 +165,8 @@ export async function createNode(
   }
 
   let space: Space | null = null
+  /** The space the layout lives in (the node's own, or inherited). */
+  let layoutSpace: Space | null = null
   let issues: Issue[] = []
   if (input.kind === 'space') {
     if (!input.space) throw new AppError('VALIDATION_FAILED', '空间节点必须包含空间')
@@ -172,10 +175,15 @@ export async function createNode(
     issues = checked.warnings
   }
   if (input.layout) {
-    const effective = space ?? (input.parentId ? await resolveSpace(db, input.parentId) : null)
-    if (!effective) throw new AppError('VALIDATION_FAILED', '布局缺少所属空间')
-    issues = [...issues, ...(await checkLayout(db, effective, input.layout, input.kind))]
+    layoutSpace = space ?? (input.parentId ? await resolveSpace(db, input.parentId) : null)
+    if (!layoutSpace) throw new AppError('VALIDATION_FAILED', '布局缺少所属空间')
+    issues = [...issues, ...(await checkLayout(db, layoutSpace, input.layout, input.kind))]
   }
+
+  const cameras =
+    input.kind === 'white' && layoutSpace
+      ? await initialCameras(db, input.parentId, layoutSpace)
+      : []
 
   const row = await db.transaction(async (tx) => {
     const [inserted] = await tx
@@ -193,6 +201,7 @@ export async function createNode(
       })
       .returning()
     if (!inserted) throw new Error('Node insert returned no row')
+    await insertCameras(tx, inserted.id, cameras)
     await tx
       .update(projects)
       .set({ updatedAt: sql`now()` })
