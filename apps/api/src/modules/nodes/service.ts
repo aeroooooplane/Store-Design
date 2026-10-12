@@ -15,6 +15,7 @@ import type {
   NodeCreate,
   NodeCreated,
   NodeKind,
+  NodeOrigin,
   NodeSummary,
   NodeTree,
   Space,
@@ -148,11 +149,19 @@ const STAGE_PARENTS: Partial<Record<NodeKind, { kinds: readonly string[]; messag
   render: { kinds: ['white'], message: '渲染只能建在白模下' },
 }
 
+/** Who made a node and what from; the API leaves this to the defaults (user / generator). */
+export interface NodeMeta {
+  origin?: NodeOrigin
+  /** e.g. the recognition run a space was confirmed from. */
+  originRef?: string
+}
+
 export async function createNode(
   db: Database,
   ctx: RequestContext,
   projectId: string,
   input: NodeCreate,
+  meta: NodeMeta = {},
 ): Promise<NodeCreated> {
   authorize(ctx.actor, 'node:create', { projectId })
   await requireActiveProject(db, projectId)
@@ -212,7 +221,8 @@ export async function createNode(
         layout: input.layout ?? null,
         strategy: input.strategy ?? null,
         siStyle: input.siStyle ?? null,
-        origin: input.kind === 'plan' ? 'generator' : 'user',
+        origin: meta.origin ?? (input.kind === 'plan' ? 'generator' : 'user'),
+        originRef: meta.originRef ?? null,
       })
       .returning()
     if (!inserted) throw new Error('Node insert returned no row')

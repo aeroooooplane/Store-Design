@@ -43,6 +43,13 @@
       "when": 1791626830315,
       "tag": "0005_asset_selection",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1791770505189,
+      "tag": "0006_recognition",
+      "breakpoints": true
     }
   ]
 }

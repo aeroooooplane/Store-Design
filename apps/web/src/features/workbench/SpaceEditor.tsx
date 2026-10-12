@@ -22,6 +22,8 @@ interface SpaceEditorProps {
   /** Existing space to start from (editing creates a new space node). */
   initial?: Space | undefined
   submitting: boolean
+  /** Name the new space node starts with; the user may change it. */
+  initialName?: string | undefined
   onSubmit: (space: Space, name: string) => void
   onCancel?: (() => void) | undefined
 }
@@ -60,13 +62,19 @@ function NumberInput({
   )
 }
 
-export function SpaceEditor({ initial, submitting, onSubmit, onCancel }: SpaceEditorProps) {
+export function SpaceEditor({
+  initial,
+  submitting,
+  initialName,
+  onSubmit,
+  onCancel,
+}: SpaceEditorProps) {
   const [mode, setMode] = useState<'rectangle' | 'polygon'>(initial ? 'polygon' : 'rectangle')
   const [rectangle, setRectangle] = useState(DEFAULT_RECTANGLE)
   const [form, setForm] = useState<PolygonForm>(() =>
     initial ? spaceToPolygonForm(initial) : rectangleToPolygon(DEFAULT_RECTANGLE),
   )
-  const [name, setName] = useState(initial ? '空间（修改）' : '空间')
+  const [name, setName] = useState(initialName ?? (initial ? '空间（修改）' : '空间'))
 
   const parsed = useMemo(() => polygonToSpace(form), [form])
   const space = parsed.success ? parsed.data : null
@@ -99,8 +107,9 @@ export function SpaceEditor({ initial, submitting, onSubmit, onCancel }: SpaceEd
     if (space && !errors.length && name.trim()) onSubmit(space, name.trim())
   }
 
+  // Recognised values are to the millimetre; the browser must not block them for the 10 mm step.
   return (
-    <form className="space-editor" onSubmit={submit} aria-label="空间编辑">
+    <form className="space-editor" onSubmit={submit} aria-label="空间编辑" noValidate>
       <div className="space-editor-fields">
         <div className="tabs" role="group" aria-label="输入方式">
           <button

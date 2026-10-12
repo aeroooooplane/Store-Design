@@ -947,3 +947,89 @@ ul.issues li.warning {
   font-size: 13px;
   color: var(--muted);
 }
+
+/* Plan recognition: PDF pages, the picture with its drawing layer, the result beside it */
+.recognition {
+  display: grid;
+  gap: 12px;
+}
+.pdf-pages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.pdf-page {
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  width: 132px;
+  font-size: 12px;
+  text-align: center;
+}
+.pdf-page img {
+  width: 100%;
+  height: 90px;
+  object-fit: contain;
+  background: var(--paper);
+}
+.pdf-page[aria-pressed='true'] {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+.recognition-work {
+  display: grid;
+  gap: 14px;
+}
+.plan-image-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+  background: var(--paper);
+  touch-action: none;
+}
+.plan-image-svg.tool-crop,
+.plan-image-svg.tool-calibrate {
+  cursor: crosshair;
+}
+.recognition-result h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0 6px;
+}
+.recognition-pending ul,
+.recognition-notes ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+}
+.recognition-pending h4 {
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.recognition-items {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin: 8px 0;
+}
+.recognition-items th,
+.recognition-items td {
+  text-align: left;
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--line-soft);
+  vertical-align: top;
+}
+.recognition-items tr.outside td {
+  color: var(--muted);
+}
+.tag.source-requested {
+  border-color: #d9303a;
+  color: #d9303a;
+}
+.tag.source-outside {
+  color: var(--muted);
+}
