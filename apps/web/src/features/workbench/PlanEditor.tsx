@@ -33,6 +33,7 @@ import type {
 import { ApiRequestError } from '../../api/client.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
+import type { Look, ViewPose } from '../viewer3d/white-scene.ts'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
 import { useAgentSelection } from '../agent/selection.ts'
 import { CameraPanel } from './CameraPanel.tsx'
@@ -40,7 +41,8 @@ import { StagePanel } from './StagePanel.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
 import type { SiSwitch } from './Workbench.tsx'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
-import { copyName, freshName, stageOf, stageParentId } from './tree.ts'
+import { copyName, freshName, spaceAncestor, stageOf, stageParentId } from './tree.ts'
+import { useViewMemory } from './view-memory.ts'
 import type { Stage } from './tree.ts'
 import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer, initialEditorState } from './editor-state.ts'
@@ -55,7 +57,7 @@ const AUTOSAVE_DELAY_MS = 800
 const STAGE_TITLES: Record<Stage, string> = {
   space: '空间阶段 · 手动排布',
   plan: '方案阶段',
-  white: '白模阶段',
+  white: '三维效果阶段',
   render: '渲染阶段',
 }
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
@@ -148,12 +150,23 @@ export function PlanEditor({
   }, [state.selectedId, setAgentSelection])
   const viewerRef = useRef<Viewer3DHandle>(null)
   const isWhite = baseNode.kind === 'white'
-  const [view, setView] = useState<'plan' | '3d'>(isWhite ? '3d' : 'plan')
+  const stage = stageOf(baseNode.kind)
+  // The same space keeps its 3D view and plan/3D choice from step to step.
+  const memory = useViewMemory(spaceAncestor(nodes, baseNode.id))
+  const remembered = useRef(memory.get())
+  const [view, setView] = useState<'plan' | '3d'>(
+    () => remembered.current.view[stage] ?? (isWhite ? '3d' : 'plan'),
+  )
+  // The 3D effect stage shows materials by default; the white model stays one click away.
+  const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
   /** The 3D scene stays mounted once opened (white models always), so switching is instant. */
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const show3d = true
   const [viewerReady, setViewerReady] = useState(false)
   const onViewerReady = useCallback(() => setViewerReady(true), [])
+  const memoryRef = useRef(memory)
+  memoryRef.current = memory
+  const rememberPose = useCallback((pose: ViewPose) => memoryRef.current.update({ pose }), [])
   const drag = useRef<{ id: string; dx: number; dz: number; group: string } | null>(null)
   /** The save in flight, so the draft is never removed underneath it. */
   const saving = useRef<Promise<void> | null>(null)
@@ -286,7 +299,6 @@ export function PlanEditor({
     )
   }
 
-  const stage = stageOf(baseNode.kind)
   const namesUnder = (parentId: string | null) =>
     nodes.filter((n) => n.parentId === parentId).map((n) => n.name)
 
@@ -333,7 +345,7 @@ export function PlanEditor({
       createFromLayout({
         kind: 'white',
         parentId: baseNode.id,
-        name: freshName('白模', namesUnder(baseNode.id)),
+        name: freshName('三维效果', namesUnder(baseNode.id)),
       })
     } else if (stage === 'white') {
       createFromLayout({
@@ -439,6 +451,12 @@ export function PlanEditor({
 
   function switchView(next: 'plan' | '3d') {
     setView(next)
+    memory.update({ view: { [stage]: next } })
+  }
+
+  function switchLook(next: Look) {
+    setLook(next)
+    memory.update({ look: next })
   }
 
   function showCamera(camera: Camera) {
@@ -489,6 +507,24 @@ export function PlanEditor({
                 三维
               </button>
             </div>
+            {isWhite && (
+              <div className="tabs" role="group" aria-label="外观">
+                <button
+                  type="button"
+                  aria-pressed={look === 'material'}
+                  onClick={() => switchLook('material')}
+                >
+                  材质
+                </button>
+                <button
+                  type="button"
+                  aria-pressed={look === 'white'}
+                  onClick={() => switchLook('white')}
+                >
+                  白模
+                </button>
+              </div>
+            )}
             <span className="history-buttons">
               <button
                 type="button"
@@ -532,7 +568,7 @@ export function PlanEditor({
             aria-label={
               planMain
                 ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-                : '三维白模：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+                : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
             }
             onPointerMove={onPointerMove}
             onPointerUp={() => (drag.current = null)}
@@ -553,7 +589,11 @@ export function PlanEditor({
                     onSelect={select}
                     onMove={move}
                     onReady={onViewerReady}
-                    title={`${baseNode.name} 三维白模`}
+                    look={isWhite ? look : 'white'}
+                    siStyle={siStyle}
+                    initialView={remembered.current.pose}
+                    onViewChange={rememberPose}
+                    title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
                   />
                 </Suspense>
                 {planMain && (
@@ -627,7 +667,7 @@ export function PlanEditor({
               second={
                 stage === 'plan' || stage === 'white'
                   ? {
-                      label: stage === 'plan' ? '确认白模' : '开始渲染',
+                      label: stage === 'plan' ? '进入三维效果' : '开始渲染',
                       onClick: advance,
                       primary: true,
                       disabled: create.isPending || errors.length > 0,
@@ -636,7 +676,7 @@ export function PlanEditor({
               }
               hint={
                 errors.length > 0 && stage !== 'space'
-                  ? `解决检查中的问题后才能${stage === 'plan' ? '确认白模' : '开始渲染'}。`
+                  ? `解决检查中的问题后才能${stage === 'plan' ? '进入三维效果' : '开始渲染'}。`
                   : undefined
               }
             />

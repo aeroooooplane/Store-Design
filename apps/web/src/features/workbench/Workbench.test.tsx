@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
 import { MemoryRouter } from 'react-router'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
@@ -344,6 +344,30 @@ describe('Workbench', () => {
     expect(screen.getByText(/换了 1 件道具，原节点保留/)).toBeTruthy()
     expect(server.state.nodes.find((n) => n.id === P1)?.layout?.items[0]?.assetId).toBe(
       'asset-2595882',
+    )
+  })
+
+  it('keeps plan or 3D when moving to another plan of the same space', async () => {
+    server = fakeApi(
+      [
+        designNode(S1, null),
+        designNode(P1, S1, { name: '方案 A' }),
+        designNode(P2, S1, { name: '方案 B' }),
+      ],
+      null,
+    )
+    vi.stubGlobal('fetch', server.fetchMock)
+    renderWorkbench(`?node=${P1}`)
+
+    await screen.findByRole('heading', { name: '方案 A' })
+    const views = screen.getByRole('group', { name: '视图' })
+    fireEvent.click(within(views).getByRole('button', { name: '三维' }))
+    fireEvent.keyDown(screen.getByRole('button', { name: '方案 B' }), { key: 'Enter' })
+
+    await screen.findByRole('heading', { name: '方案 B' })
+    const next = screen.getByRole('group', { name: '视图' })
+    expect(within(next).getByRole('button', { name: '三维' }).getAttribute('aria-pressed')).toBe(
+      'true',
     )
   })
 

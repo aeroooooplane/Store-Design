@@ -14,6 +14,14 @@ export function fileUrl(fileId: string): string {
   return `/api/v1/files/${fileId}`
 }
 
+/**
+ * A library file's address with its content hash: a browser may keep it for good, because a
+ * changed file gets another address.
+ */
+export function versionedFileUrl(fileId: string, sha256: string): string {
+  return `${fileUrl(fileId)}?v=${sha256.slice(0, 16)}`
+}
+
 /** Streams a registered file by id; there is no path-based access. */
 export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoots }> = async (
   app,
@@ -26,6 +34,7 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
         tags: ['files'],
         summary: '读取已登记的文件（模型、预览图、渲染图、交付文件）',
         params: z.object({ fileId: z.uuid() }),
+        querystring: z.object({ v: z.string().max(64).optional() }),
         response: {
           200: z.unknown().describe('文件内容（二进制）'),
           304: z.unknown().describe('未修改'),
@@ -57,7 +66,14 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
         )
       }
       const etag = `"${row.sha256}"`
-      reply.header('etag', etag).header('cache-control', 'private, max-age=3600')
+      // Addressed by content (?v= the hash): never changes, so it is cached for a year.
+      const versioned = request.query.v !== undefined && row.sha256.startsWith(request.query.v)
+      reply
+        .header('etag', etag)
+        .header(
+          'cache-control',
+          versioned ? 'private, max-age=31536000, immutable' : 'private, max-age=3600',
+        )
       if (request.headers['if-none-match'] === etag) return reply.code(304).send(undefined)
       reply.header('content-type', row.contentType).header('content-length', bytes)
       // A plan symbol is a drawing; even opened on its own it may not run anything.

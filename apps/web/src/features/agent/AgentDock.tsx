@@ -24,7 +24,7 @@ const TOOL_LABELS: Record<string, string> = {
   remove_item: '删除道具',
   validate: '检查布局',
   set_style: '切换风格',
-  confirm_white: '确认白模',
+  confirm_white: '进入三维效果',
   start_render: '创建渲染',
   export_project: '导出项目',
   edit_space: '修改空间',

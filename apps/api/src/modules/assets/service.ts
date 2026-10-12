@@ -6,7 +6,7 @@ import type { Asset, AssetList, AssetListQuery, FileRef, FrontAxis } from '@stor
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { notFound } from '../../lib/app-error.ts'
-import { fileUrl } from '../files/routes.ts'
+import { versionedFileUrl } from '../files/routes.ts'
 
 const { assets, storedFiles } = schema
 const glbFiles = aliasedTable(storedFiles, 'glb_files')
@@ -28,7 +28,14 @@ interface AssetFiles {
 type FileRow = typeof storedFiles.$inferSelect
 
 function fileRef(row: FileRow | null): FileRef | null {
-  return row ? { fileId: row.id, url: fileUrl(row.id), bytes: row.bytes, sha256: row.sha256 } : null
+  return row
+    ? {
+        fileId: row.id,
+        url: versionedFileUrl(row.id, row.sha256),
+        bytes: row.bytes,
+        sha256: row.sha256,
+      }
+    : null
 }
 
 function toAsset(

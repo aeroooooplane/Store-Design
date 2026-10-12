@@ -18,7 +18,7 @@
 | `shop_type` | `side_hall` 边厅店、`island` 中岛店、`zone` 专区 |
 | `market` | `domestic` 国内、`overseas` 海外 |
 | `si_style` | `SI1.0`、`SI2.0` |
-| `node_kind` | `space` 空间、`plan` 生成方案、`edit` 编辑、`white` 白模、`render` 渲染 |
+| `node_kind` | `space` 空间、`plan` 生成方案、`edit` 编辑、`white` 三维效果（原白模）、`render` 渲染 |
 | `node_origin` | `user`、`generator`、`agent`、`import`、`recognition` |
 | `plan_strategy` | `max` 尽量多放、`area` 按面积推荐、`min` 尽量少放、`case` 参照案例 |
 | `render_mode` | `white`、`material` |

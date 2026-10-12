@@ -4296,7 +4296,9 @@ export interface paths {
         /** 读取已登记的文件（模型、预览图、渲染图、交付文件） */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    v?: string;
+                };
                 header?: never;
                 path: {
                     fileId: string;
