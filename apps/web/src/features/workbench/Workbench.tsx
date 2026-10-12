@@ -34,6 +34,8 @@ import { StagePanel } from './StagePanel.tsx'
 import { flattenTree, spaceAncestor } from './tree.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
+import { ViewMemoryContext } from './view-memory.ts'
+import type { ViewState } from './view-memory.ts'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
 /** Swaps the props of the step on screen to another SI style; says what it did, or null. */
@@ -68,6 +70,8 @@ export function Workbench({ project }: { project: Project }) {
   })
   // The plan editor registers how it swaps its props when the SI style changes.
   const siSwitch = useRef<SiSwitch | null>(null)
+  // The 3D view and plan/3D choice of each space, kept while moving between its steps.
+  const viewMemory = useRef(new Map<string, ViewState>())
   const [siNotice, setSiNotice] = useState<string | null>(null)
   const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
     siSwitch.current = swap
@@ -167,7 +171,7 @@ export function Workbench({ project }: { project: Project }) {
   ) : null
   return (
     <AgentSelectionProvider>
-      {content}
+      <ViewMemoryContext.Provider value={viewMemory.current}>{content}</ViewMemoryContext.Provider>
       <AgentDock
         projectId={project.id}
         nodeId={creatingSpace ? null : selectedId}

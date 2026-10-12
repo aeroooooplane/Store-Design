@@ -59,7 +59,7 @@
 |---|---|---|
 | GET | `/assets` | 模型目录：`q` 按编号或名称搜索、`function` 用途、`placeable=true|false`、`siFamily`；每项含占地尺寸 `footprint`（米）、正面方向 `front`、GLB 与预览图链接 |
 | GET | `/assets/{assetId}` | 单个模型 |
-| GET | `/files/{fileId}` | 按编号读取已登记文件（GLB、预览图等），支持 `If-None-Match` 返回 304；文件只是未下载的 LFS 指针时返回 404，`details.reason = "lfs_pointer"` |
+| GET | `/files/{fileId}` | 按编号读取已登记文件（GLB、预览图等），支持 `If-None-Match` 返回 304；模型库文件的地址带内容哈希 `?v=`，与当前文件一致时按一年缓存（`immutable`），文件更新后地址随之改变；文件只是未下载的 LFS 指针时返回 404，`details.reason = "lfs_pointer"` |
 
 ### 历史节点、草稿、导入导出
 
@@ -141,7 +141,7 @@
 | POST | `/agent/sessions/{id}/messages` | 发消息：`text`（4000 字内）、`nodeId`（当前看的节点，修改从它开始）、`selectedItemIds`、`planPng`（平面截图 base64，4 MB 内；随消息保存，只交给能看图的模型）。服务端带着项目状态调用所选的 Agent 模型，模型通过工具修改项目，每次修改生成 `origin = agent` 的新节点；返回 `userMessage`、最终的 `reply` 和应切换到的 `currentNodeId`。没有可用模型 400，超额 402，模型失败 502（用户消息保留） |
 | POST | `/agent/actions/{id}/undo` | 撤销一次修改：隐藏它生成的节点，或删除它添加的视角 / 恢复它删除的视角；已撤销或没有可撤销改动的动作返回 409 |
 
-工具清单与说明在 `apps/api/src/modules/agent/tools.ts`（get_state、list_models、generate_plans、place_item、move_item、rotate_item、remove_item、validate、set_style（在方案或白模阶段切换 SI 时按映射表换道具并另存新节点）、edit_space（层高、矩形宽深、入口、加柱子，生成新的空间节点）、confirm_white、start_render、list_views / add_view / remove_view（白模或渲染节点的视角，撤销即删除或恢复）、export_project）；参数由 zod 定义并导出为 JSON Schema 交给模型，执行前再校验一次，校验失败或工具抛出的业务错误都作为失败结果回给模型继续处理。
+工具清单与说明在 `apps/api/src/modules/agent/tools.ts`（get_state、list_models、generate_plans、place_item、move_item、rotate_item、remove_item、validate、set_style（在方案或三维效果阶段切换 SI 时按映射表换道具并另存新节点）、edit_space（层高、矩形宽深、入口、加柱子，生成新的空间节点）、confirm_white（进入三维效果）、start_render、list_views / add_view / remove_view（三维效果或渲染节点的视角，撤销即删除或恢复）、export_project）；参数由 zod 定义并导出为 JSON Schema 交给模型，执行前再校验一次，校验失败或工具抛出的业务错误都作为失败结果回给模型继续处理。
 
 ## 修改接口后
 

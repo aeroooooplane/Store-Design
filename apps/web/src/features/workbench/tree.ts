@@ -4,7 +4,7 @@ export const NODE_KIND_LABELS: Record<NodeKind, string> = {
   space: '空间',
   plan: '方案',
   edit: '编辑',
-  white: '白模',
+  white: '三维效果',
   render: '渲染',
 }
 

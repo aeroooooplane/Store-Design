@@ -39,6 +39,10 @@ interface Viewer3DProps {
     | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
+  /** Where the camera starts instead of the default front view (e.g. the view last used). */
+  initialView?: ViewPose | null | undefined
+  /** The view after the user orbits, pans or zooms, and the last one when the view closes. */
+  onViewChange?: ((pose: ViewPose) => void) | undefined
   ref?: Ref<Viewer3DHandle> | undefined
   title: string
 }
@@ -59,6 +63,8 @@ export function Viewer3D({
   onSelect,
   onMove,
   onReady,
+  initialView,
+  onViewChange,
   ref,
   title,
 }: Viewer3DProps) {
@@ -67,6 +73,9 @@ export function Viewer3D({
   const viewedSpace = useRef<Space | null>(null)
   const readyCallback = useRef(onReady)
   readyCallback.current = onReady
+  const viewCallback = useRef(onViewChange)
+  viewCallback.current = onViewChange
+  const startView = useRef(initialView)
   const [status, setStatus] = useState<LoadStatus>({ loading: 0, failed: [] })
   const [error, setError] = useState<string | null>(null)
 
@@ -82,6 +91,7 @@ export function Viewer3D({
     }
     sceneRef.current = scene
     scene.onStatus(setStatus)
+    scene.onView((pose) => viewCallback.current?.(pose))
     const observer = new ResizeObserver(([entry]) => {
       if (entry) scene.resize(entry.contentRect.width, entry.contentRect.height)
     })
@@ -89,6 +99,8 @@ export function Viewer3D({
     readyCallback.current?.()
     return () => {
       observer.disconnect()
+      // A view set from outside (a camera shown) is the last one too.
+      viewCallback.current?.(scene.currentView())
       scene.dispose()
       sceneRef.current = null
       viewedSpace.current = null
@@ -101,8 +113,11 @@ export function Viewer3D({
   }, [onSelect, onMove])
 
   useEffect(() => {
-    // The view resets only when a different space is shown, not after every edit.
-    sceneRef.current?.setRoom(space, shopType, viewedSpace.current !== space)
+    // The view resets only when a different space is shown, not after every edit; the first
+    // space opens at the view handed in, if any.
+    const start = viewedSpace.current === null ? startView.current : null
+    sceneRef.current?.setRoom(space, shopType, viewedSpace.current !== space && !start)
+    if (start) sceneRef.current?.showView(start)
     viewedSpace.current = space
   }, [space, shopType])
 

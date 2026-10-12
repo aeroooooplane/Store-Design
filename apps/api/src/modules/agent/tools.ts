@@ -81,7 +81,7 @@ const STAGE_LABELS: Record<NodeKind, string> = {
   space: '空间',
   plan: '方案',
   edit: '方案',
-  white: '白模',
+  white: '三维效果',
   render: '渲染',
 }
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
@@ -233,7 +233,7 @@ function describeCamera(c: NodeCamera) {
 function requireViewNode(tools: ToolContext): DesignNode {
   const node = tools.node
   if (!node || (node.kind !== 'white' && node.kind !== 'render')) {
-    throw new AppError('INVALID_STATE', '只有白模或渲染节点有视角，请先确认白模')
+    throw new AppError('INVALID_STATE', '只有三维效果或渲染节点有视角，请先进入三维效果')
   }
   return node
 }
@@ -283,7 +283,9 @@ async function saveLayout(tools: ToolContext, layout: Layout, what: string): Pro
       nodeName: name,
       items: layout.items.length,
       issues: created.issues.map((i) => i.message),
-      ...(errors.length ? { warning: `有 ${errors.length} 个问题需要处理，确认白模前须解决` } : {}),
+      ...(errors.length
+        ? { warning: `有 ${errors.length} 个问题需要处理，进入三维效果前须解决` }
+        : {}),
     },
   }
 }
@@ -576,7 +578,7 @@ export const TOOLS: AgentTool[] = [
   tool({
     name: 'set_style',
     description:
-      '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。当前在方案或白模阶段时，按映射表把软装道具换成新风格的对应款，另存为新节点，原节点保留。',
+      '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。当前在方案或三维效果阶段时，按映射表把软装道具换成新风格的对应款，另存为新节点，原节点保留。',
     schema: z.object({
       siStyle: z.enum(['SI1.0', 'SI2.0']).optional(),
       market: z.enum(['domestic', 'overseas']).optional(),
@@ -639,14 +641,15 @@ export const TOOLS: AgentTool[] = [
   }),
   tool({
     name: 'confirm_white',
-    description: '把当前方案确认为白模（下一阶段）。布局不能有越界、重叠等错误。',
+    description:
+      '把当前方案推进到三维效果阶段（下一阶段，材质三维，可继续编辑）。布局不能有越界、重叠等错误。',
     schema: z.object({}),
     run: async (tools) => {
       const node = tools.node
       if (!node || (node.kind !== 'plan' && node.kind !== 'edit')) {
-        throw new AppError('INVALID_STATE', '只能从方案节点确认白模')
+        throw new AppError('INVALID_STATE', '只能从方案节点进入三维效果')
       }
-      const name = freshName('白模', await namesUnder(tools.db, tools.project.id, node.id))
+      const name = freshName('三维效果', await namesUnder(tools.db, tools.project.id, node.id))
       const created = await createNode(
         tools.db,
         tools.ctx,
@@ -656,13 +659,13 @@ export const TOOLS: AgentTool[] = [
       )
       return {
         nodeId: created.node.id,
-        result: { done: '已确认白模', nodeId: created.node.id, nodeName: name },
+        result: { done: '已进入三维效果', nodeId: created.node.id, nodeName: name },
       }
     },
   }),
   tool({
     name: 'start_render',
-    description: '从当前白模创建渲染节点；渲染图在打开该节点时由浏览器生成。',
+    description: '从当前三维效果节点创建渲染节点；渲染图在打开该节点时由浏览器生成。',
     schema: z.object({}),
     run: async (tools) => {
       const node = tools.node

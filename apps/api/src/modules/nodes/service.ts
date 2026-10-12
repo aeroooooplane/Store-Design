@@ -98,7 +98,7 @@ export async function checkLayout(
   if (fit.length) throw new AppError('VALIDATION_FAILED', '布局中的模型引用无效', asIssues(fit))
   const issues = asIssues(validateLayout(space, layout))
   if ((kind === 'white' || kind === 'render') && issues.some((i) => i.severity === 'error')) {
-    throw new AppError('VALIDATION_FAILED', '确认白模前须先解决越界、重叠等问题', issues)
+    throw new AppError('VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题', issues)
   }
   return issues
 }

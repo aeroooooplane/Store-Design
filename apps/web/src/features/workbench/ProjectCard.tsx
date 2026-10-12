@@ -39,7 +39,7 @@ export function ProjectCard({ project, space, onSiChanged, notice }: ProjectCard
             type="button"
             aria-pressed={project.siStyle === style}
             disabled={update.isPending}
-            title="决定自动排布与添加模型中的软装道具；在方案或白模阶段切换时，另存一个换成该风格道具的新节点，原节点保留"
+            title="决定自动排布与添加模型中的软装道具；在方案或三维效果阶段切换时，另存一个换成该风格道具的新节点，原节点保留"
             onClick={() => {
               if (project.siStyle === style) return
               update.mutate(

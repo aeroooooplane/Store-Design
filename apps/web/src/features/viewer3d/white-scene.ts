@@ -291,7 +291,13 @@ interface PlacedItem {
   finishPrepared: boolean
   finish: THREE.Object3D | null
   finishState: 'none' | 'loading' | 'ready' | 'failed'
+  /** Invisible box over the footprint: what a click hits (cheap whatever the model). */
+  hit: THREE.Mesh
 }
+
+/** One unit box and one never-drawn material shared by every hit box. */
+const HIT_BOX = new THREE.BoxGeometry(1, 1, 1)
+const HIT_MATERIAL = new THREE.MeshBasicMaterial({ visible: false })
 
 const toVec3 = (v: THREE.Vector3): [number, number, number] => [
   Math.round(v.x * 1000) / 1000,
@@ -313,6 +319,9 @@ export class WhiteScene {
   private readonly room = new THREE.Group()
   private readonly props = new THREE.Group()
   private readonly marks = new THREE.Group()
+  /** Hit boxes of the props; picking tests these, not the models. */
+  private readonly hits = new THREE.Group()
+  private viewListener: ((pose: ViewPose) => void) | null = null
   private readonly sun = new THREE.DirectionalLight('#fff4e8', 1.6)
   private readonly items = new Map<string, PlacedItem>()
   private readonly pending = new Set<Promise<unknown>>()
@@ -362,7 +371,7 @@ export class WhiteScene {
     this.sun.shadow.mapSize.set(2048, 2048)
     this.sun.shadow.bias = -0.00015
     this.sun.shadow.normalBias = 0.025
-    this.scene.add(this.sun, this.sun.target, this.room, this.props, this.marks)
+    this.scene.add(this.sun, this.sun.target, this.room, this.props, this.marks, this.hits)
 
     // Registered before OrbitControls so a press on a prop can switch orbiting off first.
     canvas.addEventListener('pointerdown', this.onPointerDown)
@@ -372,10 +381,16 @@ export class WhiteScene {
     this.controls = new OrbitControls(this.camera, canvas)
     this.controls.maxPolarAngle = Math.PI * 0.49
     this.controls.addEventListener('change', this.requestRender)
+    this.controls.addEventListener('end', () => this.viewListener?.(this.currentView()))
   }
 
   setHandlers(handlers: SceneHandlers | null) {
     this.handlers = handlers
+  }
+
+  /** Told the view whenever the user finishes orbiting, panning or zooming. */
+  onView(listener: ((pose: ViewPose) => void) | null) {
+    this.viewListener = listener
   }
 
   onStatus(listener: ((status: LoadStatus) => void) | null) {
@@ -546,7 +561,10 @@ export class WhiteScene {
           finishPrepared: Boolean(asset?.finishGlb),
           finish: null,
           finishState: 'none',
+          hit: new THREE.Mesh(HIT_BOX, HIT_MATERIAL),
         }
+        placed.hit.userData['itemId'] = item.id
+        this.hits.add(placed.hit)
         placed.group.userData['itemId'] = item.id
         placed.group.add(placed.white)
         this.props.add(placed.group)
@@ -559,6 +577,9 @@ export class WhiteScene {
       group.position.set(item.cx, 0, item.cz)
       // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
       group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
+      // The footprint is already turned (w × d on the plan), so the box needs no rotation.
+      placed.hit.scale.set(item.w, item.h, item.d)
+      placed.hit.position.set(item.cx, item.h / 2, item.cz)
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
     this.sceneChanged()
@@ -689,6 +710,7 @@ export class WhiteScene {
     this.canvas.removeEventListener('pointerup', this.endDrag)
     this.canvas.removeEventListener('pointercancel', this.endDrag)
     this.controls.dispose()
+    this.viewListener = null
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
     this.roomWhite.dispose()
@@ -800,6 +822,7 @@ export class WhiteScene {
       if (node.userData['placeholder']) disposeTree(node)
     })
     this.props.remove(placed.group)
+    this.hits.remove(placed.hit)
     this.items.delete(id)
     this.failed.delete(id)
   }
@@ -822,11 +845,11 @@ export class WhiteScene {
   }
 
   private pick(event: PointerEvent): PlacedItem | null {
-    for (const hit of this.ray(event).intersectObjects(this.props.children, true)) {
-      for (let node: THREE.Object3D | null = hit.object; node; node = node.parent) {
-        const id: unknown = node.userData['itemId']
-        if (typeof id === 'string') return this.items.get(id) ?? null
-      }
+    // Boxes may have moved since the last frame.
+    this.hits.updateMatrixWorld()
+    for (const hit of this.ray(event).intersectObjects(this.hits.children, false)) {
+      const id: unknown = hit.object.userData['itemId']
+      if (typeof id === 'string') return this.items.get(id) ?? null
     }
     return null
   }

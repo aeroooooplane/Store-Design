@@ -187,7 +187,7 @@ describe('history nodes', () => {
       layout: layout(island('a', 2, 2), island('b', 2.5, 2)),
     })
     expect(white.statusCode).toBe(400)
-    expect(white.json().error.message).toContain('确认白模前')
+    expect(white.json().error.message).toContain('进入三维效果前')
   })
 
   it('keeps every stage on its level: plans under a space, white under a plan, render under white', async () => {

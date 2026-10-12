@@ -71,6 +71,13 @@
       "when": 1791793068075,
       "tag": "0009_finish_models",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1791804161409,
+      "tag": "0010_three_d_effect_name",
+      "breakpoints": true
     }
   ]
 }

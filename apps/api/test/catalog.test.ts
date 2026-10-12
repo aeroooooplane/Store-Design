@@ -219,7 +219,10 @@ describe('GET /assets', () => {
       footprint: { w: 1, d: 1.8, h: 1.327 },
       footprintSource: 'glb',
     })
-    expect(island?.glb?.url).toMatch(/^\/api\/v1\/files\/[0-9a-f-]{36}$/)
+    expect(island?.glb?.url).toMatch(/^\/api\/v1\/files\/[0-9a-f-]{36}\?v=[0-9a-f]{16}$/)
+    // Addressed by content: the browser may keep it for good.
+    const model = await t.app.inject({ method: 'GET', url: island?.glb?.url ?? '' })
+    expect(model.headers['cache-control']).toBe('private, max-age=31536000, immutable')
     expect(island?.whiteGlb).toMatchObject({ bytes: white.length, sha256: sha(white) })
     expect(island).toMatchObject({ category: '软装道具', productImageMatch: 'exact' })
     expect(island?.productImage?.sha256).toBe(sha(preview))
