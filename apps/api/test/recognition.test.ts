@@ -7,7 +7,13 @@ import type {
   RecognizeResponse,
   VectorContent,
 } from '@store/shared'
-import { countInLabel, matchCatalog, sizeInLabel } from '../src/modules/recognition/check.ts'
+import {
+  checkDraft,
+  countInLabel,
+  failureReason,
+  matchCatalog,
+  sizeInLabel,
+} from '../src/modules/recognition/check.ts'
 import { parseAnswer } from '../src/modules/recognition/llm.ts'
 import { dimensionMm, recognizeVector } from '../src/modules/recognition/local.ts'
 import { createTestApp, png } from './helpers.ts'
@@ -82,6 +88,9 @@ describe('label reading', () => {
     expect(dimensionMm('6.5米')).toBe(6500)
     expect(dimensionMm('3450 长墙净尺寸')).toBe(3450)
     expect(dimensionMm('中岛桌')).toBeNull()
+    expect(dimensionMm('500mm')).toBeNull()
+    expect(dimensionMm('1200mm')).toBe(1200)
+    expect(dimensionMm('500')).toBe(500)
     expect(sizeInLabel('1.2米配件柜')).toBe(1.2)
     expect(sizeInLabel('1.8m中岛桌')).toBe(1.8)
     expect(sizeInLabel('2*1.2配件柜')).toBe(1.2)
@@ -153,7 +162,12 @@ describe('recognizeVector', () => {
   })
 
   it('gives up on the scale without dimensions and takes the user calibration instead', () => {
-    const bare: VectorContent = { ...SKETCH, lines: [], texts: SKETCH.texts.slice(2) }
+    // 配件柜 comes in several sizes, so its name gives no scale either.
+    const bare: VectorContent = {
+      ...SKETCH,
+      lines: [],
+      texts: SKETCH.texts.slice(2).filter((t) => t.text === '配件柜' || t.text === '主入口'),
+    }
     const none = recognizeVector(bare, {}, CATALOG)
     expect(none.scale).toBeNull()
     expect(none.space).toBeNull()
@@ -270,10 +284,14 @@ describe('recognizeVector', () => {
     const content: VectorContent = {
       ...SKETCH,
       lines: [],
+      // The area label and its number come as two pieces of one row, as CAD exports do.
       texts: [
-        { text: '店铺实测面积：27m²', x: 100, y: 600, w: 160, h: 16 },
-        { text: '1.74m²', x: 300, y: 600, w: 40, h: 14 },
-        ...SKETCH.texts.slice(2),
+        { text: '店铺实测面积：', x: 100, y: 600, w: 120, h: 16 },
+        { text: '27m²', x: 230, y: 600, w: 40, h: 16 },
+        { text: '1.74m²', x: 400, y: 600, w: 40, h: 14 },
+        // 配件柜 (several sizes) anchors the boundary but gives no scale of its own.
+        { text: '配件柜', x: 260, y: 290, w: 60, h: 20 },
+        { text: '主入口', x: 370, y: 560, w: 60, h: 20 },
       ],
     }
     const draft = recognizeVector(content, {}, CATALOG)
@@ -281,6 +299,58 @@ describe('recognizeVector', () => {
     expect(draft.scale).toMatchObject({ method: 'area', verified: false })
     expect(draft.scale?.mmPerPixel).toBeCloseTo(10, 5)
     expect(draft.scale?.reference).toContain('27m²')
+  })
+
+  it('measures a prop name without a size by the one size the catalogue has for it', () => {
+    // 中岛桌 (all 1.8 m) in a 180 px box and 边桌配件柜 (1.8 m) in a 180 px box agree on 10 mm/px.
+    const content: VectorContent = {
+      ...SKETCH,
+      lines: [],
+      texts: SKETCH.texts.slice(2).filter((t) => t.text !== '配件柜'),
+    }
+    const draft = recognizeVector(content, {}, CATALOG)
+    expect(draft.scale).toMatchObject({ method: 'item_label', verified: true })
+    expect(draft.scale?.mmPerPixel).toBeCloseTo(10, 5)
+  })
+
+  it('accepts a boundary whose front is mostly open, but only when no closed one holds the props', () => {
+    const sides = (r: { x: number; y: number; w: number; h: number }) => [
+      { x1: r.x, y1: r.y, x2: r.x + r.w, y2: r.y },
+      { x1: r.x, y1: r.y, x2: r.x, y2: r.y + r.h },
+      { x1: r.x + r.w, y1: r.y, x2: r.x + r.w, y2: r.y + r.h },
+    ]
+    const openFront: VectorContent = {
+      ...SKETCH,
+      rects: SKETCH.rects.slice(1),
+      lines: [
+        ...SKETCH.lines,
+        ...sides({ x: 100, y: 100, w: 600, h: 450 }),
+        // Only the corners of the front are walls; the rest is entrance and open edge.
+        { x1: 100, y1: 550, x2: 160, y2: 550 },
+        { x1: 640, y1: 550, x2: 700, y2: 550 },
+      ],
+    }
+    const draft = recognizeVector(openFront, {}, CATALOG)
+    expect(draft.space?.boundary[2]).toEqual([6, 4.5])
+  })
+
+  it('fails a drawing whose boundary could not be a shop', () => {
+    // A detail drawing: the "boundary" is 1 × 0.6 m.
+    const detail: VectorContent = {
+      width: 1000,
+      height: 800,
+      rects: [
+        { x: 100, y: 100, w: 500, h: 300 },
+        { x: 150, y: 150, w: 180, h: 100 },
+      ],
+      lines: [{ x1: 100, y1: 80, x2: 600, y2: 80 }],
+      texts: [
+        { text: '1000', x: 320, y: 62, w: 60, h: 16 },
+        { text: '配件柜', x: 180, y: 190, w: 60, h: 16 },
+      ],
+    }
+    const draft = checkDraft(recognizeVector(detail, {}, CATALOG))
+    expect(failureReason(draft)).toMatch(/比例不合理/)
   })
 })
 

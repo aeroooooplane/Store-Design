@@ -32,6 +32,8 @@ const AXIS_TOLERANCE_PX = 1.5
 const CLUSTER_PX = 2.5
 /** A side counts as drawn when this much of it is covered by lines. */
 const SIDE_COVERAGE = 0.85
+/** The front of a shop may be entirely entrance and open edge (a dashed lease line). */
+const OPEN_SIDE_COVERAGE = 0
 /** Boundary candidates need sides at least this fraction of the page's short side. */
 const MIN_SIDE_FRACTION = 0.12
 /** Dimension ratios within this of each other agree. */
@@ -62,8 +64,12 @@ export function dimensionMm(text: string): number | null {
   const t = text.trim()
   const metres = /^(\d+(?:\.\d+)?)\s*(?:米|m)$/i.exec(t)
   if (metres?.[1]) return Number(metres[1]) * 1000
-  const mm = /^(\d{3,5})(?:\s*mm)?(?:\s+\S{1,12})?$/i.exec(t)
-  if (mm?.[1]) return Number(mm[1])
+  const mm = /^(\d{3,5})(\s*mm)?(?:\s+\S{1,12})?$/i.exec(t)
+  if (mm?.[1]) {
+    const value = Number(mm[1])
+    // "500mm" with its unit is a logo or lintel height; plan dimension chains are bare numbers.
+    return mm[2] && value < 1000 ? null : value
+  }
   return null
 }
 
@@ -159,11 +165,35 @@ function coverage(index: LineIndex, horizontal: boolean, at: number, a: number, 
   return covered / (b - a)
 }
 
+const sideCoverages = (index: LineIndex, box: Box) => [
+  coverage(index, true, box.y, box.x, box.x + box.w),
+  coverage(index, true, box.y + box.h, box.x, box.x + box.w),
+  coverage(index, false, box.x, box.y, box.y + box.h),
+  coverage(index, false, box.x + box.w, box.y, box.y + box.h),
+]
+
+/** All four sides drawn. */
 const closed = (index: LineIndex, box: Box) =>
-  coverage(index, true, box.y, box.x, box.x + box.w) >= SIDE_COVERAGE &&
-  coverage(index, true, box.y + box.h, box.x, box.x + box.w) >= SIDE_COVERAGE &&
-  coverage(index, false, box.x, box.y, box.y + box.h) >= SIDE_COVERAGE &&
-  coverage(index, false, box.x + box.w, box.y, box.y + box.h) >= SIDE_COVERAGE
+  sideCoverages(index, box).every((c) => c >= SIDE_COVERAGE)
+
+/**
+ * Three sides drawn and the fourth at least started: a shop whose front is mostly open. The
+ * open side may not run along a prop box, or a box edge would pass for the front wall.
+ */
+const closedButFront = (index: LineIndex, box: Box, props: Box[]) => {
+  const coverages = sideCoverages(index, box)
+  const open = coverages.indexOf(Math.min(...coverages))
+  if ((coverages[open] ?? 0) < OPEN_SIDE_COVERAGE) return false
+  if (coverages.some((c, i) => i !== open && c < SIDE_COVERAGE)) return false
+  const horizontal = open < 2
+  const at = open === 0 ? box.y : open === 1 ? box.y + box.h : open === 2 ? box.x : box.x + box.w
+  const [lo, hi] = horizontal ? [box.x, box.x + box.w] : [box.y, box.y + box.h]
+  return !props.some((prop) => {
+    const edges = horizontal ? [prop.y, prop.y + prop.h] : [prop.x, prop.x + prop.w]
+    const [plo, phi] = horizontal ? [prop.x, prop.x + prop.w] : [prop.y, prop.y + prop.h]
+    return edges.some((e) => Math.abs(e - at) <= CLUSTER_PX) && phi > lo && plo < hi
+  })
+}
 
 function cluster(values: number[]): number[] {
   const sorted = [...values].sort((a, b) => a - b)
@@ -182,14 +212,26 @@ function cluster(values: number[]): number[] {
  */
 function findBoundary(content: VectorContent, lines: Line[], anchors: Box[]): Box | null {
   const minSide = Math.min(content.width, content.height) * MIN_SIDE_FRACTION
-  const long = lines.filter((l) => Math.hypot(l.x1 - l.x2, l.y1 - l.y2) >= minSide)
-  const xs = cluster(
-    long.filter((l) => Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX).map((l) => l.x1),
-  )
-  const ys = cluster(
-    long.filter((l) => Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX).map((l) => l.y1),
-  )
-  const index = buildIndex(long)
+  // Candidate side positions: where the drawn length adds up to at least a short side, so a
+  // dashed lease line or a few wall stubs count as much as one long line.
+  const positions = (horizontal: boolean) => {
+    const total = new Map<number, { length: number; pos: number }>()
+    for (const l of lines) {
+      const isDir = horizontal
+        ? Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX
+        : Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX
+      if (!isDir) continue
+      const pos = horizontal ? (l.y1 + l.y2) / 2 : (l.x1 + l.x2) / 2
+      const key = bucket(pos)
+      const entry = total.get(key) ?? { length: 0, pos }
+      entry.length += Math.hypot(l.x1 - l.x2, l.y1 - l.y2)
+      total.set(key, entry)
+    }
+    return cluster([...total.values()].filter((e) => e.length >= minSide).map((e) => e.pos))
+  }
+  const xs = positions(false)
+  const ys = positions(true)
+  const index = buildIndex(lines)
   const pageArea = content.width * content.height
   // A prop box counts as held only when it lies wholly inside a clearly bigger rectangle, so
   // a prop box never passes for the shop around it; most of the props must be held.
@@ -200,34 +242,43 @@ function findBoundary(content: VectorContent, lines: Line[], anchors: Box[]): Bo
     inner.y + inner.h <= outer.y + outer.h + CLUSTER_PX &&
     outer.w * outer.h >= inner.w * inner.h * 2
   const needed = anchors.length >= 2 ? Math.max(2, Math.ceil(anchors.length * 0.6)) : anchors.length
-  let best: Box | null = null
-  let bestScore = -Infinity
-  for (let i = 0; i < xs.length; i++) {
-    for (let j = i + 1; j < xs.length; j++) {
-      const [x1, x2] = [xs[i] ?? 0, xs[j] ?? 0]
-      if (x2 - x1 < minSide) continue
-      for (let k = 0; k < ys.length; k++) {
-        for (let m = k + 1; m < ys.length; m++) {
-          const [y1, y2] = [ys[k] ?? 0, ys[m] ?? 0]
-          if (y2 - y1 < minSide) continue
-          const box: Box = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
-          const area = box.w * box.h
-          if (area >= pageArea * MAX_BOUNDARY_FRACTION) continue
-          const held = anchors.filter((a) => holds(box, a)).length
-          // Holding the props outranks size; among holders the smallest wins, else the largest.
-          const score = anchors.length && held >= needed ? held * 1e12 - area : area
-          if (score <= bestScore) continue
-          if (closed(index, box)) {
-            best = box
-            bestScore = score
+  const search = (accept: (box: Box) => boolean) => {
+    let best: Box | null = null
+    let bestScore = -Infinity
+    for (let i = 0; i < xs.length; i++) {
+      for (let j = i + 1; j < xs.length; j++) {
+        const [x1, x2] = [xs[i] ?? 0, xs[j] ?? 0]
+        if (x2 - x1 < minSide) continue
+        for (let k = 0; k < ys.length; k++) {
+          for (let m = k + 1; m < ys.length; m++) {
+            const [y1, y2] = [ys[k] ?? 0, ys[m] ?? 0]
+            if (y2 - y1 < minSide) continue
+            const box: Box = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
+            const area = box.w * box.h
+            if (area >= pageArea * MAX_BOUNDARY_FRACTION) continue
+            const held = anchors.filter((a) => holds(box, a)).length
+            // Holding the props outranks size; among holders the smallest wins, else the largest.
+            const score = anchors.length && held >= needed ? held * 1e12 - area : area
+            if (score <= bestScore) continue
+            if (accept(box)) {
+              best = box
+              bestScore = score
+            }
           }
         }
       }
     }
+    return { best, bestScore }
   }
-  // Props that no rectangle holds mean an irregular shop: better no boundary than a wrong one.
-  if (anchors.length >= 2 && bestScore < 1e12) return null
-  return best
+  const holdsProps = (found: { bestScore: number }) => anchors.length < 2 || found.bestScore >= 1e12
+  // Four drawn sides first; a shop whose front is mostly open only when no closed rectangle
+  // holds the props. Props that nothing holds mean an irregular shop: better no boundary than
+  // a wrong one.
+  const fourSided = search((box) => closed(index, box))
+  if (fourSided.best && holdsProps(fourSided)) return fourSided.best
+  const threeSided = search((box) => closedButFront(index, box, anchors))
+  if (threeSided.best && holdsProps(threeSided)) return threeSided.best
+  return null
 }
 
 /**
@@ -292,7 +343,7 @@ function findScale(
   areas: { text: string; m2: number }[],
   boundary: Box | null,
   calibration: RecognizeRequest['calibration'],
-  labelled: { text: Text; box: Box | null; sizeM: number | null }[],
+  labelled: { text: Text; box: Box | null; sizeM: number | null; knownM: number | null }[],
 ): ScaleResult {
   const originPx: [number, number] = boundary ? [boundary.x, boundary.y] : [0, 0]
   if (calibration) {
@@ -317,10 +368,13 @@ function findScale(
   }
   // Prop names that carry a size ("1.8米开箱桌") measure their own box.
   for (const l of labelled) {
-    if (l.sizeM === null || !l.box) continue
+    if (!l.box) continue
+    // A name without a size still measures its box when the catalogue knows one size for it.
+    const sizeM = l.sizeM ?? l.knownM
+    if (sizeM === null) continue
     const longPx = Math.max(l.box.w, l.box.h)
     if (longPx > 0) {
-      ratios.push({ ratio: (l.sizeM * 1000) / longPx, text: l.text.text.trim(), kind: 'item' })
+      ratios.push({ ratio: (sizeM * 1000) / longPx, text: l.text.text.trim(), kind: 'item' })
     }
   }
   // "店铺实测面积：31.5m²" against the boundary's area gives (or checks) the scale too.
@@ -336,9 +390,21 @@ function findScale(
   if (!ratios.length) {
     return { scale: null, notes: ['图上没有尺寸标注、面积，也没有带尺寸的道具名称'] }
   }
-  // The value most of the readings agree on; a lone odd one (a "200mm" logo height) is outvoted.
+  // The value most of the readings agree on; a lone odd one (a "200mm" logo height) is outvoted,
+  // and so is any reading that would make the shop absurdly small or large.
   const cluster = (r: number) => ratios.filter((o) => Math.abs(o.ratio - r) / r <= RATIO_TOLERANCE)
-  const agreeing = ratios.map((r) => cluster(r.ratio)).sort((a, b) => b.length - a.length)[0] ?? []
+  const plausible = (r: number) => {
+    if (!boundary) return 0.5
+    const m2 = (boundary.w * boundary.h * r * r) / 1e6
+    return m2 >= 3 && m2 <= 2000 ? 0.5 : 0
+  }
+  const agreeing =
+    ratios
+      .map((r) => ({
+        members: cluster(r.ratio),
+        score: cluster(r.ratio).length + plausible(r.ratio),
+      }))
+      .sort((a, b) => b.score - a.score)[0]?.members ?? []
   const ratio = agreeing.reduce((sum, r) => sum + r.ratio, 0) / agreeing.length
   const verified = agreeing.length >= 2
   const dims = agreeing.filter((r) => r.kind === 'dimension')
@@ -503,14 +569,33 @@ export function recognizeVector(
   })
   // The shop area: a text saying 面积 with a number, else the largest bare "NN m²".
   const areaOf = (t: Text) => /(\d+(?:\.\d+)?)\s*(?:m²|㎡|平方米?)/.exec(t.text)?.[1] ?? null
-  const named = content.texts.filter((t) => /面积/.test(t.text) && areaOf(t))
+  // CAD exports often split "店铺实测面积：31.5m²" into pieces on one row.
+  const sameRow = (a: Text, b: Text) =>
+    Math.abs(a.y + a.h / 2 - (b.y + b.h / 2)) < Math.max(a.h, b.h)
+  const numberAfter = (t: Text) =>
+    content.texts
+      .filter(
+        (o) =>
+          o !== t &&
+          sameRow(t, o) &&
+          o.x > t.x &&
+          /^\d+(?:\.\d+)?\s*(?:m|㎡|m²)?$/.test(o.text.trim()),
+      )
+      .sort((p, q) => p.x - q.x)[0]
+  const named = content.texts.flatMap((t) => {
+    if (!/面积/.test(t.text)) return []
+    const own = areaOf(t)
+    if (own) return [{ text: t.text.trim(), m2: Number(own) }]
+    const next = numberAfter(t)
+    const value = next ? /(\d+(?:\.\d+)?)/.exec(next.text)?.[1] : undefined
+    return value && next ? [{ text: `${t.text.trim()}${next.text.trim()}`, m2: Number(value) }] : []
+  })
   const bare = content.texts
     .filter((t) => /^\d+(?:\.\d+)?\s*(?:m²|㎡)$/.test(t.text.trim()))
     .sort((a, b) => Number(areaOf(b)) - Number(areaOf(a)))
-  const areas = (named.length ? named : bare.slice(0, 1)).map((t) => ({
-    text: t.text.trim(),
-    m2: Number(areaOf(t)),
-  }))
+  const areas = named.length
+    ? named
+    : bare.slice(0, 1).map((t) => ({ text: t.text.trim(), m2: Number(areaOf(t)) }))
   const dimensionLines = new Set(dimensions.flatMap((d) => (d.line ? [d.line] : [])))
   const wallLines = lines.filter((l) => !dimensionLines.has(l))
   const index = buildIndex(wallLines)
@@ -524,9 +609,10 @@ export function recognizeVector(
       .filter((t) => dimensionMm(t.text) === null && t.text.trim().length >= 2)
       .map((text) => {
         // Product tags and notes ("X5", "go3s 黑") are not props: no box search for them.
+        const match = matchCatalog(text.text, catalog, undefined, siStyle)
         const relevant =
           sizeInLabel(text.text) !== null ||
-          matchCatalog(text.text, catalog, undefined, siStyle).function !== 'other' ||
+          match.function !== 'other' ||
           OBSTACLE_WORDS.some(([re]) => re.test(text.text))
         return {
           text,
@@ -535,6 +621,8 @@ export function recognizeVector(
               boxFromLines(text, wallLines, index, within, pageArea))
             : null,
           sizeM: sizeInLabel(text.text),
+          // The one size the catalogue has for this name (null when several sizes exist).
+          knownM: match.asset ? Math.max(match.asset.footprint.w, match.asset.footprint.d) : null,
         }
       })
   // Prop labels sitting in a box anchor the boundary; boxes are looked up again once it is known.

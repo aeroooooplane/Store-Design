@@ -1,13 +1,14 @@
 import {
   RECOGNITION_MIN_CONFIDENCE,
+  functionFor,
   isSimplePolygon,
   locatePoint,
   polygonArea,
 } from '@store/shared'
 import type { Asset, DraftItem, ItemFunction, RecognitionDraft } from '@store/shared'
-import { functionFor } from '../assets/importer.ts'
 
-const MIN_AREA_M2 = 1
+/** No shop is smaller; a smaller "boundary" is a detail drawing or a wrong scale. */
+const MIN_AREA_M2 = 5
 const MAX_AREA_M2 = 5000
 
 /** "1.2米配件柜" → 1.2; "1800mm" → 1.8; "2*1.2配件柜" → 1.2 (the width, after the count). */
@@ -159,7 +160,11 @@ export function checkDraft(draft: RecognitionDraft): RecognitionDraft {
       if (!space.entrances.length) pending.add('未找到入口，请在边界上指定')
     }
   } else {
-    pending.add('未能识别门店边界，请手动绘制')
+    pending.add(
+      draft.scale && draft.items.length
+        ? '未能识别门店边界（可能是异形门店）：比例与道具已识别，请手动绘制边界'
+        : '未能识别门店边界，请手动绘制',
+    )
   }
   if (!draft.scale) pending.add('比例无法标定：请在图上指定一段已知长度')
   else if (!draft.scale.verified)
@@ -188,6 +193,10 @@ export function checkDraft(draft: RecognitionDraft): RecognitionDraft {
 export function failureReason(draft: RecognitionDraft): string | null {
   if (!draft.scale) return '比例无法标定'
   if (!draft.space) return '边界不闭合'
+  const area = polygonArea(draft.space.boundary)
+  if (area < MIN_AREA_M2 || area > MAX_AREA_M2) {
+    return `比例不合理（边界面积 ${area.toFixed(1)} ㎡）`
+  }
   if (draft.confidence < RECOGNITION_MIN_CONFIDENCE) {
     return `整体置信度 ${draft.confidence.toFixed(2)} 低于 ${RECOGNITION_MIN_CONFIDENCE}`
   }

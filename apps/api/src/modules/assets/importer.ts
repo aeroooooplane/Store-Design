@@ -4,8 +4,13 @@ import { sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { AssetCategorySchema, FrontAxisSchema, ImageMatchSchema, roundM } from '@store/shared'
-import type { ItemFunction } from '@store/shared'
+import {
+  AssetCategorySchema,
+  FrontAxisSchema,
+  ImageMatchSchema,
+  functionFor,
+  roundM,
+} from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { WhiteRecordSchema } from './white-models.ts'
@@ -67,27 +72,6 @@ const FacingSchema = z.object({
     }),
   ),
 })
-
-/**
- * Catalogue function from the reviewed standard name. Order matters: specific phrases first
- * (a 边桌收银柜 is a cashier, a 开箱储物柜 an unboxing table).
- */
-const FUNCTION_RULES: [RegExp, ItemFunction][] = [
-  [/收银/, 'cashier'],
-  [/开箱/, 'unboxing_table'],
-  [/中岛/, 'island_table'],
-  [/配件边柜|边桌配件柜/, 'side_cabinet'],
-  [/配件柜/, 'accessory_cabinet'],
-  [/储物柜/, 'storage'],
-  [/展示台|试飞台/, 'display_stand'],
-  [/凳|沙发/, 'seating'],
-  [/广告机|屏|水牌/, 'screen'],
-  [/LOGO|画面|灯箱|侧招|标识/i, 'signage'],
-]
-
-export function functionFor(standardName: string): ItemFunction {
-  return FUNCTION_RULES.find(([pattern]) => pattern.test(standardName))?.[1] ?? 'other'
-}
 
 export interface CatalogImportReport {
   assets: number
