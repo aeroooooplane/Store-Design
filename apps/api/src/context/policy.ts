@@ -20,6 +20,8 @@ export type Action =
   | 'render:write'
   | 'delivery:read'
   | 'delivery:write'
+  | 'ai:read'
+  | 'ai:write'
   | 'layout:generate'
   | 'layout:validate'
   | 'asset:read'

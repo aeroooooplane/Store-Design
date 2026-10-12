@@ -31,7 +31,7 @@
 | code | HTTP | 含义 |
 |---|---|---|
 | VALIDATION_FAILED | 400 | 参数、请求体或 JSON 格式不合法 |
-| BUDGET_EXCEEDED | 402 | 当日 AI 预算已用完（后续阶段） |
+| BUDGET_EXCEEDED | 402 | 当日 AI 预算已用完（北京时间 0 点重置） |
 | FORBIDDEN | 403 | 无权限（接入用户系统后） |
 | NOT_FOUND | 404 | 资源或接口不存在 |
 | REVISION_CONFLICT | 409 | 版本冲突 |
@@ -107,6 +107,16 @@
 模型按项目 SI 风格选择：同风格优先，其次通用款；中岛桌优先普通款，收银优先收银台/收银桌；同一长度的配件柜只用一个款式。“按面积推荐”的桌数暂沿用旧版经验公式（每约 18 ㎡ 一张），待清洗数据整理出规则后替换。
 
 模型目录只读，由 `pnpm catalog:import` 从资源库导入或刷新（可重复运行，GLB 哈希须与转换记录一致才会挂接）。`name` 为模型选用表中的名称（未改名时为手册名称加变体），`retired` 为停用（模型选用表标为删除：自动排布不再选用，网页添加列表不显示，已有布局照常引用）。每件模型带分类 `category`（软装道具 / 信息化物料 / 品牌标识 / 非标陈列 / 环境设施，可作为 `GET /assets?category=` 过滤条件）、品类图库中的效果图 `productImage`（`productImageMatch` 为 exact 同款或 approximate 同类参考）和平面图 `planSymbol`（SVG，1 单位 = 1 毫米，正面朝下；以 `content-security-policy: default-src 'none'` 返回）。模型库位于 `资源库/04_模型库`，导入只读其 `manifest.json`（见该目录 README）。每件模型另有 `whiteGlb`：由 `pnpm catalog:white` 生成的白模轻量版（去掉贴图、法线和 UV，合并部件并简化到约 4 万面，外形尺寸偏差不超过 5 mm），只有记录中的源文件哈希与当前 `model.glb` 一致时才挂接；三维白模优先加载它，完整模型留给材质渲染。
+
+### AI 设置与预算
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/ai` | 可用模型（只列出已配置密钥的；境外模型须开启 `ENABLE_OVERSEAS_MODELS`）、当前设置与今日额度 |
+| PATCH | `/ai/settings` | 修改 Agent 模型、平面识别模型、识别失败后的兜底模型（全站统一；每项都校验用途与可用性，兜底须联网且能看图，不能与识别模型相同） |
+| GET | `/ai/budget` | 今日额度：上限、已用、剩余、是否用完 |
+
+模型清单与估算单价在 `apps/api/src/ai/models.ts`；调用统一走 `ai/chat.ts`（DeepSeek、通义千问为 OpenAI 兼容格式，Claude 为官方接口），调用前检查当日额度，调用后按厂商返回的 token 数记入 `ai_usage`；超额返回 402，厂商失败返回 502 `UPSTREAM_FAILED` 且不记账。本地识别不经过此层、不计费。
 
 ## 修改接口后
 

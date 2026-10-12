@@ -1,6 +1,6 @@
 # 架构说明
 
-更新：2026-10-10。第一期已实现：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
+更新：2026-10-10。第一期已实现：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表（含导入导出）、设置页（AI 模型与额度）与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
 
 ## 1. 总体结构
 
@@ -125,7 +125,7 @@ tools/  资源库/        原样保留；资源库 由 API 通过白名单读取
 
 - 接口：`chat(messages, tools, images)`，各厂商实现一个适配器；DeepSeek 与通义千问均使用其官方兼容接口。
 - 模型清单与单价放在 `apps/api/src/ai/models.json`（随代码版本管理，价格变化时修改）；密钥来自环境变量。未配置密钥或未开启开关的模型不出现在前端列表。
-- 每次调用前检查当日预算余额，调用后按实际 token 记账；超额返回 `402 BUDGET_EXCEEDED`。
+- 每次调用前检查当日预算余额，调用后按实际 token 记账；超额返回 `402 BUDGET_EXCEEDED`。已实现：`apps/api/src/ai/`（models.ts 清单与估算单价、budget.ts 北京时间日账本、settings.ts 全站设置与默认选择、chat.ts 统一调用）；设置页 `/settings`。密钥为空的厂商不出现；境外模型由 `ENABLE_OVERSEAS_MODELS` 控制。
 
 ## 6. 安全
 

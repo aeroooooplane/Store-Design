@@ -83,3 +83,26 @@ export function useSetProjectDeleted() {
     onSettled: () => client.invalidateQueries({ queryKey: keys.all }),
   })
 }
+
+/** The import API takes at most 5 MB of JSON. */
+const MAX_IMPORT_BYTES = 5 * 1024 * 1024
+
+/** Reads a project file (own export or a legacy backup) and imports it as a new project. */
+export function useImportProject() {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async (file: File) => {
+      if (file.size > MAX_IMPORT_BYTES) throw new Error('文件超过 5 MB，无法导入')
+      let data: unknown
+      try {
+        data = JSON.parse(await file.text())
+      } catch {
+        throw new Error('这不是有效的项目文件（不是 JSON）')
+      }
+      return unwrap(await api.POST('/api/v1/projects/import', { body: { data } }))
+    },
+    onSuccess: () => client.invalidateQueries({ queryKey: keys.all }),
+  })
+}
+
+export const projectExportUrl = (projectId: string) => `/api/v1/projects/${projectId}/export`

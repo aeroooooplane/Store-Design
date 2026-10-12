@@ -12,6 +12,8 @@ export const ERROR_CODES = {
   REVISION_REQUIRED: 428,
   RATE_LIMITED: 429,
   INTERNAL: 500,
+  /** A model or other outside service failed or answered with something unusable. */
+  UPSTREAM_FAILED: 502,
 } as const
 
 export type ErrorCode = keyof typeof ERROR_CODES

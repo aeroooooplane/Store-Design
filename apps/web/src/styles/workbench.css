@@ -931,3 +931,19 @@ ul.issues li.warning {
   gap: 4px 12px;
   font-size: 13px;
 }
+
+/* Project list / bar: import and export */
+.toolbar-end {
+  margin-left: auto;
+}
+.workbench-bar-end {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.import-warnings {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  color: var(--muted);
+}

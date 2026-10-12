@@ -4367,6 +4367,174 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/ai": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 可用模型、当前设置与今日额度 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            models: {
+                                id: string;
+                                label: string;
+                                /** @enum {string} */
+                                provider: "local" | "deepseek" | "dashscope" | "anthropic";
+                                purposes: ("agent" | "recognition")[];
+                                vision: boolean;
+                                overseas: boolean;
+                                price: {
+                                    inputCny: number;
+                                    outputCny: number;
+                                } | null;
+                            }[];
+                            settings: {
+                                agentModel: string | null;
+                                recognitionModel: string;
+                                recognitionFallback: string | null;
+                            };
+                            budget: {
+                                day: string;
+                                limitCny: number;
+                                spentCny: number;
+                                remainingCny: number;
+                                exceeded: boolean;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/ai/settings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 修改 Agent 与平面识别所用模型（全站统一） */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        agentModel?: string | null;
+                        recognitionModel?: string;
+                        recognitionFallback?: string | null;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            agentModel: string | null;
+                            recognitionModel: string;
+                            recognitionFallback: string | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/v1/ai/budget": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 今日 AI 额度（北京时间 0 点重置） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            day: string;
+                            limitCny: number;
+                            spentCny: number;
+                            remainingCny: number;
+                            exceeded: boolean;
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
