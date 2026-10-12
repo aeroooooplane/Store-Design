@@ -68,6 +68,8 @@ export const AssetSchema = z.object({
   glb: FileRefSchema.nullable(),
   /** Simplified, untextured copy used by the white model; falls back to `glb`. */
   whiteGlb: FileRefSchema.nullable(),
+  /** Light textured copy used by the material look (renders, 3D effect); falls back to `glb`. */
+  finishGlb: FileRefSchema.nullable(),
   preview: FileRefSchema.nullable(),
   /** Product picture from the category gallery (品类图库). */
   productImage: FileRefSchema.nullable(),

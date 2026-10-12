@@ -229,6 +229,7 @@ describe('plannerCatalog', () => {
     judgment: null,
     glb: null,
     whiteGlb: null,
+    finishGlb: null,
     category: '软装道具',
     productImage: null,
     productImageMatch: null,

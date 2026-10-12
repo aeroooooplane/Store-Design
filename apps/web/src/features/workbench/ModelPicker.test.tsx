@@ -36,6 +36,7 @@ function asset(
     judgment: null,
     glb: null,
     whiteGlb: null,
+    finishGlb: null,
     preview: file(`${id}-preview`),
     productImage: null,
     productImageMatch: null,

@@ -36,6 +36,8 @@ export const assets = pgTable(
     glbFileId: uuid('glb_file_id').references(() => storedFiles.id),
     /** Simplified, untextured copy for the white model (see apps/api assets/white-models.ts). */
     whiteGlbFileId: uuid('white_glb_file_id').references(() => storedFiles.id),
+    /** Light textured copy for the material look (see apps/api assets/finish-models.ts). */
+    finishGlbFileId: uuid('finish_glb_file_id').references(() => storedFiles.id),
     previewFileId: uuid('preview_file_id').references(() => storedFiles.id),
     productImageFileId: uuid('product_image_file_id').references(() => storedFiles.id),
     productImageMatch: text('product_image_match'),

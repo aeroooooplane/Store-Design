@@ -13,6 +13,7 @@ import {
 } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
+import { FinishRecordSchema } from './finish-models.ts'
 import { WhiteRecordSchema } from './white-models.ts'
 
 /**
@@ -78,6 +79,8 @@ export interface CatalogImportReport {
   withGlb: number
   /** Web models that also have a current light white-model copy. */
   withWhite: number
+  /** Web models that also have a current light material copy. */
+  withFinish: number
   placeable: number
   withPreview: number
   withProductImage: number
@@ -156,6 +159,7 @@ export async function importCatalog(
     assets: 0,
     withGlb: 0,
     withWhite: 0,
+    withFinish: 0,
     placeable: 0,
     withPreview: 0,
     withProductImage: 0,
@@ -193,6 +197,21 @@ export async function importCatalog(
         else white = facts
       } else if (record) {
         report.problems.push(`${id}: 白模轻量版已过期或记录无效，请运行 pnpm catalog:white`)
+      }
+    }
+    // The same for the light material model.
+    let finish: FileFacts | undefined
+    if (web && glb) {
+      const recordRaw = await optionalJson(path.join(roots.resource, web, 'finish.json'))
+      const record = recordRaw === undefined ? undefined : FinishRecordSchema.safeParse(recordRaw)
+      if (record?.success && record.data.sourceSha256 === glb.sha256) {
+        const facts = await inspect(roots, `${web}/finish.glb`)
+        if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
+        else if (facts.sha256 !== record.data.sha256)
+          report.problems.push(`${id}: finish.glb 与 finish.json 的哈希不一致，未挂接`)
+        else finish = facts
+      } else if (record) {
+        report.problems.push(`${id}: 材质轻量版已过期或记录无效，请运行 pnpm catalog:finish`)
       }
     }
     let preview: FileFacts | undefined
@@ -233,6 +252,7 @@ export async function importCatalog(
     await db.transaction(async (tx) => {
       const glbFileId = glb ? await registerFile(tx, glb, 'glb') : null
       const whiteGlbFileId = white ? await registerFile(tx, white, 'glb') : null
+      const finishGlbFileId = finish ? await registerFile(tx, finish, 'glb') : null
       const previewFileId = preview ? await registerFile(tx, preview, 'preview') : null
       const productImageFileId = productImage
         ? await registerFile(tx, productImage, 'product_image')
@@ -260,6 +280,7 @@ export async function importCatalog(
         judgment: entry.judgment ?? null,
         glbFileId,
         whiteGlbFileId,
+        finishGlbFileId,
         previewFileId,
         productImageFileId,
         productImageMatch: productImage ? (entry.product_image_match ?? null) : null,
@@ -279,6 +300,7 @@ export async function importCatalog(
     report.assets++
     if (glb) report.withGlb++
     if (white) report.withWhite++
+    if (finish) report.withFinish++
     if (placeable) report.placeable++
     if (preview) report.withPreview++
     if (productImage) report.withProductImage++

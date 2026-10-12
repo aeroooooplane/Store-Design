@@ -287,6 +287,8 @@ interface PlacedItem {
   white: THREE.Group
   /** The textured model for the material look, loaded the first time that look is used. */
   finishUrl: string | null
+  /** The light material copy (finish.glb), whose two-sided faces are marked already. */
+  finishPrepared: boolean
   finish: THREE.Object3D | null
   finishState: 'none' | 'loading' | 'ready' | 'failed'
 }
@@ -529,7 +531,8 @@ export class WhiteScene {
       const asset = item.assetId && !item.placeholder ? assets.get(item.assetId) : undefined
       // The light white-model copy when there is one (see pnpm catalog:white).
       const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
-      const finishUrl = asset?.glb?.url ?? null
+      // The light material copy when there is one (see pnpm catalog:finish).
+      const finishUrl = asset?.finishGlb?.url ?? asset?.glb?.url ?? null
       const signature = url ? `${url}|${finishUrl}` : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
@@ -540,6 +543,7 @@ export class WhiteScene {
           signature,
           white: new THREE.Group(),
           finishUrl,
+          finishPrepared: Boolean(asset?.finishGlb),
           finish: null,
           finishState: 'none',
         }
@@ -728,7 +732,7 @@ export class WhiteScene {
   private loadFinish(placed: PlacedItem) {
     if (!placed.finishUrl || placed.finishState !== 'none') return
     placed.finishState = 'loading'
-    const load = this.finished(placed.finishUrl)
+    const load = this.finished(placed.finishUrl, placed.finishPrepared)
       .then((model) => {
         if (this.items.get(placed.item.id) !== placed) return
         placed.finish = model.clone(true)
@@ -748,7 +752,7 @@ export class WhiteScene {
     this.emitStatus()
   }
 
-  private finished(url: string): Promise<THREE.Object3D> {
+  private finished(url: string, prepared: boolean): Promise<THREE.Object3D> {
     let model = this.finishes.get(url)
     if (!model) {
       model = loadSource(url).then((gltf) => {
@@ -768,7 +772,8 @@ export class WhiteScene {
           node.castShadow = true
           node.receiveShadow = true
         })
-        separateBackLayers(root, (material) => this.frontSided(material))
+        // A full model is searched for the two sides of its faces; the light copy has them marked.
+        if (!prepared) separateBackLayers(root, (material) => this.frontSided(material))
         return root
       })
       model.catch(() => this.finishes.delete(url))
