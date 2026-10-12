@@ -4,6 +4,7 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import type { Database } from '@store/database'
 import type { AppConfig } from './config/env.ts'
 import type { StorageRoots } from './lib/storage.ts'
+import { agentRoutes } from './modules/agent/routes.ts'
 import { aiRoutes } from './modules/ai/routes.ts'
 import { assetRoutes } from './modules/assets/routes.ts'
 import { cameraRoutes } from './modules/cameras/routes.ts'
@@ -66,6 +67,7 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await app.register(fileRoutes, { prefix: API_PREFIX, db, roots })
   await app.register(aiRoutes, { prefix: API_PREFIX, db, config })
   await app.register(recognitionRoutes, { prefix: API_PREFIX, db, config, roots })
+  await app.register(agentRoutes, { prefix: API_PREFIX, db, config, roots })
   return app
 }
 

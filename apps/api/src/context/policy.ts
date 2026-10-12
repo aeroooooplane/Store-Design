@@ -24,6 +24,8 @@ export type Action =
   | 'ai:write'
   | 'recognition:read'
   | 'recognition:write'
+  | 'agent:read'
+  | 'agent:write'
   | 'layout:generate'
   | 'layout:validate'
   | 'asset:read'

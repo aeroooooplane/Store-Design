@@ -12,16 +12,34 @@ export interface ChatImage {
   base64: string
 }
 
+/** A function the model may call; `parameters` is a JSON schema object. */
+export interface ToolSpec {
+  name: string
+  description: string
+  parameters: Record<string, unknown>
+}
+
+export interface ToolCall {
+  id: string
+  name: string
+  arguments: Record<string, unknown>
+}
+
 export interface ChatMessage {
-  role: 'system' | 'user' | 'assistant'
+  role: 'system' | 'user' | 'assistant' | 'tool'
   content: string
   images?: ChatImage[]
+  /** The calls an assistant message made. */
+  toolCalls?: ToolCall[]
+  /** The call a tool message answers. */
+  toolCallId?: string
 }
 
 export interface ChatRequest {
   purpose: AiPurpose
   modelId: string
   messages: ChatMessage[]
+  tools?: ToolSpec[]
   /** Ask for a JSON object (vendors that support it); the caller still parses and validates. */
   json?: boolean
   maxTokens?: number
@@ -33,6 +51,7 @@ export interface ChatRequest {
 
 export interface ChatResult {
   text: string
+  toolCalls: ToolCall[]
   tokensIn: number
   tokensOut: number
   costCny: number
@@ -57,6 +76,18 @@ const apiKeyFor = (spec: ModelSpec, ai: AppConfig['ai']): string | undefined => 
 
 function upstream(spec: ModelSpec, detail: string): AppError {
   return new AppError('UPSTREAM_FAILED', `模型「${spec.label}」调用失败：${detail}`)
+}
+
+/** Tool arguments arrive as text; something unparseable is kept for the record, not dropped. */
+function parseArguments(raw: unknown): Record<string, unknown> {
+  if (raw && typeof raw === 'object') return raw as Record<string, unknown>
+  if (typeof raw !== 'string' || !raw.trim()) return {}
+  try {
+    const parsed: unknown = JSON.parse(raw)
+    return parsed && typeof parsed === 'object' ? (parsed as Record<string, unknown>) : {}
+  } catch {
+    return { _raw: raw }
+  }
 }
 
 async function post(
@@ -97,17 +128,30 @@ async function post(
 
 interface RawResult {
   text: string
+  toolCalls: ToolCall[]
   tokensIn: number
   tokensOut: number
 }
 
-/** DeepSeek and DashScope speak the OpenAI chat format. */
+/** DeepSeek and DashScope speak the OpenAI chat format, tool calls included. */
 async function openAiCompatible(
   spec: ModelSpec,
   key: string,
   request: ChatRequest,
 ): Promise<RawResult> {
   const messages = request.messages.map((m) => {
+    if (m.role === 'tool') return { role: 'tool', tool_call_id: m.toolCallId, content: m.content }
+    if (m.role === 'assistant' && m.toolCalls?.length) {
+      return {
+        role: 'assistant',
+        content: m.content || null,
+        tool_calls: m.toolCalls.map((c) => ({
+          id: c.id,
+          type: 'function',
+          function: { name: c.name, arguments: JSON.stringify(c.arguments) },
+        })),
+      }
+    }
     if (!m.images?.length) return { role: m.role, content: m.content }
     return {
       role: m.role,
@@ -129,17 +173,43 @@ async function openAiCompatible(
       max_tokens: request.maxTokens ?? DEFAULT_MAX_TOKENS,
       temperature: request.temperature ?? 0,
       ...(request.json ? { response_format: { type: 'json_object' } } : {}),
+      ...(request.tools?.length
+        ? {
+            tools: request.tools.map((t) => ({
+              type: 'function',
+              function: { name: t.name, description: t.description, parameters: t.parameters },
+            })),
+          }
+        : {}),
     },
     spec,
     request.signal,
   )) as {
-    choices?: { message?: { content?: string | null } }[]
+    choices?: {
+      message?: {
+        content?: string | null
+        tool_calls?: { id?: string; function?: { name?: string; arguments?: unknown } }[]
+      }
+    }[]
     usage?: { prompt_tokens?: number; completion_tokens?: number }
   }
-  const text = data.choices?.[0]?.message?.content
-  if (typeof text !== 'string') throw upstream(spec, '没有返回内容')
+  const message = data.choices?.[0]?.message
+  const text = typeof message?.content === 'string' ? message.content : ''
+  const toolCalls: ToolCall[] = (message?.tool_calls ?? []).flatMap((c, i) =>
+    c.function?.name
+      ? [
+          {
+            id: c.id ?? `call_${i}`,
+            name: c.function.name,
+            arguments: parseArguments(c.function.arguments),
+          },
+        ]
+      : [],
+  )
+  if (!text && !toolCalls.length) throw upstream(spec, '没有返回内容')
   return {
     text,
+    toolCalls,
     tokensIn: data.usage?.prompt_tokens ?? 0,
     tokensOut: data.usage?.completion_tokens ?? 0,
   }
@@ -150,18 +220,38 @@ async function anthropic(spec: ModelSpec, key: string, request: ChatRequest): Pr
     .filter((m) => m.role === 'system')
     .map((m) => m.content)
     .join('\n\n')
-  const messages = request.messages
-    .filter((m) => m.role !== 'system')
-    .map((m) => ({
-      role: m.role,
-      content: [
-        ...(m.images ?? []).map((img) => ({
-          type: 'image',
-          source: { type: 'base64', media_type: img.mediaType, data: img.base64 },
-        })),
-        { type: 'text', text: m.content },
-      ],
-    }))
+  // Anthropic alternates user and assistant; tool results go in a user turn, several at once.
+  const messages: { role: 'user' | 'assistant'; content: unknown[] }[] = []
+  for (const m of request.messages) {
+    if (m.role === 'system') continue
+    if (m.role === 'tool') {
+      const block = { type: 'tool_result', tool_use_id: m.toolCallId, content: m.content }
+      const last = messages[messages.length - 1]
+      if (
+        last?.role === 'user' &&
+        last.content.every((c) => (c as { type: string }).type === 'tool_result')
+      ) {
+        last.content.push(block)
+      } else {
+        messages.push({ role: 'user', content: [block] })
+      }
+      continue
+    }
+    const content: unknown[] = [
+      ...(m.images ?? []).map((img) => ({
+        type: 'image',
+        source: { type: 'base64', media_type: img.mediaType, data: img.base64 },
+      })),
+      ...(m.content ? [{ type: 'text', text: m.content }] : []),
+      ...(m.toolCalls ?? []).map((c) => ({
+        type: 'tool_use',
+        id: c.id,
+        name: c.name,
+        input: c.arguments,
+      })),
+    ]
+    messages.push({ role: m.role, content })
+  }
   const data = (await post(
     'https://api.anthropic.com/v1/messages',
     { 'x-api-key': key, 'anthropic-version': '2023-06-01' },
@@ -170,21 +260,39 @@ async function anthropic(spec: ModelSpec, key: string, request: ChatRequest): Pr
       max_tokens: request.maxTokens ?? DEFAULT_MAX_TOKENS,
       temperature: request.temperature ?? 0,
       ...(system ? { system } : {}),
+      ...(request.tools?.length
+        ? {
+            tools: request.tools.map((t) => ({
+              name: t.name,
+              description: t.description,
+              input_schema: t.parameters,
+            })),
+          }
+        : {}),
       messages,
     },
     spec,
     request.signal,
   )) as {
-    content?: { type: string; text?: string }[]
+    content?: { type: string; text?: string; id?: string; name?: string; input?: unknown }[]
     usage?: { input_tokens?: number; output_tokens?: number }
   }
-  const text = (data.content ?? [])
+  const blocks = data.content ?? []
+  const text = blocks
     .filter((c) => c.type === 'text')
     .map((c) => c.text ?? '')
     .join('')
-  if (!text) throw upstream(spec, '没有返回内容')
+  const toolCalls: ToolCall[] = blocks
+    .filter((c) => c.type === 'tool_use' && c.name)
+    .map((c, i) => ({
+      id: c.id ?? `call_${i}`,
+      name: c.name ?? '',
+      arguments: parseArguments(c.input),
+    }))
+  if (!text && !toolCalls.length) throw upstream(spec, '没有返回内容')
   return {
     text,
+    toolCalls,
     tokensIn: data.usage?.input_tokens ?? 0,
     tokensOut: data.usage?.output_tokens ?? 0,
   }
