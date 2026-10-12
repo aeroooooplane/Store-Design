@@ -5711,6 +5711,635 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/projects/{projectId}/agent/sessions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 项目的对话列表（最近的在前） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            title: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        }[];
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        /** 新建一段与设计助理的对话 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        title?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            projectId: string;
+                            title: string;
+                            /** Format: date-time */
+                            createdAt: string;
+                            /** Format: date-time */
+                            updatedAt: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agent/sessions/{sessionId}/messages": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 一段对话的全部消息（含工具调用与动作） */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    sessionId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            sessionId: string;
+                            /** @enum {string} */
+                            role: "user" | "assistant" | "tool";
+                            content: {
+                                text: string;
+                                nodeId?: string | null;
+                                selectedItemIds?: string[];
+                                toolCalls?: {
+                                    id: string;
+                                    name: string;
+                                    arguments: {
+                                        [key: string]: unknown;
+                                    };
+                                }[];
+                                toolCallId?: string;
+                                toolName?: string;
+                            };
+                            imageUrl: string | null;
+                            model: string | null;
+                            tokensIn: number;
+                            tokensOut: number;
+                            costCny: number;
+                            /** Format: date-time */
+                            createdAt: string;
+                            actions: {
+                                /** Format: uuid */
+                                id: string;
+                                /** Format: uuid */
+                                messageId: string;
+                                toolName: string;
+                                input: {
+                                    [key: string]: unknown;
+                                };
+                                result: {
+                                    [key: string]: unknown;
+                                } | null;
+                                /** @enum {string} */
+                                status: "succeeded" | "failed";
+                                resultingNodeId: string | null;
+                                undoneAt: string | null;
+                                /** Format: date-time */
+                                createdAt: string;
+                            }[];
+                        }[];
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        /** 发一句话给设计助理；它可能调用工具修改项目，每次修改生成新节点 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    sessionId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        text: string;
+                        /** Format: uuid */
+                        nodeId?: string;
+                        selectedItemIds?: string[];
+                        planPng?: string;
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            userMessage: {
+                                /** Format: uuid */
+                                id: string;
+                                /** Format: uuid */
+                                sessionId: string;
+                                /** @enum {string} */
+                                role: "user" | "assistant" | "tool";
+                                content: {
+                                    text: string;
+                                    nodeId?: string | null;
+                                    selectedItemIds?: string[];
+                                    toolCalls?: {
+                                        id: string;
+                                        name: string;
+                                        arguments: {
+                                            [key: string]: unknown;
+                                        };
+                                    }[];
+                                    toolCallId?: string;
+                                    toolName?: string;
+                                };
+                                imageUrl: string | null;
+                                model: string | null;
+                                tokensIn: number;
+                                tokensOut: number;
+                                costCny: number;
+                                /** Format: date-time */
+                                createdAt: string;
+                                actions: {
+                                    /** Format: uuid */
+                                    id: string;
+                                    /** Format: uuid */
+                                    messageId: string;
+                                    toolName: string;
+                                    input: {
+                                        [key: string]: unknown;
+                                    };
+                                    result: {
+                                        [key: string]: unknown;
+                                    } | null;
+                                    /** @enum {string} */
+                                    status: "succeeded" | "failed";
+                                    resultingNodeId: string | null;
+                                    undoneAt: string | null;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[];
+                            };
+                            reply: {
+                                /** Format: uuid */
+                                id: string;
+                                /** Format: uuid */
+                                sessionId: string;
+                                /** @enum {string} */
+                                role: "user" | "assistant" | "tool";
+                                content: {
+                                    text: string;
+                                    nodeId?: string | null;
+                                    selectedItemIds?: string[];
+                                    toolCalls?: {
+                                        id: string;
+                                        name: string;
+                                        arguments: {
+                                            [key: string]: unknown;
+                                        };
+                                    }[];
+                                    toolCallId?: string;
+                                    toolName?: string;
+                                };
+                                imageUrl: string | null;
+                                model: string | null;
+                                tokensIn: number;
+                                tokensOut: number;
+                                costCny: number;
+                                /** Format: date-time */
+                                createdAt: string;
+                                actions: {
+                                    /** Format: uuid */
+                                    id: string;
+                                    /** Format: uuid */
+                                    messageId: string;
+                                    toolName: string;
+                                    input: {
+                                        [key: string]: unknown;
+                                    };
+                                    result: {
+                                        [key: string]: unknown;
+                                    } | null;
+                                    /** @enum {string} */
+                                    status: "succeeded" | "failed";
+                                    resultingNodeId: string | null;
+                                    undoneAt: string | null;
+                                    /** Format: date-time */
+                                    createdAt: string;
+                                }[];
+                            };
+                            currentNodeId: string | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                402: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                502: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/agent/actions/{actionId}/undo": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 撤销助理的一次修改（隐藏它生成的节点） */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    actionId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            id: string;
+                            /** Format: uuid */
+                            messageId: string;
+                            toolName: string;
+                            input: {
+                                [key: string]: unknown;
+                            };
+                            result: {
+                                [key: string]: unknown;
+                            } | null;
+                            /** @enum {string} */
+                            status: "succeeded" | "failed";
+                            resultingNodeId: string | null;
+                            undoneAt: string | null;
+                            /** Format: date-time */
+                            createdAt: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {

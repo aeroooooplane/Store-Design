@@ -131,6 +131,18 @@
 
 识别结果 `draft`：`space`（边界、入口、障碍物、层高可空）、`items`（图上文字、对应模型、用途、分类 现状/新增需求/区域外、位置尺寸、置信度、说明）、`scale`（比例来源与每像素毫米数、是否交叉核对）、`pending`（待人工确认事项）、`confidence`、`notes`。失败判定（需求 4.2）：比例无法标定、边界不闭合、整体置信度低于 0.6；失败的记录仍保留草稿，用户校准后可重试或直接手动录入。
 
+### Agent 对话（第三期）
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| POST | `/projects/{id}/agent/sessions` | 新建对话（可带标题；默认取第一句话前 30 字） |
+| GET | `/projects/{id}/agent/sessions` | 项目的对话列表（最近的在前，最多 100 条） |
+| GET | `/agent/sessions/{id}/messages` | 对话的全部消息：`role` 为 user / assistant / tool，assistant 消息带 `toolCalls` 与执行记录 `actions`（工具名、输入、结果、状态、生成的节点、撤销时间），以及模型、token 数与费用 |
+| POST | `/agent/sessions/{id}/messages` | 发消息：`text`（4000 字内）、`nodeId`（当前看的节点，修改从它开始）、`selectedItemIds`、`planPng`（平面截图 base64，4 MB 内）。服务端带着项目状态调用所选的 Agent 模型，模型通过工具修改项目，每次修改生成 `origin = agent` 的新节点；返回 `userMessage`、最终的 `reply` 和应切换到的 `currentNodeId`。没有可用模型 400，超额 402，模型失败 502（用户消息保留） |
+| POST | `/agent/actions/{id}/undo` | 撤销一次修改：隐藏它生成的节点；已撤销或没有生成节点的动作返回 409 |
+
+工具清单与说明在 `apps/api/src/modules/agent/tools.ts`（get_state、list_models、generate_plans、place_item、move_item、rotate_item、remove_item、validate、set_style、confirm_white、start_render、export_project）；参数由 zod 定义并导出为 JSON Schema 交给模型，执行前再校验一次，校验失败或工具抛出的业务错误都作为失败结果回给模型继续处理。
+
 ## 修改接口后
 
 ```powershell
