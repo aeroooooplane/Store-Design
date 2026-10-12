@@ -227,7 +227,8 @@ export function finishMaterial(source: THREE.Material, environment: THREE.Textur
   const { props } = RENDER_LOOK
   const material = source.clone()
   const name = source.name
-  material.side = THREE.DoubleSide
+  // The light material model marks the two sides of SketchUp faces; those draw front-side only.
+  material.side = source.userData['frontOnly'] === true ? THREE.FrontSide : THREE.DoubleSide
   material.flatShading = true
   material.roughness = props.roughness
   if (props.glass.pattern.test(name)) {

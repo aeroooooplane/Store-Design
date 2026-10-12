@@ -4088,6 +4088,13 @@ export interface paths {
                                     bytes: number;
                                     sha256: string;
                                 } | null;
+                                finishGlb: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
                                 preview: {
                                     /** Format: uuid */
                                     fileId: string;
@@ -4199,6 +4206,13 @@ export interface paths {
                                 sha256: string;
                             } | null;
                             whiteGlb: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                            finishGlb: {
                                 /** Format: uuid */
                                 fileId: string;
                                 url: string;

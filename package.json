@@ -20,6 +20,7 @@
     "api:openapi": "pnpm --filter @store/api openapi && pnpm --filter @store/web gen:api",
     "catalog:import": "pnpm --filter @store/api catalog:import",
     "catalog:white": "pnpm --filter @store/api catalog:white",
+    "catalog:finish": "pnpm --filter @store/api catalog:finish",
     "library:refresh": "node tools/library/refresh-library.mjs",
     "library:table": "node tools/library/build-selection-table.mjs",
     "library:apply-table": "node tools/library/apply-selection-table.mjs"

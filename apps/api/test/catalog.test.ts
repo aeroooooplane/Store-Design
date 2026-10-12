@@ -166,6 +166,7 @@ describe('importCatalog', () => {
       assets: 4,
       withGlb: 2,
       withWhite: 1,
+      withFinish: 0,
       placeable: 1,
       withPreview: 1,
       withProductImage: 1,

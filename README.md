@@ -24,6 +24,7 @@ pnpm db:migrate             # 初始化 / 升级数据库
 pnpm library:refresh        # 模型库补充效果图或平面图后刷新清单与对应关系（见 资源库/04_模型库/README.md）
 pnpm library:apply-table    # 回读用户改过的 资源库/模型选用表.xlsx（改名、停用、意见），再 pnpm library:table 重新生成
 pnpm catalog:white          # 生成白模轻量版（已是最新的会跳过；网页模型更新后重跑）
+pnpm catalog:finish         # 生成材质轻量版（三维材质视图与渲染用，不入库，每台机器/服务器各生成一次；之后再跑 pnpm catalog:import 挂接）
 pnpm catalog:import         # 从资源库导入模型目录（需先 git lfs pull 网页模型）
 # 本地识别回归（apps/web 下）：node src/scripts/local-regression.ts <图纸 PDF 目录> --limit 15 --pages 6
 pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（127.0.0.1:5173）

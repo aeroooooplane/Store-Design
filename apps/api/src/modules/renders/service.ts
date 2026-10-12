@@ -73,7 +73,12 @@ export async function renderContext(db: Database, node: NodeRow): Promise<Render
     .sort()
     .map((id) => {
       const asset = catalog.get(id)
-      return [id, asset?.glb?.sha256 ?? null, asset?.whiteGlb?.sha256 ?? null]
+      return [
+        id,
+        asset?.glb?.sha256 ?? null,
+        asset?.whiteGlb?.sha256 ?? null,
+        asset?.finishGlb?.sha256 ?? null,
+      ]
     })
   const layoutSignature = hash({
     space,

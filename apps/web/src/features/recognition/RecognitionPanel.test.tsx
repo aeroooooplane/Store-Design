@@ -28,6 +28,7 @@ const asset = (id: string, name: string, fn: Asset['function'], w: number, d: nu
   judgment: null,
   glb: null,
   whiteGlb: null,
+  finishGlb: null,
   preview: null,
   productImage: null,
   productImageMatch: null,

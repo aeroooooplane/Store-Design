@@ -106,7 +106,7 @@
 
 模型按项目 SI 风格选择：同风格优先，其次通用款；中岛桌优先普通款，收银优先收银台/收银桌；同一长度的配件柜只用一个款式。“按面积推荐”的桌数暂沿用旧版经验公式（每约 18 ㎡ 一张），待清洗数据整理出规则后替换。
 
-模型目录只读，由 `pnpm catalog:import` 从资源库导入或刷新（可重复运行，GLB 哈希须与转换记录一致才会挂接）。`name` 为模型选用表中的名称（未改名时为手册名称加变体），`retired` 为停用（模型选用表标为删除：自动排布不再选用，网页添加列表不显示，已有布局照常引用）。每件模型带分类 `category`（软装道具 / 信息化物料 / 品牌标识 / 非标陈列 / 环境设施，可作为 `GET /assets?category=` 过滤条件）、品类图库中的效果图 `productImage`（`productImageMatch` 为 exact 同款或 approximate 同类参考）和平面图 `planSymbol`（SVG，1 单位 = 1 毫米，正面朝下；以 `content-security-policy: default-src 'none'` 返回）。模型库位于 `资源库/04_模型库`，导入只读其 `manifest.json`（见该目录 README）。每件模型另有 `whiteGlb`：由 `pnpm catalog:white` 生成的白模轻量版（去掉贴图、法线和 UV，合并部件并简化到约 4 万面，外形尺寸偏差不超过 5 mm），只有记录中的源文件哈希与当前 `model.glb` 一致时才挂接；三维白模优先加载它，完整模型留给材质渲染。
+模型目录只读，由 `pnpm catalog:import` 从资源库导入或刷新（可重复运行，GLB 哈希须与转换记录一致才会挂接）。`name` 为模型选用表中的名称（未改名时为手册名称加变体），`retired` 为停用（模型选用表标为删除：自动排布不再选用，网页添加列表不显示，已有布局照常引用）。每件模型带分类 `category`（软装道具 / 信息化物料 / 品牌标识 / 非标陈列 / 环境设施，可作为 `GET /assets?category=` 过滤条件）、品类图库中的效果图 `productImage`（`productImageMatch` 为 exact 同款或 approximate 同类参考）和平面图 `planSymbol`（SVG，1 单位 = 1 毫米，正面朝下；以 `content-security-policy: default-src 'none'` 返回）。模型库位于 `资源库/04_模型库`，导入只读其 `manifest.json`（见该目录 README）。每件模型另有 `whiteGlb`：由 `pnpm catalog:white` 生成的白模轻量版（去掉贴图、法线和 UV，合并部件并简化到约 4 万面，外形尺寸偏差不超过 5 mm），只有记录中的源文件哈希与当前 `model.glb` 一致时才挂接；三维白模优先加载它。`finishGlb` 为材质轻量版：由 `pnpm catalog:finish` 生成（同材质部件合并为一次绘制；面积小于 0.01 ㎡ 且贴图不超过 256 px 的碎片贴图改为平均色写入顶点颜色；去掉法线后合并顶点，超过 25 万面的模型在 0.2% 误差内减面；贴图缩到 1024 px；SketchUp 正反两层面的材质标记 `extras.frontOnly`；外形尺寸偏差不超过 5 mm），记录源文件哈希，与当前 `model.glb` 一致才挂接；材质视图与渲染优先加载它，没有时退回完整模型。渲染图的布局签名包含它的哈希。
 
 ### AI 设置与预算
 
