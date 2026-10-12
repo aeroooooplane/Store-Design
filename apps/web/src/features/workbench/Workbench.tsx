@@ -24,6 +24,7 @@ import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree, spaceAncestor } from './tree.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
+import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
 
@@ -105,25 +106,22 @@ export function Workbench({ project }: { project: Project }) {
     </>
   )
 
-  if (creatingSpace) {
-    return (
-      <WorkbenchLayout
-        left={left}
-        center={
-          <div className="wb-card">
-            <NewSpace
-              projectId={project.id}
-              assets={assets.data}
-              first={nodes.length === 0}
-              onCreated={select}
-              onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
-            />
-          </div>
-        }
-      />
-    )
-  }
-  return selectedId ? (
+  const content = creatingSpace ? (
+    <WorkbenchLayout
+      left={left}
+      center={
+        <div className="wb-card">
+          <NewSpace
+            projectId={project.id}
+            assets={assets.data}
+            first={nodes.length === 0}
+            onCreated={select}
+            onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
+          />
+        </div>
+      }
+    />
+  ) : selectedId ? (
     <NodePanel
       key={selectedId}
       left={left}
@@ -137,6 +135,16 @@ export function Workbench({ project }: { project: Project }) {
       onSelect={select}
     />
   ) : null
+  return (
+    <AgentSelectionProvider>
+      {content}
+      <AgentDock
+        projectId={project.id}
+        nodeId={creatingSpace ? null : selectedId}
+        onSelect={select}
+      />
+    </AgentSelectionProvider>
+  )
 }
 
 function NewSpace({

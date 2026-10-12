@@ -27,6 +27,7 @@ import { ApiRequestError } from '../../api/client.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { deleteDraft, putDraft, useCreateNode, workbenchKeys } from './api.ts'
+import { useAgentSelection } from '../agent/selection.ts'
 import { CameraPanel } from './CameraPanel.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
@@ -129,6 +130,11 @@ export function PlanEditor({
   )
   const [saveError, setSaveError] = useState<unknown>(null)
   const svgRef = useRef<SVGSVGElement>(null)
+  // The design assistant sees what is selected on the plan.
+  const setAgentSelection = useAgentSelection().set
+  useEffect(() => {
+    setAgentSelection(state.selectedId ? [state.selectedId] : [])
+  }, [state.selectedId, setAgentSelection])
   const viewerRef = useRef<Viewer3DHandle>(null)
   const isWhite = baseNode.kind === 'white'
   const [view, setView] = useState<'plan' | '3d'>(isWhite ? '3d' : 'plan')

@@ -9,7 +9,7 @@ import type {
   DesignNode,
   NodeCreated,
 } from '@store/shared'
-import { createTestApp } from './helpers.ts'
+import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
 /** One placeable catalogue model: a 1.0 × 1.8 m island table. */
@@ -305,6 +305,29 @@ describe('agent with DeepSeek', () => {
     expect(String(placedTurn?.content)).toContain('"rotation":0')
     expect(String(placedTurn?.content)).not.toContain('超出')
     expect(reply.currentNodeId).toBe(actions[0]?.resultingNodeId)
+  })
+
+  it('keeps a screenshot with the message but shows it only to a vision model', async () => {
+    const { projectId, spaceNode } = await projectWithSpace(t)
+    const session = await newSession(t, projectId)
+    const bodies: { messages: { role: string; content: unknown }[] }[] = []
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (_url: string, init: { body: string }) => {
+        bodies.push(JSON.parse(init.body) as (typeof bodies)[number])
+        return textReply('看不了图，但布局我知道。')
+      }),
+    )
+    const response = await t.app.inject({
+      method: 'POST',
+      url: `/api/v1/agent/sessions/${session.id}/messages`,
+      payload: { text: '看看这张图', nodeId: spaceNode.id, planPng: png(4, 4).toString('base64') },
+    })
+    expect(response.statusCode).toBe(200)
+    const reply = response.json<AgentReply>()
+    expect(reply.userMessage.imageUrl).toMatch(/^\/api\/v1\/files\//)
+    const last = bodies[0]?.messages.at(-1)
+    expect(last?.content).toBe('看看这张图')
   })
 
   it('keeps the user message when the model fails', async () => {
