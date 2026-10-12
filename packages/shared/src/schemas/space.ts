@@ -12,7 +12,8 @@ import { PointSchema, SegmentSchema, SizeSchema } from './common.ts'
 
 export const OBSTACLE_KINDS = ['column', 'shaft', 'stair', 'fixed', 'other'] as const
 export const ENTRANCE_KINDS = ['main', 'side'] as const
-export const CALIBRATION_METHODS = ['manual', 'dimension', 'item_label', 'area'] as const
+/** Where the drawing's scale came from; 'llm' when a model read it off the picture. */
+export const CALIBRATION_METHODS = ['manual', 'dimension', 'item_label', 'area', 'llm'] as const
 
 export const ObstacleSchema = z.object({
   kind: z.enum(OBSTACLE_KINDS),

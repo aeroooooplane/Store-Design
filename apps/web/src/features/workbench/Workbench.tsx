@@ -17,6 +17,7 @@ import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
 import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
+import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
 import { ProjectCard } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
@@ -112,6 +113,7 @@ export function Workbench({ project }: { project: Project }) {
           <div className="wb-card">
             <NewSpace
               projectId={project.id}
+              assets={assets.data}
               first={nodes.length === 0}
               onCreated={select}
               onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
@@ -139,31 +141,55 @@ export function Workbench({ project }: { project: Project }) {
 
 function NewSpace({
   projectId,
+  assets,
   first,
   onCreated,
   onCancel,
 }: {
   projectId: string
+  assets: Asset[]
   first: boolean
   onCreated: (nodeId: string) => void
   onCancel?: (() => void) | undefined
 }) {
   const create = useCreateNode(projectId)
+  const [way, setWay] = useState<'manual' | 'upload'>('manual')
   return (
     <>
       <h2>{first ? '第一步：录入空间' : '新建空间'}</h2>
-      <p className="hint">按平面图录入尺寸（毫米）。保存后可以自动生成排布方案，也可以手动摆放。</p>
-      <ErrorMessage error={create.error} />
-      <SpaceEditor
-        submitting={create.isPending}
-        onCancel={onCancel}
-        onSubmit={(space, name) =>
-          create.mutate(
-            { parentId: null, kind: 'space', name, space },
-            { onSuccess: (created) => onCreated(created.node.id) },
-          )
-        }
-      />
+      <div className="tabs" role="group" aria-label="录入方式">
+        <button type="button" aria-pressed={way === 'manual'} onClick={() => setWay('manual')}>
+          手动录入
+        </button>
+        <button type="button" aria-pressed={way === 'upload'} onClick={() => setWay('upload')}>
+          上传简图识别
+        </button>
+      </div>
+      {way === 'upload' ? (
+        <RecognitionPanel
+          projectId={projectId}
+          assets={assets}
+          onCreated={onCreated}
+          onCancel={onCancel}
+        />
+      ) : (
+        <>
+          <p className="hint">
+            按平面图录入尺寸（毫米）。保存后可以自动生成排布方案，也可以手动摆放。
+          </p>
+          <ErrorMessage error={create.error} />
+          <SpaceEditor
+            submitting={create.isPending}
+            onCancel={onCancel}
+            onSubmit={(space, name) =>
+              create.mutate(
+                { parentId: null, kind: 'space', name, space },
+                { onSuccess: (created) => onCreated(created.node.id) },
+              )
+            }
+          />
+        </>
+      )}
     </>
   )
 }

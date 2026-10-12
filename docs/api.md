@@ -118,6 +118,19 @@
 
 模型清单与估算单价在 `apps/api/src/ai/models.ts`；调用统一走 `ai/chat.ts`（DeepSeek、通义千问为 OpenAI 兼容格式，Claude 为官方接口），调用前检查当日额度，调用后按厂商返回的 token 数记入 `ai_usage`；超额返回 402，厂商失败返回 502 `UPSTREAM_FAILED` 且不记账。本地识别不经过此层、不计费。
 
+### 上传识别（第二期）
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| POST | `/projects/{id}/uploads` | 上传平面简图：请求体为 PNG 或 JPEG 原始字节（20 MB 内，边长 8192 px 内），查询参数 `originalName`、`page`；PDF 由浏览器用 pdf.js 按页转成 PNG 再上传 |
+| GET | `/projects/{id}/uploads` | 项目最近 20 张简图 |
+| POST | `/uploads/{id}/recognize` | 识别。`method` 省略时按设置：平面识别模型为“本地识别”则先本地（需要浏览器提取的 `vector`：矢量 PDF 页面的文字、线段、矩形与颜色），不合格时自动改用“识别失败后”的模型；可带 `crop`（图上框选的区域，像素）和 `calibration`（用户指定的已知长度）。返回本次 `run` 与被替代的本地尝试 `attempted` |
+| GET | `/uploads/{id}/runs` | 一张简图的识别记录（最新在前） |
+| GET | `/recognition-runs/{id}` | 一次识别的结果 |
+| POST | `/recognition-runs/{id}/confirm` | 用户校对后的空间（可带保留的道具布局）生成来源为 `recognition` 的根空间节点；同一记录只能确认一次 |
+
+识别结果 `draft`：`space`（边界、入口、障碍物、层高可空）、`items`（图上文字、对应模型、用途、分类 现状/新增需求/区域外、位置尺寸、置信度、说明）、`scale`（比例来源与每像素毫米数、是否交叉核对）、`pending`（待人工确认事项）、`confidence`、`notes`。失败判定（需求 4.2）：比例无法标定、边界不闭合、整体置信度低于 0.6；失败的记录仍保留草稿，用户校准后可重试或直接手动录入。
+
 ## 修改接口后
 
 ```powershell

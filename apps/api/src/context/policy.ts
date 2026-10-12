@@ -22,6 +22,8 @@ export type Action =
   | 'delivery:write'
   | 'ai:read'
   | 'ai:write'
+  | 'recognition:read'
+  | 'recognition:write'
   | 'layout:generate'
   | 'layout:validate'
   | 'asset:read'
