@@ -27,6 +27,10 @@ const TOOL_LABELS: Record<string, string> = {
   confirm_white: '确认白模',
   start_render: '创建渲染',
   export_project: '导出项目',
+  edit_space: '修改空间',
+  list_views: '查视角',
+  add_view: '添加视角',
+  remove_view: '删除视角',
 }
 /** Wide enough for the model to read labels, small enough to send quickly. */
 const SCREENSHOT_WIDTH = 1600
@@ -287,6 +291,10 @@ function ActionRow({
       ? asText(action.result?.error, '失败')
       : asText(action.result?.done, '完成')
   const nodes = madeNodes(action)
+  const undoable =
+    nodes.length > 0 ||
+    typeof action.result?.cameraId === 'string' ||
+    typeof action.result?.restoreCameraId === 'string'
   return (
     <li className={`agent-action ${action.status}`}>
       <span>
@@ -301,7 +309,7 @@ function ActionRow({
           查看
         </button>
       ) : null}
-      {nodes.length && !action.undoneAt && onUndo ? (
+      {undoable && !action.undoneAt && onUndo ? (
         <button
           type="button"
           className="link-button"

@@ -307,6 +307,137 @@ describe('agent with DeepSeek', () => {
     expect(reply.currentNodeId).toBe(actions[0]?.resultingNodeId)
   })
 
+  it('edits the space into a new space node and manages views, all undoable', async () => {
+    const { projectId, spaceNode } = await projectWithSpace(t)
+    const session = await newSession(t, projectId)
+    let calls = 0
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        calls += 1
+        return calls === 1
+          ? toolReply([
+              {
+                id: 'e',
+                function: {
+                  name: 'edit_space',
+                  arguments:
+                    '{"height_mm":3500,"entrance":{"side":"right","width_mm":2000},"add_column":{"cx_mm":2000,"cz_mm":2000,"size_mm":500}}',
+                },
+              },
+            ])
+          : textReply('层高改为 3.5 m，入口挪到右墙，加了一根柱子。')
+      }),
+    )
+    const edited = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/agent/sessions/${session.id}/messages`,
+        payload: { text: '层高 3500，入口放右边 2 米宽，2 米处加根柱子', nodeId: spaceNode.id },
+      })
+    ).json<AgentReply>()
+    const spaceNodeId = edited.currentNodeId
+    expect(spaceNodeId).not.toBe(spaceNode.id)
+    const node = (
+      await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${spaceNodeId}` })
+    ).json<DesignNode>()
+    expect(node).toMatchObject({
+      kind: 'space',
+      parentId: spaceNode.id,
+      origin: 'agent',
+      name: '空间 · Agent',
+    })
+    expect(node.space?.height).toBe(3.5)
+    expect(node.space?.entrances).toEqual([{ kind: 'main', a: [8, 2], b: [8, 4] }])
+    expect(node.space?.obstacles).toHaveLength(1)
+    expect(node.space?.obstacles[0]?.polygon[0]).toEqual([1.75, 1.75])
+
+    // A white model under a plan under the new space, so views exist.
+    const plan = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/projects/${projectId}/nodes`,
+        payload: {
+          parentId: spaceNodeId,
+          kind: 'plan',
+          name: '方案',
+          layout: { schemaVersion: 3, items: [] },
+        },
+      })
+    ).json<NodeCreated>().node
+    const white = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/projects/${projectId}/nodes`,
+        payload: {
+          parentId: plan.id,
+          kind: 'white',
+          name: '白模',
+          layout: { schemaVersion: 3, items: [] },
+        },
+      })
+    ).json<NodeCreated>().node
+    calls = 0
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        calls += 1
+        return calls === 1
+          ? toolReply([
+              {
+                id: 'v',
+                function: {
+                  name: 'add_view',
+                  arguments: '{"name":"收银台方向","across":0.9,"along":1.2,"height":0.4}',
+                },
+              },
+              { id: 'l', function: { name: 'list_views', arguments: '{}' } },
+            ])
+          : textReply('加了一个视角。')
+      }),
+    )
+    const viewed = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/agent/sessions/${session.id}/messages`,
+        payload: { text: '从右前方店外加个视角', nodeId: white.id },
+      })
+    ).json<AgentReply>()
+    expect(viewed.currentNodeId).toBe(white.id)
+    const actions = (
+      await t.app.inject({ method: 'GET', url: `/api/v1/agent/sessions/${session.id}/messages` })
+    )
+      .json<AgentMessage[]>()
+      .flatMap((m) => m.actions)
+    const added = actions.find((a) => a.toolName === 'add_view')
+    const listed = actions.find((a) => a.toolName === 'list_views')
+    expect(added?.status).toBe('succeeded')
+    expect(typeof added?.result?.cameraId).toBe('string')
+    expect((listed?.result?.views as unknown[]).length).toBe(9)
+    const cameras = async () =>
+      (await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${white.id}/cameras` })).json<{
+        cameras: { id: string; deletedAt: string | null }[]
+      }>().cameras
+    expect((await cameras()).map((c) => c.id)).toContain(added?.result?.cameraId)
+
+    // Undo removes the view again; the space edit is undone by hiding its node.
+    expect(
+      (await t.app.inject({ method: 'POST', url: `/api/v1/agent/actions/${added?.id}/undo` }))
+        .statusCode,
+    ).toBe(200)
+    expect((await cameras()).map((c) => c.id)).not.toContain(added?.result?.cameraId)
+    const spaceEdit = actions.find((a) => a.toolName === 'edit_space')
+    expect(
+      (await t.app.inject({ method: 'POST', url: `/api/v1/agent/actions/${spaceEdit?.id}/undo` }))
+        .statusCode,
+    ).toBe(200)
+    expect(
+      (
+        await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${spaceNodeId}` })
+      ).json<DesignNode>().hidden,
+    ).toBe(true)
+  })
+
   it('keeps a screenshot with the message but shows it only to a vision model', async () => {
     const { projectId, spaceNode } = await projectWithSpace(t)
     const session = await newSession(t, projectId)
