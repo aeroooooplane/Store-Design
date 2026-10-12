@@ -461,6 +461,96 @@ describe('agent with DeepSeek', () => {
     expect(last?.content).toBe('看看这张图')
   })
 
+  it('switches the SI style and saves the plan with its props swapped', async () => {
+    // The two 1.2 m cabinets of SI_SWAP, sharing the seeded model file.
+    const [file] = await t.database.db.select().from(schema.storedFiles).limit(1)
+    for (const [id, siFamily, depth] of [
+      ['asset-2595882', 'SI1.0', 0.45],
+      ['asset-34327615', 'SI2.0', 0.54],
+    ] as const) {
+      await t.database.db.insert(schema.assets).values({
+        id,
+        standardName: '1.2米配件柜',
+        variant: siFamily,
+        materialCategory: '软装物料',
+        siFamily,
+        function: 'accessory_cabinet',
+        installation: 'floor',
+        width: 1.2,
+        depth,
+        height: 2.4,
+        footprintSource: 'glb',
+        front: '+Z',
+        placeable: true,
+        glbFileId: file?.id,
+      })
+    }
+    const { projectId, spaceNode } = await projectWithSpace(t)
+    const plan = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/projects/${projectId}/nodes`,
+        payload: {
+          parentId: spaceNode.id,
+          kind: 'plan',
+          name: '方案 A',
+          layout: {
+            schemaVersion: 3,
+            items: [
+              {
+                id: 'c1',
+                assetId: 'asset-2595882',
+                function: 'accessory_cabinet',
+                name: '1.2米配件柜',
+                cx: 2,
+                cz: 0.225,
+                rotation: 0,
+                w: 1.2,
+                d: 0.45,
+                h: 2.4,
+              },
+            ],
+          },
+        },
+      })
+    ).json<NodeCreated>().node
+    const session = await newSession(t, projectId)
+    let calls = 0
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () => {
+        calls += 1
+        return calls === 1
+          ? toolReply([
+              { id: 's', function: { name: 'set_style', arguments: '{"siStyle":"SI2.0"}' } },
+            ])
+          : textReply('已切换为 SI2.0。')
+      }),
+    )
+    const reply = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/agent/sessions/${session.id}/messages`,
+        payload: { text: '换成 SI2.0', nodeId: plan.id },
+      })
+    ).json<AgentReply>()
+    expect(reply.currentNodeId).not.toBe(plan.id)
+    const copy = (
+      await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${reply.currentNodeId}` })
+    ).json<DesignNode>()
+    expect(copy).toMatchObject({
+      kind: 'plan',
+      parentId: spaceNode.id,
+      name: '方案 A · SI2.0',
+      origin: 'agent',
+    })
+    expect(copy.layout?.items[0]).toMatchObject({ assetId: 'asset-34327615', cx: 2, cz: 0.27 })
+    const project = (
+      await t.app.inject({ method: 'GET', url: `/api/v1/projects/${projectId}` })
+    ).json<{ siStyle: string }>()
+    expect(project.siStyle).toBe('SI2.0')
+  })
+
   it('keeps the user message when the model fails', async () => {
     const { projectId, spaceNode } = await projectWithSpace(t)
     const session = await newSession(t, projectId)

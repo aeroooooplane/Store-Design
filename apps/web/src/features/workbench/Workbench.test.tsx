@@ -3,7 +3,7 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { MemoryRouter } from 'react-router'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
-import type { DesignNode, Draft, Layout, LayoutItem, Project } from '@store/shared'
+import type { Asset, DesignNode, Draft, Layout, LayoutItem, Project } from '@store/shared'
 import { Workbench } from './Workbench.tsx'
 
 const PID = '11111111-1111-4111-8111-111111111111'
@@ -70,8 +70,44 @@ interface Call {
 }
 
 /** In-memory stand-in for the node, draft, asset and layout APIs. */
-function fakeApi(nodes: DesignNode[], draft: Draft | null) {
-  const state = { nodes: [...nodes], draft }
+/** A catalogue model with just what the workbench reads. */
+function catalogAsset(
+  id: string,
+  siFamily: string,
+  w: number,
+  d: number,
+  front: Asset['front'],
+): Asset {
+  return {
+    id,
+    name: `${siFamily} 1.2米配件柜`,
+    standardName: '1.2米配件柜',
+    variant: '',
+    materialCategory: '软装物料',
+    siFamily,
+    category: '软装道具',
+    function: 'accessory_cabinet',
+    installation: 'floor',
+    footprint: { w, d, h: 2.4 },
+    footprintSource: 'glb',
+    front,
+    staffSide: null,
+    facingConfidence: 'high',
+    placeable: true,
+    retired: false,
+    judgment: null,
+    glb: null,
+    whiteGlb: null,
+    finishGlb: null,
+    preview: null,
+    productImage: null,
+    productImageMatch: null,
+    planSymbol: null,
+  }
+}
+
+function fakeApi(nodes: DesignNode[], draft: Draft | null, assets: Asset[] = []) {
+  const state = { nodes: [...nodes], draft, project }
   const calls: Call[] = []
   const json = (status: number, body: unknown) =>
     new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
@@ -125,7 +161,15 @@ function fakeApi(nodes: DesignNode[], draft: Draft | null) {
       state.nodes.push(created)
       return json(201, { node: created, issues: [] })
     }
-    if (route === 'GET /api/v1/assets') return json(200, { items: [], total: 0 })
+    if (route === 'GET /api/v1/assets') return json(200, { items: assets, total: assets.length })
+    if (route === `PATCH /api/v1/projects/${PID}`) {
+      state.project = {
+        ...state.project,
+        ...(body as Partial<Project>),
+        revision: state.project.revision + 1,
+      }
+      return json(200, state.project)
+    }
     if (request.method === 'GET' && url.pathname.startsWith('/api/v1/nodes/')) {
       const found = state.nodes.find((n) => url.pathname.endsWith(n.id))
       return found ? json(200, found) : fail(404, 'NOT_FOUND')
@@ -255,6 +299,52 @@ describe('Workbench', () => {
     expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
     expect(confirm).toHaveBeenCalledOnce()
     expect(server.calls.find((c) => c.method === 'DELETE')?.ifMatch).toBe('"3"')
+  })
+
+  it('switching SI saves a copy of the plan with its props swapped and keeps the original', async () => {
+    const cabinet: LayoutItem = {
+      ...table,
+      id: 'c1',
+      assetId: 'asset-2595882',
+      function: 'accessory_cabinet',
+      name: 'SI1.0 1.2米配件柜',
+      cx: 2,
+      cz: 0.225,
+      w: 1.2,
+      d: 0.45,
+      h: 2.4,
+      placeholder: false,
+    }
+    server = fakeApi(
+      [designNode(S1, null), designNode(P1, S1, { name: '方案 A', layout: layout([cabinet]) })],
+      null,
+      [
+        catalogAsset('asset-2595882', 'SI1.0', 1.2, 0.45, '+Z'),
+        catalogAsset('asset-34327615', 'SI2.0', 1.2, 0.54, '+Z'),
+      ],
+    )
+    vi.stubGlobal('fetch', server.fetchMock)
+    renderWorkbench(`?node=${P1}`)
+
+    await screen.findByRole('button', { name: '撤回' })
+    fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+
+    expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+    expect(server.calls.find((c) => c.method === 'PATCH')?.body).toEqual({ siStyle: 'SI2.0' })
+    const copy = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
+    expect(copy?.body).toMatchObject({
+      parentId: S1,
+      kind: 'plan',
+      name: '方案 A · SI2.0',
+      sourceNodeId: P1,
+    })
+    const swapped = (copy?.body as { layout: Layout }).layout.items[0]
+    // The deeper SI2.0 cabinet keeps its back where the old one was.
+    expect(swapped).toMatchObject({ assetId: 'asset-34327615', cx: 2, cz: 0.27, d: 0.54 })
+    expect(screen.getByText(/换了 1 件道具，原节点保留/)).toBeTruthy()
+    expect(server.state.nodes.find((n) => n.id === P1)?.layout?.items[0]?.assetId).toBe(
+      'asset-2595882',
+    )
   })
 
   it('autosaves edits to the draft, then saves a version and clears the draft', async () => {
