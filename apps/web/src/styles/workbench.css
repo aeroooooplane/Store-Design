@@ -1033,3 +1033,131 @@ ul.issues li.warning {
 .tag.source-outside {
   color: var(--muted);
 }
+
+/* Design assistant: a button at the bottom right that opens into a chat panel. */
+.agent-dock {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 30;
+}
+
+.agent-dock-toggle {
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+.agent-panel {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  max-width: calc(100vw - 32px);
+  height: min(620px, calc(100vh - 32px));
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
+  overflow: hidden;
+}
+
+.agent-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.agent-head h2 {
+  flex: 1;
+  margin: 0;
+  font-size: 15px;
+}
+
+.agent-head select {
+  max-width: 150px;
+}
+
+.agent-messages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  overflow: auto;
+}
+
+.agent-msg {
+  max-width: 92%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.agent-msg.user {
+  align-self: flex-end;
+  background: var(--accent-soft);
+}
+
+.agent-msg.assistant {
+  align-self: flex-start;
+  background: var(--surface);
+}
+
+.agent-text {
+  white-space: pre-wrap;
+}
+
+.agent-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 6px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 12px;
+}
+
+.agent-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.agent-action.failed {
+  color: #b42318;
+}
+
+.agent-action .undone {
+  color: var(--muted);
+}
+
+.agent-busy {
+  align-self: flex-start;
+}
+
+.agent-compose {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--line);
+}
+
+.agent-compose textarea {
+  width: 100%;
+  min-height: 56px;
+  padding: 8px;
+  font: inherit;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  resize: vertical;
+}
+
+.agent-compose-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}

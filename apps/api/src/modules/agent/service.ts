@@ -14,6 +14,7 @@ import type {
 } from '@store/shared'
 import { chat } from '../../ai/chat.ts'
 import type { ChatMessage, ToolCall } from '../../ai/chat.ts'
+import { findModel } from '../../ai/models.ts'
 import { readSettings } from '../../ai/settings.ts'
 import type { AppConfig } from '../../config/env.ts'
 import type { RequestContext } from '../../context/actor.ts'
@@ -288,6 +289,8 @@ export async function sendMessage(
   if (!settings.agentModel) {
     throw new AppError('VALIDATION_FAILED', '还没有可用的 Agent 模型，请先在设置中配置模型密钥')
   }
+  // The screenshot is kept with the message either way; only a vision model is shown it.
+  const picture = findModel(settings.agentModel)?.vision ? input.planPng : undefined
   const tools = await buildToolContext(
     db,
     ctx,
@@ -325,10 +328,8 @@ export async function sendMessage(
     ...replayHistory(history),
     {
       role: 'user',
-      content: input.planPng ? `${input.text}\n（附上了当前平面截图）` : input.text,
-      ...(input.planPng
-        ? { images: [{ mediaType: 'image/png' as const, base64: input.planPng }] }
-        : {}),
+      content: picture ? `${input.text}\n（附上了当前平面截图）` : input.text,
+      ...(picture ? { images: [{ mediaType: 'image/png' as const, base64: picture }] } : {}),
     },
   ]
 
