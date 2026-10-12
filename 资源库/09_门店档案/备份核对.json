@@ -1,0 +1,32 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-12T20:08:41+08:00",
+ "generator": {
+  "script": "tools/store-archive/verify_backup.py",
+  "version": "0.1.0"
+ },
+ "note": "备份与原件在同一块物理 SSD（C、D 盘同盘），只防误删、防覆盖，不防硬盘损坏",
+ "all_verified": true,
+ "pairs": [
+  {
+   "source": "资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02",
+   "backup": "D:/门店图纸备份/全量续跑-02-20261009/全量续跑-02",
+   "files": 1237,
+   "bytes": 561909679,
+   "missing_in_backup": [],
+   "extra_in_backup": [],
+   "hash_mismatch": [],
+   "verified": true
+  },
+  {
+   "source": "资源库/90_处理过程与审核/数据清洗-20261009/_cache/全量续跑-02",
+   "backup": "D:/门店图纸备份/全量续跑-02-20261009/_cache/全量续跑-02",
+   "files": 7255,
+   "bytes": 4042967039,
+   "missing_in_backup": [],
+   "extra_in_backup": [],
+   "hash_mismatch": [],
+   "verified": true
+  }
+ ]
+}

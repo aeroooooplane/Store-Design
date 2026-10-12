@@ -117,3 +117,17 @@ Thumbs.db
 # rebuilt on each machine to keep ~46 MB out of Git LFS; without them the viewer loads model.glb.
 /资源库/04_模型库/**/finish.glb
 /资源库/04_模型库/**/finish.json
+
+# Store archive (docs/store-drawing-archive-plan.md): only JSON / CSV / MD metadata is committed. PDFs, images and
+# drawings are derived from the source drawings by tools/store-archive and rebuilt on each machine (LFS quota is full).
+/资源库/09_门店档案/**/*.pdf
+/资源库/09_门店档案/**/*.png
+/资源库/09_门店档案/**/*.jpg
+/资源库/09_门店档案/**/*.jpeg
+/资源库/09_门店档案/**/*.webp
+/资源库/09_门店档案/**/*.tif
+/资源库/09_门店档案/**/*.tiff
+/资源库/09_门店档案/**/*.svg
+/资源库/09_门店档案/**/renders/
+/资源库/09_门店档案/**/evidence/
+/资源库/09_门店档案/**/_cache/
