@@ -21,6 +21,7 @@ import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
+import { setCameraDeleted } from '../cameras/service.ts'
 import { fileUrl } from '../files/routes.ts'
 import { requireActiveProject, setHidden } from '../nodes/service.ts'
 import { getProject } from '../projects/service.ts'
@@ -388,7 +389,10 @@ export async function sendMessage(
   return { userMessage: stored, reply, currentNodeId }
 }
 
-/** Hides the node(s) an action made; a read-only or already undone action cannot be undone. */
+/**
+ * Undoes an action: hides the node(s) it made, deletes a view it added or restores one it
+ * removed. A read-only or already undone action cannot be undone.
+ */
 export async function undoAction(
   db: Database,
   ctx: RequestContext,
@@ -410,8 +414,18 @@ export async function undoAction(
     : action.resultingNodeId
       ? [action.resultingNodeId]
       : []
-  if (!nodeIds.length) throw new AppError('INVALID_STATE', '该操作没有产生节点，不能撤销')
-  for (const nodeId of nodeIds) await setHidden(db, ctx, nodeId, true)
+  const cameraId = typeof action.result?.cameraId === 'string' ? action.result.cameraId : null
+  const restoreId =
+    typeof action.result?.restoreCameraId === 'string' ? action.result.restoreCameraId : null
+  if (nodeIds.length) {
+    for (const nodeId of nodeIds) await setHidden(db, ctx, nodeId, true)
+  } else if (cameraId) {
+    await setCameraDeleted(db, ctx, cameraId, true)
+  } else if (restoreId) {
+    await setCameraDeleted(db, ctx, restoreId, false)
+  } else {
+    throw new AppError('INVALID_STATE', '该操作没有产生可撤销的改动')
+  }
   const [updated] = await db
     .update(agentActions)
     .set({ undoneAt: new Date() })

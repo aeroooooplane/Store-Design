@@ -7,6 +7,7 @@ import {
   SHOP_TYPE_LABELS,
   RotationSchema,
   polygonArea,
+  rectangleSpace,
   rotatedFootprint,
   rotationFacing,
   roundM,
@@ -16,9 +17,11 @@ import {
 import type {
   Asset,
   DesignNode,
+  Entrance,
   FrontAxis,
   Layout,
   LayoutItem,
+  NodeCamera,
   NodeKind,
   Point,
   Project,
@@ -30,6 +33,7 @@ import type { AppConfig } from '../../config/env.ts'
 import type { RequestContext } from '../../context/actor.ts'
 import { AppError } from '../../lib/app-error.ts'
 import { catalogAssets } from '../assets/service.ts'
+import { addCamera, listCameras, setCameraDeleted } from '../cameras/service.ts'
 import { generateLayouts } from '../layouts/service.ts'
 import { createNode, getNode, resolveSpace } from '../nodes/service.ts'
 import { updateProject } from '../projects/service.ts'
@@ -180,6 +184,56 @@ export function stateSummary(tools: ToolContext): Record<string, unknown> {
       itemIds: i.itemIds ?? [],
     })),
   }
+}
+
+const SIDES = ['back', 'front', 'left', 'right'] as const
+type Side = (typeof SIDES)[number]
+
+/** Four axis-aligned corners: the only shape whose sides and entrance the tools can rewrite. */
+function isRectangle(space: Space): boolean {
+  const b = space.boundary
+  return (
+    b.length === 4 &&
+    b.every((p, i) => {
+      const q = b[(i + 1) % 4] ?? p
+      return p[0] === q[0] || p[1] === q[1]
+    })
+  )
+}
+
+/** The main entrance centred on one side of a rectangle; the whole side when width is 0. */
+function entranceOn(space: Space, side: Side, widthM: number): Entrance {
+  const xs = space.boundary.map((p) => p[0])
+  const zs = space.boundary.map((p) => p[1])
+  const [x0, x1, z0, z1] = [Math.min(...xs), Math.max(...xs), Math.min(...zs), Math.max(...zs)]
+  const horizontal = side === 'back' || side === 'front'
+  const length = horizontal ? x1 - x0 : z1 - z0
+  const w = widthM > 0 ? Math.min(widthM, length) : length
+  const from = roundM((horizontal ? x0 : z0) + (length - w) / 2)
+  const to = roundM(from + w)
+  const fixed = side === 'back' ? z0 : side === 'front' ? z1 : side === 'left' ? x0 : x1
+  return horizontal
+    ? { kind: 'main', a: [from, fixed], b: [to, fixed] }
+    : { kind: 'main', a: [fixed, from], b: [fixed, to] }
+}
+
+function describeCamera(c: NodeCamera) {
+  return {
+    id: c.id,
+    name: c.camera.name,
+    position_mm: c.camera.position.map(mm),
+    target_mm: c.camera.target.map(mm),
+    fovDeg: c.camera.fovDeg,
+    source: c.camera.source,
+  }
+}
+
+function requireViewNode(tools: ToolContext): DesignNode {
+  const node = tools.node
+  if (!node || (node.kind !== 'white' && node.kind !== 'render')) {
+    throw new AppError('INVALID_STATE', '只有白模或渲染节点有视角，请先确认白模')
+  }
+  return node
 }
 
 function requireSpace(tools: ToolContext): Space {
@@ -589,6 +643,170 @@ export const TOOLS: AgentTool[] = [
       return {
         nodeId: created.node.id,
         result: { done: '已创建渲染节点，打开它即可渲染', nodeId: created.node.id, nodeName: name },
+      }
+    },
+  }),
+  tool({
+    name: 'edit_space',
+    description:
+      '修改当前空间：层高 height_mm；矩形空间的宽 width_mm / 深 depth_mm（改尺寸会重建矩形，柱子清空、入口重置为前边整边，除非同时指定 entrance）；主入口 entrance（所在边与宽度，0 为整边）；add_column 添加一根方柱（中心与边长，毫米）。结果保存为新的空间节点，原空间与方案不变。',
+    schema: z.object({
+      height_mm: z.number().min(1500).max(20000).optional(),
+      width_mm: z.number().min(1000).max(100000).optional(),
+      depth_mm: z.number().min(1000).max(100000).optional(),
+      entrance: z
+        .object({ side: z.enum(SIDES), width_mm: z.number().min(0).max(100000).optional() })
+        .optional(),
+      add_column: z
+        .object({
+          cx_mm: z.number(),
+          cz_mm: z.number(),
+          size_mm: z.number().min(100).max(3000).optional(),
+        })
+        .optional(),
+    }),
+    run: async (tools, input) => {
+      const current = requireSpace(tools)
+      if (!tools.spaceNodeId) throw new AppError('INVALID_STATE', '没有空间节点')
+      if (
+        !input.height_mm &&
+        !input.width_mm &&
+        !input.depth_mm &&
+        !input.entrance &&
+        !input.add_column
+      ) {
+        throw new AppError('VALIDATION_FAILED', '请指定要修改的内容')
+      }
+      let space: Space = { ...current }
+      const notes: string[] = []
+      if (input.width_mm || input.depth_mm) {
+        if (!isRectangle(current)) {
+          throw new AppError(
+            'VALIDATION_FAILED',
+            '只有矩形空间可以直接改宽深，异形边界请在工作台里修改',
+          )
+        }
+        const xs = current.boundary.map((p) => p[0])
+        const zs = current.boundary.map((p) => p[1])
+        const width = input.width_mm ? input.width_mm / 1000 : Math.max(...xs) - Math.min(...xs)
+        const depth = input.depth_mm ? input.depth_mm / 1000 : Math.max(...zs) - Math.min(...zs)
+        space = {
+          ...rectangleSpace(width, depth, current.height),
+          calibration: current.calibration,
+        }
+        notes.push('尺寸已改，柱子已清空，入口重置为前边整边')
+      }
+      if (input.height_mm) space = { ...space, height: roundM(input.height_mm / 1000) }
+      if (input.entrance) {
+        if (!isRectangle(space)) {
+          throw new AppError('VALIDATION_FAILED', '只有矩形空间可以这样设置入口，请在工作台里修改')
+        }
+        space = {
+          ...space,
+          entrances: [
+            entranceOn(space, input.entrance.side, (input.entrance.width_mm ?? 0) / 1000),
+          ],
+        }
+      }
+      if (input.add_column) {
+        const half = (input.add_column.size_mm ?? 400) / 2000
+        const cx = input.add_column.cx_mm / 1000
+        const cz = input.add_column.cz_mm / 1000
+        const polygon: [number, number][] = [
+          [roundM(cx - half), roundM(cz - half)],
+          [roundM(cx + half), roundM(cz - half)],
+          [roundM(cx + half), roundM(cz + half)],
+          [roundM(cx - half), roundM(cz + half)],
+        ]
+        space = {
+          ...space,
+          obstacles: [...space.obstacles, { kind: 'column', polygon, height: null, label: '柱子' }],
+        }
+      }
+      const name = freshName(
+        '空间 · Agent',
+        await namesUnder(tools.db, tools.project.id, tools.spaceNodeId),
+      )
+      const created = await createNode(
+        tools.db,
+        tools.ctx,
+        tools.project.id,
+        { parentId: tools.spaceNodeId, kind: 'space', name, space },
+        { origin: 'agent' },
+      )
+      return {
+        nodeId: created.node.id,
+        result: {
+          done: '已修改空间，生成新的空间节点（原空间与方案不变）',
+          nodeId: created.node.id,
+          nodeName: name,
+          notes,
+          space: describeSpace(created.node.space ?? space),
+          issues: created.issues.map((i) => i.message),
+        },
+      }
+    },
+  }),
+  tool({
+    name: 'list_views',
+    description: '列出当前白模或渲染节点的视角（相机位置与目标，毫米；默认 8 个）。',
+    schema: z.object({}),
+    run: async (tools) => {
+      const node = requireViewNode(tools)
+      const list = await listCameras(tools.db, tools.ctx, node.id, false)
+      return { result: { views: list.cameras.map(describeCamera) } }
+    },
+  }),
+  tool({
+    name: 'add_view',
+    description:
+      '给当前白模或渲染节点增加一个视角：across 0–1 从左到右，along 0–1 从后墙到入口（大于 1 在店外），height 为相机高度占平面长边的倍数（俯瞰约 1，平视约 0.3）；相机看向店中心。可撤销。',
+    schema: z.object({
+      name: z.string().trim().min(1).max(40),
+      across: z.number().min(-1).max(2),
+      along: z.number().min(-1).max(2),
+      height: z.number().min(0.1).max(3).optional(),
+      fovDeg: z.number().min(10).max(120).optional(),
+    }),
+    run: async (tools, input) => {
+      const node = requireViewNode(tools)
+      const space = requireSpace(tools)
+      const f = sceneFrame(space)
+      const a = (input.across - 0.5) * f.width
+      const b = (input.along - 0.5) * f.depth
+      const span = Math.max(f.width, f.depth)
+      const camera = await addCamera(tools.db, tools.ctx, node.id, {
+        name: input.name,
+        position: [
+          roundM(f.center[0] + f.right[0] * a + f.front[0] * b),
+          roundM(span * (input.height ?? 1)),
+          roundM(f.center[1] + f.right[1] * a + f.front[1] * b),
+        ],
+        target: [roundM(f.center[0]), roundM(space.height * 0.25), roundM(f.center[1])],
+        fovDeg: input.fovDeg ?? 48,
+      })
+      return {
+        result: {
+          done: `已添加视角「${input.name}」`,
+          cameraId: camera.id,
+          view: describeCamera(camera),
+        },
+      }
+    },
+  }),
+  tool({
+    name: 'remove_view',
+    description: '删除当前白模或渲染节点的一个视角（可撤销恢复）。',
+    schema: z.object({ cameraId: z.string() }),
+    run: async (tools, input) => {
+      const node = requireViewNode(tools)
+      const list = await listCameras(tools.db, tools.ctx, node.id, false)
+      if (!list.cameras.some((c) => c.id === input.cameraId)) {
+        throw new AppError('VALIDATION_FAILED', '当前节点没有这个视角')
+      }
+      const camera = await setCameraDeleted(tools.db, tools.ctx, input.cameraId, true)
+      return {
+        result: { done: `已删除视角「${camera.camera.name}」`, restoreCameraId: camera.id },
       }
     },
   }),
