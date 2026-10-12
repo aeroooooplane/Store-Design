@@ -1,11 +1,17 @@
-import { useDeferredValue, useState } from 'react'
+import { useDeferredValue, useRef, useState } from 'react'
 import { Link } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
 import { formatDateTime } from '../../lib/format.ts'
 import { CreateProjectForm } from './CreateProjectForm.tsx'
-import { PAGE_SIZE, useProjectList, useSetProjectDeleted } from './queries.ts'
+import {
+  PAGE_SIZE,
+  projectExportUrl,
+  useImportProject,
+  useProjectList,
+  useSetProjectDeleted,
+} from './queries.ts'
 import type { ProjectListParams } from './queries.ts'
 
 const STATUS_TABS: { value: ProjectListParams['status']; label: string }[] = [
@@ -20,6 +26,9 @@ export function ProjectListPage() {
   const q = useDeferredValue(search)
   const list = useProjectList({ q, status, page })
   const setDeleted = useSetProjectDeleted()
+  const importProject = useImportProject()
+  const fileInput = useRef<HTMLInputElement>(null)
+  const imported = importProject.data
 
   const total = list.data?.total ?? 0
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
@@ -28,7 +37,10 @@ export function ProjectListPage() {
     <main className="page">
       <header className="page-header">
         <h1>门店空间设计工作台</h1>
-        <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
+        <span className="page-header-end">
+          <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
+          <Link to="/settings">设置</Link>
+        </span>
       </header>
 
       <CreateProjectForm />
@@ -49,6 +61,28 @@ export function ProjectListPage() {
             </button>
           ))}
         </div>
+        <span className="toolbar-end">
+          <input
+            ref={fileInput}
+            type="file"
+            accept=".json,application/json"
+            hidden
+            aria-label="选择项目文件"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              if (file) importProject.mutate(file)
+              e.target.value = ''
+            }}
+          />
+          <button
+            type="button"
+            title="导入本系统导出的项目文件，或旧版工作台的备份"
+            disabled={importProject.isPending}
+            onClick={() => fileInput.current?.click()}
+          >
+            {importProject.isPending ? '正在导入…' : '导入项目'}
+          </button>
+        </span>
         <input
           type="search"
           aria-label="按名称搜索"
@@ -61,7 +95,22 @@ export function ProjectListPage() {
         />
       </div>
 
-      <ErrorMessage error={list.error ?? setDeleted.error} />
+      <ErrorMessage error={list.error ?? setDeleted.error ?? importProject.error} />
+
+      {imported && (
+        <div className="notice" role="status">
+          已导入为新项目「{imported.project.name}」（{imported.nodesImported} 个节点
+          {imported.draftImported ? '，含草稿' : ''}）。
+          <Link to={`/projects/${imported.project.id}`}>打开</Link>
+          {imported.warnings.length > 0 && (
+            <ul className="import-warnings">
+              {imported.warnings.map((warning) => (
+                <li key={warning}>{warning}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
 
       {list.isPending ? (
         <p className="notice">正在加载…</p>
@@ -95,6 +144,14 @@ export function ProjectListPage() {
                       <Link className="button primary" to={`/projects/${project.id}`}>
                         打开
                       </Link>
+                      <a
+                        className="button"
+                        href={projectExportUrl(project.id)}
+                        download
+                        title="导出为项目文件（含全部节点与草稿），可备份或在其他电脑导入"
+                      >
+                        导出
+                      </a>
                       <button
                         type="button"
                         className="icon-button"

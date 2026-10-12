@@ -13986,6 +13986,315 @@
           }
         }
       }
+    },
+    "/api/v1/ai": {
+      "get": {
+        "summary": "可用模型、当前设置与今日额度",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "models": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "label": {
+                            "type": "string"
+                          },
+                          "provider": {
+                            "type": "string",
+                            "enum": [
+                              "local",
+                              "deepseek",
+                              "dashscope",
+                              "anthropic"
+                            ]
+                          },
+                          "purposes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "enum": [
+                                "agent",
+                                "recognition"
+                              ]
+                            }
+                          },
+                          "vision": {
+                            "type": "boolean"
+                          },
+                          "overseas": {
+                            "type": "boolean"
+                          },
+                          "price": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "inputCny": {
+                                    "type": "number"
+                                  },
+                                  "outputCny": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "inputCny",
+                                  "outputCny"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "provider",
+                          "purposes",
+                          "vision",
+                          "overseas",
+                          "price"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "settings": {
+                      "type": "object",
+                      "properties": {
+                        "agentModel": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "recognitionModel": {
+                          "type": "string"
+                        },
+                        "recognitionFallback": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "agentModel",
+                        "recognitionModel",
+                        "recognitionFallback"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "budget": {
+                      "type": "object",
+                      "properties": {
+                        "day": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                        },
+                        "limitCny": {
+                          "type": "number"
+                        },
+                        "spentCny": {
+                          "type": "number"
+                        },
+                        "remainingCny": {
+                          "type": "number"
+                        },
+                        "exceeded": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "day",
+                        "limitCny",
+                        "spentCny",
+                        "remainingCny",
+                        "exceeded"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "models",
+                    "settings",
+                    "budget"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/settings": {
+      "patch": {
+        "summary": "修改 Agent 与平面识别所用模型（全站统一）",
+        "tags": [
+          "ai"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "agentModel": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "recognitionModel": {
+                    "type": "string"
+                  },
+                  "recognitionFallback": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "agentModel": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "recognitionModel": {
+                      "type": "string"
+                    },
+                    "recognitionFallback": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "agentModel",
+                    "recognitionModel",
+                    "recognitionFallback"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/ai/budget": {
+      "get": {
+        "summary": "今日 AI 额度（北京时间 0 点重置）",
+        "tags": [
+          "ai"
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "day": {
+                      "type": "string",
+                      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                    },
+                    "limitCny": {
+                      "type": "number"
+                    },
+                    "spentCny": {
+                      "type": "number"
+                    },
+                    "remainingCny": {
+                      "type": "number"
+                    },
+                    "exceeded": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "day",
+                    "limitCny",
+                    "spentCny",
+                    "remainingCny",
+                    "exceeded"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "tags": [

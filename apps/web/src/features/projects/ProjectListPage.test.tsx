@@ -57,6 +57,20 @@ function fakeApi(initial: Project[]) {
       projects.unshift(created)
       return json(201, created)
     }
+    if (request.method === 'POST' && url.pathname === '/api/v1/projects/import') {
+      const created = project({
+        id: '33333333-3333-4333-8333-333333333333',
+        name: '旧版备份项目',
+      })
+      projects.unshift(created)
+      return json(201, {
+        project: created,
+        nodesImported: 3,
+        draftImported: true,
+        format: 'legacy',
+        warnings: ['道具「旧款柜」与当前模型不符，已改为占位'],
+      })
+    }
     if (request.method === 'DELETE') {
       const target = projects.find((p) => url.pathname.endsWith(p.id))
       if (!target)
@@ -170,5 +184,42 @@ describe('ProjectListPage', () => {
       path: '/api/v1/projects/11111111-1111-4111-8111-111111111111',
       ifMatch: '"1"',
     })
+  })
+
+  it('imports a project file and lists what was converted', async () => {
+    renderPage()
+    await screen.findByText('南京德基')
+    const file = new File([JSON.stringify({ schemaVersion: 2, projects: [] })], 'backup.json', {
+      type: 'application/json',
+    })
+    fireEvent.change(screen.getByLabelText('选择项目文件'), { target: { files: [file] } })
+
+    expect(await screen.findByText(/已导入为新项目「旧版备份项目」/)).toBeTruthy()
+    expect(screen.getByText('道具「旧款柜」与当前模型不符，已改为占位')).toBeTruthy()
+    const post = server.calls.find((c) => c.path === '/api/v1/projects/import')
+    expect(post?.body).toEqual({ data: { schemaVersion: 2, projects: [] } })
+    const notice = screen.getByRole('status')
+    expect(within(notice).getByRole('link', { name: '打开' }).getAttribute('href')).toBe(
+      '/projects/33333333-3333-4333-8333-333333333333',
+    )
+  })
+
+  it('refuses a file that is not JSON without calling the API', async () => {
+    renderPage()
+    await screen.findByText('南京德基')
+    const file = new File(['不是 JSON'], 'x.json', { type: 'application/json' })
+    fireEvent.change(screen.getByLabelText('选择项目文件'), { target: { files: [file] } })
+
+    expect(await screen.findByText('这不是有效的项目文件（不是 JSON）')).toBeTruthy()
+    expect(server.calls.some((c) => c.path.endsWith('/import'))).toBe(false)
+  })
+
+  it('links every active project to its export', async () => {
+    renderPage()
+    const row = (await screen.findByText('南京德基')).closest('tr') as HTMLElement
+    const link = within(row).getByRole('link', { name: '导出' })
+    expect(link.getAttribute('href')).toBe(
+      '/api/v1/projects/11111111-1111-4111-8111-111111111111/export',
+    )
   })
 })

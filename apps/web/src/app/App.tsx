@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Link, createBrowserRouter, RouterProvider } from 'react-router'
 import { ProjectListPage } from '../features/projects/ProjectListPage.tsx'
 import { ProjectPage } from '../features/projects/ProjectPage.tsx'
+import { SettingsPage } from '../features/settings/SettingsPage.tsx'
 
 function NotFoundPage() {
   return (
@@ -17,6 +18,7 @@ function NotFoundPage() {
 const router = createBrowserRouter([
   { path: '/', element: <ProjectListPage /> },
   { path: '/projects/:projectId', element: <ProjectPage /> },
+  { path: '/settings', element: <SettingsPage /> },
   { path: '*', element: <NotFoundPage /> },
 ])
 
