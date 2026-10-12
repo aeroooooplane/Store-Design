@@ -119,8 +119,8 @@ async function freeFolderName(
 
 /**
  * Builds the two PDFs of a render node (双PDF交付规则), stores them with a ZIP of the whole
- * delivery folder, and writes that folder to the archive. Every view must have a current white
- * and material image: a delivery never mixes images of different layouts or poses.
+ * delivery folder, and writes that folder to the archive. Every view must have a current
+ * material image: a delivery never mixes images of different layouts or poses.
  */
 export async function createDelivery(
   db: Database,
@@ -140,11 +140,9 @@ export async function createDelivery(
   let missing = 0
   let stale = 0
   for (const view of context.cameras) {
-    for (const mode of ['white', 'material'] as const) {
-      const entry = newest.get(`${view.id}:${mode}`)
-      if (!entry) missing++
-      else if (entry.image.stale) stale++
-    }
+    const entry = newest.get(`${view.id}:material`)
+    if (!entry) missing++
+    else if (entry.image.stale) stale++
   }
   if (missing || stale) {
     throw new AppError(
@@ -180,13 +178,11 @@ export async function createDelivery(
   )
   const views = await Promise.all(
     context.cameras.map(async (view, index) => {
-      const pick = async (mode: 'white' | 'material') => {
-        const entry = newest.get(`${view.id}:${mode}`)
-        const row = entry ? fileRows.get(entry.row.fileId) : undefined
-        if (!entry || !row) throw new Error(`render file missing for ${view.id} ${mode}`)
-        return { renderId: entry.row.id, row, data: await readStored(dirs.roots, row) }
-      }
-      return { no: index + 1, view, material: await pick('material'), white: await pick('white') }
+      const entry = newest.get(`${view.id}:material`)
+      const row = entry ? fileRows.get(entry.row.fileId) : undefined
+      if (!entry || !row) throw new Error(`render file missing for ${view.id}`)
+      const material = { renderId: entry.row.id, row, data: await readStored(dirs.roots, row) }
+      return { no: index + 1, view, material }
     }),
   )
 
@@ -202,7 +198,7 @@ export async function createDelivery(
       `面积 ${area.toFixed(1)} ㎡，外包尺寸 ${mm(Math.max(...xs) - Math.min(...xs))} × ${mm(Math.max(...zs) - Math.min(...zs))} mm，层高 ${mm(space.height)} mm`,
       `道具 ${layout.items.length} 件，${legend.entries.length} 种（编号见图例）`,
       `方案：${[...steps, node.name].join(' → ')}`,
-      `效果图 ${views.length} 个视角，与白模同一相机`,
+      `效果图 ${views.length} 个视角`,
     ],
     notes: notesFor(
       space,
@@ -215,7 +211,6 @@ export async function createDelivery(
         no: v.no,
         name: v.view.camera.name,
         material: await sharp(v.material.data).jpeg({ quality: 90, mozjpeg: true }).toBuffer(),
-        white: await sharp(v.white.data).jpeg({ quality: 85, mozjpeg: true }).toBuffer(),
       })),
     ),
   }
@@ -225,8 +220,8 @@ export async function createDelivery(
     deliveryFolderName(project.name, project.shopType, area, date, revision),
   )
   const names = deliveryFileNames(project.name)
-  const viewFile = (v: (typeof views)[number], suffix = '') =>
-    `${pad(v.no)}-${safeFileName(v.view.camera.name)}${suffix}.png`
+  const viewFile = (v: (typeof views)[number]) =>
+    `${pad(v.no)}-${safeFileName(v.view.camera.name)}.png`
   const exported = await exportProject(db, ctx, project.id)
   const record = {
     format: 'store-design-delivery',
@@ -248,7 +243,6 @@ export async function createDelivery(
       cameraId: v.view.id,
       name: v.view.camera.name,
       material: { renderId: v.material.renderId, sha256: v.material.row.sha256 },
-      white: { renderId: v.white.renderId, sha256: v.white.row.sha256 },
     })),
     pages: { full: full.pages, show: show.pages },
     legend: legend.entries,
@@ -266,9 +260,8 @@ export async function createDelivery(
       ? ([['01_平面图/平面图.svg', Buffer.from(input.planSvg, 'utf8')]] as [string, Uint8Array][])
       : []),
     ...views.map((v) => [`02_效果图/${viewFile(v)}`, v.material.data] as [string, Uint8Array]),
-    ...views.map((v) => [`03_总览/${viewFile(v, '-白模')}`, v.white.data] as [string, Uint8Array]),
-    ['04_源文件与记录/项目.json', Buffer.from(`${JSON.stringify(exported, null, 2)}\n`)],
-    ['04_源文件与记录/交付记录.json', Buffer.from(`${JSON.stringify(record, null, 2)}\n`)],
+    ['03_源文件与记录/项目.json', Buffer.from(`${JSON.stringify(exported, null, 2)}\n`)],
+    ['03_源文件与记录/交付记录.json', Buffer.from(`${JSON.stringify(record, null, 2)}\n`)],
   ]
   // Pictures and PDFs are compressed already.
   const zip = zipSync(

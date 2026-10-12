@@ -10,6 +10,12 @@ export const MAX_RENDER_BYTES = 16 * 1024 * 1024
 export const RENDER_MODE_LABELS = { white: '白模', material: '材质' } as const
 
 /**
+ * The images a render node is made of. White-model images (mode `white`) are no longer
+ * rendered (2026-10-12): older ones stay readable but are not listed, required or delivered.
+ */
+export const RENDERED_MODES = ['material'] as const
+
+/**
  * The newest image of one view in one mode. `stale` means the layout, the models or the
  * camera pose changed since it was made; the image stays available until it is re-rendered.
  */

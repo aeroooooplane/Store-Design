@@ -5,7 +5,7 @@ import { and, asc, desc, eq, isNull } from 'drizzle-orm'
 import { zipSync } from 'fflate'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { RENDER_MODE_LABELS } from '@store/shared'
+import { RENDER_MODE_LABELS, RENDERED_MODES } from '@store/shared'
 import type { Camera, NodeRenderList, RenderImage, RenderMode } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
@@ -101,7 +101,7 @@ export async function renderContext(db: Database, node: NodeRow): Promise<Render
   }
 }
 
-/** Newest image per active view and mode, in view order, each marked current or stale. */
+/** Newest material image per active view, in view order, each marked current or stale. */
 export async function newestImages(
   db: Database,
   context: RenderContext,
@@ -118,7 +118,7 @@ export async function newestImages(
   }
   const result: { row: RenderRow; image: RenderImage; camera: Camera; sort: number }[] = []
   context.cameras.forEach((view, sort) => {
-    for (const mode of ['white', 'material'] as const) {
+    for (const mode of RENDERED_MODES) {
       const row = newest.get(`${view.id}:${mode}`)
       if (!row) continue
       const stale =

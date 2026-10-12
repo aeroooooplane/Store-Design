@@ -47,7 +47,7 @@ async function inject(method: 'GET' | 'POST' | 'PATCH', url: string, payload?: o
   return t.app.inject({ method, url: `/api/v1${url}`, ...(payload ? { payload } : {}) })
 }
 
-/** A render node whose eight views all have a white and a material image. */
+/** A render node whose eight views all have a material image. */
 async function renderedNode(name: string) {
   const project = (
     await inject('POST', '/projects', { name, shopType: 'side_hall' })
@@ -72,15 +72,13 @@ async function renderedNode(name: string) {
   const cameras = (await inject('GET', `/nodes/${render.id}/cameras`)).json<NodeCameraList>()
     .cameras
   for (const [i, camera] of cameras.entries()) {
-    for (const mode of ['white', 'material']) {
-      const response = await t.app.inject({
-        method: 'PUT',
-        url: `/api/v1/nodes/${render.id}/renders/${camera.id}/${mode}`,
-        headers: { 'content-type': 'image/png' },
-        payload: png(150, 100, mode === 'white' ? 230 : 40 + i * 20),
-      })
-      expect(response.statusCode).toBe(201)
-    }
+    const response = await t.app.inject({
+      method: 'PUT',
+      url: `/api/v1/nodes/${render.id}/renders/${camera.id}/material`,
+      headers: { 'content-type': 'image/png' },
+      payload: png(150, 100, 40 + i * 20),
+    })
+    expect(response.statusCode).toBe(201)
   }
   return { project, render, cameras }
 }
@@ -101,9 +99,9 @@ describe('deliveries', () => {
     expect(delivery.folderName).toBe(`影石西安赛高世纪金花照材店_边厅店_48.0㎡_${date}`)
     expect(delivery.fullPdf.name).toBe('00-影石西安赛高世纪金花照材店完整方案.pdf')
     expect(delivery.showPdf.name).toBe('影石西安赛高世纪金花照材店方案.pdf')
-    // 完整版: plan, overview, one page per view, white-model sheet. 展示版: plan + one per view.
+    // 完整版: plan, overview, one page per view. 展示版: plan + one per view.
     expect(delivery.views).toBe(cameras.length)
-    expect(delivery.pages).toEqual({ full: cameras.length + 3, show: cameras.length + 1 })
+    expect(delivery.pages).toEqual({ full: cameras.length + 2, show: cameras.length + 1 })
 
     for (const file of [delivery.fullPdf, delivery.showPdf]) {
       const pdf = await t.app.inject({ method: 'GET', url: file.url })
@@ -120,9 +118,9 @@ describe('deliveries', () => {
     expect(entries).toContain(`${root}01_平面图/平面图.png`)
     expect(entries).toContain(`${root}01_平面图/平面图.svg`)
     expect(entries).toContain(`${root}02_效果图/01-正面鸟瞰.png`)
-    expect(entries).toContain(`${root}03_总览/01-正面鸟瞰-白模.png`)
-    expect(entries).toContain(`${root}04_源文件与记录/交付记录.json`)
-    expect(entries).toContain(`${root}04_源文件与记录/项目.json`)
+    expect(entries.some((e) => e.includes('白模'))).toBe(false)
+    expect(entries).toContain(`${root}03_源文件与记录/交付记录.json`)
+    expect(entries).toContain(`${root}03_源文件与记录/项目.json`)
 
     expect(delivery.archivePath).toBe(path.join(archive, delivery.folderName))
     expect(existsSync(path.join(archive, delivery.folderName, delivery.fullPdf.name))).toBe(true)
@@ -151,7 +149,7 @@ describe('deliveries', () => {
     expect(stale.statusCode).toBe(409)
     expect(stale.json<{ error: { details: unknown } }>().error.details).toEqual({
       missing: 0,
-      stale: 2,
+      stale: 1,
     })
 
     const { render: other } = await renderedNode('平面测试')

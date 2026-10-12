@@ -1,7 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { RENDER_MODE_LABELS, RENDER_SIZE, deliveryLegend } from '@store/shared'
+import { RENDERED_MODES, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
   Asset,
   Delivery,
@@ -35,12 +35,12 @@ const Viewer3D = lazy(() =>
   import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
 )
 
-/** White first: the material look stays on screen, so only the white pass switches looks. */
-const MODES: readonly RenderMode[] = ['white', 'material']
+const MODES: readonly RenderMode[] = RENDERED_MODES
 const NO_FLAGS: ReadonlySet<string> = new Set()
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
-type Show = RenderMode | '3d'
+/** The 3D material view (rotatable) or the rendered image of the chosen view. */
+type Show = '3d' | 'image'
 type Target = { camera: NodeCamera; mode: RenderMode }
 
 function dataUrlToBlob(url: string): Blob {
@@ -59,9 +59,10 @@ interface RenderStageProps {
 }
 
 /**
- * A render node: every view as a white-model and a material image, rendered in the browser
- * from one scene and camera (only the materials change) and kept under this node. Missing
- * images render on opening; images made before the models or views changed are marked stale.
+ * A render node: the shop in the material look, rotatable in 3D, and one material image per
+ * view rendered in the browser from that scene and kept under this node (white-model images
+ * are no longer made). Missing images render on opening; images made before the models or
+ * views changed are marked stale.
  */
 export function RenderStage({ left, project, node, space, assets }: RenderStageProps) {
   const cameras = useCameras(node.id)
@@ -69,7 +70,8 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const client = useQueryClient()
   const viewer = useRef<Viewer3DHandle>(null)
   const [viewerReady, setViewerReady] = useState(false)
-  const [show, setShow] = useState<Show>('material')
+  const [show, setShow] = useState<Show>('3d')
+  const posed = useRef(false)
   const [chosen, setChosen] = useState<string | null>(null)
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
   const [error, setError] = useState<unknown>(null)
@@ -85,7 +87,12 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     [cameras.data],
   )
   const images = useMemo(
-    () => new Map((renders.data?.images ?? []).map((i) => [`${i.cameraId}:${i.mode}`, i])),
+    () =>
+      new Map(
+        (renders.data?.images ?? [])
+          .filter((i) => MODES.includes(i.mode))
+          .map((i) => [`${i.cameraId}:${i.mode}`, i]),
+      ),
     [renders.data],
   )
   const imageOf = (cameraId: string, mode: RenderMode): RenderImage | undefined =>
@@ -129,6 +136,13 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     }
   }
 
+  // The 3D view opens at the chosen view, once the scene and the views are there.
+  useEffect(() => {
+    if (posed.current || !viewerReady || !selected) return
+    posed.current = true
+    viewer.current?.showView(selected.camera)
+  })
+
   // Opening a render node renders whatever is still missing, once.
   useEffect(() => {
     if (started.current || !viewerReady || !cameras.data || !renders.data) return
@@ -156,8 +170,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     if (show === '3d') viewer.current?.showView(camera.camera)
   }
 
-  const shownMode: RenderMode = show === 'white' ? 'white' : 'material'
-  const mainImage = selected && show !== '3d' ? imageOf(selected.id, show) : undefined
+  const mainImage = selected && show === 'image' ? imageOf(selected.id, 'material') : undefined
   const busy = progress !== null
   const delivering = exporting || createDelivery.isPending
 
@@ -171,7 +184,12 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
           </h2>
           <div className="toolbar">
             <div className="tabs" role="group" aria-label="显示">
-              {(['material', 'white', '3d'] as const).map((mode) => (
+              {(
+                [
+                  ['3d', '三维查看'],
+                  ['image', '渲染图'],
+                ] as const
+              ).map(([mode, label]) => (
                 <button
                   key={mode}
                   type="button"
@@ -181,11 +199,12 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                     if (mode === '3d' && selected) viewer.current?.showView(selected.camera)
                   }}
                 >
-                  {mode === '3d' ? '三维查看' : `${RENDER_MODE_LABELS[mode]}图`}
+                  {label}
                 </button>
               ))}
             </div>
             {selected && <span className="hint">{selected.camera.name}</span>}
+            {show === '3d' && <span className="hint">拖动旋转，滚轮缩放，右键平移</span>}
           </div>
           {/* The delivery plan, drawn off screen at a fixed width and exported as an image. */}
           <div className="delivery-plan" aria-hidden="true">
@@ -201,13 +220,13 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
           </div>
 
           <div className="render-main">
-            {show !== '3d' && (
+            {show === 'image' && (
               <div className="render-image">
                 {mainImage ? (
                   <>
                     <img
                       src={mainImage.url}
-                      alt={`${selected?.camera.name ?? ''} ${RENDER_MODE_LABELS[show]}图`}
+                      alt={`${selected?.camera.name ?? ''} 材质图`}
                       width={mainImage.width}
                       height={mainImage.height}
                     />
@@ -231,7 +250,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   assets={assets}
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
-                  look={show === 'white' ? 'white' : 'material'}
+                  look="material"
                   siStyle={siStyle}
                   onSelect={() => undefined}
                   onReady={() => setViewerReady(true)}
@@ -243,7 +262,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
 
           <ol className="render-strip" aria-label="视角">
             {views.map((camera) => {
-              const image = imageOf(camera.id, shownMode)
+              const image = imageOf(camera.id, 'material')
               return (
                 <li key={camera.id}>
                   <button
@@ -286,7 +305,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               first={[
                 {
                   label: '重新渲染',
-                  title: '按当前模型与视角重新渲染全部白模图和材质图',
+                  title: '按当前模型与视角重新渲染全部材质图',
                   onClick: () => void render(all),
                   disabled: busy || !viewerReady || !all.length,
                 },
@@ -308,9 +327,9 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               }}
               hint={
                 <>
-                  已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张白模图、一张材质图（
+                  已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张材质图（
                   {RENDER_SIZE.width}×{RENDER_SIZE.height}
-                  ），同一场景同一相机，只切换材质。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到它的白模。
+                  ），与三维查看同一场景。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到它的白模。
                 </>
               }
             />

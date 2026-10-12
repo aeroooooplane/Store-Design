@@ -26,7 +26,6 @@ export interface DeliveryView {
   no: number
   name: string
   material: Buffer
-  white: Buffer
 }
 
 export interface DeliveryContent {
@@ -270,8 +269,8 @@ function gridPage(
 const viewTitle = (view: DeliveryView) => `${String(view.no).padStart(2, '0')} ${view.name}`
 
 /**
- * 完整版: plan page with legend, facts and notes; material overview; one page per material view;
- * white-model check sheet (双PDF交付规则).
+ * 完整版: plan page with legend, facts and notes; material overview; one page per material view
+ * (双PDF交付规则). White-model images are no longer rendered, so there is no white-model sheet.
  */
 export async function fullPdf(content: DeliveryContent): Promise<PdfResult> {
   const doc = newDocument(`${content.title}完整方案`)
@@ -279,7 +278,6 @@ export async function fullPdf(content: DeliveryContent): Promise<PdfResult> {
   const views = content.views.map((v) => ({
     ...v,
     material: open(doc, v.material),
-    white: open(doc, v.white),
   }))
   planPage(doc, content, true)
   pages.push({ kind: 'plan' })
@@ -293,13 +291,6 @@ export async function fullPdf(content: DeliveryContent): Promise<PdfResult> {
     viewPage(doc, view.material, `${content.title} · ${viewTitle(view)}`)
     pages.push({ kind: 'material', view: view.no })
   }
-  gridPage(
-    doc,
-    `${content.title} · 白模与校核`,
-    views.map((v) => ({ no: v.no, name: v.name, image: v.white })),
-    '白模图与效果图为同一场景、同一相机，只切换材质',
-  )
-  pages.push({ kind: 'white' })
   return { data: await finish(doc, `${content.title} · 完整方案 · ${content.date}`), pages }
 }
 

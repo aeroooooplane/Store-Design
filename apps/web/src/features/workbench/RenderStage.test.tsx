@@ -158,21 +158,21 @@ afterEach(() => {
 })
 
 describe('RenderStage', () => {
-  it('renders every missing view once, white first, and uploads PNGs', async () => {
+  it('renders the material image of every missing view once and uploads PNGs', async () => {
     const { uploads, fetchMock } = fakeApi([camera(0, '正面鸟瞰'), camera(1, '入口方向')], [])
     vi.stubGlobal('fetch', fetchMock)
     show()
 
-    await waitFor(() => expect(uploads).toHaveLength(4))
-    expect(looks).toEqual(['white', 'white', 'material', 'material'])
+    await waitFor(() => expect(uploads).toHaveLength(2))
+    expect(looks).toEqual(['material', 'material'])
     expect(uploads.every((u) => u.type === 'image/png')).toBe(true)
-    expect(uploads.map((u) => u.path.split('/').pop())).toEqual([
-      'white',
-      'white',
-      'material',
-      'material',
-    ])
-    expect(await screen.findByText(/已渲染 4\/4 张/)).toBeTruthy()
+    expect(uploads.map((u) => u.path.split('/').pop())).toEqual(['material', 'material'])
+    expect(await screen.findByText(/已渲染 2\/2 张/)).toBeTruthy()
+    // Only the 3D view and the rendered image: no white-model images any more.
+    expect(screen.getByRole('button', { name: '三维查看' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    expect(screen.queryByRole('button', { name: '白模图' })).toBeNull()
     expect(screen.getByRole('button', { name: '下载图片' })).toHaveProperty('disabled', false)
     // Every view current: the delivery can be made.
     expect(screen.getByRole('button', { name: '生成交付文件' })).toHaveProperty('disabled', false)
@@ -180,7 +180,7 @@ describe('RenderStage', () => {
 
   it('sends the numbered plan for the delivery and lists the files', async () => {
     const front = camera(0, '正面鸟瞰')
-    const images = [image(front.id, 'white'), image(front.id, 'material')]
+    const images = [image(front.id, 'material')]
     const { posted, fetchMock } = fakeApi([front], images)
     vi.stubGlobal('fetch', fetchMock)
     show()
@@ -203,6 +203,7 @@ describe('RenderStage', () => {
 
   it('marks stale images and does not re-render them on its own', async () => {
     const front = camera(0, '正面鸟瞰')
+    // An old white-model image is ignored.
     const images = [image(front.id, 'white'), image(front.id, 'material', true)]
     const { uploads, fetchMock } = fakeApi([front], images)
     vi.stubGlobal('fetch', fetchMock)
@@ -210,7 +211,8 @@ describe('RenderStage', () => {
 
     expect(await screen.findByText('1 张过期')).toBeTruthy()
     expect(screen.getByText('过期')).toBeTruthy()
-    expect(screen.getByText(/已渲染 1\/2 张/)).toBeTruthy()
+    expect(screen.getByText(/已渲染 0\/1 张/)).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: '渲染图' }))
     expect(screen.getByRole('img', { name: '正面鸟瞰 材质图' })).toBeTruthy()
     expect(uploads).toHaveLength(0)
     expect(looks).toEqual([])
