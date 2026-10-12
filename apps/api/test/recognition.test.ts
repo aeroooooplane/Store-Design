@@ -14,7 +14,12 @@ import {
   matchCatalog,
   sizeInLabel,
 } from '../src/modules/recognition/check.ts'
-import { parseAnswer } from '../src/modules/recognition/llm.ts'
+import {
+  LlmAnswerSchema,
+  answerToDraft,
+  parseAnswer,
+  toPixels,
+} from '../src/modules/recognition/llm.ts'
 import { dimensionMm, recognizeVector } from '../src/modules/recognition/local.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
@@ -51,6 +56,7 @@ const CATALOG: Asset[] = [
   asset('asset-2', '1.2米配件柜', 'accessory_cabinet', 1.2, 0.45),
   asset('asset-3', '1.6米配件柜', 'accessory_cabinet', 1.6, 0.45),
   asset('asset-4', '1.8米边桌配件柜', 'side_cabinet', 0.5, 1.8),
+  asset('asset-6', '1.8米配件边柜(H1.3米)', 'side_cabinet', 1.8, 0.721),
   { ...asset('asset-5', '1.8米亮脚中岛桌', 'island_table', 0.8, 1.8), siFamily: 'SI2.0' },
 ]
 
@@ -355,38 +361,122 @@ describe('recognizeVector', () => {
   })
 })
 
+describe('answers of a vision model', () => {
+  it('places millimetre answers on the picture by their anchors', () => {
+    // A 400 × 300 px picture of an 8000 × 6000 mm shop drawn edge to edge.
+    const { answer, scale } = toPixels(
+      LlmAnswerSchema.parse({
+        units: 'mm',
+        anchors: [
+          { mm: [0, 0], at: [0, 0] },
+          { mm: [8000, 6000], at: [1000, 1000] },
+        ],
+        dimensions: [
+          { mm: 8000, a: [0, 0], b: [8000, 0] },
+          { mm: 6000, a: [0, 0], b: [0, 6000] },
+        ],
+        boundary: [
+          [0, 0],
+          [8000, 0],
+          [8000, 6000],
+          [0, 6000],
+        ],
+        items: [{ label: '中岛桌', x: 2000, y: 2000, w: 1800, h: 1000 }],
+      }),
+      400,
+      300,
+    )
+    expect(scale).toMatchObject({ mmPerPixel: 20, method: 'dimension', verified: true })
+    expect(answer.boundary?.[2]).toEqual([400, 300])
+    expect(answer.items[0]).toMatchObject({ x: 100, y: 100, w: 90, h: 50 })
+    const draft = answerToDraft(answer, CATALOG, undefined, undefined, scale)
+    expect(draft.space?.boundary[2]).toEqual([8, 6])
+    expect(draft.items[0]).toMatchObject({ cx: 2.9, cz: 2.5 })
+  })
+
+  it('works the scale of relative answers out from what was read', () => {
+    expect(toPixels(LlmAnswerSchema.parse(LLM_ANSWER), 400, 300).scale).toMatchObject({
+      mmPerPixel: 20,
+      method: 'dimension',
+      verified: true,
+    })
+    // Without dimensions: sizes written beside props.
+    const sized = toPixels(
+      LlmAnswerSchema.parse({
+        items: [{ label: '边桌配件柜 01', x: 100, y: 100, w: 450, h: 125, size_mm: [1800, 500] }],
+      }),
+      400,
+      400,
+    )
+    expect(sized.scale).toMatchObject({ mmPerPixel: 10, method: 'item_label', verified: false })
+    expect(toPixels(LlmAnswerSchema.parse({}), 400, 400).scale).toBeNull()
+  })
+
+  it('matches the words on the plan with the written size before the pick of the model', () => {
+    const { answer, scale } = toPixels(
+      LlmAnswerSchema.parse({
+        units: 'mm',
+        anchors: [
+          { mm: [0, 0], at: [0, 0] },
+          { mm: [3600, 3600], at: [1000, 1000] },
+        ],
+        boundary: [
+          [0, 0],
+          [3600, 0],
+          [3600, 3600],
+          [0, 3600],
+        ],
+        items: [
+          {
+            label: '边桌配件柜 01',
+            x: 0,
+            y: 0,
+            w: 1800,
+            h: 500,
+            size_mm: [1800, 500],
+            catalog_name: '1.2米配件柜',
+          },
+        ],
+      }),
+      360,
+      360,
+    )
+    const draft = answerToDraft(answer, CATALOG, undefined, undefined, scale)
+    expect(draft.items[0]).toMatchObject({ assetId: 'asset-4', rotation: 90, w: 1.8, d: 0.5 })
+  })
+})
+
 describe('parseAnswer', () => {
   it('takes JSON out of fences and prose, and refuses anything else', () => {
     const answer = parseAnswer(
       '好的，结果如下：\n```json\n{"boundary": null, "items": [], "confidence": 0.4}\n```\n',
     )
-    expect(answer).toMatchObject({ boundary: null, confidence: 0.4, scale: { basis: 'none' } })
+    expect(answer).toMatchObject({ boundary: null, confidence: 0.4, dimensions: [] })
     expect(() => parseAnswer('看不清这张图')).toThrow('没有返回 JSON')
     expect(() => parseAnswer('{"items": "x"}')).toThrow('不符合约定格式')
   })
 })
 
+/** A model's answer for a 400 × 300 px picture, in relative coordinates (1000 = full side). */
 const LLM_ANSWER = {
-  scale: {
-    mm_per_pixel: 20,
-    basis: 'dimension',
-    reference: '总尺寸 8000 与 400 px 边',
-    cross_checked: true,
-  },
+  dimensions: [
+    { mm: 8000, a: [0, 0], b: [1000, 0] },
+    { mm: 6000, a: [0, 0], b: [0, 1000] },
+  ],
   boundary: [
     [0, 0],
-    [400, 0],
-    [400, 300],
-    [0, 300],
+    [1000, 0],
+    [1000, 1000],
+    [0, 1000],
   ],
-  entrances: [{ a: [150, 300], b: [250, 300], kind: 'main' }],
+  entrances: [{ a: [375, 1000], b: [625, 1000], kind: 'main' }],
   obstacles: [
     {
       polygon: [
         [0, 0],
-        [30, 0],
-        [30, 30],
-        [0, 30],
+        [75, 0],
+        [75, 100],
+        [0, 100],
       ],
       kind: 'column',
       label: '柱',
@@ -395,20 +485,20 @@ const LLM_ANSWER = {
   items: [
     {
       label: '中岛桌',
-      x: 100,
-      y: 100,
-      w: 90,
-      h: 50,
+      x: 250,
+      y: 1000 / 3,
+      w: 225,
+      h: 500 / 3,
       source: 'existing',
       catalog_name: '1.8米普通中岛桌',
       confidence: 0.9,
     },
     {
       label: '新增电子水牌',
-      x: 350,
-      y: 250,
-      w: 20,
-      h: 10,
+      x: 875,
+      y: 2500 / 3,
+      w: 50,
+      h: 100 / 3,
       source: 'requested',
       catalog_name: null,
       confidence: 0.6,

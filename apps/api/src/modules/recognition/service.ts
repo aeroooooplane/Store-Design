@@ -27,8 +27,7 @@ import { catalogAssets } from '../assets/service.ts'
 import { fileUrl } from '../files/routes.ts'
 import { createNode, requireActiveProject } from '../nodes/service.ts'
 import { checkDraft, failureReason } from './check.ts'
-import { answerToDraft, buildPrompt, parseAnswer } from './llm.ts'
-import type { LlmAnswer } from './llm.ts'
+import { RELATIVE, answerToDraft, buildPrompt, parseAnswer, toPixels } from './llm.ts'
 import { recognizeVector } from './local.ts'
 
 const { planUploads, projects, recognitionRuns, storedFiles } = schema
@@ -190,23 +189,6 @@ async function saveRun(db: Database, input: RunInput): Promise<RunRow> {
   return row
 }
 
-/** Multiplies every pixel in the model's answer: it saw a shrunken picture. */
-function rescaleAnswer(answer: LlmAnswer, k: number): LlmAnswer {
-  if (k === 1) return answer
-  const p = (pt: [number, number]): [number, number] => [pt[0] * k, pt[1] * k]
-  return {
-    ...answer,
-    scale: {
-      ...answer.scale,
-      mm_per_pixel: answer.scale.mm_per_pixel === null ? null : answer.scale.mm_per_pixel / k,
-    },
-    boundary: answer.boundary?.map(p) ?? null,
-    entrances: answer.entrances.map((e) => ({ ...e, a: p(e.a), b: p(e.b) })),
-    obstacles: answer.obstacles.map((o) => ({ ...o, polygon: o.polygon.map(p) })),
-    items: answer.items.map((i) => ({ ...i, x: i.x * k, y: i.y * k, w: i.w * k, h: i.h * k })),
-  }
-}
-
 async function recognizeWithModel(
   db: Database,
   config: AppConfig,
@@ -237,16 +219,18 @@ async function recognizeWithModel(
           .png()
           .toBuffer()
       : original
+  // The model answers in relative coordinates; the crop is given to it the same way.
+  const relative = (v: number, size: number) => (v / size) * RELATIVE
   const prompt = buildPrompt(
     [...catalog.values()],
-    request.crop && shrink < 1
+    request.crop
       ? {
-          x: request.crop.x * shrink,
-          y: request.crop.y * shrink,
-          w: request.crop.w * shrink,
-          h: request.crop.h * shrink,
+          x: relative(request.crop.x, upload.width),
+          y: relative(request.crop.y, upload.height),
+          w: relative(request.crop.w, upload.width),
+          h: relative(request.crop.h, upload.height),
         }
-      : request.crop,
+      : undefined,
   )
   const result = await chat(db, config, {
     purpose: 'recognition',
@@ -269,9 +253,9 @@ async function recognizeWithModel(
       },
     ],
   })
-  const answer = rescaleAnswer(parseAnswer(result.text), 1 / shrink)
+  const { answer, scale } = toPixels(parseAnswer(result.text), upload.width, upload.height)
   const draft = checkDraft(
-    answerToDraft(answer, [...catalog.values()], request.calibration, siStyle),
+    answerToDraft(answer, [...catalog.values()], request.calibration, siStyle, scale),
   )
   draft.notes.push(
     `模型 ${spec.label}，${result.tokensIn + result.tokensOut} token，${result.costCny.toFixed(4)} 元`,
