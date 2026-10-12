@@ -105,13 +105,15 @@ describe('renders', () => {
     const image = saved.json<RenderImage>()
     expect(image).toMatchObject({ cameraId: front.id, mode: 'material', width: 180, height: 120 })
     expect(image.stale).toBe(false)
-    expect((await upload(render.id, left.id, 'white', png(180, 120, 90))).statusCode).toBe(201)
+    expect((await upload(render.id, left.id, 'material', png(180, 120, 90))).statusCode).toBe(201)
+    // An old white-model image is still accepted but no longer listed.
+    expect((await upload(render.id, left.id, 'white', png(180, 120, 60))).statusCode).toBe(201)
 
-    // Listed in view order, newest per view and mode.
+    // Listed in view order, newest per view.
     const listed = await images(render.id)
     expect(listed.map((i) => [i.cameraId, i.mode])).toEqual([
       [front.id, 'material'],
-      [left.id, 'white'],
+      [left.id, 'material'],
     ])
     const file = await t.app.inject({ method: 'GET', url: image.url })
     expect(file.statusCode).toBe(200)
@@ -131,7 +133,7 @@ describe('renders', () => {
     const { render, cameras } = await renderNode()
     const [front] = cameras
     if (!front) throw new Error('views missing')
-    await upload(render.id, front.id, 'white', png(96, 64))
+    await upload(render.id, front.id, 'material', png(96, 64))
 
     await inject('PATCH', `/cameras/${front.id}`, { name: '门口看进去' })
     expect((await images(render.id))[0]?.stale).toBe(false)
@@ -139,7 +141,7 @@ describe('renders', () => {
     await inject('PATCH', `/cameras/${front.id}`, { fovDeg: 60 })
     expect((await images(render.id))[0]?.stale).toBe(true)
     // A new image for the new pose is current again.
-    await upload(render.id, front.id, 'white', png(96, 64, 10))
+    await upload(render.id, front.id, 'material', png(96, 64, 10))
     expect((await images(render.id))[0]?.stale).toBe(false)
   })
 
@@ -169,7 +171,7 @@ describe('renders', () => {
     expect(await images(white.id)).toEqual([])
   })
 
-  it('downloads the current images as a ZIP named by view and mode', async () => {
+  it('downloads the current material images as a ZIP named by view', async () => {
     const { render, cameras } = await renderNode()
     const empty = await inject('GET', `/nodes/${render.id}/renders/archive`)
     expect(empty.statusCode).toBe(409)
@@ -189,6 +191,7 @@ describe('renders', () => {
       '渲染图-渲染.zip',
     )
     const files = unzipSync(new Uint8Array(archive.rawPayload))
-    expect(Object.keys(files).sort()).toEqual(['01-正面鸟瞰-材质.png', '01-正面鸟瞰-白模.png'])
+    // Old white-model images are not downloaded either.
+    expect(Object.keys(files)).toEqual(['01-正面鸟瞰-材质.png'])
   })
 })
