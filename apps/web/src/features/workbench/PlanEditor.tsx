@@ -10,7 +10,14 @@ import {
 } from 'react'
 import type { KeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { checkAssetFit, mToMm, mmToM, validateLayout } from '@store/shared'
+import {
+  checkAssetFit,
+  mmToM,
+  mToMm,
+  siSwapName,
+  swapLayoutSi,
+  validateLayout,
+} from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -31,6 +38,7 @@ import { useAgentSelection } from '../agent/selection.ts'
 import { CameraPanel } from './CameraPanel.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
+import type { SiSwitch } from './Workbench.tsx'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { copyName, freshName, stageOf, stageParentId } from './tree.ts'
 import type { Stage } from './tree.ts'
@@ -67,6 +75,8 @@ interface PlanEditorProps {
   draft: Draft | null
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
+  /** Lets the SI switch on the project card swap the props of this step. */
+  onRegisterSiSwitch?: (swap: SiSwitch | null) => void
 }
 
 /** Curved arrow for undo (left) and redo (right). */
@@ -119,6 +129,7 @@ export function PlanEditor({
   draft,
   assets,
   onNodeCreated,
+  onRegisterSiSwitch,
 }: PlanEditorProps) {
   const client = useQueryClient()
   const create = useCreateNode(projectId)
@@ -252,16 +263,22 @@ export function PlanEditor({
     revision.current = null
   }
 
-  /** Creates a history node from the layout on screen (draft included), then drops the draft. */
-  function createFromLayout(input: {
-    kind: 'plan' | 'white' | 'render'
-    parentId: string
-    name: string
-    sourceNodeId?: string
-  }) {
+  /**
+   * Creates a history node from the layout on screen (draft included), or from the layout
+   * given, then drops the draft.
+   */
+  function createFromLayout(
+    input: {
+      kind: 'plan' | 'white' | 'render'
+      parentId: string
+      name: string
+      sourceNodeId?: string
+    },
+    layout: Layout = state.layout,
+  ) {
     setPaused(true)
     create.mutate(
-      { ...input, layout: state.layout, ...(input.kind === 'render' ? { siStyle } : {}) },
+      { ...input, layout, ...(input.kind === 'render' ? { siStyle } : {}) },
       {
         onSuccess: (created) => void finishDraft().then(() => onNodeCreated(created.node.id)),
         onError: () => setPaused(false),
@@ -284,6 +301,31 @@ export function PlanEditor({
       sourceNodeId: baseNode.id,
     })
   }
+
+  /**
+   * The SI style changed: a plan or white model is copied beside itself with every prop swapped
+   * to its counterpart (SI_SWAP); the original stays as it was.
+   */
+  function switchSi(style: SiStyle): string | null {
+    const parentId = stageParentId(nodes, baseNode)
+    if (!parentId || (stage !== 'plan' && stage !== 'white')) return null
+    const result = swapLayoutSi(state.layout, style, assetMap)
+    const kept = result.kept.length
+      ? `${[...new Set(result.kept)].join('、')} 没有 ${style} 对应款，保留原样。`
+      : ''
+    if (!result.swapped) {
+      return `已切换为 ${style}：当前${stage === 'plan' ? '方案' : '白模'}没有需要更换的软装道具。${kept}`
+    }
+    const name = freshName(siSwapName(baseNode.name, style), namesUnder(parentId))
+    createFromLayout({ kind: stage, parentId, name, sourceNodeId: baseNode.id }, result.layout)
+    return `已切换为 ${style}：另存为“${name}”，换了 ${result.swapped} 件道具，原节点保留。${kept}尺寸变化造成的越界或重叠见检查。`
+  }
+  const switchRef = useRef(switchSi)
+  switchRef.current = switchSi
+  useEffect(() => {
+    onRegisterSiSwitch?.((style) => switchRef.current(style))
+    return () => onRegisterSiSwitch?.(null)
+  }, [onRegisterSiSwitch])
 
   /** The next stage, one level down: plan → white model → render. */
   function advance() {

@@ -1,8 +1,17 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { Asset, DesignNode, Draft, NodeSummary, Project, ShopType, Space } from '@store/shared'
+import type {
+  Asset,
+  DesignNode,
+  Draft,
+  NodeSummary,
+  Project,
+  ShopType,
+  SiStyle,
+  Space,
+} from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import {
   deleteDraft,
@@ -27,6 +36,8 @@ import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
+/** Swaps the props of the step on screen to another SI style; says what it did, or null. */
+export type SiSwitch = (style: SiStyle) => string | null
 
 /** Where to land without an explicit choice: the draft's base, else the newest visible step. */
 export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string | null {
@@ -55,6 +66,12 @@ export function Workbench({ project }: { project: Project }) {
     nodeId: null,
     kind: 'view',
   })
+  // The plan editor registers how it swaps its props when the SI style changes.
+  const siSwitch = useRef<SiSwitch | null>(null)
+  const [siNotice, setSiNotice] = useState<string | null>(null)
+  const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
+    siSwitch.current = swap
+  }, [])
 
   const nodes = useMemo(() => tree.data?.nodes ?? [], [tree.data])
   const requested = params.get('node')
@@ -83,6 +100,13 @@ export function Workbench({ project }: { project: Project }) {
     setPanel({ nodeId, kind: 'view' })
   }
 
+  function siChanged(style: SiStyle) {
+    setSiNotice(
+      siSwitch.current?.(style) ??
+        `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`,
+    )
+  }
+
   const loadError = tree.error ?? draft.error ?? assets.error
   if (loadError) return <ErrorMessage error={loadError} />
   if (!tree.data || draft.data === undefined || !assets.data) {
@@ -92,7 +116,12 @@ export function Workbench({ project }: { project: Project }) {
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
   const left = (
     <>
-      <ProjectCard project={project} space={cardSpace.data?.space ?? null} />
+      <ProjectCard
+        project={project}
+        space={cardSpace.data?.space ?? null}
+        onSiChanged={siChanged}
+        notice={siNotice}
+      />
       <HistoryTree
         projectId={project.id}
         projectName={project.name}
@@ -133,6 +162,7 @@ export function Workbench({ project }: { project: Project }) {
       panel={activePanel}
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
       onSelect={select}
+      registerSiSwitch={registerSiSwitch}
     />
   ) : null
   return (
@@ -212,6 +242,7 @@ interface NodePanelProps {
   panel: Panel
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
+  registerSiSwitch: (swap: SiSwitch | null) => void
 }
 
 function NodePanel({
@@ -224,6 +255,7 @@ function NodePanel({
   panel,
   setPanel,
   onSelect,
+  registerSiSwitch,
 }: NodePanelProps) {
   const node = useNode(nodeId)
   const spaceNode = useNode(spaceAncestor(nodes, nodeId))
@@ -282,6 +314,7 @@ function NodePanel({
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}
+      onRegisterSiSwitch={registerSiSwitch}
     />
   )
 

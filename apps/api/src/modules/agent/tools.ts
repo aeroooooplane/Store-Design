@@ -12,6 +12,8 @@ import {
   rotationFacing,
   roundM,
   sceneFrame,
+  siSwapName,
+  swapLayoutSi,
   validateLayout,
 } from '@store/shared'
 import type {
@@ -573,7 +575,8 @@ export const TOOLS: AgentTool[] = [
   }),
   tool({
     name: 'set_style',
-    description: '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。',
+    description:
+      '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。当前在方案或白模阶段时，按映射表把软装道具换成新风格的对应款，另存为新节点，原节点保留。',
     schema: z.object({
       siStyle: z.enum(['SI1.0', 'SI2.0']).optional(),
       market: z.enum(['domestic', 'overseas']).optional(),
@@ -592,7 +595,46 @@ export const TOOLS: AgentTool[] = [
         },
       )
       tools.project = updated
-      return { result: { siStyle: updated.siStyle, market: updated.market } }
+      const node = tools.node
+      const stage = node?.kind === 'edit' ? 'plan' : node?.kind
+      if (
+        !input.siStyle ||
+        !node?.layout ||
+        !node.parentId ||
+        (stage !== 'plan' && stage !== 'white')
+      ) {
+        return { result: { siStyle: updated.siStyle, market: updated.market } }
+      }
+      // Same as the SI switch on the project card: the step is copied with its props swapped.
+      const swap = swapLayoutSi(node.layout, input.siStyle, tools.catalog)
+      const kept = [...new Set(swap.kept)]
+      if (!swap.swapped) {
+        return { result: { siStyle: updated.siStyle, market: updated.market, swapped: 0, kept } }
+      }
+      const name = freshName(
+        siSwapName(node.name, input.siStyle),
+        await namesUnder(tools.db, tools.project.id, node.parentId),
+      )
+      const created = await createNode(
+        tools.db,
+        tools.ctx,
+        tools.project.id,
+        { parentId: node.parentId, kind: stage, name, layout: swap.layout, sourceNodeId: node.id },
+        { origin: 'agent' },
+      )
+      return {
+        nodeId: created.node.id,
+        result: {
+          done: `已切换为 ${input.siStyle}，另存为「${name}」并换了 ${swap.swapped} 件道具`,
+          siStyle: updated.siStyle,
+          market: updated.market,
+          nodeId: created.node.id,
+          nodeName: name,
+          swapped: swap.swapped,
+          kept,
+          issues: created.issues.map((i) => i.message),
+        },
+      }
     },
   }),
   tool({
