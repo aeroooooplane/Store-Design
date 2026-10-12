@@ -55,7 +55,7 @@ async function whiteModel() {
     space: { ...rectangleSpace(8, 6, 3.2), entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }] },
   })
   const plan = await create({ parentId: space.id, kind: 'plan', name: '方案', layout })
-  const white = await create({ parentId: plan.id, kind: 'white', name: '白模确认', layout })
+  const white = await create({ parentId: plan.id, kind: 'white', name: '白模', layout })
   return { project, plan, white }
 }
 
@@ -133,7 +133,7 @@ describe('cameras', () => {
     const copy = await inject('POST', `/projects/${project.id}/nodes`, {
       parentId: plan.id,
       kind: 'white',
-      name: '白模确认 副本2',
+      name: '白模 副本2',
       sourceNodeId: white.id,
       layout,
     })

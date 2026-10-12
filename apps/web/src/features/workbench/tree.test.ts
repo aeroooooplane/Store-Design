@@ -110,7 +110,7 @@ describe('stages', () => {
   it('numbers copies and fresh names without clashing', () => {
     expect(copyName('方案 A', [])).toBe('方案 A 副本2')
     expect(copyName('方案 A 副本2', ['方案 A 副本2'])).toBe('方案 A 副本3')
-    expect(freshName('白模确认', [])).toBe('白模确认')
-    expect(freshName('白模确认', ['白模确认', '白模确认（2）'])).toBe('白模确认（3）')
+    expect(freshName('白模', [])).toBe('白模')
+    expect(freshName('白模', ['白模', '白模（2）'])).toBe('白模（3）')
   })
 })
