@@ -93,13 +93,20 @@ export function matchCatalog(
     }
   }
   const longSide = (a: Asset) => Math.max(a.footprint.w, a.footprint.d)
+  const shortSide = (a: Asset) => Math.min(a.footprint.w, a.footprint.d)
+  // Same length: the depth drawn tells them apart (1.8 m side cabinets 531 or 721 deep).
+  const drawnShort = drawnSize ? Math.min(drawnSize.w, drawnSize.d) : null
+  const depthGap = (a: Asset) => (drawnShort === null ? 0 : Math.abs(shortSide(a) - drawnShort))
   const size = sizeInLabel(name) ?? (drawnSize ? Math.max(drawnSize.w, drawnSize.d) : null)
   if (size !== null) {
     const tolerance = sizeInLabel(name) !== null ? 0.15 : 0.25
     const bySize = family
       .filter((a) => Math.abs(longSide(a) - size) <= tolerance)
       .sort(
-        (a, b) => rank(a) - rank(b) || Math.abs(longSide(a) - size) - Math.abs(longSide(b) - size),
+        (a, b) =>
+          rank(a) - rank(b) ||
+          Math.abs(longSide(a) - size) - Math.abs(longSide(b) - size) ||
+          depthGap(a) - depthGap(b),
       )
     if (bySize[0]) {
       return {
