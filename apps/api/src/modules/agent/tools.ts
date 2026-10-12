@@ -604,7 +604,7 @@ export const TOOLS: AgentTool[] = [
       if (!node || (node.kind !== 'plan' && node.kind !== 'edit')) {
         throw new AppError('INVALID_STATE', '只能从方案节点确认白模')
       }
-      const name = freshName('白模确认', await namesUnder(tools.db, tools.project.id, node.id))
+      const name = freshName('白模', await namesUnder(tools.db, tools.project.id, node.id))
       const created = await createNode(
         tools.db,
         tools.ctx,

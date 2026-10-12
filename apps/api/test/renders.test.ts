@@ -75,7 +75,7 @@ async function renderNode() {
     space: { ...rectangleSpace(8, 6, 3.2), entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }] },
   })
   const plan = await create({ parentId: space.id, kind: 'plan', name: '方案', layout })
-  const white = await create({ parentId: plan.id, kind: 'white', name: '白模确认', layout })
+  const white = await create({ parentId: plan.id, kind: 'white', name: '白模', layout })
   const render = await create({
     parentId: white.id,
     kind: 'render',

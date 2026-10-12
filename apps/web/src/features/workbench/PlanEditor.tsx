@@ -291,7 +291,7 @@ export function PlanEditor({
       createFromLayout({
         kind: 'white',
         parentId: baseNode.id,
-        name: freshName('白模确认', namesUnder(baseNode.id)),
+        name: freshName('白模', namesUnder(baseNode.id)),
       })
     } else if (stage === 'white') {
       createFromLayout({

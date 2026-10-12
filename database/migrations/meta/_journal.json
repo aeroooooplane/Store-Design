@@ -57,6 +57,13 @@
       "when": 1791775500176,
       "tag": "0007_agent",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791786403998,
+      "tag": "0008_white_node_name",
+      "breakpoints": true
     }
   ]
 }

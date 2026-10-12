@@ -43,9 +43,9 @@ export const nodeRoutes: FastifyPluginAsyncZod<{ db: Database }> = async (app, {
       config: writeLimit,
       schema: {
         tags: ['nodes'],
-        summary: '新建历史节点（空间、方案、编辑、白模确认、渲染）',
+        summary: '新建历史节点（空间、方案、编辑、白模、渲染）',
         description:
-          '布局中的模型必须存在且保持真实尺寸，否则 400。越界、重叠等问题随结果返回；白模确认与渲染节点不允许有错误级问题。',
+          '布局中的模型必须存在且保持真实尺寸，否则 400。越界、重叠等问题随结果返回；白模与渲染节点不允许有错误级问题。',
         params: ProjectParams,
         body: NodeCreateSchema,
         response: { 201: NodeCreatedSchema, ...errors },
