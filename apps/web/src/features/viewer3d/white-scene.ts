@@ -6,6 +6,7 @@ import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import type { GLTF } from 'three/addons/loaders/GLTFLoader.js'
 import { WALL_THICKNESS_M, defaultCameras, wallSegments } from '@store/shared'
 import type { Asset, Camera, LayoutItem, Point, ShopType, SiStyle, Space } from '@store/shared'
+import { separateBackLayers } from './back-layers.ts'
 import { RENDER_LOOK, disposeRoomMaterials, finishMaterial, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 
@@ -331,6 +332,8 @@ export class WhiteScene {
   /** Textured models with adjusted finishes; per scene because metals use its environment. */
   private readonly finishes = new Map<string, Promise<THREE.Object3D>>()
   private readonly finishedMaterials = new Map<THREE.Material, THREE.Material>()
+  /** Front-side-only copies of finished materials, for the two sides of SketchUp faces. */
+  private readonly frontMaterials = new Map<THREE.Material, THREE.Material>()
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas
@@ -688,6 +691,7 @@ export class WhiteScene {
     this.roomLooks.forEach(disposeRoomMaterials)
     // Finished materials are clones; their textures belong to the shared model cache.
     this.finishedMaterials.forEach((material) => material.dispose())
+    this.frontMaterials.forEach((material) => material.dispose())
     this.marks.children.forEach(disposeTree)
     this.scene.environment?.dispose()
     this.renderer.dispose()
@@ -764,12 +768,23 @@ export class WhiteScene {
           node.castShadow = true
           node.receiveShadow = true
         })
+        separateBackLayers(root, (material) => this.frontSided(material))
         return root
       })
       model.catch(() => this.finishes.delete(url))
       this.finishes.set(url, model)
     }
     return model
+  }
+
+  private frontSided(material: THREE.Material): THREE.Material {
+    let front = this.frontMaterials.get(material)
+    if (!front) {
+      front = material.clone()
+      front.side = THREE.FrontSide
+      this.frontMaterials.set(material, front)
+    }
+    return front
   }
 
   private removeItem(id: string) {
