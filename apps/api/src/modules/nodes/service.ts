@@ -3,6 +3,7 @@ import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import {
   MAX_NODES_PER_PROJECT,
+  STAGE_PARENT_KINDS,
   checkAssetFit,
   normalizeSpace,
   validateLayout,
@@ -142,11 +143,11 @@ export async function getNode(
   return toNode(row)
 }
 
-const STAGE_PARENTS: Partial<Record<NodeKind, { kinds: readonly string[]; message: string }>> = {
-  plan: { kinds: ['space'], message: '方案只能建在空间下' },
-  // 'edit' is the plan-level variant of earlier versions.
-  white: { kinds: ['plan', 'edit'], message: '白模只能建在方案下' },
-  render: { kinds: ['white'], message: '渲染只能建在白模下' },
+// Keyed by node kind, not stage: new 'edit' nodes are still accepted anywhere (see agent-quirks).
+const STAGE_PARENTS: Partial<Record<NodeKind, { kinds: readonly NodeKind[]; message: string }>> = {
+  plan: { kinds: STAGE_PARENT_KINDS.plan ?? [], message: '方案只能建在空间下' },
+  white: { kinds: STAGE_PARENT_KINDS.white ?? [], message: '白模只能建在方案下' },
+  render: { kinds: STAGE_PARENT_KINDS.render ?? [], message: '渲染只能建在白模下' },
 }
 
 /** Who made a node and what from; the API leaves this to the defaults (user / generator). */

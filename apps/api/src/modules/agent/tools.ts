@@ -4,8 +4,11 @@ import type { Database } from '@store/database'
 import {
   ITEM_FUNCTIONS,
   ITEM_FUNCTION_LABELS,
+  PLAN_STRATEGY_LABELS,
   SHOP_TYPE_LABELS,
+  STAGE_LABELS,
   RotationSchema,
+  freshName,
   polygonArea,
   rectangleSpace,
   rotatedFootprint,
@@ -13,6 +16,7 @@ import {
   roundM,
   sceneFrame,
   siSwapName,
+  stageOf,
   swapLayoutSi,
   validateLayout,
 } from '@store/shared'
@@ -24,7 +28,6 @@ import type {
   Layout,
   LayoutItem,
   NodeCamera,
-  NodeKind,
   Point,
   Project,
   Rotation,
@@ -77,25 +80,8 @@ function tool<T extends z.ZodType>(spec: AgentTool<T>): AgentTool {
 }
 
 const mm = (m: number) => Math.round(m * 1000)
-const STAGE_LABELS: Record<NodeKind, string> = {
-  space: '空间',
-  plan: '方案',
-  edit: '方案',
-  white: '三维效果',
-  render: '渲染',
-}
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 const WALL_GAP_M = 0.02
-
-/** "方案 · Agent" → "方案 · Agent（2）" when the first name is taken (same rule as the web). */
-export function freshName(base: string, taken: readonly string[]): string {
-  if (!taken.includes(base)) return base
-  for (let n = 2; n < 1000; n++) {
-    const candidate = `${base}（${n}）`
-    if (!taken.includes(candidate)) return candidate
-  }
-  return `${base}（${Date.now()}）`
-}
 
 async function namesUnder(db: Database, projectId: string, parentId: string | null) {
   const rows = await db
@@ -173,7 +159,7 @@ export function stateSummary(tools: ToolContext): Record<string, unknown> {
       ? {
           id: tools.node.id,
           kind: tools.node.kind,
-          stage: STAGE_LABELS[tools.node.kind],
+          stage: STAGE_LABELS[stageOf(tools.node.kind)],
           name: tools.node.name,
         }
       : null,
@@ -410,13 +396,7 @@ export const TOOLS: AgentTool[] = [
       const plans: Record<string, unknown>[] = []
       let last: string | undefined
       for (const candidate of result.candidates) {
-        const label =
-          candidate.strategy === 'max'
-            ? '尽量多放'
-            : candidate.strategy === 'area'
-              ? '按面积推荐'
-              : '尽量少放'
-        const name = freshName(`方案 · ${label}`, taken)
+        const name = freshName(`方案 · ${PLAN_STRATEGY_LABELS[candidate.strategy]}`, taken)
         taken.push(name)
         const created = await createNode(
           tools.db,
@@ -598,7 +578,7 @@ export const TOOLS: AgentTool[] = [
       )
       tools.project = updated
       const node = tools.node
-      const stage = node?.kind === 'edit' ? 'plan' : node?.kind
+      const stage = node && stageOf(node.kind)
       if (
         !input.siStyle ||
         !node?.layout ||

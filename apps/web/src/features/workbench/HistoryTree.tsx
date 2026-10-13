@@ -1,9 +1,9 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { PointerEvent as ReactPointerEvent } from 'react'
+import { NODE_KIND_LABELS } from '@store/shared'
 import type { NodeSummary } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useNodeVisibility, useRenameNode } from './api.ts'
-import { NODE_KIND_LABELS } from './tree.ts'
 import { ROOT_ID, TREE_STYLE, applyOffsets, layoutTree } from './tree-layout.ts'
 import type { TreeOffsets } from './tree-layout.ts'
 

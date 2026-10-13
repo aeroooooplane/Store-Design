@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import type { Look, ViewPose } from '../viewer3d/white-scene.ts'
-import type { Stage } from './tree.ts'
+import type { Stage } from '@store/shared'
 
 /**
  * What the user was looking at in one space: the 3D camera, plan or 3D per stage, and the look

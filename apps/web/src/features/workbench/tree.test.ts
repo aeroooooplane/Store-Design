@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
 import { makeNodeSummary } from '../../test-utils/factories.ts'
-import { copyName, flattenTree, freshName, spaceAncestor, stageOf, stageParentId } from './tree.ts'
+import { copyName, freshName, spaceAncestor, stageOf, stageParentId } from '@store/shared'
+import { flattenTree } from './tree.ts'
 import { defaultNodeId } from './Workbench.tsx'
 
 let seq = 0

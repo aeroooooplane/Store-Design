@@ -12,9 +12,14 @@ import type { KeyboardEvent, PointerEvent as ReactPointerEvent, ReactNode } from
 import { useQueryClient } from '@tanstack/react-query'
 import {
   checkAssetFit,
+  copyName,
+  freshName,
   mmToM,
   mToMm,
   siSwapName,
+  spaceAncestor,
+  stageOf,
+  stageParentId,
   swapLayoutSi,
   validateLayout,
 } from '@store/shared'
@@ -41,9 +46,8 @@ import { StagePanel } from './StagePanel.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
 import type { SiSwitch } from './Workbench.tsx'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
-import { copyName, freshName, spaceAncestor, stageOf, stageParentId } from './tree.ts'
 import { useViewMemory } from './view-memory.ts'
-import type { Stage } from './tree.ts'
+import type { Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer, initialEditorState } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
@@ -159,9 +163,7 @@ export function PlanEditor({
   )
   // The 3D effect stage shows materials by default; the white model stays one click away.
   const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
-  /** The 3D scene stays mounted once opened (white models always), so switching is instant. */
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
-  const show3d = true
   const [viewerReady, setViewerReady] = useState(false)
   const onViewerReady = useCallback(() => setViewerReady(true), [])
   const memoryRef = useRef(memory)
@@ -575,38 +577,36 @@ export function PlanEditor({
             onPointerCancel={() => (drag.current = null)}
             onKeyDown={onKeyDown}
           >
-            {show3d && (
-              <div className={planMain ? 'view-mini' : 'view-main'}>
-                <Suspense fallback={<p className="notice">正在载入三维…</p>}>
-                  <Viewer3D
-                    ref={viewerRef}
-                    space={space}
-                    shopType={shopType}
-                    layout={state.layout}
-                    assets={assetMap}
-                    selectedId={state.selectedId}
-                    flaggedIds={flaggedIds}
-                    onSelect={select}
-                    onMove={move}
-                    onReady={onViewerReady}
-                    look={isWhite ? look : 'white'}
-                    siStyle={siStyle}
-                    initialView={remembered.current.pose}
-                    onViewChange={rememberPose}
-                    title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
-                  />
-                </Suspense>
-                {planMain && (
-                  <button
-                    type="button"
-                    className="view-switch"
-                    aria-label="切换到三维"
-                    title="点击切换到三维"
-                    onClick={() => switchView('3d')}
-                  />
-                )}
-              </div>
-            )}
+            <div className={planMain ? 'view-mini' : 'view-main'}>
+              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                <Viewer3D
+                  ref={viewerRef}
+                  space={space}
+                  shopType={shopType}
+                  layout={state.layout}
+                  assets={assetMap}
+                  selectedId={state.selectedId}
+                  flaggedIds={flaggedIds}
+                  onSelect={select}
+                  onMove={move}
+                  onReady={onViewerReady}
+                  look={isWhite ? look : 'white'}
+                  siStyle={siStyle}
+                  initialView={remembered.current.pose}
+                  onViewChange={rememberPose}
+                  title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
+                />
+              </Suspense>
+              {planMain && (
+                <button
+                  type="button"
+                  className="view-switch"
+                  aria-label="切换到三维"
+                  title="点击切换到三维"
+                  onClick={() => switchView('3d')}
+                />
+              )}
+            </div>
             <div className={planMain ? 'view-main' : 'view-mini'}>
               <PlanView
                 svgRef={svgRef}

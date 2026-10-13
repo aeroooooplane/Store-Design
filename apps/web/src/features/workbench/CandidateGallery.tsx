@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PLAN_STRATEGY_LABELS } from '@store/shared'
+import { PLAN_STRATEGY_LABELS, freshName } from '@store/shared'
 import type {
   Asset,
   DesignNode,
@@ -11,7 +11,6 @@ import type {
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useCreateNode, useGenerateLayouts } from './api.ts'
 import { PlanView } from './PlanView.tsx'
-import { freshName } from './tree.ts'
 
 const RULE_LABELS: Record<string, string> = {
   clearance: '道具间距',

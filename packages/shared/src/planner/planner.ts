@@ -1,3 +1,4 @@
+import { PLAN_STRATEGY_LABELS } from '../enums.ts'
 import type { ItemFunction, PlanStrategy, ShopType } from '../enums.ts'
 import {
   distance,
@@ -454,12 +455,6 @@ export function tablesForArea(area: number): number {
   return Math.max(1, Math.floor((area - 16) / 18) + 1)
 }
 
-const STRATEGY_NAMES: Record<GeneratedStrategy, string> = {
-  max: '尽量多放',
-  area: '按面积推荐',
-  min: '尽量少放',
-}
-
 /**
  * Generates one layout for a polygon space. Cashier against the back wall, island tables in the
  * open floor away from entrances and the main aisle, cabinets along the remaining walls. Guide
@@ -553,7 +548,7 @@ export function planLayout(input: PlannerInput): PlannerResult {
       requested,
       placed: chosen.slots.length,
       relaxations,
-      note: `${STRATEGY_NAMES[input.strategy]}：主通道 ${rules.aisle} m、道具间距 ${rules.clearance} m 为设计指导值，非消防验收${relaxNote}`.slice(
+      note: `${PLAN_STRATEGY_LABELS[input.strategy]}：主通道 ${rules.aisle} m、道具间距 ${rules.clearance} m 为设计指导值，非消防验收${relaxNote}`.slice(
         0,
         500,
       ),

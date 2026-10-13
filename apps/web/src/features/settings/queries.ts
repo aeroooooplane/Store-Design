@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { AiBudgetSchema, AiOverviewSchema, AiSettingsSchema } from '@store/shared'
+import { AiOverviewSchema, AiSettingsSchema } from '@store/shared'
 import type { AiOverview, AiSettingsUpdate } from '@store/shared'
 import { api, unwrap } from '../../api/client.ts'
 
@@ -17,14 +17,6 @@ export function useAiOverview() {
 }
 
 /** Today's remaining budget, refreshed often enough to notice spending. */
-export function useAiBudget() {
-  return useQuery({
-    queryKey: aiKeys.budget,
-    refetchInterval: 60_000,
-    queryFn: async () => AiBudgetSchema.parse(unwrap(await api.GET('/api/v1/ai/budget'))),
-  })
-}
-
 export function useUpdateAiSettings() {
   const client = useQueryClient()
   return useMutation({
