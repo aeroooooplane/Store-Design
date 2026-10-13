@@ -82,7 +82,9 @@ describe('ModelPicker', () => {
     expect(within(panel).queryByText('消防栓箱')).toBeNull()
     const leggy = screen.getByRole('button', { name: '添加 1.8米亮脚中岛桌 · 变体' })
     expect(within(leggy).getByText('同类参考图')).toBeTruthy()
-    expect(within(leggy).getByRole('presentation').getAttribute('src')).toBe('/api/v1/files/island')
+    expect(within(leggy).getByRole('presentation').getAttribute('src')).toBe(
+      '/api/v1/files/island?w=160',
+    )
     const screenCard = screen.getByRole('button', { name: '添加 广告机 · 变体' })
     expect(within(screenCard).getByText('占位')).toBeTruthy()
     expect(within(screenCard).getByText(/1690 × 50 × 958 mm/)).toBeTruthy()

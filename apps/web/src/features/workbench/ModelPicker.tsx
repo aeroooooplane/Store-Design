@@ -49,6 +49,9 @@ interface ModelPickerProps {
 }
 
 /** "添加模型": product pictures grouped by category; picking places the model in the middle. */
+/** The card shows its picture at 56 × 42 CSS px; the API serves a 160 px WebP instead of the original. */
+const thumbnailUrl = (url: string) => `${url}${url.includes('?') ? '&' : '?'}w=160`
+
 export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
   const [search, setSearch] = useState('')
   const [lastPicked, setLastPicked] = useState<string | null>(null)
@@ -101,7 +104,7 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
                         }}
                       >
                         {image ? (
-                          <img src={image.url} alt="" loading="lazy" />
+                          <img src={thumbnailUrl(image.url)} alt="" loading="lazy" />
                         ) : (
                           <span className="model-row-empty" />
                         )}
