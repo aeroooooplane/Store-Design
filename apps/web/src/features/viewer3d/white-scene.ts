@@ -355,7 +355,8 @@ export class WhiteScene {
     })
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     this.renderer.shadowMap.enabled = true
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    // PCFSoftShadowMap was removed from three.js; it already fell back to PCFShadowMap.
+    this.renderer.shadowMap.type = THREE.PCFShadowMap
     // Shadows depend on the scene, not the camera: recompute them only when something moves.
     this.renderer.shadowMap.autoUpdate = false
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
@@ -721,6 +722,25 @@ export class WhiteScene {
     this.marks.children.forEach(disposeTree)
     this.scene.environment?.dispose()
     this.renderer.dispose()
+    // Release the WebGL context once the canvas has really left the page; a disposed renderer keeps
+    // it alive and the browser drops the oldest one after ~16. React StrictMode re-creates the
+    // scene on the same, still attached canvas, which must keep its context.
+    const gl = this.renderer.getContext()
+    setTimeout(() => {
+      if (!this.canvas.isConnected) gl.getExtension('WEBGL_lose_context')?.loseContext()
+    })
+  }
+
+  /**
+   * Compiles the shaders of a model before it joins the scene, off the main thread where the browser
+   * supports it (KHR_parallel_shader_compile); otherwise the first frame compiles them in one block.
+   */
+  private async prepare(object: THREE.Object3D): Promise<void> {
+    try {
+      await this.renderer.compileAsync(object, this.camera, this.scene)
+    } catch {
+      // Compiling up front is an optimisation only; the first render compiles what is missing.
+    }
   }
 
   // ---- internals ----
@@ -731,9 +751,12 @@ export class WhiteScene {
       return
     }
     const load = loadModel(url)
-      .then((model) => {
+      .then(async (model) => {
         if (this.items.get(placed.item.id) !== placed) return
-        placed.white.add(model.clone(true))
+        const copy = model.clone(true)
+        await this.prepare(copy)
+        if (this.items.get(placed.item.id) !== placed) return
+        placed.white.add(copy)
         this.failed.delete(placed.item.id)
       })
       .catch(() => {
@@ -755,9 +778,12 @@ export class WhiteScene {
     if (!placed.finishUrl || placed.finishState !== 'none') return
     placed.finishState = 'loading'
     const load = this.finished(placed.finishUrl, placed.finishPrepared)
-      .then((model) => {
+      .then(async (model) => {
         if (this.items.get(placed.item.id) !== placed) return
-        placed.finish = model.clone(true)
+        const copy = model.clone(true)
+        await this.prepare(copy)
+        if (this.items.get(placed.item.id) !== placed) return
+        placed.finish = copy
         placed.finishState = 'ready'
         placed.group.add(placed.finish)
         this.showLook(placed)
