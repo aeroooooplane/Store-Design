@@ -1,10 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  NodeCreatedSchema,
-  PlanUploadSchema,
-  RecognitionRunSchema,
-  RecognizeResponseSchema,
-} from '@store/shared'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { NodeCreatedSchema, PlanUploadSchema, RecognizeResponseSchema } from '@store/shared'
 import type {
   NodeCreated,
   PlanUpload,
@@ -19,20 +14,6 @@ import { workbenchKeys } from '../workbench/api.ts'
 export const recognitionKeys = {
   uploads: (projectId: string) => ['recognition', projectId, 'uploads'] as const,
   runs: (uploadId: string) => ['recognition', 'runs', uploadId] as const,
-}
-
-export function useUploads(projectId: string) {
-  return useQuery({
-    queryKey: recognitionKeys.uploads(projectId),
-    queryFn: async () =>
-      PlanUploadSchema.array().parse(
-        unwrap(
-          await api.GET('/api/v1/projects/{projectId}/uploads', {
-            params: { path: { projectId } },
-          }),
-        ),
-      ),
-  })
 }
 
 export interface UploadInput {
@@ -67,21 +48,6 @@ export function useUploadPlan(projectId: string) {
         ),
       ),
     onSuccess: () => client.invalidateQueries({ queryKey: recognitionKeys.uploads(projectId) }),
-  })
-}
-
-export function useRuns(uploadId: string | null) {
-  return useQuery({
-    queryKey: recognitionKeys.runs(uploadId ?? 'none'),
-    enabled: uploadId !== null,
-    queryFn: async () =>
-      RecognitionRunSchema.array().parse(
-        unwrap(
-          await api.GET('/api/v1/uploads/{uploadId}/runs', {
-            params: { path: { uploadId: uploadId ?? '' } },
-          }),
-        ),
-      ),
   })
 }
 

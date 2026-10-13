@@ -1,7 +1,4 @@
 /* Project workbench: history tree, space editor, layout candidates and the plan editor. */
-.page.page-wide {
-  max-width: 1600px;
-}
 h2,
 h3 {
   margin: 0 0 var(--space-1);
@@ -48,9 +45,6 @@ legend {
 .workbench {
   display: grid;
   gap: var(--space-2);
-}
-.workbench-main {
-  min-width: 0;
 }
 
 /* History tree (colours and sizes: TREE_STYLE in tree-layout.ts) */
@@ -289,18 +283,8 @@ table.rows input {
 }
 
 /* Plan editor */
-.plan-editor-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 300px;
-  gap: var(--space-2);
-  align-items: start;
-}
 .plan-canvas {
   border: 1px solid var(--line);
-}
-.plan-side {
-  display: grid;
-  gap: var(--space-1);
 }
 .properties {
   display: grid;
@@ -422,78 +406,14 @@ ul.issues li.warning {
   font-size: 12px;
 }
 
-/* Project settings (SI switch) */
-.project-settings {
-  margin-top: calc(-1 * var(--space-1));
-}
-
 /* Model picker */
-.model-picker-panel {
-  position: absolute;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  top: 100%;
-  margin-top: 4px;
-  max-height: 70vh;
-  overflow: auto;
-  background: var(--paper);
-  border: 1px solid var(--ink);
-  padding: var(--space-2);
-}
 .plan-editor > .toolbar {
   position: relative;
-}
-.model-picker-panel .toolbar input[type='search'] {
-  min-width: 240px;
-}
-.model-picker-close {
-  margin-left: auto;
 }
 .model-group h3 {
   margin: var(--space-2) 0 var(--space-1);
   padding-bottom: 4px;
   border-bottom: 1px solid var(--line);
-}
-.model-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-1);
-}
-.model-card {
-  display: grid;
-  gap: 2px;
-  width: 100%;
-  height: 100%;
-  text-align: left;
-  padding: var(--space-1);
-  align-content: start;
-}
-.model-card:hover {
-  border-color: var(--ink);
-}
-.model-card img,
-.model-card-empty {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: contain;
-  background: var(--surface);
-}
-.model-card-empty {
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-  font-size: 12px;
-}
-.model-card-name {
-  font-size: 13px;
-  font-weight: 700;
-}
-.model-card .hint {
-  margin: 0;
 }
 .model-card-tags {
   display: flex;

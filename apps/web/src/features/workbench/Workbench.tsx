@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { spaceAncestor } from '@store/shared'
 import type {
   Asset,
   DesignNode,
@@ -31,7 +32,7 @@ import { ProjectCard } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
-import { flattenTree, spaceAncestor } from './tree.ts'
+import { flattenTree } from './tree.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 import { ViewMemoryContext } from './view-memory.ts'
