@@ -13,8 +13,8 @@ import {
 } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
-import { FinishRecordSchema } from './finish-models.ts'
-import { WhiteRecordSchema } from './white-models.ts'
+import { FinishRecordSchema, WhiteRecordSchema } from './light-records.ts'
+import type { LightKind } from './light-records.ts'
 
 /**
  * The model library inside the resource root (资源库). Every file is found through
@@ -142,6 +142,38 @@ async function registerFile(db: Database, facts: FileFacts, kind: string): Promi
   return row.id
 }
 
+const LIGHT_MODELS: Record<
+  LightKind,
+  { record: z.ZodType<{ sourceSha256: string; sha256: string }>; title: string; command: string }
+> = {
+  white: { record: WhiteRecordSchema, title: '白模轻量版', command: 'pnpm catalog:white' },
+  finish: { record: FinishRecordSchema, title: '材质轻量版', command: 'pnpm catalog:finish' },
+}
+
+/** A light model (white.glb, finish.glb) counts only if it was built from this exact model.glb. */
+async function lightModel(
+  roots: StorageRoots,
+  report: CatalogImportReport,
+  id: string,
+  web: string,
+  glb: FileFacts,
+  kind: LightKind,
+): Promise<FileFacts | undefined> {
+  const { record: schema, title, command } = LIGHT_MODELS[kind]
+  const recordRaw = await optionalJson(path.join(roots.resource, web, `${kind}.json`))
+  const record = recordRaw === undefined ? undefined : schema.safeParse(recordRaw)
+  if (record?.success && record.data.sourceSha256 === glb.sha256) {
+    const facts = await inspect(roots, `${web}/${kind}.glb`)
+    if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
+    else if (facts.sha256 !== record.data.sha256)
+      report.problems.push(`${id}: ${kind}.glb 与 ${kind}.json 的哈希不一致，未挂接`)
+    else return facts
+  } else if (record) {
+    report.problems.push(`${id}: ${title}已过期或记录无效，请运行 ${command}`)
+  }
+  return undefined
+}
+
 /**
  * Imports (or refreshes) the model catalogue from 资源库. Idempotent: rerunning updates rows in
  * place. A web model is attached only when its bytes match the conversion record.
@@ -184,36 +216,8 @@ export async function importCatalog(
         report.problems.push(`${id}: model.glb 与 conversion.json 的哈希或字节数不一致，未挂接`)
       else glb = facts
     }
-    // The light white model counts only if it was built from this exact model.glb.
-    let white: FileFacts | undefined
-    if (web && glb) {
-      const recordRaw = await optionalJson(path.join(roots.resource, web, 'white.json'))
-      const record = recordRaw === undefined ? undefined : WhiteRecordSchema.safeParse(recordRaw)
-      if (record?.success && record.data.sourceSha256 === glb.sha256) {
-        const facts = await inspect(roots, `${web}/white.glb`)
-        if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
-        else if (facts.sha256 !== record.data.sha256)
-          report.problems.push(`${id}: white.glb 与 white.json 的哈希不一致，未挂接`)
-        else white = facts
-      } else if (record) {
-        report.problems.push(`${id}: 白模轻量版已过期或记录无效，请运行 pnpm catalog:white`)
-      }
-    }
-    // The same for the light material model.
-    let finish: FileFacts | undefined
-    if (web && glb) {
-      const recordRaw = await optionalJson(path.join(roots.resource, web, 'finish.json'))
-      const record = recordRaw === undefined ? undefined : FinishRecordSchema.safeParse(recordRaw)
-      if (record?.success && record.data.sourceSha256 === glb.sha256) {
-        const facts = await inspect(roots, `${web}/finish.glb`)
-        if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
-        else if (facts.sha256 !== record.data.sha256)
-          report.problems.push(`${id}: finish.glb 与 finish.json 的哈希不一致，未挂接`)
-        else finish = facts
-      } else if (record) {
-        report.problems.push(`${id}: 材质轻量版已过期或记录无效，请运行 pnpm catalog:finish`)
-      }
-    }
+    const white = web && glb ? await lightModel(roots, report, id, web, glb, 'white') : undefined
+    const finish = web && glb ? await lightModel(roots, report, id, web, glb, 'finish') : undefined
     let preview: FileFacts | undefined
     if (entry.preview) {
       const facts = await inspect(roots, inLibrary(entry.preview))

@@ -1,8 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
-import path from 'node:path'
-import { NodeIO, Primitive } from '@gltf-transform/core'
+import { Primitive } from '@gltf-transform/core'
 import type { Accessor, Document, Material, Mesh } from '@gltf-transform/core'
-import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import {
   dedup,
   flatten,
@@ -13,10 +11,12 @@ import {
   textureCompress,
   weld,
 } from '@gltf-transform/functions'
-import { MeshoptDecoder, MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer'
+import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer'
 import sharp from 'sharp'
-import { z } from 'zod'
 import { sha256File } from '../../lib/storage.ts'
+import { bounds, checkDrift, getIO, placedTriangles as triangles, transform } from './gltf-tools.ts'
+import type { Vec3 } from './gltf-tools.ts'
+import type { FinishRecord } from './light-records.ts'
 
 /**
  * Light material versions of the web models, for the material look (renders and the 3D
@@ -46,37 +46,6 @@ const OPPOSITE = -0.9
 /** Set on the material of such triangles; the viewer draws it front-side only. */
 export const FRONT_ONLY = 'frontOnly'
 
-export const FinishRecordSchema = z.object({
-  tool: z.string(),
-  sourceSha256: z.string().regex(/^[0-9a-f]{64}$/),
-  sha256: z.string().regex(/^[0-9a-f]{64}$/),
-  bytes: z.int().positive(),
-  sourceBytes: z.int().positive(),
-  trianglesBefore: z.int().min(0),
-  trianglesAfter: z.int().min(0),
-  drawsBefore: z.int().min(0),
-  drawsAfter: z.int().min(0),
-  /** Textured patches turned into plain colours. */
-  specks: z.int().min(0),
-  /** Triangles that are one side of a two-sided SketchUp face. */
-  pairedTriangles: z.int().min(0),
-  driftM: z.number().min(0),
-})
-export type FinishRecord = z.infer<typeof FinishRecordSchema>
-
-let io: NodeIO | null = null
-
-async function getIO(): Promise<NodeIO> {
-  if (!io) {
-    await Promise.all([MeshoptDecoder.ready, MeshoptEncoder.ready, MeshoptSimplifier.ready])
-    io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({
-      'meshopt.decoder': MeshoptDecoder,
-      'meshopt.encoder': MeshoptEncoder,
-    })
-  }
-  return io
-}
-
 /** Every placed primitive is one draw. */
 function draws(document: Document): number {
   let count = 0
@@ -84,61 +53,6 @@ function draws(document: Document): number {
     count += node.getMesh()?.listPrimitives().length ?? 0
   }
   return count
-}
-
-function triangles(document: Document): number {
-  let count = 0
-  for (const node of document.getRoot().listNodes()) {
-    for (const prim of node.getMesh()?.listPrimitives() ?? []) {
-      count += (prim.getIndices() ?? prim.getAttribute('POSITION'))?.getCount() ?? 0
-    }
-  }
-  return Math.round(count / 3)
-}
-
-type Vec3 = readonly [number, number, number]
-
-function transform(m: readonly number[], p: number[]): Vec3 {
-  const [x = 0, y = 0, z = 0] = p
-  return [
-    (m[0] ?? 1) * x + (m[4] ?? 0) * y + (m[8] ?? 0) * z + (m[12] ?? 0),
-    (m[1] ?? 0) * x + (m[5] ?? 1) * y + (m[9] ?? 0) * z + (m[13] ?? 0),
-    (m[2] ?? 0) * x + (m[6] ?? 0) * y + (m[10] ?? 1) * z + (m[14] ?? 0),
-  ]
-}
-
-/** World-space box of every mesh, with quantised positions decoded. */
-export function bounds(document: Document): { min: number[]; max: number[] } {
-  const min = [Infinity, Infinity, Infinity]
-  const max = [-Infinity, -Infinity, -Infinity]
-  const p = [0, 0, 0]
-  for (const node of document.getRoot().listNodes()) {
-    const m = node.getWorldMatrix()
-    for (const prim of node.getMesh()?.listPrimitives() ?? []) {
-      const position = prim.getAttribute('POSITION')
-      if (!position) continue
-      for (let i = 0; i < position.getCount(); i++) {
-        const world = transform(m, position.getElement(i, p))
-        for (let k = 0; k < 3; k++) {
-          min[k] = Math.min(min[k] ?? Infinity, world[k] ?? 0)
-          max[k] = Math.max(max[k] ?? -Infinity, world[k] ?? 0)
-        }
-      }
-    }
-  }
-  return { min, max }
-}
-
-function drift(a: ReturnType<typeof bounds>, b: ReturnType<typeof bounds>): number {
-  let worst = 0
-  for (let k = 0; k < 3; k++) {
-    worst = Math.max(
-      worst,
-      Math.abs((a.min[k] ?? 0) - (b.min[k] ?? 0)),
-      Math.abs((a.max[k] ?? 0) - (b.max[k] ?? 0)),
-    )
-  }
-  return worst
 }
 
 interface Triangle {
@@ -386,12 +300,7 @@ export async function buildFinishModel(source: string, target: string): Promise<
     meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
   )
 
-  const driftM = drift(before, bounds(document))
-  if (driftM > FINISH_MAX_DRIFT_M) {
-    throw new Error(
-      `外形尺寸变化 ${(driftM * 1000).toFixed(1)} mm，超过 ${FINISH_MAX_DRIFT_M * 1000} mm`,
-    )
-  }
+  const driftM = checkDrift(before, document, FINISH_MAX_DRIFT_M)
   const bytes = await io.writeBinary(document)
   await writeFile(target, bytes)
   return {
@@ -406,15 +315,6 @@ export async function buildFinishModel(source: string, target: string): Promise<
     drawsAfter: draws(document),
     specks,
     pairedTriangles,
-    driftM: Math.round(driftM * 10000) / 10000,
-  }
-}
-
-/** Where the light material model and its record live, next to `model.glb`. */
-export function finishPaths(modelDir: string) {
-  return {
-    source: path.join(modelDir, 'model.glb'),
-    glb: path.join(modelDir, 'finish.glb'),
-    record: path.join(modelDir, 'finish.json'),
+    driftM,
   }
 }
