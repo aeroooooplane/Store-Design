@@ -108,11 +108,6 @@ Thumbs.db
 /资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/
 /资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/
 
-# New source drawings (95 PDF + 1 Excel) ship as assets of release cleaning-source-supplement-20261009 and are
-# restored by restore_sources.py, keeping 1.5 GB out of Git LFS. Already tracked drawings are unaffected;
-# add a drawing to Git deliberately with `git add -f`.
-/资源库/01_各门店原图纸/*
-
 # Light material models are derived from model.glb (pnpm catalog:finish, about 5 minutes) and
 # rebuilt on each machine to keep ~46 MB out of Git LFS; without them the viewer loads model.glb.
 /资源库/04_模型库/**/finish.glb
