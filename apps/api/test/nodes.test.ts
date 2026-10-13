@@ -350,7 +350,7 @@ describe('drafts', () => {
   })
 })
 
-/** Shaped like a backup from the legacy workbench (demo/src/sample.js). */
+/** Shaped like a backup from the legacy workbench (demo/src/sample.js in tag archive/pre-cleanup-20261013). */
 const legacyBackup = {
   schemaVersion: 2,
   nodes: [
