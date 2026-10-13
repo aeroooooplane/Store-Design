@@ -1,0 +1,129 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-024",
+ "name": "台湾台北Sogo大巨蛋",
+ "aliases": {
+  "filenames": [
+   "台湾台北Sogo大巨蛋.pdf"
+  ],
+  "feishu_1009": "台湾台北Sogo大巨蛋",
+  "feishu_0923": null,
+  "title_names": [
+   "台北专区"
+  ]
+ },
+ "source": {
+  "sha256": "8d7adb4ddb79900db2aebcce44c5809786458581d2b5e7ed4759880d7e1c66f0",
+  "page_count": 28,
+  "source_ids": [
+   "NEW-024"
+  ]
+ },
+ "region": {
+  "value": "港澳台",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 25,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 25,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "专区": [
+     1,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ],
+    "中岛": [
+     23
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "X4中岛桌": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 3,
+  "pages": 28
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

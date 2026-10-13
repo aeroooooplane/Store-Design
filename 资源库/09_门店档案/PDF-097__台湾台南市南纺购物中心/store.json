@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-097",
+ "name": "台湾台南市南纺购物中心",
+ "aliases": {
+  "filenames": [
+   "台湾台南市南纺购物中心.pdf"
+  ],
+  "feishu_1009": "台湾台南市南纺购物中心",
+  "feishu_0923": "台湾台南市南纺购物中心.pdf",
+  "title_names": [
+   "台湾台南市南纺购物中心边厅店",
+   "\\2026\\1月\\02.04 影石-台湾台南市南纺购物中心边厅店\\施工图\\9c2",
+   "台灣台南市南紡購物中心邊廳店。"
+  ]
+ },
+ "source": {
+  "sha256": "02a8704e29744ba05d3e6290134a8f8aafa7cd07a292753be7a99a8cf7a179d9",
+  "page_count": 37,
+  "source_ids": [
+   "PDF-097"
+  ]
+ },
+ "region": {
+  "value": "港澳台",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 198,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Iezmj"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 198,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Iezmj"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI1.0": {
+     "pages": [
+      25
+     ],
+     "words": [
+      "1.6米配件柜"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "哈尔滨红博边厅店-终稿图纸(交底修正)-20260122(1)\\影石-哈尔滨红博": 1,
+   "廣告機-產品及安裝位尺寸圖:": 1,
+   "廣告機安裝尺寸圖：": 1,
+   "Insta360 Think bold.鏡面不鏽鋼絲印白色文字": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 0,
+  "pages": 37
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

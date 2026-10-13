@@ -1,0 +1,161 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-088",
+ "name": "南昌武商mall",
+ "aliases": {
+  "filenames": [
+   "南昌武商mall.pdf"
+  ],
+  "feishu_1009": "南昌武商mall",
+  "feishu_0923": "南昌武商mall.pdf",
+  "title_names": [
+   "南昌武商mall",
+   "南昌武商mall店",
+   "南昌武商mall边厅店"
+  ]
+ },
+ "source": {
+  "sha256": "8d5e7efa53cf5d08983494c0e016e3508d526d012a8a714eff657d3f92a55157",
+  "page_count": 47,
+  "source_ids": [
+   "PDF-088"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 189,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5I5hWq"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 189,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5I5hWq"
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     11
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      2,
+      3,
+      9,
+      10,
+      11,
+      15,
+      16,
+      22,
+      23,
+      24
+     ],
+     "words": [
+      "仿水磨石",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 51.3,
+    "pages": [
+     1,
+     8,
+     14,
+     40
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 47
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

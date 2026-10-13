@@ -1,0 +1,124 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-020",
+ "name": "印尼巴厘岛 Kuta Beach walk",
+ "aliases": {
+  "filenames": [
+   "印尼巴厘岛 Kuta Beach walk.pdf"
+  ],
+  "feishu_1009": "印尼巴厘岛 Kuta Beach walk",
+  "feishu_0923": null,
+  "title_names": [
+   "印尼巴厘岛Kuta Beach Walk中岛店"
+  ]
+ },
+ "source": {
+  "sha256": "5625e4a3183552113fec6223319a803331fbeaa03b7107bb95d4cb1cf6626bea",
+  "page_count": 8,
+  "source_ids": [
+   "NEW-020"
+  ]
+ },
+ "region": {
+  "value": "海外",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 20,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 20,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      3
+     ],
+     "words": [
+      "仿水磨石"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     1
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": "现阶段专区和中岛主要用 SI1.0（用户 2026-10-13 说明），此店为 SI2.0，审核时留意",
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 8
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-184",
+ "name": "扬州万象汇授权体验店",
+ "aliases": {
+  "filenames": [
+   "扬州万象汇授权体验店.pdf"
+  ],
+  "feishu_1009": "扬州万象汇授权体验店",
+  "feishu_0923": "扬州万象汇授权体验店.pdf",
+  "title_names": [
+   "扬州万象汇中岛店",
+   "扬州万象汇中岛店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "e3fffa712afd97cbb8a39289e880258cc7eb171879df866d34c4e7a69ae8e440",
+  "page_count": 37,
+  "source_ids": [
+   "PDF-184"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 286,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5IPBsZ"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 286,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5IPBsZ"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI1.0": {
+     "pages": [
+      35,
+      37
+     ],
+     "words": [
+      "1.6米配件柜"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": "中岛"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     30,
+     31,
+     32,
+     33,
+     34,
+     35,
+     36,
+     37
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 52.87,
+    "pages": [
+     30
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 29,
+  "pages": 37
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

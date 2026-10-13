@@ -1,0 +1,159 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-032",
+ "name": "太原钟楼街（边厅）",
+ "aliases": {
+  "filenames": [
+   "太原钟楼街（边厅）.pdf"
+  ],
+  "feishu_1009": "太原钟楼街（边厅）",
+  "feishu_0923": null,
+  "title_names": [
+   "太原钟楼街边厅店",
+   "太原钟楼街边厅店-装饰施工图(总面积：52m²)",
+   "太原钟楼街边厅店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "d8264f781e270ac599c37521a81c18cb4881f4215e4f23f09084a64a52bfd0d7",
+  "page_count": 45,
+  "source_ids": [
+   "NEW-032"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 32,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 32,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     8
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      7,
+      8,
+      12,
+      13,
+      19,
+      20,
+      21,
+      29,
+      41
+     ],
+     "words": [
+      "仿水磨石",
+      "子母凳",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": "边厅",
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 52.0,
+    "pages": [
+     1,
+     36
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 2
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 45
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

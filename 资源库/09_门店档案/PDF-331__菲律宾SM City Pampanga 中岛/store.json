@@ -1,0 +1,129 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-331",
+ "name": "菲律宾SM City Pampanga 中岛",
+ "aliases": {
+  "filenames": [
+   "菲律宾SM City Pampanga 中岛.pdf"
+  ],
+  "feishu_1009": "菲律宾SM City Pampanga 中岛",
+  "feishu_0923": "菲律宾SM City Pampanga 中岛.pdf",
+  "title_names": [
+   "菲律宾SM City Pampanga",
+   "菲律宾SM City Pampanga中岛店-装饰图纸(总面积：7.29m²)"
+  ]
+ },
+ "source": {
+  "sha256": "35870f17c12cce83846e2d2ef8417e64594865938582dd7998e4bd7367b601db",
+  "page_count": 27,
+  "source_ids": [
+   "PDF-331"
+  ]
+ },
+ "region": {
+  "value": "海外",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 436,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Iml0c"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 436,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Iml0c"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "专区",
+  "source": "飞书10-09",
+  "confidence": "待定",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "专区",
+    "raw": "专区"
+   },
+   "飞书09-23": {
+    "value": "专区"
+   },
+   "文件名": {
+    "value": "中岛",
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     1
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 5.6,
+    "pages": [
+     9
+    ]
+   },
+   {
+    "value": 7.29,
+    "pages": [
+     1
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "多个读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 6,
+  "pages": 27
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "待裁决"
+ }
+}

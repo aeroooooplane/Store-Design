@@ -1,0 +1,153 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-225",
+ "name": "武汉天地壹方授权体验店（迁址）",
+ "aliases": {
+  "filenames": [
+   "武汉天地壹方授权体验店（迁址）.pdf"
+  ],
+  "feishu_1009": "武汉天地壹方授权体验店（迁址）",
+  "feishu_0923": "武汉天地壹方授权体验店（迁址）.pdf",
+  "title_names": [
+   "武汉天地壹方边厅店",
+   "武汉天地壹方边厅店-装饰图纸(总面积：148m²)",
+   "武汉天地壹方边厅店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "d6e9fa3392284e87c2ee200d8c6c729f7a27730668766829c44de743d64c9dab",
+  "page_count": 50,
+  "source_ids": [
+   "PDF-225"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": "迁址",
+ "feishu": {
+  "ledger_1009_row": 328,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5I3ApZ"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 328,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5I3ApZ"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      13,
+      14,
+      18,
+      20,
+      21,
+      48,
+      50
+     ],
+     "words": [
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 148.0,
+    "pages": [
+     1,
+     12,
+     13,
+     43
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "提供画面，画面预留出线20mm)": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 6,
+  "pages": 50
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

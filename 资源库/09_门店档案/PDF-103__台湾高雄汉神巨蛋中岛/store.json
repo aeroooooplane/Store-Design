@@ -1,0 +1,122 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-103",
+ "name": "台湾高雄汉神巨蛋中岛",
+ "aliases": {
+  "filenames": [
+   "台湾高雄汉神巨蛋中岛.pdf"
+  ],
+  "feishu_1009": "台湾高雄汉神巨蛋中岛",
+  "feishu_0923": "台湾高雄汉神巨蛋中岛.pdf",
+  "title_names": [
+   "臺灣高雄中島店",
+   "臺灣高雄中島店，其主要功能接待銷售及展廳。"
+  ]
+ },
+ "source": {
+  "sha256": "d2e6857333b704194fffe1140d2be65a3b3b17791f2a2745ae98d369f8ce95f1",
+  "page_count": 32,
+  "source_ids": [
+   "PDF-103"
+  ]
+ },
+ "region": {
+  "value": "港澳台",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 204,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Ig5hZ"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 204,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Ig5hZ"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": "中岛"
+   },
+   "文件名": {
+    "value": "中岛",
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     26,
+     27,
+     28,
+     29,
+     30,
+     31,
+     32
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 25,
+  "pages": 32
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

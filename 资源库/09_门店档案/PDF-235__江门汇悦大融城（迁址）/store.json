@@ -1,0 +1,150 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-235",
+ "name": "江门汇悦大融城（迁址）",
+ "aliases": {
+  "filenames": [
+   "江门汇悦大融城（迁址）.pdf"
+  ],
+  "feishu_1009": "江门汇悦大融城（迁址）",
+  "feishu_0923": "江门汇悦大融城（迁址）.pdf",
+  "title_names": [
+   "江门汇悦大融城",
+   "江门汇悦大融城边厅店",
+   "江门汇悦大融城店"
+  ]
+ },
+ "source": {
+  "sha256": "a7b3783a126f48032d92016e38d248cb4702cfb02341542c4741169ab540f439",
+  "page_count": 46,
+  "source_ids": [
+   "PDF-235"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": "迁址",
+ "feishu": {
+  "ledger_1009_row": 338,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Iv9z1"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 338,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Iv9z1"
+   },
+   "图纸si字样": {
+    "SI1.0": [
+     11
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      11
+     ],
+     "words": [
+      "子母凳",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 48.6,
+    "pages": [
+     8,
+     39
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 2
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 46
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

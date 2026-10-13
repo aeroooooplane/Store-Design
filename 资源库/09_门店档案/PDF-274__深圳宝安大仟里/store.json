@@ -1,0 +1,156 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-274",
+ "name": "深圳宝安大仟里",
+ "aliases": {
+  "filenames": [
+   "深圳宝安大仟里.pdf"
+  ],
+  "feishu_1009": "深圳宝安大仟里",
+  "feishu_0923": "深圳宝安大仟里.pdf",
+  "title_names": [
+   "宝安大仟里边厅专卖店"
+  ]
+ },
+ "source": {
+  "sha256": "99be0d1a1e4014b6bcdccf1568dd9a48f8581f2ab82a5f0884f1b452f39b9ef3",
+  "page_count": 45,
+  "source_ids": [
+   "PDF-274"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 378,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5I58PY"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 378,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5I58PY"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      4,
+      11,
+      12,
+      17,
+      18,
+      19,
+      24,
+      38,
+      43,
+      45
+     ],
+     "words": [
+      "仿水磨石",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 95.1,
+    "pages": [
+     1,
+     11,
+     18,
+     39
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机-产品及安装位尺寸图:": 1,
+   "提供画面，画面预留出线20mm)": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 0,
+  "pages": 45
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

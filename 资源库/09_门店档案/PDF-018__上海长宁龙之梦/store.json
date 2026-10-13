@@ -1,0 +1,160 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-018",
+ "name": "上海长宁龙之梦",
+ "aliases": {
+  "filenames": [
+   "上海长宁龙之梦.pdf"
+  ],
+  "feishu_1009": "上海长宁龙之梦",
+  "feishu_0923": "上海长宁龙之梦.pdf",
+  "title_names": [
+   "上海长宁龙之梦",
+   "上海长宁龙之梦边厅店"
+  ]
+ },
+ "source": {
+  "sha256": "6372848f1ad41d2b28bab02a847676d4ebb0f53475415141802dc0c094eb9ac2",
+  "page_count": 47,
+  "source_ids": [
+   "PDF-018"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 119,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5ItmVl"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 119,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5ItmVl"
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     11
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      2,
+      3,
+      9,
+      10,
+      11,
+      15,
+      16,
+      22,
+      23,
+      24
+     ],
+     "words": [
+      "仿水磨石",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 43.0,
+    "pages": [
+     1,
+     8,
+     14,
+     40
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 47
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

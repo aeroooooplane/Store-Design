@@ -1,0 +1,155 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-357",
+ "name": "邯郸万象汇授权体验店",
+ "aliases": {
+  "filenames": [
+   "邯郸万象汇授权体验店.pdf"
+  ],
+  "feishu_1009": "邯郸万象汇授权体验店",
+  "feishu_0923": "邯郸万象汇授权体验店.pdf",
+  "title_names": [
+   "邯郸万象汇",
+   "邯郸万象汇【边厅店】",
+   "邯郸万象汇店"
+  ]
+ },
+ "source": {
+  "sha256": "6ad01cb39ed0d7fff201f857ad6b407fe661e219a524c0d1d4040599065b2de8",
+  "page_count": 49,
+  "source_ids": [
+   "PDF-357"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 462,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5I0kB8"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 462,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5I0kB8"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      2,
+      3,
+      10,
+      13,
+      14,
+      21,
+      22,
+      23,
+      32,
+      41
+     ],
+     "words": [
+      "仿水磨石",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 93.0,
+    "pages": [
+     8,
+     42
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 2
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 49
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

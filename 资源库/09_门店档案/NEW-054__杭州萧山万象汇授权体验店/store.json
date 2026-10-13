@@ -1,0 +1,142 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-054",
+ "name": "杭州萧山万象汇授权体验店",
+ "aliases": {
+  "filenames": [
+   "杭州萧山万象汇授权体验店.pdf"
+  ],
+  "feishu_1009": "杭州萧山万象汇授权体验店",
+  "feishu_0923": null,
+  "title_names": [
+   "萧山万象汇中岛店",
+   "萧山万象汇中岛店-装饰图纸(总面积:22.4m² )",
+   "萧山万象汇中岛店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "4560f5c122235a2c13b44c35306eaff1744bfda9abf869ba80f90feb1ca038bf",
+  "page_count": 33,
+  "source_ids": [
+   "NEW-054"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 54,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 54,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     1,
+     5,
+     6,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 21.0,
+    "pages": [
+     9,
+     26
+    ]
+   },
+   {
+    "value": 22.4,
+    "pages": [
+     1
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "多个读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "Insta360 Think bold.": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 33
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

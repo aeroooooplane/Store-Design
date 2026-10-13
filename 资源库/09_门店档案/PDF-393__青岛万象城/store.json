@@ -1,0 +1,160 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-393",
+ "name": "青岛万象城",
+ "aliases": {
+  "filenames": [
+   "青岛万象城.pdf"
+  ],
+  "feishu_1009": "青岛万象城",
+  "feishu_0923": "青岛万象城.pdf",
+  "title_names": [
+   "青岛万象城",
+   "青岛万象城边厅店",
+   "青岛万象城店"
+  ]
+ },
+ "source": {
+  "sha256": "f605a001d9e06be1e9b395bc22d0841e54852228ee4cb4db7afadee9e55f4e62",
+  "page_count": 48,
+  "source_ids": [
+   "PDF-393"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 499,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5IvdkZ"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 499,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5IvdkZ"
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     11
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      2,
+      3,
+      10,
+      11,
+      15,
+      16,
+      22,
+      23,
+      24,
+      32
+     ],
+     "words": [
+      "仿水磨石",
+      "子母凳",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15,
+     16,
+     17
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 65.0,
+    "pages": [
+     8,
+     41
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 2
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 48
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

@@ -1,0 +1,129 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-095",
+ "name": "韩国乐天百货东滩 롯데백화점 동탄점",
+ "aliases": {
+  "filenames": [
+   "韩国乐天百货东滩 롯데백화점 동탄점.pdf"
+  ],
+  "feishu_1009": "韩国乐天百货东滩 롯데백화점 동탄점",
+  "feishu_0923": null,
+  "title_names": []
+ },
+ "source": {
+  "sha256": "6a9cf5bcf8da252263f0ae6154019390094894103e7a00c8b88adea797805ac0",
+  "page_count": 17,
+  "source_ids": [
+   "NEW-095"
+  ]
+ },
+ "region": {
+  "value": "海外",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 95,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "中高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 95,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      3
+     ],
+     "words": [
+      "仿水磨石"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": "现阶段专区和中岛主要用 SI1.0（用户 2026-10-13 说明），此店为 SI2.0，审核时留意",
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 28.5,
+    "pages": [
+     8
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "韩国乐天百货Hwaseong": 9,
+   "韩国乐天百货Hwaseong店": 1,
+   "韩国乐天百货Hwaseong【中岛店】": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 4,
+  "pages": 17
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}
