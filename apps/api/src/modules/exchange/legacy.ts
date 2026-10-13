@@ -23,7 +23,8 @@ import { AppError } from '../../lib/app-error.ts'
 import { parentsFirst, reconcileAssets } from './plan.ts'
 import type { PlannedNode, PlannedProject } from './plan.ts'
 
-// Legacy workbench backup (demo/src/project-import.js), read leniently: unknown fields are ignored.
+// Legacy workbench backup (demo/src/project-import.js in tag archive/pre-cleanup-20261013), read leniently:
+// unknown fields are ignored.
 const Finite = z.number().finite()
 const Positive = Finite.positive()
 const LegacyRoom = z.looseObject({

@@ -37,3 +37,11 @@ git ls-tree -r --name-only archive/pre-cleanup-20261013 -- docs         # 列出
 已删除且不需要恢复：`资源库/00_资源索引/历史目录/` 下的两张飞书授权二维码（已过期，用户 2026-10-13 确认）。
 
 原地保留：`tools/training/`（被 `tools/store-archive/register_legacy.py` 统计文件数）、`tools/data-cleaning/`、`output/图纸*-20261008/`（门店图纸整理在用）。
+
+## 第一代网页 demo/（批次 4）
+
+`demo/`（113 个文件）：2026-09 至 10-04 的静态工作台（Vite + React）、本机文件服务、Playwright 测试和离线脚本。新系统在 2026-10-08 起取代了它（需求 §14 的 10-08 决定），代码与测试都不依赖它；门店图纸窗口确认它的旧清洗脚本 `tools/data-cleaning/geometry3.py` 等随之失效可以接受。
+
+- 仍在使用的 SketchUp → GLB 转换、压缩、复核脚本已原样移到 `tools/su-convert/`。
+- 旧版项目 JSON v2 的导入由 `apps/api/src/modules/exchange/legacy.ts` 的 zod 结构定义，不依赖 demo。原格式实现在标签中的 `demo/src/project-import.js`。
+- 随之失效、未单独处理的历史脚本：`tools/training/` 里依赖 `demo/node_modules/@playwright/test` 或写入 `demo/src/generated` 的脚本（实验已结束，目录因门店档案登记而原地保留）。

@@ -46,8 +46,7 @@ packages/
     src/delivery/     交付命名与图例编号
 database/             Drizzle schema、SQL 迁移与迁移命令
 docs/                 本文档、需求、数据模型、API 说明
-demo/                 第一代静态网页，已被取代，不再维护（待归档）
-tools/  资源库/        离线工具与资料；资源库 由 API 通过白名单只读访问
+tools/  资源库/        离线工具（模型库刷新 tools/library、SU → GLB 转换 tools/su-convert 等）与资料；资源库 由 API 通过白名单只读访问
 ```
 
 **依赖方向**：`web → shared`，`api → shared + database`，`database → shared`（仅类型）。`shared` 不依赖任何运行环境（无 DOM、无 Node API），保证前端即时校验与后端权威校验使用同一份代码。

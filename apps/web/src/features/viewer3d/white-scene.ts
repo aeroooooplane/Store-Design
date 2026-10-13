@@ -10,7 +10,7 @@ import { separateBackLayers } from './back-layers.ts'
 import { RENDER_LOOK, disposeRoomMaterials, finishMaterial, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 
-/** Legacy white-mode look (demo/src/scene.js). */
+/** Legacy white-mode look (demo/src/scene.js in tag archive/pre-cleanup-20261013). */
 const WHITE = '#f7f7f5'
 const BACKGROUND = '#e8eaed'
 const FLOOR_THICKNESS_M = 0.16

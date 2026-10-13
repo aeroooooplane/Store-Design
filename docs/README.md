@@ -36,7 +36,6 @@
 | `apps/api/openapi.json`、`apps/web/src/api/schema.d.ts` | 生成物（约 2.7 万行） | `packages/shared/src/schemas/`、各模块 `routes.ts` |
 | `database/migrations/meta/` | drizzle 快照（每份约 2000 行） | `database/schema/` |
 | `资源库/90_处理过程与审核/`、`资源库/00_资源索引/历史目录/`、`资源库/01_各门店原图纸/`、`资源库/09_门店档案/`、`资源库/99_历史归档/`、`tools/data-cleaning/` | 数据与过程记录，文本合计约 4000 万 token，代码不引用 | [store-drawing-archive-plan.md](store-drawing-archive-plan.md)、[资源使用说明](../资源库/00_资源索引/资源使用说明.md) |
-| `demo/` | 第一代网页，已被取代 | — |
 | `tmp/`、`output/`、`docs/archive/` | 历史中间件与归档 | — |
 
 ## 4. 专项文档

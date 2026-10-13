@@ -9,7 +9,7 @@
 - [多电脑同步与协作](docs/sync-and-collaboration.md)：分支、LFS 与资源提交。
 - [资源使用说明](资源库/00_资源索引/资源使用说明.md)、[模型库指引](资源库/04_模型库/README.md)。
 
-代码是 pnpm Monorepo：`apps/web`（React + Vite + Three.js）、`apps/api`（Fastify）、`packages/shared`（共享校验、规划器与几何）、`database`（Drizzle schema 与 SQL 迁移）。第一代静态网页 `demo/` 已被取代，不再维护。
+代码是 pnpm Monorepo：`apps/web`（React + Vite + Three.js）、`apps/api`（Fastify）、`packages/shared`（共享校验、规划器与几何）、`database`（Drizzle schema 与 SQL 迁移）。第一代静态网页 `demo/` 已于 2026-10-13 归档（见 [docs/archive/INDEX.md](docs/archive/INDEX.md)），其中的 SketchUp → GLB 转换工具移到了 [tools/su-convert](tools/su-convert/README.md)。
 
 ## 本机开发
 

@@ -16,6 +16,6 @@
 
 先验证一个组件，避免批量导出 1GB 模型。实例缩放、旋转、继承材质、透明贴图需核验；不把包围盒直接当作产品规格。
 
-后续：转换 DAE 为 GLB，统一米制、Y向上、底部中心原点，并比较贴图与原模型效果后，再放入模型库对应目录的 `网页模型/model.glb`（见 [模型库指引](../../资源库/04_模型库/README.md)）。
+后续：用 [tools/su-convert](../su-convert/README.md) 转换 DAE 为 GLB，统一米制、Y向上、底部中心原点，并比较贴图与原模型效果后，再放入模型库对应目录的 `网页模型/model.glb`（见 [模型库指引](../../资源库/04_模型库/README.md)）。
 
 依据：[官方导出选项](https://ruby.sketchup.com/file.exporter_options.html)、[ComponentDefinition.save_copy](https://ruby.sketchup.com/Sketchup/ComponentDefinition.html)。GLB 导出无 selection-only 选项，故这里采用支持选择集的 DAE，避免误导出整个大模型。
