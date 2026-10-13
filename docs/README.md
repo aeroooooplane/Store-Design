@@ -52,6 +52,6 @@
 
 ## 5. 历史记录
 
-以下文档记录 2026-09 至 10-04 的旧版（`demo/`）开发、训练实验与资料盘点，**不描述当前系统**，只用于追溯：web-8h-progress、web-review-20260926、file-organization-20260926、case-pack-4h-handoff、case-pack-4h-progress、real-sample-review、layout-library、layout-observations-batch01、asset-ingestion-plan、asset-inventory、asset-placement、su-real-assets、github-missing-assets、sample-case-template、training-design、training-results、rtx4070-*、render-benchmark、furniture-geometry-v2、layout-render-upgrade-20260927、fuzzy-layout-validation-20260928、storage-audit-20260927、source-control-cleanup-20260927、maintenance-20261004、delivery-log-20261004、project-brief、product-flow、roadmap，以及 `archive/`、`superpowers/plans/`。按[清理计划](architecture-review-20261013.md) §4.2 逐步归档。
+2026-09 至 10-04 的旧版（`demo/`）开发记录、训练实验和资料盘点已从 main 归档，清单与恢复命令见 [archive/INDEX.md](archive/INDEX.md)。仍原地保留的历史文档：[pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md)、[si-standards-review-20261001.md](si-standards-review-20261001.md)（有脚本引用）。
 
 文件保留看实际引用、唯一性和可恢复性，不按目录名称或最后修改时间判断。
