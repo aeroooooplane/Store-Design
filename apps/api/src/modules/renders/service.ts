@@ -1,6 +1,5 @@
 import { createHash } from 'node:crypto'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import path from 'node:path'
+import { readFile } from 'node:fs/promises'
 import { and, asc, desc, eq, isNull } from 'drizzle-orm'
 import { zipSync } from 'fflate'
 import { schema } from '@store/database'
@@ -13,11 +12,13 @@ import { AppError, notFound } from '../../lib/app-error.ts'
 import { resolveStoredFile } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { catalogAssets } from '../assets/service.ts'
-import { fileUrl } from '../files/routes.ts'
-import { requireActiveProject, resolveSpace } from '../nodes/service.ts'
+import { fileUrl } from '../../lib/file-url.ts'
+import { registerStoredFile, writeStorageFile } from '../../lib/stored-files.ts'
+import { findNode, requireActiveProject } from '../nodes/repository.ts'
+import type { NodeRow } from '../nodes/repository.ts'
+import { resolveSpace } from '../nodes/service.ts'
 
-const { designNodes, nodeCameras, projects, renders, storedFiles } = schema
-type NodeRow = typeof designNodes.$inferSelect
+const { nodeCameras, projects, renders, storedFiles } = schema
 type RenderRow = typeof renders.$inferSelect
 
 const ENGINE = 'three'
@@ -52,12 +53,6 @@ export interface RenderContext {
   layoutSignature: string
   /** Active views in order. */
   cameras: { id: string; camera: Camera; signature: string }[]
-}
-
-async function findNode(db: Database, nodeId: string): Promise<NodeRow> {
-  const [row] = await db.select().from(designNodes).where(eq(designNodes.id, nodeId))
-  if (!row) throw notFound('节点')
-  return row
 }
 
 export async function renderContext(db: Database, node: NodeRow): Promise<RenderContext> {
@@ -208,29 +203,18 @@ export async function saveRender(
     node.id,
     `${view.id}-${input.mode}-${sha256.slice(0, 16)}.png`,
   ].join('/')
-  const file = path.resolve(roots.storage, storageKey)
-  await mkdir(path.dirname(file), { recursive: true })
-  await writeFile(file, input.png)
+  await writeStorageFile(roots, storageKey, input.png)
 
   const row = await db.transaction(async (tx) => {
     // The same picture uploaded twice is one file.
-    await tx
-      .insert(storedFiles)
-      .values({
-        root: 'storage',
-        storageKey,
-        kind: 'render',
-        contentType: 'image/png',
-        bytes: input.png.length,
-        sha256,
-        originalName: `${view.camera.name}-${RENDER_MODE_LABELS[input.mode]}.png`,
-      })
-      .onConflictDoNothing()
-    const [stored] = await tx
-      .select({ id: storedFiles.id })
-      .from(storedFiles)
-      .where(and(eq(storedFiles.root, 'storage'), eq(storedFiles.storageKey, storageKey)))
-    if (!stored) throw new Error('Stored file row missing after insert')
+    const storedId = await registerStoredFile(tx, {
+      storageKey,
+      kind: 'render',
+      contentType: 'image/png',
+      bytes: input.png.length,
+      sha256,
+      originalName: `${view.camera.name}-${RENDER_MODE_LABELS[input.mode]}.png`,
+    })
     const [saved] = await tx
       .insert(renders)
       .values({
@@ -242,7 +226,7 @@ export async function saveRender(
         market: context.market,
         layoutSignature: context.layoutSignature,
         cameraSignature: view.signature,
-        fileId: stored.id,
+        fileId: storedId,
         width,
         height,
       })
@@ -256,7 +240,7 @@ export async function saveRender(
           renders.layoutSignature,
           renders.cameraSignature,
         ],
-        set: { fileId: stored.id, width, height, createdAt: new Date() },
+        set: { fileId: storedId, width, height, createdAt: new Date() },
       })
       .returning()
     if (!saved) throw new Error('Render insert returned no row')

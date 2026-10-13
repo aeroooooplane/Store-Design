@@ -11,17 +11,8 @@ import { isLfsPointer, resolveStoredFile } from '../../lib/storage.ts'
 import { THUMBNAIL_WIDTHS, canThumbnail, thumbnail } from '../../lib/thumbnails.ts'
 import type { StorageRoots, StorageRootName } from '../../lib/storage.ts'
 
-export function fileUrl(fileId: string): string {
-  return `/api/v1/files/${fileId}`
-}
-
-/**
- * A library file's address with its content hash: a browser may keep it for good, because a
- * changed file gets another address.
- */
-export function versionedFileUrl(fileId: string, sha256: string): string {
-  return `${fileUrl(fileId)}?v=${sha256.slice(0, 16)}`
-}
+// Kept for modules that still import the addresses from here (deliveries).
+export { fileUrl, versionedFileUrl } from '../../lib/file-url.ts'
 
 /** Streams a registered file by id; there is no path-based access. */
 export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoots }> = async (

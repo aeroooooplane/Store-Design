@@ -13,11 +13,10 @@ import type {
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
-import { requireActiveProject } from '../nodes/service.ts'
+import { findNode, requireActiveProject } from '../nodes/repository.ts'
 
-const { designNodes, nodeCameras } = schema
+const { nodeCameras } = schema
 type CameraRow = typeof nodeCameras.$inferSelect
-type NodeRow = typeof designNodes.$inferSelect
 
 /** Views belong to confirmed white models and to the render nodes made from them. */
 const CAMERA_NODE_KINDS = new Set(['white', 'render'])
@@ -30,12 +29,6 @@ function toNodeCamera(row: CameraRow): NodeCamera {
     camera: row.camera,
     deletedAt: row.deletedAt?.toISOString() ?? null,
   }
-}
-
-async function findNode(db: Database, nodeId: string): Promise<NodeRow> {
-  const [row] = await db.select().from(designNodes).where(eq(designNodes.id, nodeId))
-  if (!row) throw notFound('节点')
-  return row
 }
 
 async function findCamera(db: Database, cameraId: string): Promise<CameraRow> {

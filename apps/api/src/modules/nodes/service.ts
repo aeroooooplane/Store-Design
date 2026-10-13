@@ -26,9 +26,13 @@ import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import { catalogAssets } from '../assets/service.ts'
 import { initialCameras, insertCameras } from '../cameras/service.ts'
+import { findNode, requireActiveProject } from './repository.ts'
+import type { NodeRow } from './repository.ts'
+
+// Other modules import the guard from here.
+export { requireActiveProject }
 
 const { designNodes, projects } = schema
-type NodeRow = typeof designNodes.$inferSelect
 
 export function toSummary(row: NodeRow): NodeSummary {
   return {
@@ -52,22 +56,6 @@ export function toNode(row: NodeRow): DesignNode {
     space: row.space ?? null,
     layout: row.layout ?? null,
   }
-}
-
-/** Projects in the recycle bin are read-only. */
-export async function requireActiveProject(db: Database, projectId: string): Promise<void> {
-  const [project] = await db
-    .select({ deletedAt: projects.deletedAt })
-    .from(projects)
-    .where(eq(projects.id, projectId))
-  if (!project) throw notFound('项目')
-  if (project.deletedAt) throw new AppError('INVALID_STATE', '项目在回收站中，请先恢复')
-}
-
-async function findNode(db: Database, nodeId: string): Promise<NodeRow> {
-  const [row] = await db.select().from(designNodes).where(eq(designNodes.id, nodeId))
-  if (!row) throw notFound('节点')
-  return row
 }
 
 /** The space a layout lives in: the nearest `space` node at or above `nodeId`. */
