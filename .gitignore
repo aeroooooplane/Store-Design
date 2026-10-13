@@ -31,18 +31,16 @@ coverage/
 *.dylib
 tools/training/runtime/
 /output/pdf/
-/tmp/pdf-clean-qa/
+
+# Scratch space: nothing under tmp/ is committed. Earlier tracked scripts are in tag archive/pre-cleanup-20261013.
+/tmp/
 
 # Local derived evidence and asset payloads (sources/scripts remain tracked)
 /output/web-qa/
 /tools/sketchup/exports/
-/tmp/su-preflight.json
-/tmp/su-reentry-test-result.txt
-/tmp/validation-progress.txt
 
 # Machine-specific external source location and disposable PDF previews
 /resources.local.json
-/tmp/pdfs/
 
 # OS / editor files
 .DS_Store
@@ -51,31 +49,13 @@ Thumbs.db
 .vscode/
 *.swp
 
-# Local SI source material and reproducible visual payloads; keep manifests,
-# generators and audit records visible to source control.
-/设计标准/
+# Local SI review payloads left from 10-04 (the tracked records were archived).
 /output/maintenance/before-swiss/
 /output/maintenance/*.png
-/tmp/si-standards-review/SI1-part*/
-/tmp/si-standards-review/SI2/
-/tmp/si-standards-review/*.pptx
-/tmp/si-standards-review/*.jpg
-/tmp/si-standards-review/model-views/
-/tmp/clean-legends/*.png
-/tmp/clean-legends/before-publish/
-/tmp/plan-legends/*.png
-/tmp/plan-legends/*.jpg
 
 # Expanded copy of the DAE delivery; the verified ZIP is tracked with LFS.
 /资源库/90_处理过程与审核/模型拆分/dae-20261009/split-20260925-v2/
 /资源库/90_处理过程与审核/模型拆分/dae-20261009/*.zip
-
-# Local preview logs and transient native-render status (retain reproduction scripts).
-/tmp/si-website-preview.log
-/tmp/si-website-preview-error.log
-/tmp/clean-legends/all.flag
-/tmp/clean-legends/progress.json
-/tmp/clean-legends/review.html
 
 # Local secrets and environment files
 .env
@@ -83,9 +63,6 @@ Thumbs.db
 !.env.example
 *.pem
 *.key
-
-# Reproducible per-asset geometry dumps; published provenance stays in manifest.
-/tmp/clean-legends/asset-*-geometry.json
 
 # Store-drawing cleaning: caches and the paused full run stay on the machine that produced them;
 # another machine recomputes in its own rebuild namespace (tools/data-cleaning/light-handoff-20261009-01/START_HERE.md).
