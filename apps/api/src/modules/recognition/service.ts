@@ -1,7 +1,6 @@
 import { createHash } from 'node:crypto'
-import { mkdir, readFile, writeFile } from 'node:fs/promises'
-import path from 'node:path'
-import { and, desc, eq } from 'drizzle-orm'
+import { readFile } from 'node:fs/promises'
+import { desc, eq } from 'drizzle-orm'
 import sharp from 'sharp'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
@@ -24,7 +23,8 @@ import { AppError, notFound } from '../../lib/app-error.ts'
 import { resolveStoredFile } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { catalogAssets } from '../assets/service.ts'
-import { fileUrl } from '../files/routes.ts'
+import { fileUrl } from '../../lib/file-url.ts'
+import { registerStoredFile, writeStorageFile } from '../../lib/stored-files.ts'
 import { createNode, requireActiveProject } from '../nodes/service.ts'
 import { checkDraft, failureReason } from './check.ts'
 import { RELATIVE, answerToDraft, buildPrompt, parseAnswer, toPixels } from './llm.ts'
@@ -110,31 +110,20 @@ export async function uploadPlan(
   const sha256 = createHash('sha256').update(input.data).digest('hex')
   const ext = expected === 'png' ? 'png' : 'jpg'
   const storageKey = `uploads/${input.projectId}/${sha256.slice(0, 16)}.${ext}`
-  const file = path.resolve(roots.storage, storageKey)
-  await mkdir(path.dirname(file), { recursive: true })
-  await writeFile(file, input.data)
+  await writeStorageFile(roots, storageKey, input.data)
 
   const row = await db.transaction(async (tx) => {
-    await tx
-      .insert(storedFiles)
-      .values({
-        root: 'storage',
-        storageKey,
-        kind: 'upload',
-        contentType: input.contentType,
-        bytes: input.data.length,
-        sha256,
-        originalName: input.originalName,
-      })
-      .onConflictDoNothing()
-    const [stored] = await tx
-      .select({ id: storedFiles.id })
-      .from(storedFiles)
-      .where(and(eq(storedFiles.root, 'storage'), eq(storedFiles.storageKey, storageKey)))
-    if (!stored) throw new Error('Stored file row missing after insert')
+    const storedId = await registerStoredFile(tx, {
+      storageKey,
+      kind: 'upload',
+      contentType: input.contentType,
+      bytes: input.data.length,
+      sha256,
+      originalName: input.originalName,
+    })
     const [inserted] = await tx
       .insert(planUploads)
-      .values({ projectId: input.projectId, fileId: stored.id, page: input.page, width, height })
+      .values({ projectId: input.projectId, fileId: storedId, page: input.page, width, height })
       .returning()
     if (!inserted) throw new Error('Upload insert returned no row')
     return inserted

@@ -1,7 +1,5 @@
 import { createHash } from 'node:crypto'
-import { mkdir, writeFile } from 'node:fs/promises'
-import path from 'node:path'
-import { and, asc, desc, eq } from 'drizzle-orm'
+import { asc, desc, eq } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import type {
@@ -22,13 +20,14 @@ import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { setCameraDeleted } from '../cameras/service.ts'
-import { fileUrl } from '../files/routes.ts'
+import { fileUrl } from '../../lib/file-url.ts'
+import { registerStoredFile, writeStorageFile } from '../../lib/stored-files.ts'
 import { requireActiveProject, setHidden } from '../nodes/service.ts'
 import { getProject } from '../projects/service.ts'
 import { buildToolContext, findTool, refreshNode, stateSummary, toolSpecs } from './tools.ts'
 import type { ToolContext } from './tools.ts'
 
-const { agentActions, agentMessages, agentSessions, storedFiles } = schema
+const { agentActions, agentMessages, agentSessions } = schema
 type SessionRow = typeof agentSessions.$inferSelect
 type MessageRow = typeof agentMessages.$inferSelect
 type ActionRow = typeof agentActions.$inferSelect
@@ -172,27 +171,15 @@ async function storeImage(
   }
   const sha256 = createHash('sha256').update(data).digest('hex')
   const storageKey = `agent/${projectId}/${sha256.slice(0, 16)}.png`
-  const file = path.resolve(roots.storage, storageKey)
-  await mkdir(path.dirname(file), { recursive: true })
-  await writeFile(file, data)
-  await db
-    .insert(storedFiles)
-    .values({
-      root: 'storage',
-      storageKey,
-      kind: 'agent_image',
-      contentType: 'image/png',
-      bytes: data.length,
-      sha256,
-      originalName: null,
-    })
-    .onConflictDoNothing()
-  const [stored] = await db
-    .select({ id: storedFiles.id })
-    .from(storedFiles)
-    .where(and(eq(storedFiles.root, 'storage'), eq(storedFiles.storageKey, storageKey)))
-  if (!stored) throw new Error('Stored file row missing after insert')
-  return stored.id
+  await writeStorageFile(roots, storageKey, data)
+  return registerStoredFile(db, {
+    storageKey,
+    kind: 'agent_image',
+    contentType: 'image/png',
+    bytes: data.length,
+    sha256,
+    originalName: null,
+  })
 }
 
 /** Earlier turns as the model sees them: just what was said, not the tool traffic. */

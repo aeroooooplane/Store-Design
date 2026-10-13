@@ -6,7 +6,7 @@ import type { Asset, AssetList, AssetListQuery, FileRef, FrontAxis } from '@stor
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { notFound } from '../../lib/app-error.ts'
-import { versionedFileUrl } from '../files/routes.ts'
+import { versionedFileUrl } from '../../lib/file-url.ts'
 
 const { assets, storedFiles } = schema
 const glbFiles = aliasedTable(storedFiles, 'glb_files')
