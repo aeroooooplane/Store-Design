@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generatedAt": "2026-10-13T10:53:01+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -49,7 +49,7 @@
  "si": {
   "value": "SI1.0",
   "source": "飞书10-09",
-  "confidence": "待定",
+  "confidence": "中",
   "confirmed": false,
   "evidence": {
    "飞书10-09": {
@@ -77,7 +77,8 @@
      ]
     }
    }
-  }
+  },
+  "note": "图纸里有 SI2.0 常见道具 / 材料（子母凳），与飞书相反；弱证据不作判定，阶段 4 看效果图复核"
  },
  "shop_type": {
   "value": "边厅店",
@@ -147,6 +148,6 @@
   "related_stores": null
  },
  "status": {
-  "stage1": "待裁决"
+  "stage1": "自动"
  }
 }

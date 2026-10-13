@@ -4,7 +4,7 @@
 - 飞书台账 2026-10-09（SI / 铺型初值，按“本地文件名”匹配）；
 - 飞书快照 2026-09-23（对照，只覆盖最初 418 份）；
 - 文件名（括号里的铺型、渠道类型、国内 / 海外）；
-- 图纸文字层（extract_text_evidence.py 的缓存）：si 字样为强证据，SI 专属道具 / 材料名为弱证据；
+- 图纸文字层（extract_text_evidence.py 的缓存）：si 字样为强证据，SI 专属道具 / 材料名为弱证据（只记录，不判冲突）；
   图签铺型字样只取图签店名与本店一致的页（模板页可能是从别的店复制的，见方案 1.7）。
 
 城市、商场、楼层、商场组、关联门店按 2026-10-13 用户答复推迟，字段留 null。
@@ -112,6 +112,13 @@ def filename_hints(stem: str) -> dict:
     return {"shop": shop, "subtype": subtype, "region": region or "中国大陆", "channel": channel, "project_hint": project}
 
 
+def prescreen_text(row) -> str | None:
+    """看图初审的建议（阶段1看图初审.json），写进冲突清单的“建议”列。"""
+    if not row:
+        return None
+    return f"建议 {row['建议取值']}（{row['动作']}；看图：{row['依据']}）"
+
+
 def pages_text(pages: list[int]) -> str:
     shown = "、".join(str(p) for p in pages[:6])
     return f"第 {shown}{' 等' if len(pages) > 6 else ''} 页"
@@ -155,6 +162,8 @@ def main() -> None:
             evidence[item["source_id"]] = item["pages"]
 
     stores, issues = [], []
+    prescreen_path = args.out / "阶段1看图初审.json"
+    prescreen = {(r["store_id"], r["字段"]): r for r in load_json(prescreen_path)["rows"]} if prescreen_path.exists() else {}
 
     def issue(store, field_name, problems, current, detail, path):
         """同一家店同一字段的多条问题合并成一行，方便在 Excel 里逐行裁决。"""
@@ -167,7 +176,7 @@ def main() -> None:
                 "问题": "；".join(k for k, _ in problems),
                 "当前取值": current,
                 "证据": detail,
-                "建议": "；".join(dict.fromkeys(v for _, v in problems)),
+                "建议": prescreen_text(prescreen.get((store["store_id"], field_name))) or "；".join(dict.fromkeys(v for _, v in problems)),
                 "你的裁决": "",
                 "备注": "",
                 "原图": path,
@@ -231,16 +240,17 @@ def main() -> None:
             problems.append((f"SI：飞书两份数据不一致（10-09 {l_si}，09-23 {snap_si}）", f"以图纸证据为准；没有证据时取 10-09 的 {l_si}"))
         if l_si and len(strong) == 1 and strong[0] != l_si:
             problems.append((f"SI：飞书为 {l_si}，图纸写明 {strong[0]}", f"建议改为 {strong[0]}"))
-        if l_si and not strong and len(weak) == 1 and weak[0] != l_si:
-            problems.append((f"SI：飞书为 {l_si}，图纸里只有 {weak[0]} 专属道具 / 材料（{'、'.join(sorted(weak_words[weak[0]]))}）", "弱证据，请看效果图或平面确认"))
+        # 弱证据只记录、不判冲突：2026-10-13 看图核对，子母凳、试飞台、徕卡品牌墙、1.6 米配件柜在两套 SI 的店里都出现，
+        # 与飞书相反的 8 家看效果图全部是飞书正确（见方案阶段 1 结果）。
+        si_note = None
+        if l_si and not strong and weak and l_si not in weak:
+            si_note = f"图纸里有 {'、'.join(weak)} 常见道具 / 材料（{'、'.join(sorted(w for k in weak for w in weak_words[k]))}），与飞书相反；弱证据不作判定，阶段 4 看效果图复核"
         if not l_si:
-            guess = strong[0] if len(strong) == 1 else (weak[0] if len(weak) == 1 else None)
+            guess = strong[0] if len(strong) == 1 else None
             problems.append(("SI：飞书未填写", f"图纸证据指向 {guess}" if guess else "图纸没有文字证据，阶段 4 用效果图判断"))
             si_value, si_source, si_conf = guess, "图纸" if guess else None, "低"
         if not problems and l_si and (l_si in strong):
             si_conf = "高"
-        elif not problems and l_si and weak == [l_si]:
-            si_conf = "中高"
         if problems:
             si_conf = "待定"
         if problems:
@@ -297,7 +307,7 @@ def main() -> None:
                 "ledger_1009_note": row.get("备注") if row else None,
                 "record_id_0923": snap.get("recordId") if snap else None,
             },
-            "si": field(si_value, si_source if si_value else None, si_ev, si_conf),
+            "si": field(si_value, si_source if si_value else None, si_ev, si_conf) | {"note": si_note},
             "shop_type": field(SHOP_LABEL.get(shop_value), "飞书10-09" if shop_value == l_shop and l_shop else ("文件名 / 图签" if shop_value else None), shop_ev, shop_conf)
             | {"subtype": hints["subtype"]},
             "review_hint": hint,
@@ -330,6 +340,7 @@ def main() -> None:
         "issues": len(issues),
         "issue_fields": dict(Counter(i["字段"] for i in issues)),
         "review_hints": sum(1 for s in stores if s["review_hint"]),
+        "si_weak_against_feishu": sum(1 for s in stores if s["si"]["note"]),
     }
     table = [
         {
