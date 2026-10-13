@@ -4,38 +4,25 @@
  * lock the current results, the nodes they create and the props' coordinates.
  */
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { schema } from '@store/database'
-import { rectangleSpace } from '@store/shared'
-import type {
-  Asset,
-  DesignNode,
-  NodeCameraList,
-  NodeCreated,
-  NodeTree,
-  Project,
-} from '@store/shared'
-import { loadConfig } from '../src/config/env.ts'
-import { systemContext } from '../src/context/actor.ts'
-import { buildToolContext, findTool } from '../src/modules/agent/tools.ts'
-import type { ToolOutcome } from '../src/modules/agent/tools.ts'
-import { getProject } from '../src/modules/projects/service.ts'
+import type { NodeCameraList, NodeTree } from '@store/shared'
+import {
+  createNode,
+  createProject,
+  createSpace,
+  getNode,
+  islandItem as island,
+  layoutOf as layout,
+  runTool,
+  seedAsset,
+} from './fixtures.ts'
+import type { AssetSeed, ToolCall } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
 let t: TestApp
-const config = loadConfig({ NODE_ENV: 'test' })
 
-type Seed = {
-  id: string
-  name: string
-  fn: Asset['function']
-  w: number
-  d: number
-  h: number
-  front: string
-}
-/** Copied from agent.test.ts / layouts.test.ts (to be shared later): a table, a cashier, a cabinet. */
-const seeds: Seed[] = [
+/** A table, a cashier, a cabinet. */
+const seeds: AssetSeed[] = [
   {
     id: 'asset-1',
     name: '1800mm普通中岛桌',
@@ -57,90 +44,19 @@ const seeds: Seed[] = [
   },
 ]
 
-async function seedAssets() {
-  for (const s of seeds) {
-    const [file] = await t.database.db
-      .insert(schema.storedFiles)
-      .values({
-        root: 'resource',
-        storageKey: `models/${s.id}.glb`,
-        kind: 'glb',
-        contentType: 'model/gltf-binary',
-        bytes: 1,
-        sha256: 'a'.repeat(64),
-      })
-      .returning()
-    await t.database.db.insert(schema.assets).values({
-      id: s.id,
-      standardName: s.name,
-      variant: 'A',
-      materialCategory: '软装物料',
-      siFamily: 'SI1.0',
-      function: s.fn,
-      installation: 'floor',
-      width: s.w,
-      depth: s.d,
-      height: s.h,
-      footprintSource: 'glb',
-      front: s.front,
-      placeable: true,
-      glbFileId: file?.id,
-    })
-  }
-}
-
 beforeAll(async () => {
   t = await createTestApp()
-  await seedAssets()
+  for (const s of seeds) await seedAsset(t, s)
 })
 
 afterAll(async () => {
   await t.close()
 })
 
-const island = (id: string, cx: number, cz: number, extra: object = {}) => ({
-  id,
-  assetId: 'asset-1',
-  function: 'island_table',
-  name: `中岛桌 ${id}`,
-  cx,
-  cz,
-  rotation: 0,
-  w: 1,
-  d: 1.8,
-  h: 1.327,
-  ...extra,
-})
-const layout = (...items: object[]) => ({ schemaVersion: 3, items })
-
-async function newProject(name = 'Agent 工具'): Promise<Project> {
-  const response = await t.app.inject({
-    method: 'POST',
-    url: '/api/v1/projects',
-    payload: { name, shopType: 'island' },
-  })
-  expect(response.statusCode).toBe(201)
-  return response.json<Project>()
-}
-
-async function create(projectId: string, payload: object): Promise<DesignNode> {
-  const response = await t.app.inject({
-    method: 'POST',
-    url: `/api/v1/projects/${projectId}/nodes`,
-    payload,
-  })
-  expect(response.statusCode).toBe(201)
-  return response.json<NodeCreated>().node
-}
-
+const newProject = (name = 'Agent 工具') => createProject(t, { name, shopType: 'island' })
+const create = (projectId: string, payload: object) => createNode(t, projectId, payload)
 /** An 8 × 6 × 3.2 m room whose whole front edge (z = 6) is the entrance. */
-const spaceOf = (projectId: string) =>
-  create(projectId, {
-    parentId: null,
-    kind: 'space',
-    name: '空间',
-    space: rectangleSpace(8, 6, 3.2),
-  })
+const spaceOf = (projectId: string) => createSpace(t, projectId)
 
 const planOf = (projectId: string, parentId: string, items: object[], name = '方案 A') =>
   create(projectId, { parentId, kind: 'plan', name, layout: layout(...items) })
@@ -148,11 +64,7 @@ const planOf = (projectId: string, parentId: string, items: object[], name = '�
 const whiteOf = (projectId: string, parentId: string, items: object[], name = '三维效果') =>
   create(projectId, { parentId, kind: 'white', name, layout: layout(...items) })
 
-async function node(id: string | undefined): Promise<DesignNode> {
-  const response = await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${id}` })
-  expect(response.statusCode).toBe(200)
-  return response.json<DesignNode>()
-}
+const node = (id: string | undefined) => getNode(t, id)
 
 async function tree(projectId: string): Promise<NodeTree['nodes']> {
   return (
@@ -166,21 +78,7 @@ async function cameras(nodeId: string) {
   ).json<NodeCameraList>().cameras
 }
 
-/** Runs one tool the way the agent service does: fresh context, input parsed by its schema. */
-async function run(
-  projectId: string,
-  nodeId: string | null,
-  name: string,
-  input: object = {},
-  selectedItemIds: string[] = [],
-): Promise<ToolOutcome> {
-  const tool = findTool(name)
-  if (!tool) throw new Error(`no tool ${name}`)
-  const ctx = systemContext('test')
-  const project = await getProject(t.database.db, ctx, projectId)
-  const tools = await buildToolContext(t.database.db, ctx, config, project, nodeId, selectedItemIds)
-  return tool.run(tools, tool.schema.parse(input))
-}
+const run = (...call: ToolCall) => runTool(t, ...call)
 
 describe('get_state（当前行为）', () => {
   it('describes the project, the current node, the space in millimetres and the props', async () => {

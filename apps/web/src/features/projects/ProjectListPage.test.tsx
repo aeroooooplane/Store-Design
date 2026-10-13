@@ -1,51 +1,17 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Project } from '@store/shared'
+import { makeProject as project } from '../../test-utils/factories.ts'
+import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { ProjectListPage } from './ProjectListPage.tsx'
-
-function project(overrides: Partial<Project>): Project {
-  return {
-    id: '11111111-1111-4111-8111-111111111111',
-    name: '南京德基',
-    shopType: 'side_hall',
-    market: 'domestic',
-    siStyle: 'SI1.0',
-    revision: 1,
-    createdAt: '2026-10-09T02:00:00.000Z',
-    updatedAt: '2026-10-09T02:00:00.000Z',
-    deletedAt: null,
-    ...overrides,
-  }
-}
-
-interface Call {
-  method: string
-  path: string
-  ifMatch: string | null
-  body: unknown
-}
 
 /** In-memory stand-in for the API, recording every request the page makes. */
 function fakeApi(initial: Project[]) {
   const projects = [...initial]
-  const calls: Call[] = []
   let failCreate: { status: number; body: object } | null = null
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
-  const fetchMock = vi.fn(async (request: Request) => {
-    const url = new URL(request.url)
-    const text = request.method === 'GET' ? '' : await request.text()
-    const body: unknown = text ? JSON.parse(text) : undefined
-    calls.push({
-      method: request.method,
-      path: url.pathname,
-      ifMatch: request.headers.get('if-match'),
-      body,
-    })
-
+  const { calls, fetchMock } = stubFetch(({ request, url, body }) => {
     if (request.method === 'GET' && url.pathname === '/api/v1/projects') {
       const deleted = url.searchParams.get('status') === 'deleted'
       const items = projects.filter((p) => (p.deletedAt !== null) === deleted)
@@ -73,13 +39,12 @@ function fakeApi(initial: Project[]) {
     }
     if (request.method === 'DELETE') {
       const target = projects.find((p) => url.pathname.endsWith(p.id))
-      if (!target)
-        return json(404, { error: { code: 'NOT_FOUND', message: '项目不存在', requestId: 'r' } })
+      if (!target) return notFound('项目不存在')
       target.deletedAt = '2026-10-09T03:00:00.000Z'
       target.revision += 1
       return json(200, target)
     }
-    return json(404, { error: { code: 'NOT_FOUND', message: '接口不存在', requestId: 'r' } })
+    return notFound()
   })
 
   return {
@@ -92,14 +57,7 @@ function fakeApi(initial: Project[]) {
 }
 
 function renderPage() {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter>
-        <ProjectListPage />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
+  return renderWithClient(<ProjectListPage />, { router: true })
 }
 
 let server: ReturnType<typeof fakeApi>
@@ -115,7 +73,6 @@ beforeEach(() => {
       siStyle: 'SI2.0',
     }),
   ])
-  vi.stubGlobal('fetch', server.fetchMock)
 })
 
 afterEach(() => {

@@ -21,6 +21,7 @@ import {
   toPixels,
 } from '../src/modules/recognition/llm.ts'
 import { dimensionMm, recognizeVector } from '../src/modules/recognition/local.ts'
+import { createProject } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -509,14 +510,7 @@ const LLM_ANSWER = {
   confidence: 0.8,
 }
 
-async function createProject(t: TestApp) {
-  const response = await t.app.inject({
-    method: 'POST',
-    url: '/api/v1/projects',
-    payload: { name: '识别测试', shopType: 'side_hall' },
-  })
-  return response.json<{ id: string }>()
-}
+const newProject = (t: TestApp) => createProject(t, { name: '识别测试', shopType: 'side_hall' })
 
 async function upload(t: TestApp, projectId: string, body: Buffer, contentType = 'image/png') {
   return t.app.inject({
@@ -537,7 +531,7 @@ describe('recognition API without a model', () => {
   })
 
   it('stores an uploaded picture and refuses anything else', async () => {
-    const { id } = await createProject(t)
+    const { id } = await newProject(t)
     const ok = await upload(t, id, png(400, 300))
     expect(ok.statusCode).toBe(201)
     expect(ok.json<PlanUpload>()).toMatchObject({
@@ -560,7 +554,7 @@ describe('recognition API without a model', () => {
   })
 
   it('reads vector content locally, fails honestly without it, and confirms a space', async () => {
-    const { id } = await createProject(t)
+    const { id } = await newProject(t)
     const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
 
     const noVector = await t.app.inject({
@@ -638,7 +632,7 @@ describe('recognition API with a fallback model', () => {
   })
 
   it('hands a picture without vector content to the model, books the call and keeps both runs', async () => {
-    const { id } = await createProject(t)
+    const { id } = await newProject(t)
     const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
     const sent: { model: string; images: number }[] = []
     vi.stubGlobal(

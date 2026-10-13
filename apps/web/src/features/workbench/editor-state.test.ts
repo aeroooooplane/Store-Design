@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, Layout, LayoutItem } from '@store/shared'
+import { makeAsset } from '../../test-utils/factories.ts'
 import { editorReducer, initialEditorState, nextItemId, snap } from './editor-state.ts'
 import type { EditorState } from './editor-state.ts'
 
@@ -27,13 +28,13 @@ function state(items: LayoutItem[]): EditorState {
   return initialEditorState(layout)
 }
 
-const asset = {
+const asset = makeAsset({
   id: 'asset-7',
   name: '配件柜',
   function: 'accessory_cabinet',
   footprint: { w: 1.2, d: 0.45, h: 2.1 },
   placeable: true,
-} as Asset
+})
 
 describe('editorReducer', () => {
   it('snaps moves and nudges to 10 mm and marks the layout dirty', () => {

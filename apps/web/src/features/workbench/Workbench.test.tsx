@@ -1,9 +1,10 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, DesignNode, Draft, Layout, LayoutItem, Project } from '@store/shared'
+import { makeAsset, makeNode, makeProject } from '../../test-utils/factories.ts'
+import { json, stubFetch } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { Workbench } from './Workbench.tsx'
 
 const PID = '11111111-1111-4111-8111-111111111111'
@@ -11,17 +12,7 @@ const S1 = '22222222-2222-4222-8222-222222222222'
 const P1 = '33333333-3333-4333-8333-333333333333'
 const P2 = '44444444-4444-4444-8444-444444444444'
 
-const project: Project = {
-  id: PID,
-  name: '南京德基',
-  shopType: 'side_hall',
-  market: 'domestic',
-  siStyle: 'SI1.0',
-  revision: 1,
-  createdAt: '2026-10-09T02:00:00.000Z',
-  updatedAt: '2026-10-09T02:00:00.000Z',
-  deletedAt: null,
-}
+const project = makeProject({ id: PID })
 
 const table: LayoutItem = {
   id: 'island_table-1',
@@ -44,32 +35,14 @@ function designNode(
   parentId: string | null,
   overrides: Partial<DesignNode> = {},
 ): DesignNode {
-  return {
-    id,
+  return makeNode(id, parentId, {
     projectId: PID,
-    parentId,
-    kind: parentId === null ? 'space' : 'plan',
-    name: id,
-    strategy: null,
-    siStyle: null,
-    origin: 'user',
-    importedFrom: null,
-    hidden: false,
-    createdAt: '2026-10-09T03:00:00.000Z',
     space: parentId === null ? rectangleSpace(8, 6, 3.2) : null,
     layout: parentId === null ? null : layout([table]),
     ...overrides,
-  }
+  })
 }
 
-interface Call {
-  method: string
-  path: string
-  ifMatch: string | null
-  body: unknown
-}
-
-/** In-memory stand-in for the node, draft, asset and layout APIs. */
 /** A catalogue model with just what the workbench reads. */
 function catalogAsset(
   id: string,
@@ -78,50 +51,24 @@ function catalogAsset(
   d: number,
   front: Asset['front'],
 ): Asset {
-  return {
+  return makeAsset({
     id,
     name: `${siFamily} 1.2米配件柜`,
     standardName: '1.2米配件柜',
-    variant: '',
-    materialCategory: '软装物料',
     siFamily,
-    category: '软装道具',
     function: 'accessory_cabinet',
-    installation: 'floor',
     footprint: { w, d, h: 2.4 },
-    footprintSource: 'glb',
     front,
-    staffSide: null,
-    facingConfidence: 'high',
-    placeable: true,
-    retired: false,
-    judgment: null,
-    glb: null,
-    whiteGlb: null,
-    finishGlb: null,
-    preview: null,
-    productImage: null,
-    productImageMatch: null,
-    planSymbol: null,
-  }
+  })
 }
 
+/** In-memory stand-in for the node, draft, asset and layout APIs. */
 function fakeApi(nodes: DesignNode[], draft: Draft | null, assets: Asset[] = []) {
   const state = { nodes: [...nodes], draft, project }
-  const calls: Call[] = []
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
   const fail = (status: number, code: string) =>
     json(status, { error: { code, message: code, requestId: 'r' } })
 
-  const fetchMock = vi.fn(async (request: Request) => {
-    const url = new URL(request.url)
-    const text = request.method === 'GET' ? '' : await request.text()
-    const body: unknown = text ? JSON.parse(text) : undefined
-    const ifMatch = request.headers.get('if-match')
-    calls.push({ method: request.method, path: url.pathname, ifMatch, body })
-    const route = `${request.method} ${url.pathname}`
-
+  const { calls, fetchMock } = stubFetch(({ request, url, route, body, ifMatch }) => {
     if (route === `GET /api/v1/projects/${PID}/nodes`) {
       const summaries = state.nodes.map(({ projectId: _p, space: _s, layout: _l, ...s }) => s)
       return json(200, { projectId: PID, nodes: summaries })
@@ -191,14 +138,9 @@ function fakeApi(nodes: DesignNode[], draft: Draft | null, assets: Asset[] = [])
 }
 
 function renderWorkbench(search = '') {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={[`/projects/${PID}${search}`]}>
-        <Workbench project={project} />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
+  return renderWithClient(<Workbench project={project} />, {
+    router: { initialEntries: [`/projects/${PID}${search}`] },
+  })
 }
 
 let server: ReturnType<typeof fakeApi>
@@ -224,7 +166,6 @@ afterEach(() => {
 describe('Workbench', () => {
   it('starts an empty project with the space editor and opens the saved space', async () => {
     server = fakeApi([], null)
-    vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench()
 
     expect(await screen.findByText('第一步：录入空间')).toBeTruthy()
@@ -252,7 +193,6 @@ describe('Workbench', () => {
 
   it('keeps all three generated plans under the space and opens one', async () => {
     server = fakeApi([designNode(S1, null, { name: '一层空间' })], null)
-    vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench()
 
     fireEvent.click(await screen.findByRole('button', { name: '生成三个方案' }))
@@ -289,7 +229,6 @@ describe('Workbench', () => {
       ],
       draft,
     )
-    vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench(`?node=${P2}`)
 
     expect(await screen.findByText(/基于「方案 A」的草稿/)).toBeTruthy()
@@ -323,7 +262,6 @@ describe('Workbench', () => {
         catalogAsset('asset-34327615', 'SI2.0', 1.2, 0.54, '+Z'),
       ],
     )
-    vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench(`?node=${P1}`)
 
     await screen.findByRole('button', { name: '撤回' })
@@ -356,7 +294,6 @@ describe('Workbench', () => {
       ],
       null,
     )
-    vi.stubGlobal('fetch', server.fetchMock)
     renderWorkbench(`?node=${P1}`)
 
     await screen.findByRole('heading', { name: '方案 A' })
@@ -373,7 +310,6 @@ describe('Workbench', () => {
 
   it('autosaves edits to the draft, then saves a version and clears the draft', async () => {
     server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
-    vi.stubGlobal('fetch', server.fetchMock)
     const { container } = renderWorkbench(`?node=${P1}`)
 
     await screen.findByRole('button', { name: '撤回' })

@@ -1,39 +1,18 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Asset, PlanUpload, RecognitionRun, RecognizeResponse } from '@store/shared'
+import { makeAsset, makeNode } from '../../test-utils/factories.ts'
+import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
+import type { FakeRequest } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { RecognitionPanel } from './RecognitionPanel.tsx'
 
 const PROJECT = '11111111-1111-4111-8111-111111111111'
 const UPLOAD = '22222222-2222-4222-8222-222222222222'
 const RUN = '33333333-3333-4333-8333-333333333333'
 
-const asset = (id: string, name: string, fn: Asset['function'], w: number, d: number): Asset => ({
-  id,
-  name,
-  standardName: name,
-  variant: '',
-  materialCategory: '软装物料',
-  siFamily: 'SI1.0',
-  category: '软装道具',
-  function: fn,
-  installation: 'floor',
-  footprint: { w, d, h: 0.9 },
-  footprintSource: 'glb',
-  front: '+Z',
-  staffSide: null,
-  facingConfidence: 'high',
-  placeable: true,
-  retired: false,
-  judgment: null,
-  glb: null,
-  whiteGlb: null,
-  finishGlb: null,
-  preview: null,
-  productImage: null,
-  productImageMatch: null,
-  planSymbol: null,
-})
+const asset = (id: string, name: string, fn: Asset['function'], w: number, d: number): Asset =>
+  makeAsset({ id, name, standardName: name, function: fn, footprint: { w, d, h: 0.9 } })
 const ASSETS = [
   asset('asset-1', '1.8米普通中岛桌', 'island_table', 1, 1.8),
   asset('asset-2', '1.2米配件柜', 'accessory_cabinet', 1.2, 0.45),
@@ -132,15 +111,14 @@ const run: RecognitionRun = {
   finishedAt: '2026-10-12T01:00:05.000Z',
 }
 
+/** Uploads are recorded by their content type; JSON bodies are parsed. */
+async function readBody(request: Request): Promise<unknown> {
+  const type = request.headers.get('content-type') ?? ''
+  return type.startsWith('application/json') ? JSON.parse(await request.text()) : type
+}
+
 function fakeApi() {
-  const calls: { method: string; path: string; body: unknown }[] = []
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
-  const fetchMock = vi.fn(async (request: Request) => {
-    const { pathname } = new URL(request.url)
-    const type = request.headers.get('content-type') ?? ''
-    const body = type.startsWith('application/json') ? JSON.parse(await request.text()) : type
-    calls.push({ method: request.method, path: pathname, body })
+  const handle = ({ request, path: pathname }: FakeRequest) => {
     if (request.method === 'POST' && pathname.endsWith('/uploads')) return json(201, upload)
     if (request.method === 'POST' && pathname.endsWith('/recognize')) {
       const response: RecognizeResponse = { run, attempted: null }
@@ -149,27 +127,19 @@ function fakeApi() {
     if (pathname.endsWith('/runs')) return json(200, [run])
     if (request.method === 'POST' && pathname.endsWith('/confirm')) {
       return json(201, {
-        node: {
-          id: '55555555-5555-4555-8555-555555555555',
+        node: makeNode('55555555-5555-4555-8555-555555555555', null, {
           projectId: PROJECT,
-          parentId: null,
           kind: 'space',
           name: '识别空间',
-          strategy: null,
-          siStyle: null,
           origin: 'recognition',
-          importedFrom: null,
-          hidden: false,
           createdAt: '2026-10-12T01:00:10.000Z',
-          space: null,
-          layout: null,
-        },
+        }),
         issues: [],
       })
     }
-    return json(404, { error: { code: 'NOT_FOUND', message: '接口不存在', requestId: 'r' } })
-  })
-  return { calls, fetchMock }
+    return notFound()
+  }
+  return stubFetch(handle, { readBody })
 }
 
 afterEach(() => {
@@ -180,14 +150,8 @@ afterEach(() => {
 describe('RecognitionPanel', () => {
   it('uploads a picture, shows the result, lets the model be chosen, and confirms the space', async () => {
     const server = fakeApi()
-    vi.stubGlobal('fetch', server.fetchMock)
     const onCreated = vi.fn()
-    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-    render(
-      <QueryClientProvider client={client}>
-        <RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={onCreated} />
-      </QueryClientProvider>,
-    )
+    renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={onCreated} />)
 
     const file = new File([new Uint8Array([137, 80, 78, 71])], '简图.png', { type: 'image/png' })
     fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
@@ -256,28 +220,11 @@ describe('RecognitionPanel', () => {
     }
     server.fetchMock.mockImplementation(async (request: Request) => {
       const { pathname } = new URL(request.url)
-      if (pathname.endsWith('/uploads'))
-        return new Response(JSON.stringify(upload), {
-          status: 201,
-          headers: { 'content-type': 'application/json' },
-        })
-      if (pathname.endsWith('/recognize'))
-        return new Response(JSON.stringify({ run: failed, attempted: null }), {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        })
-      return new Response(JSON.stringify([]), {
-        status: 200,
-        headers: { 'content-type': 'application/json' },
-      })
+      if (pathname.endsWith('/uploads')) return json(201, upload)
+      if (pathname.endsWith('/recognize')) return json(200, { run: failed, attempted: null })
+      return json(200, [])
     })
-    vi.stubGlobal('fetch', server.fetchMock)
-    const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-    render(
-      <QueryClientProvider client={client}>
-        <RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />
-      </QueryClientProvider>,
-    )
+    renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
     fireEvent.change(screen.getByLabelText('选择简图文件'), {
       target: { files: [new File(['x'], 'a.gif', { type: 'image/gif' })] },
     })

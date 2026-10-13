@@ -3,14 +3,8 @@ import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { unzipSync } from 'fflate'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
-import type {
-  NodeCameraList,
-  NodeCreated,
-  NodeRenderList,
-  Project,
-  RenderImage,
-} from '@store/shared'
+import type { NodeCameraList, NodeRenderList, RenderImage } from '@store/shared'
+import { api, renderChain } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -27,28 +21,7 @@ afterAll(async () => {
   await rm(storage, { recursive: true, force: true })
 })
 
-const layout = {
-  schemaVersion: 3,
-  items: [
-    {
-      id: 'island_table-1',
-      assetId: null,
-      function: 'island_table',
-      name: '中岛桌',
-      cx: 4,
-      cz: 3,
-      rotation: 0,
-      w: 1.8,
-      d: 0.9,
-      h: 0.9,
-      placeholder: true,
-    },
-  ],
-}
-
-async function inject(method: 'GET' | 'POST' | 'PATCH', url: string, payload?: object) {
-  return t.app.inject({ method, url: `/api/v1${url}`, ...(payload ? { payload } : {}) })
-}
+const inject = api(() => t)
 
 const upload = (nodeId: string, cameraId: string, mode: string, body: Buffer | string) =>
   t.app.inject({
@@ -59,34 +32,7 @@ const upload = (nodeId: string, cameraId: string, mode: string, body: Buffer | s
   })
 
 /** space → plan → white → render; returns the nodes and the render node's views. */
-async function renderNode() {
-  const project = (
-    await inject('POST', '/projects', { name: '渲染测试', shopType: 'side_hall' })
-  ).json<Project>()
-  const create = async (payload: object) => {
-    const response = await inject('POST', `/projects/${project.id}/nodes`, payload)
-    expect(response.statusCode).toBe(201)
-    return response.json<NodeCreated>().node
-  }
-  const space = await create({
-    parentId: null,
-    kind: 'space',
-    name: '空间',
-    space: { ...rectangleSpace(8, 6, 3.2), entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }] },
-  })
-  const plan = await create({ parentId: space.id, kind: 'plan', name: '方案', layout })
-  const white = await create({ parentId: plan.id, kind: 'white', name: '白模', layout })
-  const render = await create({
-    parentId: white.id,
-    kind: 'render',
-    name: '渲染',
-    siStyle: 'SI1.0',
-    layout,
-  })
-  const cameras = (await inject('GET', `/nodes/${render.id}/cameras`)).json<NodeCameraList>()
-    .cameras
-  return { project, plan, white, render, cameras }
-}
+const renderNode = () => renderChain(t, { projectName: '渲染测试' })
 
 const images = async (nodeId: string) =>
   (await inject('GET', `/nodes/${nodeId}/renders`)).json<NodeRenderList>().images

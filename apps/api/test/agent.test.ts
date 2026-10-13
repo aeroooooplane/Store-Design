@@ -1,6 +1,5 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { schema } from '@store/database'
-import { rectangleSpace } from '@store/shared'
 import type {
   AgentAction,
   AgentMessage,
@@ -9,54 +8,13 @@ import type {
   DesignNode,
   NodeCreated,
 } from '@store/shared'
+import { createProject, createSpace, seedAsset } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
-/** One placeable catalogue model: a 1.0 × 1.8 m island table. */
-async function seedAsset(t: TestApp) {
-  const [file] = await t.database.db
-    .insert(schema.storedFiles)
-    .values({
-      root: 'resource',
-      storageKey: 'models/asset-1.glb',
-      kind: 'glb',
-      contentType: 'model/gltf-binary',
-      bytes: 1,
-      sha256: 'a'.repeat(64),
-    })
-    .returning()
-  await t.database.db.insert(schema.assets).values({
-    id: 'asset-1',
-    standardName: '1800mm普通中岛桌',
-    variant: 'A',
-    materialCategory: '软装物料',
-    siFamily: 'SI1.0',
-    function: 'island_table',
-    installation: 'floor',
-    width: 1,
-    depth: 1.8,
-    height: 1.327,
-    footprintSource: 'glb',
-    front: 'any',
-    placeable: true,
-    glbFileId: file?.id,
-  })
-}
-
 async function projectWithSpace(t: TestApp) {
-  const project = await t.app.inject({
-    method: 'POST',
-    url: '/api/v1/projects',
-    payload: { name: 'Agent 测试', shopType: 'island' },
-  })
-  const { id } = project.json<{ id: string }>()
-  const space = await t.app.inject({
-    method: 'POST',
-    url: `/api/v1/projects/${id}/nodes`,
-    payload: { parentId: null, kind: 'space', name: '空间', space: rectangleSpace(8, 6, 3.2) },
-  })
-  expect(space.statusCode).toBe(201)
-  return { projectId: id, spaceNode: space.json<NodeCreated>().node }
+  const project = await createProject(t, { name: 'Agent 测试', shopType: 'island' })
+  return { projectId: project.id, spaceNode: await createSpace(t, project.id) }
 }
 
 async function newSession(t: TestApp, projectId: string): Promise<AgentSession> {
@@ -468,20 +426,16 @@ describe('agent with DeepSeek', () => {
       ['asset-2595882', 'SI1.0', 0.45],
       ['asset-34327615', 'SI2.0', 0.54],
     ] as const) {
-      await t.database.db.insert(schema.assets).values({
+      await seedAsset(t, {
         id,
-        standardName: '1.2米配件柜',
+        name: '1.2米配件柜',
         variant: siFamily,
-        materialCategory: '软装物料',
-        siFamily,
-        function: 'accessory_cabinet',
-        installation: 'floor',
-        width: 1.2,
-        depth,
-        height: 2.4,
-        footprintSource: 'glb',
+        si: siFamily,
+        fn: 'accessory_cabinet',
+        w: 1.2,
+        d: depth,
+        h: 2.4,
         front: '+Z',
-        placeable: true,
         glbFileId: file?.id,
       })
     }

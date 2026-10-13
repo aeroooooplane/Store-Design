@@ -1,25 +1,15 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { schema } from '@store/database'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, LayoutCandidates } from '@store/shared'
 import { plannerCatalog } from '../src/modules/layouts/selection.ts'
+import { seedAsset } from './fixtures.ts'
+import type { AssetSeed } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
 let t: TestApp
 
-type Seed = {
-  id: string
-  name: string
-  variant?: string
-  fn: Asset['function']
-  si: string
-  w: number
-  d: number
-  h: number
-  front: string
-}
-const seeds: Seed[] = [
+const seeds: AssetSeed[] = [
   {
     id: 'asset-1',
     name: '1800mm普通中岛桌',
@@ -76,35 +66,7 @@ const seeds: Seed[] = [
 
 beforeAll(async () => {
   t = await createTestApp()
-  for (const s of seeds) {
-    const [file] = await t.database.db
-      .insert(schema.storedFiles)
-      .values({
-        root: 'resource',
-        storageKey: `models/${s.id}.glb`,
-        kind: 'glb',
-        contentType: 'model/gltf-binary',
-        bytes: 1,
-        sha256: 'a'.repeat(64),
-      })
-      .returning()
-    await t.database.db.insert(schema.assets).values({
-      id: s.id,
-      standardName: s.name,
-      variant: s.variant ?? 'A',
-      materialCategory: '软装物料',
-      siFamily: s.si,
-      function: s.fn,
-      installation: 'floor',
-      width: s.w,
-      depth: s.d,
-      height: s.h,
-      footprintSource: 'glb',
-      front: s.front,
-      placeable: true,
-      glbFileId: file?.id,
-    })
-  }
+  for (const s of seeds) await seedAsset(t, s)
 })
 
 afterAll(async () => {

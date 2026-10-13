@@ -10,6 +10,7 @@ import { storageRoots } from '../src/app.ts'
 import { loadConfig } from '../src/config/env.ts'
 import { functionFor } from '@store/shared'
 import { LIBRARY_DIR, importCatalog } from '../src/modules/assets/importer.ts'
+import { seedStoredFile } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -299,17 +300,10 @@ describe('GET /files/:id', () => {
   })
 
   it('reports un-pulled LFS pointers and keeps tampered keys inside the root', async () => {
-    const [pointer] = await t.database.db
-      .insert(schema.storedFiles)
-      .values({
-        root: 'resource',
-        storageKey: `${webDir('asset-4')}/model.glb`,
-        kind: 'glb',
-        contentType: 'model/gltf-binary',
-        bytes: 1,
-        sha256: 'b'.repeat(64),
-      })
-      .returning()
+    const pointer = await seedStoredFile(t, {
+      storageKey: `${webDir('asset-4')}/model.glb`,
+      sha256: 'b'.repeat(64),
+    })
     const lfs = await t.app.inject({ method: 'GET', url: `/api/v1/files/${pointer?.id}` })
     expect(lfs.statusCode).toBe(404)
     expect(lfs.json().error.details).toEqual({ reason: 'lfs_pointer' })
@@ -317,17 +311,13 @@ describe('GET /files/:id', () => {
     const outside = path.join(path.dirname(resource), `outside-${path.basename(resource)}.txt`)
     await writeFile(outside, 'secret')
     try {
-      const [escape] = await t.database.db
-        .insert(schema.storedFiles)
-        .values({
-          root: 'resource',
-          storageKey: `../${path.basename(outside)}`,
-          kind: 'other',
-          contentType: 'text/plain',
-          bytes: 6,
-          sha256: 'c'.repeat(64),
-        })
-        .returning()
+      const escape = await seedStoredFile(t, {
+        storageKey: `../${path.basename(outside)}`,
+        kind: 'other',
+        contentType: 'text/plain',
+        bytes: 6,
+        sha256: 'c'.repeat(64),
+      })
       const blocked = await t.app.inject({ method: 'GET', url: `/api/v1/files/${escape?.id}` })
       expect(blocked.statusCode).toBe(403)
     } finally {

@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Asset, AssetCategory } from '@store/shared'
+import { makeAsset } from '../../test-utils/factories.ts'
 import { ModelPicker, pickableGroups } from './ModelPicker.tsx'
 
 const file = (name: string) => ({
@@ -16,33 +17,19 @@ function asset(
   category: AssetCategory,
   overrides: Partial<Asset> = {},
 ): Asset {
-  return {
+  return makeAsset({
     id,
     name: `${standardName} · 变体`,
     standardName,
     variant: '变体',
-    materialCategory: '软装物料',
-    siFamily: 'SI1.0',
     category,
     function: 'other',
-    installation: 'floor',
     footprint: { w: 1.8, d: 1, h: 0.9 },
-    footprintSource: 'glb',
     front: 'any',
-    staffSide: null,
     facingConfidence: null,
-    placeable: true,
-    retired: false,
-    judgment: null,
-    glb: null,
-    whiteGlb: null,
-    finishGlb: null,
     preview: file(`${id}-preview`),
-    productImage: null,
-    productImageMatch: null,
-    planSymbol: null,
     ...overrides,
-  }
+  })
 }
 
 const catalog = [

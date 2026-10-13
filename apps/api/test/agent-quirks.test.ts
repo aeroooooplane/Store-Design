@@ -6,41 +6,34 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { schema } from '@store/database'
-import { rectangleSpace } from '@store/shared'
 import type {
-  Asset,
-  DesignNode,
   NodeCameraList,
   NodeCreated,
   NodeRenderList,
   NodeTree,
-  Project,
   ProjectImported,
   RenderImage,
 } from '@store/shared'
-import { loadConfig } from '../src/config/env.ts'
-import { systemContext } from '../src/context/actor.ts'
-import { buildToolContext, findTool } from '../src/modules/agent/tools.ts'
-import type { ToolOutcome } from '../src/modules/agent/tools.ts'
-import { getProject } from '../src/modules/projects/service.ts'
+import {
+  createNode,
+  createProject,
+  createSpace,
+  getNode,
+  islandItem as island,
+  layoutOf as layout,
+  postNode,
+  runTool,
+  seedAsset,
+} from './fixtures.ts'
+import type { AssetSeed } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
 let t: TestApp
 let storage: string
-const config = loadConfig({ NODE_ENV: 'test' })
 
-/** Copied from agent.test.ts / layouts.test.ts (to be shared later): a table and a cabinet. */
-const seeds: {
-  id: string
-  name: string
-  fn: Asset['function']
-  w: number
-  d: number
-  h: number
-  front: string
-}[] = [
+/** A table and a cabinet. */
+const seeds: AssetSeed[] = [
   {
     id: 'asset-1',
     name: '1800mm普通中岛桌',
@@ -61,42 +54,10 @@ const seeds: {
   },
 ]
 
-async function seedAssets() {
-  for (const s of seeds) {
-    const [file] = await t.database.db
-      .insert(schema.storedFiles)
-      .values({
-        root: 'resource',
-        storageKey: `models/${s.id}.glb`,
-        kind: 'glb',
-        contentType: 'model/gltf-binary',
-        bytes: 1,
-        sha256: 'a'.repeat(64),
-      })
-      .returning()
-    await t.database.db.insert(schema.assets).values({
-      id: s.id,
-      standardName: s.name,
-      variant: 'A',
-      materialCategory: '软装物料',
-      siFamily: 'SI1.0',
-      function: s.fn,
-      installation: 'floor',
-      width: s.w,
-      depth: s.d,
-      height: s.h,
-      footprintSource: 'glb',
-      front: s.front,
-      placeable: true,
-      glbFileId: file?.id,
-    })
-  }
-}
-
 beforeAll(async () => {
   storage = await mkdtemp(path.join(tmpdir(), 'store-quirks-'))
   t = await createTestApp({ STORAGE_ROOT: storage })
-  await seedAssets()
+  for (const s of seeds) await seedAsset(t, s)
 })
 
 afterAll(async () => {
@@ -104,69 +65,15 @@ afterAll(async () => {
   await rm(storage, { recursive: true, force: true })
 })
 
-const island = (id: string, cx: number, cz: number) => ({
-  id,
-  assetId: 'asset-1',
-  function: 'island_table',
-  name: `中岛桌 ${id}`,
-  cx,
-  cz,
-  rotation: 0,
-  w: 1,
-  d: 1.8,
-  h: 1.327,
-})
-const layout = (...items: object[]) => ({ schemaVersion: 3, items })
-
-async function newProject(name = '当前行为'): Promise<Project> {
-  const response = await t.app.inject({
-    method: 'POST',
-    url: '/api/v1/projects',
-    payload: { name, shopType: 'island' },
-  })
-  expect(response.statusCode).toBe(201)
-  return response.json<Project>()
-}
-
-function post(projectId: string, payload: object) {
-  return t.app.inject({ method: 'POST', url: `/api/v1/projects/${projectId}/nodes`, payload })
-}
-
-async function create(projectId: string, payload: object): Promise<DesignNode> {
-  const response = await post(projectId, payload)
-  expect(response.statusCode).toBe(201)
-  return response.json<NodeCreated>().node
-}
-
+const newProject = (name = '当前行为') => createProject(t, { name, shopType: 'island' })
+const post = (projectId: string, payload: object) => postNode(t, projectId, payload)
+const create = (projectId: string, payload: object) => createNode(t, projectId, payload)
 /** An 8 × 6 × 3.2 m room whose whole front edge (z = 6) is the entrance. */
-const spaceOf = (projectId: string) =>
-  create(projectId, {
-    parentId: null,
-    kind: 'space',
-    name: '空间',
-    space: rectangleSpace(8, 6, 3.2),
-  })
-
-async function node(id: string | undefined): Promise<DesignNode> {
-  const response = await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${id}` })
-  expect(response.statusCode).toBe(200)
-  return response.json<DesignNode>()
-}
-
-/** Runs one tool the way the agent service does: fresh context, input parsed by its schema. */
-async function run(
-  projectId: string,
-  nodeId: string | null,
-  name: string,
-  input: object = {},
-): Promise<ToolOutcome> {
-  const tool = findTool(name)
-  if (!tool) throw new Error(`no tool ${name}`)
-  const ctx = systemContext('test')
-  const project = await getProject(t.database.db, ctx, projectId)
-  const tools = await buildToolContext(t.database.db, ctx, config, project, nodeId, [])
-  return tool.run(tools, tool.schema.parse(input))
-}
+const spaceOf = (projectId: string) => createSpace(t, projectId)
+const node = (id: string | undefined) => getNode(t, id)
+/** Runs one tool without a selection. */
+const run = (projectId: string, nodeId: string | null, name: string, input: object = {}) =>
+  runTool(t, projectId, nodeId, name, input, [])
 
 async function projectCount(): Promise<number> {
   const response = await t.app.inject({ method: 'GET', url: '/api/v1/projects?pageSize=100' })
