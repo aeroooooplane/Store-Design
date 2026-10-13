@@ -1,0 +1,123 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-100",
+ "name": "台湾桃园大江国际",
+ "aliases": {
+  "filenames": [
+   "台湾桃园大江国际.pdf"
+  ],
+  "feishu_1009": "台湾桃园大江国际",
+  "feishu_0923": "台湾桃园大江国际.pdf",
+  "title_names": [
+   "台灣桃園大江國際中島店",
+   "台灣桃園大江國際中島店(總面積：32m²)",
+   "台灣桃園大江國際中島店，其主要功能接待銷售及展廳。"
+  ]
+ },
+ "source": {
+  "sha256": "c45e7854573f7aec726b4b5349b65718bccb04ae680cff664b63ed0782eb35af",
+  "page_count": 33,
+  "source_ids": [
+   "PDF-100"
+  ]
+ },
+ "region": {
+  "value": "港澳台",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 201,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Ifq4C"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 201,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Ifq4C"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": "中岛"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     27,
+     28,
+     29,
+     30,
+     31,
+     32,
+     33
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 25,
+  "pages": 33
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

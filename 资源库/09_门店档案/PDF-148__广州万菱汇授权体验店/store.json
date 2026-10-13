@@ -1,0 +1,166 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-148",
+ "name": "广州万菱汇授权体验店",
+ "aliases": {
+  "filenames": [
+   "广州万菱汇授权体验店.pdf"
+  ],
+  "feishu_1009": "广州万菱汇授权体验店",
+  "feishu_0923": "广州万菱汇授权体验店.pdf",
+  "title_names": [
+   "广州万菱汇边厅店",
+   "广州万菱汇边厅店-装饰图纸(总面积：118.9m²)",
+   "广州万菱汇边厅店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "367de68cb04f9598657ac14d4f0896d5b5e971475367177c0a61517efbe65208",
+  "page_count": 49,
+  "source_ids": [
+   "PDF-148"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 250,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5IQ51a"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 250,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5IQ51a"
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     9
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      7,
+      8,
+      9,
+      13,
+      14,
+      21,
+      22,
+      35,
+      36,
+      39
+     ],
+     "words": [
+      "仿水磨石",
+      "子母凳",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "边厅": [
+     1,
+     7,
+     8,
+     9,
+     10,
+     11,
+     12,
+     13,
+     14,
+     15
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 109.4,
+    "pages": [
+     42
+    ]
+   },
+   {
+    "value": 118.9,
+    "pages": [
+     1,
+     12
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "多个读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 49
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

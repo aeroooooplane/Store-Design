@@ -1,0 +1,111 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-068",
+ "name": "北京超极合生汇授权体验店",
+ "aliases": {
+  "filenames": [
+   "北京超极合生汇授权体验店.pdf"
+  ],
+  "feishu_1009": "北京超极合生汇授权体验店",
+  "feishu_0923": "北京超极合生汇授权体验店.pdf",
+  "title_names": [
+   "-北京合生汇店"
+  ]
+ },
+ "source": {
+  "sha256": "d6b06296e785c3ff46c7b49d1e1924d581acfca40b23ad02dd4c23e31d172c80",
+  "page_count": 7,
+  "source_ids": [
+   "PDF-068"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "授权体验店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 169,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5IEIJL"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 169,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5IEIJL"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 7
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

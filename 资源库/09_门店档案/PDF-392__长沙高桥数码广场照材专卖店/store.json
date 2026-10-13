@@ -1,0 +1,125 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-392",
+ "name": "长沙高桥数码广场照材专卖店",
+ "aliases": {
+  "filenames": [
+   "长沙高桥数码广场照材专卖店.pdf"
+  ],
+  "feishu_1009": "长沙高桥数码广场照材专卖店",
+  "feishu_0923": "长沙高桥数码广场照材专卖店.pdf",
+  "title_names": [
+   "长沙市高桥数码广场照材店",
+   "长沙市高桥数码广场照材店-装饰图纸(总面积：46.5m²)",
+   "长沙市高桥数码广场照材店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "8866b83502fc99186aed67ff3fa4246d589b2085c540eefae8b11615e8f1170f",
+  "page_count": 34,
+  "source_ids": [
+   "PDF-392"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "照材专卖店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 498,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5Ijjds"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 498,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5Ijjds"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": "中岛"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 46.5,
+    "pages": [
+     1,
+     10,
+     11,
+     28
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "Insta360 Think bold.": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 34
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

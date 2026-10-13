@@ -1,0 +1,111 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-018",
+ "name": "印尼巴厘岛 beach walk",
+ "aliases": {
+  "filenames": [
+   "印尼巴厘岛 beach walk.pdf"
+  ],
+  "feishu_1009": "印尼巴厘岛 beach walk",
+  "feishu_0923": null,
+  "title_names": []
+ },
+ "source": {
+  "sha256": "a707e74a6e9cd0bf1ed93536afd0effbb8177ec307b3d3dcc2a4e7c781d89a6e",
+  "page_count": 29,
+  "source_ids": [
+   "NEW-018"
+  ]
+ },
+ "region": {
+  "value": "海外",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 21,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 21,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "印尼巴厘岛海滩步行街Koisk店": 6
+  }
+ },
+ "text_layer": {
+  "textless_pages": 23,
+  "pages": 29
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

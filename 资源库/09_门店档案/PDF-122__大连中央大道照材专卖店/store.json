@@ -1,0 +1,109 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-122",
+ "name": "大连中央大道照材专卖店",
+ "aliases": {
+  "filenames": [
+   "大连中央大道照材专卖店.pdf"
+  ],
+  "feishu_1009": "大连中央大道照材专卖店",
+  "feishu_0923": "大连中央大道照材专卖店.pdf",
+  "title_names": []
+ },
+ "source": {
+  "sha256": "c2a37d69dcc3995961d736b69bc62d1e57eb62ada9f2d7bbafd83bf8cba832fb",
+  "page_count": 37,
+  "source_ids": [
+   "PDF-122"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": "照材专卖店",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 223,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5I7jUX"
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 223,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": "SI1.0",
+    "record_id": "recvvyql5I7jUX"
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [],
+  "adopted": null,
+  "status": "图纸文字层没有面积读数"
+ },
+ "title_block": {
+  "other_store_titles": {}
+ },
+ "text_layer": {
+  "textless_pages": 2,
+  "pages": 37
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

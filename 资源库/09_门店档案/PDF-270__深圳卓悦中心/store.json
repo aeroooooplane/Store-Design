@@ -1,0 +1,155 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-270",
+ "name": "深圳卓悦中心",
+ "aliases": {
+  "filenames": [
+   "深圳卓悦中心.pdf"
+  ],
+  "feishu_1009": "深圳卓悦中心",
+  "feishu_0923": "深圳卓悦中心.pdf",
+  "title_names": [
+   "深圳卓悦中心店",
+   "深圳卓悦中心店-装饰图纸(总面积：91.7m²)",
+   "深圳卓悦中心店-电气图"
+  ]
+ },
+ "source": {
+  "sha256": "5dcc5a29caef217c9b112e09985a41a63471456e23e6569f9cb3ee2cf44a1820",
+  "page_count": 45,
+  "source_ids": [
+   "PDF-270"
+  ]
+ },
+ "region": {
+  "value": "中国大陆",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "domestic",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 374,
+  "ledger_1009_note": null,
+  "record_id_0923": "recvvyql5IyJcv"
+ },
+ "si": {
+  "value": "SI2.0",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI2.0",
+    "row": 374,
+    "raw": "si2.0"
+   },
+   "飞书09-23": {
+    "value": "SI2.0",
+    "record_id": "recvvyql5IyJcv"
+   },
+   "图纸si字样": {
+    "SI2.0": [
+     9
+    ]
+   },
+   "图纸专属道具": {
+    "SI2.0": {
+     "pages": [
+      8,
+      9,
+      13,
+      14,
+      20,
+      21,
+      22,
+      31,
+      43,
+      45
+     ],
+     "words": [
+      "仿水磨石",
+      "子母凳",
+      "徕卡"
+     ]
+    }
+   }
+  }
+ },
+ "shop_type": {
+  "value": "边厅店",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "边厅",
+    "raw": "边厅"
+   },
+   "飞书09-23": {
+    "value": "边厅"
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {}
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 91.7,
+    "pages": [
+     1,
+     12,
+     13
+    ]
+   },
+   {
+    "value": 93.5,
+    "pages": [
+     38
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "多个读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 1,
+   "提供画面，画面预留出线20mm)": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 45
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}

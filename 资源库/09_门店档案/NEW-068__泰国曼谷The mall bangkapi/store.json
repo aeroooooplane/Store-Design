@@ -1,0 +1,136 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-13T10:45:40+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_stores.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-068",
+ "name": "泰国曼谷The mall bangkapi",
+ "aliases": {
+  "filenames": [
+   "泰国曼谷The mall bangkapi.pdf"
+  ],
+  "feishu_1009": "泰国曼谷The mall bangkapi",
+  "feishu_0923": null,
+  "title_names": [
+   "泰国曼谷Fashion island",
+   "泰国曼谷The mall bangkapi【中岛店】",
+   "泰国曼谷The mall bangkapi店"
+  ]
+ },
+ "source": {
+  "sha256": "e63cb34c0db7604afab4b1218b483d53295d6f72c47e030db79bdb0dcf3cde48",
+  "page_count": 35,
+  "source_ids": [
+   "NEW-068"
+  ]
+ },
+ "region": {
+  "value": "海外",
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "market": "overseas",
+ "channel": {
+  "value": null,
+  "source": "文件名",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": null
+ },
+ "project_hint": null,
+ "feishu": {
+  "ledger_1009_row": 68,
+  "ledger_1009_note": "该字段仅一份PDF，已校验PDF格式及页数",
+  "record_id_0923": null
+ },
+ "si": {
+  "value": "SI1.0",
+  "source": "飞书10-09",
+  "confidence": "中",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "SI1.0",
+    "row": 68,
+    "raw": "si1.0"
+   },
+   "飞书09-23": {
+    "value": null,
+    "record_id": null
+   },
+   "图纸si字样": {},
+   "图纸专属道具": {}
+  }
+ },
+ "shop_type": {
+  "value": "中岛店",
+  "source": "飞书10-09",
+  "confidence": "高",
+  "confirmed": false,
+  "evidence": {
+   "飞书10-09": {
+    "value": "中岛",
+    "raw": "中岛"
+   },
+   "飞书09-23": {
+    "value": null
+   },
+   "文件名": {
+    "value": null,
+    "subtype": null
+   },
+   "图签": {
+    "中岛": [
+     9,
+     10,
+     11,
+     12,
+     23,
+     24,
+     25,
+     26,
+     27,
+     28
+    ]
+   }
+  },
+  "subtype": null
+ },
+ "review_hint": null,
+ "area_m2": {
+  "candidates": [
+   {
+    "value": 35.0,
+    "pages": [
+     9,
+     31
+    ]
+   }
+  ],
+  "adopted": null,
+  "status": "单一读数，待阶段 3 几何校核"
+ },
+ "title_block": {
+  "other_store_titles": {
+   "广告机安装尺寸图": 1
+  }
+ },
+ "text_layer": {
+  "textless_pages": 5,
+  "pages": 35
+ },
+ "deferred": {
+  "city": null,
+  "mall": null,
+  "floor": null,
+  "mall_group": null,
+  "related_stores": null
+ },
+ "status": {
+  "stage1": "自动"
+ }
+}
