@@ -2,7 +2,7 @@
 
 - 513 份原图纸逐个计算 SHA256、字节数、页数，核对 Git 跟踪状态；
 - 沿用旧编号：PDF-001~418 取自 门店资源索引.json，NEW-006~101 取自 10-09 交接包的同步清单；
-- 同内容（同 SHA256）的文件归为一份档案，编号最小的为主来源，其余记为别名；
+- 同内容（同 SHA256）的文件归为一份档案，编号最小的为主来源（用户指定的除外），其余记为别名；
 - 登记不建档的来源（5 个 RAR / PPTX、飞书台账）及原因；
 - 附旧编号对照：store-XXXX 草稿、S01 等样本号、09-23 飞书 recordId。
 
@@ -19,7 +19,7 @@ from pathlib import Path
 
 import pymupdf
 
-from common import SOURCE_DIR, base_args, git_tracked, header, load_json, rel, sha256_file, write_json
+from common import SOURCE_DIR, THIS_REPO, base_args, git_tracked, header, load_json, rel, sha256_file, write_json
 
 INDEX = "资源库/00_资源索引/门店资源索引.json"
 HANDOFF = "tools/data-cleaning/light-handoff-20261009-01/history/00_同步与文件清单.json"
@@ -32,6 +32,11 @@ LEDGER_NAME = "各门店图纸_SI类型与铺型.xlsx"
 
 OTHER_REASON = "非 PDF 来源（RAR 内只有电施图 / PPTX），01 里没有这家店的 PDF；按 2026-10-12 用户答复（Q3）不建档"
 LEDGER_REASON = "飞书多维表 2026-10-09 导出的下载台账，是 SI / 铺型标签来源，不是图纸；阶段 1 使用"
+
+# 同内容文件中由用户指定的主来源：文件名 → 依据
+PRIMARY_OVERRIDES = {
+    "广州番禺天河城授权体验店（框架中岛）.pdf": "2026-10-13 用户指定：框架 / 无框架中岛两份内容相同，只保留框架中岛",
+}
 
 
 def fail(message: str) -> None:
@@ -60,7 +65,8 @@ def main() -> None:
 
     index = {item["source_file"]: item for item in load_json(repo / INDEX)["sources"]}
     handoff = {item["filename"]: item for item in load_json(repo / HANDOFF)["files"]}
-    tracked = git_tracked(repo, SOURCE_DIR, OTHER_SOURCES)
+    # 跟踪状态取档案所在的仓库（分支）；主仓库可能正被其他会话切到别的分支
+    tracked = git_tracked(THIS_REPO, SOURCE_DIR, OTHER_SOURCES)
 
     pdfs = sorted(p for p in source_root.iterdir() if p.suffix.lower() == ".pdf")
     sources = []
@@ -106,7 +112,7 @@ def main() -> None:
         groups[source["sha256"]].append(source)
     archives = []
     for digest, members in groups.items():
-        members.sort(key=lambda s: id_order(s["source_id"]))
+        members.sort(key=lambda s: (s["filename"] not in PRIMARY_OVERRIDES, id_order(s["source_id"])))
         primary = members[0]
         for member in members:
             member["archive_source_id"] = primary["source_id"]
@@ -120,6 +126,7 @@ def main() -> None:
                 "page_count": primary["page_count"],
                 "filenames": [m["filename"] for m in members],
                 "source_ids": [m["source_id"] for m in members],
+                "primary_reason": PRIMARY_OVERRIDES.get(primary["filename"], "编号最小" if len(members) > 1 else None),
             }
         )
     archives.sort(key=lambda a: id_order(a["archive_source_id"]))
@@ -208,9 +215,9 @@ def main() -> None:
     data = header("build_sources.py") | {
         "summary": summary,
         "rules": {
-            "archive": "同 SHA256 的 PDF 归为一份档案；PDF- 优先于 NEW-，同类取编号最小者为主来源，其余为别名（2026-10-12 用户答复 Q3）",
-            "store_id": "门店编号 ST-xxxx 在阶段 1 分配，此处为 null",
-            "untracked": "未被 Git 跟踪的 PDF 由 .gitignore 第 114 行排除，实体在本机与 release cleaning-source-supplement-20261009",
+            "archive": "同 SHA256 的 PDF 归为一份档案；用户指定的主来源优先，其次 PDF- 优先于 NEW-、同类取编号最小者，其余为别名（2026-10-12 用户答复 Q3；番禺 2026-10-13 指定框架中岛）",
+            "store_id": "门店编号在阶段 1 写入：沿用主来源的 source_id，不另编号",
+            "git_tracked": "按生成本清单的仓库分支计算；2026-10-13 起 513 份全部进 Git",
         },
         "archives": archives,
         "sources": sources,

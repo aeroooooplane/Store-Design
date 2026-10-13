@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-12T20:07:07+08:00",
+ "generatedAt": "2026-10-13T10:23:48+08:00",
  "generator": {
   "script": "tools/store-archive/build_sources.py",
   "version": "0.1.0"
@@ -13,16 +13,16 @@
   "unique_sha256": 511,
   "archives": 511,
   "alias_files": 2,
-  "git_tracked_pdfs": 418,
-  "untracked_pdfs": 95,
+  "git_tracked_pdfs": 513,
+  "untracked_pdfs": 0,
   "ids_from_index": 418,
   "ids_from_handoff": 95,
   "excluded": 6
  },
  "rules": {
-  "archive": "同 SHA256 的 PDF 归为一份档案；PDF- 优先于 NEW-，同类取编号最小者为主来源，其余为别名（2026-10-12 用户答复 Q3）",
-  "store_id": "门店编号 ST-xxxx 在阶段 1 分配，此处为 null",
-  "untracked": "未被 Git 跟踪的 PDF 由 .gitignore 第 114 行排除，实体在本机与 release cleaning-source-supplement-20261009"
+  "archive": "同 SHA256 的 PDF 归为一份档案；用户指定的主来源优先，其次 PDF- 优先于 NEW-、同类取编号最小者，其余为别名（2026-10-12 用户答复 Q3；番禺 2026-10-13 指定框架中岛）",
+  "store_id": "门店编号在阶段 1 写入：沿用主来源的 source_id，不另编号",
+  "git_tracked": "按生成本清单的仓库分支计算；2026-10-13 起 513 份全部进 Git"
  },
  "archives": [
   {
@@ -36,7 +36,8 @@
    ],
    "source_ids": [
     "PDF-001"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-002",
@@ -49,7 +50,8 @@
    ],
    "source_ids": [
     "PDF-002"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-003",
@@ -62,7 +64,8 @@
    ],
    "source_ids": [
     "PDF-003"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-004",
@@ -75,7 +78,8 @@
    ],
    "source_ids": [
     "PDF-004"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-005",
@@ -88,7 +92,8 @@
    ],
    "source_ids": [
     "PDF-005"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-006",
@@ -101,7 +106,8 @@
    ],
    "source_ids": [
     "PDF-006"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-007",
@@ -114,7 +120,8 @@
    ],
    "source_ids": [
     "PDF-007"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-008",
@@ -127,7 +134,8 @@
    ],
    "source_ids": [
     "PDF-008"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-009",
@@ -140,7 +148,8 @@
    ],
    "source_ids": [
     "PDF-009"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-010",
@@ -153,7 +162,8 @@
    ],
    "source_ids": [
     "PDF-010"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-011",
@@ -166,7 +176,8 @@
    ],
    "source_ids": [
     "PDF-011"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-012",
@@ -179,7 +190,8 @@
    ],
    "source_ids": [
     "PDF-012"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-013",
@@ -192,7 +204,8 @@
    ],
    "source_ids": [
     "PDF-013"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-014",
@@ -205,7 +218,8 @@
    ],
    "source_ids": [
     "PDF-014"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-015",
@@ -218,7 +232,8 @@
    ],
    "source_ids": [
     "PDF-015"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-016",
@@ -231,7 +246,8 @@
    ],
    "source_ids": [
     "PDF-016"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-017",
@@ -244,7 +260,8 @@
    ],
    "source_ids": [
     "PDF-017"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-018",
@@ -257,7 +274,8 @@
    ],
    "source_ids": [
     "PDF-018"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-019",
@@ -270,7 +288,8 @@
    ],
    "source_ids": [
     "PDF-019"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-020",
@@ -283,7 +302,8 @@
    ],
    "source_ids": [
     "PDF-020"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-021",
@@ -296,7 +316,8 @@
    ],
    "source_ids": [
     "PDF-021"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-022",
@@ -309,7 +330,8 @@
    ],
    "source_ids": [
     "PDF-022"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-023",
@@ -322,7 +344,8 @@
    ],
    "source_ids": [
     "PDF-023"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-024",
@@ -335,7 +358,8 @@
    ],
    "source_ids": [
     "PDF-024"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-025",
@@ -348,7 +372,8 @@
    ],
    "source_ids": [
     "PDF-025"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-026",
@@ -361,7 +386,8 @@
    ],
    "source_ids": [
     "PDF-026"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-027",
@@ -374,7 +400,8 @@
    ],
    "source_ids": [
     "PDF-027"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-028",
@@ -387,7 +414,8 @@
    ],
    "source_ids": [
     "PDF-028"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-029",
@@ -400,7 +428,8 @@
    ],
    "source_ids": [
     "PDF-029"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-030",
@@ -413,7 +442,8 @@
    ],
    "source_ids": [
     "PDF-030"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-031",
@@ -426,7 +456,8 @@
    ],
    "source_ids": [
     "PDF-031"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-032",
@@ -439,7 +470,8 @@
    ],
    "source_ids": [
     "PDF-032"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-033",
@@ -452,7 +484,8 @@
    ],
    "source_ids": [
     "PDF-033"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-034",
@@ -465,7 +498,8 @@
    ],
    "source_ids": [
     "PDF-034"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-035",
@@ -478,7 +512,8 @@
    ],
    "source_ids": [
     "PDF-035"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-036",
@@ -491,7 +526,8 @@
    ],
    "source_ids": [
     "PDF-036"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-037",
@@ -504,7 +540,8 @@
    ],
    "source_ids": [
     "PDF-037"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-038",
@@ -517,7 +554,8 @@
    ],
    "source_ids": [
     "PDF-038"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-039",
@@ -530,7 +568,8 @@
    ],
    "source_ids": [
     "PDF-039"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-040",
@@ -543,7 +582,8 @@
    ],
    "source_ids": [
     "PDF-040"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-041",
@@ -556,7 +596,8 @@
    ],
    "source_ids": [
     "PDF-041"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-042",
@@ -569,7 +610,8 @@
    ],
    "source_ids": [
     "PDF-042"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-043",
@@ -582,7 +624,8 @@
    ],
    "source_ids": [
     "PDF-043"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-044",
@@ -595,7 +638,8 @@
    ],
    "source_ids": [
     "PDF-044"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-045",
@@ -608,7 +652,8 @@
    ],
    "source_ids": [
     "PDF-045"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-046",
@@ -621,7 +666,8 @@
    ],
    "source_ids": [
     "PDF-046"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-047",
@@ -634,7 +680,8 @@
    ],
    "source_ids": [
     "PDF-047"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-048",
@@ -647,7 +694,8 @@
    ],
    "source_ids": [
     "PDF-048"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-049",
@@ -660,7 +708,8 @@
    ],
    "source_ids": [
     "PDF-049"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-050",
@@ -673,7 +722,8 @@
    ],
    "source_ids": [
     "PDF-050"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-051",
@@ -686,7 +736,8 @@
    ],
    "source_ids": [
     "PDF-051"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-052",
@@ -699,7 +750,8 @@
    ],
    "source_ids": [
     "PDF-052"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-053",
@@ -712,7 +764,8 @@
    ],
    "source_ids": [
     "PDF-053"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-054",
@@ -725,7 +778,8 @@
    ],
    "source_ids": [
     "PDF-054"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-055",
@@ -738,7 +792,8 @@
    ],
    "source_ids": [
     "PDF-055"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-056",
@@ -751,7 +806,8 @@
    ],
    "source_ids": [
     "PDF-056"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-057",
@@ -764,7 +820,8 @@
    ],
    "source_ids": [
     "PDF-057"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-058",
@@ -777,7 +834,8 @@
    ],
    "source_ids": [
     "PDF-058"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-059",
@@ -790,7 +848,8 @@
    ],
    "source_ids": [
     "PDF-059"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-060",
@@ -803,7 +862,8 @@
    ],
    "source_ids": [
     "PDF-060"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-061",
@@ -816,7 +876,8 @@
    ],
    "source_ids": [
     "PDF-061"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-062",
@@ -829,7 +890,8 @@
    ],
    "source_ids": [
     "PDF-062"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-063",
@@ -842,7 +904,8 @@
    ],
    "source_ids": [
     "PDF-063"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-064",
@@ -855,7 +918,8 @@
    ],
    "source_ids": [
     "PDF-064"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-065",
@@ -868,7 +932,8 @@
    ],
    "source_ids": [
     "PDF-065"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-066",
@@ -881,7 +946,8 @@
    ],
    "source_ids": [
     "PDF-066"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-067",
@@ -894,7 +960,8 @@
    ],
    "source_ids": [
     "PDF-067"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-068",
@@ -907,7 +974,8 @@
    ],
    "source_ids": [
     "PDF-068"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-069",
@@ -920,7 +988,8 @@
    ],
    "source_ids": [
     "PDF-069"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-070",
@@ -933,7 +1002,8 @@
    ],
    "source_ids": [
     "PDF-070"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-071",
@@ -946,7 +1016,8 @@
    ],
    "source_ids": [
     "PDF-071"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-072",
@@ -959,7 +1030,8 @@
    ],
    "source_ids": [
     "PDF-072"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-073",
@@ -972,7 +1044,8 @@
    ],
    "source_ids": [
     "PDF-073"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-074",
@@ -985,7 +1058,8 @@
    ],
    "source_ids": [
     "PDF-074"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-075",
@@ -998,7 +1072,8 @@
    ],
    "source_ids": [
     "PDF-075"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-076",
@@ -1011,7 +1086,8 @@
    ],
    "source_ids": [
     "PDF-076"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-077",
@@ -1024,7 +1100,8 @@
    ],
    "source_ids": [
     "PDF-077"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-078",
@@ -1037,7 +1114,8 @@
    ],
    "source_ids": [
     "PDF-078"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-079",
@@ -1050,7 +1128,8 @@
    ],
    "source_ids": [
     "PDF-079"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-080",
@@ -1063,7 +1142,8 @@
    ],
    "source_ids": [
     "PDF-080"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-081",
@@ -1076,7 +1156,8 @@
    ],
    "source_ids": [
     "PDF-081"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-082",
@@ -1089,7 +1170,8 @@
    ],
    "source_ids": [
     "PDF-082"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-083",
@@ -1102,7 +1184,8 @@
    ],
    "source_ids": [
     "PDF-083"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-084",
@@ -1115,7 +1198,8 @@
    ],
    "source_ids": [
     "PDF-084"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-085",
@@ -1128,7 +1212,8 @@
    ],
    "source_ids": [
     "PDF-085"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-086",
@@ -1141,7 +1226,8 @@
    ],
    "source_ids": [
     "PDF-086"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-087",
@@ -1154,7 +1240,8 @@
    ],
    "source_ids": [
     "PDF-087"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-088",
@@ -1167,7 +1254,8 @@
    ],
    "source_ids": [
     "PDF-088"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-089",
@@ -1180,7 +1268,8 @@
    ],
    "source_ids": [
     "PDF-089"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-090",
@@ -1193,7 +1282,8 @@
    ],
    "source_ids": [
     "PDF-090"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-091",
@@ -1206,7 +1296,8 @@
    ],
    "source_ids": [
     "PDF-091"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-092",
@@ -1219,7 +1310,8 @@
    ],
    "source_ids": [
     "PDF-092"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-093",
@@ -1232,7 +1324,8 @@
    ],
    "source_ids": [
     "PDF-093"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-094",
@@ -1245,7 +1338,8 @@
    ],
    "source_ids": [
     "PDF-094"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-095",
@@ -1258,7 +1352,8 @@
    ],
    "source_ids": [
     "PDF-095"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-096",
@@ -1271,7 +1366,8 @@
    ],
    "source_ids": [
     "PDF-096"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-097",
@@ -1284,7 +1380,8 @@
    ],
    "source_ids": [
     "PDF-097"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-098",
@@ -1297,7 +1394,8 @@
    ],
    "source_ids": [
     "PDF-098"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-099",
@@ -1310,7 +1408,8 @@
    ],
    "source_ids": [
     "PDF-099"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-100",
@@ -1323,7 +1422,8 @@
    ],
    "source_ids": [
     "PDF-100"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-101",
@@ -1336,7 +1436,8 @@
    ],
    "source_ids": [
     "PDF-101"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-102",
@@ -1349,7 +1450,8 @@
    ],
    "source_ids": [
     "PDF-102"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-103",
@@ -1362,7 +1464,8 @@
    ],
    "source_ids": [
     "PDF-103"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-104",
@@ -1375,7 +1478,8 @@
    ],
    "source_ids": [
     "PDF-104"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-105",
@@ -1388,7 +1492,8 @@
    ],
    "source_ids": [
     "PDF-105"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-106",
@@ -1401,7 +1506,8 @@
    ],
    "source_ids": [
     "PDF-106"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-107",
@@ -1414,7 +1520,8 @@
    ],
    "source_ids": [
     "PDF-107"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-108",
@@ -1427,7 +1534,8 @@
    ],
    "source_ids": [
     "PDF-108"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-109",
@@ -1440,7 +1548,8 @@
    ],
    "source_ids": [
     "PDF-109"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-110",
@@ -1453,7 +1562,8 @@
    ],
    "source_ids": [
     "PDF-110"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-111",
@@ -1466,7 +1576,8 @@
    ],
    "source_ids": [
     "PDF-111"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-112",
@@ -1479,7 +1590,8 @@
    ],
    "source_ids": [
     "PDF-112"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-113",
@@ -1492,7 +1604,8 @@
    ],
    "source_ids": [
     "PDF-113"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-114",
@@ -1505,7 +1618,8 @@
    ],
    "source_ids": [
     "PDF-114"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-115",
@@ -1518,7 +1632,8 @@
    ],
    "source_ids": [
     "PDF-115"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-116",
@@ -1531,7 +1646,8 @@
    ],
    "source_ids": [
     "PDF-116"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-117",
@@ -1544,7 +1660,8 @@
    ],
    "source_ids": [
     "PDF-117"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-118",
@@ -1557,7 +1674,8 @@
    ],
    "source_ids": [
     "PDF-118"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-119",
@@ -1570,7 +1688,8 @@
    ],
    "source_ids": [
     "PDF-119"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-120",
@@ -1583,7 +1702,8 @@
    ],
    "source_ids": [
     "PDF-120"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-121",
@@ -1596,7 +1716,8 @@
    ],
    "source_ids": [
     "PDF-121"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-122",
@@ -1609,7 +1730,8 @@
    ],
    "source_ids": [
     "PDF-122"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-123",
@@ -1622,7 +1744,8 @@
    ],
    "source_ids": [
     "PDF-123"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-124",
@@ -1635,7 +1758,8 @@
    ],
    "source_ids": [
     "PDF-124"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-125",
@@ -1648,7 +1772,8 @@
    ],
    "source_ids": [
     "PDF-125"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-126",
@@ -1661,7 +1786,8 @@
    ],
    "source_ids": [
     "PDF-126"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-127",
@@ -1674,7 +1800,8 @@
    ],
    "source_ids": [
     "PDF-127"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-128",
@@ -1687,7 +1814,8 @@
    ],
    "source_ids": [
     "PDF-128"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-129",
@@ -1700,7 +1828,8 @@
    ],
    "source_ids": [
     "PDF-129"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-130",
@@ -1713,7 +1842,8 @@
    ],
    "source_ids": [
     "PDF-130"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-131",
@@ -1726,7 +1856,8 @@
    ],
    "source_ids": [
     "PDF-131"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-132",
@@ -1739,7 +1870,8 @@
    ],
    "source_ids": [
     "PDF-132"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-133",
@@ -1752,7 +1884,8 @@
    ],
    "source_ids": [
     "PDF-133"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-134",
@@ -1765,7 +1898,8 @@
    ],
    "source_ids": [
     "PDF-134"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-135",
@@ -1778,7 +1912,8 @@
    ],
    "source_ids": [
     "PDF-135"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-136",
@@ -1791,7 +1926,8 @@
    ],
    "source_ids": [
     "PDF-136"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-137",
@@ -1804,7 +1940,8 @@
    ],
    "source_ids": [
     "PDF-137"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-138",
@@ -1817,7 +1954,8 @@
    ],
    "source_ids": [
     "PDF-138"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-139",
@@ -1830,7 +1968,8 @@
    ],
    "source_ids": [
     "PDF-139"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-140",
@@ -1843,7 +1982,8 @@
    ],
    "source_ids": [
     "PDF-140"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-141",
@@ -1856,7 +1996,8 @@
    ],
    "source_ids": [
     "PDF-141"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-142",
@@ -1869,7 +2010,8 @@
    ],
    "source_ids": [
     "PDF-142"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-143",
@@ -1882,7 +2024,8 @@
    ],
    "source_ids": [
     "PDF-143"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-144",
@@ -1895,7 +2038,8 @@
    ],
    "source_ids": [
     "PDF-144"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-145",
@@ -1908,7 +2052,8 @@
    ],
    "source_ids": [
     "PDF-145"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-146",
@@ -1921,7 +2066,8 @@
    ],
    "source_ids": [
     "PDF-146"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-147",
@@ -1934,7 +2080,8 @@
    ],
    "source_ids": [
     "PDF-147"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-148",
@@ -1947,7 +2094,8 @@
    ],
    "source_ids": [
     "PDF-148"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-149",
@@ -1960,7 +2108,8 @@
    ],
    "source_ids": [
     "PDF-149"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-150",
@@ -1973,7 +2122,8 @@
    ],
    "source_ids": [
     "PDF-150"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-151",
@@ -1986,7 +2136,8 @@
    ],
    "source_ids": [
     "PDF-151"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-152",
@@ -1999,7 +2150,8 @@
    ],
    "source_ids": [
     "PDF-152"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-153",
@@ -2012,7 +2164,8 @@
    ],
    "source_ids": [
     "PDF-153"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-154",
@@ -2025,7 +2178,8 @@
    ],
    "source_ids": [
     "PDF-154"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-155",
@@ -2038,7 +2192,8 @@
    ],
    "source_ids": [
     "PDF-155"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-156",
@@ -2051,7 +2206,8 @@
    ],
    "source_ids": [
     "PDF-156"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-157",
@@ -2064,7 +2220,8 @@
    ],
    "source_ids": [
     "PDF-157"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-158",
@@ -2077,7 +2234,8 @@
    ],
    "source_ids": [
     "PDF-158"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-159",
@@ -2090,7 +2248,8 @@
    ],
    "source_ids": [
     "PDF-159"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-160",
@@ -2103,7 +2262,8 @@
    ],
    "source_ids": [
     "PDF-160"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-161",
@@ -2116,7 +2276,8 @@
    ],
    "source_ids": [
     "PDF-161"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-162",
@@ -2129,7 +2290,8 @@
    ],
    "source_ids": [
     "PDF-162"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-163",
@@ -2142,7 +2304,8 @@
    ],
    "source_ids": [
     "PDF-163"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-164",
@@ -2155,7 +2318,8 @@
    ],
    "source_ids": [
     "PDF-164"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-165",
@@ -2168,7 +2332,8 @@
    ],
    "source_ids": [
     "PDF-165"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-166",
@@ -2181,7 +2346,8 @@
    ],
    "source_ids": [
     "PDF-166"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-167",
@@ -2194,7 +2360,8 @@
    ],
    "source_ids": [
     "PDF-167"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-168",
@@ -2207,7 +2374,8 @@
    ],
    "source_ids": [
     "PDF-168"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-169",
@@ -2220,7 +2388,8 @@
    ],
    "source_ids": [
     "PDF-169"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-170",
@@ -2233,7 +2402,8 @@
    ],
    "source_ids": [
     "PDF-170"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-171",
@@ -2246,7 +2416,8 @@
    ],
    "source_ids": [
     "PDF-171"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-172",
@@ -2259,7 +2430,8 @@
    ],
    "source_ids": [
     "PDF-172"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-173",
@@ -2272,7 +2444,8 @@
    ],
    "source_ids": [
     "PDF-173"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-174",
@@ -2285,7 +2458,8 @@
    ],
    "source_ids": [
     "PDF-174"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-175",
@@ -2300,7 +2474,8 @@
    "source_ids": [
     "PDF-175",
     "PDF-176"
-   ]
+   ],
+   "primary_reason": "编号最小"
   },
   {
    "archive_source_id": "PDF-177",
@@ -2313,7 +2488,8 @@
    ],
    "source_ids": [
     "PDF-177"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-178",
@@ -2326,7 +2502,8 @@
    ],
    "source_ids": [
     "PDF-178"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-179",
@@ -2339,7 +2516,8 @@
    ],
    "source_ids": [
     "PDF-179"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-180",
@@ -2352,7 +2530,8 @@
    ],
    "source_ids": [
     "PDF-180"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-181",
@@ -2365,7 +2544,8 @@
    ],
    "source_ids": [
     "PDF-181"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-182",
@@ -2378,7 +2558,8 @@
    ],
    "source_ids": [
     "PDF-182"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-183",
@@ -2391,7 +2572,8 @@
    ],
    "source_ids": [
     "PDF-183"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-184",
@@ -2404,7 +2586,8 @@
    ],
    "source_ids": [
     "PDF-184"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-185",
@@ -2417,7 +2600,8 @@
    ],
    "source_ids": [
     "PDF-185"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-186",
@@ -2430,7 +2614,8 @@
    ],
    "source_ids": [
     "PDF-186"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-187",
@@ -2443,7 +2628,8 @@
    ],
    "source_ids": [
     "PDF-187"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-188",
@@ -2456,7 +2642,8 @@
    ],
    "source_ids": [
     "PDF-188"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-189",
@@ -2469,7 +2656,8 @@
    ],
    "source_ids": [
     "PDF-189"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-190",
@@ -2482,7 +2670,8 @@
    ],
    "source_ids": [
     "PDF-190"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-191",
@@ -2495,7 +2684,8 @@
    ],
    "source_ids": [
     "PDF-191"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-192",
@@ -2508,7 +2698,8 @@
    ],
    "source_ids": [
     "PDF-192"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-193",
@@ -2521,7 +2712,8 @@
    ],
    "source_ids": [
     "PDF-193"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-194",
@@ -2534,7 +2726,8 @@
    ],
    "source_ids": [
     "PDF-194"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-195",
@@ -2547,7 +2740,8 @@
    ],
    "source_ids": [
     "PDF-195"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-196",
@@ -2560,7 +2754,8 @@
    ],
    "source_ids": [
     "PDF-196"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-197",
@@ -2573,7 +2768,8 @@
    ],
    "source_ids": [
     "PDF-197"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-198",
@@ -2586,7 +2782,8 @@
    ],
    "source_ids": [
     "PDF-198"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-199",
@@ -2599,7 +2796,8 @@
    ],
    "source_ids": [
     "PDF-199"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-200",
@@ -2612,7 +2810,8 @@
    ],
    "source_ids": [
     "PDF-200"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-201",
@@ -2625,7 +2824,8 @@
    ],
    "source_ids": [
     "PDF-201"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-202",
@@ -2638,7 +2838,8 @@
    ],
    "source_ids": [
     "PDF-202"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-203",
@@ -2651,7 +2852,8 @@
    ],
    "source_ids": [
     "PDF-203"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-204",
@@ -2664,7 +2866,8 @@
    ],
    "source_ids": [
     "PDF-204"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-205",
@@ -2677,7 +2880,8 @@
    ],
    "source_ids": [
     "PDF-205"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-206",
@@ -2690,7 +2894,8 @@
    ],
    "source_ids": [
     "PDF-206"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-207",
@@ -2703,7 +2908,8 @@
    ],
    "source_ids": [
     "PDF-207"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-208",
@@ -2716,7 +2922,8 @@
    ],
    "source_ids": [
     "PDF-208"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-209",
@@ -2729,7 +2936,8 @@
    ],
    "source_ids": [
     "PDF-209"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-210",
@@ -2742,7 +2950,8 @@
    ],
    "source_ids": [
     "PDF-210"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-211",
@@ -2755,7 +2964,8 @@
    ],
    "source_ids": [
     "PDF-211"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-212",
@@ -2768,7 +2978,8 @@
    ],
    "source_ids": [
     "PDF-212"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-213",
@@ -2781,7 +2992,8 @@
    ],
    "source_ids": [
     "PDF-213"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-214",
@@ -2794,7 +3006,8 @@
    ],
    "source_ids": [
     "PDF-214"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-215",
@@ -2807,7 +3020,8 @@
    ],
    "source_ids": [
     "PDF-215"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-216",
@@ -2820,7 +3034,8 @@
    ],
    "source_ids": [
     "PDF-216"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-217",
@@ -2833,7 +3048,8 @@
    ],
    "source_ids": [
     "PDF-217"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-218",
@@ -2846,7 +3062,8 @@
    ],
    "source_ids": [
     "PDF-218"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-219",
@@ -2859,7 +3076,8 @@
    ],
    "source_ids": [
     "PDF-219"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-220",
@@ -2872,7 +3090,8 @@
    ],
    "source_ids": [
     "PDF-220"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-221",
@@ -2885,7 +3104,8 @@
    ],
    "source_ids": [
     "PDF-221"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-222",
@@ -2898,7 +3118,8 @@
    ],
    "source_ids": [
     "PDF-222"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-223",
@@ -2911,7 +3132,8 @@
    ],
    "source_ids": [
     "PDF-223"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-224",
@@ -2924,7 +3146,8 @@
    ],
    "source_ids": [
     "PDF-224"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-225",
@@ -2937,7 +3160,8 @@
    ],
    "source_ids": [
     "PDF-225"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-226",
@@ -2950,7 +3174,8 @@
    ],
    "source_ids": [
     "PDF-226"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-227",
@@ -2963,7 +3188,8 @@
    ],
    "source_ids": [
     "PDF-227"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-228",
@@ -2976,7 +3202,8 @@
    ],
    "source_ids": [
     "PDF-228"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-229",
@@ -2989,7 +3216,8 @@
    ],
    "source_ids": [
     "PDF-229"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-230",
@@ -3002,7 +3230,8 @@
    ],
    "source_ids": [
     "PDF-230"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-231",
@@ -3015,7 +3244,8 @@
    ],
    "source_ids": [
     "PDF-231"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-232",
@@ -3028,7 +3258,8 @@
    ],
    "source_ids": [
     "PDF-232"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-233",
@@ -3041,7 +3272,8 @@
    ],
    "source_ids": [
     "PDF-233"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-234",
@@ -3054,7 +3286,8 @@
    ],
    "source_ids": [
     "PDF-234"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-235",
@@ -3067,7 +3300,8 @@
    ],
    "source_ids": [
     "PDF-235"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-236",
@@ -3080,7 +3314,8 @@
    ],
    "source_ids": [
     "PDF-236"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-237",
@@ -3093,7 +3328,8 @@
    ],
    "source_ids": [
     "PDF-237"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-238",
@@ -3106,7 +3342,8 @@
    ],
    "source_ids": [
     "PDF-238"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-239",
@@ -3119,7 +3356,8 @@
    ],
    "source_ids": [
     "PDF-239"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-240",
@@ -3132,7 +3370,8 @@
    ],
    "source_ids": [
     "PDF-240"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-241",
@@ -3145,7 +3384,8 @@
    ],
    "source_ids": [
     "PDF-241"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-242",
@@ -3158,7 +3398,8 @@
    ],
    "source_ids": [
     "PDF-242"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-243",
@@ -3171,7 +3412,8 @@
    ],
    "source_ids": [
     "PDF-243"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-244",
@@ -3184,7 +3426,8 @@
    ],
    "source_ids": [
     "PDF-244"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-245",
@@ -3197,7 +3440,8 @@
    ],
    "source_ids": [
     "PDF-245"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-246",
@@ -3210,7 +3454,8 @@
    ],
    "source_ids": [
     "PDF-246"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-247",
@@ -3223,7 +3468,8 @@
    ],
    "source_ids": [
     "PDF-247"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-248",
@@ -3236,7 +3482,8 @@
    ],
    "source_ids": [
     "PDF-248"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-249",
@@ -3249,7 +3496,8 @@
    ],
    "source_ids": [
     "PDF-249"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-250",
@@ -3262,7 +3510,8 @@
    ],
    "source_ids": [
     "PDF-250"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-251",
@@ -3275,7 +3524,8 @@
    ],
    "source_ids": [
     "PDF-251"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-252",
@@ -3288,7 +3538,8 @@
    ],
    "source_ids": [
     "PDF-252"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-253",
@@ -3301,7 +3552,8 @@
    ],
    "source_ids": [
     "PDF-253"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-254",
@@ -3314,7 +3566,8 @@
    ],
    "source_ids": [
     "PDF-254"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-255",
@@ -3327,7 +3580,8 @@
    ],
    "source_ids": [
     "PDF-255"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-256",
@@ -3340,7 +3594,8 @@
    ],
    "source_ids": [
     "PDF-256"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-257",
@@ -3353,7 +3608,8 @@
    ],
    "source_ids": [
     "PDF-257"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-258",
@@ -3366,7 +3622,8 @@
    ],
    "source_ids": [
     "PDF-258"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-259",
@@ -3379,7 +3636,8 @@
    ],
    "source_ids": [
     "PDF-259"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-260",
@@ -3392,7 +3650,8 @@
    ],
    "source_ids": [
     "PDF-260"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-261",
@@ -3405,7 +3664,8 @@
    ],
    "source_ids": [
     "PDF-261"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-262",
@@ -3418,7 +3678,8 @@
    ],
    "source_ids": [
     "PDF-262"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-263",
@@ -3431,7 +3692,8 @@
    ],
    "source_ids": [
     "PDF-263"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-264",
@@ -3444,7 +3706,8 @@
    ],
    "source_ids": [
     "PDF-264"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-265",
@@ -3457,7 +3720,8 @@
    ],
    "source_ids": [
     "PDF-265"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-266",
@@ -3470,7 +3734,8 @@
    ],
    "source_ids": [
     "PDF-266"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-267",
@@ -3483,7 +3748,8 @@
    ],
    "source_ids": [
     "PDF-267"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-268",
@@ -3496,7 +3762,8 @@
    ],
    "source_ids": [
     "PDF-268"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-269",
@@ -3509,7 +3776,8 @@
    ],
    "source_ids": [
     "PDF-269"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-270",
@@ -3522,7 +3790,8 @@
    ],
    "source_ids": [
     "PDF-270"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-271",
@@ -3535,7 +3804,8 @@
    ],
    "source_ids": [
     "PDF-271"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-272",
@@ -3548,7 +3818,8 @@
    ],
    "source_ids": [
     "PDF-272"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-273",
@@ -3561,7 +3832,8 @@
    ],
    "source_ids": [
     "PDF-273"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-274",
@@ -3574,7 +3846,8 @@
    ],
    "source_ids": [
     "PDF-274"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-275",
@@ -3587,7 +3860,8 @@
    ],
    "source_ids": [
     "PDF-275"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-276",
@@ -3600,7 +3874,8 @@
    ],
    "source_ids": [
     "PDF-276"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-277",
@@ -3613,7 +3888,8 @@
    ],
    "source_ids": [
     "PDF-277"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-278",
@@ -3626,7 +3902,8 @@
    ],
    "source_ids": [
     "PDF-278"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-279",
@@ -3639,7 +3916,8 @@
    ],
    "source_ids": [
     "PDF-279"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-280",
@@ -3652,7 +3930,8 @@
    ],
    "source_ids": [
     "PDF-280"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-281",
@@ -3665,7 +3944,8 @@
    ],
    "source_ids": [
     "PDF-281"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-282",
@@ -3678,7 +3958,8 @@
    ],
    "source_ids": [
     "PDF-282"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-283",
@@ -3691,7 +3972,8 @@
    ],
    "source_ids": [
     "PDF-283"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-284",
@@ -3704,7 +3986,8 @@
    ],
    "source_ids": [
     "PDF-284"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-285",
@@ -3717,7 +4000,8 @@
    ],
    "source_ids": [
     "PDF-285"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-286",
@@ -3730,7 +4014,8 @@
    ],
    "source_ids": [
     "PDF-286"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-287",
@@ -3743,7 +4028,8 @@
    ],
    "source_ids": [
     "PDF-287"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-288",
@@ -3756,7 +4042,8 @@
    ],
    "source_ids": [
     "PDF-288"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-289",
@@ -3769,7 +4056,8 @@
    ],
    "source_ids": [
     "PDF-289"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-290",
@@ -3782,7 +4070,8 @@
    ],
    "source_ids": [
     "PDF-290"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-291",
@@ -3795,7 +4084,8 @@
    ],
    "source_ids": [
     "PDF-291"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-292",
@@ -3808,7 +4098,8 @@
    ],
    "source_ids": [
     "PDF-292"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-293",
@@ -3821,7 +4112,8 @@
    ],
    "source_ids": [
     "PDF-293"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-294",
@@ -3834,7 +4126,8 @@
    ],
    "source_ids": [
     "PDF-294"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-295",
@@ -3847,7 +4140,8 @@
    ],
    "source_ids": [
     "PDF-295"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-296",
@@ -3860,7 +4154,8 @@
    ],
    "source_ids": [
     "PDF-296"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-297",
@@ -3873,7 +4168,8 @@
    ],
    "source_ids": [
     "PDF-297"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-298",
@@ -3886,7 +4182,8 @@
    ],
    "source_ids": [
     "PDF-298"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-299",
@@ -3899,7 +4196,8 @@
    ],
    "source_ids": [
     "PDF-299"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-300",
@@ -3912,7 +4210,8 @@
    ],
    "source_ids": [
     "PDF-300"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-301",
@@ -3925,7 +4224,8 @@
    ],
    "source_ids": [
     "PDF-301"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-302",
@@ -3938,7 +4238,8 @@
    ],
    "source_ids": [
     "PDF-302"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-303",
@@ -3951,7 +4252,8 @@
    ],
    "source_ids": [
     "PDF-303"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-304",
@@ -3964,7 +4266,8 @@
    ],
    "source_ids": [
     "PDF-304"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-305",
@@ -3977,7 +4280,8 @@
    ],
    "source_ids": [
     "PDF-305"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-306",
@@ -3990,7 +4294,8 @@
    ],
    "source_ids": [
     "PDF-306"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-307",
@@ -4003,7 +4308,8 @@
    ],
    "source_ids": [
     "PDF-307"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-308",
@@ -4016,7 +4322,8 @@
    ],
    "source_ids": [
     "PDF-308"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-309",
@@ -4029,7 +4336,8 @@
    ],
    "source_ids": [
     "PDF-309"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-310",
@@ -4042,7 +4350,8 @@
    ],
    "source_ids": [
     "PDF-310"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-311",
@@ -4055,7 +4364,8 @@
    ],
    "source_ids": [
     "PDF-311"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-312",
@@ -4068,7 +4378,8 @@
    ],
    "source_ids": [
     "PDF-312"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-313",
@@ -4081,7 +4392,8 @@
    ],
    "source_ids": [
     "PDF-313"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-314",
@@ -4094,7 +4406,8 @@
    ],
    "source_ids": [
     "PDF-314"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-315",
@@ -4107,7 +4420,8 @@
    ],
    "source_ids": [
     "PDF-315"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-316",
@@ -4120,7 +4434,8 @@
    ],
    "source_ids": [
     "PDF-316"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-317",
@@ -4133,7 +4448,8 @@
    ],
    "source_ids": [
     "PDF-317"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-318",
@@ -4146,7 +4462,8 @@
    ],
    "source_ids": [
     "PDF-318"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-319",
@@ -4159,7 +4476,8 @@
    ],
    "source_ids": [
     "PDF-319"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-320",
@@ -4172,7 +4490,8 @@
    ],
    "source_ids": [
     "PDF-320"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-321",
@@ -4185,7 +4504,8 @@
    ],
    "source_ids": [
     "PDF-321"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-322",
@@ -4198,7 +4518,8 @@
    ],
    "source_ids": [
     "PDF-322"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-323",
@@ -4211,7 +4532,8 @@
    ],
    "source_ids": [
     "PDF-323"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-324",
@@ -4224,7 +4546,8 @@
    ],
    "source_ids": [
     "PDF-324"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-325",
@@ -4237,7 +4560,8 @@
    ],
    "source_ids": [
     "PDF-325"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-326",
@@ -4250,7 +4574,8 @@
    ],
    "source_ids": [
     "PDF-326"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-327",
@@ -4263,7 +4588,8 @@
    ],
    "source_ids": [
     "PDF-327"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-328",
@@ -4276,7 +4602,8 @@
    ],
    "source_ids": [
     "PDF-328"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-329",
@@ -4289,7 +4616,8 @@
    ],
    "source_ids": [
     "PDF-329"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-330",
@@ -4302,7 +4630,8 @@
    ],
    "source_ids": [
     "PDF-330"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-331",
@@ -4315,7 +4644,8 @@
    ],
    "source_ids": [
     "PDF-331"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-332",
@@ -4328,7 +4658,8 @@
    ],
    "source_ids": [
     "PDF-332"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-333",
@@ -4341,7 +4672,8 @@
    ],
    "source_ids": [
     "PDF-333"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-334",
@@ -4354,7 +4686,8 @@
    ],
    "source_ids": [
     "PDF-334"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-335",
@@ -4367,7 +4700,8 @@
    ],
    "source_ids": [
     "PDF-335"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-336",
@@ -4380,7 +4714,8 @@
    ],
    "source_ids": [
     "PDF-336"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-337",
@@ -4393,7 +4728,8 @@
    ],
    "source_ids": [
     "PDF-337"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-338",
@@ -4406,7 +4742,8 @@
    ],
    "source_ids": [
     "PDF-338"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-339",
@@ -4419,7 +4756,8 @@
    ],
    "source_ids": [
     "PDF-339"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-340",
@@ -4432,7 +4770,8 @@
    ],
    "source_ids": [
     "PDF-340"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-341",
@@ -4445,7 +4784,8 @@
    ],
    "source_ids": [
     "PDF-341"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-342",
@@ -4458,7 +4798,8 @@
    ],
    "source_ids": [
     "PDF-342"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-343",
@@ -4471,7 +4812,8 @@
    ],
    "source_ids": [
     "PDF-343"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-344",
@@ -4484,7 +4826,8 @@
    ],
    "source_ids": [
     "PDF-344"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-345",
@@ -4497,7 +4840,8 @@
    ],
    "source_ids": [
     "PDF-345"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-346",
@@ -4510,7 +4854,8 @@
    ],
    "source_ids": [
     "PDF-346"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-347",
@@ -4523,7 +4868,8 @@
    ],
    "source_ids": [
     "PDF-347"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-348",
@@ -4536,7 +4882,8 @@
    ],
    "source_ids": [
     "PDF-348"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-349",
@@ -4549,7 +4896,8 @@
    ],
    "source_ids": [
     "PDF-349"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-350",
@@ -4562,7 +4910,8 @@
    ],
    "source_ids": [
     "PDF-350"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-351",
@@ -4575,7 +4924,8 @@
    ],
    "source_ids": [
     "PDF-351"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-352",
@@ -4588,7 +4938,8 @@
    ],
    "source_ids": [
     "PDF-352"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-353",
@@ -4601,7 +4952,8 @@
    ],
    "source_ids": [
     "PDF-353"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-354",
@@ -4614,7 +4966,8 @@
    ],
    "source_ids": [
     "PDF-354"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-355",
@@ -4627,7 +4980,8 @@
    ],
    "source_ids": [
     "PDF-355"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-356",
@@ -4640,7 +4994,8 @@
    ],
    "source_ids": [
     "PDF-356"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-357",
@@ -4653,7 +5008,8 @@
    ],
    "source_ids": [
     "PDF-357"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-358",
@@ -4666,7 +5022,8 @@
    ],
    "source_ids": [
     "PDF-358"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-359",
@@ -4679,7 +5036,8 @@
    ],
    "source_ids": [
     "PDF-359"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-360",
@@ -4692,7 +5050,8 @@
    ],
    "source_ids": [
     "PDF-360"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-361",
@@ -4705,7 +5064,8 @@
    ],
    "source_ids": [
     "PDF-361"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-362",
@@ -4718,7 +5078,8 @@
    ],
    "source_ids": [
     "PDF-362"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-363",
@@ -4731,7 +5092,8 @@
    ],
    "source_ids": [
     "PDF-363"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-364",
@@ -4744,7 +5106,8 @@
    ],
    "source_ids": [
     "PDF-364"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-365",
@@ -4757,7 +5120,8 @@
    ],
    "source_ids": [
     "PDF-365"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-366",
@@ -4770,7 +5134,8 @@
    ],
    "source_ids": [
     "PDF-366"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-367",
@@ -4783,7 +5148,8 @@
    ],
    "source_ids": [
     "PDF-367"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-368",
@@ -4796,7 +5162,8 @@
    ],
    "source_ids": [
     "PDF-368"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-369",
@@ -4809,7 +5176,8 @@
    ],
    "source_ids": [
     "PDF-369"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-370",
@@ -4822,7 +5190,8 @@
    ],
    "source_ids": [
     "PDF-370"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-371",
@@ -4835,7 +5204,8 @@
    ],
    "source_ids": [
     "PDF-371"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-372",
@@ -4848,7 +5218,8 @@
    ],
    "source_ids": [
     "PDF-372"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-373",
@@ -4861,7 +5232,8 @@
    ],
    "source_ids": [
     "PDF-373"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-374",
@@ -4874,7 +5246,8 @@
    ],
    "source_ids": [
     "PDF-374"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-375",
@@ -4887,7 +5260,8 @@
    ],
    "source_ids": [
     "PDF-375"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-376",
@@ -4900,7 +5274,8 @@
    ],
    "source_ids": [
     "PDF-376"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-377",
@@ -4913,7 +5288,8 @@
    ],
    "source_ids": [
     "PDF-377"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-378",
@@ -4926,7 +5302,8 @@
    ],
    "source_ids": [
     "PDF-378"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-379",
@@ -4939,7 +5316,8 @@
    ],
    "source_ids": [
     "PDF-379"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-380",
@@ -4952,7 +5330,8 @@
    ],
    "source_ids": [
     "PDF-380"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-381",
@@ -4965,7 +5344,8 @@
    ],
    "source_ids": [
     "PDF-381"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-382",
@@ -4978,7 +5358,8 @@
    ],
    "source_ids": [
     "PDF-382"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-383",
@@ -4991,7 +5372,8 @@
    ],
    "source_ids": [
     "PDF-383"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-384",
@@ -5004,7 +5386,8 @@
    ],
    "source_ids": [
     "PDF-384"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-385",
@@ -5017,7 +5400,8 @@
    ],
    "source_ids": [
     "PDF-385"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-386",
@@ -5030,7 +5414,8 @@
    ],
    "source_ids": [
     "PDF-386"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-387",
@@ -5043,7 +5428,8 @@
    ],
    "source_ids": [
     "PDF-387"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-388",
@@ -5056,7 +5442,8 @@
    ],
    "source_ids": [
     "PDF-388"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-389",
@@ -5069,7 +5456,8 @@
    ],
    "source_ids": [
     "PDF-389"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-390",
@@ -5082,7 +5470,8 @@
    ],
    "source_ids": [
     "PDF-390"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-391",
@@ -5095,7 +5484,8 @@
    ],
    "source_ids": [
     "PDF-391"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-392",
@@ -5108,7 +5498,8 @@
    ],
    "source_ids": [
     "PDF-392"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-393",
@@ -5121,7 +5512,8 @@
    ],
    "source_ids": [
     "PDF-393"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-394",
@@ -5134,7 +5526,8 @@
    ],
    "source_ids": [
     "PDF-394"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-395",
@@ -5147,7 +5540,8 @@
    ],
    "source_ids": [
     "PDF-395"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-396",
@@ -5160,7 +5554,8 @@
    ],
    "source_ids": [
     "PDF-396"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-397",
@@ -5173,7 +5568,8 @@
    ],
    "source_ids": [
     "PDF-397"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-398",
@@ -5186,7 +5582,8 @@
    ],
    "source_ids": [
     "PDF-398"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-399",
@@ -5199,7 +5596,8 @@
    ],
    "source_ids": [
     "PDF-399"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-400",
@@ -5212,7 +5610,8 @@
    ],
    "source_ids": [
     "PDF-400"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-401",
@@ -5225,7 +5624,8 @@
    ],
    "source_ids": [
     "PDF-401"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-402",
@@ -5238,7 +5638,8 @@
    ],
    "source_ids": [
     "PDF-402"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-403",
@@ -5251,7 +5652,8 @@
    ],
    "source_ids": [
     "PDF-403"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-404",
@@ -5264,7 +5666,8 @@
    ],
    "source_ids": [
     "PDF-404"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-405",
@@ -5277,7 +5680,8 @@
    ],
    "source_ids": [
     "PDF-405"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-406",
@@ -5290,7 +5694,8 @@
    ],
    "source_ids": [
     "PDF-406"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-407",
@@ -5303,7 +5708,8 @@
    ],
    "source_ids": [
     "PDF-407"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-408",
@@ -5316,7 +5722,8 @@
    ],
    "source_ids": [
     "PDF-408"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-409",
@@ -5329,7 +5736,8 @@
    ],
    "source_ids": [
     "PDF-409"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-410",
@@ -5342,7 +5750,8 @@
    ],
    "source_ids": [
     "PDF-410"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-411",
@@ -5355,7 +5764,8 @@
    ],
    "source_ids": [
     "PDF-411"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-412",
@@ -5368,7 +5778,8 @@
    ],
    "source_ids": [
     "PDF-412"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-413",
@@ -5381,7 +5792,8 @@
    ],
    "source_ids": [
     "PDF-413"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-414",
@@ -5394,7 +5806,8 @@
    ],
    "source_ids": [
     "PDF-414"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-415",
@@ -5407,7 +5820,8 @@
    ],
    "source_ids": [
     "PDF-415"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-416",
@@ -5420,7 +5834,8 @@
    ],
    "source_ids": [
     "PDF-416"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-417",
@@ -5433,7 +5848,8 @@
    ],
    "source_ids": [
     "PDF-417"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "PDF-418",
@@ -5446,7 +5862,8 @@
    ],
    "source_ids": [
     "PDF-418"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-006",
@@ -5459,7 +5876,8 @@
    ],
    "source_ids": [
     "NEW-006"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-007",
@@ -5472,7 +5890,8 @@
    ],
    "source_ids": [
     "NEW-007"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-008",
@@ -5485,7 +5904,8 @@
    ],
    "source_ids": [
     "NEW-008"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-009",
@@ -5498,7 +5918,8 @@
    ],
    "source_ids": [
     "NEW-009"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-010",
@@ -5511,7 +5932,8 @@
    ],
    "source_ids": [
     "NEW-010"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-011",
@@ -5524,7 +5946,8 @@
    ],
    "source_ids": [
     "NEW-011"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-012",
@@ -5537,7 +5960,8 @@
    ],
    "source_ids": [
     "NEW-012"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-013",
@@ -5550,7 +5974,8 @@
    ],
    "source_ids": [
     "NEW-013"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-014",
@@ -5563,7 +5988,8 @@
    ],
    "source_ids": [
     "NEW-014"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-015",
@@ -5576,7 +6002,8 @@
    ],
    "source_ids": [
     "NEW-015"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-016",
@@ -5589,7 +6016,8 @@
    ],
    "source_ids": [
     "NEW-016"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-017",
@@ -5602,7 +6030,8 @@
    ],
    "source_ids": [
     "NEW-017"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-018",
@@ -5615,7 +6044,8 @@
    ],
    "source_ids": [
     "NEW-018"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-019",
@@ -5628,7 +6058,8 @@
    ],
    "source_ids": [
     "NEW-019"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-020",
@@ -5641,7 +6072,8 @@
    ],
    "source_ids": [
     "NEW-020"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-021",
@@ -5654,7 +6086,8 @@
    ],
    "source_ids": [
     "NEW-021"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-022",
@@ -5667,7 +6100,8 @@
    ],
    "source_ids": [
     "NEW-022"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-023",
@@ -5680,7 +6114,8 @@
    ],
    "source_ids": [
     "NEW-023"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-024",
@@ -5693,7 +6128,8 @@
    ],
    "source_ids": [
     "NEW-024"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-025",
@@ -5706,7 +6142,8 @@
    ],
    "source_ids": [
     "NEW-025"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-026",
@@ -5719,7 +6156,8 @@
    ],
    "source_ids": [
     "NEW-026"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-028",
@@ -5732,7 +6170,8 @@
    ],
    "source_ids": [
     "NEW-028"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-029",
@@ -5745,7 +6184,8 @@
    ],
    "source_ids": [
     "NEW-029"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-030",
@@ -5758,7 +6198,8 @@
    ],
    "source_ids": [
     "NEW-030"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-031",
@@ -5771,7 +6212,8 @@
    ],
    "source_ids": [
     "NEW-031"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-032",
@@ -5784,7 +6226,8 @@
    ],
    "source_ids": [
     "NEW-032"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-033",
@@ -5797,7 +6240,8 @@
    ],
    "source_ids": [
     "NEW-033"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-034",
@@ -5810,7 +6254,8 @@
    ],
    "source_ids": [
     "NEW-034"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-035",
@@ -5823,7 +6268,8 @@
    ],
    "source_ids": [
     "NEW-035"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-036",
@@ -5836,7 +6282,8 @@
    ],
    "source_ids": [
     "NEW-036"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-037",
@@ -5849,7 +6296,8 @@
    ],
    "source_ids": [
     "NEW-037"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-038",
@@ -5862,22 +6310,24 @@
    ],
    "source_ids": [
     "NEW-038"
-   ]
+   ],
+   "primary_reason": null
   },
   {
-   "archive_source_id": "NEW-039",
+   "archive_source_id": "NEW-040",
    "store_id": null,
    "sha256": "bac7306952a96ae61151065abfde8521a5cdc6d85f515219c63b485f01b7042a",
    "bytes": 14105191,
    "page_count": 6,
    "filenames": [
-    "广州番禺天河城授权体验店（无框架中岛）.pdf",
-    "广州番禺天河城授权体验店（框架中岛）.pdf"
+    "广州番禺天河城授权体验店（框架中岛）.pdf",
+    "广州番禺天河城授权体验店（无框架中岛）.pdf"
    ],
    "source_ids": [
-    "NEW-039",
-    "NEW-040"
-   ]
+    "NEW-040",
+    "NEW-039"
+   ],
+   "primary_reason": "2026-10-13 用户指定：框架 / 无框架中岛两份内容相同，只保留框架中岛"
   },
   {
    "archive_source_id": "NEW-041",
@@ -5890,7 +6340,8 @@
    ],
    "source_ids": [
     "NEW-041"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-042",
@@ -5903,7 +6354,8 @@
    ],
    "source_ids": [
     "NEW-042"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-043",
@@ -5916,7 +6368,8 @@
    ],
    "source_ids": [
     "NEW-043"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-044",
@@ -5929,7 +6382,8 @@
    ],
    "source_ids": [
     "NEW-044"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-045",
@@ -5942,7 +6396,8 @@
    ],
    "source_ids": [
     "NEW-045"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-046",
@@ -5955,7 +6410,8 @@
    ],
    "source_ids": [
     "NEW-046"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-047",
@@ -5968,7 +6424,8 @@
    ],
    "source_ids": [
     "NEW-047"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-048",
@@ -5981,7 +6438,8 @@
    ],
    "source_ids": [
     "NEW-048"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-049",
@@ -5994,7 +6452,8 @@
    ],
    "source_ids": [
     "NEW-049"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-050",
@@ -6007,7 +6466,8 @@
    ],
    "source_ids": [
     "NEW-050"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-051",
@@ -6020,7 +6480,8 @@
    ],
    "source_ids": [
     "NEW-051"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-052",
@@ -6033,7 +6494,8 @@
    ],
    "source_ids": [
     "NEW-052"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-053",
@@ -6046,7 +6508,8 @@
    ],
    "source_ids": [
     "NEW-053"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-054",
@@ -6059,7 +6522,8 @@
    ],
    "source_ids": [
     "NEW-054"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-055",
@@ -6072,7 +6536,8 @@
    ],
    "source_ids": [
     "NEW-055"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-056",
@@ -6085,7 +6550,8 @@
    ],
    "source_ids": [
     "NEW-056"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-057",
@@ -6098,7 +6564,8 @@
    ],
    "source_ids": [
     "NEW-057"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-058",
@@ -6111,7 +6578,8 @@
    ],
    "source_ids": [
     "NEW-058"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-059",
@@ -6124,7 +6592,8 @@
    ],
    "source_ids": [
     "NEW-059"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-060",
@@ -6137,7 +6606,8 @@
    ],
    "source_ids": [
     "NEW-060"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-061",
@@ -6150,7 +6620,8 @@
    ],
    "source_ids": [
     "NEW-061"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-062",
@@ -6163,7 +6634,8 @@
    ],
    "source_ids": [
     "NEW-062"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-063",
@@ -6176,7 +6648,8 @@
    ],
    "source_ids": [
     "NEW-063"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-064",
@@ -6189,7 +6662,8 @@
    ],
    "source_ids": [
     "NEW-064"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-065",
@@ -6202,7 +6676,8 @@
    ],
    "source_ids": [
     "NEW-065"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-066",
@@ -6215,7 +6690,8 @@
    ],
    "source_ids": [
     "NEW-066"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-067",
@@ -6228,7 +6704,8 @@
    ],
    "source_ids": [
     "NEW-067"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-068",
@@ -6241,7 +6718,8 @@
    ],
    "source_ids": [
     "NEW-068"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-069",
@@ -6254,7 +6732,8 @@
    ],
    "source_ids": [
     "NEW-069"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-070",
@@ -6267,7 +6746,8 @@
    ],
    "source_ids": [
     "NEW-070"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-071",
@@ -6280,7 +6760,8 @@
    ],
    "source_ids": [
     "NEW-071"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-072",
@@ -6293,7 +6774,8 @@
    ],
    "source_ids": [
     "NEW-072"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-073",
@@ -6306,7 +6788,8 @@
    ],
    "source_ids": [
     "NEW-073"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-074",
@@ -6319,7 +6802,8 @@
    ],
    "source_ids": [
     "NEW-074"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-075",
@@ -6332,7 +6816,8 @@
    ],
    "source_ids": [
     "NEW-075"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-076",
@@ -6345,7 +6830,8 @@
    ],
    "source_ids": [
     "NEW-076"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-077",
@@ -6358,7 +6844,8 @@
    ],
    "source_ids": [
     "NEW-077"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-078",
@@ -6371,7 +6858,8 @@
    ],
    "source_ids": [
     "NEW-078"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-079",
@@ -6384,7 +6872,8 @@
    ],
    "source_ids": [
     "NEW-079"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-080",
@@ -6397,7 +6886,8 @@
    ],
    "source_ids": [
     "NEW-080"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-081",
@@ -6410,7 +6900,8 @@
    ],
    "source_ids": [
     "NEW-081"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-082",
@@ -6423,7 +6914,8 @@
    ],
    "source_ids": [
     "NEW-082"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-083",
@@ -6436,7 +6928,8 @@
    ],
    "source_ids": [
     "NEW-083"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-084",
@@ -6449,7 +6942,8 @@
    ],
    "source_ids": [
     "NEW-084"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-085",
@@ -6462,7 +6956,8 @@
    ],
    "source_ids": [
     "NEW-085"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-086",
@@ -6475,7 +6970,8 @@
    ],
    "source_ids": [
     "NEW-086"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-087",
@@ -6488,7 +6984,8 @@
    ],
    "source_ids": [
     "NEW-087"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-088",
@@ -6501,7 +6998,8 @@
    ],
    "source_ids": [
     "NEW-088"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-089",
@@ -6514,7 +7012,8 @@
    ],
    "source_ids": [
     "NEW-089"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-090",
@@ -6527,7 +7026,8 @@
    ],
    "source_ids": [
     "NEW-090"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-091",
@@ -6540,7 +7040,8 @@
    ],
    "source_ids": [
     "NEW-091"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-092",
@@ -6553,7 +7054,8 @@
    ],
    "source_ids": [
     "NEW-092"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-093",
@@ -6566,7 +7068,8 @@
    ],
    "source_ids": [
     "NEW-093"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-094",
@@ -6579,7 +7082,8 @@
    ],
    "source_ids": [
     "NEW-094"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-095",
@@ -6592,7 +7096,8 @@
    ],
    "source_ids": [
     "NEW-095"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-096",
@@ -6605,7 +7110,8 @@
    ],
    "source_ids": [
     "NEW-096"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-097",
@@ -6618,7 +7124,8 @@
    ],
    "source_ids": [
     "NEW-097"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-098",
@@ -6631,7 +7138,8 @@
    ],
    "source_ids": [
     "NEW-098"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-099",
@@ -6644,7 +7152,8 @@
    ],
    "source_ids": [
     "NEW-099"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-100",
@@ -6657,7 +7166,8 @@
    ],
    "source_ids": [
     "NEW-100"
-   ]
+   ],
+   "primary_reason": null
   },
   {
    "archive_source_id": "NEW-101",
@@ -6670,7 +7180,8 @@
    ],
    "source_ids": [
     "NEW-101"
-   ]
+   ],
+   "primary_reason": null
   }
  ],
  "sources": [
@@ -6683,7 +7194,7 @@
    "bytes": 12383179,
    "page_count": 34,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-006",
    "role": "primary",
    "legacy_ids": {
@@ -6809,7 +7320,7 @@
    "bytes": 6219286,
    "page_count": 7,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-007",
    "role": "primary",
    "legacy_ids": {
@@ -6917,7 +7428,7 @@
    "bytes": 1778016,
    "page_count": 7,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-008",
    "role": "primary",
    "legacy_ids": {
@@ -7025,7 +7536,7 @@
    "bytes": 11908866,
    "page_count": 57,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-009",
    "role": "primary",
    "legacy_ids": {
@@ -7043,7 +7554,7 @@
    "bytes": 3094926,
    "page_count": 5,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-010",
    "role": "primary",
    "legacy_ids": {
@@ -7241,7 +7752,7 @@
    "bytes": 3725295,
    "page_count": 4,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-011",
    "role": "primary",
    "legacy_ids": {
@@ -7331,7 +7842,7 @@
    "bytes": 4522491,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-012",
    "role": "primary",
    "legacy_ids": {
@@ -7367,7 +7878,7 @@
    "bytes": 18535137,
    "page_count": 53,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-013",
    "role": "primary",
    "legacy_ids": {
@@ -7709,7 +8220,7 @@
    "bytes": 25668330,
    "page_count": 30,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-014",
    "role": "primary",
    "legacy_ids": {
@@ -8267,7 +8778,7 @@
    "bytes": 15502390,
    "page_count": 47,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-015",
    "role": "primary",
    "legacy_ids": {
@@ -8285,7 +8796,7 @@
    "bytes": 8649006,
    "page_count": 28,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-016",
    "role": "primary",
    "legacy_ids": {
@@ -8375,7 +8886,7 @@
    "bytes": 2105759,
    "page_count": 7,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-017",
    "role": "primary",
    "legacy_ids": {
@@ -8519,7 +9030,7 @@
    "bytes": 37218343,
    "page_count": 29,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-018",
    "role": "primary",
    "legacy_ids": {
@@ -8537,7 +9048,7 @@
    "bytes": 3013805,
    "page_count": 14,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-019",
    "role": "primary",
    "legacy_ids": {
@@ -8555,7 +9066,7 @@
    "bytes": 5705915,
    "page_count": 8,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-020",
    "role": "primary",
    "legacy_ids": {
@@ -8573,7 +9084,7 @@
    "bytes": 10856811,
    "page_count": 46,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-021",
    "role": "primary",
    "legacy_ids": {
@@ -8609,7 +9120,7 @@
    "bytes": 14619882,
    "page_count": 34,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-022",
    "role": "primary",
    "legacy_ids": {
@@ -8681,7 +9192,7 @@
    "bytes": 3086753,
    "page_count": 3,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-023",
    "role": "primary",
    "legacy_ids": {
@@ -8735,7 +9246,7 @@
    "bytes": 7799570,
    "page_count": 28,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-024",
    "role": "primary",
    "legacy_ids": {
@@ -8753,7 +9264,7 @@
    "bytes": 14894996,
    "page_count": 36,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-025",
    "role": "primary",
    "legacy_ids": {
@@ -8861,7 +9372,7 @@
    "bytes": 18014586,
    "page_count": 42,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-026",
    "role": "primary",
    "legacy_ids": {
@@ -9023,7 +9534,7 @@
    "bytes": 18876685,
    "page_count": 45,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-028",
    "role": "primary",
    "legacy_ids": {
@@ -9239,7 +9750,7 @@
    "bytes": 5057478,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-029",
    "role": "primary",
    "legacy_ids": {
@@ -9365,7 +9876,7 @@
    "bytes": 5057837,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-030",
    "role": "primary",
    "legacy_ids": {
@@ -9527,7 +10038,7 @@
    "bytes": 20032581,
    "page_count": 31,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-031",
    "role": "primary",
    "legacy_ids": {
@@ -9545,7 +10056,7 @@
    "bytes": 15325675,
    "page_count": 45,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-032",
    "role": "primary",
    "legacy_ids": {
@@ -9581,7 +10092,7 @@
    "bytes": 1072739,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-033",
    "role": "primary",
    "legacy_ids": {
@@ -9707,7 +10218,7 @@
    "bytes": 3293428,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-034",
    "role": "primary",
    "legacy_ids": {
@@ -9851,7 +10362,7 @@
    "bytes": 9903037,
    "page_count": 39,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-035",
    "role": "primary",
    "legacy_ids": {
@@ -9887,7 +10398,7 @@
    "bytes": 28764009,
    "page_count": 44,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-036",
    "role": "primary",
    "legacy_ids": {
@@ -9905,7 +10416,7 @@
    "bytes": 13325415,
    "page_count": 46,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-037",
    "role": "primary",
    "legacy_ids": {
@@ -9923,7 +10434,7 @@
    "bytes": 5571003,
    "page_count": 16,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-038",
    "role": "primary",
    "legacy_ids": {
@@ -10013,9 +10524,9 @@
    "bytes": 14105191,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
-   "archive_source_id": "NEW-039",
-   "role": "primary",
+   "git_tracked": true,
+   "archive_source_id": "NEW-040",
+   "role": "alias",
    "legacy_ids": {
     "feishu_0923_record_id": null,
     "pilot_store_id": null,
@@ -10031,9 +10542,9 @@
    "bytes": 14105191,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
-   "archive_source_id": "NEW-039",
-   "role": "alias",
+   "git_tracked": true,
+   "archive_source_id": "NEW-040",
+   "role": "primary",
    "legacy_ids": {
     "feishu_0923_record_id": null,
     "pilot_store_id": null,
@@ -10229,7 +10740,7 @@
    "bytes": 12288513,
    "page_count": 35,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-041",
    "role": "primary",
    "legacy_ids": {
@@ -10247,7 +10758,7 @@
    "bytes": 51554252,
    "page_count": 38,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-042",
    "role": "primary",
    "legacy_ids": {
@@ -10301,7 +10812,7 @@
    "bytes": 17968933,
    "page_count": 7,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-043",
    "role": "primary",
    "legacy_ids": {
@@ -10337,7 +10848,7 @@
    "bytes": 28110248,
    "page_count": 33,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-044",
    "role": "primary",
    "legacy_ids": {
@@ -10463,7 +10974,7 @@
    "bytes": 21056777,
    "page_count": 48,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-045",
    "role": "primary",
    "legacy_ids": {
@@ -10499,7 +11010,7 @@
    "bytes": 9264136,
    "page_count": 38,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-046",
    "role": "primary",
    "legacy_ids": {
@@ -10679,7 +11190,7 @@
    "bytes": 16948978,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-047",
    "role": "primary",
    "legacy_ids": {
@@ -10751,7 +11262,7 @@
    "bytes": 7077400,
    "page_count": 30,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-048",
    "role": "primary",
    "legacy_ids": {
@@ -10805,7 +11316,7 @@
    "bytes": 18346423,
    "page_count": 46,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-049",
    "role": "primary",
    "legacy_ids": {
@@ -10967,7 +11478,7 @@
    "bytes": 8168409,
    "page_count": 12,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-050",
    "role": "primary",
    "legacy_ids": {
@@ -11183,7 +11694,7 @@
    "bytes": 18527982,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-051",
    "role": "primary",
    "legacy_ids": {
@@ -11291,7 +11802,7 @@
    "bytes": 10859195,
    "page_count": 7,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-052",
    "role": "primary",
    "legacy_ids": {
@@ -11435,7 +11946,7 @@
    "bytes": 11397738,
    "page_count": 32,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-053",
    "role": "primary",
    "legacy_ids": {
@@ -11471,7 +11982,7 @@
    "bytes": 17714296,
    "page_count": 33,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-054",
    "role": "primary",
    "legacy_ids": {
@@ -11543,7 +12054,7 @@
    "bytes": 1423509,
    "page_count": 4,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-055",
    "role": "primary",
    "legacy_ids": {
@@ -11561,7 +12072,7 @@
    "bytes": 13541632,
    "page_count": 44,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-056",
    "role": "primary",
    "legacy_ids": {
@@ -11615,7 +12126,7 @@
    "bytes": 15010764,
    "page_count": 30,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-057",
    "role": "primary",
    "legacy_ids": {
@@ -11705,7 +12216,7 @@
    "bytes": 8829284,
    "page_count": 5,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-058",
    "role": "primary",
    "legacy_ids": {
@@ -11813,7 +12324,7 @@
    "bytes": 16588114,
    "page_count": 43,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-059",
    "role": "primary",
    "legacy_ids": {
@@ -11849,7 +12360,7 @@
    "bytes": 5351217,
    "page_count": 5,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-060",
    "role": "primary",
    "legacy_ids": {
@@ -11885,7 +12396,7 @@
    "bytes": 37865618,
    "page_count": 35,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-061",
    "role": "primary",
    "legacy_ids": {
@@ -12029,7 +12540,7 @@
    "bytes": 9478614,
    "page_count": 5,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-062",
    "role": "primary",
    "legacy_ids": {
@@ -12065,7 +12576,7 @@
    "bytes": 11127211,
    "page_count": 43,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-063",
    "role": "primary",
    "legacy_ids": {
@@ -12119,7 +12630,7 @@
    "bytes": 13397780,
    "page_count": 46,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-064",
    "role": "primary",
    "legacy_ids": {
@@ -12155,7 +12666,7 @@
    "bytes": 9994775,
    "page_count": 31,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-065",
    "role": "primary",
    "legacy_ids": {
@@ -12173,7 +12684,7 @@
    "bytes": 9229898,
    "page_count": 34,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-066",
    "role": "primary",
    "legacy_ids": {
@@ -12227,7 +12738,7 @@
    "bytes": 14060615,
    "page_count": 45,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-067",
    "role": "primary",
    "legacy_ids": {
@@ -12245,7 +12756,7 @@
    "bytes": 9530670,
    "page_count": 35,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-068",
    "role": "primary",
    "legacy_ids": {
@@ -12353,7 +12864,7 @@
    "bytes": 1862207,
    "page_count": 8,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-069",
    "role": "primary",
    "legacy_ids": {
@@ -12407,7 +12918,7 @@
    "bytes": 15573019,
    "page_count": 47,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-070",
    "role": "primary",
    "legacy_ids": {
@@ -12551,7 +13062,7 @@
    "bytes": 31495630,
    "page_count": 27,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-071",
    "role": "primary",
    "legacy_ids": {
@@ -12623,7 +13134,7 @@
    "bytes": 10061809,
    "page_count": 37,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-072",
    "role": "primary",
    "legacy_ids": {
@@ -12785,7 +13296,7 @@
    "bytes": 18832436,
    "page_count": 36,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-073",
    "role": "primary",
    "legacy_ids": {
@@ -12803,7 +13314,7 @@
    "bytes": 15783239,
    "page_count": 33,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-074",
    "role": "primary",
    "legacy_ids": {
@@ -13037,7 +13548,7 @@
    "bytes": 10396112,
    "page_count": 5,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-075",
    "role": "primary",
    "legacy_ids": {
@@ -13343,7 +13854,7 @@
    "bytes": 34321970,
    "page_count": 40,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-076",
    "role": "primary",
    "legacy_ids": {
@@ -13487,7 +13998,7 @@
    "bytes": 17386673,
    "page_count": 28,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-077",
    "role": "primary",
    "legacy_ids": {
@@ -13523,7 +14034,7 @@
    "bytes": 200503591,
    "page_count": 27,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-078",
    "role": "primary",
    "legacy_ids": {
@@ -13667,7 +14178,7 @@
    "bytes": 8463164,
    "page_count": 37,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-079",
    "role": "primary",
    "legacy_ids": {
@@ -13739,7 +14250,7 @@
    "bytes": 14171724,
    "page_count": 43,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-080",
    "role": "primary",
    "legacy_ids": {
@@ -13811,7 +14322,7 @@
    "bytes": 4689213,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-081",
    "role": "primary",
    "legacy_ids": {
@@ -13955,7 +14466,7 @@
    "bytes": 1904564,
    "page_count": 4,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-082",
    "role": "primary",
    "legacy_ids": {
@@ -14027,7 +14538,7 @@
    "bytes": 10634077,
    "page_count": 26,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-083",
    "role": "primary",
    "legacy_ids": {
@@ -14081,7 +14592,7 @@
    "bytes": 13914036,
    "page_count": 34,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-084",
    "role": "primary",
    "legacy_ids": {
@@ -14117,7 +14628,7 @@
    "bytes": 26247223,
    "page_count": 44,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-085",
    "role": "primary",
    "legacy_ids": {
@@ -14135,7 +14646,7 @@
    "bytes": 18392938,
    "page_count": 38,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-086",
    "role": "primary",
    "legacy_ids": {
@@ -14351,7 +14862,7 @@
    "bytes": 29550089,
    "page_count": 32,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-087",
    "role": "primary",
    "legacy_ids": {
@@ -14387,7 +14898,7 @@
    "bytes": 17331751,
    "page_count": 40,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-088",
    "role": "primary",
    "legacy_ids": {
@@ -14603,7 +15114,7 @@
    "bytes": 11795021,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-089",
    "role": "primary",
    "legacy_ids": {
@@ -14675,7 +15186,7 @@
    "bytes": 31052777,
    "page_count": 28,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-090",
    "role": "primary",
    "legacy_ids": {
@@ -14693,7 +15204,7 @@
    "bytes": 16264845,
    "page_count": 49,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-091",
    "role": "primary",
    "legacy_ids": {
@@ -15125,7 +15636,7 @@
    "bytes": 8413191,
    "page_count": 6,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-092",
    "role": "primary",
    "legacy_ids": {
@@ -15161,7 +15672,7 @@
    "bytes": 17113670,
    "page_count": 49,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-093",
    "role": "primary",
    "legacy_ids": {
@@ -15197,7 +15708,7 @@
    "bytes": 18760678,
    "page_count": 30,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-094",
    "role": "primary",
    "legacy_ids": {
@@ -15467,7 +15978,7 @@
    "bytes": 10303280,
    "page_count": 17,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-095",
    "role": "primary",
    "legacy_ids": {
@@ -15629,7 +16140,7 @@
    "bytes": 9013090,
    "page_count": 9,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-096",
    "role": "primary",
    "legacy_ids": {
@@ -15701,7 +16212,7 @@
    "bytes": 12592048,
    "page_count": 45,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-097",
    "role": "primary",
    "legacy_ids": {
@@ -15791,7 +16302,7 @@
    "bytes": 19945251,
    "page_count": 40,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-098",
    "role": "primary",
    "legacy_ids": {
@@ -15863,7 +16374,7 @@
    "bytes": 9533321,
    "page_count": 36,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-099",
    "role": "primary",
    "legacy_ids": {
@@ -15881,7 +16392,7 @@
    "bytes": 17589674,
    "page_count": 40,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-100",
    "role": "primary",
    "legacy_ids": {
@@ -15899,7 +16410,7 @@
    "bytes": 17926071,
    "page_count": 19,
    "open_error": null,
-   "git_tracked": false,
+   "git_tracked": true,
    "archive_source_id": "NEW-101",
    "role": "primary",
    "legacy_ids": {
@@ -15967,7 +16478,7 @@
    "format": "xlsx",
    "sha256": "02ee47f435e5a216e6b5094739d2732edc533dd1b52c13231ef19e7435207654",
    "bytes": 43433,
-   "git_tracked": false,
+   "git_tracked": true,
    "reason": "飞书多维表 2026-10-09 导出的下载台账，是 SI / 铺型标签来源，不是图纸；阶段 1 使用"
   }
  ]
