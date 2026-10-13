@@ -1,98 +1,38 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { schema } from '@store/database'
 import { rectangleSpace } from '@store/shared'
 import type {
   DesignNode,
   Draft,
   NodeCreated,
   NodeTree,
-  Project,
   ProjectExport,
   ProjectImported,
 } from '@store/shared'
+import {
+  createProject,
+  createSpace,
+  islandItem as island,
+  layoutOf as layout,
+  postNode,
+  seedAsset,
+} from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
 let t: TestApp
 
-/** One placeable catalogue model: a 1.0 × 1.8 m island table. */
-async function seedAsset() {
-  const [file] = await t.database.db
-    .insert(schema.storedFiles)
-    .values({
-      root: 'resource',
-      storageKey: 'models/asset-1.glb',
-      kind: 'glb',
-      contentType: 'model/gltf-binary',
-      bytes: 1,
-      sha256: 'a'.repeat(64),
-    })
-    .returning()
-  await t.database.db.insert(schema.assets).values({
-    id: 'asset-1',
-    standardName: '1800mm普通中岛桌',
-    variant: 'A',
-    materialCategory: '软装物料',
-    siFamily: 'SI1.0',
-    function: 'island_table',
-    installation: 'floor',
-    width: 1,
-    depth: 1.8,
-    height: 1.327,
-    footprintSource: 'glb',
-    front: 'any',
-    placeable: true,
-    glbFileId: file?.id,
-  })
-}
-
 beforeAll(async () => {
   t = await createTestApp()
-  await seedAsset()
+  await seedAsset(t)
 })
 
 afterAll(async () => {
   await t.close()
 })
 
-async function newProject(name = '节点测试'): Promise<Project> {
-  const response = await t.app.inject({
-    method: 'POST',
-    url: '/api/v1/projects',
-    payload: { name, shopType: 'island' },
-  })
-  return response.json()
-}
-
-function post(projectId: string, payload: object) {
-  return t.app.inject({ method: 'POST', url: `/api/v1/projects/${projectId}/nodes`, payload })
-}
-
-const island = (id: string, cx: number, cz: number, extra: object = {}) => ({
-  id,
-  assetId: 'asset-1',
-  function: 'island_table',
-  name: `中岛桌 ${id}`,
-  cx,
-  cz,
-  rotation: 0,
-  w: 1,
-  d: 1.8,
-  h: 1.327,
-  ...extra,
-})
-const layout = (...items: object[]) => ({ schemaVersion: 3, items })
-
-async function spaceNode(projectId: string): Promise<DesignNode> {
-  const response = await post(projectId, {
-    parentId: null,
-    kind: 'space',
-    name: '空间',
-    space: rectangleSpace(8, 6, 3.2),
-  })
-  expect(response.statusCode).toBe(201)
-  return response.json<NodeCreated>().node
-}
+const newProject = (name = '节点测试') => createProject(t, { name, shopType: 'island' })
+const post = (projectId: string, payload: object) => postNode(t, projectId, payload)
+const spaceNode = (projectId: string) => createSpace(t, projectId)
 
 describe('history nodes', () => {
   it('builds a tree of space and layout nodes and serves full nodes on demand', async () => {

@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { DEFAULT_VIEW_NAMES, MAX_CAMERAS_PER_NODE, rectangleSpace } from '@store/shared'
-import type { NodeCamera, NodeCameraList, NodeCreated, Project } from '@store/shared'
+import { DEFAULT_VIEW_NAMES, MAX_CAMERAS_PER_NODE } from '@store/shared'
+import type { NodeCamera, NodeCameraList, NodeCreated } from '@store/shared'
+import { api, placeholderLayout as layout, whiteChain } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -14,50 +15,10 @@ afterAll(async () => {
   await t.close()
 })
 
-/** A placeholder table needs no catalogue model. */
-const layout = {
-  schemaVersion: 3,
-  items: [
-    {
-      id: 'island_table-1',
-      assetId: null,
-      function: 'island_table',
-      name: '中岛桌',
-      cx: 4,
-      cz: 3,
-      rotation: 0,
-      w: 1.8,
-      d: 0.9,
-      h: 0.9,
-      placeholder: true,
-    },
-  ],
-}
-
-async function inject(method: 'GET' | 'POST' | 'PATCH' | 'DELETE', url: string, payload?: object) {
-  return t.app.inject({ method, url: `/api/v1${url}`, ...(payload ? { payload } : {}) })
-}
+const inject = api(() => t)
 
 /** A project with space → plan → white; returns the ids. */
-async function whiteModel() {
-  const project = (
-    await inject('POST', '/projects', { name: '视角测试', shopType: 'side_hall' })
-  ).json<Project>()
-  const create = async (payload: object) => {
-    const response = await inject('POST', `/projects/${project.id}/nodes`, payload)
-    expect(response.statusCode).toBe(201)
-    return response.json<NodeCreated>().node
-  }
-  const space = await create({
-    parentId: null,
-    kind: 'space',
-    name: '空间',
-    space: { ...rectangleSpace(8, 6, 3.2), entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }] },
-  })
-  const plan = await create({ parentId: space.id, kind: 'plan', name: '方案', layout })
-  const white = await create({ parentId: plan.id, kind: 'white', name: '白模', layout })
-  return { project, plan, white }
-}
+const whiteModel = () => whiteChain(t, { projectName: '视角测试' })
 
 const list = async (nodeId: string, includeDeleted = false) =>
   (

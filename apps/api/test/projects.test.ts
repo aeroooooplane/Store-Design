@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { eq } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Project } from '@store/shared'
+import { createProject } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -15,11 +16,7 @@ afterAll(async () => {
   await t.close()
 })
 
-async function create(body: Record<string, unknown>): Promise<Project> {
-  const response = await t.app.inject({ method: 'POST', url: '/api/v1/projects', payload: body })
-  expect(response.statusCode).toBe(201)
-  return response.json()
-}
+const create = (body: Record<string, unknown>) => createProject(t, body)
 
 function write(
   method: 'PATCH' | 'DELETE' | 'POST',

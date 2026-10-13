@@ -1,8 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { AgentAction, AgentMessage, AgentSession } from '@store/shared'
+import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { AgentDock, AgentSelectionProvider } from './AgentDock.tsx'
 
 const PID = '11111111-1111-4111-8111-111111111111'
@@ -12,18 +12,9 @@ const SID = '44444444-4444-4444-8444-444444444444'
 const AID = '55555555-5555-4555-8555-555555555555'
 const AT = '2026-10-12T04:00:00.000Z'
 
-interface Call {
-  method: string
-  path: string
-  body: unknown
-}
-
 /** In-memory stand-in for the AI overview and agent APIs. */
 function fakeApi(agentModel: string | null) {
   const state = { sessions: [] as AgentSession[], messages: [] as AgentMessage[] }
-  const calls: Call[] = []
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
   const message = (
     role: AgentMessage['role'],
     text: string,
@@ -42,13 +33,7 @@ function fakeApi(agentModel: string | null) {
     actions,
   })
 
-  const fetchMock = vi.fn(async (request: Request) => {
-    const url = new URL(request.url)
-    const text = request.method === 'GET' ? '' : await request.text()
-    const body: unknown = text ? JSON.parse(text) : undefined
-    calls.push({ method: request.method, path: url.pathname, body })
-    const route = `${request.method} ${url.pathname}`
-
+  const { fetchMock, calls } = stubFetch(({ route, body }) => {
     if (route === 'GET /api/v1/ai') {
       return json(200, {
         models: agentModel
@@ -102,21 +87,17 @@ function fakeApi(agentModel: string | null) {
     }
     if (route === `GET /api/v1/projects/${PID}/nodes`)
       return json(200, { projectId: PID, nodes: [] })
-    return json(404, { error: { code: 'NOT_FOUND', message: route, requestId: 'r' } })
+    return notFound(route)
   })
   return { fetchMock, calls, state }
 }
 
 function mount(onSelect: (id: string) => void) {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter>
-        <AgentSelectionProvider>
-          <AgentDock projectId={PID} nodeId={S1} onSelect={onSelect} />
-        </AgentSelectionProvider>
-      </MemoryRouter>
-    </QueryClientProvider>,
+  return renderWithClient(
+    <AgentSelectionProvider>
+      <AgentDock projectId={PID} nodeId={S1} onSelect={onSelect} />
+    </AgentSelectionProvider>,
+    { router: true },
   )
 }
 
@@ -127,8 +108,7 @@ describe('AgentDock', () => {
   })
 
   it('starts a conversation on the first message, shows the actions and undoes one', async () => {
-    const { fetchMock, calls } = fakeApi('deepseek-flash')
-    vi.stubGlobal('fetch', fetchMock)
+    const { calls } = fakeApi('deepseek-flash')
     const onSelect = vi.fn()
     mount(onSelect)
 
@@ -156,8 +136,7 @@ describe('AgentDock', () => {
   })
 
   it('asks for a model before it can chat', async () => {
-    const { fetchMock } = fakeApi(null)
-    vi.stubGlobal('fetch', fetchMock)
+    fakeApi(null)
     mount(vi.fn())
     fireEvent.click(screen.getByRole('button', { name: '设计助理' }))
     await screen.findByText(/还没有可用的 Agent 模型/)

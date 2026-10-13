@@ -1,10 +1,13 @@
 import { useEffect, useImperativeHandle } from 'react'
 import type { Ref } from 'react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
-import type { Delivery, DesignNode, NodeCamera, Project, RenderImage } from '@store/shared'
+import type { Delivery, NodeCamera, RenderImage } from '@store/shared'
+import { makeCamera, makeNode, makeProject } from '../../test-utils/factories.ts'
+import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
+import type { FakeRequest } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { RenderStage } from './RenderStage.tsx'
 
@@ -37,42 +40,24 @@ vi.mock('./plan-export.ts', () => ({
 const PROJECT = '11111111-1111-4111-8111-111111111111'
 const NODE = '22222222-2222-4222-8222-222222222222'
 
-const project: Project = {
+const project = makeProject({
   id: PROJECT,
   name: '渲染测试',
-  shopType: 'side_hall',
-  market: 'domestic',
-  siStyle: 'SI1.0',
-  revision: 1,
   createdAt: '2026-10-10T00:00:00.000Z',
   updatedAt: '2026-10-10T00:00:00.000Z',
-  deletedAt: null,
-}
+})
 
-const node: DesignNode = {
-  id: NODE,
+const node = makeNode(NODE, '33333333-3333-4333-8333-333333333333', {
   projectId: PROJECT,
-  parentId: '33333333-3333-4333-8333-333333333333',
   kind: 'render',
   name: '渲染',
-  strategy: null,
   siStyle: 'SI1.0',
-  origin: 'user',
-  importedFrom: null,
-  hidden: false,
   createdAt: '2026-10-10T00:00:00.000Z',
-  space: null,
   layout: { schemaVersion: 3, items: [], planning: null },
-}
+})
 
 function camera(i: number, name: string): NodeCamera {
-  return {
-    id: `00000000-0000-4000-8000-00000000000${i}`,
-    nodeId: NODE,
-    sort: i,
-    camera: { name, position: [i, 5, 9], target: [4, 0.8, 3], fovDeg: 48, source: 'auto' },
-    deletedAt: null,
-  }
+  return makeCamera(i, NODE, name)
 }
 
 function image(cameraId: string, mode: 'white' | 'material', stale = false): RenderImage {
@@ -89,15 +74,11 @@ function image(cameraId: string, mode: 'white' | 'material', stale = false): Ren
   }
 }
 
-const json = (status: number, body: unknown) =>
-  new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
-
 function fakeApi(cameras: NodeCamera[], images: RenderImage[]) {
   const uploads: { path: string; type: string | null }[] = []
   const deliveries: Delivery[] = []
   const posted: unknown[] = []
-  const fetchMock = vi.fn(async (request: Request) => {
-    const { pathname } = new URL(request.url)
+  const handle = async ({ request, path: pathname }: FakeRequest) => {
     if (pathname.endsWith('/deliveries')) {
       if (request.method === 'POST') {
         posted.push(await request.json())
@@ -128,23 +109,22 @@ function fakeApi(cameras: NodeCamera[], images: RenderImage[]) {
     }
     if (pathname.endsWith('/cameras')) return json(200, { nodeId: NODE, cameras })
     if (pathname.endsWith('/renders')) return json(200, { nodeId: NODE, images })
-    return json(404, { error: { code: 'NOT_FOUND', message: '不存在', requestId: 'x' } })
-  })
-  return { uploads, posted, fetchMock }
+    return notFound('不存在', 'x')
+  }
+  // The images are PNG uploads, so the handler reads the one JSON body itself.
+  stubFetch(handle, { readBody: () => undefined })
+  return { uploads, posted }
 }
 
 function show() {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={client}>
-      <RenderStage
-        left={null}
-        project={project}
-        node={node}
-        space={rectangleSpace(8, 6, 3.2)}
-        assets={new Map()}
-      />
-    </QueryClientProvider>,
+  return renderWithClient(
+    <RenderStage
+      left={null}
+      project={project}
+      node={node}
+      space={rectangleSpace(8, 6, 3.2)}
+      assets={new Map()}
+    />,
   )
 }
 
@@ -159,8 +139,7 @@ afterEach(() => {
 
 describe('RenderStage', () => {
   it('renders the material image of every missing view once and uploads PNGs', async () => {
-    const { uploads, fetchMock } = fakeApi([camera(0, '正面鸟瞰'), camera(1, '入口方向')], [])
-    vi.stubGlobal('fetch', fetchMock)
+    const { uploads } = fakeApi([camera(0, '正面鸟瞰'), camera(1, '入口方向')], [])
     show()
 
     await waitFor(() => expect(uploads).toHaveLength(2))
@@ -181,8 +160,7 @@ describe('RenderStage', () => {
   it('sends the numbered plan for the delivery and lists the files', async () => {
     const front = camera(0, '正面鸟瞰')
     const images = [image(front.id, 'material')]
-    const { posted, fetchMock } = fakeApi([front], images)
-    vi.stubGlobal('fetch', fetchMock)
+    const { posted } = fakeApi([front], images)
     show()
 
     const deliver = await screen.findByRole('button', { name: '生成交付文件' })
@@ -205,8 +183,7 @@ describe('RenderStage', () => {
     const front = camera(0, '正面鸟瞰')
     // An old white-model image is ignored.
     const images = [image(front.id, 'white'), image(front.id, 'material', true)]
-    const { uploads, fetchMock } = fakeApi([front], images)
-    vi.stubGlobal('fetch', fetchMock)
+    const { uploads } = fakeApi([front], images)
     show()
 
     expect(await screen.findByText('1 张过期')).toBeTruthy()

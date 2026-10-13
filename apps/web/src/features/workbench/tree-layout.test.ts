@@ -1,23 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
+import { makeNodeSummary } from '../../test-utils/factories.ts'
 import { ROOT_ID, TREE_STYLE, applyOffsets, layoutTree, textWidth } from './tree-layout.ts'
 
 let seq = 0
 function node(id: string, parentId: string | null, overrides: Partial<NodeSummary> = {}) {
   seq += 1
-  return {
-    id,
-    parentId,
-    kind: parentId === null ? 'space' : 'plan',
-    name: id,
-    strategy: null,
-    siStyle: null,
-    origin: 'user',
-    importedFrom: null,
-    hidden: false,
-    createdAt: new Date(Date.UTC(2026, 9, 10, 0, seq)).toISOString(),
-    ...overrides,
-  } satisfies NodeSummary
+  const createdAt = new Date(Date.UTC(2026, 9, 10, 0, seq)).toISOString()
+  return makeNodeSummary(id, parentId, { createdAt, ...overrides })
 }
 
 const nodes = [

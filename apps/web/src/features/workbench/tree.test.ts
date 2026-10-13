@@ -1,24 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
+import { makeNodeSummary } from '../../test-utils/factories.ts'
 import { copyName, flattenTree, freshName, spaceAncestor, stageOf, stageParentId } from './tree.ts'
 import { defaultNodeId } from './Workbench.tsx'
 
 let seq = 0
 function node(id: string, parentId: string | null, overrides: Partial<NodeSummary> = {}) {
   seq += 1
-  return {
-    id,
-    parentId,
-    kind: parentId === null ? 'space' : 'plan',
-    name: id,
-    strategy: null,
-    siStyle: null,
-    origin: 'user',
-    importedFrom: null,
-    hidden: false,
-    createdAt: new Date(Date.UTC(2026, 9, 9, 0, seq)).toISOString(),
-    ...overrides,
-  } satisfies NodeSummary
+  const createdAt = new Date(Date.UTC(2026, 9, 9, 0, seq)).toISOString()
+  return makeNodeSummary(id, parentId, { createdAt, ...overrides })
 }
 
 const nodes = [

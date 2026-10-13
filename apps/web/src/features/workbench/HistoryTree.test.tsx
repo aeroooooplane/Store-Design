@@ -1,51 +1,28 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { QueryClient } from '@tanstack/react-query'
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { NodeSummary } from '@store/shared'
+import { makeNodeSummary } from '../../test-utils/factories.ts'
+import { json, stubFetch } from '../../test-utils/fake-api.ts'
+import type { RecordedCall } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { HistoryTree, nodeLabel } from './HistoryTree.tsx'
 
 const PID = '11111111-1111-4111-8111-111111111111'
 const S1 = '22222222-2222-4222-8222-222222222222'
 const P1 = '33333333-3333-4333-8333-333333333333'
 
-const summary = (id: string, parentId: string | null, overrides: Partial<NodeSummary> = {}) =>
-  ({
-    id,
-    parentId,
-    kind: parentId === null ? 'space' : 'plan',
-    name: parentId === null ? '一层空间' : '方案 · 按面积推荐',
-    strategy: parentId === null ? null : 'area',
-    siStyle: null,
-    origin: 'user',
-    importedFrom: null,
-    hidden: false,
-    createdAt: '2026-10-10T03:00:00.000Z',
-    ...overrides,
-  }) satisfies NodeSummary
-
-const nodes = [summary(S1, null), summary(P1, S1)]
-const calls: { method: string; path: string; body: unknown }[] = []
+const createdAt = '2026-10-10T03:00:00.000Z'
+const nodes = [
+  makeNodeSummary(S1, null, { name: '一层空间', createdAt }),
+  makeNodeSummary(P1, S1, { name: '方案 · 按面积推荐', strategy: 'area', createdAt }),
+]
+let calls: RecordedCall[] = []
 
 beforeEach(() => {
-  calls.length = 0
-  vi.stubGlobal(
-    'fetch',
-    vi.fn(async (request: Request) => {
-      const text = request.method === 'GET' ? '' : await request.text()
-      calls.push({
-        method: request.method,
-        path: new URL(request.url).pathname,
-        body: text ? JSON.parse(text) : undefined,
-      })
-      return new Response(
-        JSON.stringify({ ...nodes[1], projectId: PID, space: null, layout: null }),
-        {
-          status: 200,
-          headers: { 'content-type': 'application/json' },
-        },
-      )
-    }),
-  )
+  ;({ calls } = stubFetch(() =>
+    json(200, { ...nodes[1], projectId: PID, space: null, layout: null }),
+  ))
 })
 
 afterEach(() => {
@@ -54,19 +31,19 @@ afterEach(() => {
 })
 
 function renderTree(onSelect = vi.fn(), selectedId: string | null = P1) {
-  render(
-    <QueryClientProvider client={new QueryClient()}>
-      <HistoryTree
-        projectId={PID}
-        projectName="南京德基"
-        nodes={nodes}
-        selectedId={selectedId}
-        draftBaseId={P1}
-        onSelect={onSelect}
-        onNewSpace={vi.fn()}
-        newSpaceDisabled={false}
-      />
-    </QueryClientProvider>,
+  // This tree keeps React Query's default retries.
+  renderWithClient(
+    <HistoryTree
+      projectId={PID}
+      projectName="南京德基"
+      nodes={nodes}
+      selectedId={selectedId}
+      draftBaseId={P1}
+      onSelect={onSelect}
+      onNewSpace={vi.fn()}
+      newSpaceDisabled={false}
+    />,
+    { client: new QueryClient() },
   )
   return onSelect
 }

@@ -1,8 +1,8 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { AiModel, AiOverview, AiSettings } from '@store/shared'
+import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import { SettingsPage } from './SettingsPage.tsx'
 
 const model = (id: string, overrides: Partial<AiModel> = {}): AiModel => ({
@@ -18,31 +18,21 @@ const model = (id: string, overrides: Partial<AiModel> = {}): AiModel => ({
 
 function fakeApi(overview: AiOverview) {
   const patches: unknown[] = []
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
-  const fetchMock = vi.fn(async (request: Request) => {
-    const { pathname } = new URL(request.url)
-    if (request.method === 'GET' && pathname === '/api/v1/ai') return json(200, overview)
-    if (request.method === 'PATCH' && pathname === '/api/v1/ai/settings') {
-      const patch = JSON.parse(await request.text()) as Partial<AiSettings>
+  stubFetch(({ route, body }) => {
+    if (route === 'GET /api/v1/ai') return json(200, overview)
+    if (route === 'PATCH /api/v1/ai/settings') {
+      const patch = body as Partial<AiSettings>
       patches.push(patch)
       overview.settings = { ...overview.settings, ...patch }
       return json(200, overview.settings)
     }
-    return json(404, { error: { code: 'NOT_FOUND', message: '接口不存在', requestId: 'r' } })
+    return notFound()
   })
-  return { patches, fetchMock }
+  return { patches }
 }
 
 function show() {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return render(
-    <QueryClientProvider client={client}>
-      <MemoryRouter>
-        <SettingsPage />
-      </MemoryRouter>
-    </QueryClientProvider>,
-  )
+  return renderWithClient(<SettingsPage />, { router: true })
 }
 
 afterEach(() => {
@@ -76,7 +66,6 @@ describe('SettingsPage', () => {
         exceeded: false,
       },
     })
-    vi.stubGlobal('fetch', server.fetchMock)
     show()
 
     const agent = await screen.findByLabelText<HTMLSelectElement>('Agent')
@@ -95,7 +84,7 @@ describe('SettingsPage', () => {
   })
 
   it('explains what to do when no key is configured and the budget is used up', async () => {
-    const server = fakeApi({
+    fakeApi({
       models: [
         model('local', {
           provider: 'local',
@@ -107,7 +96,6 @@ describe('SettingsPage', () => {
       settings: { agentModel: null, recognitionModel: 'local', recognitionFallback: null },
       budget: { day: '2026-10-12', limitCny: 50, spentCny: 50, remainingCny: 0, exceeded: true },
     })
-    vi.stubGlobal('fetch', server.fetchMock)
     show()
     expect(await screen.findByText(/请在服务器配置 DeepSeek 或通义千问的密钥/)).toBeTruthy()
     expect(screen.queryByLabelText('Agent')).toBeNull()

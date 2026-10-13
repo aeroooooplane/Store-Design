@@ -1,8 +1,10 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { DEFAULT_VIEW_NAMES } from '@store/shared'
 import type { Camera, NodeCamera } from '@store/shared'
+import { makeCamera } from '../../test-utils/factories.ts'
+import { json, stubFetch } from '../../test-utils/fake-api.ts'
+import { renderWithClient } from '../../test-utils/render.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
 
@@ -10,45 +12,15 @@ const NODE = '55555555-5555-4555-8555-555555555555'
 const pose = { position: [1, 2, 3], target: [4, 0.8, 3], fovDeg: 50 } as const
 
 function camera(i: number, overrides: Partial<NodeCamera> = {}): NodeCamera {
-  return {
-    id: `00000000-0000-4000-8000-00000000000${i}`,
-    nodeId: NODE,
-    sort: i,
-    camera: {
-      name: DEFAULT_VIEW_NAMES[i] ?? `视角 ${i}`,
-      position: [i, 5, 9],
-      target: [4, 0.8, 3],
-      fovDeg: 48,
-      source: 'auto',
-    },
-    deletedAt: null,
-    ...overrides,
-  }
-}
-
-interface Call {
-  method: string
-  path: string
-  body: unknown
+  return makeCamera(i, NODE, DEFAULT_VIEW_NAMES[i] ?? `视角 ${i}`, overrides)
 }
 
 function fakeApi(cameras: NodeCamera[]) {
-  const calls: Call[] = []
-  const json = (status: number, body: unknown) =>
-    new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
-  const fetchMock = vi.fn(async (request: Request) => {
-    const url = new URL(request.url)
-    const text = request.method === 'GET' ? '' : await request.text()
-    calls.push({
-      method: request.method,
-      path: url.pathname,
-      body: text ? JSON.parse(text) : undefined,
-    })
+  return stubFetch(({ request, url }) => {
     if (request.method === 'GET') return json(200, { nodeId: NODE, cameras })
     const target = cameras.find((c) => url.pathname.includes(c.id)) ?? cameras[0]
     return json(request.method === 'POST' && url.pathname.endsWith('/cameras') ? 201 : 200, target)
   })
-  return { calls, fetchMock }
 }
 
 function viewer(): Viewer3DHandle & { shown: Camera[] } {
@@ -64,17 +36,14 @@ function viewer(): Viewer3DHandle & { shown: Camera[] } {
 let server: ReturnType<typeof fakeApi>
 
 function renderPanel(handle: Viewer3DHandle, onShow = vi.fn()) {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  render(
-    <QueryClientProvider client={client}>
-      <CameraPanel
-        nodeId={NODE}
-        viewer={{ current: handle }}
-        viewerReady
-        layout={{ schemaVersion: 3, items: [], planning: null }}
-        onShow={onShow}
-      />
-    </QueryClientProvider>,
+  renderWithClient(
+    <CameraPanel
+      nodeId={NODE}
+      viewer={{ current: handle }}
+      viewerReady
+      layout={{ schemaVersion: 3, items: [], planning: null }}
+      onShow={onShow}
+    />,
   )
   return onShow
 }
@@ -84,7 +53,6 @@ beforeEach(() => {
     ...[0, 1, 2].map((i) => camera(i)),
     camera(3, { deletedAt: '2026-10-10T01:00:00.000Z' }),
   ])
-  vi.stubGlobal('fetch', server.fetchMock)
 })
 
 afterEach(() => {
