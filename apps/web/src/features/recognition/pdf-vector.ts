@@ -214,17 +214,19 @@ export async function extractPageVector(
         const paint = packed[0]
         if (typeof paint === 'number') {
           // pdf.js 5: [paint operator, [flat path data], minMax]; the data is op, coords, op,
-          // coords… with 0 moveTo (x y), 1 lineTo (x y), 2 curveTo (6 numbers), 3 closePath.
+          // coords… with pdf.js DrawOPS codes: 0 moveTo (x y), 1 lineTo (x y), 2 curveTo
+          // (6 numbers), 3 quadraticCurveTo (4 numbers), 4 closePath. A `re` rectangle arrives
+          // as moveTo, three lineTo and closePath.
           const data = Array.from((packed[1] as ArrayLike<number>[] | undefined)?.[0] ?? [])
           let k = 0
           while (k < data.length) {
             const op = data[k++]
             if (op === 0) moveTo(data[k++] ?? 0, data[k++] ?? 0)
             else if (op === 1) lineTo(data[k++] ?? 0, data[k++] ?? 0)
-            else if (op === 2) {
-              k += 6
+            else if (op === 2 || op === 3) {
+              k += op === 2 ? 6 : 4
               current = null
-            } else if (op === 3) closePath()
+            } else if (op === 4) closePath()
             else break
           }
           paintPath(paint)

@@ -138,16 +138,21 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
     expect(content.rects).toEqual([])
   })
 
-  it('reads a packed rectangle as three edges: code 4 (closePath in pdf.js 5.7) ends the path', async () => {
+  it('reads packed rectangles as four edges each: code 4 is closePath in pdf.js 5', async () => {
     const content = await extract([
       [OPS.setStrokeRGBColor, ['#000000']],
-      // Two rectangles in one path: everything after the first closePath is dropped.
+      // Two rectangles in one path: the path goes on after the first closePath.
       path(OPS.stroke, [...packedRect(10, 10, 50, 30), ...packedRect(70, 10, 20, 20)]),
     ])
     expect(content.lines).toEqual([
       { x1: 10, y1: 90, x2: 60, y2: 90, color: '#000000' },
       { x1: 60, y1: 90, x2: 60, y2: 60, color: '#000000' },
       { x1: 60, y1: 60, x2: 10, y2: 60, color: '#000000' },
+      { x1: 10, y1: 60, x2: 10, y2: 90, color: '#000000' },
+      { x1: 70, y1: 90, x2: 90, y2: 90, color: '#000000' },
+      { x1: 90, y1: 90, x2: 90, y2: 70, color: '#000000' },
+      { x1: 90, y1: 70, x2: 70, y2: 70, color: '#000000' },
+      { x1: 70, y1: 70, x2: 70, y2: 90, color: '#000000' },
     ])
     expect(content.rects).toEqual([])
   })
@@ -174,7 +179,7 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
     ])
   })
 
-  it('treats code 3 (quadraticCurveTo in pdf.js 5.7) as closePath and goes on', async () => {
+  it('skips quadratic curves (code 3, four numbers) like cubic ones', async () => {
     const content = await extract([
       path(OPS.stroke, [
         DRAW.moveTo,
@@ -184,6 +189,13 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
         10,
         60,
         DRAW.quadraticCurveTo,
+        15,
+        65,
+        20,
+        60,
+        DRAW.lineTo,
+        30,
+        60,
         DRAW.moveTo,
         0,
         70,
@@ -194,7 +206,6 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
     ])
     expect(content.lines).toEqual([
       { x1: 0, y1: 40, x2: 10, y2: 40 },
-      { x1: 10, y1: 40, x2: 0, y2: 40 },
       { x1: 0, y1: 30, x2: 10, y2: 30 },
     ])
   })
