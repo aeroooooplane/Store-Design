@@ -1,19 +1,20 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
-import type { GLTF } from 'three/addons/loaders/GLTFLoader.js'
-import { WALL_THICKNESS_M, defaultCameras, wallSegments } from '@store/shared'
-import type { Asset, Camera, LayoutItem, Point, ShopType, SiStyle, Space } from '@store/shared'
-import { separateBackLayers } from './back-layers.ts'
-import { RENDER_LOOK, disposeRoomMaterials, finishMaterial, roomMaterials } from './render-look.ts'
+import { defaultCameras } from '@store/shared'
+import type { Asset, Camera, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
+import { finishModel } from './finish-model.ts'
+import { loadModel, loadSource } from './model-cache.ts'
+import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
+import { aimSun, buildRoom } from './room-builder.ts'
+import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
+
+// The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
+export { loadSource }
 
 /** Legacy white-mode look (demo/src/scene.js in tag archive/pre-cleanup-20261013). */
-const WHITE = '#f7f7f5'
 const BACKGROUND = '#e8eaed'
-const FLOOR_THICKNESS_M = 0.16
 
 export interface ViewPose {
   position: [number, number, number]
@@ -44,240 +45,6 @@ export interface LoadStatus {
   failed: string[]
 }
 
-// ---- model cache: each GLB is fetched and decoded once per page ----
-
-type AnyMaterial = THREE.Material | THREE.Material[]
-type Drawable =
-  | THREE.Mesh<THREE.BufferGeometry, AnyMaterial>
-  | THREE.LineSegments<THREE.BufferGeometry, AnyMaterial>
-const isDrawable = (node: THREE.Object3D): node is Drawable =>
-  node instanceof THREE.Mesh || node instanceof THREE.LineSegments
-
-// Meshopt decoding runs in workers instead of blocking the page.
-if (typeof Worker !== 'undefined') MeshoptDecoder.useWorkers(2)
-const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
-const sources = new Map<string, Promise<GLTF>>()
-const whiteModels = new Map<string, Promise<THREE.Object3D>>()
-
-/** The decoded GLB with its original materials (kept for the material renders). */
-export function loadSource(url: string): Promise<GLTF> {
-  let source = sources.get(url)
-  if (!source) {
-    source = loader.loadAsync(url)
-    // A failed load is retried next time.
-    source.catch(() => sources.delete(url))
-    sources.set(url, source)
-  }
-  return source
-}
-
-/**
- * Below this opacity a surface reads as glass and stays see-through; above it (frosted acrylic,
- * light boxes) it is drawn as a solid white panel, so the shadowed inside of a counter does not
- * show through as dark grey.
- */
-const GLASS_OPACITY = 0.4
-
-/**
- * White-model materials, shared by every model. Double-sided because SketchUp exports often
- * contain reversed faces, and flat shaded because their normals often point against the face
- * winding (tops lit as if facing down); flat shading derives normals from the geometry.
- */
-const SOLID = new THREE.MeshStandardMaterial({
-  color: WHITE,
-  roughness: 1,
-  metalness: 0,
-  side: THREE.DoubleSide,
-  flatShading: true,
-})
-const GLASS = new THREE.MeshStandardMaterial({
-  color: WHITE,
-  roughness: 0.2,
-  metalness: 0,
-  side: THREE.DoubleSide,
-  flatShading: true,
-  transparent: true,
-  opacity: 0.3,
-  depthWrite: false,
-})
-const cutouts = new WeakMap<THREE.Material, THREE.Material>()
-
-type Kind = 'solid' | 'glass' | 'cutout'
-
-function kindOf(source: THREE.Material): Kind {
-  const original = source as THREE.MeshStandardMaterial
-  if (original.alphaMap || (original.map && (source.transparent || source.alphaTest > 0))) {
-    return 'cutout'
-  }
-  return source.transparent && source.opacity < GLASS_OPACITY ? 'glass' : 'solid'
-}
-
-/**
- * Perforated or cut-out parts keep their texture alpha; the colour is forced to white in the
- * shader, as in the legacy viewer.
- */
-function cutoutMaterial(source: THREE.Material): THREE.Material {
-  let material = cutouts.get(source)
-  if (!material) {
-    const original = source as THREE.MeshStandardMaterial
-    const white = SOLID.clone()
-    white.map = original.map
-    white.alphaMap = original.alphaMap
-    white.transparent = source.transparent
-    white.opacity = source.opacity
-    white.alphaTest = source.alphaTest
-    white.onBeforeCompile = (shader) => {
-      shader.fragmentShader = shader.fragmentShader.replace(
-        '#include <map_fragment>',
-        ['#include <map_fragment>', 'diffuseColor.rgb = vec3(1.0);'].join('\n'),
-      )
-    }
-    white.customProgramCacheKey = () => 'white-cutout'
-    cutouts.set(source, white)
-    material = white
-  }
-  return material
-}
-
-/** One geometry from many parts, transforms baked in; flat shading needs positions only. */
-function mergeParts(parts: { geometry: THREE.BufferGeometry; matrix: THREE.Matrix4 }[]) {
-  let vertices = 0
-  let indices = 0
-  for (const { geometry } of parts) {
-    const count = geometry.getAttribute('position').count
-    vertices += count
-    indices += geometry.index?.count ?? count
-  }
-  const positions = new Float32Array(vertices * 3)
-  const index = new Uint32Array(indices)
-  const v = new THREE.Vector3()
-  let base = 0
-  let at = 0
-  for (const { geometry, matrix } of parts) {
-    const position = geometry.getAttribute('position')
-    for (let i = 0; i < position.count; i++) {
-      v.fromBufferAttribute(position, i).applyMatrix4(matrix)
-      positions.set([v.x, v.y, v.z], (base + i) * 3)
-    }
-    const source = geometry.index
-    const count = source?.count ?? position.count
-    for (let i = 0; i < count; i++) index[at + i] = base + (source ? source.getX(i) : i)
-    base += position.count
-    at += count
-  }
-  const merged = new THREE.BufferGeometry()
-  merged.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-  merged.setIndex(new THREE.BufferAttribute(index, 1))
-  merged.computeBoundingSphere()
-  merged.computeBoundingBox()
-  return merged
-}
-
-/**
- * The white version of a model: all solid parts in one mesh and all glass in another, so a
- * prop costs one or two draw calls instead of hundreds. Cut-out parts stay separate.
- */
-function buildWhite(gltf: GLTF): THREE.Object3D {
-  const root = gltf.scene
-  root.updateMatrixWorld(true)
-  const parts: Record<
-    'solid' | 'glass',
-    { geometry: THREE.BufferGeometry; matrix: THREE.Matrix4 }[]
-  > = { solid: [], glass: [] }
-  const model = new THREE.Group()
-  root.traverse((node) => {
-    if (!(node instanceof THREE.Mesh) || !isDrawable(node)) return
-    const source = Array.isArray(node.material) ? node.material[0] : node.material
-    if (!source) return
-    const kind = kindOf(source)
-    if (kind !== 'cutout') {
-      parts[kind].push({ geometry: node.geometry, matrix: node.matrixWorld })
-      return
-    }
-    const mesh = new THREE.Mesh(node.geometry, cutoutMaterial(source))
-    mesh.applyMatrix4(node.matrixWorld)
-    mesh.castShadow = true
-    mesh.receiveShadow = true
-    model.add(mesh)
-  })
-  for (const kind of ['solid', 'glass'] as const) {
-    if (!parts[kind].length) continue
-    const mesh = new THREE.Mesh(mergeParts(parts[kind]), kind === 'solid' ? SOLID : GLASS)
-    mesh.castShadow = kind === 'solid'
-    mesh.receiveShadow = true
-    model.add(mesh)
-  }
-  return model
-}
-
-function loadModel(url: string): Promise<THREE.Object3D> {
-  let model = whiteModels.get(url)
-  if (!model) {
-    model = loadSource(url).then(buildWhite)
-    model.catch(() => whiteModels.delete(url))
-    whiteModels.set(url, model)
-  }
-  return model
-}
-
-// ---- geometry helpers ----
-
-/** Plan polygon extruded upwards from y = bottom; plan z maps to scene z. */
-function prism(polygon: readonly Point[], bottom: number, height: number): THREE.BufferGeometry {
-  const shape = new THREE.Shape(polygon.map(([x, z]) => new THREE.Vector2(x, -z)))
-  const geometry = new THREE.ExtrudeGeometry(shape, { depth: height, bevelEnabled: false })
-  geometry.rotateX(-Math.PI / 2)
-  geometry.translate(0, bottom, 0)
-  return geometry
-}
-
-function surface(): THREE.MeshStandardMaterial {
-  return new THREE.MeshStandardMaterial({ color: WHITE, roughness: 0.8, metalness: 0 })
-}
-
-/** Room meshes share their materials, so only the geometry is freed with them. */
-function disposeGeometry(root: THREE.Object3D) {
-  root.traverse((node) => {
-    if (isDrawable(node)) node.geometry.dispose()
-  })
-}
-
-/** Signed area of a plan polygon; positive when the outward normal of a→b is (dz, −dx). */
-function signedArea(polygon: readonly Point[]): number {
-  let area = 0
-  polygon.forEach(([x1, z1], i) => {
-    const [x2, z2] = polygon[(i + 1) % polygon.length] ?? [x1, z1]
-    area += x1 * z2 - x2 * z1
-  })
-  return area / 2
-}
-
-function disposeTree(root: THREE.Object3D) {
-  root.traverse((node) => {
-    if (isDrawable(node)) {
-      node.geometry.dispose()
-      const materials = Array.isArray(node.material) ? node.material : [node.material]
-      materials.forEach((m) => m.dispose())
-    }
-  })
-}
-
-/** Outlined box for an item without a loadable model (footprint is already rotated). */
-function placeholderBox(item: LayoutItem): THREE.Object3D {
-  const geometry = new THREE.BoxGeometry(item.w, item.h, item.d)
-  geometry.translate(0, item.h / 2, 0)
-  const box = new THREE.Mesh(geometry, surface())
-  box.castShadow = true
-  box.receiveShadow = true
-  const edges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(geometry),
-    new THREE.LineBasicMaterial({ color: '#888888' }),
-  )
-  box.add(edges)
-  box.userData['placeholder'] = true
-  return box
-}
-
 interface PlacedItem {
   group: THREE.Group
   item: LayoutItem
@@ -298,12 +65,6 @@ interface PlacedItem {
 /** One unit box and one never-drawn material shared by every hit box. */
 const HIT_BOX = new THREE.BoxGeometry(1, 1, 1)
 const HIT_MATERIAL = new THREE.MeshBasicMaterial({ visible: false })
-
-const toVec3 = (v: THREE.Vector3): [number, number, number] => [
-  Math.round(v.x * 1000) / 1000,
-  Math.round(v.y * 1000) / 1000,
-  Math.round(v.z * 1000) / 1000,
-]
 
 /**
  * The white model of one layout: floor, walls, obstacles and props, an orbit view, and 3D
@@ -408,57 +169,8 @@ export class WhiteScene {
     this.shopType = shopType
     this.space = space
 
-    const floor = new THREE.Mesh(
-      prism(space.boundary, -FLOOR_THICKNESS_M, FLOOR_THICKNESS_M),
-      this.roomWhite,
-    )
-    floor.receiveShadow = true
-    floor.userData['surface'] = 'floor'
-    this.room.add(floor)
-    if (shopType === 'island') this.addEdging(space.boundary)
-
-    for (const wall of wallSegments(space, shopType)) {
-      const length = Math.hypot(wall.b[0] - wall.a[0], wall.b[1] - wall.a[1])
-      const geometry = new THREE.BoxGeometry(length, wall.height, WALL_THICKNESS_M)
-      const mesh = new THREE.Mesh(geometry, this.roomWhite)
-      mesh.userData['surface'] = 'wall'
-      const half = WALL_THICKNESS_M / 2
-      mesh.position.set(
-        (wall.a[0] + wall.b[0]) / 2 + wall.outward[0] * half,
-        wall.height / 2,
-        (wall.a[1] + wall.b[1]) / 2 + wall.outward[1] * half,
-      )
-      mesh.rotation.y = -Math.atan2(wall.b[1] - wall.a[1], wall.b[0] - wall.a[0])
-      mesh.castShadow = true
-      mesh.receiveShadow = true
-      this.room.add(mesh)
-    }
-
-    for (const obstacle of space.obstacles) {
-      const height = obstacle.height ?? space.height
-      const mesh = new THREE.Mesh(prism(obstacle.polygon, 0, height), this.roomWhite)
-      mesh.userData['surface'] = 'wall'
-      mesh.castShadow = true
-      mesh.receiveShadow = true
-      this.room.add(mesh)
-    }
-
-    const xs = space.boundary.map((p) => p[0])
-    const zs = space.boundary.map((p) => p[1])
-    const [minX, maxX, minZ, maxZ] = [
-      Math.min(...xs),
-      Math.max(...xs),
-      Math.min(...zs),
-      Math.max(...zs),
-    ]
-    const span = Math.max(maxX - minX, maxZ - minZ, 1)
-    this.sun.position.set(minX + (maxX - minX) * 0.4, space.height * 3, minZ + (maxZ - minZ) * 0.8)
-    this.sun.target.position.set((minX + maxX) / 2, 0, (minZ + maxZ) / 2)
-    const shadow = this.sun.shadow.camera
-    shadow.left = shadow.bottom = -span
-    shadow.right = shadow.top = span
-    shadow.far = span * 8
-    shadow.updateProjectionMatrix()
+    buildRoom(this.room, space, shopType, this.roomWhite)
+    aimSun(this.sun, space)
 
     if (resetView) {
       const [front] = defaultCameras(space)
@@ -466,37 +178,6 @@ export class WhiteScene {
     }
     this.paintRoom()
     this.sceneChanged()
-  }
-
-  /**
-   * 中岛店: continuous stainless edging around the raised floor, following the real outline
-   * (in the white model it is white like everything else).
-   */
-  private addEdging(boundary: readonly Point[]) {
-    const { width, height } = RENDER_LOOK.edging
-    const sign = signedArea(boundary) > 0 ? 1 : -1
-    boundary.forEach((a, i) => {
-      const b = boundary[(i + 1) % boundary.length] ?? a
-      const length = Math.hypot(b[0] - a[0], b[1] - a[1])
-      if (length < 1e-6) return
-      const out: Point = [(sign * (b[1] - a[1])) / length, (-sign * (b[0] - a[0])) / length]
-      const total = FLOOR_THICKNESS_M + height
-      // Lengthened by the strip width at both ends so the corners close.
-      const mesh = new THREE.Mesh(
-        new THREE.BoxGeometry(length + 2 * width, total, width),
-        this.roomWhite,
-      )
-      mesh.position.set(
-        (a[0] + b[0]) / 2 + (out[0] * width) / 2,
-        height - total / 2,
-        (a[1] + b[1]) / 2 + (out[1] * width) / 2,
-      )
-      mesh.rotation.y = -Math.atan2(b[1] - a[1], b[0] - a[0])
-      mesh.castShadow = true
-      mesh.receiveShadow = true
-      mesh.userData['surface'] = 'edging'
-      this.room.add(mesh)
-    })
   }
 
   /** White, or the material look; the props follow, loading textured models when needed. */
@@ -803,27 +484,11 @@ export class WhiteScene {
   private finished(url: string, prepared: boolean): Promise<THREE.Object3D> {
     let model = this.finishes.get(url)
     if (!model) {
-      model = loadSource(url).then((gltf) => {
-        const root = gltf.scene.clone(true)
-        root.traverse((node) => {
-          if (!isDrawable(node)) return
-          const materials = Array.isArray(node.material) ? node.material : [node.material]
-          const finished = materials.map((source) => {
-            let material = this.finishedMaterials.get(source)
-            if (!material) {
-              material = finishMaterial(source, this.scene.environment)
-              if (material !== source) this.finishedMaterials.set(source, material)
-            }
-            return material
-          })
-          node.material = Array.isArray(node.material) ? finished : (finished[0] ?? node.material)
-          node.castShadow = true
-          node.receiveShadow = true
-        })
-        // A full model is searched for the two sides of its faces; the light copy has them marked.
-        if (!prepared) separateBackLayers(root, (material) => this.frontSided(material))
-        return root
-      })
+      model = loadSource(url).then((gltf) =>
+        finishModel(gltf, prepared, this.scene.environment, this.finishedMaterials, (material) =>
+          this.frontSided(material),
+        ),
+      )
       model.catch(() => this.finishes.delete(url))
       this.finishes.set(url, model)
     }
