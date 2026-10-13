@@ -1,19 +1,19 @@
 # 架构说明
 
-更新：2026-10-10。第一期已实现：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表（含导入导出）、设置页（AI 模型与额度）与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
+更新：2026-10-13（目录、模块表与技术决定按代码订正）。第一、二、三期已实现（识别见 4.5，设计助理见 4.6）。第一期：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表（含导入导出）、设置页（AI 模型与额度）与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构见 [归档](archive/20261009-before-refactor/architecture.md)。
 
 ## 1. 总体结构
 
 ```text
-浏览器 apps/web ──REST/JSON──▶ apps/api ──▶ PostgreSQL
+浏览器 apps/web ──REST/JSON──▶ apps/api ──▶ PostgreSQL（开发与测试用 PGlite）
   React + Three.js              Fastify          （database/ 管理 schema 与迁移）
   只通过 API 访问数据            │
-                                ├──▶ 文件存储（STORAGE_ROOT，默认指向 资源库/ 与 data/files/）
-                                ├──▶ 任务队列（jobs 表）──▶ services/worker（Python：识别、PDF、Blender）
+                                ├──▶ 文件存储（STORAGE_ROOT，默认 data/files/）与只读资源库（RESOURCE_ROOT，默认 资源库/）
+                                ├──▶ 交付归档目录（ARCHIVE_ROOT，默认 data/archive/）
                                 └──▶ 外部大模型（DeepSeek / 通义千问 / 可选境外），密钥仅在后端
 ```
 
-浏览器不连接数据库，也不持有任何密钥。三维白模与预览渲染在浏览器中执行（这是可视化，不是业务逻辑）；渲染结果上传到后端保存。
+浏览器不连接数据库，也不持有任何密钥。三维白模与预览渲染在浏览器中执行（这是可视化，不是业务逻辑）；渲染结果上传到后端保存。识别、PDF 合成都在 API 进程内完成；`jobs` 表已建好，为第四期的 Python worker（Blender 渲染等）预留，目前没有代码使用，仓库里也还没有 `services/worker`。
 
 ## 2. 目录与模块边界
 
@@ -22,55 +22,57 @@ apps/
   web/                React 前端
     src/app/          路由、布局壳、Provider
     src/api/          由 OpenAPI 生成的类型和请求客户端（唯一的数据通道）
-    src/features/     projects / workbench（历史树、空间录入、方案生成、平面编辑）/
-                      viewer-3d / cameras / renders / delivery / recognition / agent /
-                      assets / settings
+    src/features/     projects / workbench（历史树、空间录入、方案、平面编辑、阶段面板、渲染阶段、视角）/
+                      viewer3d / recognition / agent / settings
     src/components/   通用 UI
-    src/styles/       沿用 tokens.css 的瑞士风格
+    src/styles/       tokens.css（主题变量）、app.css、workbench.css
+    src/scripts/      本地识别回归脚本
   api/                Fastify 后端
     src/config/       环境变量（zod 校验，启动时失败即退出）
-    src/plugins/      db、错误处理、安全头、限流、OpenAPI、存储、请求 ID
-    src/modules/<领域>/  routes.ts / service.ts / repository.ts / schemas.ts / *.test.ts
-    src/ai/           模型适配层、价格表、预算账本
+    src/context/      请求上下文与授权扩展点（见第 9 节）
+    src/plugins/      错误处理、安全头与限流、OpenAPI、请求 ID
+    src/lib/          存储、版本号、AppError
+    src/modules/<领域>/  routes.ts / service.ts（部分模块另有 repository.ts 等）
+    src/ai/           模型清单、价格、预算账本、统一调用
+    src/scripts/      导出 OpenAPI、导入目录、生成白模 / 材质轻量版
+    test/             API 集成测试（内存数据库）
 packages/
   shared/             前后端共享：zod 校验规则、类型、纯函数领域逻辑
-    src/schemas/      Space、Layout、Item、Camera、Project 导入导出、API DTO
+    src/schemas/      Space、Layout、Item、Camera、Asset、Project 导入导出、API DTO
     src/geometry/     多边形运算、碰撞、包含、间距
-    src/planner/      4 策略自动排布、软硬约束、让步记录
-    src/assets/       资产契约（刚体变换、禁止镜像拉伸、正面方向）
-database/             Drizzle schema、SQL 迁移、种子与目录导入脚本
-services/
-  worker/             Python 任务执行器：本地识别（OCR+OpenCV）、PDF 合成、后期 Blender
-docs/                 本文档、需求、数据模型、API 说明、ADR
-legacy/demo/          旧版，功能对齐前并行保留
-tools/  资源库/        原样保留；资源库 由 API 通过白名单读取
+    src/planner/      自动排布、软硬约束、让步记录、朝向
+    src/scene/        墙段与默认视角
+    src/catalog/      道具功能识别、SI 切换映射
+    src/delivery/     交付命名与图例编号
+database/             Drizzle schema、SQL 迁移与迁移命令
+docs/                 本文档、需求、数据模型、API 说明
+demo/                 第一代静态网页，已被取代，不再维护（待归档）
+tools/  资源库/        离线工具与资料；资源库 由 API 通过白名单只读访问
 ```
 
 **依赖方向**：`web → shared`，`api → shared + database`，`database → shared`（仅类型）。`shared` 不依赖任何运行环境（无 DOM、无 Node API），保证前端即时校验与后端权威校验使用同一份代码。
-
-`services/worker` 使用 Python，因为 PaddleOCR、OpenCV、Blender 只有 Python 生态成熟。它不直接对外提供接口，只从 `jobs` 表领取任务、写回结果。
 
 ## 3. 后端模块
 
 | 模块 | 职责 |
 |---|---|
-| health | 数据库、存储、worker 心跳检查 |
+| health | 运行状态与数据库连通检查 |
 | projects | 项目增删改查、软删除与恢复、乐观锁 |
-| nodes | 历史节点树、隐藏/恢复、复制为分支 |
-| drafts | 编辑草稿保存与冲突检测 |
-| spaces | 空间校验（多边形闭合、自交、障碍物在内） |
-| layouts | 4 策略生成、校验、让步说明 |
+| nodes | 历史节点树、阶段层级校验、隐藏/恢复；空间校验（多边形闭合、自交、障碍物在内）由 shared 的 schema 完成 |
+| drafts | 共享草稿保存与冲突检测 |
+| layouts | 三种策略生成方案、校验、让步说明 |
 | cameras | 默认 8 视角生成、增删改 |
 | renders | 渲染图上传（PNG）、按节点查询最新图并标明过期、打包下载 ZIP |
 | deliveries | 双 PDF、交付目录 ZIP 与归档目录生成、历次交付查询 |
-| imports | 旧版项目 JSON v2 导入、项目导出 |
-| uploads / recognition | 简图上传、识别任务、结果确认（第二期） |
+| exchange | 项目导入导出（`native.ts`）、旧版项目 JSON v2 导入（`legacy.ts`） |
+| recognition | 简图上传、本地矢量识别与视觉模型识别、校验、结果确认（第二期） |
 | agent | 对话会话、工具调用、撤销（第三期） |
 | ai | 模型列表、全站设置、预算查询 |
-| assets / artworks | 模型库与灯箱画面（只读，画面可联网补充） |
-| catalog | 门店、来源资料、案例、SI 标准（只读） |
+| assets | 模型目录（只读，命令行导入）、白模与材质轻量版构建 |
 | files | 按 ID 流式读取已登记文件 |
-| jobs | 任务状态查询 |
+| audit | 写操作审计记录 |
+
+灯箱画面、门店与 SI 标准目录、任务队列查询在需求中规划过，尚未实现。
 
 统一错误格式：`{ "error": { "code", "message", "details"?, "requestId" } }`。所有写接口要求 `If-Match: <revision>`，冲突返回 409 并附当前版本信息。
 
@@ -148,7 +150,7 @@ tools/  资源库/        原样保留；资源库 由 API 通过白名单读取
 |---|---|
 | `DATABASE_URL` | PostgreSQL 连接 |
 | `API_PORT`、`WEB_ORIGIN` | 服务端口与允许的前端来源 |
-| `STORAGE_ROOT`、`RESOURCE_ROOT`、`ARCHIVE_ROOT` | 文件存储、资源库、交付归档目录 |
+| `STORAGE_ROOT`、`RESOURCE_ROOT`、`ARCHIVE_ROOT` | 文件存储（默认 `./data/files`）、只读资源库（默认 `./资源库`）、交付归档目录（默认 `./data/archive`）；相对路径以仓库根目录为基准 |
 | `DEEPSEEK_API_KEY`、`DASHSCOPE_API_KEY` | 国内模型密钥 |
 | `ENABLE_OVERSEAS_MODELS`、`ANTHROPIC_API_KEY` | 境外模型开关与密钥（默认关闭） |
 | `AI_DAILY_BUDGET_CNY` | 每日预算，默认 50 |
@@ -161,9 +163,9 @@ tools/  资源库/        原样保留；资源库 由 API 通过白名单读取
 | Drizzle | SQL 优先，迁移为可读 SQL，放在 `database/` |
 | 布局存 JSONB，不拆道具表 | 历史快照不可变、整体读写、兼容旧项目 JSON；以后需要统计再加派生表 |
 | 渲染在浏览器 | 无需 GPU 服务器即可上线；Blender 在第四期作为 worker 任务加入 |
-| 任务队列用 PostgreSQL 表 | 3 人规模不需要 Redis；`SELECT … FOR UPDATE SKIP LOCKED` 领取任务 |
-| Python worker 独立 | OCR、OpenCV、Blender 依赖 Python；与 Node 服务解耦 |
-| PDF 由 worker 用无头 Chromium 将 HTML 打印为 PDF | 中文排版可控，两份 PDF 共用同一模板与图片 |
+| 任务队列用 PostgreSQL 表（计划） | 3 人规模不需要 Redis；`SELECT … FOR UPDATE SKIP LOCKED` 领取任务。`jobs` 表已建，第四期 worker 接入时启用 |
+| Python worker 独立（计划） | Blender 等依赖 Python；与 Node 服务解耦。识别已改为 API 内的矢量规则加视觉模型（4.5），不再需要 OCR worker |
+| PDF 由 API 用 pdfkit 直接生成（10-10 改定） | 无需 worker 与浏览器，数秒完成；随附思源黑体子集保证中文排版（4.4） |
 | Node 24 直接运行 TypeScript（类型擦除），不设构建步骤 | 后端与脚本无需编译产物；`tsc` 只做类型检查。代码限定为可擦除语法（`erasableSyntaxOnly`），导入写 `.ts` 扩展名 |
 | 开发与测试默认使用 PGlite | 本机未安装 PostgreSQL 也能开发；PGlite 是编译为 WebAssembly 的 PostgreSQL 17，迁移文件与正式库完全相同。部署时 `DATABASE_URL` 改为 `postgres://` |
 | TypeScript 固定 6.0.x | typescript-eslint 8 尚不支持 TypeScript 7 |

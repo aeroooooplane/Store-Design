@@ -1,0 +1,23 @@
+# 搜索默认跳过的内容（ripgrep 格式；Claude Code 的 Grep、VS Code 搜索等会遵守）。
+# 这些是数据、过程记录、历史与生成物，代码工作不需要读；需要时显式指定路径即可搜索。
+# 说明见 docs/README.md 第 3 节。
+
+# 生成物：改看 packages/shared/src/schemas/、各模块 routes.ts、database/schema/
+/apps/api/openapi.json
+/apps/web/src/api/schema.d.ts
+/database/migrations/meta/
+/pnpm-lock.yaml
+
+# 数据与过程记录（门店图纸整理等，代码不引用）
+/资源库/90_处理过程与审核/
+/资源库/00_资源索引/历史目录/
+/资源库/01_各门店原图纸/
+/资源库/09_门店档案/
+/资源库/99_历史归档/
+/tools/data-cleaning/
+
+# 已被取代的旧版与历史中间件
+/demo/
+/tmp/
+/output/
+/docs/archive/
