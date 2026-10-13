@@ -8,7 +8,8 @@ import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
 import {readLibrary} from '../server/model-library-paths.mjs'
 
-const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
+// tools/su-convert is two levels below the repository root.
+const tool=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.resolve(tool,'../..')
 const library=await readLibrary(repo),webModels=library.webModels
 const [outputArg,...requested]=process.argv.slice(2)
 if(!outputArg)throw Error('Pass an output directory.')
@@ -18,7 +19,7 @@ const named=library.manifest
 const nameOf=new Map(named.assets.map(a=>[a.asset_id,`${a.standard_name} · ${a.variant}`]))
 
 await mkdir(output,{recursive:true})
-const server=await createServer({root:demo,logLevel:'error',server:{host:'127.0.0.1',port:5184,strictPort:true,fs:{allow:[repo]}}})
+const server=await createServer({root:tool,logLevel:'error',server:{host:'127.0.0.1',port:5184,strictPort:true,fs:{allow:[repo]}}})
 let browser
 const rows=[]
 try{

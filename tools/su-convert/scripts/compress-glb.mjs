@@ -19,7 +19,8 @@ const POSITION_BITS=16
 const STEPS=['dedup','weld','prune',`meshopt(level=medium, position=${POSITION_BITS}bit)`]
 const TOLERANCE_M=.001
 
-const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
+// tools/su-convert is two levels below the repository root.
+const tool=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.resolve(tool,'../..')
 const {webModels}=await readLibrary(repo)
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex')
 

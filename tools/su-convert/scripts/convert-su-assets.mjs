@@ -7,7 +7,8 @@ import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
 import {readLibrary,webModelDirFor} from '../server/model-library-paths.mjs'
 
-const demo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.dirname(demo)
+// tools/su-convert is two levels below the repository root.
+const tool=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..'),repo=path.resolve(tool,'../..')
 // SU_SPLIT_DIR points at an unpacked DAE delivery (e.g. the dae-20261009 archive); relative to the repo.
 const source=path.resolve(repo,process.env.SU_SPLIT_DIR||'资源库/90_处理过程与审核/模型拆分/split-20260925-v2')
 const manifest=JSON.parse(await readFile(path.join(source,'manifest.json'),'utf8'))
@@ -19,7 +20,7 @@ if(!ids.length)throw Error('Pass explicit asset IDs; no automatic whole-library 
 const maxTextureSize=process.env.SU_MAX_TEXTURE_SIZE?Number(process.env.SU_MAX_TEXTURE_SIZE):null
 if(maxTextureSize!==null&&!(Number.isInteger(maxTextureSize)&&maxTextureSize>=256))throw Error('SU_MAX_TEXTURE_SIZE must be an integer ≥ 256')
 const jpegForJpg=process.env.SU_JPEG_FOR_JPG==='1'
-const server=await createServer({root:demo,server:{host:'127.0.0.1',port:5183,strictPort:true,fs:{allow:[repo]}}})
+const server=await createServer({root:tool,server:{host:'127.0.0.1',port:5183,strictPort:true,fs:{allow:[repo]}}})
 let browser
 try{
   await server.listen()
