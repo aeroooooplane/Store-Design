@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from common import base_args, git_tracked, header, write_json
+from common import THIS_REPO, base_args, git_tracked, header, write_json
 
 P90 = "资源库/90_处理过程与审核"
 CLEAN = f"{P90}/数据清洗-20261009"
@@ -52,7 +52,7 @@ LEGACY = [
         "scope": "已下载门店 518 行（SI1.0 424、SI2.0 92、未填写 2；边厅 357、中岛 146、专区 14、专区 / 边厅 1）；未下载项目 403 行",
         "trust": "已核实",
         "disposition": "复用",
-        "use": "阶段 1 的 SI / 铺型初值；未进 Git",
+        "use": "阶段 1 的 SI / 铺型初值；2026-10-13 起进 Git",
         "issues": ["用户指出飞书 SI 可能有错（docs/si-source-recovery.md 第 3 行）"],
     },
     {
@@ -127,8 +127,11 @@ LEGACY = [
         "trust": "已核实（完成凭据与 checkpoint 一致）",
         "disposition": "复用",
         "use": "阶段 1–2 复用页面扫描和图签 OCR（先抽检）；平面和比例候选只作参考",
-        "issues": ["被 Git 忽略，没有异地备份", "封面 / 目录类 4,239 页偏高（图签“图纸索引”误判）"],
-        "backup": "D:/门店图纸备份/全量续跑-02-20261009（同一块 SSD，只防误删；核对结果见 备份核对.json）",
+        "issues": ["被 Git 忽略", "封面 / 目录类 4,239 页偏高（图签“图纸索引”误判）"],
+        "backup": [
+            "D:/门店图纸备份/全量续跑-02-20261009：完整副本，与原件同一块 SSD，只防误删（核对结果见 备份核对.json）",
+            "GitHub release cleaning-full-run-02-20261009：全量续跑-02 中的 JSON / JSONL / MD / CSV / TXT 打包，异地备份；图片缓存可重建，不上传",
+        ],
     },
     {
         "id": "L09",
@@ -187,7 +190,7 @@ LEGACY = [
         "scope": "release cleaning-source-supplement-20261009（95 份 PDF + 台账）、tag cleaning-source-supplement-20261009、分支 progress/cleaning-light-20261009",
         "trust": "已核实（release 附件大小与本地一致）",
         "disposition": "保留",
-        "use": "95 份未进 Git 的 PDF 的唯一远端来源",
+        "use": "95 份补充 PDF 最初的远端来源；2026-10-13 起它们已进 Git，release 仍保留",
         "issues": [],
     },
     {
@@ -220,7 +223,7 @@ def measure(repo: Path, rel_path: str, tracked: set[str]) -> dict:
 
 def main() -> None:
     args = base_args(__doc__.splitlines()[0]).parse_args()
-    tracked = git_tracked(args.repo)
+    tracked = git_tracked(THIS_REPO)  # 跟踪状态取档案所在分支，不随主仓库切分支变化
     entries = []
     for item in LEGACY:
         entries.append(item | {"paths": [measure(args.repo, p, tracked) for p in item["paths"]]})
