@@ -4298,6 +4298,8 @@ export interface paths {
             parameters: {
                 query?: {
                     v?: string;
+                    /** @description 图片缩略图宽度（像素），返回 WebP；非图片忽略 */
+                    w?: "160" | "480";
                 };
                 header?: never;
                 path: {

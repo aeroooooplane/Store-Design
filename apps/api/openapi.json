@@ -13937,6 +13937,19 @@
           {
             "schema": {
               "type": "string",
+              "enum": [
+                "160",
+                "480"
+              ]
+            },
+            "in": "query",
+            "name": "w",
+            "required": false,
+            "description": "图片缩略图宽度（像素），返回 WebP；非图片忽略"
+          },
+          {
+            "schema": {
+              "type": "string",
               "format": "uuid",
               "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
             },

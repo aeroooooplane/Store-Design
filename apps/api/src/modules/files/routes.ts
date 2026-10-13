@@ -8,6 +8,7 @@ import { ApiErrorSchema } from '@store/shared'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import { isLfsPointer, resolveStoredFile } from '../../lib/storage.ts'
+import { THUMBNAIL_WIDTHS, canThumbnail, thumbnail } from '../../lib/thumbnails.ts'
 import type { StorageRoots, StorageRootName } from '../../lib/storage.ts'
 
 export function fileUrl(fileId: string): string {
@@ -34,7 +35,13 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
         tags: ['files'],
         summary: '读取已登记的文件（模型、预览图、渲染图、交付文件）',
         params: z.object({ fileId: z.uuid() }),
-        querystring: z.object({ v: z.string().max(64).optional() }),
+        querystring: z.object({
+          v: z.string().max(64).optional(),
+          w: z
+            .enum(THUMBNAIL_WIDTHS)
+            .optional()
+            .describe('图片缩略图宽度（像素），返回 WebP；非图片忽略'),
+        }),
         response: {
           200: z.unknown().describe('文件内容（二进制）'),
           304: z.unknown().describe('未修改'),
@@ -65,7 +72,8 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
           },
         )
       }
-      const etag = `"${row.sha256}"`
+      const width = request.query.w && canThumbnail(row.contentType) ? request.query.w : null
+      const etag = width ? `"${row.sha256}-w${width}"` : `"${row.sha256}"`
       // Addressed by content (?v= the hash): never changes, so it is cached for a year.
       const versioned = request.query.v !== undefined && row.sha256.startsWith(request.query.v)
       reply
@@ -75,6 +83,11 @@ export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoo
           versioned ? 'private, max-age=31536000, immutable' : 'private, max-age=3600',
         )
       if (request.headers['if-none-match'] === etag) return reply.code(304).send(undefined)
+      if (width) {
+        const thumb = await thumbnail(roots.storage, file, row.sha256, width)
+        reply.header('content-type', 'image/webp').header('content-length', thumb.bytes)
+        return reply.send(createReadStream(thumb.file))
+      }
       reply.header('content-type', row.contentType).header('content-length', bytes)
       // A plan symbol is a drawing; even opened on its own it may not run anything.
       if (row.contentType.startsWith('image/svg+xml')) {
