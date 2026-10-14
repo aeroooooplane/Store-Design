@@ -264,12 +264,45 @@ table.rows input {
 .row .field input {
   width: 96px;
 }
+.space-edge-table {
+  table-layout: fixed;
+}
+/* Edge no. | length | turn | angle | insert: fixed widths so the 420 px column never squeezes them. */
+.space-edge-table th:nth-child(1) {
+  width: 3em;
+}
+.space-edge-table th:nth-child(3) {
+  width: 6.2em;
+}
+.space-edge-table th:nth-child(4) {
+  width: 5em;
+}
+.space-edge-table th:nth-child(5) {
+  width: 3.6em;
+}
+.space-edge-table td,
+.space-edge-table th {
+  padding: 2px;
+}
 .space-edge-table th[scope='row'] {
-  white-space: nowrap;
   font-weight: 400;
+}
+.space-edge-table th[scope='row'] .hint {
+  display: block;
+  font-size: 11px;
 }
 .space-edge-table select {
   width: 100%;
+}
+.space-edge-table input,
+.space-edge-table select {
+  font-size: 13px;
+  padding: 4px 4px;
+  min-width: 0;
+}
+.space-edge-table button {
+  white-space: nowrap;
+  padding-inline: 6px;
 }
 .space-row-actions {
   display: flex;

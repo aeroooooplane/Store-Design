@@ -103,7 +103,7 @@ export function SpaceBoundaryFields({
                   <tr key={i} onFocus={() => onFocusEdge(i)}>
                     <th scope="row">
                       {i + 1}
-                      {i === n - 1 && <span className="hint">（闭合）</span>}
+                      {i === n - 1 && <span className="hint">闭合</span>}
                     </th>
                     <td>
                       <input
