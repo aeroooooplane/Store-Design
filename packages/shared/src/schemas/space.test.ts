@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { isClockwise } from '../geometry/index.ts'
-import { SpaceSchema, normalizeSpace, rectangleSpace, validateSpace } from './space.ts'
+import { ARC, arcFront } from '../planner/shapes.fixture.ts'
+import {
+  SpaceSchema,
+  normalizeSpace,
+  openingPieces,
+  rectangleSpace,
+  validateSpace,
+} from './space.ts'
 import type { SpaceInput } from './space.ts'
 
 const lShape: SpaceInput = {
@@ -110,6 +117,46 @@ describe('validateSpace', () => {
     expect(validateSpace(space).map((issue) => issue.code)).toEqual(['boundary_not_simple'])
   })
 
+  it('accepts an entrance or open edge that runs along several edges', () => {
+    const [p0, , p2, , , , p6, , p8] = ARC
+    // The whole arc storefront as one entrance: its chord midpoint (5, 7) is inside the shop.
+    const wholeArc = { ...arcFront, entrances: [{ a: p0, b: p8, kind: 'main' as const }] }
+    expect(validateSpace(SpaceSchema.parse({ ...wholeArc, openEdges: [] }))).toEqual([])
+    // Part entrance, part open edges (the fixture).
+    expect(validateSpace(arcFront)).toEqual([])
+    expect(openingPieces(arcFront, { a: p2, b: p6 })?.map((p) => p.edge)).toEqual([4, 5, 6, 7])
+    // From the middle of one arc piece to the middle of another, and round an L-shape corner.
+    const mid = (i: number): [number, number] => {
+      const [a, b] = [ARC[i], ARC[i + 1]] as [[number, number], [number, number]]
+      return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+    }
+    const partial = SpaceSchema.parse({
+      ...arcFront,
+      entrances: [{ a: mid(1), b: mid(4), kind: 'main' }],
+      openEdges: [{ a: p6, b: p8 }],
+    })
+    expect(validateSpace(partial)).toEqual([])
+    expect(openingPieces(partial, partial.entrances[0] ?? { a: p0, b: p0 })).toHaveLength(4)
+    const corner = SpaceSchema.parse({
+      ...lShape,
+      entrances: [{ a: [3, 3], b: [5, 2], kind: 'main' }],
+    })
+    expect(validateSpace(corner)).toEqual([])
+  })
+
+  it('still rejects an entrance or open edge with an end off the boundary', () => {
+    const [p0, , , , p4] = ARC // p4 = (5, 8), the front of the arc
+    const space = SpaceSchema.parse({
+      ...arcFront,
+      entrances: [{ a: p0, b: [5, 7.5], kind: 'main' }],
+      openEdges: [{ a: p4, b: [5, 7] }],
+    })
+    expect(validateSpace(space).map((issue) => [issue.code, issue.path])).toEqual([
+      ['entrance_not_on_boundary', ['entrances', 0]],
+      ['open_edge_not_on_boundary', ['openEdges', 0]],
+    ])
+  })
+
   it('warns about unusual ceiling heights without blocking', () => {
     const issues = validateSpace(SpaceSchema.parse({ ...lShape, height: 8 }))
     expect(issues).toHaveLength(1)
@@ -126,6 +173,16 @@ describe('normalizeSpace', () => {
     const normalized = normalizeSpace(space)
     expect(isClockwise(normalized.boundary)).toBe(true)
     expect(normalized.boundary[0]).toEqual([0, 0])
+  })
+
+  it('keeps an entrance along several edges as one entrance', () => {
+    const normalized = normalizeSpace({
+      ...arcFront,
+      boundary: [...arcFront.boundary].reverse(),
+    })
+    expect(normalized.entrances).toEqual(arcFront.entrances)
+    expect(normalized.openEdges).toEqual(arcFront.openEdges)
+    expect(validateSpace(normalized)).toEqual([])
   })
 })
 

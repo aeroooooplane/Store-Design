@@ -16,6 +16,8 @@ export {
   toClockwise,
 } from './polygon.ts'
 export type { PointLocation } from './polygon.ts'
+export { boundaryPath, pathMidpoint } from './path.ts'
+export type { BoundaryPiece } from './path.ts'
 export {
   polygonOverlapsRect,
   rectCorners,

@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import {
+  boundaryPath,
   isClockwise,
   isSimplePolygon,
   locatePoint,
+  pathMidpoint,
   polygonArea,
   polygonInsidePolygon,
   polygonOverlapsRect,
@@ -154,5 +156,46 @@ describe('rectangle relations', () => {
     expect(polygonOverlapsRect(column, rectFromCenter(1, 1, 2, 2))).toBe(true)
     expect(polygonOverlapsRect(square, rectFromCenter(1, 1, 0.5, 0.5))).toBe(true)
     expect(polygonOverlapsRect(column, rectFromCenter(1.6, 1, 1, 1))).toBe(false)
+  })
+})
+
+describe('boundaryPath', () => {
+  const ends = (pieces: ReturnType<typeof boundaryPath>) => pieces?.map((p) => [p.edge, p.a, p.b])
+
+  it('gives the segment itself when both ends lie on one edge', () => {
+    expect(ends(boundaryPath(square, [3, 3], [1, 3], 0.02))).toEqual([[2, [3, 3], [1, 3]]])
+    // An end within the tolerance stays exactly as given.
+    expect(ends(boundaryPath(square, [4.01, 1], [4, 2], 0.02))).toEqual([[1, [4.01, 1], [4, 2]]])
+  })
+
+  it('follows the boundary round corners, the shorter way, from a to b', () => {
+    // From the right edge round the bottom-right corner to the bottom edge.
+    expect(ends(boundaryPath(square, [4, 2], [3, 3], 0.02))).toEqual([
+      [1, [4, 2], [4, 3]],
+      [2, [4, 3], [3, 3]],
+    ])
+    // The same opening given the other way round runs backwards along the ring.
+    expect(ends(boundaryPath(square, [3, 3], [4, 2], 0.02))).toEqual([
+      [2, [3, 3], [4, 3]],
+      [1, [4, 3], [4, 2]],
+    ])
+    // Across the U-shape's slot the short way is round the slot's three sides.
+    expect(boundaryPath(uShape, [4.5, 4], [1.5, 4], 0.02)?.map((p) => p.edge)).toEqual([
+      2, 3, 4, 5, 6,
+    ])
+  })
+
+  it('treats a whole edge given by its corners as that edge', () => {
+    expect(ends(boundaryPath(square, [0, 3], [4, 3], 0.02))).toEqual([[2, [0, 3], [4, 3]]])
+  })
+
+  it('returns null when an end is off the boundary', () => {
+    expect(boundaryPath(square, [2, 2], [4, 2], 0.02)).toBeNull()
+    expect(boundaryPath(square, [4, 2], [4.05, 3], 0.02)).toBeNull()
+  })
+
+  it('finds the point halfway along the path', () => {
+    const pieces = boundaryPath(square, [4, 1], [2, 3], 0.02) ?? []
+    expect(pathMidpoint(pieces)).toEqual([4, 3])
   })
 })

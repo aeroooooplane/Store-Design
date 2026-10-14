@@ -10,6 +10,7 @@ import {
 import type { Rect } from '../geometry/index.ts'
 import { EPSILON_M } from '../units.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
+import { openingPieces } from './space.ts'
 import type { IssueSeverity, Space } from './space.ts'
 
 export const MAX_LAYOUT_ITEMS = 200
@@ -200,7 +201,9 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
       }
     })
     space.entrances.forEach((entrance, index) => {
-      if (segmentIntersectsRectInterior(entrance.a, entrance.b, rect)) {
+      // An entrance along several edges is checked piece by piece, not along its chord.
+      const pieces = openingPieces(space, entrance) ?? [entrance]
+      if (pieces.some((p) => segmentIntersectsRectInterior(p.a, p.b, rect))) {
         issues.push({
           code: 'item_blocks_entrance',
           severity: 'error',

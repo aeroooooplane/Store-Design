@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
+import { ARC, arcFront } from '../planner/shapes.fixture.ts'
 import { rectangleSpace } from '../schemas/space.ts'
+import type { Point } from '../geometry/index.ts'
 import type { Space } from '../schemas/space.ts'
 import { DEFAULT_VIEW_NAMES, defaultCameras, sceneFrame } from './views.ts'
 import { CUTAWAY_WALL_HEIGHT_M, wallSegments } from './walls.ts'
@@ -45,6 +47,31 @@ describe('sceneFrame', () => {
       entrances: [{ a: [5, 3], b: [7, 3], kind: 'main' }],
     }
     expect(sceneFrame(l).front).toEqual([0, 1])
+  })
+})
+
+describe('an entrance along an arc storefront', () => {
+  const wholeArc: Space = {
+    ...arcFront,
+    entrances: [{ a: [...ARC[0]], b: [...ARC[8]], kind: 'main' }],
+    openEdges: [],
+  }
+
+  it('faces square to its chord, from the middle of the arc', () => {
+    for (const space of [arcFront, wholeArc]) {
+      const frame = sceneFrame(space)
+      expect(frame.front[0]).toBeCloseTo(0, 9)
+      expect(frame.front[1]).toBeCloseTo(1, 9)
+      // Halfway along the arc, not the chord midpoint (5, 7) inside the shop.
+      expect(frame.entrance[0]).toBeCloseTo(5, 6)
+      expect(frame.entrance[1]).toBeCloseTo(8, 6)
+    }
+  })
+
+  it('puts the entrance view outside the arc, looking in', () => {
+    const view = defaultCameras(wholeArc).find((c) => c.name === '入口方向')
+    expect(view?.position).toEqual([5, 1.65, 8.8])
+    expect(view?.target[2]).toBeLessThan(7)
   })
 })
 
@@ -113,6 +140,37 @@ describe('wallSegments', () => {
     }
     const walls = wallSegments(space, 'zone')
     expect(walls.some((w) => w.a[0] === 8 && w.b[0] === 8)).toBe(false)
+  })
+
+  it('leaves an entrance along several edges open, not just the edge it starts on', () => {
+    const onArc = (w: { a: Point; b: Point }) => w.a[1] > 6.99 && w.b[1] > 6.99
+    // Main entrance over the middle four arc pieces, open edges over the rest: no arc walls.
+    const walls = wallSegments(arcFront, 'side_hall')
+    expect(walls.filter(onArc)).toEqual([])
+    expect(walls.map((w) => [w.a, w.b, w.kind])).toEqual([
+      [[0, 0], [10, 0], 'full'],
+      [[10, 0], [10, 7], 'cutaway'],
+      [[0, 7], [0, 0], 'cutaway'],
+    ])
+    // From the middle of the second arc piece to the middle of the fifth: the outer halves stay.
+    const mid = (i: number): [number, number] => {
+      const [a, b] = [ARC[i], ARC[i + 1]] as [[number, number], [number, number]]
+      return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+    }
+    const partial: Space = {
+      ...arcFront,
+      entrances: [{ a: mid(1), b: mid(4), kind: 'main' }],
+      openEdges: [],
+    }
+    const arcWalls = wallSegments(partial, 'side_hall').filter(onArc)
+    expect(arcWalls.map((w) => [w.a, w.b])).toEqual([
+      [ARC[0], ARC[1]],
+      [ARC[1], mid(1).map((v) => Math.round(v * 1000) / 1000)],
+      [mid(4).map((v) => Math.round(v * 1000) / 1000), ARC[5]],
+      [ARC[5], ARC[6]],
+      [ARC[6], ARC[7]],
+      [ARC[7], ARC[8]],
+    ])
   })
 
   it('has no walls for island shops', () => {
