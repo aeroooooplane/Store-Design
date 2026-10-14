@@ -1,6 +1,7 @@
 /**
  * Characterization tests for known behaviours that are due to change. Each test locks what
- * the API does today ("当前行为") so the later change is a deliberate, visible diff.
+ * the API does today ("当前行为") so the later change is a deliberate, visible diff. Tests
+ * without that prefix have been fixed and now assert the intended behaviour.
  */
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
@@ -11,6 +12,7 @@ import type {
   NodeCreated,
   NodeRenderList,
   NodeTree,
+  ProjectExport,
   ProjectImported,
   RenderImage,
 } from '@store/shared'
@@ -346,43 +348,84 @@ describe('d. 渲染上传仍接受 white 模式', () => {
   })
 })
 
-describe('e. 导入不合规的旧版项目', () => {
-  it('当前行为：道具尺寸超出 SizeSchema 上限（w > 50）时返回 500 INTERNAL，且不建项目', async () => {
-    const before = await projectCount()
-    const oversized = {
-      nodes: [
-        { id: 'root', name: '超大道具', kind: 'root', parent: null, room: { w: 8, d: 6, h: 3.2 } },
-        {
-          id: 'plan',
-          name: '方案',
-          kind: 'plan',
-          parent: 'root',
-          layout: {
-            room: { w: 8, d: 6, h: 3.2 },
-            items: [{ id: 'big', name: '超长桌', type: 'table', x: 0, z: 0, w: 60, d: 1, h: 1 }],
-          },
+describe('e. 导入不合规的项目', () => {
+  const importFile = (data: unknown) =>
+    t.app.inject({ method: 'POST', url: '/api/v1/projects/import', payload: { data } })
+  const oversized = {
+    nodes: [
+      { id: 'root', name: '超大道具', kind: 'root', parent: null, room: { w: 8, d: 6, h: 3.2 } },
+      {
+        id: 'plan',
+        name: '方案',
+        kind: 'plan',
+        parent: 'root',
+        layout: {
+          room: { w: 8, d: 6, h: 3.2 },
+          items: [{ id: 'big', name: '超长桌', type: 'table', x: 0, z: 0, w: 60, d: 1, h: 1 }],
         },
-      ],
-    }
-    const response = await t.app.inject({
-      method: 'POST',
-      url: '/api/v1/projects/import',
-      payload: { data: oversized },
+      },
+    ],
+  }
+
+  it('旧版道具尺寸超出 SizeSchema 上限（w > 50）时返回 400 并列出问题，且不建项目', async () => {
+    const before = await projectCount()
+    const response = await importFile(oversized)
+    expect(response.statusCode).toBe(400)
+    const { error } = response.json()
+    expect(error).toMatchObject({
+      code: 'VALIDATION_FAILED',
+      message: '导入文件中节点“方案”的布局不符合要求',
     })
-    // LayoutSchema.parse throws a ZodError that the error handler does not map.
-    expect(response.statusCode).toBe(500)
-    expect(response.json().error).toMatchObject({ code: 'INTERNAL', message: '服务器内部错误' })
+    expect(error.details).toEqual([{ path: '/items/0/w', message: expect.any(String) }])
     expect(await projectCount()).toBe(before)
 
     // At the limit the same file imports.
     const atLimit = structuredClone(oversized)
     const item = atLimit.nodes[1]?.layout?.items[0]
     if (item) item.w = 50
-    const ok = await t.app.inject({
-      method: 'POST',
-      url: '/api/v1/projects/import',
-      payload: { data: atLimit },
-    })
+    const ok = await importFile(atLimit)
     expect(ok.statusCode).toBe(201)
+  })
+
+  it('旧版房间高度低于 SpaceSchema 下限时返回 400 并指出空间，且不建项目', async () => {
+    const before = await projectCount()
+    const low = {
+      nodes: [
+        { id: 'root', name: '矮房间', kind: 'root', parent: null, room: { w: 8, d: 6, h: 1 } },
+      ],
+    }
+    const response = await importFile(low)
+    expect(response.statusCode).toBe(400)
+    const { error } = response.json()
+    expect(error).toMatchObject({
+      code: 'VALIDATION_FAILED',
+      message: '导入文件中节点“矮房间”的空间不符合要求',
+    })
+    expect(error.details).toEqual([{ path: '/height', message: expect.any(String) }])
+    expect(await projectCount()).toBe(before)
+  })
+
+  it('新格式文件里的同类超限道具在格式检查时就返回 400，且不建项目', async () => {
+    const atLimit = structuredClone(oversized)
+    const item = atLimit.nodes[1]?.layout?.items[0]
+    if (item) item.w = 50
+    const source = (await importFile(atLimit)).json<ProjectImported>()
+    const exported = await t.app.inject({
+      method: 'GET',
+      url: `/api/v1/projects/${source.project.id}/export`,
+    })
+    const file = exported.json<ProjectExport>()
+    const exportedItem = file.nodes.find((n) => n.layout?.items.length)?.layout?.items[0]
+    if (!exportedItem) throw new Error('export has no item')
+    exportedItem.w = 60
+
+    const before = await projectCount()
+    const response = await importFile(file)
+    expect(response.statusCode).toBe(400)
+    expect(response.json().error).toMatchObject({
+      code: 'VALIDATION_FAILED',
+      message: '项目文件格式无效',
+    })
+    expect(await projectCount()).toBe(before)
   })
 })
