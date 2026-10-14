@@ -322,8 +322,17 @@ export function overallDimensions(
     (p) => -p[1],
     (p) => p[0],
   )
-  return [
-    {
+  // A side whose total is already one chain (a straight full-width or full-depth edge) needs no
+  // overall dimension: it would only repeat that number.
+  const spans = (horizontal: boolean, total: number) =>
+    chains.some((d) => {
+      const along = horizontal ? Math.abs(d.b[0] - d.a[0]) : Math.abs(d.b[1] - d.a[1])
+      const across = horizontal ? Math.abs(d.b[1] - d.a[1]) : Math.abs(d.b[0] - d.a[0])
+      return across < 1e-6 && Math.abs(along - total) < 0.001
+    })
+  const overall: Dimension[] = []
+  if (!spans(true, width))
+    overall.push({
       a: [westmost[0], top],
       b: [eastmost[0], top],
       from: westmost,
@@ -331,8 +340,9 @@ export function overallDimensions(
       outward: [0, -1],
       label: String(Math.round(width * 1000)),
       angle: 0,
-    },
-    {
+    })
+  if (!spans(false, depth))
+    overall.push({
       a: [left, northmost[1]],
       b: [left, southmost[1]],
       from: northmost,
@@ -340,8 +350,8 @@ export function overallDimensions(
       outward: [-1, 0],
       label: String(Math.round(depth * 1000)),
       angle: 90,
-    },
-  ]
+    })
+  return overall
 }
 
 /**
