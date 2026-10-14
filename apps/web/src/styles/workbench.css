@@ -264,6 +264,41 @@ table.rows input {
 .row .field input {
   width: 96px;
 }
+.space-edge-table th[scope='row'] {
+  white-space: nowrap;
+  font-weight: 400;
+}
+.space-edge-table select {
+  width: 100%;
+}
+.space-row-actions {
+  display: flex;
+  gap: 4px;
+}
+.space-obstacle {
+  padding-bottom: var(--space-1);
+  border-bottom: 1px solid var(--line-soft);
+}
+/* Space preview overlay: edge numbers, selected edges and click targets. */
+.space-edge-mark {
+  stroke: var(--accent);
+  stroke-width: 5px;
+  stroke-linecap: round;
+  opacity: 0.6;
+}
+.space-edge-hit {
+  stroke: transparent;
+  stroke-width: 14px;
+  cursor: pointer;
+}
+.space-edge-label {
+  fill: var(--muted);
+  pointer-events: none;
+}
+.space-edge.selected .space-edge-label {
+  fill: var(--accent);
+  font-weight: 700;
+}
 
 /* Layout candidates */
 .candidate-grid {
