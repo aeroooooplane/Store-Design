@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T19:17:14+08:00",
+ "generatedAt": "2026-10-14T21:01:55+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -105,8 +105,18 @@
     "to": 1
    },
    {
-    "label": "无文字待看图",
+    "label": "目录",
     "from": 2,
+    "to": 2
+   },
+   {
+    "label": "说明",
+    "from": 3,
+    "to": 3
+   },
+   {
+    "label": "材料表",
+    "from": 4,
     "to": 4
    },
    {
@@ -115,23 +125,68 @@
     "to": 8
    },
    {
-    "label": "平面图（类别待定）",
+    "label": "原始平面",
     "from": 9,
+    "to": 9
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 10,
+    "to": 11
+   },
+   {
+    "label": "其他平面图",
+    "from": 12,
+    "to": 14
+   },
+   {
+    "label": "电气",
+    "from": 15,
+    "to": 15
+   },
+   {
+    "label": "其他平面图",
+    "from": 16,
+    "to": 16
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 17,
+    "to": 17
+   },
+   {
+    "label": "电气",
+    "from": 18,
     "to": 18
    },
    {
-    "label": "无文字待看图",
+    "label": "立面",
     "from": 19,
-    "to": 21
+    "to": 20
    },
    {
     "label": "大样",
-    "from": 22,
+    "from": 21,
+    "to": 29
+   },
+   {
+    "label": "立面",
+    "from": 30,
+    "to": 32
+   },
+   {
+    "label": "大样",
+    "from": 33,
     "to": 33
    },
    {
     "label": "无文字待看图",
     "from": 34,
+    "to": 34
+   },
+   {
+    "label": "电气",
+    "from": 35,
     "to": 39
    },
    {
@@ -154,7 +209,9 @@
   "render_annotated_pages": [],
   "render_status": "有效果图",
   "bom_pages": [],
-  "material_pages": [],
+  "material_pages": [
+   4
+  ],
   "status": "已选主平面"
  },
  "deferred": {

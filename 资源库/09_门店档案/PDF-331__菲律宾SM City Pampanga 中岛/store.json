@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T19:17:15+08:00",
+ "generatedAt": "2026-10-14T21:01:55+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -165,23 +165,13 @@
     "to": 13
    },
    {
-    "label": "无文字待看图",
-    "from": 14,
-    "to": 14
-   },
-   {
     "label": "立面",
-    "from": 15,
+    "from": 14,
     "to": 15
    },
    {
-    "label": "无文字待看图",
-    "from": 16,
-    "to": 16
-   },
-   {
     "label": "大样",
-    "from": 17,
+    "from": 16,
     "to": 21
    },
    {
