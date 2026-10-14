@@ -173,7 +173,7 @@ export class WhiteScene {
     aimSun(this.sun, space)
 
     if (resetView) {
-      const [front] = defaultCameras(space)
+      const [front] = defaultCameras(space, shopType)
       if (front) this.showView(front)
     }
     this.paintRoom()

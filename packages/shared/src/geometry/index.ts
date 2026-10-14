@@ -27,3 +27,5 @@ export {
   rectsOverlap,
   segmentIntersectsRectInterior,
 } from './rect.ts'
+export { interiorPoint } from './interior.ts'
+export type { InteriorPointOptions } from './interior.ts'

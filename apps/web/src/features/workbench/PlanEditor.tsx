@@ -32,7 +32,7 @@ import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { useViewMemory } from './view-memory.ts'
 import type { Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
-import { editorReducer, initialEditorState } from './editor-state.ts'
+import { editorReducer, initialEditorState, newItemPoint } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
@@ -179,14 +179,8 @@ export function PlanEditor({
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
   function addAsset(asset: Asset) {
-    const xs = space.boundary.map((p) => p[0])
-    const zs = space.boundary.map((p) => p[1])
-    dispatch({
-      type: 'add',
-      asset,
-      cx: (Math.min(...xs) + Math.max(...xs)) / 2,
-      cz: (Math.min(...zs) + Math.max(...zs)) / 2,
-    })
+    const [cx, cz] = newItemPoint(space)
+    dispatch({ type: 'add', asset, cx, cz })
   }
 
   function switchView(next: 'plan' | '3d') {
