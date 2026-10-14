@@ -172,9 +172,31 @@ describe('dimension chains of irregular shops', () => {
 })
 
 describe('overallDimensions', () => {
+  it('adds no overall dimension that one chain already shows', () => {
+    // The L's left edge is one 10000 chain: no overall depth. Its bottom edge is split by the
+    // entrance into several chains, so the overall width is still added.
+    const overall = overallDimensions(L, dimensionChains(L, 0.6), 0.6, 0.5)
+    expect(overall.map((d) => [d.label, d.angle])).toEqual([['10000', 0]])
+  })
+
   it('adds the overall width above and depth left, outside every chain', () => {
-    const chains = dimensionChains(L, 0.6)
-    const [width, depth] = overallDimensions(L, chains, 0.6, 0.5)
+    // Every corner cut: no edge spans the full width or depth.
+    const cut: Space = {
+      ...rectangleSpace(10, 10, 3),
+      boundary: [
+        [1, 0],
+        [9, 0],
+        [10, 1],
+        [10, 9],
+        [9, 10],
+        [1, 10],
+        [0, 9],
+        [0, 1],
+      ],
+      entrances: [],
+    }
+    const chains = dimensionChains(cut, 0.6)
+    const [width, depth] = overallDimensions(cut, chains, 0.6, 0.5)
     expect(width?.label).toBe('10000')
     expect(depth?.label).toBe('10000')
     const top = Math.min(...chains.flatMap((d) => [d.a[1], d.b[1]]))
@@ -185,12 +207,12 @@ describe('overallDimensions', () => {
     expect(depth?.b).toEqual([left - 0.5, 10])
     // Measured from the extreme vertices, nearest the dimension line.
     expect([width?.from, width?.to]).toEqual([
-      [0, 0],
-      [10, 6],
+      [0, 1],
+      [10, 1],
     ])
     expect([depth?.from, depth?.to]).toEqual([
-      [0, 0],
-      [0, 10],
+      [1, 0],
+      [1, 10],
     ])
     expect(depth?.angle).toBe(90)
   })
@@ -201,9 +223,9 @@ describe('overallDimensions', () => {
 
   it('measures an arc shop to the bottom of its arc', () => {
     const space = arcShop()
-    const [width, depth] = overallDimensions(space, dimensionChains(space, 0.6), 0.6, 0.5)
-    expect(width?.label).toBe('10000')
-    expect(depth?.label).toBe('7500')
+    // The straight back edge already shows the 10000 width; only the depth to the arc is added.
+    const overall = overallDimensions(space, dimensionChains(space, 0.6), 0.6, 0.5)
+    expect(overall.map((d) => d.label)).toEqual(['7500'])
   })
 })
 
