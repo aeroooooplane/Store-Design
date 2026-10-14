@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:15+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -110,6 +110,83 @@
  "text_layer": {
   "textless_pages": 3,
   "pages": 21
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "封面",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "无文字待看图",
+    "from": 2,
+    "to": 2
+   },
+   {
+    "label": "未识别",
+    "from": 3,
+    "to": 4
+   },
+   {
+    "label": "原始平面",
+    "from": 5,
+    "to": 5
+   },
+   {
+    "label": "布置平面",
+    "from": 6,
+    "to": 6
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 7,
+    "to": 7
+   },
+   {
+    "label": "未识别",
+    "from": 8,
+    "to": 8
+   },
+   {
+    "label": "无文字待看图",
+    "from": 9,
+    "to": 10
+   },
+   {
+    "label": "电气",
+    "from": 11,
+    "to": 11
+   },
+   {
+    "label": "大样",
+    "from": 12,
+    "to": 12
+   },
+   {
+    "label": "立面",
+    "from": 13,
+    "to": 14
+   },
+   {
+    "label": "大样",
+    "from": 15,
+    "to": 21
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": 6,
+  "main_plan_note": null,
+  "plan_alternatives": [],
+  "plan_floor_tags": [
+   "40F"
+  ],
+  "render_pages": [],
+  "render_annotated_pages": [],
+  "render_status": "图纸内无效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

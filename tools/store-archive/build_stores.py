@@ -144,6 +144,34 @@ def describe_shop(row, snap_shop, hints, shop_pages) -> str:
     return "；".join(parts)
 
 
+def stage2_pages(info: dict | None) -> dict:
+    """阶段 2 的页面摘要（classify_pages.py）：页面分块、主平面页、效果图页、物料清单页。"""
+    empty = {"main_plan_page": None, "main_plan_note": None, "render_pages": [], "render_status": None, "bom_pages": [], "status": "未分类"}
+    if not info:
+        return empty
+    renders = info["render_pages"]
+    if info["main_plan_page"]:
+        status = "已选主平面"
+    elif info["main_plan_note"] and "看图" in info["main_plan_note"]:
+        status = "待看图选平面"
+    else:
+        status = "图纸内无平面"
+    return {
+        "blocks": [{"label": b["label"], "from": b["from"], "to": b["to"]} for b in info["blocks"]],
+        "toc_found": info["toc_found"],
+        "main_plan_page": info["main_plan_page"],
+        "main_plan_note": info["main_plan_note"],
+        "plan_alternatives": info["plan_alternatives"],
+        "plan_floor_tags": info["plan_floor_tags"],
+        "render_pages": renders,
+        "render_annotated_pages": info["render_annotated_pages"],
+        "render_status": "有效果图" if renders else ("只有带标注效果图" if info["render_annotated_pages"] else "图纸内无效果图"),
+        "bom_pages": info["bom_pages"],
+        "material_pages": info["material_pages"],
+        "status": status,
+    }
+
+
 def apply_decisions(record: dict, decisions: dict) -> None:
     """用户裁决（阶段1裁决.json）覆盖自动取值，标记为已确认。"""
     for key, name in (("si", "SI"), ("shop_type", "铺型")):
@@ -182,6 +210,8 @@ def main() -> None:
     stores, issues = [], []
     prescreen_path = args.out / "阶段1看图初审.json"
     prescreen = {(r["store_id"], r["字段"]): r for r in load_json(prescreen_path)["rows"]} if prescreen_path.exists() else {}
+    pages_path = args.out / "_cache" / "页面摘要.json"
+    page_summary = load_json(pages_path)["stores"] if pages_path.exists() else {}
     decisions_path = args.out / "阶段1裁决.json"
     decisions = {(r["store_id"], r["字段"]): r for r in load_json(decisions_path)["rows"]} if decisions_path.exists() else {}
 
@@ -338,6 +368,7 @@ def main() -> None:
             },
             "title_block": {"other_store_titles": dict(other_titles.most_common(5))},
             "text_layer": {"textless_pages": sum(1 for p in pages if p["chars"] < 30), "pages": len(pages)},
+            "pages": stage2_pages(page_summary.get(sid)),
             "deferred": {"city": None, "mall": None, "floor": None, "mall_group": None, "related_stores": None},
             "status": {"stage1": "待裁决" if si_conf == "待定" or shop_conf == "待定" else "自动"},
         }
@@ -367,6 +398,7 @@ def main() -> None:
         "issues": len(issues),
         "issue_fields": dict(Counter(i["字段"] for i in issues)),
         "review_hints": sum(1 for s in stores if s["review_hint"]),
+        "stage2": dict(Counter(s["pages"]["status"] for s in stores)) if page_summary else None,
         "si_weak_against_feishu": sum(1 for s in stores if s["si"]["note"]),
     }
     table = [
@@ -388,6 +420,12 @@ def main() -> None:
             "飞书项目名": s["aliases"]["feishu_1009"],
             "审核提示": s["review_hint"],
             "阶段1状态": s["status"]["stage1"],
+            "主平面页": s["pages"]["main_plan_page"],
+            "主平面依据": s["pages"]["main_plan_note"],
+            "效果图页数": len(s["pages"]["render_pages"]),
+            "效果图状态": s["pages"]["render_status"],
+            "物料清单页": "、".join(map(str, s["pages"]["bom_pages"])),
+            "阶段2状态": s["pages"]["status"],
         }
         for s in stores
     ]

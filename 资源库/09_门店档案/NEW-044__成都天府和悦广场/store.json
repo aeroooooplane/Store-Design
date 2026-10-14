@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:15+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -106,6 +106,57 @@
  "text_layer": {
   "textless_pages": 26,
   "pages": 33
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "封面",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "效果图",
+    "from": 2,
+    "to": 6
+   },
+   {
+    "label": "无文字待看图",
+    "from": 7,
+    "to": 26
+   },
+   {
+    "label": "未识别",
+    "from": 27,
+    "to": 27
+   },
+   {
+    "label": "目录",
+    "from": 28,
+    "to": 28
+   },
+   {
+    "label": "电气",
+    "from": 29,
+    "to": 33
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": null,
+  "main_plan_note": "有无文字页，需看图确认",
+  "plan_alternatives": [],
+  "plan_floor_tags": [],
+  "render_pages": [
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "render_annotated_pages": [],
+  "render_status": "有效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "待看图选平面"
  },
  "deferred": {
   "city": null,

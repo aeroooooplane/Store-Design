@@ -1,0 +1,110 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-14T19:17:10+08:00",
+ "generator": {
+  "script": "tools/store-archive/read_bom.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-006",
+ "source": "物料清单（设计方填写的数量；平面计数在阶段 3 补）",
+ "pages_read": [
+  12
+ ],
+ "pages_failed": [],
+ "items": [
+  {
+   "no": 1,
+   "name": "75寸广告机",
+   "size": "TCL/75P30X",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "permission,需配备支架anycopyofitisforbidden.Nevermeasure",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 2,
+   "name": "1.8msi2.0收银台",
+   "size": "W1800*D600*H900mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24432224",
+    "asset-33819654"
+   ]
+  },
+  {
+   "no": 3,
+   "name": "1.8msi2.0中岛桌",
+   "size": "W1800*D800*H900mm",
+   "qty": 3,
+   "qty_text": "3",
+   "remark": "Constructioncompanyshouldcheckthe竖版dateinthedrawingatbuildingsite.Iffind",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24312623",
+    "asset-41053706"
+   ]
+  },
+  {
+   "no": 4,
+   "name": "1.8米配件边柜(带托盘)",
+   "size": "W1800*D500*H900mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "anymistake,pleaseinformtheengineerresponsibleforthedrawing",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-28192911",
+    "asset-33660153",
+    "asset-33819654"
+   ]
+  },
+  {
+   "no": 5,
+   "name": "43寸电子水牌（国内）",
+   "size": null,
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "immediately.Thecopyrightofthedrawingisreserved",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2587726"
+   ]
+  },
+  {
+   "no": 6,
+   "name": "无线摄像头",
+   "size": "高清网络摄像头",
+   "qty": 3,
+   "qty_text": "3",
+   "remark": "byourcompany.公司名称",
+   "page": 12,
+   "category": "设备（无模型）",
+   "si_hint": null,
+   "asset_candidates": []
+  }
+ ],
+ "totals_by_category": {
+  "信息化物料": 2,
+  "软装道具": 6,
+  "设备（无模型）": 3
+ },
+ "reviewed": false
+}

@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:15+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -105,6 +105,43 @@
  "text_layer": {
   "textless_pages": 4,
   "pages": 6
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "其他平面图",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "效果图",
+    "from": 2,
+    "to": 5
+   },
+   {
+    "label": "效果图（带标注）",
+    "from": 6,
+    "to": 6
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": 1,
+  "main_plan_note": "没有“布置平面”页，取道具标注最多的其他平面图",
+  "plan_alternatives": [],
+  "plan_floor_tags": [],
+  "render_pages": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "render_annotated_pages": [
+   6
+  ],
+  "render_status": "有效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

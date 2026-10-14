@@ -1,0 +1,731 @@
+﻿store_id,门店,页,序号,名称,规格,数量,大类,SI,型号候选,备注
+PDF-001,上海TPY中心,11,1,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-001,上海TPY中心,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-001,上海TPY中心,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-001,上海TPY中心,11,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-001,上海TPY中心,11,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,immediately.Thecopyrightofthedrawingis需配备支架reserved
+PDF-001,上海TPY中心,11,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,byourcompany.公司名称
+PDF-001,上海TPY中心,11,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,CompanyName
+PDF-001,上海TPY中心,11,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,横版
+PDF-001,上海TPY中心,11,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-001,上海TPY中心,11,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,项目编号ProjectNum
+PDF-001,上海TPY中心,11,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,日期Date
+PDF-001,上海TPY中心,11,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,制图DrawnBy
+PDF-001,上海TPY中心,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,校对CheckedBy
+PDF-001,上海TPY中心,11,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,审核ApprovedBy
+PDF-001,上海TPY中心,11,15,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,项目负责https://vsp.jd.com/new/sku/100106460364ChargedBy
+PDF-001,上海TPY中心,11,16,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,骑行的场景设计Designer
+PDF-001,上海TPY中心,11,17,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,
+PDF-001,上海TPY中心,11,18,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,项目名称ProjectName
+PDF-001,上海TPY中心,11,19,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,影石-上海TPY中心【边厅店】
+PDF-008,上海新嘉中心,11,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-008,上海新嘉中心,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-008,上海新嘉中心,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-008,上海新嘉中心,11,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架
+PDF-008,上海新嘉中心,11,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-008,上海新嘉中心,11,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+PDF-008,上海新嘉中心,11,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,
+PDF-008,上海新嘉中心,11,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版单位:毫米（mm）
+PDF-008,上海新嘉中心,11,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+PDF-008,上海新嘉中心,11,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+PDF-008,上海新嘉中心,11,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,在图纸上量取。
+PDF-008,上海新嘉中心,11,12,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,会签栏
+PDF-008,上海新嘉中心,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,首席设计：
+PDF-008,上海新嘉中心,11,14,有线摄像头,D8P-C高清网络摄像头,8,设备（无模型）,,,项目负责人：
+PDF-008,上海新嘉中心,11,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,审核：
+PDF-008,上海新嘉中心,11,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,设计：
+PDF-018,上海长宁龙之梦,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-018,上海长宁龙之梦,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+PDF-018,上海长宁龙之梦,11,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-018,上海长宁龙之梦,11,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe竖版engineerresponsibleforthedrawing"
+PDF-018,上海长宁龙之梦,11,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+PDF-018,上海长宁龙之梦,11,6,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,byourcompany.公司名称
+PDF-018,上海长宁龙之梦,11,7,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,CompanyName
+PDF-018,上海长宁龙之梦,11,8,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,
+PDF-018,上海长宁龙之梦,11,9,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,
+PDF-029,临沂万象汇,13,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-029,临沂万象汇,13,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-029,临沂万象汇,13,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-029,临沂万象汇,13,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-029,临沂万象汇,13,5,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,immediately.Thecopyrightofthedrawingisreserved
+PDF-029,临沂万象汇,13,6,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,byourcompany.公司名称
+PDF-029,临沂万象汇,13,7,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,CompanyName横版
+PDF-029,临沂万象汇,13,8,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-029,临沂万象汇,13,9,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,
+PDF-029,临沂万象汇,13,10,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,项目编号ProjectNum
+PDF-029,临沂万象汇,13,11,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,日期Date
+PDF-029,临沂万象汇,13,12,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,制图DrawnBy
+PDF-029,临沂万象汇,13,13,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,校对CheckedBy
+PDF-029,临沂万象汇,13,14,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,审核https://vsp.jd.com/new/sku/100106460364ApprovedBy
+PDF-029,临沂万象汇,13,15,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,项目负责骑行的场景ChargedBy
+PDF-029,临沂万象汇,13,16,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,设计Designer
+PDF-029,临沂万象汇,13,17,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,
+PDF-029,临沂万象汇,13,18,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目名称ProjectName
+PDF-088,南昌武商mall,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-088,南昌武商mall,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+PDF-088,南昌武商mall,11,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-088,南昌武商mall,11,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe横版engineerresponsibleforthedrawing"
+PDF-088,南昌武商mall,11,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+PDF-088,南昌武商mall,11,6,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,byourcompany.公司名称
+PDF-088,南昌武商mall,11,7,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,CompanyName
+PDF-088,南昌武商mall,11,8,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,
+PDF-088,南昌武商mall,11,9,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,
+PDF-138,宜兴八佰伴,12,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-138,宜兴八佰伴,12,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-138,宜兴八佰伴,12,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-138,宜兴八佰伴,12,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-138,宜兴八佰伴,12,5,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,immediately.Thecopyrightofthedrawingisreserved
+PDF-138,宜兴八佰伴,12,6,1.8msi2.0开箱桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-16469753、asset-41277543,byourcompany.公司名称
+PDF-138,宜兴八佰伴,12,7,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,CompanyName竖版
+PDF-138,宜兴八佰伴,12,8,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-138,宜兴八佰伴,12,9,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,
+PDF-138,宜兴八佰伴,12,10,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,项目编号ProjectNum
+PDF-138,宜兴八佰伴,12,11,si2.0子母凳,W450*D450*H450mm,6,软装道具,SI2.0,,日期Date
+PDF-138,宜兴八佰伴,12,12,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,制图DrawnBy
+PDF-138,宜兴八佰伴,12,13,有线摄像头,D8P-C高清网络摄像头,9,设备（无模型）,,,校对CheckedBy
+PDF-138,宜兴八佰伴,12,14,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,审核https://vsp.jd.com/new/sku/100106460364ApprovedBy
+PDF-138,宜兴八佰伴,12,15,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,项目负责骑行的场景ChargedBy
+PDF-138,宜兴八佰伴,12,16,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,设计Designer
+PDF-138,宜兴八佰伴,12,17,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,
+PDF-138,宜兴八佰伴,12,18,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,项目名称ProjectName
+PDF-143,山西临汾生龙国际,11,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-143,山西临汾生龙国际,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+PDF-143,山西临汾生龙国际,11,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-143,山西临汾生龙国际,11,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe竖版engineerresponsibleforthedrawing"
+PDF-143,山西临汾生龙国际,11,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+PDF-143,山西临汾生龙国际,11,6,600*600方形展桌,,2,软装道具,,,byourcompany.公司名称
+PDF-143,山西临汾生龙国际,11,7,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,CompanyName
+PDF-143,山西临汾生龙国际,11,8,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,
+PDF-143,山西临汾生龙国际,11,9,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,
+PDF-143,山西临汾生龙国际,11,11,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,项目编号ProjectNum
+PDF-143,山西临汾生龙国际,11,12,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,日期Date
+PDF-148,广州万菱汇授权体验店,9,,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+PDF-148,广州万菱汇授权体验店,9,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+PDF-148,广州万菱汇授权体验店,9,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架Client
+PDF-148,广州万菱汇授权体验店,9,4,86寸广告机,TCL/86P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+PDF-148,广州万菱汇授权体验店,9,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-148,广州万菱汇授权体验店,9,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+PDF-148,广州万菱汇授权体验店,9,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+PDF-148,广州万菱汇授权体验店,9,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+PDF-148,广州万菱汇授权体验店,9,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+PDF-148,广州万菱汇授权体验店,9,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.
+PDF-148,广州万菱汇授权体验店,9,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,编号Date日期
+PDF-148,广州万菱汇授权体验店,9,12,si2.0子母凳,W450*D450*H450mm,9,软装道具,SI2.0,,Desrption摘要
+PDF-148,广州万菱汇授权体验店,9,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+PDF-148,广州万菱汇授权体验店,9,14,有线摄像头,D8P-C高清网络摄像头,8,设备（无模型）,,,Checkedby校对人
+PDF-148,广州万菱汇授权体验店,9,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,Reviewedby审定
+PDF-148,广州万菱汇授权体验店,9,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,Approvedby审核Chargedby
+PDF-149,广州保利时光里,11,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-149,广州保利时光里,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+PDF-149,广州保利时光里,11,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-149,广州保利时光里,11,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe2竖版、1横板engineerresponsibleforthedrawing"
+PDF-149,广州保利时光里,11,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+PDF-149,广州保利时光里,11,6,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,byourcompany.公司名称
+PDF-149,广州保利时光里,11,7,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,CompanyName
+PDF-149,广州保利时光里,11,8,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,
+PDF-149,广州保利时光里,11,9,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,
+PDF-149,广州保利时光里,11,10,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目编号ProjectNum
+PDF-161,恩施星光里购物中心照材店,12,1,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-161,恩施星光里购物中心照材店,12,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-161,恩施星光里购物中心照材店,12,3,65寸广告机,TCL/65P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-161,恩施星光里购物中心照材店,12,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-161,恩施星光里购物中心照材店,12,5,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,immediately.Thecopyrightofthedrawingisreserved
+PDF-161,恩施星光里购物中心照材店,12,6,1.8msi1.0开箱桌,W1800*D1000*H900mm,0,软装道具,SI1.0,asset-666964、asset-1788391,byourcompany.公司名称
+PDF-161,恩施星光里购物中心照材店,12,7,1.8msi1.0中岛桌,W1800*D1000*H900mm,2,软装道具,SI1.0,asset-408124,CompanyName竖板
+PDF-161,恩施星光里购物中心照材店,12,8,1.2msi1.0配件柜,W1200*D450*H2400mm,0,软装道具,SI1.0,asset-2595882,
+PDF-161,恩施星光里购物中心照材店,12,9,1.6msi1.0配件柜,W1600*D450*H2400mm,1,软装道具,SI1.0,asset-323015,
+PDF-161,恩施星光里购物中心照材店,12,10,si1.0子母凳,W450*D450*H450mm,0,软装道具,SI1.0,,项目编号ProjectNum
+PDF-161,恩施星光里购物中心照材店,12,11,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,日期Date
+PDF-161,恩施星光里购物中心照材店,12,12,有线摄像头,D8P-C高清网络摄像头,8,设备（无模型）,,,制图DrawnBy
+PDF-161,恩施星光里购物中心照材店,12,13,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,1,仓储（无模型）,,,校对https://vsp.jd.com/new/sku/100106460364CheckedBy
+PDF-161,恩施星光里购物中心照材店,12,14,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,审核ApprovedBy
+PDF-161,恩施星光里购物中心照材店,12,15,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,项目负责ChargedBy
+PDF-161,恩施星光里购物中心照材店,12,16,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,设计Designer
+PDF-161,恩施星光里购物中心照材店,12,17,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,
+PDF-186,新乡大桥照材专卖店,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-186,新乡大桥照材专卖店,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-186,新乡大桥照材专卖店,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-186,新乡大桥照材专卖店,11,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-186,新乡大桥照材专卖店,11,5,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,immediately.Thecopyrightofthedrawingisreserved
+PDF-186,新乡大桥照材专卖店,11,6,1.8msi1.0开箱桌,W1800*D1000*H900mm,0,软装道具,SI1.0,asset-666964、asset-1788391,byourcompany.公司名称
+PDF-186,新乡大桥照材专卖店,11,7,1.8msi1.0中岛桌（X4）,W1800*D1000*H900mm,1,软装道具,SI1.0,asset-408124,CompanyName竖版
+PDF-186,新乡大桥照材专卖店,11,8,1.8msi1.0中岛桌（go3s）,W1800*D1000*H900mm,1,软装道具,SI1.0,asset-408124,横板
+PDF-186,新乡大桥照材专卖店,11,9,1.8msi1.0中岛桌（ace）,W1800*D1000*H900mm,0,软装道具,SI1.0,asset-408124,备注横板/竖版
+PDF-186,新乡大桥照材专卖店,11,10,1.2msi1.0配件柜,W1200*D450*H2400mm,2,软装道具,SI1.0,asset-2595882,项目编号ProjectNum
+PDF-186,新乡大桥照材专卖店,11,11,1.6msi1.0配件柜,W1600*D450*H2400mm,0,软装道具,SI1.0,asset-323015,日期Date
+PDF-186,新乡大桥照材专卖店,11,12,si1.0子母凳,W450*D450*H450mm,0,软装道具,SI1.0,,制图DrawnBy
+PDF-186,新乡大桥照材专卖店,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,校对CheckedBy
+PDF-186,新乡大桥照材专卖店,11,14,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,审核ApprovedBy
+PDF-186,新乡大桥照材专卖店,11,15,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,1,仓储（无模型）,,,项目负责https://vsp.jd.com/new/sku/100106460364ChargedBy
+PDF-186,新乡大桥照材专卖店,11,16,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,设计Designer
+PDF-186,新乡大桥照材专卖店,11,17,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,
+PDF-186,新乡大桥照材专卖店,11,18,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,项目名称ProjectName
+PDF-198,无锡荟聚,11,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-198,无锡荟聚,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-198,无锡荟聚,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-198,无锡荟聚,11,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-198,无锡荟聚,11,5,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,immediately.Thecopyrightofthedrawingisreserved
+PDF-198,无锡荟聚,11,6,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,byourcompany.公司名称
+PDF-198,无锡荟聚,11,7,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,CompanyName竖版
+PDF-198,无锡荟聚,11,8,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-198,无锡荟聚,11,9,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,
+PDF-198,无锡荟聚,11,10,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,项目编号ProjectNum
+PDF-198,无锡荟聚,11,11,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,日期Date
+PDF-198,无锡荟聚,11,12,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,制图DrawnBy
+PDF-198,无锡荟聚,11,13,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,校对CheckedBy
+PDF-198,无锡荟聚,11,14,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,审核https://vsp.jd.com/new/sku/100106460364ApprovedBy
+PDF-198,无锡荟聚,11,15,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,项目负责骑行的场景ChargedBy
+PDF-198,无锡荟聚,11,16,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,设计Designer
+PDF-198,无锡荟聚,11,17,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,
+PDF-198,无锡荟聚,11,18,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目名称ProjectName
+PDF-201,昆山商厦家电市场照材专卖店（扩店）,5,1,1.8msi1.0中岛桌,W1800*D800*H900mm,2,软装道具,SI1.0,asset-408124,建设单位横版
+PDF-201,昆山商厦家电市场照材专卖店（扩店）,5,2,1.8msi1.0边桌储物柜,W1800*D500*H900mm,1,软装道具,SI1.0,asset-666964、asset-752992,工程编号
+PDF-201,昆山商厦家电市场照材专卖店（扩店）,5,3,1.8msi1.0边桌储物+开箱柜,W1800*D500*H900mm,1,软装道具,SI1.0,asset-666964、asset-1788391,
+PDF-201,昆山商厦家电市场照材专卖店（扩店）,5,4,无线摄像头,D8P-C高清网络摄像头,4,设备（无模型）,,,工程名称
+PDF-223,武汉光谷世界城,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-223,武汉光谷世界城,11,2,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-223,武汉光谷世界城,11,3,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-223,武汉光谷世界城,11,4,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+PDF-223,武汉光谷世界城,11,5,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,immediately.Thecopyrightofthedrawingis竖版reserved
+PDF-223,武汉光谷世界城,11,6,0.8*0.8msi2.0方形展桌,W800*D800*H900mm,1,软装道具,SI2.0,,byourcompany.公司名称
+PDF-223,武汉光谷世界城,11,7,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,CompanyName
+PDF-223,武汉光谷世界城,11,8,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,
+PDF-223,武汉光谷世界城,11,9,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,
+PDF-223,武汉光谷世界城,11,10,有线摄像头,D8P-C高清网络摄像头,8,设备（无模型）,,,项目编号ProjectNum
+PDF-223,武汉光谷世界城,11,11,徕卡品牌墙（画框+海报）,410*570,3,软装道具,,asset-36929204,日期Date
+PDF-223,武汉光谷世界城,11,12,徕卡品牌墙（画框+海报）,730*570,1,软装道具,,asset-36929204,制图DrawnBy
+PDF-223,武汉光谷世界城,11,13,徕卡品牌墙（画框+海报）,1040*570,2,软装道具,,asset-36929204,校对CheckedBy
+PDF-223,武汉光谷世界城,11,14,徕卡品牌墙（画框+海报）,800*1200,1,软装道具,,asset-36929204,审核ApprovedBy
+PDF-224,武汉大悦城,10,,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+PDF-224,武汉大悦城,10,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+PDF-224,武汉大悦城,10,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+PDF-224,武汉大悦城,10,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+PDF-224,武汉大悦城,10,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-224,武汉大悦城,10,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+PDF-224,武汉大悦城,10,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+PDF-224,武汉大悦城,10,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+PDF-224,武汉大悦城,10,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+PDF-224,武汉大悦城,10,10,2.4msi2.0配件柜,W2400*D450*H2400mm,2,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.
+PDF-224,武汉大悦城,10,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,编号Date日期
+PDF-224,武汉大悦城,10,12,si2.0子母凳,W450*D450*H450mm,9,软装道具,SI2.0,,Desrption摘要
+PDF-224,武汉大悦城,10,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+PDF-224,武汉大悦城,10,14,有线摄像头,D8P-C高清网络摄像头,11,设备（无模型）,,,Checkedby校对人
+PDF-224,武汉大悦城,10,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,Reviewedby审定
+PDF-224,武汉大悦城,10,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,Approvedby审核Chargedby
+PDF-230,武汉荟聚,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-230,武汉荟聚,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-230,武汉荟聚,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-230,武汉荟聚,11,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架
+PDF-230,武汉荟聚,11,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-230,武汉荟聚,11,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+PDF-230,武汉荟聚,11,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,
+PDF-230,武汉荟聚,11,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版单位:毫米（mm）
+PDF-230,武汉荟聚,11,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+PDF-230,武汉荟聚,11,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+PDF-230,武汉荟聚,11,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,在图纸上量取。
+PDF-230,武汉荟聚,11,12,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,会签栏
+PDF-230,武汉荟聚,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,首席设计：
+PDF-230,武汉荟聚,11,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,项目负责人：
+PDF-230,武汉荟聚,11,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,审核：
+PDF-230,武汉荟聚,11,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,设计：
+PDF-230,武汉荟聚,11,17,灯箱,1700*890,1,信息化物料,,asset-1156409、asset-2587203、asset-11478950,制图：机电：
+PDF-230,武汉荟聚,11,18,灯箱,1200*2300,1,信息化物料,,asset-1156409、asset-2587203、asset-11478950,图纸名称：
+PDF-235,江门汇悦大融城（迁址）,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,复用需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-235,江门汇悦大融城（迁址）,11,2,55寸广告机,TCL/55P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-235,江门汇悦大融城（迁址）,11,3,65寸广告机,TCL/65P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-235,江门汇悦大融城（迁址）,11,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-235,江门汇悦大融城（迁址）,11,5,98寸广告机,TCL/98P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,immediately.Thecopyrightofthedrawingis需配备支架reserved
+PDF-235,江门汇悦大融城（迁址）,11,6,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,byourcompany.公司名称
+PDF-235,江门汇悦大融城（迁址）,11,7,1.8msi1.0开箱桌,W1800*D1000*H900mm,1,软装道具,SI1.0,asset-666964、asset-1788391,CompanyName
+PDF-235,江门汇悦大融城（迁址）,11,8,1.8msi1.0中岛桌,W1800*D1000*H900mm,3,软装道具,SI1.0,asset-408124,复用
+PDF-235,江门汇悦大融城（迁址）,11,9,1.2msi1.0配件柜,W1200*D450*H2400mm,2,软装道具,SI1.0,asset-2595882,
+PDF-235,江门汇悦大融城（迁址）,11,10,1.6msi1.0配件柜,W1600*D450*H2400mm,,软装道具,SI1.0,asset-323015,项目编号ProjectNum
+PDF-235,江门汇悦大融城（迁址）,11,11,si1.0子母凳,W450*D450*H450mm,,软装道具,SI1.0,,日期Date
+PDF-235,江门汇悦大融城（迁址）,11,12,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,制图复用DrawnBy
+PDF-235,江门汇悦大融城（迁址）,11,13,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,校对CheckedBy
+PDF-235,江门汇悦大融城（迁址）,11,14,徕卡品牌墙（画框+海报）,730*570,,软装道具,,asset-36929204,审核ApprovedBy
+PDF-235,江门汇悦大融城（迁址）,11,15,徕卡品牌墙（画框+海报）,410*570,,软装道具,,asset-36929204,项目负责ChargedBy
+PDF-279,深圳海雅缤纷城,9,1,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+PDF-279,深圳海雅缤纷城,9,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+PDF-279,深圳海雅缤纷城,9,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+PDF-279,深圳海雅缤纷城,9,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+PDF-279,深圳海雅缤纷城,9,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-279,深圳海雅缤纷城,9,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Design&ProjectManagementConsultancy
+PDF-279,深圳海雅缤纷城,9,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,项目设计
+PDF-279,深圳海雅缤纷城,9,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+PDF-279,深圳海雅缤纷城,9,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+PDF-279,深圳海雅缤纷城,9,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+PDF-279,深圳海雅缤纷城,9,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,Date日期
+PDF-279,深圳海雅缤纷城,9,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+PDF-279,深圳海雅缤纷城,9,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+PDF-279,深圳海雅缤纷城,9,14,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,Checkedby校对人
+PDF-279,深圳海雅缤纷城,9,15,徕卡品牌墙（画框+海报）,1200*800,1,软装道具,,asset-36929204,Reviewedby审定Approvedby
+PDF-279,深圳海雅缤纷城,9,16,徕卡品牌墙（画框+海报）,1040*570,2,软装道具,,asset-36929204,审核Chargedby项目负责
+PDF-279,深圳海雅缤纷城,9,17,徕卡品牌墙（画框+海报）,730*570,1,软装道具,,asset-36929204,
+PDF-279,深圳海雅缤纷城,9,18,徕卡品牌墙（画框+海报）,410*570,3,软装道具,,asset-36929204,Designer
+PDF-311,芜湖银泰inpark,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-311,芜湖银泰inpark,11,2,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-311,芜湖银泰inpark,11,3,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+PDF-311,芜湖银泰inpark,11,4,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+PDF-311,芜湖银泰inpark,11,5,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,immediately.Thecopyrightofthedrawingis横版reserved
+PDF-311,芜湖银泰inpark,11,6,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,byourcompany.公司名称
+PDF-311,芜湖银泰inpark,11,7,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,CompanyName
+PDF-311,芜湖银泰inpark,11,8,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,
+PDF-311,芜湖银泰inpark,11,9,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,
+PDF-311,芜湖银泰inpark,11,10,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,项目编号https://vsp.jd.com/new/sku/100106460364ProjectNum
+PDF-311,芜湖银泰inpark,11,11,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,日期Date
+PDF-311,芜湖银泰inpark,11,12,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,制图DrawnBy
+PDF-319,莆田万象汇,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-319,莆田万象汇,11,2,55寸广告机,TCL/55P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-319,莆田万象汇,11,3,65寸广告机,TCL/65P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-319,莆田万象汇,11,4,86寸广告机,TCL/86P30X,,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-319,莆田万象汇,11,5,98寸广告机,TCL/98P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,immediately.Thecopyrightofthedrawingis需配备支架reserved
+PDF-319,莆田万象汇,11,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,byourcompany.公司名称
+PDF-319,莆田万象汇,11,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,CompanyName
+PDF-319,莆田万象汇,11,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,横版
+PDF-319,莆田万象汇,11,9,1.2msi2.0配件柜,W1200*D450*H2400mm,,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-319,莆田万象汇,11,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,项目编号ProjectNum
+PDF-319,莆田万象汇,11,11,3.6msi2.0配件柜,W3600*D450*H2400mm,,软装道具,SI2.0,asset-15903179、asset-36857093,日期Date
+PDF-319,莆田万象汇,11,12,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,制图DrawnBy
+PDF-319,莆田万象汇,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,校对CheckedBy
+PDF-319,莆田万象汇,11,14,有线摄像头,D8P-C高清网络摄像头,8,设备（无模型）,,,审核ApprovedBy
+PDF-319,莆田万象汇,11,15,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,项目负责https://vsp.jd.com/new/sku/100106460364ChargedBy
+PDF-319,莆田万象汇,11,16,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,设计Designer
+PDF-319,莆田万象汇,11,17,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,
+PDF-342,西安开元商场,7,,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+PDF-342,西安开元商场,7,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+PDF-342,西安开元商场,7,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+PDF-342,西安开元商场,7,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+PDF-342,西安开元商场,7,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+PDF-342,西安开元商场,7,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+PDF-342,西安开元商场,7,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+PDF-342,西安开元商场,7,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+PDF-342,西安开元商场,7,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+PDF-342,西安开元商场,7,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订
+PDF-342,西安开元商场,7,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,No.编号Date日期
+PDF-342,西安开元商场,7,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+PDF-342,西安开元商场,7,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+PDF-342,西安开元商场,7,14,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,Checkedby校对人
+PDF-342,西安开元商场,7,15,徕卡品牌墙（画框+海报）,730*570,1,软装道具,,asset-36929204,Reviewedby审定
+PDF-342,西安开元商场,7,16,徕卡品牌墙（画框+海报）,410*570,3,软装道具,,asset-36929204,Approvedby审核Chargedby
+PDF-342,西安开元商场,7,17,徕卡品牌墙（画框+海报）,1040*570,2,软装道具,,asset-36929204,项目负责
+PDF-342,西安开元商场,7,18,徕卡品牌墙（画框+海报）,1200*800,1,软装道具,,asset-36929204,Designer
+PDF-393,青岛万象城,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+PDF-393,青岛万象城,11,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+PDF-393,青岛万象城,11,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Constructioncompanyshouldcheckthe需配备支架dateinthedrawingatbuildingsite.Iffind
+PDF-393,青岛万象城,11,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"anymistake,pleaseinformthe需配备支架engineerresponsibleforthedrawing"
+PDF-393,青岛万象城,11,5,98寸广告机,,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,immediately.Thecopyrightofthedrawingisreserved
+PDF-393,青岛万象城,11,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,byourcompany.公司名称
+PDF-393,青岛万象城,11,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,CompanyName
+PDF-393,青岛万象城,11,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,横版
+PDF-393,青岛万象城,11,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+PDF-393,青岛万象城,11,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,项目编号ProjectNum
+PDF-393,青岛万象城,11,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,日期Date
+PDF-393,青岛万象城,11,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,制图DrawnBy
+PDF-393,青岛万象城,11,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,校对CheckedBy
+PDF-393,青岛万象城,11,14,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,审核ApprovedBy
+PDF-393,青岛万象城,11,15,货架,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架,2,仓储（无模型）,,,项目负责https://vsp.jd.com/new/sku/100106460364ChargedBy
+PDF-393,青岛万象城,11,16,人形模特（站立）,JKQ男黑,0,非标陈列,,asset-1688589,骑行的场景设计Designer
+PDF-393,青岛万象城,11,17,人形模特（侧摆）,滑雪女模-浅灰色,0,非标陈列,,asset-1688589,
+PDF-393,青岛万象城,11,18,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,项目名称ProjectName
+PDF-393,青岛万象城,11,19,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,影石-青岛万象城【边厅店】
+PDF-409,香港旺角郎豪坊,8,1,75寸廣告機,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配備支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+PDF-409,香港旺角郎豪坊,8,2,55寸廣告機,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配備支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+PDF-409,香港旺角郎豪坊,8,3,65寸廣告機,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配備支架Client业主
+PDF-409,香港旺角郎豪坊,8,4,86寸廣告機,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配備支架
+PDF-409,香港旺角郎豪坊,8,5,98寸廣告機,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配備支架
+PDF-409,香港旺角郎豪坊,8,6,1.5msi2.0收銀邊柜,W1500*D500*H900mm,1,软装道具,SI2.0,,Design&ProjectManagementConsultancy
+PDF-409,香港旺角郎豪坊,8,7,1.8msi2.0儲物邊柜,W1800*D500*H900mm,1,软装道具,SI2.0,asset-28192911、asset-33660153、asset-33819654,项目设计
+PDF-409,香港旺角郎豪坊,8,8,1.8msi2.0中島桌,W1800*D800*H900mm,2,软装道具,SI2.0,asset-24312623、asset-41053706,豎版
+PDF-409,香港旺角郎豪坊,8,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380修订
+PDF-409,香港旺角郎豪坊,8,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,No.编号
+PDF-409,香港旺角郎豪坊,8,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,Date日期
+PDF-409,香港旺角郎豪坊,8,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+PDF-409,香港旺角郎豪坊,8,13,43寸電子水牌（國內）,,1,信息化物料,,asset-2587726,Drawnby制图人
+PDF-409,香港旺角郎豪坊,8,14,有線攝像頭,D8P-C高清网络摄像头,5,设备（无模型）,,,Checkedby校对人
+PDF-409,香港旺角郎豪坊,8,15,徠卡品牌墻（畫框+海報）,730*570,0,软装道具,,asset-36929204,Reviewedby审定Approvedby
+PDF-409,香港旺角郎豪坊,8,16,徠卡品牌墻（畫框+海報）,410*570,0,软装道具,,asset-36929204,审核Chargedby项目负责
+NEW-006,三亚大悦城,12,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-006,三亚大悦城,12,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-006,三亚大悦城,12,3,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版dateinthedrawingatbuildingsite.Iffind
+NEW-006,三亚大悦城,12,4,1.8米配件边柜(带托盘),W1800*D500*H900mm,2,软装道具,,asset-28192911、asset-33660153、asset-33819654,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-006,三亚大悦城,12,5,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,immediately.Thecopyrightofthedrawingisreserved
+NEW-006,三亚大悦城,12,6,无线摄像头,高清网络摄像头,3,设备（无模型）,,,byourcompany.公司名称
+NEW-009,上海第一百货中心旗舰店,13,1,98寸广告机,TCL/98P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-009,上海第一百货中心旗舰店,13,2,1.8msi2.0收银台,W1800*D800*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-009,上海第一百货中心旗舰店,13,3,开箱吧台+workshop,W2400*D800*H1100mm,1,软装道具,,asset-666964、asset-1788391、asset-16469753,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-009,上海第一百货中心旗舰店,13,4,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-009,上海第一百货中心旗舰店,13,5,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,immediately.Thecopyrightofthedrawingisreserved
+NEW-009,上海第一百货中心旗舰店,13,6,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,byourcompany.公司名称
+NEW-009,上海第一百货中心旗舰店,13,7,徕卡品牌墙（画框+海报）,730*570,1,软装道具,,asset-36929204,CompanyName
+NEW-009,上海第一百货中心旗舰店,13,8,徕卡品牌墙（画框+海报）,410*570,3,软装道具,,asset-36929204,
+NEW-009,上海第一百货中心旗舰店,13,9,徕卡品牌墙（画框+海报）,1040*570,2,软装道具,,asset-36929204,
+NEW-009,上海第一百货中心旗舰店,13,10,1.4米直径岛台,,1,软装道具,,,项目编号ProjectNum
+NEW-009,上海第一百货中心旗舰店,13,11,3.8米直径岛台,,1,软装道具,,,日期Date
+NEW-009,上海第一百货中心旗舰店,13,12,外滩大沙盘,,1,非标陈列,,,制图DrawnBy
+NEW-009,上海第一百货中心旗舰店,13,13,吊装双面LED屏,,1,信息化物料,,,校对CheckedBy
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,2,98寸广告机,TCL/98P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,3,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,4,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,5,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,immediately.Thecopyrightofthedrawingis横版reserved
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,6,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,byourcompany.公司名称
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,7,si2.0子母凳,W450*D450*H450mm,6,软装道具,SI2.0,,CompanyName
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,8,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,9,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,10,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-013,乌鲁木齐北京路汇嘉时代广场,13,11,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,日期Date
+NEW-015,南京悠湖湾,12,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-015,南京悠湖湾,12,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-015,南京悠湖湾,12,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-015,南京悠湖湾,12,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe竖版engineerresponsibleforthedrawing"
+NEW-015,南京悠湖湾,12,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+NEW-015,南京悠湖湾,12,6,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,byourcompany.公司名称
+NEW-015,南京悠湖湾,12,7,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,CompanyName
+NEW-015,南京悠湖湾,12,8,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,
+NEW-015,南京悠湖湾,12,9,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,
+NEW-015,南京悠湖湾,12,10,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-021,印尼棉兰sun plaza,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-021,印尼棉兰sun plaza,11,2,1.8msi1.0收银台1.8msi1.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-021,印尼棉兰sun plaza,11,3,1.8msi1.0中岛桌1.8msi1.0islandtable,W1800*D800*H900mm,2,软装道具,SI1.0,asset-408124,Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind
+NEW-021,印尼棉兰sun plaza,11,4,1.2msi1.0配件柜1.2msi1.0accessorycabinet,W1200*D450*H2400mm,2,软装道具,SI1.0,asset-2595882,"anymistake,pleaseinformtheengineerresponsibleforthedrawingimmediately."
+NEW-021,印尼棉兰sun plaza,11,5,43寸电子水牌（国内）43-inchelectronicwatersign(domestic),,1,信息化物料,,asset-2587726,Thecopyrightofthedrawingisreservedbyourcompany.
+NEW-021,印尼棉兰sun plaza,11,6,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,公司名称CompanyName
+NEW-021,印尼棉兰sun plaza,11,7,货架Shelf,W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架W400*D1200*H2000mm[StandardGrade]Single-LayerLoadCapacity[240kg]WhiteStorage,1Shelf,仓储（无模型）,,,https://vsp.jd.com/new/sku/100106460364
+NEW-025,台湾台北信义商圈A9T,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-025,台湾台北信义商圈A9T,11,,si2.0收银台1.8msi2.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-025,台湾台北信义商圈A9T,11,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe横版HorizontalVersiondateinthedrawingatbuildingsite.Iffind
+NEW-025,台湾台北信义商圈A9T,11,4,1.8m开箱储物边柜1.8mopen-boxstoragesidecabinet,W1800*D500*H900mm,1,软装道具,,asset-666964、asset-1788391、asset-16469753,"anymistake,pleaseinformtheengineerresponsibleforthedrawingimmediately.Thecopyrightofthedrawingisreserved"
+NEW-025,台湾台北信义商圈A9T,11,5,1.8m配件边柜（带托盘）1.8maccessorysidecabinet（withtray）,W1800*D500*H900mm,2,软装道具,,asset-28192911、asset-33660153、asset-33819654,byourcompany.公司名称CompanyName
+NEW-025,台湾台北信义商圈A9T,11,6,43寸电子水牌（国外）43-inchelectronicwatersign(abroad),,1,信息化物料,,asset-2587726,
+NEW-025,台湾台北信义商圈A9T,11,7,无线摄像头WirelessCamera,D8P-C高清网络摄像头D8P-CHDnetworkcamera,3,设备（无模型）,,,项目编号ProjectNum日期Date
+NEW-026,台湾高雄LALAport,9,1,75寸广告机75-inchDigitalSignage,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+NEW-026,台湾高雄LALAport,9,2,55寸广告机55-inchDigitalSignage,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+NEW-026,台湾高雄LALAport,9,3,65寸广告机65-inchDigitalSignage,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+NEW-026,台湾高雄LALAport,9,4,86寸广告机86-inchDigitalSignage,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+NEW-026,台湾高雄LALAport,9,5,98寸广告机98-inchDigitalSignage,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-026,台湾高雄LALAport,9,,1.8msi2.0收银台SI2.0CheckoutCounterCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Design&ProjectManagementConsultancy
+NEW-026,台湾高雄LALAport,9,7,1.8msi2.0开箱桌1.8mSI2.0unboxingtable,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,项目设计
+NEW-026,台湾高雄LALAport,9,8,1.8msi2.0中岛桌1.8mSI2.0IslandTable,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-026,台湾高雄LALAport,9,,1.2msi2.0配件柜SI2.0AccessoryCabinet,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-026,台湾高雄LALAport,9,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+NEW-026,台湾高雄LALAport,9,,3.6msi2.0配件柜SI2.0AccessoryCabinet,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,Date日期
+NEW-026,台湾高雄LALAport,9,12,si2.0子母凳SI2.0NestingStool,W450*D450*H450mm,6,软装道具,SI2.0,,Desrption摘要
+NEW-026,台湾高雄LALAport,9,,43寸电子水牌（国内）DigitalSign(Domestic),,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-026,台湾高雄LALAport,9,14,有线摄像头WiredCamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,Checkedby校对人
+NEW-026,台湾高雄LALAport,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),730*570,4,软装道具,,asset-36929204,Reviewedby审定Approvedby
+NEW-026,台湾高雄LALAport,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),410*570,2,软装道具,,asset-36929204,审核Chargedby项目负责
+NEW-026,台湾高雄LALAport,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),800*1200,0,软装道具,,asset-36929204,
+NEW-026,台湾高雄LALAport,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),1040*570,0,软装道具,,asset-36929204,Designer设计
+NEW-028,周庄古镇,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-028,周庄古镇,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-028,周庄古镇,11,3,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版dateinthedrawingatbuildingsite.Iffind
+NEW-028,周庄古镇,11,4,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-028,周庄古镇,11,5,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,immediately.Thecopyrightofthedrawingisreserved
+NEW-028,周庄古镇,11,6,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,byourcompany.公司名称
+NEW-028,周庄古镇,11,7,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,CompanyName
+NEW-028,周庄古镇,11,8,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,
+NEW-032,太原钟楼街（边厅）,8,,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+NEW-032,太原钟楼街（边厅）,8,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+NEW-032,太原钟楼街（边厅）,8,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+NEW-032,太原钟楼街（边厅）,8,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+NEW-032,太原钟楼街（边厅）,8,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-032,太原钟楼街（边厅）,8,6,1.5msi2.0收银台,W1500*D600*H900mm,1,软装道具,SI2.0,,
+NEW-032,太原钟楼街（边厅）,8,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+NEW-032,太原钟楼街（边厅）,8,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-032,太原钟楼街（边厅）,8,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-032,太原钟楼街（边厅）,8,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.
+NEW-032,太原钟楼街（边厅）,8,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,编号Date日期
+NEW-032,太原钟楼街（边厅）,8,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-032,太原钟楼街（边厅）,8,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-032,太原钟楼街（边厅）,8,14,有线摄像头,D8P-C高清网络摄像头,5,设备（无模型）,,,Checkedby校对人
+NEW-032,太原钟楼街（边厅）,8,15,徕卡品牌墙（画框+海报）,730*570,1,软装道具,,asset-36929204,Reviewedby审定
+NEW-032,太原钟楼街（边厅）,8,16,徕卡品牌墙（画框+海报）,410*570,3,软装道具,,asset-36929204,Approvedby审核Chargedby
+NEW-032,太原钟楼街（边厅）,8,17,徕卡品牌墙（画框+海报）,1040*570,2,软装道具,,asset-36929204,项目负责
+NEW-032,太原钟楼街（边厅）,8,18,徕卡品牌墙（画框+海报）,1200*800,1,软装道具,,asset-36929204,Designer
+NEW-036,广州凯德乐峰广场,7,,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+NEW-036,广州凯德乐峰广场,7,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+NEW-036,广州凯德乐峰广场,7,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+NEW-036,广州凯德乐峰广场,7,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+NEW-036,广州凯德乐峰广场,7,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-036,广州凯德乐峰广场,7,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-036,广州凯德乐峰广场,7,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+NEW-036,广州凯德乐峰广场,7,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-036,广州凯德乐峰广场,7,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-036,广州凯德乐峰广场,7,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.
+NEW-036,广州凯德乐峰广场,7,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,编号Date日期
+NEW-036,广州凯德乐峰广场,7,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-036,广州凯德乐峰广场,7,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-036,广州凯德乐峰广场,7,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,Checkedby校对人
+NEW-036,广州凯德乐峰广场,7,15,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,Reviewedby审定
+NEW-036,广州凯德乐峰广场,7,16,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,Approvedby审核Chargedby
+NEW-036,广州凯德乐峰广场,7,17,徕卡品牌墙（画框+海报）,1040*570,0,软装道具,,asset-36929204,项目负责
+NEW-036,广州凯德乐峰广场,7,18,徕卡品牌墙（画框+海报）,1200*800,0,软装道具,,asset-36929204,
+NEW-037,广州天河城(迁址),7,,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+NEW-037,广州天河城(迁址),7,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+NEW-037,广州天河城(迁址),7,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+NEW-037,广州天河城(迁址),7,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+NEW-037,广州天河城(迁址),7,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-037,广州天河城(迁址),7,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-037,广州天河城(迁址),7,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+NEW-037,广州天河城(迁址),7,8,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-037,广州天河城(迁址),7,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-037,广州天河城(迁址),7,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订
+NEW-037,广州天河城(迁址),7,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,No.编号Date日期
+NEW-037,广州天河城(迁址),7,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-037,广州天河城(迁址),7,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-037,广州天河城(迁址),7,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,Checkedby校对人
+NEW-037,广州天河城(迁址),7,15,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,Reviewedby审定
+NEW-037,广州天河城(迁址),7,16,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,Approvedby审核Chargedby
+NEW-037,广州天河城(迁址),7,17,徕卡品牌墙（画框+海报）,1040*570,0,软装道具,,asset-36929204,项目负责
+NEW-037,广州天河城(迁址),7,18,徕卡品牌墙（画框+海报）,1200*800,0,软装道具,,asset-36929204,
+NEW-037,广州天河城(迁址),7,19,1.8m储物边柜,W1800*D500*H900mm,1,软装道具,,asset-28192911、asset-33660153、asset-33819654,Designer设计
+NEW-045,成都来福士授权专卖店（调优）,14,1,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-045,成都来福士授权专卖店（调优）,14,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-045,成都来福士授权专卖店（调优）,14,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-045,成都来福士授权专卖店（调优）,14,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架
+NEW-045,成都来福士授权专卖店（调优）,14,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-045,成都来福士授权专卖店（调优）,14,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-045,成都来福士授权专卖店（调优）,14,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,竖版开箱桌(四腿)
+NEW-045,成都来福士授权专卖店（调优）,14,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版中岛桌(四腿)单位:毫米（mm）
+NEW-045,成都来福士授权专卖店（调优）,14,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+NEW-045,成都来福士授权专卖店（调优）,14,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+NEW-045,成都来福士授权专卖店（调优）,14,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,在图纸上量取。
+NEW-045,成都来福士授权专卖店（调优）,14,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,会签栏
+NEW-045,成都来福士授权专卖店（调优）,14,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,首席设计：
+NEW-045,成都来福士授权专卖店（调优）,14,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,项目负责人：
+NEW-045,成都来福士授权专卖店（调优）,14,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,审核：
+NEW-045,成都来福士授权专卖店（调优）,14,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,设计：
+NEW-045,成都来福士授权专卖店（调优）,14,17,0.6msi2.0明星展桌,W600*D600*H900mm,1,软装道具,SI2.0,,制图：
+NEW-048,新世界大邱店 신세계대구점,11,1,55寸广告机55-inchadvertisingdisplay,TCL/55P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-048,新世界大邱店 신세계대구점,11,,si2.0收银台1.8msi2.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-048,新世界大邱店 신세계대구점,11,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,2,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind
+NEW-048,新世界大邱店 신세계대구점,11,4,800*800方形展桌800*800squareexhibitiontable,W800*D800*H900mm,1,软装道具,,,"anymistake,pleaseinformtheengineerresponsibleforthedrawingimmediately."
+NEW-048,新世界大邱店 신세계대구점,11,5,1.8m配件边柜（带托盘）1.8maccessorysidecabinet（withtray）,W1800*D500*H900mm,1,软装道具,,asset-28192911、asset-33660153、asset-33819654,Thecopyrightofthedrawingisreservedbyourcompany.公司名称
+NEW-048,新世界大邱店 신세계대구점,11,6,43寸电子水牌（国外）43-inchelectronicwatersign(abroad),,1,信息化物料,,asset-2587726,CompanyName
+NEW-049,新加坡 Vivo City,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-049,新加坡 Vivo City,11,2,1.8msi2.0收银台1.8msi2.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-049,新加坡 Vivo City,11,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,2,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind
+NEW-049,新加坡 Vivo City,11,4,2.4msi2.0配件柜2.4msi2.0accessorycabinet,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-049,新加坡 Vivo City,11,5,600x600方形展桌600x600squareexhibitiontable,W600*D600*H900mm,1,软装道具,,,immediately.Thecopyrightofthedrawingisreserved
+NEW-049,新加坡 Vivo City,11,6,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,byourcompany.公司名称
+NEW-056,武汉光谷万象天地,9,,75寸广告机,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。
+NEW-056,武汉光谷万象天地,9,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸需配备支架上所有遗漏需知会城市意创。参看本图时，请同时阅读合约条款细则及规则。
+NEW-056,武汉光谷万象天地,9,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,本图以最后更正之版本做实。其他版本，自动作废。需配备支架
+NEW-056,武汉光谷万象天地,9,4,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,Client业主需配备支架
+NEW-056,武汉光谷万象天地,9,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-056,武汉光谷万象天地,9,6,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-056,武汉光谷万象天地,9,7,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Design&ProjectManagementConsultancy项目设计
+NEW-056,武汉光谷万象天地,9,8,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-056,武汉光谷万象天地,9,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-056,武汉光谷万象天地,9,10,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订
+NEW-056,武汉光谷万象天地,9,11,3.6msi2.0配件柜,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,No.编号Date日期
+NEW-056,武汉光谷万象天地,9,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-056,武汉光谷万象天地,9,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-056,武汉光谷万象天地,9,14,有线摄像头,D8P-C高清网络摄像头,9,设备（无模型）,,,Checkedby校对人
+NEW-056,武汉光谷万象天地,9,15,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,Reviewedby审定
+NEW-056,武汉光谷万象天地,9,16,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,Approvedby审核Chargedby
+NEW-056,武汉光谷万象天地,9,17,徕卡品牌墙（画框+海报）,1040*570,0,软装道具,,asset-36929204,项目负责
+NEW-056,武汉光谷万象天地,9,18,徕卡品牌墙（画框+海报）,1200*800,0,软装道具,,asset-36929204,
+NEW-056,武汉光谷万象天地,9,19,1.8m储物边柜,W1800*D500*H900mm,1,软装道具,,asset-28192911、asset-33660153、asset-33819654,Designer设计
+NEW-059,江苏常州苏宁旗舰店,12,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-059,江苏常州苏宁旗舰店,12,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-059,江苏常州苏宁旗舰店,12,3,65寸广告机（竖版）,TCL/65P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-059,江苏常州苏宁旗舰店,12,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架
+NEW-059,江苏常州苏宁旗舰店,12,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-059,江苏常州苏宁旗舰店,12,6,1.8msi2.0收银台,W1800*D600*H900mm,0,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-059,江苏常州苏宁旗舰店,12,7,1.8msi2.0开箱桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-16469753、asset-41277543,
+NEW-059,江苏常州苏宁旗舰店,12,8,1.8msi2.0中岛桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-24312623、asset-41053706,竖版单位:毫米（mm）
+NEW-059,江苏常州苏宁旗舰店,12,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+NEW-059,江苏常州苏宁旗舰店,12,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+NEW-059,江苏常州苏宁旗舰店,12,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,在图纸上量取。
+NEW-059,江苏常州苏宁旗舰店,12,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,会签栏
+NEW-059,江苏常州苏宁旗舰店,12,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,首席设计：
+NEW-059,江苏常州苏宁旗舰店,12,14,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,项目负责人：
+NEW-059,江苏常州苏宁旗舰店,12,15,徕卡品牌墙（画框+海报）,730*570,2,软装道具,,asset-36929204,审核：
+NEW-059,江苏常州苏宁旗舰店,12,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,设计：
+NEW-059,江苏常州苏宁旗舰店,12,17,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,制图：机电：
+NEW-059,江苏常州苏宁旗舰店,12,18,1.8msi1.0中岛桌,W1800*D1000*H900mm,2,软装道具,SI1.0,asset-408124,图纸名称：
+NEW-059,江苏常州苏宁旗舰店,12,19,1.8msi1.0开箱桌,W1800*D1000*H900mm,1,软装道具,SI1.0,asset-666964、asset-1788391,
+NEW-059,江苏常州苏宁旗舰店,12,20,1.2msi1.0配件柜,W1200*D450*H2400mm,2,软装道具,SI1.0,asset-2595882,物料清单
+NEW-064,泰国Market Village Huahin店,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-064,泰国Market Village Huahin店,11,2,1.8msi2.0收银台1.8msi2.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-064,泰国Market Village Huahin店,11,3,1.8msi2.0开箱桌1.8msi2.0UnboxingTable,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-064,泰国Market Village Huahin店,11,4,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe竖版Verticalversionengineerresponsibleforthedrawing"
+NEW-064,泰国Market Village Huahin店,11,5,2.4msi2.0配件柜2.4msi2.0accessorycabinet,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreservedbyourcompany.
+NEW-064,泰国Market Village Huahin店,11,6,43寸电子水牌（国外）43-inchelectronicwatersign(abroad),,1,信息化物料,,asset-2587726,公司名称CompanyName
+NEW-064,泰国Market Village Huahin店,11,7,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,7,设备（无模型）,,,
+NEW-064,泰国Market Village Huahin店,11,8,徕卡品牌墙（画框+海报）Leicabrandwall(pictureframeposter),730*570,2,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-064,泰国Market Village Huahin店,11,9,徕卡品牌墙（画框+海报）Leicabrandwall(pictureframeposter),410*570,2,软装道具,,asset-36929204,日期Date制图DrawnBy
+NEW-066,泰国曼谷Central Rama2,12,,si1.0收银台1.8msi1.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,"permission,anycopyofitisforbidden.Nevermeasure"
+NEW-066,泰国曼谷Central Rama2,12,2,1.8msi1.0中岛桌1.8msi1.0islandtable,W1800*D800*H900mm,3,软装道具,SI1.0,asset-408124,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-066,泰国曼谷Central Rama2,12,,1.8msi1.0配件柜+开箱桌AccessoryDisplayCabinet+DiscussionTable,W1800*D500*H900mm,1,软装道具,SI1.0,asset-666964、asset-1788391、asset-34320268,"Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffindanymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-066,泰国曼谷Central Rama2,12,4,1.8msi1.0边桌+储物柜1.8-MeterStorageDisplaySideTable,W1800*D500*H900mm,1,软装道具,SI1.0,asset-666964、asset-752992,immediately.Thecopyrightofthedrawingisreservedbyourcompany.公司名称
+NEW-066,泰国曼谷Central Rama2,12,5,培训坐凳SmallStoolsInTheExperienceArea,,4,软装道具,,asset-569180,CompanyName
+NEW-066,泰国曼谷Central Rama2,12,6,43寸电子水牌（国内）43-inchelectronicwatersign(domestic),,2,信息化物料,,asset-2587726,项目编号ProjectNum
+NEW-066,泰国曼谷Central Rama2,12,7,无线摄像头wirelesscamera,,6,设备（无模型）,,,日期Date
+NEW-067,泰国曼谷MBK Center,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-067,泰国曼谷MBK Center,11,,边柜收银台1.8msi2.0sidecabinetcheckoutcounter,W1800*D500*H900mm,1,软装道具,SI2.0,asset-24432224、asset-28192911、asset-33660153,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-067,泰国曼谷MBK Center,11,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe横版HorizontalVersiondateinthedrawingatbuildingsite.Iffind
+NEW-067,泰国曼谷MBK Center,11,,si2.0售后桌1.8msi2.0after-salesdesk,W1800*D600*H900mm,1,软装道具,SI2.0,,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-067,泰国曼谷MBK Center,11,,si2.0配件柜1.6msi2.0accessorycabinet,W1600*D450*H2400mm,1,软装道具,SI2.0,,immediately.Thecopyrightofthedrawingisreserved
+NEW-067,泰国曼谷MBK Center,11,6,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,0,设备（无模型）,,,byourcompany.公司名称
+NEW-067,泰国曼谷MBK Center,11,,徕卡品牌墙（画框+海报）brandwall(pictureframeposter),730*570,2,软装道具,,asset-36929204,CompanyName
+NEW-067,泰国曼谷MBK Center,11,,徕卡品牌墙（画框+海报）brandwall(pictureframeposter),410*570,2,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-070,济南印象城,11,1,86寸广告机,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-070,济南印象城,11,2,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-070,济南印象城,11,3,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-070,济南印象城,11,4,1.8msi2.0中岛桌,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,"anymistake,pleaseinformthe横版engineerresponsibleforthedrawing"
+NEW-070,济南印象城,11,5,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,immediately.Thecopyrightofthedrawingisreserved
+NEW-070,济南印象城,11,6,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,byourcompany.公司名称
+NEW-070,济南印象城,11,7,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,CompanyName
+NEW-070,济南印象城,11,8,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,
+NEW-070,济南印象城,11,9,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,
+NEW-070,济南印象城,11,10,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-080,菲律宾 Ayala Center Cebu,11,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-080,菲律宾 Ayala Center Cebu,11,,si2.0收银台0.9msi2.0CashRegisterCounter,W900*D600*H900mm,1,软装道具,SI2.0,,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-080,菲律宾 Ayala Center Cebu,11,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,2,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind
+NEW-080,菲律宾 Ayala Center Cebu,11,4,1.8米储物边柜(带托盘)1.8-MeterStorageDisplaySideTable,W1800*D600*H900mm,1,软装道具,,asset-28192911、asset-33660153、asset-33819654,"anymistake,pleaseinformtheengineerresponsibleforthedrawingimmediately.Thecopyrightofthedrawingisreserved"
+NEW-080,菲律宾 Ayala Center Cebu,11,5,600x600方形展桌600x600squareexhibitiontable,W600*D600*H900mm,1,软装道具,,,byourcompany.公司名称
+NEW-080,菲律宾 Ayala Center Cebu,11,,si2.0配件柜2.4msi2.0accessorycabinet,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,CompanyName
+NEW-080,菲律宾 Ayala Center Cebu,11,7,43寸电子水牌（国外）43-inchelectronicwatersign(abroad),,1,信息化物料,,asset-2587726,
+NEW-080,菲律宾 Ayala Center Cebu,11,8,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,7,设备（无模型）,,,项目编号ProjectNum
+NEW-085,西塘古镇建新路店,12,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-085,西塘古镇建新路店,12,2,1.8米配件边柜(带托盘),W1800*D500*H900mm,1,软装道具,,asset-28192911、asset-33660153、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-085,西塘古镇建新路店,12,3,1.8米储物边柜(带托盘),W1800*D500*H900mm,5,软装道具,,asset-28192911、asset-33660153、asset-33819654,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-085,西塘古镇建新路店,12,4,1.8米开箱储物边柜,W1800*D500*H900mm,1,软装道具,,asset-666964、asset-1788391、asset-16469753,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-085,西塘古镇建新路店,12,5,1.8米收银边柜,W1800*D500*H900mm,1,软装道具,,asset-24432224、asset-24488377、asset-28192911,immediately.Thecopyrightofthedrawingisreserved
+NEW-085,西塘古镇建新路店,12,6,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,byourcompany.公司名称
+NEW-085,西塘古镇建新路店,12,7,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,CompanyName
+NEW-086,西塘古镇木屋店,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-086,西塘古镇木屋店,11,2,1.8米配件边柜(带托盘),W1800*D500*H900mm,3,软装道具,,asset-28192911、asset-33660153、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-086,西塘古镇木屋店,11,3,1.8米收银边柜,W1800*D500*H900mm,1,软装道具,,asset-24432224、asset-24488377、asset-28192911,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-086,西塘古镇木屋店,11,4,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-086,西塘古镇木屋店,11,5,有线摄像头,D8P-C高清网络摄像头,4,设备（无模型）,,,immediately.Thecopyrightofthedrawingisreserved
+NEW-088,西安赛高世纪金花,12,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架所在位置
+NEW-088,西安赛高世纪金花,12,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-088,西安赛高世纪金花,12,3,65寸广告机,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-088,西安赛高世纪金花,12,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-088,西安赛高世纪金花,12,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注
+NEW-088,西安赛高世纪金花,12,6,1.8msi2.0收银台,W1800*D600*H900mm,0,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-088,西安赛高世纪金花,12,7,1.8msi2.0开箱桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-16469753、asset-41277543,
+NEW-088,西安赛高世纪金花,12,8,1.8msi2.0中岛桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-088,西安赛高世纪金花,12,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+NEW-088,西安赛高世纪金花,12,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,单位:毫米（mm）
+NEW-088,西安赛高世纪金花,12,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+NEW-088,西安赛高世纪金花,12,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+NEW-088,西安赛高世纪金花,12,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,在图纸上量取。
+NEW-088,西安赛高世纪金花,12,14,有线摄像头,D8P-C高清网络摄像头,5,设备（无模型）,,,会签栏
+NEW-088,西安赛高世纪金花,12,15,徕卡品牌墙（画框+海报）,730*570,0,软装道具,,asset-36929204,首席设计：
+NEW-088,西安赛高世纪金花,12,16,徕卡品牌墙（画框+海报）,410*570,0,软装道具,,asset-36929204,项目负责人：
+NEW-088,西安赛高世纪金花,12,17,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,审核：
+NEW-088,西安赛高世纪金花,12,18,1.8msi1.0中岛桌,W1800*D1000*H900mm,2,软装道具,SI1.0,asset-408124,设计：制图：
+NEW-088,西安赛高世纪金花,12,19,1.8msi1.0开箱桌,W1800*D1000*H900mm,0,软装道具,SI1.0,asset-666964、asset-1788391,机电：
+NEW-088,西安赛高世纪金花,12,20,1.6msi1.0配件柜,W1600*D450*H2400mm,1,软装道具,SI1.0,asset-323015,图纸名称：
+NEW-088,西安赛高世纪金花,12,21,1.8msi1.0开箱储物边柜,W1800*D500*H900mm,2,软装道具,SI1.0,asset-666964、asset-1788391,
+NEW-088,西安赛高世纪金花,12,22,1.8msi1.0边桌储物柜,W1800*D500*H900mm,2,软装道具,SI1.0,asset-666964、asset-752992,物料清单
+NEW-091,郑州正弘城（迁址）,11,1,75寸广告机,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架anycopyofitisforbidden.Nevermeasure"
+NEW-091,郑州正弘城（迁址）,11,2,98寸广告机,TCL/98P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,thedrawinginthisscale.Always需配备支架keepinginthelightofdatainthedrawing.
+NEW-091,郑州正弘城（迁址）,11,3,1.8msi2.0收银台,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Constructioncompanyshouldcheckthedateinthedrawingatbuildingsite.Iffind
+NEW-091,郑州正弘城（迁址）,11,4,1.8msi2.0开箱桌,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-091,郑州正弘城（迁址）,11,5,1.8msi2.0中岛桌,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,immediately.Thecopyrightofthedrawingis竖版reserved
+NEW-091,郑州正弘城（迁址）,11,6,2.4msi2.0配件柜,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,byourcompany.公司名称
+NEW-091,郑州正弘城（迁址）,11,7,si2.0子母凳,W450*D450*H450mm,4,软装道具,SI2.0,,CompanyName
+NEW-091,郑州正弘城（迁址）,11,8,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,
+NEW-091,郑州正弘城（迁址）,11,9,有线摄像头,D8P-C高清网络摄像头,6,设备（无模型）,,,
+NEW-091,郑州正弘城（迁址）,11,10,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,项目编号ProjectNum
+NEW-091,郑州正弘城（迁址）,11,11,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,日期Date
+NEW-093,长春重庆路照材店,14,1,75寸广告机,TCL/75P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架所在位置
+NEW-093,长春重庆路照材店,14,2,55寸广告机,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-093,长春重庆路照材店,14,3,65寸广告机,TCL/65P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-093,长春重庆路照材店,14,4,86寸广告机,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-093,长春重庆路照材店,14,5,98寸广告机,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架备注
+NEW-093,长春重庆路照材店,14,6,1.8msi2.0收银台,W1800*D600*H900mm,0,软装道具,SI2.0,asset-24432224、asset-33819654,
+NEW-093,长春重庆路照材店,14,7,1.8msi2.0开箱桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-16469753、asset-41277543,
+NEW-093,长春重庆路照材店,14,8,1.8msi2.0中岛桌,W1800*D800*H900mm,0,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-093,长春重庆路照材店,14,9,1.2msi2.0配件柜,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,
+NEW-093,长春重庆路照材店,14,10,2.4msi2.0配件柜,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,单位:毫米（mm）
+NEW-093,长春重庆路照材店,14,11,3.6msi2.0配件柜,W3600*D450*H2400mm,0,软装道具,SI2.0,asset-15903179、asset-36857093,注意1.此图及其内容版权属本公司所有，未经本公司同意，
+NEW-093,长春重庆路照材店,14,12,si2.0子母凳,W450*D450*H450mm,0,软装道具,SI2.0,,不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接
+NEW-093,长春重庆路照材店,14,13,43寸电子水牌（国内）,,1,信息化物料,,asset-2587726,在图纸上量取。
+NEW-093,长春重庆路照材店,14,14,有线摄像头,D8P-C高清网络摄像头,7,设备（无模型）,,,会签栏
+NEW-093,长春重庆路照材店,14,15,徕卡品牌墙（画框+海报）,730*570,4,软装道具,,asset-36929204,首席设计：
+NEW-093,长春重庆路照材店,14,16,徕卡品牌墙（画框+海报）,410*570,2,软装道具,,asset-36929204,项目负责人：
+NEW-093,长春重庆路照材店,14,17,1.8msi1.0收银台,W1800*D600*H900mm,1,软装道具,SI1.0,asset-24488377,审核：
+NEW-093,长春重庆路照材店,14,18,1.8msi1.0中岛桌,W1800*D1000*H900mm,3,软装道具,SI1.0,asset-408124,设计：制图：
+NEW-093,长春重庆路照材店,14,19,1.8msi1.0开箱桌,W1800*D1000*H900mm,1,软装道具,SI1.0,asset-666964、asset-1788391,机电：
+NEW-093,长春重庆路照材店,14,20,1.2msi1.0配件柜,W1200*D450*H2400mm,2,软装道具,SI1.0,asset-2595882,图纸名称：
+NEW-093,长春重庆路照材店,14,20,1.8msi1.0储物边柜(带托盘),W1800*D500*H900mm,0,软装道具,SI1.0,,
+NEW-097,马来西亚 sunway velocity,12,1,75寸广告机75-inchadvertisingdisplay,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,"permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure"
+NEW-097,马来西亚 sunway velocity,12,2,1.8msi2.0收银台1.8msi2.0CashRegisterCounter,W1800*D600*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.
+NEW-097,马来西亚 sunway velocity,12,3,1.8msi2.0中岛桌1.8msi2.0islandtable,W1800*D800*H900mm,2,软装道具,SI2.0,asset-24312623、asset-41053706,Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind
+NEW-097,马来西亚 sunway velocity,12,4,2.4msi2.0配件柜2.4msi2.0accessorycabinet,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,"anymistake,pleaseinformtheengineerresponsibleforthedrawing"
+NEW-097,马来西亚 sunway velocity,12,5,有线摄像头Wiredcamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,4,设备（无模型）,,,immediately.Thecopyrightofthedrawingisreserved
+NEW-098,马来西亚midvalley KL,9,1,75寸广告机75-inchDigitalSignage,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+NEW-098,马来西亚midvalley KL,9,2,55寸广告机55-inchDigitalSignage,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+NEW-098,马来西亚midvalley KL,9,3,65寸广告机65-inchDigitalSignage,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+NEW-098,马来西亚midvalley KL,9,4,86寸广告机86-inchDigitalSignage,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+NEW-098,马来西亚midvalley KL,9,5,98寸广告机98-inchDigitalSignage,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-098,马来西亚midvalley KL,9,,1.8msi2.0收银台SI2.0CheckoutCounterCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Design&ProjectManagementConsultancy
+NEW-098,马来西亚midvalley KL,9,7,1.8msi2.0开箱桌1.8mSI2.0unboxingtable,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,项目设计
+NEW-098,马来西亚midvalley KL,9,8,1.8msi2.0中岛桌1.8mSI2.0IslandTable,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-098,马来西亚midvalley KL,9,,1.2msi2.0配件柜SI2.0AccessoryCabinet,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-098,马来西亚midvalley KL,9,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+NEW-098,马来西亚midvalley KL,9,,3.6msi2.0配件柜SI2.0AccessoryCabinet,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,Date日期
+NEW-098,马来西亚midvalley KL,9,12,si2.0子母凳SI2.0NestingStool,W450*D450*H450mm,6,软装道具,SI2.0,,Desrption摘要
+NEW-098,马来西亚midvalley KL,9,,43寸电子水牌（国内）DigitalSign(Domestic),,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-098,马来西亚midvalley KL,9,14,有线摄像头WiredCamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,Checkedby校对人
+NEW-098,马来西亚midvalley KL,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),730*570,1,软装道具,,asset-36929204,Reviewedby审定Approvedby
+NEW-098,马来西亚midvalley KL,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),410*570,3,软装道具,,asset-36929204,审核Chargedby项目负责
+NEW-098,马来西亚midvalley KL,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),800*1200,1,软装道具,,asset-36929204,
+NEW-098,马来西亚midvalley KL,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),1040*570,2,软装道具,,asset-36929204,Designer设计
+NEW-099,马来西亚Sunway Carnival Penang,8,1,75寸广告机75-inchDigitalSignage,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+NEW-099,马来西亚Sunway Carnival Penang,8,2,55寸广告机55-inchDigitalSignage,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+NEW-099,马来西亚Sunway Carnival Penang,8,3,65寸广告机65-inchDigitalSignage,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+NEW-099,马来西亚Sunway Carnival Penang,8,4,86寸广告机86-inchDigitalSignage,TCL/86P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+NEW-099,马来西亚Sunway Carnival Penang,8,5,98寸广告机98-inchDigitalSignage,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-099,马来西亚Sunway Carnival Penang,8,,1.0msi2.0收银台SI2.0CheckoutCounterCabinet,W1000*D500*H900mm,1,软装道具,SI2.0,,Design&ProjectManagementConsultancy
+NEW-099,马来西亚Sunway Carnival Penang,8,7,1.8msi2.0储物边柜1.8mSI2.0StorageSideCabinet,W1800*D500*H900mm,2,软装道具,SI2.0,asset-28192911、asset-33660153、asset-33819654,项目设计
+NEW-099,马来西亚Sunway Carnival Penang,8,8,1.8msi2.0中岛桌1.8mSI2.0IslandTable,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,横版
+NEW-099,马来西亚Sunway Carnival Penang,8,,1.8msi2.0配件柜SI2.0AccessoryCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,,｜www.cityinno.comT(8620)38809380
+NEW-099,马来西亚Sunway Carnival Penang,8,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+NEW-099,马来西亚Sunway Carnival Penang,8,11,2.4msi2.0配件柜2.4mSI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,Date日期
+NEW-099,马来西亚Sunway Carnival Penang,8,12,si2.0子母凳SI2.0NestingStool,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-099,马来西亚Sunway Carnival Penang,8,,43寸电子水牌（国内）DigitalSign(Domestic),,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-099,马来西亚Sunway Carnival Penang,8,14,有线摄像头WiredCamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,3,设备（无模型）,,,Checkedby校对人
+NEW-099,马来西亚Sunway Carnival Penang,8,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),730*570,0,软装道具,,asset-36929204,Reviewedby审定Approvedby
+NEW-099,马来西亚Sunway Carnival Penang,8,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),410*570,0,软装道具,,asset-36929204,审核Chargedby项目负责
+NEW-100,马来西亚Vivacity megamall,9,1,75寸广告机75-inchDigitalSignage,TCL/75P30X,2,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+NEW-100,马来西亚Vivacity megamall,9,2,55寸广告机55-inchDigitalSignage,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+NEW-100,马来西亚Vivacity megamall,9,3,65寸广告机65-inchDigitalSignage,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+NEW-100,马来西亚Vivacity megamall,9,4,86寸广告机86-inchDigitalSignage,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+NEW-100,马来西亚Vivacity megamall,9,5,98寸广告机98-inchDigitalSignage,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-100,马来西亚Vivacity megamall,9,,1.8msi2.0收银台SI2.0CheckoutCounterCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Design&ProjectManagementConsultancy
+NEW-100,马来西亚Vivacity megamall,9,7,1.8msi2.0开箱桌1.8mSI2.0unboxingtable,W1800*D800*H900mm,1,软装道具,SI2.0,asset-16469753、asset-41277543,项目设计
+NEW-100,马来西亚Vivacity megamall,9,8,1.8msi2.0中岛桌1.8mSI2.0IslandTable,W1800*D800*H900mm,4,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-100,马来西亚Vivacity megamall,9,,1.2msi2.0配件柜SI2.0AccessoryCabinet,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-100,马来西亚Vivacity megamall,9,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+NEW-100,马来西亚Vivacity megamall,9,,3.6msi2.0配件柜SI2.0AccessoryCabinet,W3600*D450*H2400mm,1,软装道具,SI2.0,asset-15903179、asset-36857093,Date日期
+NEW-100,马来西亚Vivacity megamall,9,12,si2.0子母凳SI2.0NestingStool,W450*D450*H450mm,6,软装道具,SI2.0,,Desrption摘要
+NEW-100,马来西亚Vivacity megamall,9,,43寸电子水牌（国内）DigitalSign(Domestic),,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-100,马来西亚Vivacity megamall,9,14,有线摄像头WiredCamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,Checkedby校对人
+NEW-100,马来西亚Vivacity megamall,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),730*570,4,软装道具,,asset-36929204,Reviewedby审定Approvedby
+NEW-100,马来西亚Vivacity megamall,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),410*570,2,软装道具,,asset-36929204,审核Chargedby项目负责
+NEW-100,马来西亚Vivacity megamall,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),800*1200,0,软装道具,,asset-36929204,
+NEW-100,马来西亚Vivacity megamall,9,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),1040*570,0,软装道具,,asset-36929204,Designer设计
+NEW-101,马来西亚吉隆坡Merdeka 118,7,1,75寸广告机75-inchDigitalSignage,TCL/75P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸
+NEW-101,马来西亚吉隆坡Merdeka 118,7,2,55寸广告机55-inchDigitalSignage,TCL/55P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。
+NEW-101,马来西亚吉隆坡Merdeka 118,7,3,65寸广告机65-inchDigitalSignage,TCL/65P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架Client
+NEW-101,马来西亚吉隆坡Merdeka 118,7,4,86寸广告机86-inchDigitalSignage,TCL/86P30X,1,信息化物料,,asset-2500908、asset-2595839、asset-2597250,业主需配备支架
+NEW-101,马来西亚吉隆坡Merdeka 118,7,5,98寸广告机98-inchDigitalSignage,TCL/98P30X,0,信息化物料,,asset-2500908、asset-2595839、asset-2597250,需配备支架
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,1.8msi2.0收银台SI2.0CheckoutCounterCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,asset-24432224、asset-33819654,Design&ProjectManagementConsultancy
+NEW-101,马来西亚吉隆坡Merdeka 118,7,7,1.8msi2.0储物边柜1.8mSI2.0StorageSideCabinet,W1800*D500*H900mm,1,软装道具,SI2.0,asset-28192911、asset-33660153、asset-33819654,项目设计
+NEW-101,马来西亚吉隆坡Merdeka 118,7,8,1.8msi2.0中岛桌1.8mSI2.0IslandTable,W1800*D800*H900mm,3,软装道具,SI2.0,asset-24312623、asset-41053706,竖版
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,1.2msi2.0配件柜SI2.0AccessoryCabinet,W1200*D450*H2400mm,0,软装道具,SI2.0,asset-24482600、asset-34327615,｜www.cityinno.comT(8620)38809380
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,0,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,修订No.编号
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,2.4msi2.0配件柜SI2.0AccessoryCabinet,W2400*D450*H2400mm,1,软装道具,SI2.0,asset-36887885、asset-36890994、asset-36929122,Date日期
+NEW-101,马来西亚吉隆坡Merdeka 118,7,12,si2.0子母凳SI2.0NestingStool,W450*D450*H450mm,0,软装道具,SI2.0,,Desrption摘要
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,43寸电子水牌（国内）DigitalSign(Domestic),,1,信息化物料,,asset-2587726,Drawnby制图人
+NEW-101,马来西亚吉隆坡Merdeka 118,7,14,有线摄像头WiredCamera,D8P-C高清网络摄像头D8P-CHDNetworkCamera,6,设备（无模型）,,,Checkedby校对人
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),730*570,2,软装道具,,asset-36929204,Reviewedby审定Approvedby
+NEW-101,马来西亚吉隆坡Merdeka 118,7,,徕卡品牌墙（画框+海报）BrandWall(Frame+Poster),410*570,2,软装道具,,asset-36929204,审核Chargedby项目负责
