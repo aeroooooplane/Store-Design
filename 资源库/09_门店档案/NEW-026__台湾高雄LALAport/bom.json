@@ -1,0 +1,287 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-14T19:17:11+08:00",
+ "generator": {
+  "script": "tools/store-archive/read_bom.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-026",
+ "source": "物料清单（设计方填写的数量；平面计数在阶段 3 补）",
+ "pages_read": [
+  9
+ ],
+ "pages_failed": [],
+ "items": [
+  {
+   "no": 1,
+   "name": "75寸广告机75-inchDigitalSignage",
+   "size": "TCL/75P30X",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "备注需配备支架本图版权为本公司拥有，任何人士如未获允许不得翻印任何部分。请列明尺寸成以方格代替比例。尺寸度量以地盘实物为准。图纸",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 2,
+   "name": "55寸广告机55-inchDigitalSignage",
+   "size": "TCL/55P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "上所有遗漏需知会城市意创。需配备支架参看本图时，请同时阅读合约条款细则及规则。本图以最后更正之版本做实。其他版本，自动作废。",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 3,
+   "name": "65寸广告机65-inchDigitalSignage",
+   "size": "TCL/65P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架Client",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 4,
+   "name": "86寸广告机86-inchDigitalSignage",
+   "size": "TCL/86P30X",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "业主需配备支架",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 5,
+   "name": "98寸广告机98-inchDigitalSignage",
+   "size": "TCL/98P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": null,
+   "name": "1.8msi2.0收银台SI2.0CheckoutCounterCabinet",
+   "size": "W1800*D500*H900mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "Design&ProjectManagementConsultancy",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24432224",
+    "asset-33819654"
+   ]
+  },
+  {
+   "no": 7,
+   "name": "1.8msi2.0开箱桌1.8mSI2.0unboxingtable",
+   "size": "W1800*D800*H900mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "项目设计",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-16469753",
+    "asset-41277543"
+   ]
+  },
+  {
+   "no": 8,
+   "name": "1.8msi2.0中岛桌1.8mSI2.0IslandTable",
+   "size": "W1800*D800*H900mm",
+   "qty": 4,
+   "qty_text": "4",
+   "remark": "竖版",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24312623",
+    "asset-41053706"
+   ]
+  },
+  {
+   "no": null,
+   "name": "1.2msi2.0配件柜SI2.0AccessoryCabinet",
+   "size": "W1200*D450*H2400mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "｜www.cityinno.comT(8620)38809380",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24482600",
+    "asset-34327615"
+   ]
+  },
+  {
+   "no": null,
+   "name": "2.4msi2.0配件柜SI2.0AccessoryCabinet",
+   "size": "W2400*D450*H2400mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "修订No.编号",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-36887885",
+    "asset-36890994",
+    "asset-36929122"
+   ]
+  },
+  {
+   "no": null,
+   "name": "3.6msi2.0配件柜SI2.0AccessoryCabinet",
+   "size": "W3600*D450*H2400mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "Date日期",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-15903179",
+    "asset-36857093"
+   ]
+  },
+  {
+   "no": 12,
+   "name": "si2.0子母凳SI2.0NestingStool",
+   "size": "W450*D450*H450mm",
+   "qty": 6,
+   "qty_text": "6",
+   "remark": "Desrption摘要",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": []
+  },
+  {
+   "no": null,
+   "name": "43寸电子水牌（国内）DigitalSign(Domestic)",
+   "size": null,
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "Drawnby制图人",
+   "page": 9,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2587726"
+   ]
+  },
+  {
+   "no": 14,
+   "name": "有线摄像头WiredCamera",
+   "size": "D8P-C高清网络摄像头D8P-CHDNetworkCamera",
+   "qty": 6,
+   "qty_text": "6",
+   "remark": "Checkedby校对人",
+   "page": 9,
+   "category": "设备（无模型）",
+   "si_hint": null,
+   "asset_candidates": []
+  },
+  {
+   "no": null,
+   "name": "徕卡品牌墙（画框+海报）BrandWall(Frame+Poster)",
+   "size": "730*570",
+   "qty": 4,
+   "qty_text": "4",
+   "remark": "Reviewedby审定Approvedby",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  },
+  {
+   "no": null,
+   "name": "徕卡品牌墙（画框+海报）BrandWall(Frame+Poster)",
+   "size": "410*570",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "审核Chargedby项目负责",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  },
+  {
+   "no": null,
+   "name": "徕卡品牌墙（画框+海报）BrandWall(Frame+Poster)",
+   "size": "800*1200",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": null,
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  },
+  {
+   "no": null,
+   "name": "徕卡品牌墙（画框+海报）BrandWall(Frame+Poster)",
+   "size": "1040*570",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "Designer设计",
+   "page": 9,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  }
+ ],
+ "totals_by_category": {
+  "信息化物料": 4,
+  "软装道具": 19,
+  "设备（无模型）": 6
+ },
+ "reviewed": false
+}

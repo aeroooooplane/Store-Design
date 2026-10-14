@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:14+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -105,6 +105,92 @@
  "text_layer": {
   "textless_pages": 1,
   "pages": 36
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "封面",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "无文字待看图",
+    "from": 2,
+    "to": 4
+   },
+   {
+    "label": "效果图",
+    "from": 5,
+    "to": 9
+   },
+   {
+    "label": "无文字待看图",
+    "from": 10,
+    "to": 10
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 11,
+    "to": 13
+   },
+   {
+    "label": "其他平面图",
+    "from": 14,
+    "to": 15
+   },
+   {
+    "label": "电气",
+    "from": 16,
+    "to": 16
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 17,
+    "to": 19
+   },
+   {
+    "label": "无文字待看图",
+    "from": 20,
+    "to": 22
+   },
+   {
+    "label": "大样",
+    "from": 23,
+    "to": 29
+   },
+   {
+    "label": "无文字待看图",
+    "from": 30,
+    "to": 34
+   },
+   {
+    "label": "电气",
+    "from": 35,
+    "to": 35
+   },
+   {
+    "label": "无文字待看图",
+    "from": 36,
+    "to": 36
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": 11,
+  "main_plan_note": "按图号 P-02 / PL-02 推断为平面布置图（标题文字不可读）",
+  "plan_alternatives": [],
+  "plan_floor_tags": [],
+  "render_pages": [
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "render_annotated_pages": [],
+  "render_status": "有效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

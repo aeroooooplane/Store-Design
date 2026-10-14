@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:14+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -96,6 +96,84 @@
  "text_layer": {
   "textless_pages": 3,
   "pages": 49
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "封面",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "无文字待看图",
+    "from": 2,
+    "to": 4
+   },
+   {
+    "label": "效果图",
+    "from": 5,
+    "to": 11
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 12,
+    "to": 21
+   },
+   {
+    "label": "无文字待看图",
+    "from": 22,
+    "to": 24
+   },
+   {
+    "label": "大样",
+    "from": 25,
+    "to": 35
+   },
+   {
+    "label": "无文字待看图",
+    "from": 36,
+    "to": 39
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 40,
+    "to": 40
+   },
+   {
+    "label": "无文字待看图",
+    "from": 41,
+    "to": 46
+   },
+   {
+    "label": "平面图（类别待定）",
+    "from": 47,
+    "to": 47
+   },
+   {
+    "label": "无文字待看图",
+    "from": 48,
+    "to": 49
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": 13,
+  "main_plan_note": "按图号 P-02 / PL-02 推断为平面布置图（标题文字不可读）",
+  "plan_alternatives": [],
+  "plan_floor_tags": [],
+  "render_pages": [
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "render_annotated_pages": [],
+  "render_status": "有效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

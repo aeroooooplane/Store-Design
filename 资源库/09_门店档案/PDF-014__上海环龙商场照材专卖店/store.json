@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T16:28:13+08:00",
+ "generatedAt": "2026-10-14T19:17:14+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -138,6 +138,103 @@
  "text_layer": {
   "textless_pages": 6,
   "pages": 43
+ },
+ "pages": {
+  "blocks": [
+   {
+    "label": "封面",
+    "from": 1,
+    "to": 1
+   },
+   {
+    "label": "效果图",
+    "from": 2,
+    "to": 5
+   },
+   {
+    "label": "无文字待看图",
+    "from": 6,
+    "to": 6
+   },
+   {
+    "label": "未识别",
+    "from": 7,
+    "to": 7
+   },
+   {
+    "label": "说明",
+    "from": 8,
+    "to": 8
+   },
+   {
+    "label": "原始平面",
+    "from": 9,
+    "to": 9
+   },
+   {
+    "label": "布置平面",
+    "from": 10,
+    "to": 11
+   },
+   {
+    "label": "其他平面图",
+    "from": 12,
+    "to": 14
+   },
+   {
+    "label": "电气",
+    "from": 15,
+    "to": 17
+   },
+   {
+    "label": "其他平面图",
+    "from": 18,
+    "to": 18
+   },
+   {
+    "label": "立面",
+    "from": 19,
+    "to": 22
+   },
+   {
+    "label": "大样",
+    "from": 23,
+    "to": 35
+   },
+   {
+    "label": "未识别",
+    "from": 36,
+    "to": 36
+   },
+   {
+    "label": "目录",
+    "from": 37,
+    "to": 37
+   },
+   {
+    "label": "电气",
+    "from": 38,
+    "to": 43
+   }
+  ],
+  "toc_found": false,
+  "main_plan_page": 10,
+  "main_plan_note": null,
+  "plan_alternatives": [
+   11
+  ],
+  "plan_floor_tags": [],
+  "render_pages": [
+   2,
+   3,
+   4,
+   5
+  ],
+  "render_annotated_pages": [],
+  "render_status": "有效果图",
+  "bom_pages": [],
+  "material_pages": [],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

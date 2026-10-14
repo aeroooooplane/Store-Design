@@ -1,0 +1,346 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-14T19:17:12+08:00",
+ "generator": {
+  "script": "tools/store-archive/read_bom.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-088",
+ "source": "物料清单（设计方填写的数量；平面计数在阶段 3 补）",
+ "pages_read": [
+  12
+ ],
+ "pages_failed": [],
+ "items": [
+  {
+   "no": 1,
+   "name": "75寸广告机",
+   "size": "TCL/75P30X",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "需配备支架所在位置",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 2,
+   "name": "55寸广告机",
+   "size": "TCL/55P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 3,
+   "name": "65寸广告机",
+   "size": "TCL/65P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 4,
+   "name": "86寸广告机",
+   "size": "TCL/86P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 5,
+   "name": "98寸广告机",
+   "size": "TCL/98P30X",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "需配备支架备注",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 6,
+   "name": "1.8msi2.0收银台",
+   "size": "W1800*D600*H900mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": null,
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24432224",
+    "asset-33819654"
+   ]
+  },
+  {
+   "no": 7,
+   "name": "1.8msi2.0开箱桌",
+   "size": "W1800*D800*H900mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": null,
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-16469753",
+    "asset-41277543"
+   ]
+  },
+  {
+   "no": 8,
+   "name": "1.8msi2.0中岛桌",
+   "size": "W1800*D800*H900mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "竖版",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24312623",
+    "asset-41053706"
+   ]
+  },
+  {
+   "no": 9,
+   "name": "1.2msi2.0配件柜",
+   "size": "W1200*D450*H2400mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": null,
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-24482600",
+    "asset-34327615"
+   ]
+  },
+  {
+   "no": 10,
+   "name": "2.4msi2.0配件柜",
+   "size": "W2400*D450*H2400mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "单位:毫米（mm）",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-36887885",
+    "asset-36890994",
+    "asset-36929122"
+   ]
+  },
+  {
+   "no": 11,
+   "name": "3.6msi2.0配件柜",
+   "size": "W3600*D450*H2400mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "注意1.此图及其内容版权属本公司所有，未经本公司同意，",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": [
+    "asset-15903179",
+    "asset-36857093"
+   ]
+  },
+  {
+   "no": 12,
+   "name": "si2.0子母凳",
+   "size": "W450*D450*H450mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "不得擅自将任何部分翻印。2.此图应与本工程合约及施工细节一起参考。3.以图纸标注为依据，细部以现场尺寸为准，不能直接",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI2.0",
+   "asset_candidates": []
+  },
+  {
+   "no": 13,
+   "name": "43寸电子水牌（国内）",
+   "size": null,
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "在图纸上量取。",
+   "page": 12,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2587726"
+   ]
+  },
+  {
+   "no": 14,
+   "name": "有线摄像头",
+   "size": "D8P-C高清网络摄像头",
+   "qty": 5,
+   "qty_text": "5",
+   "remark": "会签栏",
+   "page": 12,
+   "category": "设备（无模型）",
+   "si_hint": null,
+   "asset_candidates": []
+  },
+  {
+   "no": 15,
+   "name": "徕卡品牌墙（画框+海报）",
+   "size": "730*570",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "首席设计：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  },
+  {
+   "no": 16,
+   "name": "徕卡品牌墙（画框+海报）",
+   "size": "410*570",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "项目负责人：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-36929204"
+   ]
+  },
+  {
+   "no": 17,
+   "name": "1.8msi1.0收银台",
+   "size": "W1800*D600*H900mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "审核：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-24488377"
+   ]
+  },
+  {
+   "no": 18,
+   "name": "1.8msi1.0中岛桌",
+   "size": "W1800*D1000*H900mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "设计：制图：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-408124"
+   ]
+  },
+  {
+   "no": 19,
+   "name": "1.8msi1.0开箱桌",
+   "size": "W1800*D1000*H900mm",
+   "qty": 0,
+   "qty_text": "0",
+   "remark": "机电：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-666964",
+    "asset-1788391"
+   ]
+  },
+  {
+   "no": 20,
+   "name": "1.6msi1.0配件柜",
+   "size": "W1600*D450*H2400mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "图纸名称：",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-323015"
+   ]
+  },
+  {
+   "no": 21,
+   "name": "1.8msi1.0开箱储物边柜",
+   "size": "W1800*D500*H900mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": null,
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-666964",
+    "asset-1788391"
+   ]
+  },
+  {
+   "no": 22,
+   "name": "1.8msi1.0边桌储物柜",
+   "size": "W1800*D500*H900mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "物料清单",
+   "page": 12,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-666964",
+    "asset-752992"
+   ]
+  }
+ ],
+ "totals_by_category": {
+  "信息化物料": 2,
+  "设备（无模型）": 5,
+  "软装道具": 8
+ },
+ "reviewed": false
+}

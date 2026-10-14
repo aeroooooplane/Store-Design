@@ -1,0 +1,118 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-14T19:17:11+08:00",
+ "generator": {
+  "script": "tools/store-archive/read_bom.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-021",
+ "source": "物料清单（设计方填写的数量；平面计数在阶段 3 补）",
+ "pages_read": [
+  11
+ ],
+ "pages_failed": [],
+ "items": [
+  {
+   "no": 1,
+   "name": "75寸广告机75-inchadvertisingdisplay",
+   "size": "TCL/75P30X",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "permission,需配备支架Requiresabracketanycopyofitisforbidden.Nevermeasure",
+   "page": 11,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2500908",
+    "asset-2595839",
+    "asset-2597250"
+   ]
+  },
+  {
+   "no": 2,
+   "name": "1.8msi1.0收银台1.8msi1.0CashRegisterCounter",
+   "size": "W1800*D600*H900mm",
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "thedrawinginthisscale.Alwayskeepinginthelightofdatainthedrawing.",
+   "page": 11,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-24488377"
+   ]
+  },
+  {
+   "no": 3,
+   "name": "1.8msi1.0中岛桌1.8msi1.0islandtable",
+   "size": "W1800*D800*H900mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "Constructioncompanyshouldcheckthe竖版Verticalversiondateinthedrawingatbuildingsite.Iffind",
+   "page": 11,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-408124"
+   ]
+  },
+  {
+   "no": 4,
+   "name": "1.2msi1.0配件柜1.2msi1.0accessorycabinet",
+   "size": "W1200*D450*H2400mm",
+   "qty": 2,
+   "qty_text": "2",
+   "remark": "anymistake,pleaseinformtheengineerresponsibleforthedrawingimmediately.",
+   "page": 11,
+   "category": "软装道具",
+   "si_hint": "SI1.0",
+   "asset_candidates": [
+    "asset-2595882"
+   ]
+  },
+  {
+   "no": 5,
+   "name": "43寸电子水牌（国内）43-inchelectronicwatersign(domestic)",
+   "size": null,
+   "qty": 1,
+   "qty_text": "1",
+   "remark": "Thecopyrightofthedrawingisreservedbyourcompany.",
+   "page": 11,
+   "category": "信息化物料",
+   "si_hint": null,
+   "asset_candidates": [
+    "asset-2587726"
+   ]
+  },
+  {
+   "no": 6,
+   "name": "有线摄像头Wiredcamera",
+   "size": "D8P-C高清网络摄像头D8P-CHDNetworkCamera",
+   "qty": 6,
+   "qty_text": "6",
+   "remark": "公司名称CompanyName",
+   "page": 11,
+   "category": "设备（无模型）",
+   "si_hint": null,
+   "asset_candidates": []
+  },
+  {
+   "no": 7,
+   "name": "货架Shelf",
+   "size": "W400*D1200*H2000mm【常规级】单层承重【240kg】白色仓储货架W400*D1200*H2000mm[StandardGrade]Single-LayerLoadCapacity[240kg]WhiteStorage",
+   "qty": null,
+   "qty_text": "1Shelf",
+   "remark": "https://vsp.jd.com/new/sku/100106460364",
+   "page": 11,
+   "category": "仓储（无模型）",
+   "si_hint": null,
+   "asset_candidates": []
+  }
+ ],
+ "totals_by_category": {
+  "信息化物料": 3,
+  "软装道具": 5,
+  "设备（无模型）": 6
+ },
+ "reviewed": false
+}
