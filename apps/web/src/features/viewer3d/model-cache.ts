@@ -7,6 +7,8 @@ import { buildWhite } from './white-material.ts'
 // ---- model cache: each GLB is fetched and decoded once per page ----
 
 // Meshopt decoding runs in workers instead of blocking the page.
+// three.js API, not a React hook.
+// eslint-disable-next-line react-hooks/rules-of-hooks
 if (typeof Worker !== 'undefined') MeshoptDecoder.useWorkers(2)
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 const sources = new Map<string, Promise<GLTF>>()
