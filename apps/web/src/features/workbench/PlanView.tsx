@@ -10,13 +10,17 @@ import {
 } from '@store/shared'
 import type { Asset, Issue, Layout, LayoutItem, Point, ShopType, Space } from '@store/shared'
 import {
+  LABEL_OFFSET_EM,
+  avoidOverlaps,
   dimensionChains,
   openingLines,
   overallDimensions,
+  radiusMarks,
   symbolBaseRotation,
   tickHalf,
   wallBands,
 } from './plan-drawing.ts'
+import type { RadiusMark } from './plan-drawing.ts'
 import { renderShapes, usePlanSymbols } from './plan-symbols.ts'
 import type { PlanSymbol } from './plan-symbols.ts'
 
@@ -178,8 +182,8 @@ function symbolFor(item: LayoutItem, asset: Asset | undefined, symbol: PlanSymbo
 /**
  * The plan as a store drawing: hatched walls outside the boundary (none for island shops), a
  * red lease line, columns, the entrance, every prop as its true-size plan symbol (or a block),
- * names with heights, dimension chains along every edge and the area. Units are metres with
- * SVG y = plan z (both point down); line widths do not scale with zoom.
+ * names with heights, dimension chains along every edge (a radius for arcs) and the area.
+ * Units are metres with SVG y = plan z (both point down); line widths do not scale with zoom.
  */
 export function PlanView({
   space,
@@ -212,17 +216,23 @@ export function PlanView({
   const span = Math.max(width, depth, 1)
   const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
   const dimOffset = WALL_THICKNESS_M + fontSize * 2.4
-  const dims = useMemo(() => {
-    if (compact) return []
-    const chains = dimensionChains(space, dimOffset)
-    return [...chains, ...overallDimensions(space, chains, dimOffset, fontSize * 2.4)]
+  const { dims, radii } = useMemo(() => {
+    if (compact) return { dims: [], radii: [] as RadiusMark[] }
+    const marks = radiusMarks(space, dimOffset)
+    // Chains whose labels would overlap earlier ones move one dimension step further out.
+    const step = fontSize * 2.4
+    const chains = avoidOverlaps(dimensionChains(space, dimOffset), marks, fontSize, step)
+    return {
+      dims: [...chains, ...overallDimensions(space, chains, dimOffset, step, marks)],
+      radii: marks,
+    }
   }, [compact, space, dimOffset, fontSize])
   const pad = compact ? WALL_THICKNESS_M + 0.15 : dimOffset + fontSize * 2.2
   const bottomPad = compact ? pad : pad + fontSize * 2
   // Room beyond `pad` for chains farther out than a straight edge's (overall sizes, arcs).
   const extra = useMemo(() => {
-    if (!dims.length) return { left: 0, top: 0, right: 0, bottom: 0 }
-    const ends = dims.flatMap((d) => [d.a, d.b])
+    if (!dims.length && !radii.length) return { left: 0, top: 0, right: 0, bottom: 0 }
+    const ends = [...dims.flatMap((d) => [d.a, d.b]), ...radii.map((m) => m.end)]
     const reach = (beyond: number) => {
       const more = beyond + fontSize * 2.2 - pad
       return more > 1e-6 ? more : 0
@@ -233,7 +243,7 @@ export function PlanView({
       right: reach(Math.max(0, ...ends.map((p) => p[0] - bounds.maxX))),
       bottom: reach(Math.max(0, ...ends.map((p) => p[1] - bounds.maxZ))),
     }
-  }, [dims, bounds, fontSize, pad])
+  }, [dims, radii, bounds, fontSize, pad])
   const viewBox = `${bounds.minX - pad - extra.left} ${bounds.minZ - pad - extra.top} ${width + pad * 2 + extra.left + extra.right} ${depth + pad + bottomPad + extra.top + extra.bottom}`
 
   const flagged = new Set(
@@ -435,10 +445,11 @@ export function PlanView({
           mid[0] + d.outward[0] * fontSize * 0.7,
           mid[1] + d.outward[1] * fontSize * 0.7,
         ]
-        const ext = (from: Point, to: Point) => (
+        // From just outside the wall, or from where the dimension says (a stub, or nothing).
+        const ext = (from: Point, to: Point, start: Point | undefined) => (
           <line
-            x1={from[0] + d.outward[0] * (WALL_THICKNESS_M + 0.04)}
-            y1={from[1] + d.outward[1] * (WALL_THICKNESS_M + 0.04)}
+            x1={start ? start[0] : from[0] + d.outward[0] * (WALL_THICKNESS_M + 0.04)}
+            y1={start ? start[1] : from[1] + d.outward[1] * (WALL_THICKNESS_M + 0.04)}
             x2={to[0] + d.outward[0] * tick}
             y2={to[1] + d.outward[1] * tick}
           />
@@ -446,8 +457,8 @@ export function PlanView({
         return (
           <g key={`d${i}`} className="plan-dim">
             <line x1={d.a[0]} y1={d.a[1]} x2={d.b[0]} y2={d.b[1]} />
-            {ext(d.from, d.a)}
-            {ext(d.to, d.b)}
+            {ext(d.from, d.a, d.extA)}
+            {ext(d.to, d.b, d.extB)}
             {[d.a, d.b].map((p, k) => (
               <line
                 key={k}
@@ -467,6 +478,40 @@ export function PlanView({
               transform={`rotate(${d.angle} ${text[0]} ${text[1]})`}
             >
               {d.label}
+            </text>
+          </g>
+        )
+      })}
+
+      {radii.map((m, i) => {
+        // A radial leader from outside up to the arc, its arrow touching the arc, "R…" beyond.
+        const head = fontSize * 0.45
+        const side: Point = [-m.outward[1] * head * 0.3, m.outward[0] * head * 0.3]
+        const neck: Point = [m.at[0] + m.outward[0] * head, m.at[1] + m.outward[1] * head]
+        const text: Point = [
+          m.end[0] + m.outward[0] * fontSize * LABEL_OFFSET_EM,
+          m.end[1] + m.outward[1] * fontSize * LABEL_OFFSET_EM,
+        ]
+        return (
+          <g key={`r${i}`} className="plan-dim plan-radius">
+            <line x1={m.at[0]} y1={m.at[1]} x2={m.end[0]} y2={m.end[1]} />
+            <polygon
+              points={points([
+                m.at,
+                [neck[0] + side[0], neck[1] + side[1]],
+                [neck[0] - side[0], neck[1] - side[1]],
+              ])}
+              fill="#6b7280"
+            />
+            <text
+              x={text[0]}
+              y={text[1]}
+              fontSize={fontSize}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              transform={`rotate(${m.angle} ${text[0]} ${text[1]})`}
+            >
+              {m.label}
             </text>
           </g>
         )

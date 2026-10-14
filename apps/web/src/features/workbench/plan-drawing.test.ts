@@ -1,11 +1,17 @@
 import { describe, expect, it } from 'vitest'
-import { WALL_THICKNESS_M, rectangleSpace } from '@store/shared'
+import { WALL_THICKNESS_M, locatePoint, rectangleSpace, segmentsProperlyCross } from '@store/shared'
 import type { Point, Space } from '@store/shared'
 import {
+  avoidOverlaps,
   boundarySides,
+  boxesOverlap,
   dimensionChains,
+  dimensionTextBox,
+  fitCircle,
   openingLines,
   overallDimensions,
+  radiusMarks,
+  radiusTextBox,
   readableAngle,
   symbolBaseRotation,
   symbolSizeFromSvg,
@@ -64,12 +70,16 @@ describe('dimensionChains', () => {
   })
 })
 
-/** 10 m wide, 6 m deep at the sides; the front bulges 1.5 m out in an 8-piece arc. */
-function arcShop(entrances: Space['entrances'] = []): Space {
+/**
+ * 10 m wide, 6 m deep at the sides; the front bulges 1.5 m out in an 8-piece arc (a sine, close
+ * enough to a circle; with `pointed` a curve that comes to a point, which is no circle).
+ */
+function arcShop(entrances: Space['entrances'] = [], pointed = false): Space {
   const arc: [number, number][] = []
   for (let i = 0; i <= 8; i++) {
     const t = i / 8
-    arc.push([10 - 10 * t, 6 + 1.5 * Math.sin(Math.PI * t)])
+    const bulge = pointed ? 1 - Math.abs(2 * t - 1) ** 1.5 : Math.sin(Math.PI * t)
+    arc.push([10 - 10 * t, 6 + 1.5 * bulge])
   }
   return {
     ...rectangleSpace(10, 7.5, 3),
@@ -96,11 +106,26 @@ const L: Space = {
 }
 
 describe('dimension chains of irregular shops', () => {
-  it('measures an arc front as one chord instead of eight pieces', () => {
+  it('labels an arc front with its radius instead of eight pieces', () => {
     const space = arcShop()
     expect(space.boundary).toHaveLength(11)
+    // Back, right side, left side; the arc has its radius instead (was 3 + 8 = 11 chains).
+    expect(dimensionChains(space, 0.6).map((d) => d.label)).toEqual(['10000', '6000', '6000'])
+    const [mark, ...more] = radiusMarks(space, 0.6)
+    expect(more).toEqual([])
+    // Chord 10 m, rise 1.5 m: a circle would have r = (5² + 1.5²) / 3 = 9.08 m.
+    expect(mark?.label).toBe('R9075')
+    // Halfway along the arc, at its lowest point, with the leader pointing down out of the plan.
+    expect(mark?.at[0]).toBeCloseTo(5, 2)
+    expect(mark?.at[1]).toBeCloseTo(7.5, 2)
+    expect(mark?.outward[1]).toBeCloseTo(1, 6)
+    expect(mark?.end[1]).toBeCloseTo(7.5 + 0.6, 2)
+  })
+
+  it('measures a curve that is no circle as one chord', () => {
+    const space = arcShop([], true)
+    expect(radiusMarks(space, 0.6)).toEqual([])
     const chains = dimensionChains(space, 0.6)
-    // Back, right side, the arc, left side (was 3 + 8 = 11 chains).
     expect(chains.map((d) => d.label)).toEqual(['10000', '6000', '10000', '6000'])
     const front = chains[2]
     // Along the chord, outside the arc's lowest point (z = 7.5).
@@ -115,9 +140,12 @@ describe('dimension chains of irregular shops', () => {
   it('splits the arc chord where an entrance across several pieces starts and ends', () => {
     const space = arcShop()
     const [a, b] = [space.boundary[4], space.boundary[8]] as [[number, number], [number, number]]
-    const chains = dimensionChains({ ...space, entrances: [{ a, b, kind: 'main' }] }, 0.6)
+    const split: Space = { ...space, entrances: [{ a, b, kind: 'main' }] }
+    const chains = dimensionChains(split, 0.6)
     const front = chains.filter((d) => d.outward[1] === 1)
+    // The chord keeps the entrance's ends; the radius is labelled as well.
     expect(front.map((d) => d.label)).toEqual(['2500', '5000', '2500'])
+    expect(radiusMarks(split, 0.6).map((m) => m.label)).toEqual(['R9075'])
     // The entrance ends sit on the boundary, not on the chord.
     expect(front[1]?.from).toEqual(a)
     expect(front[1]?.to).toEqual(b)
@@ -351,13 +379,9 @@ describe('openings across several edges', () => {
   })
 
   it('splits dimension chains only at the ends of an opening, not at the vertices inside it', () => {
-    // The whole arc is one chain, as without an entrance.
-    expect(dimensionChains(arcFront(), 0.6).map((d) => d.label)).toEqual([
-      '7000',
-      '6000',
-      '7000',
-      '6000',
-    ])
+    // An entrance along the whole arc does not split it: it gets its radius, as without one.
+    expect(dimensionChains(arcFront(), 0.6).map((d) => d.label)).toEqual(['7000', '6000', '6000'])
+    expect(radiusMarks(arcFront(), 0.6)).toHaveLength(1)
     // Round a corner: each side splits where the entrance reaches it.
     expect(dimensionChains(roundCorner(), 0.6).map((d) => d.label)).toEqual([
       '8000',
@@ -458,28 +482,31 @@ describe('dimension chains of real shop drafts', () => {
       expect(turned(side)).toBeGreaterThan(65)
       expect(turned(side)).toBeLessThan(75)
     }
-    expect(dimensionChains(STORE_0293, 0.6).map((d) => d.label)).toEqual([
-      '4520',
-      '2735',
-      '2724',
-      '2713',
-    ])
+    // The three parts are one circle: one radius label instead of the chords 2735, 2724, 2713.
+    expect(dimensionChains(STORE_0293, 0.6).map((d) => d.label)).toEqual(['4520'])
+    const marks = radiusMarks(STORE_0293, 0.6)
+    expect(marks.map((m) => m.label)).toEqual(['R2355'])
+    // Centre in the middle of the 4706 width, half of it as radius; label at the top of the arc.
+    expect(marks[0]?.center.map((v) => Math.round(v * 100) / 100)).toEqual([2.35, 2.35])
+    expect(marks[0]?.radius).toBeCloseTo(2.353, 2)
+    expect(marks[0]?.outward[1]).toBeCloseTo(-1, 2)
   })
 
-  it('keeps store-0043’s straight sides apart from its round corners', () => {
+  it('keeps store-0043’s straight sides apart from its round corners, each with its radius', () => {
     // The first and last piece of each corner turn under 1° from the long side next to them.
     // They used to join it as "straight", pulling whole corners into the sides' chains (5772,
-    // 7050, 5872, 1920); now each straight side and each corner has its own chain.
+    // 7050, 5872, 1920); now each straight side has its chain and each corner its radius
+    // (instead of its 2107 chord).
     expect(dimensionChains(STORE_0043, 0.6).map((d) => d.label)).toEqual([
       '4024',
-      '2107',
       '5166',
-      '2107',
       '4024',
-      '2107',
       '5166',
-      '2107',
     ])
+    const marks = radiusMarks(STORE_0043, 0.6)
+    expect(marks.map((m) => m.label)).toEqual(['R1490', 'R1490', 'R1490', 'R1490'])
+    // Each leader points diagonally out of its corner.
+    for (const m of marks) expect(Math.abs(m.outward[0] * m.outward[1])).toBeCloseTo(0.5, 2)
   })
 
   it('leaves the corners of lease-line polylines alone: one side per edge', () => {
@@ -496,5 +523,147 @@ describe('dimension chains of real shop drafts', () => {
       '13037',
       '4381',
     ])
+  })
+})
+
+/** The plan's dimensions as PlanView lays them out (same font size, offsets and steps). */
+function annotate(space: Space) {
+  const xs = space.boundary.map((p) => p[0])
+  const zs = space.boundary.map((p) => p[1])
+  const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs), 1)
+  const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
+  const offset = WALL_THICKNESS_M + fontSize * 2.4
+  const step = fontSize * 2.4
+  const marks = radiusMarks(space, offset)
+  const chains = avoidOverlaps(dimensionChains(space, offset), marks, fontSize, step)
+  const overall = overallDimensions(space, chains, offset, step, marks)
+  return { fontSize, offset, step, marks, chains, overall }
+}
+
+describe('fitCircle', () => {
+  it('finds the circle through points on it, and none through a straight line', () => {
+    const points = [0, 20, 45, 70, 100].map((deg): Point => {
+      const rad = (deg * Math.PI) / 180
+      return [3 + 5 * Math.cos(rad), -2 + 5 * Math.sin(rad)]
+    })
+    const circle = fitCircle(points)
+    expect(circle?.center[0]).toBeCloseTo(3, 9)
+    expect(circle?.center[1]).toBeCloseTo(-2, 9)
+    expect(circle?.radius).toBeCloseTo(5, 9)
+    expect(
+      fitCircle([
+        [0, 0],
+        [1, 1],
+        [2, 2],
+        [3, 3],
+      ]),
+    ).toBeNull()
+  })
+})
+
+describe('small steps, overlapping labels and overall extension lines', () => {
+  it('gives store-0088’s small steps no chain of their own', () => {
+    const { chains } = annotate(STORE_0088)
+    const labels = chains.map((d) => d.label)
+    // The 99, 175, 74 and 71 mm steps used to have one chain each.
+    for (const step of ['99', '175', '74', '71']) expect(labels).not.toContain(step)
+    // The walls either side of the 175 step share one line (top), as do those of the 99 step.
+    const top = chains.filter((d) => d.label === '8265' || d.label === '836')
+    expect(top).toHaveLength(2)
+    expect(top[0]?.a[1]).toBeCloseTo(top[1]?.a[1] ?? NaN, 9)
+    const left = chains.filter((d) => d.label === '1985' || d.label === '987')
+    expect(left).toHaveLength(2)
+    expect(left[0]?.a[0]).toBeCloseTo(left[1]?.a[0] ?? NaN, 9)
+    // The other sides keep their chains.
+    expect(labels).toEqual(expect.arrayContaining(['548', '489', '862', '1045', '5815', '8566']))
+  })
+
+  it('keeps store-0001’s labels apart', () => {
+    const { chains, marks, overall, fontSize } = annotate(STORE_0001)
+    const boxes = [
+      ...[...chains, ...overall].map((d) => dimensionTextBox(d, fontSize)),
+      ...marks.map((m) => radiusTextBox(m, fontSize)),
+    ]
+    const clashes = boxes.flatMap((p, i) => boxes.slice(i + 1).filter((q) => boxesOverlap(p, q)))
+    expect(clashes).toEqual([])
+    // Without moving the 1438 chain out, its label sat on the 1300 one.
+    const raw = dimensionChains(STORE_0001, annotate(STORE_0001).offset)
+    const [d1300, d1438] = ['1300', '1438'].map((label) => raw.find((d) => d.label === label))
+    expect(
+      boxesOverlap(dimensionTextBox(d1300!, fontSize), dimensionTextBox(d1438!, fontSize)),
+    ).toBe(true)
+  })
+
+  it('stops a chain at the outer face of the wall round an inner corner', () => {
+    // store-0001: the 3270 chain used to end under the wall of the 6551 side.
+    const { chains } = annotate(STORE_0001)
+    const d3270 = chains.find((d) => d.label === '3270')
+    const wall6551: [Point, Point] = [
+      [5.949, 3.288],
+      [12.464, 2.604],
+    ]
+    const offWall = (p: Point) => {
+      const [a, b] = wall6551
+      const l = Math.hypot(b[0] - a[0], b[1] - a[1])
+      return ((p[0] - a[0]) * (b[1] - a[1]) - (p[1] - a[1]) * (b[0] - a[0])) / l
+    }
+    // Above the 6551 side (outside the plan) by at least the wall thickness.
+    expect(Math.abs(offWall(d3270?.b as Point))).toBeGreaterThanOrEqual(WALL_THICKNESS_M - 1e-6)
+    expect(d3270?.extB).toEqual(d3270?.b)
+    // An L: both chains meeting at the inner corner stop outside the walls there.
+    const chainsL = dimensionChains(L, 0.6)
+    const inner = chainsL.find((d) => d.from[0] === 4 && d.from[1] === 0)
+    expect(inner?.b.map((v) => Math.round(v * 1000) / 1000)).toEqual([4.6, 6 - WALL_THICKNESS_M])
+    const after = chainsL.find((d) => d.from[0] === 4 && d.from[1] === 6)
+    expect(after?.a.map((v) => Math.round(v * 1000) / 1000)).toEqual([4 + WALL_THICKNESS_M, 5.4])
+    expect([inner?.label, after?.label]).toEqual(['6000', '6000'])
+  })
+
+  it('draws no overall extension line across the plan or another chain', () => {
+    for (const space of [STORE_0293, STORE_0043, STORE_0088, STORE_0001]) {
+      const { chains, marks, overall } = annotate(space)
+      expect(overall.length).toBeGreaterThan(0)
+      const others: [Point, Point][] = [
+        ...chains.map((d): [Point, Point] => [d.a, d.b]),
+        ...marks.map((m): [Point, Point] => [m.at, m.end]),
+      ]
+      for (const d of overall) {
+        for (const [from, end, start] of [
+          [d.from, d.a, d.extA],
+          [d.to, d.b, d.extB],
+        ] as [Point, Point, Point | undefined][]) {
+          const begin = start ?? [
+            from[0] + d.outward[0] * (WALL_THICKNESS_M + 0.04),
+            from[1] + d.outward[1] * (WALL_THICKNESS_M + 0.04),
+          ]
+          for (let k = 0; k <= 20; k++) {
+            const p: Point = [
+              begin[0] + ((end[0] - begin[0]) * k) / 20,
+              begin[1] + ((end[1] - begin[1]) * k) / 20,
+            ]
+            expect(locatePoint(p, space.boundary)).toBe('outside')
+          }
+          for (const [c, e] of others) expect(segmentsProperlyCross(begin, end, c, e)).toBe(false)
+        }
+      }
+    }
+    // store-0088's 6061 used to run from the far right vertex under the whole plan: now a stub.
+    const { overall, step } = annotate(STORE_0088)
+    const depth = overall.find((d) => d.label === '6061')
+    expect(depth?.extB).toBeDefined()
+    expect(
+      Math.hypot(
+        ...([0, 1].map((i) => (depth?.b[i] ?? 0) - (depth?.extB?.[i] ?? 0)) as [number, number]),
+      ),
+    ).toBeLessThan(step)
+  })
+
+  it('leaves rectangles alone', () => {
+    const space = shop()
+    expect(radiusMarks(space, 0.6)).toEqual([])
+    const chains = dimensionChains(space, 0.6)
+    const placed = avoidOverlaps(chains, [], 0.2, 0.48)
+    placed.forEach((d, i) => expect(d).toBe(chains[i]))
+    expect(chains.some((d) => d.extA || d.extB)).toBe(false)
   })
 })
