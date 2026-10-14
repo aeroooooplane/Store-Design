@@ -1,4 +1,4 @@
-import { distanceToBoundary, edges, signedArea, sceneFrame } from '@store/shared'
+import { NEAR_AXIS_DEG, distanceToBoundary, edges, signedArea, sceneFrame } from '@store/shared'
 import type { Point, Polygon, SceneFrame, Space } from '@store/shared'
 
 /** The four walls as seen from the main entrance. */
@@ -12,8 +12,11 @@ export const SIDE_LABELS: Record<Side, string> = {
   right: '右墙',
 }
 
-/** An edge counts as square to its wall within about one degree. */
-const SQUARE_COS = Math.cos((1 * Math.PI) / 180)
+/**
+ * An edge counts as square to its wall within NEAR_AXIS_DEG (3°), the tolerance the automatic
+ * planner allows before it stops standing props against an edge.
+ */
+const SQUARE_COS = Math.cos((NEAR_AXIS_DEG * Math.PI) / 180)
 
 export const dot = (a: Point, b: Point) => a[0] * b[0] + a[1] * b[1]
 export const neg = (v: Point): Point => [-v[0] + 0, -v[1] + 0]
@@ -30,7 +33,7 @@ export interface WallEdge {
   inward: Point
   /** The wall whose outward direction is nearest to the edge's. */
   side: Side
-  /** More than about a degree off that wall's direction. */
+  /** More than NEAR_AXIS_DEG (3°) off that wall's direction. */
   slanted: boolean
 }
 

@@ -109,6 +109,19 @@ describe('real shop drafts', () => {
       expect(locatePoint([camera.target[0], camera.target[2]], ring)).toBe('inside')
   })
 
+  it('stands no 2.4 m cabinet along the edge of the island shops', () => {
+    // store-0043、0239：只放中岛桌和收银台（目录里的配件柜都是 2.4 m 高柜），收银台仍靠入口对面的直边。
+    for (const shape of [baodingBeiguo, shenyangBainaohui]) {
+      for (const strategy of STRATEGIES) {
+        const { layout, notes } = run(shape, strategy)
+        expect(byFunction(layout.items, 'accessory_cabinet')).toEqual([])
+        expect(byFunction(layout.items, 'cashier')).toHaveLength(1)
+        expect(byFunction(layout.items, 'island_table').length).toBeGreaterThanOrEqual(1)
+        expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子，未摆放配件柜')
+      }
+    }
+  })
+
   it('places tables in every draft but the 11.7 ㎡ arc platform', () => {
     for (const shape of [baodingBeiguo, shenyangBainaohui, nanchangWushang, shanghaiTpy]) {
       for (const strategy of STRATEGIES) {
@@ -143,19 +156,31 @@ describe('real shop drafts', () => {
     ])
   })
 
-  it('store-0001: the back wall is a 1.3 m stub, so the cashier goes to the left wall', () => {
-    // 已知问题（只记录，未修）：上方真正的后墙 3720 mm 一段在草稿里斜了 0.55°（36 mm），6551 mm
-    // 一段斜约 6°，排布只认严格水平或竖直的墙，都被丢掉；面向入口的墙只剩左上角 1.3 m 的短段。
-    // 它被选为后墙，“尽量少放”唯一的配件柜就放在那里；1.8 m 的收银台放不下，退到左侧墙。
+  it('store-0001: the 0.55° top edge counts as the back wall and takes the cashier', () => {
+    // 上方 3720 mm 一段在草稿里斜了 0.55°（右端低 36 mm）：偏差 3° 以内按直墙处理，它是后墙，
+    // 收银台和“尽量少放”唯一的配件柜都靠它。约 6° 的 6551 mm 一段仍不放靠墙道具。
+    const top: [Point, Point] = [
+      [1.886, 0],
+      [5.606, 0.036],
+    ]
+    expect(cashierEdge(shanghaiTpy)).toEqual(top)
     const [cabinet] = byFunction(run(shanghaiTpy, 'min').layout.items, 'accessory_cabinet')
     expect(cabinet).toBeDefined()
-    expect(backEdge(shanghaiTpy, cabinet as LayoutItem)).toEqual([
-      [0.586, 1.438],
-      [1.886, 1.438],
-    ])
-    expect(cashierEdge(shanghaiTpy)).toEqual([
-      [0, 8.071],
-      [0, 3.69],
-    ])
+    expect(backEdge(shanghaiTpy, cabinet as LayoutItem)).toEqual(top)
+    // Props stand square to the x axis with the wall gap taken from the lower right end of the
+    // edge, so none reaches over the slanted wall (to within the millimetre centres round to).
+    for (const strategy of STRATEGIES) {
+      for (const item of run(shanghaiTpy, strategy).layout.items) {
+        const rect = itemFootprint(item)
+        if (rect.minZ > 1) continue
+        expect(Math.abs(rect.minZ - (0.036 + 0.05))).toBeLessThanOrEqual(0.001)
+        const corners: Point[] = [
+          [rect.minX, rect.minZ],
+          [rect.maxX, rect.minZ],
+        ]
+        for (const corner of corners)
+          expect(distanceToSegment(corner, ...top)).toBeGreaterThanOrEqual(0.05 - 0.001)
+      }
+    }
   })
 })
