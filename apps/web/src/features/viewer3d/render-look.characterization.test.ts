@@ -153,9 +153,14 @@ describe('floorLayout', () => {
     expect(floorLayout(shop(3, 7), 'side_hall')).toEqual({ alongX: false, origin: [1.5, 3.5] })
   })
 
-  it('runs along x when a diagonal entrance is as long in x as in z', () => {
+  it('runs along x when a diagonal entrance is as long in x as in z, turned with it', () => {
     const space = shop(6, 6, [{ a: [0, 4], b: [2, 6], kind: 'main' }])
-    expect(floorLayout(space, 'side_hall')).toEqual({ alongX: true, origin: [1, 5] })
+    // Since the irregular-shop work the tiles follow the slant (−45°: from +x towards +z).
+    expect(floorLayout(space, 'side_hall')).toEqual({
+      alongX: true,
+      origin: [1, 5],
+      angle: -Math.PI / 4,
+    })
   })
 })
 

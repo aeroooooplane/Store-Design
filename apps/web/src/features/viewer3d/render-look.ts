@@ -93,15 +93,25 @@ export function floorKind(siStyle: SiStyle, shopType: ShopType): FloorKind {
   return shopType === 'island' ? 'island' : siStyle
 }
 
-/** How the tiles are laid: long side along plan x or z, and the point a tile is centred on. */
+/**
+ * How the tiles are laid: long side along plan x or z, and the point a tile is centred on.
+ * `angle` turns the tiles further (radians, at most 45° either way, the rotation of the floor
+ * texture) so they stay parallel to an entrance on a slanted edge; positive turns the long
+ * side from +x towards −z (the top of the plan). It is left out for entrances along x or z.
+ */
 export interface FloorLayout {
   alongX: boolean
   origin: readonly [number, number]
+  angle?: number
 }
 
+/** Below this an entrance counts as running exactly along x or z (about 0.06°). */
+const SQUARE_RAD = 1e-3
+
 /**
- * Side-hall floors are laid from the centre of the main entrance with the long side along it;
- * island floors run along the shop's long side from its centre (manual pages above).
+ * Side-hall floors are laid from the centre of the main entrance with the long side along it,
+ * turned with it when it is slanted; island floors run along the shop's long side from its
+ * centre (manual pages above).
  */
 export function floorLayout(space: Space, shopType: ShopType): FloorLayout {
   const xs = space.boundary.map((p) => p[0])
@@ -117,12 +127,20 @@ export function floorLayout(space: Space, shopType: ShopType): FloorLayout {
   if (shopType === 'island' || !entrance) {
     return { alongX: maxX - minX >= maxZ - minZ, origin: centre }
   }
-  const dx = Math.abs(entrance.b[0] - entrance.a[0])
-  const dz = Math.abs(entrance.b[1] - entrance.a[1])
-  return {
-    alongX: dx >= dz,
-    origin: [(entrance.a[0] + entrance.b[0]) / 2, (entrance.a[1] + entrance.b[1]) / 2],
-  }
+  const dx = entrance.b[0] - entrance.a[0]
+  const dz = entrance.b[1] - entrance.a[1]
+  const alongX = Math.abs(dx) >= Math.abs(dz)
+  const origin: [number, number] = [
+    (entrance.a[0] + entrance.b[0]) / 2,
+    (entrance.a[1] + entrance.b[1]) / 2,
+  ]
+  // Direction of the entrance in floor UVs (z flipped), folded to (−90°, 90°] and then
+  // measured from the axis the long side already runs along.
+  let angle = Math.atan2(-dz, dx)
+  if (angle > Math.PI / 2) angle -= Math.PI
+  if (angle <= -Math.PI / 2) angle += Math.PI
+  if (!alongX) angle += angle > 0 ? -Math.PI / 2 : Math.PI / 2
+  return Math.abs(angle) < SQUARE_RAD ? { alongX, origin } : { alongX, origin, angle }
 }
 
 const TILES_PER_SIDE = 4
@@ -176,7 +194,19 @@ function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | nul
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping
   texture.repeat.set(1 / (TILES_PER_SIDE * tw), 1 / (TILES_PER_SIDE * td))
   const [ox, oz] = layout.origin
-  texture.offset.set((tw / 2 - ox) / (TILES_PER_SIDE * tw), (td / 2 + oz) / (TILES_PER_SIDE * td))
+  if (layout.angle === undefined) {
+    texture.offset.set((tw / 2 - ox) / (TILES_PER_SIDE * tw), (td / 2 + oz) / (TILES_PER_SIDE * td))
+  } else {
+    // Three maps uv to repeat × R(−angle) × uv + offset (centre 0), so the long side runs at
+    // `angle`; the offset puts the middle of a tile on the origin again.
+    const [c, s] = [Math.cos(layout.angle), Math.sin(layout.angle)]
+    const [u, v] = [ox, -oz]
+    texture.rotation = layout.angle
+    texture.offset.set(
+      1 / (2 * TILES_PER_SIDE) - (c * u + s * v) / (TILES_PER_SIDE * tw),
+      1 / (2 * TILES_PER_SIDE) - (-s * u + c * v) / (TILES_PER_SIDE * td),
+    )
+  }
   texture.anisotropy = 8
   return texture
 }

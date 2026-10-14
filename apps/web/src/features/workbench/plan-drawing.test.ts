@@ -1,11 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import { WALL_THICKNESS_M, rectangleSpace } from '@store/shared'
-import type { Space } from '@store/shared'
+import type { Point, Space } from '@store/shared'
 import {
+  boundarySides,
   dimensionChains,
+  openingLines,
+  overallDimensions,
   readableAngle,
   symbolBaseRotation,
   symbolSizeFromSvg,
+  tickHalf,
   wallBands,
 } from './plan-drawing.ts'
 
@@ -60,12 +64,309 @@ describe('dimensionChains', () => {
   })
 })
 
+/** 10 m wide, 6 m deep at the sides; the front bulges 1.5 m out in an 8-piece arc. */
+function arcShop(entrances: Space['entrances'] = []): Space {
+  const arc: [number, number][] = []
+  for (let i = 0; i <= 8; i++) {
+    const t = i / 8
+    arc.push([10 - 10 * t, 6 + 1.5 * Math.sin(Math.PI * t)])
+  }
+  return {
+    ...rectangleSpace(10, 7.5, 3),
+    boundary: [
+      [0, 0],
+      [10, 0],
+      ...arc.map((p): [number, number] => [round(p)[0] ?? 0, round(p)[1] ?? 0]),
+    ],
+    entrances,
+  }
+}
+
+const L: Space = {
+  ...rectangleSpace(10, 10, 3),
+  boundary: [
+    [0, 0],
+    [4, 0],
+    [4, 6],
+    [10, 6],
+    [10, 10],
+    [0, 10],
+  ],
+  entrances: [{ a: [8, 10], b: [4, 10], kind: 'main' }],
+}
+
+describe('dimension chains of irregular shops', () => {
+  it('measures an arc front as one chord instead of eight pieces', () => {
+    const space = arcShop()
+    expect(space.boundary).toHaveLength(11)
+    const chains = dimensionChains(space, 0.6)
+    // Back, right side, the arc, left side (was 3 + 8 = 11 chains).
+    expect(chains.map((d) => d.label)).toEqual(['10000', '6000', '10000', '6000'])
+    const front = chains[2]
+    // Along the chord, outside the arc's lowest point (z = 7.5).
+    expect(front?.outward).toEqual([0, 1])
+    expect(front?.a[1]).toBeCloseTo(7.5 + 0.6, 6)
+    expect(front?.b[1]).toBeCloseTo(7.5 + 0.6, 6)
+    // The extension lines start on the boundary: the chord ends are the arc ends.
+    expect(front?.from).toEqual([10, 6])
+    expect(front?.to).toEqual([0, 6])
+  })
+
+  it('splits the arc chord where an entrance across several pieces starts and ends', () => {
+    const space = arcShop()
+    const [a, b] = [space.boundary[4], space.boundary[8]] as [[number, number], [number, number]]
+    const chains = dimensionChains({ ...space, entrances: [{ a, b, kind: 'main' }] }, 0.6)
+    const front = chains.filter((d) => d.outward[1] === 1)
+    expect(front.map((d) => d.label)).toEqual(['2500', '5000', '2500'])
+    // The entrance ends sit on the boundary, not on the chord.
+    expect(front[1]?.from).toEqual(a)
+    expect(front[1]?.to).toEqual(b)
+  })
+
+  it('keeps long straight-ish edges and corners apart', () => {
+    // A 30° cut corner is not an arc: three sides plus the cut, each with its own chain.
+    const cut: Point[] = [
+      [0, 0],
+      [10, 0],
+      [10, 4],
+      [7, 8],
+      [0, 8],
+    ]
+    expect(boundarySides(cut)).toHaveLength(5)
+    // Collinear edges (an extra vertex on a straight wall) are one side.
+    expect(
+      boundarySides([
+        [0, 0],
+        [5, 0],
+        [10, 0],
+        [10, 6],
+        [0, 6],
+      ]),
+    ).toHaveLength(4)
+  })
+
+  it('leaves out the faces of a narrow notch, but not of a wide one', () => {
+    const notch = (w: number): Space => ({
+      ...rectangleSpace(9, 6, 3),
+      boundary: [
+        [0, 0],
+        [9, 0],
+        [9, 6],
+        [4.5 + w / 2, 6],
+        [4.5 + w / 2, 2],
+        [4.5 - w / 2, 2],
+        [4.5 - w / 2, 6],
+        [0, 6],
+      ],
+      entrances: [],
+    })
+    const faces = (space: Space) =>
+      dimensionChains(space, 0.6).filter(
+        (d) => (d.from[1] === 6 && d.to[1] === 2) || (d.from[1] === 2 && d.to[1] === 6),
+      )
+    expect(faces(notch(3))).toHaveLength(2)
+    expect(faces(notch(0.8))).toHaveLength(0)
+    // The bottom of the narrow notch still shows its width.
+    expect(dimensionChains(notch(0.8), 0.6).map((d) => d.label)).toContain('800')
+  })
+})
+
+describe('overallDimensions', () => {
+  it('adds no overall dimension that one chain already shows', () => {
+    // The L's left edge is one 10000 chain: no overall depth. Its bottom edge is split by the
+    // entrance into several chains, so the overall width is still added.
+    const overall = overallDimensions(L, dimensionChains(L, 0.6), 0.6, 0.5)
+    expect(overall.map((d) => [d.label, d.angle])).toEqual([['10000', 0]])
+  })
+
+  it('adds the overall width above and depth left, outside every chain', () => {
+    // Every corner cut: no edge spans the full width or depth.
+    const cut: Space = {
+      ...rectangleSpace(10, 10, 3),
+      boundary: [
+        [1, 0],
+        [9, 0],
+        [10, 1],
+        [10, 9],
+        [9, 10],
+        [1, 10],
+        [0, 9],
+        [0, 1],
+      ],
+      entrances: [],
+    }
+    const chains = dimensionChains(cut, 0.6)
+    const [width, depth] = overallDimensions(cut, chains, 0.6, 0.5)
+    expect(width?.label).toBe('10000')
+    expect(depth?.label).toBe('10000')
+    const top = Math.min(...chains.flatMap((d) => [d.a[1], d.b[1]]))
+    const left = Math.min(...chains.flatMap((d) => [d.a[0], d.b[0]]))
+    expect(width?.a).toEqual([0, top - 0.5])
+    expect(width?.b).toEqual([10, top - 0.5])
+    expect(depth?.a).toEqual([left - 0.5, 0])
+    expect(depth?.b).toEqual([left - 0.5, 10])
+    // Measured from the extreme vertices, nearest the dimension line.
+    expect([width?.from, width?.to]).toEqual([
+      [0, 1],
+      [10, 1],
+    ])
+    expect([depth?.from, depth?.to]).toEqual([
+      [1, 0],
+      [1, 10],
+    ])
+    expect(depth?.angle).toBe(90)
+  })
+
+  it('adds nothing to a rectangle: its edge chains are already the overall sizes', () => {
+    expect(overallDimensions(shop(), dimensionChains(shop(), 0.6), 0.6, 0.5)).toEqual([])
+  })
+
+  it('measures an arc shop to the bottom of its arc', () => {
+    const space = arcShop()
+    // The straight back edge already shows the 10000 width; only the depth to the arc is added.
+    const overall = overallDimensions(space, dimensionChains(space, 0.6), 0.6, 0.5)
+    expect(overall.map((d) => d.label)).toEqual(['7500'])
+  })
+})
+
+describe('tickHalf', () => {
+  const angleBetween = (u: Point, v: Point) =>
+    (Math.acos(
+      Math.abs(u[0] * v[0] + u[1] * v[1]) / (Math.hypot(u[0], u[1]) * Math.hypot(v[0], v[1])),
+    ) *
+      180) /
+    Math.PI
+
+  it('keeps the legacy (1, −1) tick on lines along x or z', () => {
+    expect(tickHalf([0, 0], [5, 0], 0.2)).toEqual([0.1, -0.1])
+    expect(tickHalf([5, 0], [0, 0], 0.2)).toEqual([0.1, -0.1])
+    expect(tickHalf([0, 0], [0, 5], 0.2)).toEqual([0.1, -0.1])
+    expect(tickHalf([0, 5], [0, 0], 0.2)).toEqual([0.1, -0.1])
+  })
+
+  it('turns with a slanted line and crosses it at 45°, also on a 45° edge', () => {
+    for (const b of [
+      [3, -3],
+      [3, 3],
+      [-3, 4],
+      [4, 1],
+    ] as Point[]) {
+      const half = tickHalf([0, 0], b, 0.2)
+      expect(Math.hypot(half[0], half[1])).toBeCloseTo(0.2 / Math.SQRT2, 9)
+      expect(angleBetween(half, b)).toBeCloseTo(45, 6)
+    }
+    // The legacy fixed tick would lie on a (1, −1) line.
+    expect(angleBetween([1, -1], [3, -3])).toBeCloseTo(0, 3)
+  })
+})
+
 describe('readableAngle', () => {
   it('never turns text upside down', () => {
     expect(readableAngle([1, 0])).toBe(0)
     expect(readableAngle([-1, 0])).toBe(0)
     expect(readableAngle([0, 1])).toBe(90)
     expect(readableAngle([0, -1])).toBe(90)
+  })
+})
+
+describe('openings across several edges', () => {
+  /** 7 m wide, 6 m deep at the sides, a 4-piece arc front bulging 0.8 m; all of it entrance. */
+  const arcFront = (): Space => {
+    const arc = [0, 1, 2, 3, 4].map((i): [number, number] => [
+      round([7 - 1.75 * i])[0] ?? 0,
+      round([6 + 0.8 * Math.sin((Math.PI * i) / 4)])[0] ?? 0,
+    ])
+    return {
+      ...rectangleSpace(7, 6.8, 3),
+      boundary: [[0, 0], [7, 0], ...arc],
+      entrances: [{ a: [7, 6], b: [0, 6], kind: 'main' }],
+    }
+  }
+  /** 8 × 6 m with the entrance round the bottom-right corner. */
+  const roundCorner = (): Space => ({
+    ...rectangleSpace(8, 6, 3),
+    entrances: [{ a: [6, 6], b: [8, 4], kind: 'main' }],
+  })
+  const touches = (bands: ReturnType<typeof wallBands>, p: Point) =>
+    bands.some((band) => band.polygon.some((q) => Math.hypot(q[0] - p[0], q[1] - p[1]) < 1e-6))
+
+  it('draws an opening along the boundary, one line per edge it covers', () => {
+    const space = arcFront()
+    const entrance = space.entrances[0] as Space['entrances'][number]
+    expect(openingLines(space, entrance)).toEqual([
+      [space.boundary[2], space.boundary[3]],
+      [space.boundary[3], space.boundary[4]],
+      [space.boundary[4], space.boundary[5]],
+      [space.boundary[5], space.boundary[6]],
+    ])
+    expect(openingLines(roundCorner(), { a: [6, 6], b: [8, 4] })).toEqual([
+      [
+        [6, 6],
+        [8, 6],
+      ],
+      [
+        [8, 6],
+        [8, 4],
+      ],
+    ])
+    // Within one edge, and off the boundary, it stays the segment a → b.
+    expect(openingLines(shop(), { a: [5, 6], b: [3, 6] })).toEqual([
+      [
+        [5, 6],
+        [3, 6],
+      ],
+    ])
+    expect(openingLines(shop(), { a: [3, 5], b: [5, 5] })).toEqual([
+      [
+        [3, 5],
+        [5, 5],
+      ],
+    ])
+  })
+
+  it('leaves no wall at the vertices inside an opening, and caps the walls at its ends', () => {
+    const arc = arcFront()
+    const bands = wallBands(arc, 'side_hall')
+    // Back and both sides only: the arc is all entrance.
+    expect(bands).toHaveLength(3)
+    for (const vertex of arc.boundary.slice(3, 6)) expect(touches(bands, vertex)).toBe(false)
+    const outlines = bands.flatMap((band) => band.outline.map((line) => line.map(round)))
+    expect(outlines).toContainEqual([
+      [7, 6],
+      [7 + t, 6],
+    ])
+    expect(outlines).toContainEqual([
+      [0, 6],
+      [-t, 6],
+    ])
+
+    const corner = wallBands(roundCorner(), 'side_hall')
+    expect(touches(corner, [8, 6])).toBe(false)
+    expect(touches(corner, [8, 4])).toBe(true)
+    expect(touches(corner, [6, 6])).toBe(true)
+
+    // An open edge round the top-right corner leaves that corner without wall too.
+    const open: Space = { ...shop(), openEdges: [{ a: [8, 2], b: [6, 0] }] }
+    expect(touches(wallBands(open, 'side_hall'), [8, 0])).toBe(false)
+  })
+
+  it('splits dimension chains only at the ends of an opening, not at the vertices inside it', () => {
+    // The whole arc is one chain, as without an entrance.
+    expect(dimensionChains(arcFront(), 0.6).map((d) => d.label)).toEqual([
+      '7000',
+      '6000',
+      '7000',
+      '6000',
+    ])
+    // Round a corner: each side splits where the entrance reaches it.
+    expect(dimensionChains(roundCorner(), 0.6).map((d) => d.label)).toEqual([
+      '8000',
+      '4000',
+      '2000',
+      '2000',
+      '6000',
+      '6000',
+    ])
   })
 })
 

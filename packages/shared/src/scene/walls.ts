@@ -4,7 +4,7 @@ import type { ShopType } from '../enums.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { roundM } from '../units.ts'
-import { sceneFrame } from './views.ts'
+import { sceneFrame } from './frame.ts'
 
 /** Walls are drawn outside the boundary so the floor area stays exactly as planned. */
 export const WALL_THICKNESS_M = 0.16

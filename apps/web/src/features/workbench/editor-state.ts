@@ -1,5 +1,5 @@
-import { roundM, rotatedFootprint } from '@store/shared'
-import type { Asset, Layout, LayoutItem, Rotation, Space } from '@store/shared'
+import { interiorPoint, roundM, rotatedFootprint } from '@store/shared'
+import type { Asset, Layout, LayoutItem, Point, Rotation, Space } from '@store/shared'
 import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
@@ -44,6 +44,14 @@ export type EditorAction =
   | { type: 'saved'; layout: Layout }
 
 export const snap = (value: number): number => roundM(Math.round(value / SNAP_M) * SNAP_M)
+
+/**
+ * Where a model picked from the catalogue lands: the point of the floor farthest from the walls
+ * (the centre of a rectangle), so it starts inside L and U shaped shops too.
+ */
+export function newItemPoint(space: Space): Point {
+  return interiorPoint(space.boundary)
+}
 
 export function initialEditorState(layout: Layout): EditorState {
   return { layout, selectedId: null, dirty: false, past: [], future: [], lastKey: null }
