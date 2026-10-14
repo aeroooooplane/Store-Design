@@ -379,45 +379,51 @@ export async function sendMessage(
 /**
  * Undoes an action: hides the node(s) it made, deletes a view it added or restores one it
  * removed. A read-only or already undone action cannot be undone.
+ *
+ * One transaction: the action row is locked while the "already undone" check runs, and either
+ * every node / view is reverted and the action marked undone, or nothing changes.
  */
 export async function undoAction(
   db: Database,
   ctx: RequestContext,
   actionId: string,
 ): Promise<AgentAction> {
-  const [found] = await db
-    .select({ action: agentActions, projectId: agentSessions.projectId })
-    .from(agentActions)
-    .innerJoin(agentMessages, eq(agentMessages.id, agentActions.messageId))
-    .innerJoin(agentSessions, eq(agentSessions.id, agentMessages.sessionId))
-    .where(eq(agentActions.id, actionId))
-  if (!found) throw notFound('操作')
-  authorize(ctx.actor, 'agent:write', { projectId: found.projectId })
-  const action = found.action
-  if (action.undoneAt) throw new AppError('INVALID_STATE', '该操作已撤销')
-  const listed = action.result?.nodeIds
-  const nodeIds = Array.isArray(listed)
-    ? listed.filter((id): id is string => typeof id === 'string')
-    : action.resultingNodeId
-      ? [action.resultingNodeId]
-      : []
-  const cameraId = typeof action.result?.cameraId === 'string' ? action.result.cameraId : null
-  const restoreId =
-    typeof action.result?.restoreCameraId === 'string' ? action.result.restoreCameraId : null
-  if (nodeIds.length) {
-    for (const nodeId of nodeIds) await setHidden(db, ctx, nodeId, true)
-  } else if (cameraId) {
-    await setCameraDeleted(db, ctx, cameraId, true)
-  } else if (restoreId) {
-    await setCameraDeleted(db, ctx, restoreId, false)
-  } else {
-    throw new AppError('INVALID_STATE', '该操作没有产生可撤销的改动')
-  }
-  const [updated] = await db
-    .update(agentActions)
-    .set({ undoneAt: new Date() })
-    .where(eq(agentActions.id, actionId))
-    .returning()
-  if (!updated) throw notFound('操作')
-  return toAction(updated)
+  return db.transaction(async (tx) => {
+    const [found] = await tx
+      .select({ action: agentActions, projectId: agentSessions.projectId })
+      .from(agentActions)
+      .innerJoin(agentMessages, eq(agentMessages.id, agentActions.messageId))
+      .innerJoin(agentSessions, eq(agentSessions.id, agentMessages.sessionId))
+      .where(eq(agentActions.id, actionId))
+      .for('update', { of: agentActions })
+    if (!found) throw notFound('操作')
+    authorize(ctx.actor, 'agent:write', { projectId: found.projectId })
+    const action = found.action
+    if (action.undoneAt) throw new AppError('INVALID_STATE', '该操作已撤销')
+    const listed = action.result?.nodeIds
+    const nodeIds = Array.isArray(listed)
+      ? listed.filter((id): id is string => typeof id === 'string')
+      : action.resultingNodeId
+        ? [action.resultingNodeId]
+        : []
+    const cameraId = typeof action.result?.cameraId === 'string' ? action.result.cameraId : null
+    const restoreId =
+      typeof action.result?.restoreCameraId === 'string' ? action.result.restoreCameraId : null
+    if (nodeIds.length) {
+      for (const nodeId of nodeIds) await setHidden(tx, ctx, nodeId, true)
+    } else if (cameraId) {
+      await setCameraDeleted(tx, ctx, cameraId, true)
+    } else if (restoreId) {
+      await setCameraDeleted(tx, ctx, restoreId, false)
+    } else {
+      throw new AppError('INVALID_STATE', '该操作没有产生可撤销的改动')
+    }
+    const [updated] = await tx
+      .update(agentActions)
+      .set({ undoneAt: new Date() })
+      .where(eq(agentActions.id, actionId))
+      .returning()
+    if (!updated) throw notFound('操作')
+    return toAction(updated)
+  })
 }
