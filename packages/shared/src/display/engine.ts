@@ -71,6 +71,49 @@ const neg = (v: Point): Point => [-v[0] || 0, -v[1] || 0]
 /** Facing into the store, the right-hand direction on the plan (x right, z down). */
 const rightOf = (inward: Point): Point => [-inward[1] || 0, inward[0]]
 const longAxis = (t: Pick<DisplayTableInput, 'w' | 'd'>): Point => (t.w >= t.d ? [1, 0] : [0, 1])
+/** A table whose footprint is known (one placed by hand or read without its outline has 0 × 0). */
+const sized = (t: Pick<DisplayTableInput, 'w' | 'd'>) => t.w > 0 && t.d > 0 && t.w !== t.d
+
+export const ENTRANCE_SIDES = ['bottom', 'top', 'left', 'right'] as const
+export type EntranceSide = (typeof ENTRANCE_SIDES)[number]
+export const ENTRANCE_SIDE_LABELS: Record<EntranceSide, string> = {
+  bottom: '下方',
+  top: '上方',
+  left: '左侧',
+  right: '右侧',
+}
+
+/**
+ * An entrance on one side of a picture (uploaded plans: x right, y down in pixels), beyond the
+ * tables, so that numbering and orientation work without a measured space.
+ */
+export function sideEntrance(
+  side: EntranceSide,
+  tables: readonly Pick<DisplayTableInput, 'cx' | 'cz'>[],
+): EntranceFrame {
+  const xs = tables.map((t) => t.cx)
+  const zs = tables.map((t) => t.cz)
+  const mid = (v: number[]) => (v.length ? (Math.min(...v) + Math.max(...v)) / 2 : 0)
+  const far = 1e6
+  switch (side) {
+    case 'top':
+      return { point: [mid(xs), -far], inward: [0, 1] }
+    case 'left':
+      return { point: [-far, mid(zs)], inward: [1, 0] }
+    case 'right':
+      return { point: [far, mid(zs)], inward: [-1, 0] }
+    default:
+      return { point: [mid(xs), far], inward: [0, -1] }
+  }
+}
+
+/** The picture side nearest to an entrance direction (for showing a measured entrance). */
+export function entranceSideOf(frame: EntranceFrame | null): EntranceSide {
+  if (!frame) return 'bottom'
+  const [x, z] = frame.inward
+  if (Math.abs(z) >= Math.abs(x)) return z < 0 ? 'bottom' : 'top'
+  return x > 0 ? 'left' : 'right'
+}
 
 /** The main entrance of a space (the first main one, else the first), with its inward normal. */
 export function entranceFrame(space: Pick<Space, 'boundary' | 'entrances'>): EntranceFrame | null {
@@ -97,7 +140,13 @@ export function orderTables<T extends DisplayTableInput>(
   const right = rightOf(frame.inward)
   const depth = (t: T) => dot(sub([t.cx, t.cz], frame.point), frame.inward)
   const lateral = (t: T) => dot(sub([t.cx, t.cz], frame.point), right)
-  const tolerance = (t: T) => Math.min(t.w, t.d) / 2
+  // Tables of unknown size take the typical half width of the others.
+  const halves = tables
+    .filter(sized)
+    .map((t) => Math.min(t.w, t.d) / 2)
+    .sort((a, b) => a - b)
+  const typical = halves[Math.floor(halves.length / 2)] ?? 0
+  const tolerance = (t: T) => (sized(t) ? Math.min(t.w, t.d) / 2 : typical)
   const sorted = [...tables].sort((a, b) => depth(a) - depth(b))
   const rows: T[][] = []
   for (const t of sorted) {
@@ -127,6 +176,8 @@ export interface PlanDisplayInput {
   market: Market
   /** Side of the end slot on landscape tables, facing into the store; the guide draws it left. */
   landscapeEnd?: 'left' | 'right'
+  /** Set by hand when the drawing is read wrongly; otherwise from the table nearest the entrance. */
+  orientation?: DisplayOrientation | null
 }
 
 /**
@@ -145,8 +196,10 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
     input.tables.filter((t) => t.kind === 'side'),
     input.entrance,
   )
-  const first = islands[0]
-  const orientation = first ? tableOrientation(first, input.entrance) : 'portrait'
+  // The island table nearest the entrance whose outline was found decides for the store.
+  const first = islands.find(sized) ?? islands[0]
+  const orientation =
+    input.orientation ?? (first ? tableOrientation(first, input.entrance) : 'portrait')
   const n = islands.length
   const ruleTables: 2 | 3 | 4 = n <= 2 ? 2 : n >= 4 ? 4 : 3
   const nonStandard = n === 1 || n > 4
@@ -155,7 +208,12 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
   const sideward: Point = input.landscapeEnd === 'right' ? rightOf(inward) : neg(rightOf(inward))
 
   const endToward = (t: DisplayTableInput): Point => {
-    const axis = longAxis(t)
+    // Unknown size: the long side follows the store's orientation.
+    const axis: Point = sized(t)
+      ? longAxis(t)
+      : orientation === 'portrait'
+        ? [Math.abs(inward[0]), Math.abs(inward[1])]
+        : [Math.abs(rightOf(inward)[0]), Math.abs(rightOf(inward)[1])]
     // Portrait: the end faces the entrance; landscape: every table's end on the same side.
     const target: Point = orientation === 'portrait' ? neg(inward) : sideward
     return dot(axis, target) >= 0 ? axis : neg(axis)

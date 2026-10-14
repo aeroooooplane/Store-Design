@@ -66,6 +66,8 @@ export const deliveries = pgTable(
     folderName: text('folder_name').notNull(),
     fullPdfFileId: uuid('full_pdf_file_id').references(() => storedFiles.id),
     showPdfFileId: uuid('show_pdf_file_id').references(() => storedFiles.id),
+    /** 展陈方案 PPT when the delivery included it. */
+    displayPptFileId: uuid('display_ppt_file_id').references(() => storedFiles.id),
     zipFileId: uuid('zip_file_id').references(() => storedFiles.id),
     archivePath: text('archive_path'),
     manifest: jsonb('manifest').$type<Record<string, unknown>>().notNull().default({}),

@@ -91,6 +91,7 @@ function fakeApi(cameras: NodeCamera[], images: RenderImage[]) {
           fullPdf: file('00-影石渲染测试店完整方案.pdf'),
           showPdf: file('影石渲染测试店方案.pdf'),
           zip: file('交付.zip'),
+          displayPpt: null,
           pages: { full: 5, show: 3 },
           views: 2,
           createdAt: '2026-10-10T10:00:00.000Z',

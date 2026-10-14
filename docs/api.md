@@ -92,7 +92,7 @@
 | PUT | `/nodes/{id}/renders/{cameraId}/{mode}` | 上传浏览器渲染的一张视角图（请求体为 PNG，`mode` 为 material；white 为旧的白模图，仍可上传但不再列出、下载或交付）；只限渲染节点 |
 | GET | `/nodes/{id}/renders` | 每个视角每种模式最新一张，`stale` 表示布局、所用模型文件或视角位姿已变 |
 | GET | `/nodes/{id}/renders/archive` | 当前（未过期）渲染图打包为 ZIP |
-| POST | `/nodes/{id}/deliveries` | 生成交付：请求体 `{ planPng, planSvg? }` 为浏览器绘制的编号平面图；返回完整版与展示版 PDF、交付目录 ZIP 的下载地址 |
+| POST | `/nodes/{id}/deliveries` | 生成交付：请求体 `{ planPng, planSvg?, display? }`，`planPng` 为浏览器绘制的编号平面图；带 `display`（同 `/nodes/{id}/display/export` 的请求体）时一并生成展陈方案 PPT 与展陈清单，放进交付目录 `04_展陈方案/`。返回完整版与展示版 PDF、展陈方案 PPT（可空）、交付目录 ZIP 的下载地址 |
 | GET | `/nodes/{id}/deliveries` | 该渲染节点的历次交付（新的在前） |
 
 签名在服务端计算：布局签名含空间、铺位形态、布局、SI、市场与所用模型文件哈希；视角签名含位置、目标与视场角（改名不算）。交付要求每个视角的材质图都已渲染且未过期，否则返回 409（`details` 给出缺失与过期张数）。PDF 用随附的思源黑体子集（Noto Sans SC，GB2312 常用字）。
@@ -130,6 +130,22 @@
 | POST | `/recognition-runs/{id}/confirm` | 用户校对后的空间（可带保留的道具布局）生成来源为 `recognition` 的根空间节点；同一记录只能确认一次 |
 
 识别结果 `draft`：`space`（边界、入口、障碍物、层高可空）、`items`（图上文字、对应模型、用途、分类 现状/新增需求/区域外、位置尺寸、置信度、说明）、`scale`（比例来源与每像素毫米数、是否交叉核对）、`pending`（待人工确认事项）、`confidence`、`notes`。失败判定（需求 4.2）：比例无法标定、边界不闭合、整体置信度低于 0.6；失败的记录仍保留草稿，用户校准后可重试或直接手动录入。
+
+### 展陈方案
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/display-rules/current` | 现行展陈规则（版本、产品、托盘、版式），未导入时 404 |
+| GET | `/nodes/{id}/display` | 渲染节点的展陈方案：按指引编号的中岛桌与边桌、各槽位产品（含用户修改）、平面与每个视角效果图上的标签位置（由视角投影算出）、历次导出 |
+| PUT | `/nodes/{id}/display` | 保存修改 `{ orientation, landscapeEnd, slots, modules }`，带 `If-Match` |
+| POST | `/nodes/{id}/display/export` | 生成展陈方案 PPT 与展陈清单 Excel：请求体 `{ planPng, planViewBox }` 为浏览器绘制的无编号平面图及其范围（米） |
+| GET / POST | `/display-tasks` | 上传式展陈任务（工作流 2）列表与新建 `{ name, market, siStyle }` |
+| GET / PATCH / DELETE | `/display-tasks/{id}` | 任务详情、修改（入口、桌子、标签位置、槽位修改，带 `If-Match`）、删除（软删除） |
+| PUT | `/display-tasks/{id}/{plan|render}` | 上传平面图或效果图（PNG/JPEG 原始字节，查询参数 `originalName`、`page`，带 `If-Match`） |
+| POST | `/display-tasks/{id}/detect` | 识别桌子：矢量 PDF 页带浏览器提取的 `vector` 时本地找“中岛桌”标注与桌面外框，否则用视觉模型；效果图由视觉模型框桌、程序按远近与左右对号。返回更新后的任务 |
+| POST | `/display-tasks/{id}/export` | 按任务生成展陈方案 PPT 与清单 |
+
+任务不建正式项目；`state`（入口、桌子、修改）与工作流 1 的数据结构一致，以后可加“转为项目”。
 
 ### Agent 对话（第三期）
 

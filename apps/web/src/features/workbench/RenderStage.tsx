@@ -8,6 +8,7 @@ import type {
   DesignNode,
   Layout,
   NodeCamera,
+  NodeDisplayExportRequest,
   NodeRenderList,
   Project,
   RenderImage,
@@ -16,6 +17,8 @@ import type {
   Space,
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { DisplayPanel } from '../display/DisplayPanel.tsx'
+import { displayKeys, useNodeDisplay } from '../display/queries.ts'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import {
   renderArchiveUrl,
@@ -40,8 +43,9 @@ const MODES: readonly RenderedMode[] = RENDERED_MODES
 const NO_FLAGS: ReadonlySet<string> = new Set()
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
-/** The 3D material view (rotatable) or the rendered image of the chosen view. */
-type Show = '3d' | 'image'
+/** The 3D material view (rotatable), the rendered image of the chosen view, or the 展陈 plan. */
+type Show = '3d' | 'image' | 'display'
+const NO_NUMBERS: Readonly<Record<string, number>> = {}
 type Target = { camera: NodeCamera; mode: RenderedMode }
 
 function dataUrlToBlob(url: string): Blob {
@@ -78,6 +82,10 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const [error, setError] = useState<unknown>(null)
   const started = useRef(false)
   const planRef = useRef<SVGSVGElement>(null)
+  const displayPlanRef = useRef<SVGSVGElement>(null)
+  const display = useNodeDisplay(node.id)
+  const hasDisplay = (display.data?.tables.length ?? 0) > 0
+  const [withDisplay, setWithDisplay] = useState(true)
   const deliveries = useDeliveries(node.id)
   const createDelivery = useCreateDelivery(node.id)
   const [exporting, setExporting] = useState(false)
@@ -134,6 +142,8 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     } finally {
       setProgress(null)
       void client.invalidateQueries({ queryKey: workbenchKeys.renders(node.id) })
+      // The 展陈 tab shows the renders with the table labels on them.
+      void client.invalidateQueries({ queryKey: displayKeys.node(node.id) })
     }
   }
 
@@ -151,6 +161,15 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     if (missing.length) void render(missing)
   })
 
+  /** The plan for the 展陈 PPT: no legend numbers, the customer-flow arrow, and its area in metres. */
+  async function exportDisplayPlan(): Promise<NodeDisplayExportRequest> {
+    const svg = displayPlanRef.current
+    if (!svg) throw new Error('平面图尚未绘制')
+    const plan = await exportPlan(svg)
+    const box = svg.viewBox.baseVal
+    return { planPng: plan.png, planViewBox: [box.x, box.y, box.width, box.height] }
+  }
+
   /** Draws the numbered plan at print size, then the server builds both PDFs and the ZIP. */
   async function deliver() {
     const svg = planRef.current
@@ -158,7 +177,11 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     setExporting(true)
     try {
       const plan = await exportPlan(svg)
-      await createDelivery.mutateAsync({ planPng: plan.png, planSvg: plan.svg })
+      await createDelivery.mutateAsync({
+        planPng: plan.png,
+        planSvg: plan.svg,
+        ...(hasDisplay && withDisplay ? { display: await exportDisplayPlan() } : {}),
+      })
     } catch (caught) {
       if (!createDelivery.isError) setError(caught)
     } finally {
@@ -189,6 +212,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 [
                   ['3d', '三维查看'],
                   ['image', '渲染图'],
+                  ['display', '展陈'],
                 ] as const
               ).map(([mode, label]) => (
                 <button
@@ -218,9 +242,28 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               numbers={numbers}
               title={`${node.name} 交付平面`}
             />
+            <PlanView
+              svgRef={displayPlanRef}
+              space={space}
+              shopType={project.shopType}
+              layout={layout}
+              assets={assets}
+              numbers={NO_NUMBERS}
+              title={`${node.name} 展陈平面`}
+            />
           </div>
 
-          <div className="render-main">
+          <div className={show === 'display' ? 'render-main render-main-display' : 'render-main'}>
+            {show === 'display' && (
+              <DisplayPanel
+                project={project}
+                node={node}
+                space={space}
+                layout={layout}
+                assets={assets}
+                exportPlan={exportDisplayPlan}
+              />
+            )}
             {show === 'image' && (
               <div className="render-image">
                 {mainImage ? (
@@ -334,6 +377,16 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 </>
               }
             />
+            {hasDisplay && (
+              <label className="check-field">
+                <input
+                  type="checkbox"
+                  checked={withDisplay}
+                  onChange={(event) => setWithDisplay(event.target.checked)}
+                />
+                同时生成展陈方案 PPT（{display.data?.tables.length} 张桌，见“展陈”页签）
+              </label>
+            )}
             <ErrorMessage error={error ?? createDelivery.error ?? cameras.error ?? renders.error} />
           </div>
           <DeliveryList deliveries={deliveries.data ?? []} error={deliveries.error} />
@@ -379,6 +432,11 @@ function DeliveryList({ deliveries, error }: DeliveryListProps) {
                 <a href={d.showPdf.url} target="_blank" rel="noreferrer">
                   展示版 PDF（{d.pages.show} 页）
                 </a>
+                {d.displayPpt && (
+                  <a href={d.displayPpt.url} download={d.displayPpt.name}>
+                    展陈方案 PPT
+                  </a>
+                )}
                 <a href={d.zip.url} download={d.zip.name}>
                   ZIP（{sizeText(d.zip.bytes)}）
                 </a>
