@@ -13,7 +13,7 @@ import { createNode } from '../../nodes/service.ts'
 import { requireSpace, tool } from './context.ts'
 import { describeItem } from './describe.ts'
 import { EMPTY_LAYOUT, namesUnder, saveLayout } from './persist.ts'
-import { ALONG, placeAlong, unrotated } from './placement.ts'
+import { ALONG, placeAlong, unrotated, wallGap } from './placement.ts'
 
 export const generatePlansTool = tool({
   name: 'generate_plans',
@@ -81,7 +81,14 @@ export const placeItemTool = tool({
     if (!asset || asset.retired)
       throw new AppError('VALIDATION_FAILED', `没有模型 ${input.modelId}`)
     const base = tools.node?.layout ?? EMPTY_LAYOUT
-    const placed = placeAlong(space, asset, input.along, input.position ?? 0.5, input.rotation)
+    const placed = placeAlong(
+      space,
+      asset,
+      input.along,
+      input.position ?? 0.5,
+      wallGap(tools.project.shopType),
+      input.rotation,
+    )
     const item: LayoutItem = {
       id: `${asset.function}-${Date.now().toString(36)}`,
       assetId: asset.id,
@@ -125,6 +132,7 @@ export const moveItemTool = tool({
         { footprint: unrotated(item), front },
         input.along,
         input.position ?? 0.5,
+        wallGap(tools.project.shopType),
       )
       next = { ...item, ...placed }
     } else {

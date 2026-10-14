@@ -6,6 +6,7 @@ import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { rectangleSpace } from '@store/shared'
 import type {
   NodeCameraList,
   NodeCreated,
@@ -69,7 +70,7 @@ const newProject = (name = '当前行为') => createProject(t, { name, shopType:
 const post = (projectId: string, payload: object) => postNode(t, projectId, payload)
 const create = (projectId: string, payload: object) => createNode(t, projectId, payload)
 /** An 8 × 6 × 3.2 m room whose whole front edge (z = 6) is the entrance. */
-const spaceOf = (projectId: string) => createSpace(t, projectId)
+const spaceOf = (projectId: string, space?: object) => createSpace(t, projectId, space)
 const node = (id: string | undefined) => getNode(t, id)
 /** Runs one tool without a selection. */
 const run = (projectId: string, nodeId: string | null, name: string, input: object = {}) =>
@@ -80,33 +81,101 @@ async function projectCount(): Promise<number> {
   return response.json<{ total: number }>().total
 }
 
-describe('a. place_item 贴墙间隙', () => {
-  it('当前行为：道具外沿离墙 0.02 m（WALL_GAP_M），四面墙都一样', async () => {
-    const project = await newProject()
-    const space = await spaceOf(project.id)
-    const place = async (modelId: string, along: string) => {
-      const outcome = await run(project.id, space.id, 'place_item', { modelId, along })
-      const saved = await node(outcome.nodeId)
-      const item = saved.layout?.items[0]
-      if (!item) throw new Error('nothing placed')
-      return item
+describe('a. place_item 贴墙间隙（已修正：规划器的 wallGap，贴真实墙边）', () => {
+  const place = async (
+    projectId: string,
+    spaceId: string,
+    modelId: string,
+    along: string,
+    position?: number,
+  ) => {
+    const outcome = await run(projectId, spaceId, 'place_item', {
+      modelId,
+      along,
+      ...(position === undefined ? {} : { position }),
+    })
+    const item = (await node(outcome.nodeId)).layout?.items[0]
+    if (!item) throw new Error('nothing placed')
+    return item
+  }
+
+  it('keeps the planner gap per shop type: 0.3 m in an island shop, 0.05 m in a side hall', async () => {
+    for (const [shopType, gap] of [
+      ['island', 0.3],
+      ['side_hall', 0.05],
+    ] as const) {
+      const project = await createProject(t, { name: `间隙 ${shopType}`, shopType })
+      const space = await spaceOf(project.id)
+      // [model, wall, expected centre and rotation, distance from the outer edge to that wall]
+      const cases = [
+        ['asset-1', 'back', { cx: 4, cz: 0.5 + gap, rotation: 90 }, (i: Box) => i.cz - i.d / 2],
+        [
+          'asset-1',
+          'front',
+          { cx: 4, cz: 5.5 - gap, rotation: 90 },
+          (i: Box) => 6 - (i.cz + i.d / 2),
+        ],
+        ['asset-1', 'left', { cx: 0.5 + gap, cz: 3, rotation: 0 }, (i: Box) => i.cx - i.w / 2],
+        [
+          'asset-1',
+          'right',
+          { cx: 7.5 - gap, cz: 3, rotation: 0 },
+          (i: Box) => 8 - (i.cx + i.w / 2),
+        ],
+        ['asset-4', 'back', { cx: 4, cz: 0.225 + gap, rotation: 0 }, (i: Box) => i.cz - i.d / 2],
+        [
+          'asset-4',
+          'front',
+          { cx: 4, cz: 5.775 - gap, rotation: 180 },
+          (i: Box) => 6 - (i.cz + i.d / 2),
+        ],
+        ['asset-4', 'left', { cx: 0.225 + gap, cz: 3, rotation: 270 }, (i: Box) => i.cx - i.w / 2],
+        [
+          'asset-4',
+          'right',
+          { cx: 7.775 - gap, cz: 3, rotation: 90 },
+          (i: Box) => 8 - (i.cx + i.w / 2),
+        ],
+      ] as const
+      for (const [modelId, along, where, distance] of cases) {
+        const item = await place(project.id, space.id, modelId, along)
+        const label = `${shopType} ${modelId} ${along}`
+        expect(item.cx, label).toBeCloseTo(where.cx, 9)
+        expect(item.cz, label).toBeCloseTo(where.cz, 9)
+        expect(item.rotation, label).toBe(where.rotation)
+        expect(distance(item), label).toBeCloseTo(gap, 9)
+      }
     }
-    // [model, wall, expected centre and rotation, distance from the outer edge to that wall]
-    const cases = [
-      ['asset-1', 'back', { cx: 4, cz: 0.52, rotation: 90 }, (i: Box) => i.cz - i.d / 2],
-      ['asset-1', 'front', { cx: 4, cz: 5.48, rotation: 90 }, (i: Box) => 6 - (i.cz + i.d / 2)],
-      ['asset-1', 'left', { cx: 0.52, cz: 3, rotation: 0 }, (i: Box) => i.cx - i.w / 2],
-      ['asset-1', 'right', { cx: 7.48, cz: 3, rotation: 0 }, (i: Box) => 8 - (i.cx + i.w / 2)],
-      ['asset-4', 'back', { cx: 4, cz: 0.245, rotation: 0 }, (i: Box) => i.cz - i.d / 2],
-      ['asset-4', 'front', { cx: 4, cz: 5.755, rotation: 180 }, (i: Box) => 6 - (i.cz + i.d / 2)],
-      ['asset-4', 'left', { cx: 0.245, cz: 3, rotation: 270 }, (i: Box) => i.cx - i.w / 2],
-      ['asset-4', 'right', { cx: 7.755, cz: 3, rotation: 90 }, (i: Box) => 8 - (i.cx + i.w / 2)],
-    ] as const
-    for (const [modelId, along, where, gap] of cases) {
-      const item = await place(modelId, along)
-      expect(item, `${modelId} ${along}`).toMatchObject(where)
-      expect(gap(item), `${modelId} ${along}`).toBeCloseTo(0.02, 9)
-    }
+  })
+
+  it('sets a prop against the real wall of an L-shaped shop, not its bounding box', async () => {
+    const project = await newProject('L 形')
+    // The back wall steps in: z = 0 for x 0–4 m, z = 2 for x 4–8 m.
+    const space = await spaceOf(project.id, {
+      ...rectangleSpace(8, 6, 3.2),
+      boundary: [
+        [0, 0],
+        [4, 0],
+        [4, 2],
+        [8, 2],
+        [8, 6],
+        [0, 6],
+      ],
+    })
+    expect(await place(project.id, space.id, 'asset-4', 'back', 0.25)).toMatchObject({
+      cx: 2,
+      cz: 0.525,
+    })
+    // The bounding box would put it at z 0.525, in the notch outside the shop.
+    expect(await place(project.id, space.id, 'asset-4', 'back', 0.75)).toMatchObject({
+      cx: 6,
+      cz: 2.525,
+    })
+    // Straddling the step it keeps clear of the nearer (inner) wall.
+    expect(await place(project.id, space.id, 'asset-4', 'back', 0.5)).toMatchObject({
+      cx: 4,
+      cz: 2.525,
+    })
   })
 })
 
@@ -156,8 +225,8 @@ const deepLegacy = {
   ],
 }
 
-describe('b. 旧项目深层级上的设计助理修改', () => {
-  it('当前行为：导入保留“方案下挂方案/调整、白模下挂白模”，在这些节点上修改布局会因层级规则失败', async () => {
+describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
+  it('导入保留“方案下挂方案/调整、白模下挂白模”；在这些节点上修改布局时，副本回到所属阶段的层级', async () => {
     const imported = await t.app.inject({
       method: 'POST',
       url: '/api/v1/projects/import',
@@ -200,23 +269,32 @@ describe('b. 旧项目深层级上的设计助理修改', () => {
       name: '白模 · Agent',
     })
 
-    // saveLayout files the copy under node.parentId, which here is a plan or a white model:
-    // createNode's stage rule refuses it and nothing is created.
-    const before = nodes.length + 1
-    await expect(
-      run(project.id, plan2.id, 'move_item', { itemId: 'real', dx_mm: 1000 }),
-    ).rejects.toMatchObject({ code: 'VALIDATION_FAILED', message: '方案只能建在空间下' })
-    await expect(
-      run(project.id, edit1.id, 'remove_item', { itemId: 'real' }),
-    ).rejects.toMatchObject({ code: 'VALIDATION_FAILED', message: '方案只能建在空间下' })
-    await expect(
-      run(project.id, white2.id, 'move_item', { itemId: 'real', along: 'back' }),
-    ).rejects.toMatchObject({ code: 'VALIDATION_FAILED', message: '白模只能建在方案下' })
-    expect(
-      (
-        await t.app.inject({ method: 'GET', url: `/api/v1/projects/${project.id}/nodes` })
-      ).json<NodeTree>().nodes,
-    ).toHaveLength(before)
+    // Copies go to the stage's own level, like the workbench's stageParentId: a plan nested under a
+    // plan (or an old edit step) back under the space, a nested white model under its plan.
+    const nested = await run(project.id, plan2.id, 'move_item', { itemId: 'real', dx_mm: 1000 })
+    expect(await node(nested.nodeId)).toMatchObject({
+      kind: 'plan',
+      parentId: root.id,
+      name: '方案 A 再调 · Agent',
+    })
+    const fromEdit = await run(project.id, edit1.id, 'remove_item', { itemId: 'real' })
+    expect(await node(fromEdit.nodeId)).toMatchObject({
+      kind: 'plan',
+      parentId: root.id,
+      name: '调整 · Agent',
+    })
+    const deepWhite = await run(project.id, white2.id, 'move_item', {
+      itemId: 'real',
+      along: 'back',
+    })
+    expect(await node(deepWhite.nodeId)).toMatchObject({
+      kind: 'white',
+      parentId: plan1.id,
+      name: '白模 再调 · Agent',
+    })
+    // The SI switch files its copy the same way.
+    const swapped = await run(project.id, plan2.id, 'set_style', { siStyle: 'SI2.0' })
+    if (swapped.nodeId) expect((await node(swapped.nodeId)).parentId).toBe(root.id)
 
     // Tools that file under the space (found by walking up) are unaffected by the depth.
     const plans = await run(project.id, plan2.id, 'generate_plans')

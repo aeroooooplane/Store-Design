@@ -175,10 +175,11 @@ describe('agent with DeepSeek', () => {
     })
     expect(node.layout?.items).toHaveLength(1)
     const item = node.layout?.items[0]
-    // Against the back wall (z = 0), centred, long side along the wall (the model has no front).
+    // Against the back wall (z = 0), centred, long side along the wall (the model has no front),
+    // kept the planner's 0.3 m off the lease line of an island shop.
     expect(item).toMatchObject({ assetId: 'asset-1', rotation: 90, w: 1.8, d: 1 })
     expect(item?.cx).toBeCloseTo(4, 2)
-    expect(item?.cz).toBeCloseTo(0.52, 2)
+    expect(item?.cz).toBeCloseTo(0.8, 2)
     // The session took its title from the first message and booked the spend.
     const sessions = (
       await t.app.inject({ method: 'GET', url: `/api/v1/projects/${projectId}/agent/sessions` })
@@ -258,8 +259,8 @@ describe('agent with DeepSeek', () => {
     expect(String(actions[2]?.result?.error)).toContain('nope')
     // The second round saw the item the first round placed (the state moved on).
     const placedTurn = bodies[1]?.messages.find((m) => m.role === 'tool')
-    // Long side along the left wall, just inside it, nothing outside the boundary.
-    expect(String(placedTurn?.content)).toContain('"cx_mm":520,"cz_mm":3000')
+    // Long side along the left wall, 0.3 m inside it (island shop), nothing outside the boundary.
+    expect(String(placedTurn?.content)).toContain('"cx_mm":800,"cz_mm":3000')
     expect(String(placedTurn?.content)).toContain('"rotation":0')
     expect(String(placedTurn?.content)).not.toContain('超出')
     expect(reply.currentNodeId).toBe(actions[0]?.resultingNodeId)
