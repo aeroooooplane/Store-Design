@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-13T10:53:01+08:00",
+ "generatedAt": "2026-10-14T16:28:13+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -67,9 +67,9 @@
  },
  "shop_type": {
   "value": "边厅店",
-  "source": "飞书10-09",
-  "confidence": "待定",
-  "confirmed": false,
+  "source": "用户裁决",
+  "confidence": "已确认",
+  "confirmed": true,
   "evidence": {
    "飞书10-09": {
     "value": "边厅",
@@ -88,7 +88,12 @@
     ]
    }
   },
-  "subtype": null
+  "subtype": null,
+  "auto_value": "边厅店",
+  "decision": {
+   "题号": 18,
+   "说明": "同意建议"
+  }
  },
  "review_hint": null,
  "area_m2": {
@@ -119,6 +124,6 @@
   "related_stores": null
  },
  "status": {
-  "stage1": "待裁决"
+  "stage1": "已裁决"
  }
 }
