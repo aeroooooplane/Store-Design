@@ -1,12 +1,12 @@
 import { z } from 'zod'
 import {
-  distanceToBoundary,
+  boundaryPath,
   isSimplePolygon,
   polygonArea,
   polygonInsidePolygon,
   toClockwise,
 } from '../geometry/index.ts'
-import type { Point } from '../geometry/index.ts'
+import type { BoundaryPiece, Point } from '../geometry/index.ts'
 import { roundM } from '../units.ts'
 import { PointSchema, SegmentSchema, SizeSchema } from './common.ts'
 
@@ -31,8 +31,9 @@ export const CalibrationSchema = z.object({
 })
 
 /**
- * A store space: polygon boundary, entrances and open edges lying on the boundary,
- * obstacles inside it. Units are metres; x right, z down, y up.
+ * A store space: polygon boundary, entrances and open edges lying on the boundary (each given
+ * by its two ends; it may run along several edges, see `openingPieces`), obstacles inside it.
+ * Units are metres; x right, z down, y up.
  */
 export const SpaceSchema = z.object({
   schemaVersion: z.literal(1),
@@ -71,10 +72,21 @@ const MIN_AREA_M2 = 1
 const ON_BOUNDARY_TOLERANCE_M = 0.02
 const TYPICAL_HEIGHT_M = { min: 2.4, max: 6 } as const
 
-function onBoundary(a: Point, b: Point, boundary: readonly Point[]): boolean {
-  const middle: Point = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
-  return [a, b, middle].every((p) => distanceToBoundary(p, boundary) <= ON_BOUNDARY_TOLERANCE_M)
+/**
+ * The boundary an entrance or open edge covers, one piece per edge. An opening is stored by its
+ * two ends and runs along the boundary between them the shorter way round, so a single opening
+ * can span several edges (an arc storefront drawn as a polyline, or round a corner) and still
+ * count as one entrance. Null when an end is off the boundary.
+ */
+export function openingPieces(
+  space: { boundary: readonly Point[] },
+  opening: { a: Point; b: Point },
+): BoundaryPiece[] | null {
+  return boundaryPath(space.boundary, opening.a, opening.b, ON_BOUNDARY_TOLERANCE_M)
 }
+
+const onBoundary = (a: Point, b: Point, boundary: readonly Point[]): boolean =>
+  openingPieces({ boundary }, { a, b }) !== null
 
 /**
  * Geometric checks that a schema cannot express. Errors block saving; warnings are shown

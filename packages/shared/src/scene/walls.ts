@@ -1,6 +1,7 @@
-import { distanceToSegment, edges, isClockwise } from '../geometry/index.ts'
+import { edges, isClockwise } from '../geometry/index.ts'
 import type { Point } from '../geometry/index.ts'
 import type { ShopType } from '../enums.ts'
+import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { roundM } from '../units.ts'
 import { sceneFrame } from './frame.ts'
@@ -19,12 +20,10 @@ export interface WallSegment {
   kind: 'full' | 'cutaway'
 }
 
-const ON_EDGE_M = 0.02
 const MIN_WALL_M = 0.05
 
-/** Parameter of `p` along a → b (0 at a, `length` at b), or null if p is not on the edge. */
-function along(a: Point, b: Point, p: Point, length: number): number | null {
-  if (distanceToSegment(p, a, b) > ON_EDGE_M) return null
+/** Parameter of `p` along a → b (0 at a, `length` at b). */
+function along(a: Point, b: Point, p: Point, length: number): number {
   return ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) / length
 }
 
@@ -47,19 +46,24 @@ function remaining(length: number, gaps: [number, number][]): [number, number][]
 export function wallSegments(space: Space, shopType: ShopType): WallSegment[] {
   if (shopType === 'island') return []
   const { front } = sceneFrame(space)
-  const openings = [...space.entrances, ...space.openEdges]
+  // An opening may run along several edges; each edge only leaves out its own piece.
+  const pieces = [...space.entrances, ...space.openEdges].flatMap(
+    (o) => openingPieces(space, o) ?? [],
+  )
   const clockwise = isClockwise(space.boundary)
-  return edges(space.boundary).flatMap(([a, b]) => {
+  return edges(space.boundary).flatMap(([a, b], index) => {
     const length = Math.hypot(b[0] - a[0], b[1] - a[1])
     if (length < MIN_WALL_M) return []
     const dir: Point = [(b[0] - a[0]) / length, (b[1] - a[1]) / length]
     // Plan z points down, so a clockwise-on-screen boundary has its outside on the left.
     const outward: Point = clockwise ? [dir[1] + 0, -dir[0] + 0] : [-dir[1] + 0, dir[0] + 0]
-    const gaps = openings.flatMap((o) => {
-      const s = along(a, b, o.a, length)
-      const t = along(a, b, o.b, length)
-      return s === null || t === null ? [] : [[Math.min(s, t), Math.max(s, t)] as [number, number]]
-    })
+    const gaps = pieces
+      .filter((piece) => piece.edge === index)
+      .map((piece): [number, number] => {
+        const s = along(a, b, piece.a, length)
+        const t = along(a, b, piece.b, length)
+        return [Math.min(s, t), Math.max(s, t)]
+      })
     const back = outward[0] * front[0] + outward[1] * front[1] < -0.5
     return remaining(length, gaps).map(([s, e]): WallSegment => ({
       a: [roundM(a[0] + dir[0] * s), roundM(a[1] + dir[1] * s)],
