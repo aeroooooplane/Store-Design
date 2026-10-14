@@ -173,9 +173,10 @@ describe('a. place_item 贴墙间隙（已修正：规划器的 wallGap，贴真
       cx: 6,
       cz: 2.525,
     })
-    // Straddling the step it keeps clear of the nearer (inner) wall.
+    // position runs over the two back edges (4 m each); at the step it falls on the second edge
+    // and stays on it, against that edge, instead of straddling the step (cx 4 before).
     expect(await place(project.id, space.id, 'asset-4', 'back', 0.5)).toMatchObject({
-      cx: 4,
+      cx: 4.8,
       cz: 2.525,
     })
   })

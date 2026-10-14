@@ -99,6 +99,12 @@ describe('get_state（当前行为）', () => {
           [0, 6000],
         ],
         size_mm: [8000, 6000],
+        edges: [
+          'e0 8000mm 0° back',
+          'e1 6000mm 90° right',
+          'e2 8000mm 180° front 入口',
+          'e3 6000mm 270° left',
+        ],
         area_m2: 48,
         height_mm: 3200,
         entrances: [{ kind: 'main', a_mm: [0, 6000], b_mm: [8000, 6000] }],
