@@ -130,8 +130,6 @@ export function PlanEditor({
   )
   const select = useCallback((id: string | null) => dispatch({ type: 'select', id }), [])
   // 3D drags: one undo step per drag, magnetic snapping unless Alt is held.
-  // Dependencies kept as before (`[]`) although `space` is read: a known stale-closure issue,
-  // deliberately not fixed in this refactor.
   const move = useCallback(
     (id: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) =>
       dispatch({
@@ -142,7 +140,7 @@ export function PlanEditor({
         group: gesture.group,
         snapTo: gesture.snap ? space : null,
       }),
-    [],
+    [space],
   )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
