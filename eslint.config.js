@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import reactHooks from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -33,6 +34,16 @@ export default tseslint.config(
       // Fastify plugins and hooks are async by contract even when they do not await anything.
       '@typescript-eslint/require-await': 'off',
       eqeqeq: ['error', 'always'],
+    },
+  },
+  {
+    // Only the two classic hook rules; the React Compiler rules of the plugin's preset are not used.
+    files: ['apps/web/**/*.{ts,tsx}'],
+    plugins: { 'react-hooks': reactHooks },
+    rules: {
+      'react-hooks/rules-of-hooks': 'error',
+      // A warning for now: existing incomplete dependency lists are fixed one by one.
+      'react-hooks/exhaustive-deps': 'warn',
     },
   },
   {
