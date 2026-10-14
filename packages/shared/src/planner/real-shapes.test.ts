@@ -1,0 +1,161 @@
+// 回归样例：5 家真实门店的草稿边界（见 real-shapes.fixture.ts，未经用户核实，入口为补设）。
+import { describe, expect, it } from 'vitest'
+import { distanceToSegment, edges, interiorPoint, locatePoint } from '../geometry/index.ts'
+import type { Point } from '../geometry/index.ts'
+import { itemFootprint } from '../schemas/layout.ts'
+import type { LayoutItem } from '../schemas/layout.ts'
+import { validateSpace } from '../schemas/space.ts'
+import { defaultCameras } from '../scene/views.ts'
+import { facingAfter } from './orientation.ts'
+import { planLayout } from './planner.ts'
+import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
+import {
+  REAL_SHAPES,
+  baodingBeiguo,
+  nanchangWushang,
+  shanghaiTpy,
+  shenyangBainaohui,
+  venetianMacau,
+} from './real-shapes.fixture.ts'
+import type { RealShape } from './real-shapes.fixture.ts'
+
+// Real catalogue sizes (资源库/04_模型库), as in planner.test.ts.
+const catalog: PlannerCatalog = {
+  island: [
+    {
+      id: 'asset-408124',
+      name: '1800mm普通中岛桌',
+      function: 'island_table',
+      footprint: { w: 1, d: 1.8, h: 1.327 },
+      front: 'any',
+    },
+  ],
+  cashier: [
+    {
+      id: 'asset-24432224',
+      name: '1.8米收银桌(左)',
+      function: 'cashier',
+      footprint: { w: 1.8, d: 0.603, h: 1.205 },
+      front: '+Z',
+    },
+  ],
+  cabinet: [
+    {
+      id: 'asset-2595882',
+      name: '1200mm配件柜',
+      function: 'accessory_cabinet',
+      footprint: { w: 1.2, d: 0.45, h: 2.4 },
+      front: '+Z',
+    },
+    {
+      id: 'asset-323015',
+      name: '1600mm配件柜',
+      function: 'accessory_cabinet',
+      footprint: { w: 1.6, d: 0.45, h: 2.4 },
+      front: '+Z',
+    },
+  ],
+}
+const STRATEGIES: GeneratedStrategy[] = ['max', 'area', 'min']
+const CASES = REAL_SHAPES.map((shape) => [`${shape.source} ${shape.name}`, shape] as const)
+
+const run = (shape: RealShape, strategy: GeneratedStrategy) =>
+  planLayout({ space: shape.space, shopType: shape.shopType, strategy, catalog })
+const byFunction = (items: LayoutItem[], fn: string) => items.filter((i) => i.function === fn)
+
+/** The boundary edge a wall-standing prop (front +Z) has its back against. */
+function backEdge(shape: RealShape, item: LayoutItem): [Point, Point] {
+  const rect = itemFootprint(item)
+  const [fx, fz] = facingAfter('+Z', item.rotation)
+  const back: Point = [
+    item.cx - (fx * (rect.maxX - rect.minX)) / 2,
+    item.cz - (fz * (rect.maxZ - rect.minZ)) / 2,
+  ]
+  let best: [Point, Point] | null = null
+  let gap = Infinity
+  for (const [a, b] of edges(shape.space.boundary)) {
+    const d = distanceToSegment(back, a, b)
+    if (d < gap) [best, gap] = [[a, b], d]
+  }
+  // Within the wall gap of the shop type (0.05 m side hall, 0.3 m island).
+  expect(gap).toBeLessThan(0.31)
+  return best as [Point, Point]
+}
+const cashierEdge = (shape: RealShape) => {
+  const [cashier] = byFunction(run(shape, 'area').layout.items, 'cashier')
+  expect(cashier).toBeDefined()
+  return backEdge(shape, cashier as LayoutItem)
+}
+
+describe('real shop drafts', () => {
+  it.each(CASES)('%s：能建立空间', (_, shape) => {
+    expect(validateSpace(shape.space).filter((i) => i.severity === 'error')).toEqual([])
+    expect(shape.space.entrances).toHaveLength(1)
+  })
+
+  it.each(CASES)('%s：三种策略都没有越界、重叠等硬约束错误', (_, shape) => {
+    for (const strategy of STRATEGIES) {
+      const { issues } = run(shape, strategy)
+      expect(issues.filter((i) => i.severity === 'error')).toEqual([])
+    }
+  })
+
+  it.each(CASES)('%s：内部点和默认视角的目标点都在店内', (_, shape) => {
+    const ring = shape.space.boundary
+    expect(locatePoint(interiorPoint(ring), ring)).toBe('inside')
+    const cameras = defaultCameras(shape.space, shape.shopType)
+    expect(cameras).toHaveLength(8)
+    for (const camera of cameras)
+      expect(locatePoint([camera.target[0], camera.target[2]], ring)).toBe('inside')
+  })
+
+  it('places tables in every draft but the 11.7 ㎡ arc platform', () => {
+    for (const shape of [baodingBeiguo, shenyangBainaohui, nanchangWushang, shanghaiTpy]) {
+      for (const strategy of STRATEGIES) {
+        const tables = byFunction(run(shape, strategy).layout.items, 'island_table')
+        expect(tables.length).toBeGreaterThanOrEqual(1)
+      }
+    }
+    // 已知问题（只记录，未修）：store-0293 唯一的直边是整条入口，弧上全是斜边，没有可贴墙的边；
+    // 主通道和入口缓冲区占掉平台中部，两侧放不下 1 m 宽的桌子加通道（去掉入口时能放 1 张），三种策略都是空的。
+    for (const strategy of STRATEGIES) {
+      const { layout, notes } = run(venetianMacau, strategy)
+      expect(layout.items).toEqual([])
+      expect(notes).toContain('没有足够的墙面放收银台，请人工安排')
+    }
+  })
+
+  it('takes the wall opposite the entrance as the back wall', () => {
+    // store-0043：圆角矩形，入口在下边，收银台靠上边的直段。
+    expect(cashierEdge(baodingBeiguo)).toEqual([
+      [1.49, 0],
+      [6.656, 0],
+    ])
+    // store-0239：入口在下边（两角倒圆的一侧），收银台靠 6.008 m 的上边。
+    expect(cashierEdge(shenyangBainaohui)).toEqual([
+      [0, 0],
+      [6.008, 0],
+    ])
+    // store-0088：入口是约 4° 的斜底边，收银台靠 8.265 m 的上边。
+    expect(cashierEdge(nanchangWushang)).toEqual([
+      [0.01, 0],
+      [8.275, 0],
+    ])
+  })
+
+  it('store-0001: the back wall is a 1.3 m stub, so the cashier goes to the left wall', () => {
+    // 已知问题（只记录，未修）：上方真正的后墙 3720 mm 一段在草稿里斜了 0.55°（36 mm），6551 mm
+    // 一段斜约 6°，排布只认严格水平或竖直的墙，都被丢掉；面向入口的墙只剩左上角 1.3 m 的短段。
+    // 它被选为后墙，“尽量少放”唯一的配件柜就放在那里；1.8 m 的收银台放不下，退到左侧墙。
+    const [cabinet] = byFunction(run(shanghaiTpy, 'min').layout.items, 'accessory_cabinet')
+    expect(cabinet).toBeDefined()
+    expect(backEdge(shanghaiTpy, cabinet as LayoutItem)).toEqual([
+      [0.586, 1.438],
+      [1.886, 1.438],
+    ])
+    expect(cashierEdge(shanghaiTpy)).toEqual([
+      [0, 8.071],
+      [0, 3.69],
+    ])
+  })
+})
