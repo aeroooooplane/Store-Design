@@ -78,6 +78,13 @@
       "when": 1791804161409,
       "tag": "0010_three_d_effect_name",
       "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1791966180538,
+      "tag": "0011_display_rules",
+      "breakpoints": true
     }
   ]
 }

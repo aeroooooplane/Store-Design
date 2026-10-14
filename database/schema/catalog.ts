@@ -1,5 +1,17 @@
 import { sql } from 'drizzle-orm'
-import { boolean, check, index, numeric, pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core'
+import {
+  boolean,
+  check,
+  index,
+  jsonb,
+  numeric,
+  pgTable,
+  text,
+  timestamp,
+  unique,
+  uuid,
+} from 'drizzle-orm/pg-core'
+import type { DisplayRules } from '@store/shared'
 import { itemFunction } from './enums.ts'
 import { storedFiles } from './files.ts'
 
@@ -67,5 +79,26 @@ export const assets = pgTable(
     ),
     check('assets_dimensions_positive', sql`${t.width} > 0 AND ${t.depth} > 0 AND ${t.height} > 0`),
     check('assets_placeable_needs_glb', sql`NOT ${t.placeable} OR ${t.glbFileId} IS NOT NULL`),
+  ],
+)
+
+/**
+ * Display rules (展陈规则), imported from 资源库/10_产品与陈列/展陈规则.xlsx by `pnpm display:import`.
+ * One row per distinct workbook; the newest row is in force, older rows stay so that a display
+ * plan made with an earlier version can be shown as it was.
+ */
+export const displayRuleSets = pgTable(
+  'display_rule_sets',
+  {
+    id: uuid('id').primaryKey().defaultRandom(),
+    /** 版本日期 of the guide (YYYY-MM-DD). */
+    version: text('version').notNull(),
+    sourceSha256: text('source_sha256').notNull(),
+    rules: jsonb('rules').$type<DisplayRules>().notNull(),
+    importedAt: timestamp('imported_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    unique('display_rule_sets_source_unique').on(t.sourceSha256),
+    index('display_rule_sets_imported_idx').on(t.importedAt),
   ],
 )
