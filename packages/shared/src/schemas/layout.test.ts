@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { LayoutSchema, assetFitProblem, checkAssetFit, validateLayout } from './layout.ts'
 import type { LayoutInput } from './layout.ts'
+import { ARC, arcFront } from '../planner/shapes.fixture.ts'
 import { SpaceSchema, rectangleSpace } from './space.ts'
 
 const space = SpaceSchema.parse({
@@ -89,6 +90,23 @@ describe('validateLayout', () => {
       'item_blocks_entrance',
     ])
     expect(codes(layout([item('a', 1, 0.25, 1.8, 0.5, 3.2)]))).toEqual(['item_too_tall'])
+  })
+
+  it('checks an entrance along an arc piece by piece, not along its chord', () => {
+    const wholeArc = SpaceSchema.parse({
+      ...arcFront,
+      entrances: [{ a: [...ARC[0]], b: [...ARC[8]], kind: 'main' }],
+      openEdges: [],
+    })
+    const check = (input: LayoutInput) =>
+      validateLayout(wholeArc, LayoutSchema.parse(input)).map((issue) => issue.code)
+    // Across the chord z = 7 but inside the arc: fine.
+    expect(check(layout([item('a', 5, 7.2, 1.8, 0.5)]))).toEqual([])
+    // Across the arc itself: outside the shop and over the entrance.
+    expect(check(layout([item('a', 5, 7.9, 1, 0.5)]))).toEqual([
+      'item_outside_boundary',
+      'item_blocks_entrance',
+    ])
   })
 
   it('allows a prop standing against the entrance edge from inside', () => {
