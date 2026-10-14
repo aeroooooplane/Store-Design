@@ -1,4 +1,4 @@
-export { DEFAULT_RULES, planLayout, tablesForArea, usableArea } from './planner.ts'
+export { DEFAULT_RULES, NEAR_AXIS_DEG, planLayout, tablesForArea, usableArea } from './planner.ts'
 export type {
   GeneratedStrategy,
   PlannerAsset,

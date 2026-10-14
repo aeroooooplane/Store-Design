@@ -318,6 +318,45 @@ describe('planLayout on irregular shops', () => {
     expect(cashierOf(long)?.cx).toBeCloseTo(6 - 0.05 - 0.603 / 2, 2)
   })
 
+  it('treats an edge within 3° of an axis as a wall along it, clear of the edge at its inner end', () => {
+    // The back wall drops 0.35 m over 9.7 m (2.1°), the left wall leans 0.3 m over 8 m (2.1°).
+    const askew = space({
+      ...rectangleSpace(10, 8, 3.2),
+      boundary: [
+        [0.3, 0],
+        [10, 0.35],
+        [10, 8],
+        [0, 8],
+      ],
+    })
+    expect(cashierOf(askew)).toMatchObject({ rotation: 0 })
+    // Square to the axis, the wall gap taken from the end of the edge farther into the room (to
+    // within the millimetre the centres round to).
+    const near = (value: number, target: number) =>
+      expect(Math.abs(value - target)).toBeLessThanOrEqual(0.001)
+    for (const strategy of STRATEGIES) {
+      const { layout, issues } = run(askew, strategy)
+      expect(issues).toEqual([])
+      const back = layout.items.filter((i) => itemFootprint(i).minZ < 0.8)
+      const left = layout.items.filter((i) => itemFootprint(i).minX < 0.8 && !back.includes(i))
+      expect(back.length).toBeGreaterThan(0)
+      for (const item of back) near(itemFootprint(item).minZ, 0.35 + 0.05)
+      for (const item of left) near(itemFootprint(item).minX, 0.3 + 0.05)
+      if (strategy === 'max') expect(left.length).toBeGreaterThan(0)
+    }
+    // At 4° the back wall is a slanted wall: nothing stands against it.
+    const steeper = space({
+      ...rectangleSpace(10, 8, 3.2),
+      boundary: [
+        [0, 0],
+        [10, 0.7],
+        [10, 8],
+        [0, 8],
+      ],
+    })
+    expect(cashierOf(steeper)?.rotation).not.toBe(0)
+  })
+
   it('puts nothing against an open edge', () => {
     const open = space({
       ...rectangleSpace(10, 8, 3.2),

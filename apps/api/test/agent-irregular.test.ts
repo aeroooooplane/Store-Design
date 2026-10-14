@@ -79,6 +79,16 @@ const spaces = {
     entrances: [{ kind: 'main', a: [0, 6], b: [8, 6] }],
     openEdges: [{ a: [0, 2], b: [0, 0] }],
   },
+  /** The back edge drops 0.28 m over 7.58 m (2.1°), the left edge leans 0.42 m over 6 m (4.0°). */
+  askew: {
+    ...rectangleSpace(8, 6, 3.2),
+    boundary: [
+      [0.42, 0],
+      [8, 0.28],
+      [8, 6],
+      [0, 6],
+    ],
+  },
 }
 
 /** An island shop (0.3 m off the walls) on one of the shapes. */
@@ -308,6 +318,15 @@ describe('空间描述的边表', () => {
       'e1 6325mm 108° 斜向(近right)',
       'e2 8000mm 180° front 入口',
       'e3 6000mm 270° left 开放边2000mm',
+    ])
+  })
+
+  it('calls an edge square to its wall within 3°, as the automatic planner does', async () => {
+    expect(await edgesOf('askew')).toEqual([
+      'e0 7585mm 2° back',
+      'e1 5720mm 90° right',
+      'e2 8000mm 180° front 入口',
+      'e3 6015mm 274° 斜向(近left)',
     ])
   })
 })

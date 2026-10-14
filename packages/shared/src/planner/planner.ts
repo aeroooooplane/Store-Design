@@ -92,10 +92,18 @@ export interface PlannerResult {
 
 type Vec = readonly [number, number]
 
+/**
+ * A boundary edge that can carry wall-standing props, as a line along the x or z axis. For an
+ * edge a few degrees off the axis (see NEAR_AXIS_DEG) the line runs through the end of the edge
+ * nearer the interior, so props stood against it clear the whole edge.
+ */
 interface Wall {
+  /** Start of the line: the edge's first end, moved square to the axis onto that line. */
   a: Point
   axis: 'x' | 'z'
+  /** Unit direction along the axis, the way the edge runs. */
   u: Vec
+  /** Inward normal of the line. */
   n: Vec
   /** Usable stretches along the wall, in metres from `a` (entrances and open edges removed). */
   intervals: [number, number][]
@@ -130,6 +138,14 @@ interface Placed {
 const ALONG_STEP = 0.05
 /** How far an entrance end may lie from the boundary (as in validateSpace). */
 const ON_EDGE_M = 0.02
+/**
+ * Edges within this many degrees of the x or z axis count as walls along that axis (confirmed by
+ * the user, 2026-10-14). Drawn and measured boundaries are often a fraction of a degree off, such
+ * as the 0.55° back wall of store-0001; props still turn in quarter turns, so they stand square
+ * to the axis and clear the edge at its end nearer the interior.
+ */
+export const NEAR_AXIS_DEG = 3
+const NEAR_AXIS_TAN = Math.tan((NEAR_AXIS_DEG * Math.PI) / 180)
 
 function inward(u: Vec): Vec {
   // The ring is clockwise on the plan (x right, z down), so the interior lies to the left of u.
@@ -242,10 +258,19 @@ class Planner {
       const dx = b[0] - a[0]
       const dz = b[1] - a[1]
       const length = Math.hypot(dx, dz)
-      // Props rotate in quarter turns, so only axis-aligned edges can carry wall-standing props.
-      if (length < 0.3 || (Math.abs(dx) > 1e-6 && Math.abs(dz) > 1e-6)) return []
-      const u: Vec = [dx / length + 0, dz / length + 0]
-      let intervals: [number, number][] = [[0, length]]
+      // Props rotate in quarter turns, so only edges along (or within NEAR_AXIS_DEG of) the x or
+      // z axis can carry wall-standing props.
+      const alongX = Math.abs(dz) <= Math.abs(dx) * NEAR_AXIS_TAN
+      const alongZ = Math.abs(dx) <= Math.abs(dz) * NEAR_AXIS_TAN
+      if (length < 0.3 || !(alongX || alongZ)) return []
+      const u: Vec = alongX ? [Math.sign(dx), 0] : [0, Math.sign(dz)]
+      const n = inward(u)
+      // Off the axis, the far end of the edge stands this far further into the room than `a`:
+      // the line of props runs through whichever end stands further in.
+      const lift = Math.max(0, dx * n[0] + dz * n[1])
+      const start: Point = [a[0] + n[0] * lift + 0, a[1] + n[1] * lift + 0]
+      const span = dx * u[0] + dz * u[1]
+      let intervals: [number, number][] = [[0, span]]
       for (const piece of entrancePieces) {
         if (piece.edge !== index) continue
         const ta = (piece.a[0] - a[0]) * u[0] + (piece.a[1] - a[1]) * u[1]
@@ -267,10 +292,10 @@ class Planner {
       return intervals.length
         ? [
             {
-              a,
-              axis: Math.abs(dx) > 1e-6 ? 'x' : 'z',
+              a: start,
+              axis: alongX ? 'x' : 'z',
               u,
-              n: inward(u),
+              n,
               intervals,
               distance: far,
               depth,
