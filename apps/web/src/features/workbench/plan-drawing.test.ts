@@ -387,3 +387,114 @@ describe('symbols', () => {
     expect(symbolBaseRotation(null, { w: 1.8, d: 1 }, { w: 1.8, d: 1 })).toBe(0)
   })
 })
+
+/**
+ * 草稿样例（门店图纸窗口清洗试点，AI 看图得到、未经用户核实；与
+ * packages/shared/src/planner/real-shapes.fixture.ts 相同的坐标，按 x, z 依次排列，单位米）。
+ */
+const draft = (flat: number[]): Space => {
+  const boundary: [number, number][] = []
+  for (let i = 0; i + 1 < flat.length; i += 2) boundary.push([flat[i] ?? 0, flat[i + 1] ?? 0])
+  return { ...rectangleSpace(1, 1, 3.2), boundary, entrances: [] }
+}
+/** store-0293 澳门威尼斯人：4.52 m 平直底边，其余 65 段是约 210° 的弧形平台。 */
+const STORE_0293 = draft([
+  4.613, 3.006, 0.093, 3.006, 0.063, 2.893, 0.024, 2.688, 0.011, 2.585, 0, 2.378, 0.001, 2.261,
+  0.02, 2.047, 0.051, 1.863, 0.083, 1.731, 0.114, 1.627, 0.149, 1.525, 0.19, 1.426, 0.246, 1.304,
+  0.336, 1.139, 0.456, 0.959, 0.526, 0.869, 0.591, 0.792, 0.664, 0.713, 0.76, 0.62, 0.895, 0.505,
+  1.002, 0.426, 1.151, 0.329, 1.268, 0.264, 1.362, 0.217, 1.562, 0.136, 1.651, 0.105, 1.767, 0.073,
+  1.852, 0.053, 1.977, 0.029, 2.057, 0.018, 2.191, 0.005, 2.299, 0, 2.407, 0, 2.514, 0.005, 2.622,
+  0.014, 2.728, 0.029, 2.853, 0.053, 2.953, 0.077, 3.042, 0.102, 3.144, 0.136, 3.248, 0.176, 3.343,
+  0.217, 3.463, 0.277, 3.641, 0.383, 3.726, 0.442, 3.809, 0.505, 3.867, 0.551, 3.967, 0.64, 4.042,
+  0.713, 4.112, 0.788, 4.25, 0.959, 4.343, 1.097, 4.411, 1.212, 4.446, 1.277, 4.516, 1.426, 4.556,
+  1.525, 4.591, 1.627, 4.648, 1.836, 4.669, 1.941, 4.688, 2.067, 4.704, 2.274, 4.706, 2.369, 4.694,
+  2.585, 4.664, 2.79, 4.643, 2.891,
+])
+/** store-0043 保定北国先天下：8.146 × 7.004 m，四角为约 1.49 m 半径、15 段折线的圆角。 */
+const STORE_0043 = draft([
+  0.436, 6.567, 0.317, 6.432, 0.214, 6.283, 0.13, 6.122, 0.065, 5.949, 0.022, 5.767, 0.001, 5.577,
+  0, 5.514, 0, 1.49, 0.001, 1.427, 0.022, 1.237, 0.065, 1.054, 0.13, 0.882, 0.214, 0.72, 0.317,
+  0.571, 0.436, 0.436, 0.571, 0.317, 0.72, 0.214, 0.882, 0.13, 1.054, 0.065, 1.237, 0.022, 1.427,
+  0.001, 1.49, 0, 6.656, 0, 6.719, 0.001, 6.91, 0.022, 7.092, 0.065, 7.264, 0.13, 7.426, 0.214,
+  7.575, 0.317, 7.71, 0.436, 7.829, 0.571, 7.932, 0.72, 8.017, 0.882, 8.081, 1.054, 8.124, 1.237,
+  8.145, 1.427, 8.146, 1.49, 8.146, 5.514, 8.145, 5.577, 8.124, 5.767, 8.081, 5.949, 8.017, 6.122,
+  7.932, 6.283, 7.829, 6.432, 7.71, 6.567, 7.575, 6.687, 7.426, 6.79, 7.264, 6.874, 7.092, 6.939,
+  6.91, 6.982, 6.719, 7.002, 6.656, 7.004, 1.49, 7.004, 1.427, 7.002, 1.237, 6.982, 1.054, 6.939,
+  0.882, 6.874, 0.72, 6.79, 0.571, 6.687,
+])
+/** store-0088 南昌武商mall：租赁线，直角凹凸、74 mm 的小错台和约 4° 的斜底边。 */
+const STORE_0088 = draft([
+  0.489, 5.427, 0.489, 4.879, 0, 4.879, 0, 2.894, 0.099, 2.894, 0.099, 1.907, 0.798, 1.907, 0.798,
+  0.862, 0.01, 0.862, 0.01, 0, 8.275, 0, 8.275, 0.175, 9.111, 0.175, 9.111, 5.99, 9.037, 5.99,
+  9.032, 6.061,
+])
+/** store-0001 上海TPY中心：租赁线，斜墙之间转角 75°–96°，左墙与左上斜边只差 14.6°。 */
+const STORE_0001 = draft([
+  0, 3.69, 0.586, 1.438, 1.886, 1.438, 1.886, 0, 5.606, 0.036, 5.949, 3.288, 12.464, 2.604, 13.037,
+  8.071, 0, 8.071,
+])
+
+describe('dimension chains of real shop drafts', () => {
+  const turned = (side: Point[]) => {
+    const dir = (i: number) => {
+      const [a, b] = [side[i] as Point, side[i + 1] as Point]
+      return Math.atan2(b[1] - a[1], b[0] - a[0])
+    }
+    let sum = 0
+    for (let i = 1; i + 1 < side.length; i++) {
+      let d = dir(i) - dir(i - 1)
+      if (d > Math.PI) d -= 2 * Math.PI
+      if (d < -Math.PI) d += 2 * Math.PI
+      sum += d
+    }
+    return Math.abs((sum * 180) / Math.PI)
+  }
+
+  it('cuts store-0293’s 210° arc into three equal chains, not 90° + 90° + 30°', () => {
+    // The 90° cap alone gave 3377, 3378 and a short 1171 at the end of the arc.
+    const sides = boundarySides(STORE_0293.boundary)
+    expect(sides.map((side) => side.length - 1)).toEqual([1, 20, 24, 21])
+    for (const side of sides.slice(1)) {
+      expect(turned(side)).toBeGreaterThan(65)
+      expect(turned(side)).toBeLessThan(75)
+    }
+    expect(dimensionChains(STORE_0293, 0.6).map((d) => d.label)).toEqual([
+      '4520',
+      '2735',
+      '2724',
+      '2713',
+    ])
+  })
+
+  it('keeps store-0043’s straight sides apart from its round corners', () => {
+    // The first and last piece of each corner turn under 1° from the long side next to them.
+    // They used to join it as "straight", pulling whole corners into the sides' chains (5772,
+    // 7050, 5872, 1920); now each straight side and each corner has its own chain.
+    expect(dimensionChains(STORE_0043, 0.6).map((d) => d.label)).toEqual([
+      '4024',
+      '2107',
+      '5166',
+      '2107',
+      '4024',
+      '2107',
+      '5166',
+      '2107',
+    ])
+  })
+
+  it('leaves the corners of lease-line polylines alone: one side per edge', () => {
+    expect(boundarySides(STORE_0088.boundary)).toHaveLength(16)
+    expect(boundarySides(STORE_0001.boundary)).toHaveLength(9)
+    expect(dimensionChains(STORE_0001, 0.6).map((d) => d.label)).toEqual([
+      '2327',
+      '1300',
+      '1438',
+      '3720',
+      '3270',
+      '6551',
+      '5497',
+      '13037',
+      '4381',
+    ])
+  })
+})
