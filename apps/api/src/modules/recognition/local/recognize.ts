@@ -103,12 +103,25 @@ export function recognizeVector(
         }
       })
   // Prop labels sitting in a box anchor the boundary; boxes are looked up again once it is known.
-  const anchors = label(null).flatMap((l) =>
+  const unbounded = label(null)
+  const anchors = unbounded.flatMap((l) =>
     l.box && matchCatalog(l.text.text, catalog, undefined, siStyle).function !== 'other'
       ? [l.box]
       : [],
   )
-  const boundary = findBoundary(content, wallLines, anchors)
+  // The stated shop area in px², by a cross-checked scale read without the boundary (dimension
+  // lines, sized prop names): it tells the shop from a room inside it or the frame around it.
+  const shopM2 = Math.max(
+    0,
+    ...named.filter((a) => /店|铺|总面积/.test(a.text) && a.m2 >= 5).map((a) => a.m2),
+  )
+  const early = shopM2
+    ? findScale(dimensions, [], null, request.calibration, unbounded).scale
+    : null
+  const boundary = findBoundary(content, wallLines, anchors, {
+    pageEdges: !request.crop,
+    expectedArea: early?.verified ? (shopM2 * 1e6) / early.mmPerPixel ** 2 : null,
+  })
   if (boundary) {
     notes.push(
       `边界取${anchors.length ? '包含道具的最小' : '图中最大的'}闭合矩形（${Math.round(boundary.w)} × ${Math.round(boundary.h)} px）；异形门店请在校对时调整`,

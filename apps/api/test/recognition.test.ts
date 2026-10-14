@@ -360,6 +360,103 @@ describe('recognizeVector', () => {
     const draft = checkDraft(recognizeVector(detail, {}, CATALOG))
     expect(failureReason(draft)).toMatch(/比例不合理/)
   })
+
+  it('takes the shop, not the sheet frame or a frame holding the title block', () => {
+    // A 500 × 350 px shop with its dimensions (10 mm per px) on a framed sheet. A prop drawn
+    // beside the shop puts all three props inside the frame but only two inside the shop.
+    const sheet = (frames: VectorContent['rects']): VectorContent => ({
+      width: 1000,
+      height: 800,
+      rects: [
+        ...frames,
+        { x: 150, y: 150, w: 500, h: 350 },
+        { x: 200, y: 250, w: 180, h: 100 },
+        { x: 450, y: 170, w: 120, h: 45 },
+        { x: 700, y: 250, w: 50, h: 180 },
+      ],
+      lines: [
+        { x1: 150, y1: 130, x2: 650, y2: 130 },
+        { x1: 130, y1: 150, x2: 130, y2: 500 },
+      ],
+      texts: [
+        { text: '5000', x: 370, y: 112, w: 60, h: 16 },
+        { text: '3500', x: 112, y: 295, w: 16, h: 60 },
+        { text: '中岛桌', x: 260, y: 290, w: 60, h: 20 },
+        { text: '配件柜', x: 480, y: 182, w: 60, h: 20 },
+        { text: '边桌配件柜', x: 680, y: 330, w: 90, h: 20 },
+        { text: 'Client', x: 850, y: 100, w: 40, h: 10 },
+        { text: 'Scale', x: 850, y: 600, w: 40, h: 10 },
+        { text: 'Project Number', x: 850, y: 650, w: 80, h: 10 },
+      ],
+    })
+    const sheets = [
+      // The page border and a drawing frame along the page edges, short of the title block.
+      sheet([
+        { x: 5, y: 5, w: 990, h: 790 },
+        { x: 20, y: 20, w: 800, h: 760 },
+      ]),
+      // A frame well inside the page, around the drawing and the title block.
+      sheet([{ x: 100, y: 60, w: 820, h: 680 }]),
+    ]
+    for (const content of sheets) {
+      const draft = recognizeVector(content, {}, CATALOG)
+      expect(draft.scale).toMatchObject({
+        method: 'dimension',
+        verified: true,
+        originPx: [150, 150],
+      })
+      expect(draft.space?.boundary).toEqual([
+        [0, 0],
+        [5, 0],
+        [5, 3.5],
+        [0, 3.5],
+      ])
+      expect(draft.items.find((i) => i.label === '边桌配件柜')).toMatchObject({ source: 'outside' })
+    }
+  })
+
+  it('keeps a boundary at the edges of a crop the user drew around the shop', () => {
+    // The shop's left and top sides lie 10 px inside the crop: along its edges, yet the shop.
+    const cropped = recognizeVector(
+      SKETCH,
+      {
+        crop: { x: 90, y: 90, w: 700, h: 560 },
+        calibration: { a: [10, 10], b: [610, 10], mm: 6000 },
+      },
+      CATALOG,
+    )
+    expect(cropped.space?.boundary[2]).toEqual([6, 4.5])
+  })
+
+  it('prefers the rectangle of the stated shop area over a closed room inside it', () => {
+    // The shop's front is open, so a closed room around the props would win on its own; the
+    // stated 27 m² (600 × 450 px at the 10 mm per px the sized prop names give) picks the shop.
+    const content: VectorContent = {
+      width: 1000,
+      height: 800,
+      rects: [
+        { x: 150, y: 130, w: 420, h: 250 },
+        { x: 200, y: 250, w: 180, h: 100 },
+        { x: 400, y: 140, w: 160, h: 45 },
+      ],
+      lines: [
+        { x1: 100, y1: 100, x2: 700, y2: 100 },
+        { x1: 100, y1: 100, x2: 100, y2: 550 },
+        { x1: 700, y1: 100, x2: 700, y2: 550 },
+        { x1: 100, y1: 550, x2: 160, y2: 550 },
+        { x1: 640, y1: 550, x2: 700, y2: 550 },
+      ],
+      texts: [
+        { text: '1.8米开箱桌', x: 230, y: 290, w: 90, h: 16 },
+        { text: '1.6米配件柜', x: 440, y: 155, w: 90, h: 16 },
+        { text: '店铺实测面积：27m²', x: 100, y: 650, w: 160, h: 16 },
+      ],
+    }
+    const draft = recognizeVector(content, {}, CATALOG)
+    expect(draft.scale?.mmPerPixel).toBeCloseTo(10, 5)
+    expect(draft.space?.boundary[2]).toEqual([6, 4.5])
+    expect(draft.scale?.originPx).toEqual([100, 100])
+  })
 })
 
 describe('answers of a vision model', () => {
