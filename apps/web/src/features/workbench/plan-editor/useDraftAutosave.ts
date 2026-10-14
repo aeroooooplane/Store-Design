@@ -71,8 +71,7 @@ export function useDraftAutosave({
         })
     }, AUTOSAVE_DELAY_MS)
     return () => window.clearTimeout(timer)
-    // Dependencies kept as before: `dispatch` comes from useReducer, is stable and is not listed.
-  }, [state.dirty, state.layout, paused, saveState, projectId, baseNode.id, client])
+  }, [state.dirty, state.layout, paused, saveState, projectId, baseNode.id, client, dispatch])
 
   /** Removes the draft once its content is kept elsewhere (a new node) or thrown away. */
   async function finishDraft() {

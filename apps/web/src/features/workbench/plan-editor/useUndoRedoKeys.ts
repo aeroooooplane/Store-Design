@@ -25,6 +25,6 @@ export function useUndoRedoKeys(dispatch: Dispatch<EditorAction>) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-    // Kept as before: `dispatch` comes from useReducer and never changes, so `[]` registers once.
-  }, [])
+    // `dispatch` comes from useReducer and never changes, so the listener registers once.
+  }, [dispatch])
 }
