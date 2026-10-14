@@ -2480,7 +2480,7 @@
 {"store_id": "PDF-073", "page": 13, "type": "render", "method": "标题（OCR）", "code": null, "name": "RENDERING", "label": "效果图"}
 {"store_id": "PDF-073", "page": 14, "type": "unknown_no_text", "method": "无文字（OCR）", "code": null, "name": null, "label": "无文字待看图"}
 {"store_id": "PDF-074", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "PDF-074", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "PDF-074", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "PDF-074", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-074", "page": 4, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-074", "page": 5, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
@@ -3008,7 +3008,7 @@
 {"store_id": "PDF-090", "page": 2, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-090", "page": 3, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-091", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "PDF-091", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "Floorplan平面布置图Sc", "label": "封面"}
+{"store_id": "PDF-091", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "Floorplan平面布置图Sc", "label": "布置平面"}
 {"store_id": "PDF-091", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-091", "page": 4, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-091", "page": 5, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
@@ -4215,7 +4215,7 @@
 {"store_id": "PDF-123", "page": 36, "type": "electrical", "method": "目录", "code": "ZDS-05", "name": "照明配电平面图", "label": "电气"}
 {"store_id": "PDF-123", "page": 37, "type": "electrical", "method": "目录", "code": "ZDS-06", "name": "弱电平面图", "label": "电气"}
 {"store_id": "PDF-124", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "PDF-124", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "PDF-124", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "PDF-124", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-124", "page": 4, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-125", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
@@ -6424,7 +6424,7 @@
 {"store_id": "PDF-187", "page": 16, "type": "detail", "method": "标题", "code": null, "name": "系列中岛桌平面图", "label": "大样"}
 {"store_id": "PDF-187", "page": 17, "type": "detail", "method": "标题", "code": null, "name": "系列中岛桌平面图", "label": "大样"}
 {"store_id": "PDF-187", "page": 18, "type": "detail", "method": "标题", "code": null, "name": "DETAIL", "label": "大样"}
-{"store_id": "PDF-188", "page": 1, "type": "plan_layout", "method": "标题", "code": null, "name": "影石-新加坡Jewel中岛店-平面方案(总面积：14m²)", "label": "布置平面"}
+{"store_id": "PDF-188", "page": 1, "type": "cover", "method": "首页方案封面（只有标题文字）", "code": null, "name": "影石-新加坡Jewel中岛店-平面方案(总面积：14m²)", "label": "封面"}
 {"store_id": "PDF-188", "page": 2, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-188", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-188", "page": 4, "type": "toc", "method": "目录页", "code": null, "name": "图纸目录", "label": "目录"}
@@ -6992,7 +6992,7 @@
 {"store_id": "PDF-205", "page": 58, "type": "electrical", "method": "目录", "code": "ZDS-05", "name": "强电连线图", "label": "电气"}
 {"store_id": "PDF-205", "page": 59, "type": "electrical", "method": "目录", "code": "ZDS-06", "name": "弱电连线图", "label": "电气"}
 {"store_id": "PDF-206", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "PDF-206", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "PDF-206", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "PDF-206", "page": 3, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-206", "page": 4, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-206", "page": 5, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
@@ -8023,7 +8023,7 @@
 {"store_id": "PDF-233", "page": 38, "type": "detail", "method": "标题", "code": null, "name": "DETAIL", "label": "大样"}
 {"store_id": "PDF-233", "page": 39, "type": "detail", "method": "标题", "code": null, "name": "DETAIL", "label": "大样"}
 {"store_id": "PDF-234", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "PDF-234", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "PDF-234", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "PDF-234", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-234", "page": 4, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "PDF-234", "page": 5, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
@@ -14254,7 +14254,7 @@
 {"store_id": "NEW-007", "page": 6, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-007", "page": 7, "type": "render_annotated", "method": "图片特征+标注文字", "code": null, "name": null, "label": "效果图（带标注）"}
 {"store_id": "NEW-008", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "NEW-008", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "NEW-008", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "NEW-008", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-008", "page": 4, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-008", "page": 5, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
@@ -14871,7 +14871,7 @@
 {"store_id": "NEW-032", "page": 44, "type": "electrical", "method": "电气字样", "code": null, "name": null, "label": "电气"}
 {"store_id": "NEW-032", "page": 45, "type": "unknown", "method": null, "code": null, "name": null, "label": "未识别"}
 {"store_id": "NEW-033", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "NEW-033", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "封面"}
+{"store_id": "NEW-033", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图Scale比例A3-1", "label": "布置平面"}
 {"store_id": "NEW-033", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-033", "page": 4, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-033", "page": 5, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
@@ -15233,7 +15233,7 @@
 {"store_id": "NEW-046", "page": 37, "type": "electrical", "method": "标题", "code": null, "name": "照明配电平面图1:50", "label": "电气"}
 {"store_id": "NEW-046", "page": 38, "type": "electrical", "method": "标题", "code": null, "name": "弱电平面图", "label": "电气"}
 {"store_id": "NEW-047", "page": 1, "type": "cover", "method": "首页", "code": null, "name": null, "label": "封面"}
-{"store_id": "NEW-047", "page": 2, "type": "cover", "method": "首页方案封面（只有标题文字）（OCR）", "code": null, "name": "平面布置图ScaleA3-1:5", "label": "封面"}
+{"store_id": "NEW-047", "page": 2, "type": "plan_layout", "method": "图签图名（OCR）", "code": null, "name": "平面布置图ScaleA3-1:5", "label": "布置平面"}
 {"store_id": "NEW-047", "page": 3, "type": "render", "method": "图片特征（OCR）", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-047", "page": 4, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-047", "page": 5, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
@@ -16177,7 +16177,7 @@
 {"store_id": "NEW-080", "page": 41, "type": "plan_other", "method": "目录", "code": "ZDS-03", "name": "天花灯具线路控制图/Lightingdistributionplan", "label": "其他平面图"}
 {"store_id": "NEW-080", "page": 42, "type": "electrical", "method": "目录", "code": "ZDS-04", "name": "强电连线图/Socketwiringplan", "label": "电气"}
 {"store_id": "NEW-080", "page": 43, "type": "electrical", "method": "目录", "code": "ZDS-05", "name": "弱电连线图/Weakcurrentwiringdiagram", "label": "电气"}
-{"store_id": "NEW-081", "page": 1, "type": "plan_layout", "method": "标题", "code": null, "name": "影石-菲律宾Festival Mall中岛店-平面方案(总面积：10m²)", "label": "布置平面"}
+{"store_id": "NEW-081", "page": 1, "type": "cover", "method": "首页方案封面（只有标题文字）", "code": null, "name": "影石-菲律宾Festival Mall中岛店-平面方案(总面积：10m²)", "label": "封面"}
 {"store_id": "NEW-081", "page": 2, "type": "unknown", "method": null, "code": null, "name": null, "label": "未识别"}
 {"store_id": "NEW-081", "page": 3, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}
 {"store_id": "NEW-081", "page": 4, "type": "render", "method": "图片特征", "code": null, "name": null, "label": "效果图"}

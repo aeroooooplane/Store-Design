@@ -131,7 +131,9 @@ def classify(pages: list[dict], thumbs: dict[int, dict], ocr: dict[int, dict]) -
             flat_heads = re.sub(r"[\s_]+", "", " ".join(p["headings"])).upper()
             if kind in ("plan_layout", "elevation") and "PLANVIEW" in flat_heads and "ELEVATION" in flat_heads:
                 kind, method = "detail", "标题（平面+立面，道具三视图）"
-        if kind == "plan_layout" and p["page"] <= 2 and p["chars"] < 150 and not any(w in p["text"] for w in PROP_WORDS):
+        # 方案首页只有标题文字；真正的平面图哪怕文字转成了曲线，也会留下 SCALE / 比例 / PLAN VIEW 等图纸元素
+        if (kind == "plan_layout" and p["page"] <= 2 and p["chars"] < 250 and not any(w in p["text"] for w in PROP_WORDS)
+                and not re.search(r"SCALE|Scale|比例|PLANVIEW|1:\d", p["text"])):
             kind, method = "cover", "首页方案封面（只有标题文字）"
         if kind in (None, "plan_layout", "plan_other", "plan_original") and electrical_words(p["text"]) >= 6:
             kind, method = "electrical", "电气字样"
