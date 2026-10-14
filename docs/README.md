@@ -43,6 +43,7 @@
 | 主题 | 文档 |
 |---|---|
 | 多电脑同步、分支与 LFS | [sync-and-collaboration.md](sync-and-collaboration.md) |
+| 展陈方案（中岛桌与边桌陈列） | [display-plan-requirements.md](display-plan-requirements.md) |
 | 门店图纸整理（另一窗口负责） | [store-drawing-archive-plan.md](store-drawing-archive-plan.md) |
 | 架构评审与清理计划 | [architecture-review-20261013.md](architecture-review-20261013.md) |
 | SI 标准阅读与命名依据 | [si-standards-review-20261001.md](si-standards-review-20261001.md)、[模型库指引](../资源库/04_模型库/README.md) |
