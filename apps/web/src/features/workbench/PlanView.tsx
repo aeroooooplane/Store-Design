@@ -9,7 +9,13 @@ import {
   sceneFrame,
 } from '@store/shared'
 import type { Asset, Issue, Layout, LayoutItem, Point, ShopType, Space } from '@store/shared'
-import { dimensionChains, symbolBaseRotation, wallBands } from './plan-drawing.ts'
+import {
+  dimensionChains,
+  overallDimensions,
+  symbolBaseRotation,
+  tickHalf,
+  wallBands,
+} from './plan-drawing.ts'
 import { renderShapes, usePlanSymbols } from './plan-symbols.ts'
 import type { PlanSymbol } from './plan-symbols.ts'
 
@@ -205,13 +211,29 @@ export function PlanView({
   const span = Math.max(width, depth, 1)
   const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
   const dimOffset = WALL_THICKNESS_M + fontSize * 2.4
-  const dims = useMemo(
-    () => (compact ? [] : dimensionChains(space, dimOffset)),
-    [compact, space, dimOffset],
-  )
+  const dims = useMemo(() => {
+    if (compact) return []
+    const chains = dimensionChains(space, dimOffset)
+    return [...chains, ...overallDimensions(space, chains, dimOffset, fontSize * 2.4)]
+  }, [compact, space, dimOffset, fontSize])
   const pad = compact ? WALL_THICKNESS_M + 0.15 : dimOffset + fontSize * 2.2
   const bottomPad = compact ? pad : pad + fontSize * 2
-  const viewBox = `${bounds.minX - pad} ${bounds.minZ - pad} ${width + pad * 2} ${depth + pad + bottomPad}`
+  // Room beyond `pad` for chains farther out than a straight edge's (overall sizes, arcs).
+  const extra = useMemo(() => {
+    if (!dims.length) return { left: 0, top: 0, right: 0, bottom: 0 }
+    const ends = dims.flatMap((d) => [d.a, d.b])
+    const reach = (beyond: number) => {
+      const more = beyond + fontSize * 2.2 - pad
+      return more > 1e-6 ? more : 0
+    }
+    return {
+      left: reach(Math.max(0, ...ends.map((p) => bounds.minX - p[0]))),
+      top: reach(Math.max(0, ...ends.map((p) => bounds.minZ - p[1]))),
+      right: reach(Math.max(0, ...ends.map((p) => p[0] - bounds.maxX))),
+      bottom: reach(Math.max(0, ...ends.map((p) => p[1] - bounds.maxZ))),
+    }
+  }, [dims, bounds, fontSize, pad])
+  const viewBox = `${bounds.minX - pad - extra.left} ${bounds.minZ - pad - extra.top} ${width + pad * 2 + extra.left + extra.right} ${depth + pad + bottomPad + extra.top + extra.bottom}`
 
   const flagged = new Set(
     issues.filter((i) => i.severity === 'error').flatMap((i) => i.itemIds ?? []),
@@ -399,6 +421,8 @@ export function PlanView({
 
       {dims.map((d, i) => {
         const tick = fontSize * 0.35
+        // 45° to the dimension line, so it stays visible on slanted edges.
+        const half = tickHalf(d.a, d.b, tick)
         const mid: Point = [(d.a[0] + d.b[0]) / 2, (d.a[1] + d.b[1]) / 2]
         const text: Point = [
           mid[0] + d.outward[0] * fontSize * 0.7,
@@ -421,10 +445,10 @@ export function PlanView({
               <line
                 key={k}
                 className="plan-dim-tick"
-                x1={p[0] - tick / 2}
-                y1={p[1] + tick / 2}
-                x2={p[0] + tick / 2}
-                y2={p[1] - tick / 2}
+                x1={p[0] - half[0]}
+                y1={p[1] - half[1]}
+                x2={p[0] + half[0]}
+                y2={p[1] + half[1]}
               />
             ))}
             <text
@@ -444,8 +468,8 @@ export function PlanView({
       {!compact && (
         <text
           className="plan-info"
-          x={bounds.minX - pad + fontSize}
-          y={bounds.maxZ + bottomPad - fontSize * 0.8}
+          x={bounds.minX - pad - extra.left + fontSize}
+          y={bounds.maxZ + bottomPad + extra.bottom - fontSize * 0.8}
           fontSize={fontSize}
         >
           面积 {area.toFixed(1)} m² · 层高 {mToMm(space.height)} mm
