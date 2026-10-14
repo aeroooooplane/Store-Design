@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
+import { locatePoint, rectangleSpace } from '@store/shared'
 import type { Asset, Layout, LayoutItem } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
-import { editorReducer, initialEditorState, nextItemId, snap } from './editor-state.ts'
+import {
+  editorReducer,
+  initialEditorState,
+  newItemPoint,
+  nextItemId,
+  snap,
+} from './editor-state.ts'
 import type { EditorState } from './editor-state.ts'
 
 function item(overrides: Partial<LayoutItem> = {}): LayoutItem {
@@ -100,6 +106,28 @@ describe('editorReducer', () => {
       h: 2.1,
       placeholder: false,
     })
+  })
+
+  it('drops a new model in the middle of a rectangle and inside a U shape', () => {
+    expect(newItemPoint(rectangleSpace(8, 6, 3))).toEqual([4, 3])
+    // The bounding-box centre (4.5, 3) lies in the slot of the U, outside the shop.
+    const u = {
+      ...rectangleSpace(9, 6, 3),
+      boundary: [
+        [0, 0],
+        [9, 0],
+        [9, 6],
+        [6, 6],
+        [6, 2],
+        [3, 2],
+        [3, 6],
+        [0, 6],
+      ] as [number, number][],
+    }
+    const [cx, cz] = newItemPoint(u)
+    const added = editorReducer(state([]), { type: 'add', asset, cx, cz })
+    const placed = added.layout.items[0]
+    expect(locatePoint([placed?.cx ?? 0, placed?.cz ?? 0], u.boundary)).toBe('inside')
   })
 
   it('adds a model without a web model as a true-size placeholder', () => {
