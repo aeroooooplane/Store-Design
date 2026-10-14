@@ -4,6 +4,7 @@ import {
   distanceToSegment,
   edges,
   isClockwise,
+  openingPieces,
   polygonArea,
   wallSegments,
 } from '@store/shared'
@@ -23,6 +24,17 @@ function lineIntersection(p: Point, r: Point, q: Point, s: Point): Point | null 
   if (Math.abs(denom) < 1e-9) return null
   const t = ((q[0] - p[0]) * s[1] - (q[1] - p[1]) * s[0]) / denom
   return add(p, r, t)
+}
+
+/**
+ * The lines of an entrance or open edge: one per boundary edge it runs along (an opening may
+ * span several edges, see openingPieces, e.g. a whole arc storefront), so it follows the
+ * boundary instead of cutting across it. An opening with an end off the boundary is its chord.
+ */
+export function openingLines(space: Space, opening: { a: Point; b: Point }): [Point, Point][] {
+  const pieces = openingPieces(space, opening)
+  if (!pieces) return [[opening.a, opening.b]]
+  return pieces.map((piece): [Point, Point] => [piece.a, piece.b])
 }
 
 export interface WallBand {

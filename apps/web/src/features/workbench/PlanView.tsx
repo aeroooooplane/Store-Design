@@ -11,6 +11,7 @@ import {
 import type { Asset, Issue, Layout, LayoutItem, Point, ShopType, Space } from '@store/shared'
 import {
   dimensionChains,
+  openingLines,
   overallDimensions,
   symbolBaseRotation,
   tickHalf,
@@ -245,12 +246,13 @@ export function PlanView({
   })
   const symbols = usePlanSymbols(symbolUrls)
   const entrance = mainEntrance(space)
-  // The label sits just outside the opening, between the wall and the dimension chain.
-  const front = sceneFrame(space).front
+  // Halfway along the main entrance on the boundary (for an arc storefront on the arc, not on
+  // its chord). The label sits there once, just outside, between the wall and the dimensions.
+  const { front, entrance: entranceMid } = sceneFrame(space)
   const entranceLabel: Point | null = entrance
     ? [
-        (entrance.a[0] + entrance.b[0]) / 2 + front[0] * (WALL_THICKNESS_M + fontSize * 0.9),
-        (entrance.a[1] + entrance.b[1]) / 2 + front[1] * (WALL_THICKNESS_M + fontSize * 0.9),
+        entranceMid[0] + front[0] * (WALL_THICKNESS_M + fontSize * 0.9),
+        entranceMid[1] + front[1] * (WALL_THICKNESS_M + fontSize * 0.9),
       ]
     : null
   const area = polygonArea(space.boundary)
@@ -317,28 +319,33 @@ export function PlanView({
           <title>{o.label ?? '障碍物'}</title>
         </polygon>
       ))}
-      {space.openEdges.map((e, i) => (
-        <line
-          key={`open${i}`}
-          className="plan-open-edge"
-          x1={e.a[0]}
-          y1={e.a[1]}
-          x2={e.b[0]}
-          y2={e.b[1]}
-        />
-      ))}
-      {space.entrances.map((e, i) => (
-        <line
-          key={`e${i}`}
-          className="plan-entrance"
-          x1={e.a[0]}
-          y1={e.a[1]}
-          x2={e.b[0]}
-          y2={e.b[1]}
-        >
-          <title>{e.kind === 'main' ? '主入口' : '入口'}</title>
-        </line>
-      ))}
+      {/* Openings follow the boundary: one across several edges is drawn piece by piece. */}
+      {space.openEdges.flatMap((e, i) =>
+        openingLines(space, e).map(([a, b], k) => (
+          <line
+            key={`open${i}-${k}`}
+            className="plan-open-edge"
+            x1={a[0]}
+            y1={a[1]}
+            x2={b[0]}
+            y2={b[1]}
+          />
+        )),
+      )}
+      {space.entrances.flatMap((e, i) =>
+        openingLines(space, e).map(([a, b], k) => (
+          <line
+            key={`e${i}-${k}`}
+            className="plan-entrance"
+            x1={a[0]}
+            y1={a[1]}
+            x2={b[0]}
+            y2={b[1]}
+          >
+            <title>{e.kind === 'main' ? '主入口' : '入口'}</title>
+          </line>
+        )),
+      )}
 
       {layout?.items.map((item) => {
         const asset = assetOf(item)
@@ -400,7 +407,7 @@ export function PlanView({
 
       {!compact && numbers && entrance && (
         <FlowArrow
-          from={[(entrance.a[0] + entrance.b[0]) / 2, (entrance.a[1] + entrance.b[1]) / 2]}
+          from={entranceMid}
           inward={[-front[0], -front[1]]}
           length={Math.min(1.4, Math.max(0.6, depth * 0.18))}
           fontSize={fontSize}
