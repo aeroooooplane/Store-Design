@@ -68,7 +68,7 @@ export const generatePlansTool = tool({
 export const placeItemTool = tool({
   name: 'place_item',
   description:
-    '把一个模型放进当前布局：靠后墙 back、前边 front、左墙 left、右墙 right 或中央 center，position 为沿墙 0–1 的位置（0.5 居中）。程序计算坐标并让道具正面朝向店内；结果保存为新节点。',
+    '把一个模型放进当前布局：靠后墙 back、前边 front、左墙 left、右墙 right 或中央 center，position 为沿墙 0–1 的位置（0.5 居中）。程序按这面墙的真实边（见空间 edges）计算坐标，并让道具正面朝向店内；异形店的一面墙可能分成几段，position 按各段总长分布；斜墙上道具取最接近的直角朝向；center 为店内最空旷处，position 沿横向移动。放不下（超出店铺或压住柱子）时报错且不保存，请换位置或换墙。结果保存为新节点。',
   schema: z.object({
     modelId: z.string().describe('list_models 返回的模型编号'),
     along: z.enum(ALONG),
@@ -111,7 +111,7 @@ export const placeItemTool = tool({
 export const moveItemTool = tool({
   name: 'move_item',
   description:
-    '移动布局中的一件道具：按 along/position 贴墙放，或按 dx_mm/dz_mm 相对移动（x 向右，z 向下）。结果保存为新节点。',
+    '移动布局中的一件道具：按 along/position 贴墙放（规则同 place_item，放不下时报错），或按 dx_mm/dz_mm 相对移动（x 向右，z 向下）。结果保存为新节点。',
   schema: z.object({
     itemId: z.string(),
     along: z.enum(ALONG).optional(),
@@ -129,7 +129,7 @@ export const moveItemTool = tool({
       const front = item.assetId ? (tools.catalog.get(item.assetId)?.front ?? null) : null
       const placed = placeAlong(
         space,
-        { footprint: unrotated(item), front },
+        { name: item.name, footprint: unrotated(item), front },
         input.along,
         input.position ?? 0.5,
         wallGap(tools.project.shopType),
