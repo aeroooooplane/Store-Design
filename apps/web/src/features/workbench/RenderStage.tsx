@@ -12,6 +12,7 @@ import type {
   Project,
   RenderImage,
   RenderMode,
+  RenderedMode,
   Space,
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
@@ -35,13 +36,13 @@ const Viewer3D = lazy(() =>
   import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
 )
 
-const MODES: readonly RenderMode[] = RENDERED_MODES
+const MODES: readonly RenderedMode[] = RENDERED_MODES
 const NO_FLAGS: ReadonlySet<string> = new Set()
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
 /** The 3D material view (rotatable) or the rendered image of the chosen view. */
 type Show = '3d' | 'image'
-type Target = { camera: NodeCamera; mode: RenderMode }
+type Target = { camera: NodeCamera; mode: RenderedMode }
 
 function dataUrlToBlob(url: string): Blob {
   const data = atob(url.slice(url.indexOf(',') + 1))
@@ -90,7 +91,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     () =>
       new Map(
         (renders.data?.images ?? [])
-          .filter((i) => MODES.includes(i.mode))
+          .filter((i) => (MODES as readonly RenderMode[]).includes(i.mode))
           .map((i) => [`${i.cameraId}:${i.mode}`, i]),
       ),
     [renders.data],

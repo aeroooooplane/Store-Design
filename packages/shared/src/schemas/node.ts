@@ -50,7 +50,8 @@ export type NodeTree = z.infer<typeof NodeTreeSchema>
 export const NodeCreateSchema = z
   .strictObject({
     parentId: z.uuid().nullable(),
-    kind: NodeKindSchema,
+    // 'edit' is the plan-level step of earlier versions: still read and imported, no longer created.
+    kind: NodeKindSchema.exclude(['edit']),
     name: NameSchema,
     space: SpaceSchema.optional(),
     layout: LayoutSchema.optional(),

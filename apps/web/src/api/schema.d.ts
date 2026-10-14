@@ -1069,7 +1069,7 @@ export interface paths {
                     "application/json": {
                         parentId: string | null;
                         /** @enum {string} */
-                        kind: "space" | "plan" | "edit" | "white" | "render";
+                        kind: "space" | "plan" | "white" | "render";
                         name: string;
                         space?: {
                             /** @enum {number} */
@@ -3200,7 +3200,7 @@ export interface paths {
                 path: {
                     nodeId: string;
                     cameraId: string;
-                    mode: "white" | "material";
+                    mode: "material";
                 };
                 cookie?: never;
             };

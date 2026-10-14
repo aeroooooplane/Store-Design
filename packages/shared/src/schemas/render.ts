@@ -14,6 +14,8 @@ export const RENDER_MODE_LABELS = { white: '白模', material: '材质' } as con
  * rendered (2026-10-12): older ones stay readable but are not listed, required or delivered.
  */
 export const RENDERED_MODES = ['material'] as const
+/** The modes that are still rendered and uploaded. */
+export type RenderedMode = (typeof RENDERED_MODES)[number]
 
 /**
  * The newest image of one view in one mode. `stale` means the layout, the models or the

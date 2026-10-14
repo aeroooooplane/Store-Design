@@ -25,7 +25,7 @@ import type {
   NodeCreateInput,
   NodeRenderList,
   RenderImage,
-  RenderMode,
+  RenderedMode,
 } from '@store/shared'
 import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
 
@@ -249,7 +249,7 @@ export function useRenders(nodeId: string) {
 export async function uploadRender(
   nodeId: string,
   cameraId: string,
-  mode: RenderMode,
+  mode: RenderedMode,
   png: Blob,
 ): Promise<RenderImage> {
   return RenderImageSchema.parse(
