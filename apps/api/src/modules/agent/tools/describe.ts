@@ -2,6 +2,7 @@ import {
   ITEM_FUNCTION_LABELS,
   SHOP_TYPE_LABELS,
   STAGE_LABELS,
+  openingPieces,
   polygonArea,
   stageOf,
   validateLayout,
@@ -40,7 +41,9 @@ function edgeMarks(space: Space, edge: WallEdge): string[] {
     ['开放边', space.openEdges],
   ]
   return marks.flatMap(([label, segments]) => {
-    const length = segments.reduce((sum, s) => sum + overlapOnEdge(s.a, s.b, edge), 0)
+    // An opening along several edges (an arc storefront) counts piece by piece, not by its chord.
+    const pieces = segments.flatMap((s) => openingPieces(space, s) ?? [s])
+    const length = pieces.reduce((sum, s) => sum + overlapOnEdge(s.a, s.b, edge), 0)
     if (length < MIN_OVERLAP_M) return []
     return [length >= edge.length - MIN_OVERLAP_M ? label : `${label}${mm(length)}mm`]
   })

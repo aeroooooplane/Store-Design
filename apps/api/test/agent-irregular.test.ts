@@ -5,7 +5,7 @@
  */
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { rectFromCenter, rectInsidePolygon, rectangleSpace } from '@store/shared'
-import type { LayoutItem, NodeTree, Point } from '@store/shared'
+import type { LayoutItem, NodeTree, Point, Space } from '@store/shared'
 import { createProject, createSpace, getNode, runTool, seedAsset } from './fixtures.ts'
 import type { AssetSeed, ToolCall } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
@@ -408,5 +408,30 @@ describe('edit_space 移动和插入顶点', () => {
       code: 'VALIDATION_FAILED',
       message: expect.stringContaining('入口 1 不在空间边界上'),
     })
+  })
+})
+
+describe('边表与跨边入口', () => {
+  it('marks every edge of an arc storefront entered along the boundary, not by its chord', async () => {
+    const { describeEdges } = await import('../src/modules/agent/tools/describe.ts')
+    // The front is a four-segment arc; one main entrance runs along it from (8, 6) to (0, 6).
+    const arc: Space = {
+      ...rectangleSpace(8, 6, 3.2),
+      boundary: [
+        [0, 0],
+        [8, 0],
+        [8, 6],
+        [6, 6.6],
+        [4, 6.8],
+        [2, 6.6],
+        [0, 6],
+      ],
+      entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }],
+    }
+    const lines = describeEdges(arc)
+    expect(lines.filter((line) => line.endsWith(' 入口'))).toHaveLength(4)
+    // No edge is marked as partly an entrance, and the side walls are not marked at all.
+    expect(lines.some((line) => /入口\d+mm/.test(line))).toBe(false)
+    expect(lines.filter((line) => line.includes('入口'))).toHaveLength(4)
   })
 })
