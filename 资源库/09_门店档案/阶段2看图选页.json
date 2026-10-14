@@ -2,7 +2,7 @@
  "schemaVersion": 1,
  "checkedAt": "2026-10-14",
  "checker": "Claude（看前 9 页缩略图）",
- "scope": "OCR 后仍未选出主平面、且不是“只有效果图”的 38 家",
+ "scope": "OCR 后仍未选出主平面的 53 家（含原先判为“只有效果图”的 15 家），逐家看前 9 页缩略图",
  "rows": [
   {
    "store_id": "PDF-011",
@@ -193,6 +193,51 @@
    "store_id": "NEW-078",
    "main_plan_page": null,
    "note": "纽约时代广场方案演示文稿：效果图、街景照片和概念方案，没有布置平面"
+  },
+  {
+   "store_id": "PDF-239",
+   "main_plan_page": 1,
+   "note": "看图选定（第 1 页是没有文字层的平面图，被误当成封面）"
+  },
+  {
+   "store_id": "PDF-402",
+   "main_plan_page": 1,
+   "note": "看图选定（第 1 页是没有文字层的平面图，被误当成封面）"
+  },
+  {
+   "store_id": "NEW-007",
+   "main_plan_page": 1,
+   "note": "看图选定（第 1 页是没有文字层的平面图，被误当成封面）"
+  },
+  {
+   "store_id": "NEW-023",
+   "main_plan_page": 1,
+   "note": "看图选定（第 1 页是没有文字层的平面图，被误当成封面）"
+  },
+  {
+   "store_id": "NEW-089",
+   "main_plan_page": 1,
+   "note": "看图选定（第 1 页是没有文字层的平面图，被误当成封面）"
+  },
+  {
+   "store_id": "PDF-036",
+   "main_plan_page": null,
+   "note": "看图确认：只有效果图，没有布置平面"
+  },
+  {
+   "store_id": "PDF-072",
+   "main_plan_page": null,
+   "note": "看图确认：只有效果图，没有布置平面"
+  },
+  {
+   "store_id": "PDF-277",
+   "main_plan_page": null,
+   "note": "看图确认：只有效果图，没有布置平面"
+  },
+  {
+   "store_id": "NEW-081",
+   "main_plan_page": 2,
+   "note": "看图选定（第 1 页是文字封面，第 2 页是平面图但没有可识别的标题）"
   }
  ]
 }
