@@ -1,7 +1,9 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { schema } from '@store/database'
 import type {
   Asset,
   NodeCreated,
+  NodeTree,
   PlanUpload,
   RecognitionRun,
   RecognizeResponse,
@@ -21,7 +23,7 @@ import {
   toPixels,
 } from '../src/modules/recognition/llm.ts'
 import { dimensionMm, recognizeVector } from '../src/modules/recognition/local.ts'
-import { createProject } from './fixtures.ts'
+import { createProject, failUpdateOf } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -616,6 +618,61 @@ describe('recognition API without a model', () => {
     expect(detail.json<RecognitionRun>().confirmedNodeId).toBe(
       confirmed.json<NodeCreated>().node.id,
     )
+  })
+
+  it('confirms in one transaction: a failure after the node is made leaves nothing behind', async () => {
+    const { id } = await newProject(t)
+    const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
+    const { run } = (
+      await t.app.inject({
+        method: 'POST',
+        url: `/api/v1/uploads/${uploaded.id}/recognize`,
+        payload: { vector: SKETCH },
+      })
+    ).json<RecognizeResponse>()
+    const confirm = (name: string) =>
+      t.app.inject({
+        method: 'POST',
+        url: `/api/v1/recognition-runs/${run.id}/confirm`,
+        payload: {
+          name,
+          space: { schemaVersion: 1, boundary: run.draft?.space?.boundary, height: 3.2 },
+        },
+      })
+    const nodeCount = async () =>
+      (
+        await t.app.inject({
+          method: 'GET',
+          url: `/api/v1/projects/${id}/nodes?includeHidden=true`,
+        })
+      ).json<NodeTree>().nodes.length
+    const confirmedNodeId = async () =>
+      (
+        await t.app.inject({ method: 'GET', url: `/api/v1/recognition-runs/${run.id}` })
+      ).json<RecognitionRun>().confirmedNodeId
+
+    // Step 1 (the space node) succeeds, step 2 (marking the run confirmed) fails.
+    const failing = failUpdateOf(t, schema.recognitionRuns)
+    try {
+      expect((await confirm('半成品')).statusCode).toBe(500)
+    } finally {
+      failing.mockRestore()
+    }
+    expect(await nodeCount()).toBe(0)
+    expect(await confirmedNodeId()).toBeNull()
+
+    // The run can still be confirmed once, and only once.
+    const confirmed = await confirm('识别的空间')
+    expect(confirmed.statusCode).toBe(201)
+    expect(await nodeCount()).toBe(1)
+    expect(await confirmedNodeId()).toBe(confirmed.json<NodeCreated>().node.id)
+    const again = await confirm('再来')
+    expect(again.statusCode).toBe(409)
+    expect(again.json().error).toMatchObject({
+      code: 'INVALID_STATE',
+      message: '这次识别已经确认过，生成了空间节点',
+    })
+    expect(await nodeCount()).toBe(1)
   })
 })
 

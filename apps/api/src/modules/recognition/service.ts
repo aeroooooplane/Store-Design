@@ -380,6 +380,9 @@ export async function getRun(
 /**
  * The user has corrected the drawing: the space (and the props kept) become a root space
  * node with origin `recognition`, so the history shows where it came from.
+ *
+ * One transaction: the run row is locked while the "already confirmed" check runs, and the
+ * node is never left behind without the run pointing at it.
  */
 export async function confirmRun(
   db: Database,
@@ -387,29 +390,35 @@ export async function confirmRun(
   runId: string,
   input: RecognitionConfirm,
 ): Promise<NodeCreated> {
-  const [row] = await db.select().from(recognitionRuns).where(eq(recognitionRuns.id, runId))
-  if (!row) throw notFound('识别记录')
-  const upload = await findUpload(db, row.uploadId)
-  authorize(ctx.actor, 'recognition:write', { projectId: upload.projectId })
-  if (row.confirmedNodeId) {
-    throw new AppError('INVALID_STATE', '这次识别已经确认过，生成了空间节点')
-  }
-  const created = await createNode(
-    db,
-    ctx,
-    upload.projectId,
-    {
-      parentId: null,
-      kind: 'space',
-      name: input.name,
-      space: input.space,
-      ...(input.layout ? { layout: input.layout } : {}),
-    },
-    { origin: 'recognition', originRef: row.id },
-  )
-  await db
-    .update(recognitionRuns)
-    .set({ confirmedNodeId: created.node.id })
-    .where(eq(recognitionRuns.id, runId))
-  return created
+  return db.transaction(async (tx) => {
+    const [row] = await tx
+      .select()
+      .from(recognitionRuns)
+      .where(eq(recognitionRuns.id, runId))
+      .for('update')
+    if (!row) throw notFound('识别记录')
+    const upload = await findUpload(tx, row.uploadId)
+    authorize(ctx.actor, 'recognition:write', { projectId: upload.projectId })
+    if (row.confirmedNodeId) {
+      throw new AppError('INVALID_STATE', '这次识别已经确认过，生成了空间节点')
+    }
+    const created = await createNode(
+      tx,
+      ctx,
+      upload.projectId,
+      {
+        parentId: null,
+        kind: 'space',
+        name: input.name,
+        space: input.space,
+        ...(input.layout ? { layout: input.layout } : {}),
+      },
+      { origin: 'recognition', originRef: row.id },
+    )
+    await tx
+      .update(recognitionRuns)
+      .set({ confirmedNodeId: created.node.id })
+      .where(eq(recognitionRuns.id, runId))
+    return created
+  })
 }

@@ -1,4 +1,5 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
+import { eq } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type {
   AgentAction,
@@ -8,7 +9,14 @@ import type {
   DesignNode,
   NodeCreated,
 } from '@store/shared'
-import { createProject, createSpace, seedAsset } from './fixtures.ts'
+import {
+  createProject,
+  createSpace,
+  failUpdateOf,
+  getNode,
+  seedAsset,
+  whiteChain,
+} from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -73,6 +81,58 @@ describe('agent without a model', () => {
     })
     expect(response.statusCode).toBe(400)
     expect(response.json().error.message).toContain('Agent 模型')
+  })
+
+  it('undoes in one transaction: a failure on the second node leaves the first one shown', async () => {
+    const { project, plan, white } = await whiteChain(t, { projectName: '撤销事务' })
+    const session = await newSession(t, project.id)
+    // An action that made two nodes, recorded the way the agent service does.
+    const db = t.database.db
+    const [message] = await db
+      .insert(schema.agentMessages)
+      .values({ sessionId: session.id, role: 'assistant', content: { text: '已生成' } })
+      .returning()
+    const [action] = await db
+      .insert(schema.agentActions)
+      .values({
+        messageId: message?.id ?? '',
+        toolName: 'generate_plans',
+        input: {},
+        result: { nodeIds: [plan.id, white.id] },
+        status: 'succeeded',
+        resultingNodeId: white.id,
+      })
+      .returning()
+    const undo = () =>
+      t.app.inject({ method: 'POST', url: `/api/v1/agent/actions/${action?.id}/undo` })
+    const undoneAt = async () =>
+      (
+        await db
+          .select()
+          .from(schema.agentActions)
+          .where(eq(schema.agentActions.id, action?.id ?? ''))
+      )[0]?.undoneAt ?? null
+
+    // Hiding the first node succeeds, hiding the second fails.
+    const failing = failUpdateOf(t, schema.designNodes, 2)
+    try {
+      expect((await undo()).statusCode).toBe(500)
+    } finally {
+      failing.mockRestore()
+    }
+    expect((await getNode(t, plan.id)).hidden).toBe(false)
+    expect((await getNode(t, white.id)).hidden).toBe(false)
+    expect(await undoneAt()).toBeNull()
+
+    // A clean undo hides both; undoing again is refused with the same answer as before.
+    const undone = await undo()
+    expect(undone.statusCode).toBe(200)
+    expect(undone.json<AgentAction>().undoneAt).not.toBeNull()
+    expect((await getNode(t, plan.id)).hidden).toBe(true)
+    expect((await getNode(t, white.id)).hidden).toBe(true)
+    const again = await undo()
+    expect(again.statusCode).toBe(409)
+    expect(again.json().error).toMatchObject({ code: 'INVALID_STATE', message: '该操作已撤销' })
   })
 })
 

@@ -1,7 +1,7 @@
 import { EXPORT_FORMAT, LayoutSchema, ProjectExportSchema } from '@store/shared'
 import type { AssetFit, ProjectExport } from '@store/shared'
 import { AppError } from '../../lib/app-error.ts'
-import { parentsFirst, reconcileAssets } from './plan.ts'
+import { parentsFirst, parseImported, reconcileAssets } from './plan.ts'
 import type { PlannedProject } from './plan.ts'
 
 export function isNativeExport(raw: unknown): boolean {
@@ -31,10 +31,14 @@ export function convertNative(
       name: node.name,
       space: node.space,
       layout: node.layout
-        ? LayoutSchema.parse({
-            ...node.layout,
-            items: reconcileAssets(node.layout.items, assets, `节点“${node.name}”`, warnings),
-          })
+        ? parseImported(
+            LayoutSchema,
+            {
+              ...node.layout,
+              items: reconcileAssets(node.layout.items, assets, `节点“${node.name}”`, warnings),
+            },
+            `节点“${node.name}”的布局`,
+          )
         : null,
       strategy: node.strategy,
       siStyle: node.siStyle,
@@ -50,10 +54,14 @@ export function convertNative(
     else
       draft = {
         baseRef,
-        layout: LayoutSchema.parse({
-          ...file.draft.layout,
-          items: reconcileAssets(file.draft.layout.items, assets, '草稿', warnings),
-        }),
+        layout: parseImported(
+          LayoutSchema,
+          {
+            ...file.draft.layout,
+            items: reconcileAssets(file.draft.layout.items, assets, '草稿', warnings),
+          },
+          '草稿的布局',
+        ),
       }
   }
   return { ...file.project, name: name ?? file.project.name, nodes, draft, warnings }

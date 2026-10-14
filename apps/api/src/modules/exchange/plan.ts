@@ -1,3 +1,4 @@
+import type { z } from 'zod'
 import { assetFitProblem } from '@store/shared'
 import type {
   AssetFit,
@@ -36,6 +37,33 @@ export interface PlannedProject {
   nodes: PlannedNode[]
   draft: { baseRef: string; layout: Layout } | null
   warnings: string[]
+}
+
+/**
+ * Data converted from an import file that breaks the stored contract is the file's fault, so it
+ * becomes a 400 listing every problem (path and message, as for request validation) instead of
+ * a ZodError that would surface as a 500.
+ */
+export function importRejected(what: string, error: z.ZodError): AppError {
+  return new AppError(
+    'VALIDATION_FAILED',
+    `导入文件中${what}不符合要求`,
+    error.issues.map((issue) => ({
+      path: issue.path.map((key) => `/${String(key)}`).join(''),
+      message: issue.message,
+    })),
+  )
+}
+
+/** Checks converted import data against `schema`; see {@link importRejected}. */
+export function parseImported<S extends z.ZodType>(
+  schema: S,
+  value: unknown,
+  what: string,
+): z.output<S> {
+  const parsed = schema.safeParse(value)
+  if (parsed.success) return parsed.data
+  throw importRejected(what, parsed.error)
 }
 
 /** Orders nodes parent-first; rejects missing parents and cycles. */

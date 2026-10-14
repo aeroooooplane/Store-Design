@@ -20,7 +20,7 @@ import type {
 } from '@store/shared'
 import type { Point } from '@store/shared'
 import { AppError } from '../../lib/app-error.ts'
-import { parentsFirst, reconcileAssets } from './plan.ts'
+import { importRejected, parentsFirst, parseImported, reconcileAssets } from './plan.ts'
 import type { PlannedNode, PlannedProject } from './plan.ts'
 
 // Legacy workbench backup (demo/src/project-import.js in tag archive/pre-cleanup-20261013), read leniently:
@@ -94,7 +94,14 @@ function legacySpace(
   where: string,
   warnings: string[],
 ): Space {
-  const base = rectangleSpace(room.w, room.d, room.h)
+  let base: Space
+  try {
+    base = rectangleSpace(room.w, room.d, room.h)
+  } catch (error) {
+    // rectangleSpace validates too, e.g. a room lower than 1.5 m or wider than 1000 m.
+    if (error instanceof z.ZodError) throw importRejected(`${where}的空间`, error)
+    throw error
+  }
   const obstacles = structures.flatMap((item) => {
     const polygon = rect(item.x, item.z, item.w, item.d)
     if (!isSimplePolygon(polygon) || !polygonInsidePolygon(polygon, base.boundary)) {
@@ -105,7 +112,7 @@ function legacySpace(
       { kind: 'other' as const, polygon, height: roundM(item.h), label: item.name.slice(0, 100) },
     ]
   })
-  return SpaceSchema.parse({ ...base, obstacles })
+  return parseImported(SpaceSchema, { ...base, obstacles }, `${where}的空间`)
 }
 
 function convertItems(
@@ -153,11 +160,15 @@ function convertLayout(
   where: string,
   warnings: string[],
 ): Layout {
-  return LayoutSchema.parse({
-    schemaVersion: 3,
-    items: convertItems(layout.items, assets, where, warnings),
-    planning: null,
-  })
+  return parseImported(
+    LayoutSchema,
+    {
+      schemaVersion: 3,
+      items: convertItems(layout.items, assets, where, warnings),
+      planning: null,
+    },
+    `${where}的布局`,
+  )
 }
 
 /**

@@ -2,7 +2,7 @@
  * Shared set-up for the API tests: catalogue seeds, projects, node chains and request helpers.
  * Every helper that creates something through the API asserts the 201 it expects.
  */
-import { expect } from 'vitest'
+import { expect, vi } from 'vitest'
 import { schema } from '@store/database'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, DesignNode, NodeCameraList, NodeCreated, Project } from '@store/shared'
@@ -254,4 +254,29 @@ export async function runTool(
     selectedItemIds,
   )
   return tool.run(tools, tool.schema.parse(input))
+}
+
+// ---------------------------------------------------------------------------------------------
+// Failure injection
+
+type Update = (this: unknown, table: object) => unknown
+type Updatable = { update: Update }
+
+/**
+ * Makes the `nth` UPDATE of `table` throw, whether it runs on the app's database or inside a
+ * transaction (both inherit `update` from drizzle's PgDatabase), to prove that a multi-step
+ * write rolls back as a whole. Undo with `mockRestore()` on the returned spy.
+ */
+export function failUpdateOf(t: TestApp, table: object, nth = 1) {
+  let owner: object | null = Object.getPrototypeOf(t.database.db) as object | null
+  while (owner && !Object.hasOwn(owner, 'update'))
+    owner = Object.getPrototypeOf(owner) as object | null
+  if (!owner) throw new Error('update() not found on the database')
+  const target = owner as Updatable
+  const original = Object.getOwnPropertyDescriptor(owner, 'update')?.value as Update
+  let seen = 0
+  return vi.spyOn(target, 'update').mockImplementation(function (this: Updatable, written: object) {
+    if (written === table && ++seen === nth) throw new Error('模拟写入失败')
+    return original.call(this, written)
+  })
 }
