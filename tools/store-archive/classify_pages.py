@@ -229,6 +229,8 @@ def main() -> None:
     ocr_path = args.out / "_cache" / "OCR文字.json"
     if ocr_path.exists():
         ocr_text = {sid: {int(k): v for k, v in pages.items()} for sid, pages in load_json(ocr_path).items()}
+    override_path = args.out / "阶段2看图选页.json"
+    overrides = {r["store_id"]: r for r in load_json(override_path)["rows"]} if override_path.exists() else {}
     lines, summary = [], {}
     type_count = Counter()
     for sid, pages in features.items():
@@ -237,6 +239,8 @@ def main() -> None:
         for r in rows:
             lines.append(json.dumps({"store_id": sid} | r | {"label": LABELS[r["type"]]}, ensure_ascii=False))
         main_plan, alternatives, note, floors = pick_main_plan(rows, pages)
+        if sid in overrides:  # 阶段2看图选页.json：人工看图的结论优先
+            main_plan, note = overrides[sid]["main_plan_page"], overrides[sid]["note"]
         summary[sid] = {
             "blocks": blocks(rows),
             "toc_found": any(p["toc"] for p in pages),

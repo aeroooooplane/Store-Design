@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T19:17:14+08:00",
+ "generatedAt": "2026-10-14T21:01:55+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -137,8 +137,63 @@
     "to": 1
    },
    {
-    "label": "无文字待看图",
+    "label": "目录",
     "from": 2,
+    "to": 2
+   },
+   {
+    "label": "材料表",
+    "from": 3,
+    "to": 3
+   },
+   {
+    "label": "说明",
+    "from": 4,
+    "to": 4
+   },
+   {
+    "label": "原始平面",
+    "from": 5,
+    "to": 5
+   },
+   {
+    "label": "布置平面",
+    "from": 6,
+    "to": 7
+   },
+   {
+    "label": "其他平面图",
+    "from": 8,
+    "to": 10
+   },
+   {
+    "label": "电气",
+    "from": 11,
+    "to": 11
+   },
+   {
+    "label": "其他平面图",
+    "from": 12,
+    "to": 12
+   },
+   {
+    "label": "电气",
+    "from": 13,
+    "to": 13
+   },
+   {
+    "label": "其他平面图",
+    "from": 14,
+    "to": 14
+   },
+   {
+    "label": "立面",
+    "from": 15,
+    "to": 16
+   },
+   {
+    "label": "大样",
+    "from": 17,
     "to": 29
    },
    {
@@ -158,16 +213,20 @@
    }
   ],
   "toc_found": false,
-  "main_plan_page": null,
-  "main_plan_note": "有无文字页，需看图确认",
-  "plan_alternatives": [],
+  "main_plan_page": 6,
+  "main_plan_note": null,
+  "plan_alternatives": [
+   7
+  ],
   "plan_floor_tags": [],
   "render_pages": [],
   "render_annotated_pages": [],
   "render_status": "图纸内无效果图",
   "bom_pages": [],
-  "material_pages": [],
-  "status": "待看图选平面"
+  "material_pages": [
+   3
+  ],
+  "status": "已选主平面"
  },
  "deferred": {
   "city": null,

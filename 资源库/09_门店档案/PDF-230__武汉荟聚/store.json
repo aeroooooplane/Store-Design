@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-14T19:17:14+08:00",
+ "generatedAt": "2026-10-14T21:01:55+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -164,7 +164,7 @@
     "to": 1
    },
    {
-    "label": "无文字待看图",
+    "label": "布置平面",
     "from": 2,
     "to": 2
    },
@@ -282,7 +282,9 @@
   "toc_found": true,
   "main_plan_page": 15,
   "main_plan_note": null,
-  "plan_alternatives": [],
+  "plan_alternatives": [
+   2
+  ],
   "plan_floor_tags": [],
   "render_pages": [
    4,

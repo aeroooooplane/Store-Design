@@ -152,7 +152,7 @@ def stage2_pages(info: dict | None) -> dict:
     renders = info["render_pages"]
     if info["main_plan_page"]:
         status = "已选主平面"
-    elif info["main_plan_note"] and "看图" in info["main_plan_note"]:
+    elif info["main_plan_note"] and "需看图" in info["main_plan_note"]:
         status = "待看图选平面"
     else:
         status = "图纸内无平面"
