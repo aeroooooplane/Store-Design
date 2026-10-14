@@ -209,29 +209,25 @@ describe('generate_plans（当前行为）', () => {
     // The planner is deterministic: lock what it places today ([model, cx, cz, rotation, w, d]).
     const placed = async (id: string) =>
       (await node(id)).layout?.items.map((i) => [i.assetId, i.cx, i.cz, i.rotation, i.w, i.d])
+    // An island shop stands no 2.4 m 配件柜 along its edge: tables and the cashier only.
     const cashier = ['asset-3', 0.971, 0.624, 0, 1.942, 0.648]
-    const cabinet = (cx: number) => ['asset-4', cx, 0.525, 0, 1.6, 0.45]
     const table = (cx: number, cz: number) => ['asset-1', cx, cz, 90, 1.8, 1]
-    expect(plans.map((p) => p.items)).toEqual([8, 6, 3])
+    expect(plans.map((p) => p.items)).toEqual([5, 3, 2])
     expect(await placed(plans[0]?.nodeId ?? '')).toEqual([
       cashier,
-      table(5.5, 2.2),
+      table(5.5, 1.4),
       table(1.8, 2.4),
-      table(5.5, 4.1),
+      table(5.5, 3.3),
       table(1.8, 4.3),
-      cabinet(2.8),
-      cabinet(4.4),
-      cabinet(6),
     ])
     expect(await placed(plans[1]?.nodeId ?? '')).toEqual([
       cashier,
-      table(5.5, 4.1),
-      table(1.8, 2.4),
-      cabinet(2.8),
-      cabinet(4.4),
-      cabinet(6),
+      table(5.5, 3.3),
+      table(1.8, 4.3),
     ])
-    expect(await placed(plans[2]?.nodeId ?? '')).toEqual([cashier, table(5.5, 4.1), cabinet(2.8)])
+    expect(await placed(plans[2]?.nodeId ?? '')).toEqual([cashier, table(5.5, 3.3)])
+    for (const plan of plans)
+      expect(plan.notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子，未摆放配件柜')
   })
 
   it('numbers repeated names and always files the plans under the space above the current node', async () => {

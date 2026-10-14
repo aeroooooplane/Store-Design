@@ -7,7 +7,13 @@ import type { LayoutItem } from '../schemas/layout.ts'
 import { SpaceSchema, rectangleSpace } from '../schemas/space.ts'
 import type { Space, SpaceInput } from '../schemas/space.ts'
 import { facingAfter, rotationFacing } from './orientation.ts'
-import { planLayout, tablesForArea, usableArea } from './planner.ts'
+import {
+  DEFAULT_RULES,
+  ISLAND_CABINET_MAX_H,
+  planLayout,
+  tablesForArea,
+  usableArea,
+} from './planner.ts'
 import {
   ARC,
   IRREGULAR_SHAPES,
@@ -269,6 +275,71 @@ describe('planLayout', () => {
     expect(notes).toContain('空间没有入口，未预留入口缓冲与主通道')
     expect(issues.filter((i) => i.severity === 'error')).toEqual([])
     expect(byFunction(layout.items, 'island_table').length).toBeGreaterThanOrEqual(1)
+  })
+
+  describe('cabinets along the edge of an island shop', () => {
+    // The 1.8 m 配件边柜 (H 1.3 m) of the real catalogue next to the 2.4 m 配件柜.
+    const low = {
+      id: 'asset-28192911',
+      name: '1.8米配件边柜(H1.3米)',
+      function: 'side_cabinet',
+      footprint: { w: 1.8, d: 0.721, h: 1.3 },
+      front: '+Z',
+    } as const
+    const mixed: PlannerCatalog = { ...catalog, cabinet: [...catalog.cabinet, low] }
+    const shapes: [string, Space][] = [
+      ['10×8 矩形', rectangleSpace(10, 8, 3.2)],
+      ['U 形', uShape],
+      ['带柱子', withColumn],
+      ...Object.entries(IRREGULAR_SHAPES),
+    ]
+    const cabinetsOf = (items: LayoutItem[]) =>
+      items.filter((i) => i.function === 'accessory_cabinet' || i.function === 'side_cabinet')
+
+    it.each(shapes)('%s：三种策略都不沿边界放高于 1.5 m 的柜子，矮柜照放', (_, s) => {
+      expect(DEFAULT_RULES.island.cabinetMaxHeight).toBe(ISLAND_CABINET_MAX_H)
+      for (const strategy of STRATEGIES) {
+        const { layout, issues, notes } = planLayout({
+          space: s,
+          shopType: 'island',
+          strategy,
+          catalog: mixed,
+        })
+        expect(issues.filter((i) => i.severity === 'error')).toEqual([])
+        const cabinets = cabinetsOf(layout.items)
+        for (const item of cabinets) expect(item.h).toBeLessThanOrEqual(ISLAND_CABINET_MAX_H)
+        if (strategy !== 'min') expect(cabinets.length).toBeGreaterThan(0)
+        expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子')
+        // The cashier still stands against the back of the shop.
+        expect(byFunction(layout.items, 'cashier')).toHaveLength(1)
+      }
+    })
+
+    it('leaves the cabinets out and says so when the catalogue has only tall ones', () => {
+      for (const strategy of STRATEGIES) {
+        const { layout, notes } = planLayout({
+          space: rectangleSpace(10, 8, 3.2),
+          shopType: 'island',
+          strategy,
+          catalog,
+        })
+        expect(cabinetsOf(layout.items)).toEqual([])
+        expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子，未摆放配件柜')
+      }
+    })
+
+    it('still lines the walls of a side-hall shop or a zone with tall cabinets', () => {
+      for (const shopType of ['side_hall', 'zone'] as const) {
+        const { layout, notes } = planLayout({
+          space: rectangleSpace(10, 8, 3.2),
+          shopType,
+          strategy: 'max',
+          catalog: mixed,
+        })
+        expect(cabinetsOf(layout.items).some((i) => i.h > ISLAND_CABINET_MAX_H)).toBe(true)
+        expect(notes.join()).not.toContain('不沿边界放')
+      }
+    })
   })
 })
 

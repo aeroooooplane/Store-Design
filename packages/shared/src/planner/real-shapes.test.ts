@@ -109,6 +109,19 @@ describe('real shop drafts', () => {
       expect(locatePoint([camera.target[0], camera.target[2]], ring)).toBe('inside')
   })
 
+  it('stands no 2.4 m cabinet along the edge of the island shops', () => {
+    // store-0043、0239：只放中岛桌和收银台（目录里的配件柜都是 2.4 m 高柜），收银台仍靠入口对面的直边。
+    for (const shape of [baodingBeiguo, shenyangBainaohui]) {
+      for (const strategy of STRATEGIES) {
+        const { layout, notes } = run(shape, strategy)
+        expect(byFunction(layout.items, 'accessory_cabinet')).toEqual([])
+        expect(byFunction(layout.items, 'cashier')).toHaveLength(1)
+        expect(byFunction(layout.items, 'island_table').length).toBeGreaterThanOrEqual(1)
+        expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子，未摆放配件柜')
+      }
+    }
+  })
+
   it('places tables in every draft but the 11.7 ㎡ arc platform', () => {
     for (const shape of [baodingBeiguo, shenyangBainaohui, nanchangWushang, shanghaiTpy]) {
       for (const strategy of STRATEGIES) {

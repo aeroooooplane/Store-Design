@@ -1,4 +1,4 @@
-import { PLAN_STRATEGY_LABELS } from '../enums.ts'
+import { PLAN_STRATEGY_LABELS, SHOP_TYPE_LABELS } from '../enums.ts'
 import type { ItemFunction, PlanStrategy, ShopType } from '../enums.ts'
 import {
   boundaryPath,
@@ -49,16 +49,51 @@ export interface PlannerRules {
   entranceBuffer: number
   /** Gap between wall-standing props and the wall. */
   wallGap: number
+  /**
+   * Tallest cabinet stood along the boundary, in metres; taller models are left out and this is
+   * never relaxed. Unlimited where the boundary is a wall; an island shop has no walls, only its
+   * edge on the mall floor (see ISLAND_CABINET_MAX_H).
+   */
+  cabinetMaxHeight: number
 }
 
+/**
+ * Tallest cabinet an island shop stands along its edge (confirmed by the user, 2026-10-14: island
+ * tables, the cashier and low cabinets only). An island shop is seen from every side of the mall,
+ * so its edge stays below eye height, about 1.5 m, and the shop stays open to view. The catalogue
+ * leaves a clear gap there: 配件边柜, island tables and cashiers stand 0.9–1.43 m, 配件柜 2.4–2.43 m.
+ */
+export const ISLAND_CABINET_MAX_H = 1.5
+
 export const DEFAULT_RULES: Record<ShopType, PlannerRules> = {
-  side_hall: { aisle: 1.2, clearance: 0.9, entranceBuffer: 1.2, wallGap: 0.05 },
-  island: { aisle: 1.2, clearance: 0.9, entranceBuffer: 1.0, wallGap: 0.3 },
-  zone: { aisle: 1.2, clearance: 0.9, entranceBuffer: 1.0, wallGap: 0.05 },
+  side_hall: {
+    aisle: 1.2,
+    clearance: 0.9,
+    entranceBuffer: 1.2,
+    wallGap: 0.05,
+    cabinetMaxHeight: Infinity,
+  },
+  island: {
+    aisle: 1.2,
+    clearance: 0.9,
+    entranceBuffer: 1.0,
+    wallGap: 0.3,
+    cabinetMaxHeight: ISLAND_CABINET_MAX_H,
+  },
+  zone: {
+    aisle: 1.2,
+    clearance: 0.9,
+    entranceBuffer: 1.0,
+    wallGap: 0.05,
+    cabinetMaxHeight: Infinity,
+  },
 }
 
 /** Each step relaxes one guide value; applied in order until enough tables fit. */
-const RELAXATION_STEPS: { rule: keyof Omit<PlannerRules, 'wallGap'>; value: number }[] = [
+const RELAXATION_STEPS: {
+  rule: keyof Omit<PlannerRules, 'wallGap' | 'cabinetMaxHeight'>
+  value: number
+}[] = [
   { rule: 'clearance', value: 0.75 },
   { rule: 'clearance', value: 0.6 },
   { rule: 'aisle', value: 1.0 },
@@ -673,9 +708,15 @@ export function planLayout(input: PlannerInput): PlannerResult {
   }
   const islands = pick(input.catalog.island, '中岛桌')
   const cashiers = pick(input.catalog.cashier, '收银台')
-  const cabinets = pick(input.catalog.cabinet, '配件柜').sort(
-    (a, b) => Math.max(b.footprint.w, b.footprint.d) - Math.max(a.footprint.w, a.footprint.d),
-  )
+  const allCabinets = pick(input.catalog.cabinet, '配件柜')
+  // Too tall for the edge of this shop type (an island shop keeps to low cabinets).
+  const cabinets = allCabinets
+    .filter((asset) => asset.footprint.h <= base.cabinetMaxHeight + 1e-9)
+    .sort((a, b) => Math.max(b.footprint.w, b.footprint.d) - Math.max(a.footprint.w, a.footprint.d))
+  if (cabinets.length < allCabinets.length)
+    planner.notes.push(
+      `${SHOP_TYPE_LABELS[input.shopType]}不沿边界放高于 ${base.cabinetMaxHeight} m 的柜子${cabinets.length ? '' : '，未摆放配件柜'}`,
+    )
 
   // 1. Cashier at the end of the back wall (or the next wall that has room).
   const cashier = cashiers[0]
