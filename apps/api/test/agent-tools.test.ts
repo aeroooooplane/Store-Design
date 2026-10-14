@@ -253,8 +253,8 @@ describe('generate_plans（当前行为）', () => {
   })
 })
 
-describe('move_item（当前行为）', () => {
-  it('moves a prop against a wall: long side along it, 0.02 m inside, saved as a sibling plan', async () => {
+describe('move_item', () => {
+  it('moves a prop against a wall: long side along it, the island wallGap (0.3 m) inside, saved as a sibling plan', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
     const plan = await planOf(project.id, space.id, [island('a', 2, 2), island('b', 6, 3)])
@@ -265,7 +265,7 @@ describe('move_item（当前行为）', () => {
       nodeName: '方案 A · Agent',
       items: 2,
       issues: [],
-      item: { id: 'a', cx_mm: 4000, cz_mm: 520, width_mm: 1800, depth_mm: 1000, rotation: 90 },
+      item: { id: 'a', cx_mm: 4000, cz_mm: 800, width_mm: 1800, depth_mm: 1000, rotation: 90 },
     })
     expect(outcome.result).not.toHaveProperty('warning')
     const moved = await node(outcome.nodeId)
@@ -274,7 +274,7 @@ describe('move_item（当前行为）', () => {
     expect(moved.layout?.items[0]).toMatchObject({
       id: 'a',
       cx: 4,
-      cz: 0.52,
+      cz: 0.8,
       rotation: 90,
       w: 1.8,
       d: 1,
@@ -317,32 +317,32 @@ describe('move_item（当前行为）', () => {
       ).result.item
     // The table has no front: its long side lies along the wall.
     expect(await at('a', 'left', 0)).toMatchObject({
-      cx_mm: 520,
+      cx_mm: 800,
       cz_mm: 900,
       width_mm: 1000,
       depth_mm: 1800,
       rotation: 0,
     })
-    expect(await at('a', 'right', 1)).toMatchObject({ cx_mm: 7480, cz_mm: 5100, rotation: 0 })
-    expect(await at('a', 'front', 0.5)).toMatchObject({ cx_mm: 4000, cz_mm: 5480, rotation: 90 })
+    expect(await at('a', 'right', 1)).toMatchObject({ cx_mm: 7200, cz_mm: 5100, rotation: 0 })
+    expect(await at('a', 'front', 0.5)).toMatchObject({ cx_mm: 4000, cz_mm: 5200, rotation: 90 })
     expect(await at('a', 'center')).toMatchObject({ cx_mm: 4000, cz_mm: 3000, rotation: 90 })
     // The cabinet's front (+Z) faces into the shop from every wall.
     expect(await at('c', 'back', 0)).toMatchObject({
       cx_mm: 800,
-      cz_mm: 245,
+      cz_mm: 525,
       width_mm: 1600,
       depth_mm: 450,
       rotation: 0,
     })
-    expect(await at('c', 'front')).toMatchObject({ cx_mm: 4000, cz_mm: 5755, rotation: 180 })
+    expect(await at('c', 'front')).toMatchObject({ cx_mm: 4000, cz_mm: 5475, rotation: 180 })
     expect(await at('c', 'left')).toMatchObject({
-      cx_mm: 245,
+      cx_mm: 525,
       cz_mm: 3000,
       width_mm: 450,
       depth_mm: 1600,
       rotation: 270,
     })
-    expect(await at('c', 'right')).toMatchObject({ cx_mm: 7755, cz_mm: 3000, rotation: 90 })
+    expect(await at('c', 'right')).toMatchObject({ cx_mm: 7475, cz_mm: 3000, rotation: 90 })
     // Every move started from the same plan, so the names keep counting up.
     const names = (await tree(project.id)).filter((n) => n.origin === 'agent').map((n) => n.name)
     expect(names).toEqual([

@@ -4,7 +4,7 @@ import { AppError } from '../../../lib/app-error.ts'
 import { createNode } from '../../nodes/service.ts'
 import { updateProject } from '../../projects/service.ts'
 import { tool } from './context.ts'
-import { EMPTY_LAYOUT, namesUnder } from './persist.ts'
+import { EMPTY_LAYOUT, namesUnder, stageParentOf } from './persist.ts'
 
 export const setStyleTool = tool({
   name: 'set_style',
@@ -44,15 +44,16 @@ export const setStyleTool = tool({
     if (!swap.swapped) {
       return { result: { siStyle: updated.siStyle, market: updated.market, swapped: 0, kept } }
     }
+    const parentId = await stageParentOf(tools.db, node)
     const name = freshName(
       siSwapName(node.name, input.siStyle),
-      await namesUnder(tools.db, tools.project.id, node.parentId),
+      await namesUnder(tools.db, tools.project.id, parentId),
     )
     const created = await createNode(
       tools.db,
       tools.ctx,
       tools.project.id,
-      { parentId: node.parentId, kind: stage, name, layout: swap.layout, sourceNodeId: node.id },
+      { parentId, kind: stage, name, layout: swap.layout, sourceNodeId: node.id },
       { origin: 'agent' },
     )
     return {

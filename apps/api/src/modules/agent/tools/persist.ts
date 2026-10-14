@@ -1,8 +1,9 @@
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { freshName } from '@store/shared'
-import type { Layout } from '@store/shared'
+import { MAX_NODES_PER_PROJECT, STAGE_PARENT_KINDS, freshName, stageOf } from '@store/shared'
+import type { Layout, NodeKind } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
+import { findNode } from '../../nodes/repository.ts'
 import { createNode } from '../../nodes/service.ts'
 import { asc, eq } from 'drizzle-orm'
 import type { ToolContext, ToolOutcome } from './context.ts'
@@ -18,6 +19,25 @@ export async function namesUnder(db: Database, projectId: string, parentId: stri
     .where(eq(designNodes.projectId, projectId))
     .orderBy(asc(designNodes.seq))
   return rows.filter((r) => r.parentId === parentId).map((r) => r.name)
+}
+
+/**
+ * Where a copy of a step goes: the nearest ancestor of its stage's parent kind (a plan under its
+ * space, a white model under its plan), the same rule as the workbench's stageParentId. Old
+ * projects nested plans under plans; their copies come back up a level instead of being refused.
+ */
+export async function stageParentOf(
+  db: Database,
+  node: { parentId: string | null; kind: NodeKind },
+): Promise<string> {
+  const kinds = STAGE_PARENT_KINDS[stageOf(node.kind)] ?? []
+  let current = node.parentId
+  for (let depth = 0; current && depth <= MAX_NODES_PER_PROJECT; depth++) {
+    const row = await findNode(db, current)
+    if (kinds.includes(row.kind)) return row.id
+    current = row.parentId
+  }
+  throw new AppError('INVALID_STATE', '找不到这一步所属的上一层，无法另存')
 }
 
 /** Where a changed layout goes: a plan under the space, or a copy beside the current step. */
@@ -39,11 +59,11 @@ export async function saveLayout(
     kind = 'plan'
     base = '方案 · Agent'
   } else if (node.kind === 'white') {
-    parentId = node.parentId ?? node.id
+    parentId = await stageParentOf(tools.db, node)
     kind = 'white'
     base = `${node.name.replace(/（\d+）$/, '')} · Agent`
   } else {
-    parentId = node.parentId ?? node.id
+    parentId = await stageParentOf(tools.db, node)
     kind = 'plan'
     base = `${node.name.replace(/（\d+）$/, '')} · Agent`
   }
