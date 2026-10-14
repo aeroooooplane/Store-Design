@@ -1,28 +1,36 @@
 import { describe, expect, it } from 'vitest'
-import { distance, polygonArea, rectangleSpace, validateSpace } from '@store/shared'
-import type { Space } from '@store/shared'
+import {
+  distance,
+  openingPieces,
+  polygonArea,
+  rectangleSpace,
+  sceneFrame,
+  validateSpace,
+} from '@store/shared'
+import type { BoundaryPiece, Space } from '@store/shared'
 import {
   DEFAULT_TEMPLATES,
   applyEdges,
   arcEdge,
   closure,
   deleteVertex,
+  edgeLengthMm,
   formWarnings,
   frontEdge,
   insertVertex,
   mainIsContinuous,
   normalizeTurn,
+  openingRange,
   polygonToSpace,
   rectangleToPolygon,
   selectionEdges,
   setStorefront,
   spaceToPolygonForm,
-  splitAlongBoundary,
   templateToPolygon,
   unmappedOpenings,
   verticesToEdges,
 } from './space-form.ts'
-import type { ObstacleRow, PolygonForm, TemplateKind } from './space-form.ts'
+import type { ObstacleRow, PolygonForm, TemplateKind, VertexRow } from './space-form.ts'
 
 const RECT = { widthMm: 8000, depthMm: 6000, heightMm: 3200, entranceWidthMm: 0 } as const
 
@@ -46,6 +54,27 @@ function parse(form: PolygonForm): Space {
 
 const errorsOf = (space: Space) => validateSpace(space).filter((i) => i.severity === 'error')
 
+const OUT_ARC = { mode: 'sagitta', valueMm: 1000, segments: 4, direction: 'out' } as const
+
+/**
+ * The 8 × 6 m rectangle with its front edge as 4 chords of an arc bulging 1 m out: vertices
+ * (0, 0), (8, 0), (8, 6), three arc points with the apex (4, 7) in the middle, (0, 6); the arc
+ * is edges 2–5 (0-based). No storefront unless asked for.
+ */
+function arcFront(entranceSide: 'front' | 'none' = 'none'): PolygonForm {
+  const result = arcEdge(rectangleToPolygon({ ...RECT, entranceSide }), 2, OUT_ARC)
+  if (!result.ok) throw new Error(result.message)
+  return result.form
+}
+
+/** How shared reads the first entrance: the boundary pieces it covers. */
+function piecesOf(space: Space): BoundaryPiece[] {
+  const entrance = space.entrances[0]
+  const pieces = entrance && openingPieces(space, entrance)
+  if (!pieces) throw new Error('入口不在边界上')
+  return pieces
+}
+
 describe('rectangleToPolygon', () => {
   it('opens the whole front edge when no entrance width is given', () => {
     const form = rectangleToPolygon({ ...RECT, entranceSide: 'front' })
@@ -55,14 +84,16 @@ describe('rectangleToPolygon', () => {
       { xMm: 8000, zMm: 6000 },
       { xMm: 0, zMm: 6000 },
     ])
-    expect(form.openings).toEqual([{ edge: 2, startMm: 0, endMm: 8000, kind: 'main' }])
+    expect(form.openings).toEqual([{ edge: 2, startMm: 0, toEdge: 2, endMm: 8000, kind: 'main' }])
   })
 
   it('centres a narrower entrance and caps it at the side length', () => {
     const left = rectangleToPolygon({ ...RECT, entranceSide: 'left', entranceWidthMm: 2000 })
-    expect(left.openings).toEqual([{ edge: 3, startMm: 2000, endMm: 4000, kind: 'main' }])
+    expect(left.openings).toEqual([
+      { edge: 3, startMm: 2000, toEdge: 3, endMm: 4000, kind: 'main' },
+    ])
     const wide = rectangleToPolygon({ ...RECT, entranceSide: 'right', entranceWidthMm: 9000 })
-    expect(wide.openings).toEqual([{ edge: 1, startMm: 0, endMm: 6000, kind: 'main' }])
+    expect(wide.openings).toEqual([{ edge: 1, startMm: 0, toEdge: 1, endMm: 6000, kind: 'main' }])
   })
 
   it('has no entrance when none is chosen', () => {
@@ -101,8 +132,8 @@ describe('polygonToSpace', () => {
   it('writes each row by its kind: main and side entrances, open edges', () => {
     const form = rectangleToPolygon({ ...RECT, entranceSide: 'front' })
     form.openings.push(
-      { edge: 1, startMm: 1000, endMm: 2000, kind: 'side' },
-      { edge: 3, startMm: 0, endMm: 6000, kind: 'open' },
+      { edge: 1, startMm: 1000, toEdge: 1, endMm: 2000, kind: 'side' },
+      { edge: 3, startMm: 0, toEdge: 3, endMm: 6000, kind: 'open' },
     )
     const space = parse(form)
     expect(space.entrances.map((e) => e.kind)).toEqual(['main', 'side'])
@@ -141,6 +172,8 @@ describe('spaceToPolygonForm', () => {
     const [entrance] = spaceToPolygonForm(space).openings
     expect(entrance?.edge).toBe(edge)
     expect((entrance?.endMm ?? 0) - (entrance?.startMm ?? 0)).toBe(2000)
+    // Saving keeps a before b.
+    expect(parse(spaceToPolygonForm(space)).entrances).toEqual(space.entrances)
   })
 
   it('keeps open edges, obstacle kinds, heights, outlines and entrances across edges', () => {
@@ -183,10 +216,10 @@ describe('spaceToPolygonForm', () => {
       calibration: null,
     }
     const form = spaceToPolygonForm(space)
+    // The entrance across edges 3 and 4 stays one row.
     expect(form.openings).toEqual([
-      { edge: 1, startMm: 1000, endMm: 3000, kind: 'open' },
-      { edge: 2, startMm: 2000, endMm: 4000, kind: 'main' },
-      { edge: 3, startMm: 0, endMm: 2000, kind: 'main' },
+      { edge: 1, startMm: 1000, toEdge: 1, endMm: 3000, kind: 'open' },
+      { edge: 2, startMm: 2000, toEdge: 3, endMm: 2000, kind: 'main' },
     ])
     expect(form.obstacles[0]).toMatchObject({ kind: 'fixed', label: '展台', heightMm: 1200 })
     expect(form.obstacles[0]?.polygon).toEqual(space.obstacles[0]?.polygon)
@@ -194,14 +227,61 @@ describe('spaceToPolygonForm', () => {
 
     const saved = parse(form)
     expect(saved.openEdges).toEqual(space.openEdges)
-    expect(saved.entrances).toEqual([
-      { a: [6, 6], b: [4, 6], kind: 'main' },
-      { a: [4, 6], b: [2, 6], kind: 'main' },
-    ])
+    expect(saved.entrances).toEqual(space.entrances)
     expect(saved.obstacles[0]).toEqual(space.obstacles[0])
     expect(saved.obstacles[1]).toMatchObject({ kind: 'shaft', height: 2.5, label: null })
     expect(errorsOf(saved)).toEqual([])
     expect(unmappedOpenings(space)).toBe(0)
+  })
+
+  it('saves an unchanged space with openings across edges field for field', () => {
+    const arc = arcFront()
+    const space: Space = {
+      schemaVersion: 1,
+      boundary: arc.vertices.map((v) => [v.xMm / 1000, v.zMm / 1000]),
+      height: 3.2,
+      entrances: [
+        // From the right wall round the corner along the arc to its apex.
+        { a: [8, 5], b: [4, 7], kind: 'main' },
+        // On one edge, against the vertex order.
+        { a: [6, 0], b: [5, 0], kind: 'side' },
+      ],
+      // Round the top-left corner, against the vertex order.
+      openEdges: [{ a: [1, 0], b: [0, 2] }],
+      obstacles: [
+        {
+          kind: 'column',
+          label: '柱 1',
+          height: null,
+          polygon: [
+            [1, 1],
+            [1.5, 1],
+            [1.5, 1.5],
+            [1, 1.5],
+          ],
+        },
+      ],
+      calibration: null,
+    }
+    expect(validateSpace(space)).toEqual([])
+    const form = spaceToPolygonForm(space)
+    expect(form.openings).toEqual([
+      { edge: 0, startMm: 5000, toEdge: 0, endMm: 6000, kind: 'side', reversed: true },
+      {
+        edge: 1,
+        startMm: 5000,
+        toEdge: 3,
+        endMm: edgeLengthMm(arc.vertices, 3),
+        kind: 'main',
+      },
+      { edge: 6, startMm: 4000, toEdge: 0, endMm: 1000, kind: 'open', reversed: true },
+    ])
+    expect(form.openings.map(openingRange)).toEqual([
+      '第 1 条边',
+      '第 2 条边 → 第 4 条边',
+      '第 7 条边 → 第 1 条边',
+    ])
+    expect(parse(form)).toEqual(space)
   })
 
   it('counts entrances off the boundary, which cannot be edited', () => {
@@ -211,21 +291,17 @@ describe('spaceToPolygonForm', () => {
     expect(spaceToPolygonForm(space).openings).toHaveLength(1)
   })
 
-  it('splits along the short way round the boundary', () => {
-    const boundary = [
-      [0, 0],
-      [8, 0],
-      [8, 6],
-      [0, 6],
-    ] as const
-    const corner = [
-      { edge: 1, startMm: 5000, endMm: 6000 },
-      { edge: 2, startMm: 0, endMm: 1000 },
-    ]
-    // From the right side round the bottom-right corner onto the front, in either direction.
-    expect(splitAlongBoundary(boundary, [8, 5], [7, 6])).toEqual(corner)
-    expect(splitAlongBoundary(boundary, [7, 6], [8, 5])).toEqual(corner)
-    expect(splitAlongBoundary(boundary, [4, 3], [8, 5])).toBeNull()
+  it('reads an opening round a corner as one row, in either direction', () => {
+    const space = rectangleSpace(8, 6, 3)
+    const corner = { edge: 1, startMm: 5000, toEdge: 2, endMm: 1000, kind: 'main' }
+    // From the right side round the bottom-right corner onto the front.
+    space.entrances = [{ a: [8, 5], b: [7, 6], kind: 'main' }]
+    expect(spaceToPolygonForm(space).openings).toEqual([corner])
+    expect(parse(spaceToPolygonForm(space)).entrances).toEqual(space.entrances)
+    // The same stretch saved the other way round keeps its direction.
+    space.entrances = [{ a: [7, 6], b: [8, 5], kind: 'main' }]
+    expect(spaceToPolygonForm(space).openings).toEqual([{ ...corner, reversed: true }])
+    expect(parse(spaceToPolygonForm(space)).entrances).toEqual(space.entrances)
   })
 })
 
@@ -304,7 +380,7 @@ describe('templates', () => {
       { xMm: 10000, zMm: 8000 },
       { xMm: 0, zMm: 8000 },
     ])
-    expect(form.openings).toEqual([{ edge: 4, startMm: 0, endMm: 10000, kind: 'main' }])
+    expect(form.openings).toEqual([{ edge: 4, startMm: 0, toEdge: 4, endMm: 10000, kind: 'main' }])
     expect(area(form)).toBe(68)
   })
 
@@ -319,7 +395,7 @@ describe('templates', () => {
     expect(area(right)).toBe(72)
     const left = templateToPolygon({ ...DEFAULT_TEMPLATES.trapezoid, slant: 'left' })
     expect(left.vertices[0]).toEqual({ xMm: 2000, zMm: 0 })
-    expect(left.openings).toEqual([{ edge: 2, startMm: 0, endMm: 10000, kind: 'main' }])
+    expect(left.openings).toEqual([{ edge: 2, startMm: 0, toEdge: 2, endMm: 10000, kind: 'main' }])
   })
 
   it('cuts a chamfer and bumps the back wall out or in', () => {
@@ -359,41 +435,97 @@ describe('inserting and deleting vertices', () => {
   const base = () => {
     const form = rectangleToPolygon({ ...RECT, entranceSide: 'front' })
     form.openings = [
-      { edge: 0, startMm: 1000, endMm: 2000, kind: 'side' },
-      { edge: 2, startMm: 0, endMm: 8000, kind: 'main' },
-      { edge: 3, startMm: 0, endMm: 6000, kind: 'open' },
+      { edge: 0, startMm: 1000, toEdge: 0, endMm: 2000, kind: 'side' },
+      { edge: 2, startMm: 0, toEdge: 2, endMm: 8000, kind: 'main' },
+      { edge: 3, startMm: 0, toEdge: 3, endMm: 6000, kind: 'open' },
     ]
     return form
   }
 
-  it('inserts a midpoint and splits the openings on that edge', () => {
+  it('inserts a midpoint; an opening across it now runs over both halves', () => {
     const form = insertVertex(base(), 2)
     expect(form.vertices[3]).toEqual({ xMm: 4000, zMm: 6000 })
     expect(form.openings).toEqual([
-      { edge: 0, startMm: 1000, endMm: 2000, kind: 'side' },
-      { edge: 2, startMm: 0, endMm: 4000, kind: 'main' },
-      { edge: 3, startMm: 0, endMm: 4000, kind: 'main' },
-      { edge: 4, startMm: 0, endMm: 6000, kind: 'open' },
+      { edge: 0, startMm: 1000, toEdge: 0, endMm: 2000, kind: 'side' },
+      { edge: 2, startMm: 0, toEdge: 3, endMm: 4000, kind: 'main' },
+      { edge: 4, startMm: 0, toEdge: 4, endMm: 6000, kind: 'open' },
     ])
-    expect(errorsOf(parse(form))).toEqual([])
+    const space = parse(form)
+    expect(space.entrances).toEqual(parse(base()).entrances)
+    expect(errorsOf(space)).toEqual([])
   })
 
   it('puts an opening on one half only when it does not cross the midpoint', () => {
     const form = insertVertex(base(), 0)
-    expect(form.openings[0]).toEqual({ edge: 0, startMm: 1000, endMm: 2000, kind: 'side' })
+    expect(form.openings[0]).toEqual({
+      edge: 0,
+      startMm: 1000,
+      toEdge: 0,
+      endMm: 2000,
+      kind: 'side',
+    })
     expect(form.openings.map((o) => o.edge)).toEqual([0, 3, 4])
   })
 
-  it('removes only the openings on the two edges of a deleted vertex', () => {
+  it('moves openings on the two edges of a deleted vertex onto the joined edge', () => {
     const form = deleteVertex(base(), 1)
     expect(form.vertices).toHaveLength(3)
+    // The side entrance keeps its distance from vertex 1, which stays.
     expect(form.openings).toEqual([
-      { edge: 1, startMm: 0, endMm: 8000, kind: 'main' },
-      { edge: 2, startMm: 0, endMm: 6000, kind: 'open' },
+      { edge: 0, startMm: 1000, toEdge: 0, endMm: 2000, kind: 'side' },
+      { edge: 1, startMm: 0, toEdge: 1, endMm: 8000, kind: 'main' },
+      { edge: 2, startMm: 0, toEdge: 2, endMm: 6000, kind: 'open' },
     ])
-    // Deleting the first vertex merges the last and the first edge.
+    // Deleting the first vertex joins the last and the first edge into (0, 6) → (8, 0). The
+    // open edge ended on the deleted vertex; the nearer neighbour (0, 6) is its own start, so
+    // it goes to the other one, (8, 0). The side entrance keeps its distance from (8, 0).
     expect(deleteVertex(base(), 0).openings).toEqual([
-      { edge: 1, startMm: 0, endMm: 8000, kind: 'main' },
+      { edge: 1, startMm: 0, toEdge: 1, endMm: 8000, kind: 'main' },
+      { edge: 2, startMm: 0, toEdge: 2, endMm: 10000, kind: 'open' },
+      { edge: 2, startMm: 3000, toEdge: 2, endMm: 4000, kind: 'side' },
+    ])
+  })
+
+  it('keeps an opening across edges over the same stretch when inserting or deleting', () => {
+    // Main entrance from the right wall, 1 m before the corner, along the arc to its apex.
+    const { form } = setStorefront(
+      arcFront(),
+      { from: 1, to: 3, startMm: 5000, endMm: null },
+      'main',
+    )
+    expect(form.openings).toMatchObject([{ edge: 1, startMm: 5000, toEdge: 3, kind: 'main' }])
+    const before = parse(form).entrances
+    expect(before).toEqual([{ a: [8, 5], b: [4, 7], kind: 'main' }])
+    expect(piecesOf(parse(form)).map((p) => p.edge)).toEqual([1, 2, 3])
+
+    // On the first edge before the start, inside, on the last edge and after the end.
+    for (const edge of [1, 2, 3, 4]) {
+      const inserted = parse(insertVertex(form, edge))
+      expect(inserted.entrances, `插点于边 ${edge + 1}`).toEqual(before)
+      expect(errorsOf(inserted)).toEqual([])
+    }
+    // Inserting on edge 2, before the start: the start moves onto the new second half.
+    expect(insertVertex(form, 1).openings).toMatchObject([
+      { edge: 2, startMm: 2000, toEdge: 4, kind: 'main' },
+    ])
+    // Deleting vertex 4, inside the stretch, joins its edges 3 and 4; the ends stay.
+    const deleted = parse(deleteVertex(form, 3))
+    expect(deleted.entrances).toEqual(before)
+    expect(piecesOf(deleted).map((p) => p.edge)).toEqual([1, 2])
+    expect(errorsOf(deleted)).toEqual([])
+  })
+
+  it('moves an end on a deleted vertex to the nearer neighbouring vertex', () => {
+    const arc = arcFront()
+    const { form } = setStorefront(arc, { from: 2, to: 5, startMm: 0, endMm: null }, 'main')
+    const metres = (v: VertexRow | undefined) => [(v?.xMm ?? 0) / 1000, (v?.zMm ?? 0) / 1000]
+    // The start (8, 6) goes: its neighbours are (8, 0), 6 m away, and the first arc point.
+    expect(parse(deleteVertex(form, 2)).entrances).toEqual([
+      { a: metres(arc.vertices[3]), b: [0, 6], kind: 'main' },
+    ])
+    // The end (0, 6) goes: the last arc point is nearer than (0, 0).
+    expect(parse(deleteVertex(form, 6)).entrances).toEqual([
+      { a: [8, 6], b: metres(arc.vertices[5]), kind: 'main' },
     ])
   })
 
@@ -405,7 +537,7 @@ describe('inserting and deleting vertices', () => {
 
 describe('arcEdge', () => {
   const rect = () => rectangleToPolygon({ ...RECT, entranceSide: 'front' })
-  const out = { mode: 'sagitta', valueMm: 1000, segments: 4, direction: 'out' } as const
+  const out = OUT_ARC
 
   it('replaces an edge by chords of an arc bulging out of the shop', () => {
     const result = arcEdge(rect(), 2, out)
@@ -416,16 +548,16 @@ describe('arcEdge', () => {
     expect(vertices[4]).toEqual({ xMm: 4000, zMm: 7000 })
     for (const v of vertices.slice(3, 6))
       expect(Math.abs(Math.hypot(v.xMm - 4000, v.zMm + 1500) - 8500)).toBeLessThanOrEqual(1)
-    // The whole-edge entrance now covers every segment.
-    expect(openings.map((o) => o.edge)).toEqual([2, 3, 4, 5])
-    expect(openings.every((o) => o.kind === 'main' && o.startMm === 0)).toBe(true)
+    // The whole-edge entrance now runs over every segment, still as one row.
+    expect(openings).toEqual([
+      { edge: 2, startMm: 0, toEdge: 5, endMm: edgeLengthMm(vertices, 5), kind: 'main' },
+    ])
 
     const space = parse(result.form)
     expect(errorsOf(space)).toEqual([])
-    expect(space.entrances).toHaveLength(4)
-    expect(space.entrances.every((e) => e.kind === 'main')).toBe(true)
-    // The middle of the storefront comes first: downstream takes it as the main entrance.
-    expect(space.entrances[0]).toMatchObject({ b: [4, 7] })
+    // One main entrance between the old corners, read along the arc.
+    expect(space.entrances).toEqual([{ a: [8, 6], b: [0, 6], kind: 'main' }])
+    expect(piecesOf(space).map((p) => p.edge)).toEqual([2, 3, 4, 5])
     expect(mainIsContinuous(result.form)).toBe(true)
   })
 
@@ -466,40 +598,92 @@ describe('storefront', () => {
     expect(selectionEdges({ from: 2, to: 2, startMm: 0, endMm: null }, 4)).toEqual([2])
   })
 
-  it('writes one span per edge and cuts what was there before', () => {
-    const { form, replaced } = setStorefront(
+  it('writes the selection as one opening across edges and cuts what was there before', () => {
+    const { form, replaced, parts } = setStorefront(
       rect(),
       { from: 1, to: 2, startMm: 1000, endMm: 3000 },
       'open',
     )
     expect(replaced).toBe(0)
+    expect(parts).toBe(1)
     expect(form.openings).toEqual([
-      { edge: 1, startMm: 1000, endMm: 6000, kind: 'open' },
-      { edge: 2, startMm: 0, endMm: 3000, kind: 'open' },
-      { edge: 2, startMm: 3000, endMm: 8000, kind: 'main' },
+      { edge: 1, startMm: 1000, toEdge: 2, endMm: 3000, kind: 'open' },
+      { edge: 2, startMm: 3000, toEdge: 2, endMm: 8000, kind: 'main' },
+    ])
+    expect(form.openings.map(openingRange)).toEqual(['第 2 条边 → 第 3 条边', '第 3 条边'])
+    const space = parse(form)
+    expect(space.openEdges).toEqual([{ a: [8, 1], b: [5, 6] }])
+    expect(errorsOf(space)).toEqual([])
+  })
+
+  it('makes a whole arc storefront one main entrance', () => {
+    const arc = arcFront()
+    const { form, parts } = setStorefront(arc, { from: 2, to: 5, startMm: 0, endMm: null }, 'main')
+    expect(parts).toBe(1)
+    expect(form.openings).toEqual([
+      { edge: 2, startMm: 0, toEdge: 5, endMm: edgeLengthMm(arc.vertices, 5), kind: 'main' },
+    ])
+    const space = parse(form)
+    expect(space.entrances).toEqual([{ a: [8, 6], b: [0, 6], kind: 'main' }])
+    expect(validateSpace(space)).toEqual([])
+    expect(piecesOf(space).map((p) => p.edge)).toEqual([2, 3, 4, 5])
+    // Downstream reads it at the apex, facing straight out of the front.
+    const frame = sceneFrame(space)
+    expect(frame.entrance[0]).toBeCloseTo(4, 2)
+    expect(frame.entrance[1]).toBeCloseTo(7, 2)
+    expect(frame.front[0]).toBeCloseTo(0, 6)
+    expect(frame.front[1]).toBeCloseTo(1, 6)
+  })
+
+  it('splits a storefront longer than half the perimeter so each piece reads the right way', () => {
+    // Top, right side and front: 22 m of the 28 m perimeter.
+    const { form, parts } = setStorefront(
+      rect(),
+      { from: 0, to: 2, startMm: 0, endMm: null },
+      'open',
+    )
+    expect(parts).toBe(2)
+    expect(form.openings).toEqual([
+      { edge: 0, startMm: 0, toEdge: 1, endMm: 3000, kind: 'open' },
+      { edge: 1, startMm: 3000, toEdge: 2, endMm: 8000, kind: 'open' },
     ])
     const space = parse(form)
     expect(space.openEdges).toEqual([
-      { a: [8, 1], b: [8, 6] },
-      { a: [8, 6], b: [5, 6] },
+      { a: [0, 0], b: [8, 3] },
+      { a: [8, 3], b: [0, 6] },
     ])
+    const covered = space.openEdges
+      .flatMap((e) => openingPieces(space, e) ?? [])
+      .reduce((sum, piece) => sum + distance(piece.a, piece.b), 0)
+    expect(covered).toBeCloseTo(22, 6)
     expect(errorsOf(space)).toEqual([])
+    expect(formWarnings(form)).toEqual([])
+
+    // A row typed in that long is saved in pieces too, with a warning.
+    const typed = rect()
+    typed.openings = [{ edge: 0, startMm: 0, toEdge: 2, endMm: 8000, kind: 'open' }]
+    expect(parse(typed).openEdges).toEqual(space.openEdges)
+    expect(formWarnings(typed)).toEqual([
+      '边 1 → 边 3 的开放边超过周长的一半，保存时拆成 2 段（一段店面只按两端之间较短的一侧理解）',
+    ])
   })
 
   it('keeps one main entrance: a new one replaces the old, side entrances stay', () => {
     const start = rect()
-    start.openings.push({ edge: 1, startMm: 1000, endMm: 2000, kind: 'side' })
+    start.openings.push({ edge: 1, startMm: 1000, toEdge: 1, endMm: 2000, kind: 'side' })
     const moved = setStorefront(start, { from: 0, to: 0, startMm: 2000, endMm: 4000 }, 'main')
     expect(moved.replaced).toBe(1)
     expect(moved.form.openings).toEqual([
-      { edge: 0, startMm: 2000, endMm: 4000, kind: 'main' },
-      { edge: 1, startMm: 1000, endMm: 2000, kind: 'side' },
+      { edge: 0, startMm: 2000, toEdge: 0, endMm: 4000, kind: 'main' },
+      { edge: 1, startMm: 1000, toEdge: 1, endMm: 2000, kind: 'side' },
     ])
     expect(parse(moved.form).entrances.map((e) => e.kind)).toEqual(['main', 'side'])
     // Narrowing the whole-front entrance leaves wall on both sides.
     const narrowed = setStorefront(rect(), { from: 2, to: 2, startMm: 3000, endMm: 5000 }, 'main')
     expect(narrowed.replaced).toBe(2)
-    expect(narrowed.form.openings).toEqual([{ edge: 2, startMm: 3000, endMm: 5000, kind: 'main' }])
+    expect(narrowed.form.openings).toEqual([
+      { edge: 2, startMm: 3000, toEdge: 2, endMm: 5000, kind: 'main' },
+    ])
   })
 
   it('turns a stretch back into wall and ignores an empty selection', () => {
@@ -512,12 +696,15 @@ describe('storefront', () => {
 
   it('warns about a broken main storefront but not about one round a corner', () => {
     const form = rect()
-    form.openings.push({ edge: 0, startMm: 0, endMm: 1000, kind: 'main' })
+    form.openings.push({ edge: 0, startMm: 0, toEdge: 0, endMm: 1000, kind: 'main' })
     expect(mainIsContinuous(form)).toBe(false)
     expect(formWarnings(form)).toContain(
       '主入口不连续：一个空间只能有一段连续的主入口，请把其余段改为次入口',
     )
     const corner = setStorefront(rect(), { from: 1, to: 2, startMm: 3000, endMm: null }, 'main')
+    expect(corner.form.openings).toEqual([
+      { edge: 1, startMm: 3000, toEdge: 2, endMm: 8000, kind: 'main' },
+    ])
     expect(mainIsContinuous(corner.form)).toBe(true)
   })
 })
@@ -536,8 +723,8 @@ describe('formWarnings', () => {
   it('warns about openings that do not fit their edge', () => {
     const form = rectangleToPolygon({ ...RECT, entranceSide: 'front' })
     form.openings.push(
-      { edge: 1, startMm: 5000, endMm: 7000, kind: 'side' },
-      { edge: 3, startMm: 100, endMm: 100, kind: 'open' },
+      { edge: 1, startMm: 5000, toEdge: 1, endMm: 7000, kind: 'side' },
+      { edge: 3, startMm: 100, toEdge: 3, endMm: 100, kind: 'open' },
     )
     expect(formWarnings(form)).toEqual([
       '边 2 上的次入口超出这条边，已截到边内',

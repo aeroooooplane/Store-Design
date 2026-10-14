@@ -1,4 +1,4 @@
-import { SpaceSchema, distance, distanceToSegment, mmToM, mToMm } from '@store/shared'
+import { SpaceSchema, mmToM, mToMm, openingPieces } from '@store/shared'
 import type { Obstacle, Point, Space, SpaceInput } from '@store/shared'
 
 /** Forms work in millimetres; spaces are stored in metres. */
@@ -35,13 +35,23 @@ export const OPENING_KIND_LABELS: Record<OpeningKind, string> = {
   open: '开放边',
 }
 
+/**
+ * One entrance or open edge, as saved: it runs forwards round the boundary (in vertex order)
+ * from `startMm` along edge `edge` to `endMm` along edge `toEdge`, so one row can follow several
+ * edges (an arc storefront, or round a corner). Edge i runs from vertex i to vertex i + 1.
+ */
 export interface OpeningRow {
-  /** Index of the boundary edge (from vertex i to vertex i + 1). */
+  /** Edge the opening starts on. */
   edge: number
-  /** Opening start and end, measured along the edge from its first vertex. */
+  /** Start, measured along `edge` from its first vertex. */
   startMm: number
+  /** Edge the opening ends on; the same as `edge` for an opening on one edge. */
+  toEdge: number
+  /** End, measured along `toEdge` from its first vertex. */
   endMm: number
   kind: OpeningKind
+  /** The saved opening runs against the vertex order (b before a); saving keeps it that way. */
+  reversed?: boolean
 }
 
 export type ObstacleKind = Obstacle['kind']
@@ -83,8 +93,12 @@ export const MAX_VERTICES = 200
 export const MAX_ARC_SEGMENTS = 64
 /** Openings shorter than this are dropped; also the tolerance for touching spans. */
 const MIN_SPAN_MM = 1
-/** How far an entrance end may lie from the boundary to still count as on it (schema: 0.02 m). */
-const ON_EDGE_M = 0.02
+/**
+ * An opening is saved by its two ends and read back as the shorter way round between them
+ * (shared `openingPieces`), so one longer than half the perimeter would be read as the other
+ * side. Kept below half the perimeter by this much, rounding the ends to the millimetre is safe.
+ */
+const HALF_MARGIN_MM = 10
 
 const point = (xMm: number, zMm: number): [number, number] => [mmToM(xMm), mmToM(zMm)]
 const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v))
@@ -139,7 +153,10 @@ export function rectangleToPolygon(form: RectangleForm): PolygonForm {
   return {
     vertices,
     heightMm: form.heightMm,
-    openings: edge < 0 ? [] : [{ edge, startMm: start, endMm: start + opening, kind: 'main' }],
+    openings:
+      edge < 0
+        ? []
+        : [{ edge, startMm: start, toEdge: edge, endMm: start + opening, kind: 'main' }],
     obstacles: [],
   }
 }
@@ -335,7 +352,15 @@ export function templateToPolygon(t: TemplateForm): PolygonForm {
     openings:
       front < 0
         ? []
-        : [{ edge: front, startMm: 0, endMm: edgeLengthMm(vertices, front), kind: 'main' }],
+        : [
+            {
+              edge: front,
+              startMm: 0,
+              toEdge: front,
+              endMm: edgeLengthMm(vertices, front),
+              kind: 'main',
+            },
+          ],
     obstacles: [],
   }
 }
@@ -432,44 +457,277 @@ export function closure(vertices: readonly VertexRow[], edges: readonly EdgeRow[
 }
 
 // ---------------------------------------------------------------------------------------------
+// Positions round the boundary
+
+/**
+ * The boundary unrolled onto a line: edge i covers `starts[i]` to `starts[i] + lengths[i]`
+ * millimetres from vertex 0, the whole ring `perimeter`.
+ */
+interface Ring {
+  starts: number[]
+  lengths: number[]
+  perimeter: number
+}
+
+/** A stretch of the boundary: from `start` (see Ring) forwards over `length` millimetres. */
+interface Stretch {
+  start: number
+  length: number
+}
+
+/** One end of an opening: an edge and the distance along it from its first vertex. */
+interface End {
+  edge: number
+  mm: number
+}
+
+/** Below this a position counts as on a vertex (floating-point noise, not a real distance). */
+const SNAP_MM = 1e-6
+
+function ringOf(vertices: readonly VertexRow[]): Ring {
+  const lengths = vertices.map((_, i) => edgeLengthMm(vertices, i))
+  const starts: number[] = []
+  let perimeter = 0
+  for (const length of lengths) {
+    starts.push(perimeter)
+    perimeter += length
+  }
+  return { starts, lengths, perimeter }
+}
+
+const validEdge = (ring: Ring, edge: number) =>
+  Number.isInteger(edge) && edge >= 0 && edge < ring.lengths.length
+
+const along = (ring: Ring, end: End) =>
+  (ring.starts[end.edge] ?? 0) + clamp(end.mm, 0, ring.lengths[end.edge] ?? 0)
+
+/** A row's two ends; on one edge the start is the nearer one to the edge's first vertex. */
+function rowEnds(row: OpeningRow): { start: End; end: End } {
+  const start = { edge: row.edge, mm: row.startMm }
+  const end = { edge: row.toEdge, mm: row.endMm }
+  return row.edge === row.toEdge && row.startMm > row.endMm
+    ? { start: { ...start, mm: row.endMm }, end: { ...end, mm: row.startMm } }
+    : { start, end }
+}
+
+/** The stretch a row covers; null when one of its edges does not exist. */
+function rowStretch(ring: Ring, row: OpeningRow): Stretch | null {
+  if (!validEdge(ring, row.edge) || !validEdge(ring, row.toEdge) || ring.perimeter <= 0) return null
+  const { start, end } = rowEnds(row)
+  const from = along(ring, start)
+  const to = along(ring, end)
+  return {
+    start: from,
+    length: row.edge === row.toEdge ? to - from : mod(to - from, ring.perimeter),
+  }
+}
+
+/**
+ * Edge and offset of a position round the ring. On a vertex a start goes on the edge that
+ * begins there and an end on the edge that ends there, so neither gets an empty first piece.
+ */
+function locate(ring: Ring, position: number, role: 'start' | 'end'): End {
+  const { starts, lengths, perimeter } = ring
+  let p = mod(position, perimeter)
+  for (const s of [...starts, perimeter]) if (Math.abs(p - s) <= SNAP_MM) p = s
+  if (p === perimeter) p = 0
+  if (role === 'end' && p === 0) p = perimeter
+  for (let edge = 0; edge < lengths.length; edge++) {
+    const lo = starts[edge] ?? 0
+    const length = lengths[edge] ?? 0
+    const hi = lo + length
+    if (length <= 0) continue
+    if (role === 'start' ? p >= lo && p < hi : p > lo && p <= hi)
+      return { edge, mm: p === hi ? length : p === lo ? 0 : roundTo(p - lo, 3) }
+  }
+  return { edge: 0, mm: 0 }
+}
+
+/**
+ * Splits a stretch longer than half the perimeter (less HALF_MARGIN_MM) into equal pieces that
+ * are each read back the right way round; the cuts move to the nearest vertices when every
+ * piece stays short enough.
+ */
+function shortPieces(ring: Ring, stretch: Stretch): Stretch[] {
+  const half = ring.perimeter / 2 - HALF_MARGIN_MM
+  if (stretch.length <= half || half <= 0) return [stretch]
+  const count = Math.ceil(stretch.length / half)
+  const end = stretch.start + stretch.length
+  const exact = Array.from(
+    { length: count - 1 },
+    (_, k) => stretch.start + (stretch.length * (k + 1)) / count,
+  )
+  const toVertex = (cut: number) => {
+    const p = mod(cut, ring.perimeter)
+    const nearest = [...ring.starts, ring.perimeter].reduce((best, s) =>
+      Math.abs(s - p) < Math.abs(best - p) ? s : best,
+    )
+    return cut + nearest - p
+  }
+  const fits = (cuts: number[]) =>
+    [stretch.start, ...cuts, end].every((c, k, all) => {
+      const piece = c - (all[k - 1] ?? c)
+      return k === 0 || (piece >= MIN_SPAN_MM && piece <= half)
+    })
+  const snapped = exact.map(toVertex)
+  const cuts = fits(snapped) ? snapped : exact
+  return [stretch.start, ...cuts].map((s, k) => ({ start: s, length: (cuts[k] ?? end) - s }))
+}
+
+/** The rows for a stretch, more than one when it is longer than half the perimeter. */
+function rowsFor(
+  ring: Ring,
+  stretch: Stretch,
+  like: Pick<OpeningRow, 'kind' | 'reversed'>,
+): OpeningRow[] {
+  return shortPieces(ring, stretch).map((piece) => {
+    const a = locate(ring, piece.start, 'start')
+    const b = locate(ring, piece.start + piece.length, 'end')
+    return {
+      edge: a.edge,
+      startMm: a.mm,
+      toEdge: b.edge,
+      endMm: b.mm,
+      kind: like.kind,
+      ...(like.reversed ? { reversed: true } : {}),
+    }
+  })
+}
+
+/** How much two stretches overlap, either way round the ring. */
+function overlapMm(ring: Ring, p: Stretch, q: Stretch): number {
+  let most = 0
+  for (const shift of [-ring.perimeter, 0, ring.perimeter]) {
+    const lo = Math.max(p.start, q.start + shift)
+    const hi = Math.min(p.start + p.length, q.start + shift + q.length)
+    most = Math.max(most, hi - lo)
+  }
+  return most
+}
+
+/** What is left of a row outside a stretch; the row itself when they do not overlap. */
+function subtractStretch(ring: Ring, row: OpeningRow, cut: Stretch): OpeningRow[] {
+  const own = rowStretch(ring, row)
+  if (!own || overlapMm(ring, own, cut) <= 0) return [row]
+  let left: [number, number][] = [[own.start, own.start + own.length]]
+  // The row may run past vertex 0, so the cut is also tried a turn either way.
+  for (const shift of [-ring.perimeter, 0, ring.perimeter]) {
+    const lo = cut.start + shift
+    const hi = lo + cut.length
+    const next: [number, number][] = []
+    for (const [s, e] of left) {
+      if (hi <= s || lo >= e) next.push([s, e])
+      else {
+        if (lo - s >= MIN_SPAN_MM) next.push([s, lo])
+        if (e - hi >= MIN_SPAN_MM) next.push([hi, e])
+      }
+    }
+    left = next
+  }
+  return left.flatMap(([s, e]) => rowsFor(ring, { start: s, length: e - s }, row))
+}
+
+/** Where a row runs, for lists and messages: 第 3 条边, or 第 3 条边 → 第 6 条边. */
+export function openingRange(row: OpeningRow): string {
+  return row.edge === row.toEdge
+    ? `第 ${row.edge + 1} 条边`
+    : `第 ${row.edge + 1} 条边 → 第 ${row.toEdge + 1} 条边`
+}
+
+const withEnds = (row: OpeningRow, start: End, end: End): OpeningRow => ({
+  ...row,
+  edge: start.edge,
+  startMm: start.mm,
+  toEdge: end.edge,
+  endMm: end.mm,
+})
+
+// ---------------------------------------------------------------------------------------------
 // Vertex editing
 
-/** Inserts the midpoint of `edge`; openings on it are split over the two halves. */
+/**
+ * Inserts the midpoint of `edge`. Openings keep their ends: an end on the split edge moves to
+ * whichever half it lies on, so an opening across the midpoint now runs over both halves.
+ */
 export function insertVertex(form: PolygonForm, edge: number): PolygonForm {
   const n = form.vertices.length
   const a = form.vertices[edge]
   const b = form.vertices[(edge + 1) % n]
   if (!a || !b || n >= MAX_VERTICES) return form
   const mid = { xMm: Math.round((a.xMm + b.xMm) / 2), zMm: Math.round((a.zMm + b.zMm) / 2) }
+  const length = edgeLengthMm(form.vertices, edge)
   const first = Math.hypot(mid.xMm - a.xMm, mid.zMm - a.zMm)
   const vertices = [...form.vertices.slice(0, edge + 1), mid, ...form.vertices.slice(edge + 1)]
-  const openings = form.openings.flatMap((row): OpeningRow[] => {
-    if (row.edge < edge) return [row]
-    if (row.edge > edge) return [{ ...row, edge: row.edge + 1 }]
-    const parts: OpeningRow[] = []
-    if (row.startMm < first - MIN_SPAN_MM) parts.push({ ...row, endMm: Math.min(row.endMm, first) })
-    if (row.endMm > first + MIN_SPAN_MM)
-      parts.push({
-        ...row,
-        edge: edge + 1,
-        startMm: Math.max(row.startMm, first) - first,
-        endMm: row.endMm - first,
-      })
-    return parts
+  const second = edgeLengthMm(vertices, edge + 1)
+  const move = (end: End, role: 'start' | 'end'): End => {
+    if (end.edge < edge) return end
+    if (end.edge > edge) return { ...end, edge: end.edge + 1 }
+    if (role === 'start' ? end.mm < first : end.mm <= first) return end
+    // An end on the far vertex stays exactly on it, whatever the rounding of the midpoint.
+    const mm = end.mm >= length - SNAP_MM ? second : Math.max(0, end.mm - first)
+    return { edge: edge + 1, mm }
+  }
+  const openings = form.openings.map((row) => {
+    const { start, end } = rowEnds(row)
+    return withEnds(row, move(start, 'start'), move(end, 'end'))
   })
   return { ...form, vertices, openings: sortOpenings(openings) }
 }
 
-/** Removes a vertex; only the openings on its two edges go, the others follow their edges. */
+/**
+ * Removes a vertex, joining its two edges into one. Openings keep their ends: an end on one of
+ * the joined edges keeps its distance from the remaining vertex at that side, and an end on
+ * the removed vertex moves to the nearer neighbouring vertex (the other one if the opening
+ * would vanish). Openings that still vanish are dropped.
+ */
 export function deleteVertex(form: PolygonForm, index: number): PolygonForm {
   const n = form.vertices.length
   if (n <= 3 || index < 0 || index >= n) return form
   const before = mod(index - 1, n)
-  const openings = form.openings.flatMap((row) => {
-    if (row.edge === before || row.edge === index) return []
-    return [{ ...row, edge: row.edge > index ? row.edge - 1 : row.edge }]
+  const vertices = form.vertices.filter((_, i) => i !== index)
+  const ring = ringOf(vertices)
+  const merged = before > index ? before - 1 : before
+  const l1 = edgeLengthMm(form.vertices, before)
+  const l2 = edgeLengthMm(form.vertices, index)
+  const joined = edgeLengthMm(vertices, merged)
+  const reindex = (end: End): End => ({ ...end, edge: end.edge > index ? end.edge - 1 : end.edge })
+  // Distance from vertex `before` along the two joined edges; null for an end elsewhere.
+  const fromBefore = (end: End) =>
+    end.edge === before
+      ? clamp(end.mm, 0, l1)
+      : end.edge === index
+        ? l1 + clamp(end.mm, 0, l2)
+        : null
+  const keepDistance = (d: number) =>
+    d < l1 ? Math.min(d, joined) : Math.max(0, joined - (l1 + l2 - d))
+  const proportional = (d: number) => (l1 + l2 > 0 ? (d * joined) / (l1 + l2) : 0)
+  const nearer = l1 <= l2 ? 0 : joined
+  const attempts: [(d: number) => number, number][] = [
+    [keepDistance, nearer],
+    [keepDistance, joined - nearer],
+    [proportional, nearer],
+    [proportional, joined - nearer],
+  ]
+
+  const openings = form.openings.flatMap((row): OpeningRow[] => {
+    const { start, end } = rowEnds(row)
+    const ds = fromBefore(start)
+    const de = fromBefore(end)
+    if (ds === null && de === null)
+      return [{ ...row, edge: reindex(start).edge, toEdge: reindex(end).edge }]
+    const place = (d: number | null, e: End, map: (d: number) => number, vertex: number): End =>
+      d === null
+        ? reindex(e)
+        : { edge: merged, mm: Math.abs(d - l1) <= MIN_SPAN_MM ? vertex : map(d) }
+    for (const [map, vertex] of attempts) {
+      const next = withEnds(row, place(ds, start, map, vertex), place(de, end, map, vertex))
+      const stretch = rowStretch(ring, next)
+      const forwards = next.edge !== next.toEdge || next.endMm - next.startMm >= MIN_SPAN_MM
+      if (stretch && stretch.length >= MIN_SPAN_MM && forwards) return [next]
+    }
+    return []
   })
-  return { ...form, vertices: form.vertices.filter((_, i) => i !== index), openings }
+  return { ...form, vertices, openings: sortOpenings(openings) }
 }
 
 export interface ArcOptions {
@@ -484,8 +742,8 @@ export interface ArcOptions {
 export type ArcResult = { ok: true; form: PolygonForm } | { ok: false; message: string }
 
 /**
- * Replaces `edge` by `segments` equal chords of a circular arc. Openings on the edge are spread
- * over the new segments by their share of the chord.
+ * Replaces `edge` by `segments` equal chords of a circular arc. An opening end on the edge moves
+ * to the same share of the arc, so an opening on the edge now runs over the arc's segments.
  */
 export function arcEdge(form: PolygonForm, edge: number, options: ArcOptions): ArcResult {
   const n = form.vertices.length
@@ -533,19 +791,23 @@ export function arcEdge(form: PolygonForm, edge: number, options: ArcOptions): A
     }
   })
   const vertices = [...form.vertices.slice(0, edge + 1), ...inner, ...form.vertices.slice(edge + 1)]
-  const openings = form.openings.flatMap((row): OpeningRow[] => {
-    if (row.edge < edge) return [row]
-    if (row.edge > edge) return [{ ...row, edge: row.edge + segments - 1 }]
-    const from = clamp(row.startMm / chord, 0, 1)
-    const to = clamp(row.endMm / chord, 0, 1)
-    return Array.from({ length: segments }, (_, k): OpeningRow[] => {
-      const lo = Math.max(from, k / segments)
-      const hi = Math.min(to, (k + 1) / segments)
-      const length = edgeLengthMm(vertices, edge + k)
-      const startMm = Math.round((lo - k / segments) * segments * length)
-      const endMm = Math.round((hi - k / segments) * segments * length)
-      return endMm - startMm >= MIN_SPAN_MM ? [{ ...row, edge: edge + k, startMm, endMm }] : []
-    }).flat()
+  const move = (end: End, role: 'start' | 'end'): End => {
+    if (end.edge < edge) return end
+    if (end.edge > edge) return { ...end, edge: end.edge + segments - 1 }
+    const share = clamp(end.mm / chord, 0, 1) * segments
+    // On a segment boundary a start goes on the next segment and an end on the previous one.
+    const k =
+      role === 'start'
+        ? Math.min(segments - 1, Math.floor(share + SNAP_MM))
+        : Math.max(0, Math.ceil(share - SNAP_MM) - 1)
+    const length = edgeLengthMm(vertices, edge + k)
+    const local = share - k
+    const mm = local >= 1 - SNAP_MM ? length : local <= SNAP_MM ? 0 : roundTo(local * length, 1)
+    return { edge: edge + k, mm }
+  }
+  const openings = form.openings.map((row) => {
+    const { start: from, end: to } = rowEnds(row)
+    return withEnds(row, move(from, 'start'), move(to, 'end'))
   })
   return { ok: true, form: { ...form, vertices, openings: sortOpenings(openings) } }
 }
@@ -571,43 +833,38 @@ export function selectionEdges(selection: EdgeSelection, n: number): number[] {
   return Array.from({ length: count }, (_, k) => (from + k) % n)
 }
 
-export interface Span {
-  edge: number
-  startMm: number
-  endMm: number
-}
-
-/** The selection as one span per edge; empty when it has no length. */
-export function selectionSpans(vertices: readonly VertexRow[], selection: EdgeSelection): Span[] {
-  const edges = selectionEdges(selection, vertices.length)
-  return edges
-    .map((edge, k) => {
-      const length = edgeLengthMm(vertices, edge)
-      const startMm = k === 0 ? clamp(selection.startMm, 0, length) : 0
-      const endMm = k === edges.length - 1 ? clamp(selection.endMm ?? length, 0, length) : length
-      return { edge, startMm, endMm }
-    })
-    .filter((s) => s.endMm - s.startMm >= MIN_SPAN_MM)
-}
-
-function subtractSpan(row: OpeningRow, span: Span): OpeningRow[] {
-  if (row.edge !== span.edge || row.endMm <= span.startMm || row.startMm >= span.endMm) return [row]
-  return [
-    { ...row, endMm: span.startMm },
-    { ...row, startMm: span.endMm },
-  ].filter((r) => r.endMm - r.startMm >= MIN_SPAN_MM)
+/** The selected stretch of the boundary; null when the edges do not exist. */
+function selectionStretch(ring: Ring, selection: EdgeSelection): Stretch | null {
+  const edges = selectionEdges(selection, ring.lengths.length)
+  const first = edges[0]
+  const last = edges[edges.length - 1]
+  if (first === undefined || last === undefined) return null
+  const firstLength = ring.lengths[first] ?? 0
+  const lastLength = ring.lengths[last] ?? 0
+  const startMm = clamp(selection.startMm, 0, firstLength)
+  const endMm = clamp(selection.endMm ?? lastLength, 0, lastLength)
+  const start = (ring.starts[first] ?? 0) + startMm
+  if (edges.length === 1) return { start, length: Math.max(0, endMm - startMm) }
+  const middle = edges.slice(1, -1).reduce((sum, e) => sum + (ring.lengths[e] ?? 0), 0)
+  return { start, length: firstLength - startMm + middle + endMm }
 }
 
 export interface StorefrontResult {
   form: PolygonForm
-  /** Earlier main entrance segments outside the selection that went back to wall. */
+  /** Pieces of the earlier main entrance outside the selection that went back to wall. */
   replaced: number
+  /**
+   * Rows written for the selection: one, or more when it is longer than half the perimeter (an
+   * opening is read back as the shorter way round between its ends). 0 for `wall`.
+   */
+  parts: number
 }
 
 /**
- * Makes the selected stretch one storefront: whatever was on it is replaced, one row per edge.
- * A space has one continuous main entrance, so a new main entrance replaces the old one (its
- * remaining segments go back to wall; for example narrowing the default whole-front entrance).
+ * Makes the selected stretch one storefront, written as a single entrance or open edge from
+ * the start of the selection to its end, however many edges it runs over; whatever was on the
+ * stretch is replaced. A space has one main entrance, so a new one replaces the old (its
+ * remaining pieces go back to wall; for example narrowing the default whole-front entrance).
  * `wall` clears the stretch.
  */
 export function setStorefront(
@@ -615,37 +872,47 @@ export function setStorefront(
   selection: EdgeSelection,
   kind: OpeningKind | 'wall',
 ): StorefrontResult {
-  const spans = selectionSpans(form.vertices, selection)
-  if (!spans.length) return { form, replaced: 0 }
-  let rows = form.openings
-  for (const span of spans) rows = rows.flatMap((row) => subtractSpan(row, span))
+  const ring = ringOf(form.vertices)
+  const cut = selectionStretch(ring, selection)
+  if (!cut || cut.length < MIN_SPAN_MM) return { form, replaced: 0, parts: 0 }
+  let rows = form.openings.flatMap((row) => subtractStretch(ring, row, cut))
   const replaced = kind === 'main' ? rows.filter((row) => row.kind === 'main').length : 0
   if (kind === 'main') rows = rows.filter((row) => row.kind !== 'main')
-  const added = kind === 'wall' ? [] : spans.map((span) => ({ ...span, kind }))
-  return { form: { ...form, openings: sortOpenings([...rows, ...added]) }, replaced }
-}
-
-/** True when `next` continues `prev` along the boundary without a gap. */
-function joins(vertices: readonly VertexRow[], prev: OpeningRow, next: OpeningRow): boolean {
-  if (prev === next) return false
-  if (prev.edge === next.edge) return Math.abs(prev.endMm - next.startMm) <= MIN_SPAN_MM
-  return (
-    next.edge === (prev.edge + 1) % vertices.length &&
-    prev.endMm >= edgeLengthMm(vertices, prev.edge) - MIN_SPAN_MM &&
-    next.startMm <= MIN_SPAN_MM
-  )
+  const added = kind === 'wall' ? [] : rowsFor(ring, cut, { kind })
+  return {
+    form: { ...form, openings: sortOpenings([...rows, ...added]) },
+    replaced,
+    parts: added.length,
+  }
 }
 
 /** Main-entrance rows in boundary order from the start of the storefront, and its pieces. */
-function mainChain(form: PolygonForm): { chain: OpeningRow[]; pieces: number } {
-  const rows = sortOpenings(form.openings.filter((r) => r.kind === 'main'))
-  const starts = rows.flatMap((row, i) =>
-    joins(form.vertices, rows[mod(i - 1, rows.length)] ?? row, row) ? [] : [i],
-  )
+function mainChain(form: PolygonForm): { chain: OpeningRow[]; lengths: number[]; pieces: number } {
+  const ring = ringOf(form.vertices)
+  const rows = form.openings
+    .filter((row) => row.kind === 'main')
+    .flatMap((row) => {
+      const stretch = rowStretch(ring, row)
+      return stretch && stretch.length >= MIN_SPAN_MM ? [{ row, stretch }] : []
+    })
+    .sort((p, q) => p.stretch.start - q.stretch.start)
+  const gap = (prev: Stretch, next: Stretch) => {
+    const d = mod(next.start - (prev.start + prev.length), ring.perimeter)
+    return Math.min(d, ring.perimeter - d)
+  }
+  const starts = rows.flatMap((item, i) => {
+    const prev = rows[mod(i - 1, rows.length)]
+    return prev && prev !== item && gap(prev.stretch, item.stretch) <= MIN_SPAN_MM ? [] : [i]
+  })
   const first = starts[0] ?? 0
-  // A closed ring of main segments has no start but is one piece.
+  const ordered = [...rows.slice(first), ...rows.slice(0, first)]
+  // A closed ring of main rows has no start but is one piece.
   const pieces = rows.length ? Math.max(1, starts.length) : 0
-  return { chain: [...rows.slice(first), ...rows.slice(0, first)], pieces }
+  return {
+    chain: ordered.map((item) => item.row),
+    lengths: ordered.map((item) => item.stretch.length),
+    pieces,
+  }
 }
 
 /** A space has at most one continuous main entrance. */
@@ -654,17 +921,16 @@ export function mainIsContinuous(form: PolygonForm): boolean {
 }
 
 /**
- * Main segments with the one at the middle of the storefront first: downstream code
- * (mainEntrance, the planner, the plan's 主入口 label) takes the first `main` entrance for the
- * entrance position and direction, and the middle segment of a curved storefront faces the
- * right way.
+ * Main rows with the one at the middle of the storefront first. Normally there is one; a main
+ * entrance longer than half the perimeter is written in pieces, and downstream code
+ * (mainEntrance, the planner, the plan's 主入口 label) takes the first `main` entrance.
  */
 function orderedMain(form: PolygonForm): OpeningRow[] {
-  const { chain } = mainChain(form)
-  const total = chain.reduce((sum, r) => sum + (r.endMm - r.startMm), 0)
+  const { chain, lengths } = mainChain(form)
+  const total = lengths.reduce((sum, length) => sum + length, 0)
   let walked = 0
-  const middle = chain.findIndex((r) => {
-    walked += r.endMm - r.startMm
+  const middle = lengths.findIndex((length) => {
+    walked += length
     // The tolerance keeps the choice stable when the middle falls on a vertex.
     return walked >= total / 2 - MIN_SPAN_MM
   })
@@ -675,20 +941,33 @@ function orderedMain(form: PolygonForm): OpeningRow[] {
 // ---------------------------------------------------------------------------------------------
 // Form ⇄ space
 
-function openingSegment(
-  form: PolygonForm,
-  row: OpeningRow,
-): { a: [number, number]; b: [number, number] } | null {
-  const a = form.vertices[row.edge]
-  const b = form.vertices[(row.edge + 1) % form.vertices.length]
-  if (!a || !b) return null
-  const length = edgeLengthMm(form.vertices, row.edge)
-  const start = clamp(Math.min(row.startMm, row.endMm), 0, length)
-  const end = clamp(Math.max(row.startMm, row.endMm), 0, length)
-  if (end - start < MIN_SPAN_MM) return null
-  const p = pointAlong(a, b, start)
-  const q = pointAlong(a, b, end)
-  return { a: point(p.xMm, p.zMm), b: point(q.xMm, q.zMm) }
+type Segment = { a: [number, number]; b: [number, number] }
+
+function endPoint(form: PolygonForm, ring: Ring, end: End): [number, number] {
+  const a = form.vertices[end.edge] ?? { xMm: 0, zMm: 0 }
+  const b = form.vertices[(end.edge + 1) % form.vertices.length] ?? a
+  const p = pointAlong(a, b, clamp(end.mm, 0, ring.lengths[end.edge] ?? 0))
+  return point(p.xMm, p.zMm)
+}
+
+/**
+ * The saved entrances or open edges of a row: one segment from its start to its end (read back
+ * as the stretch between them, see shared `openingPieces`), or several for a row longer than
+ * half the perimeter. A reversed row is written from its end to its start.
+ */
+function rowSegments(form: PolygonForm, ring: Ring, row: OpeningRow): Segment[] {
+  const stretch = rowStretch(ring, row)
+  if (!stretch || stretch.length < MIN_SPAN_MM) return []
+  const pieces = shortPieces(ring, stretch)
+  const { start, end } = rowEnds(row)
+  const segments =
+    pieces.length === 1
+      ? [{ a: endPoint(form, ring, start), b: endPoint(form, ring, end) }]
+      : pieces.map((piece) => ({
+          a: endPoint(form, ring, locate(ring, piece.start, 'start')),
+          b: endPoint(form, ring, locate(ring, piece.start + piece.length, 'end')),
+        }))
+  return row.reversed ? segments.reverse().map(({ a, b }) => ({ a: b, b: a })) : segments
 }
 
 function obstacleToSpace(row: ObstacleRow) {
@@ -703,20 +982,19 @@ function obstacleToSpace(row: ObstacleRow) {
 
 /**
  * Builds a space; schema errors (too few vertices, bad numbers) surface to the form. Each
- * storefront row becomes one entrance or open edge; every segment of the main storefront is
- * `main`, the middle one first (see orderedMain).
+ * storefront row becomes one entrance or open edge, also when it runs over several edges; the
+ * main entrance comes first.
  */
 export function polygonToSpace(form: PolygonForm): ReturnType<typeof SpaceSchema.safeParse> {
   const boundary = form.vertices.map((v) => point(v.xMm, v.zMm))
+  const ring = ringOf(form.vertices)
+  const of = (rows: readonly OpeningRow[]) => rows.flatMap((row) => rowSegments(form, ring, row))
   const side = sortOpenings(form.openings.filter((r) => r.kind === 'side'))
-  const entrances = [...orderedMain(form), ...side].flatMap((row) => {
-    const segment = openingSegment(form, row)
-    return segment ? [{ ...segment, kind: row.kind === 'main' ? 'main' : 'side' } as const] : []
-  })
-  const openEdges = sortOpenings(form.openings.filter((r) => r.kind === 'open')).flatMap((row) => {
-    const segment = openingSegment(form, row)
-    return segment ? [segment] : []
-  })
+  const entrances = [
+    ...of(orderedMain(form)).map((segment) => ({ ...segment, kind: 'main' as const })),
+    ...of(side).map((segment) => ({ ...segment, kind: 'side' as const })),
+  ]
+  const openEdges = of(sortOpenings(form.openings.filter((r) => r.kind === 'open')))
   const input: SpaceInput = {
     schemaVersion: 1,
     boundary,
@@ -728,62 +1006,59 @@ export function polygonToSpace(form: PolygonForm): ReturnType<typeof SpaceSchema
   return SpaceSchema.safeParse(input)
 }
 
-/** Millimetres from `a` to the foot of `p` on segment a–b. */
-function offsetMm(a: Point, b: Point, p: Point): number {
-  const length = distance(a, b)
-  if (length === 0) return 0
-  const t = ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) / length
-  return mToMm(clamp(t, 0, length))
-}
-
-/** Nearest boundary edge within the on-boundary tolerance, and the position along it. */
-function locateOnBoundary(boundary: readonly Point[], p: Point) {
-  let best: { edge: number; mm: number; d: number } | null = null
-  for (let edge = 0; edge < boundary.length; edge++) {
-    const a = boundary[edge]
-    const b = boundary[(edge + 1) % boundary.length]
-    if (!a || !b) continue
-    const d = distanceToSegment(p, a, b)
-    if (d <= ON_EDGE_M && (!best || d < best.d - 1e-9)) best = { edge, mm: offsetMm(a, b, p), d }
-  }
-  return best
+/** Millimetres from vertex `edge` to the foot of `p` (metres) on that edge, to 0.1 mm. */
+function offsetMm(vertices: readonly VertexRow[], edge: number, p: Point): number {
+  const a = vertices[edge]
+  const b = vertices[(edge + 1) % vertices.length]
+  const length = edgeLengthMm(vertices, edge)
+  if (!a || !b || length === 0) return 0
+  const [x, z] = [p[0] * 1000, p[1] * 1000]
+  const t = clamp(
+    ((x - a.xMm) * (b.xMm - a.xMm) + (z - a.zMm) * (b.zMm - a.zMm)) / length,
+    0,
+    length,
+  )
+  // Ends on a vertex stay exactly on it.
+  return length - t < 0.05 ? length : roundTo(t, 1)
 }
 
 /**
- * Splits a boundary segment (an entrance or open edge) into one span per edge, following the
- * boundary the short way round from `a` to `b`. Null when an end is off the boundary.
+ * The row of a saved entrance or open edge: shared `openingPieces` gives the stretch it covers
+ * (between its ends, the shorter way round), whose first and last piece give the two ends.
+ * Null when it is off the boundary.
  */
-export function splitAlongBoundary(boundary: readonly Point[], a: Point, b: Point): Span[] | null {
-  const n = boundary.length
-  // Both ends on one edge: a single span, whatever the direction.
-  for (let edge = 0; edge < n; edge++) {
-    const p = boundary[edge]
-    const q = boundary[(edge + 1) % n]
-    if (!p || !q) continue
-    if (distanceToSegment(a, p, q) <= ON_EDGE_M && distanceToSegment(b, p, q) <= ON_EDGE_M) {
-      const s = offsetMm(p, q, a)
-      const t = offsetMm(p, q, b)
-      return [{ edge, startMm: Math.min(s, t), endMm: Math.max(s, t) }]
-    }
+function openingToRow(
+  space: Space,
+  vertices: readonly VertexRow[],
+  opening: { a: Point; b: Point },
+  kind: OpeningKind,
+): OpeningRow | null {
+  const pieces = openingPieces(space, opening)
+  const first = pieces?.[0]
+  const last = pieces?.[pieces.length - 1]
+  if (!pieces || !first || !last) return null
+  // The pieces run from a to b; a row runs in vertex order, so against it the row starts at b.
+  const forwards =
+    pieces.length === 1
+      ? offsetMm(vertices, first.edge, first.a) <= offsetMm(vertices, first.edge, first.b)
+      : pieces[1]?.edge === (first.edge + 1) % vertices.length
+  const [from, to] = forwards
+    ? [
+        { edge: first.edge, p: first.a },
+        { edge: last.edge, p: last.b },
+      ]
+    : [
+        { edge: last.edge, p: last.b },
+        { edge: first.edge, p: first.a },
+      ]
+  return {
+    edge: from.edge,
+    startMm: offsetMm(vertices, from.edge, from.p),
+    toEdge: to.edge,
+    endMm: offsetMm(vertices, to.edge, to.p),
+    kind,
+    ...(forwards ? {} : { reversed: true }),
   }
-  const from = locateOnBoundary(boundary, a)
-  const to = locateOnBoundary(boundary, b)
-  if (!from || !to) return null
-  const lengths = boundary.map((p, i) => mToMm(distance(p, boundary[(i + 1) % n] ?? p)))
-  const walk = (s: { edge: number; mm: number }, e: { edge: number; mm: number }): Span[] => {
-    const spans: Span[] = []
-    for (let k = 0, edge = s.edge; k < n; k++, edge = (edge + 1) % n) {
-      const startMm = edge === s.edge ? s.mm : 0
-      const endMm = edge === e.edge ? e.mm : (lengths[edge] ?? 0)
-      spans.push({ edge, startMm, endMm })
-      if (edge === e.edge) break
-    }
-    return spans.filter((span) => span.endMm - span.startMm >= MIN_SPAN_MM)
-  }
-  const forward = walk(from, to)
-  const backward = walk(to, from)
-  const total = (spans: Span[]) => spans.reduce((sum, s) => sum + s.endMm - s.startMm, 0)
-  return total(forward) <= total(backward) ? forward : backward
 }
 
 function isAxisRectangle(polygon: readonly Point[]): boolean {
@@ -823,23 +1098,23 @@ function obstacleToRow(o: Obstacle): ObstacleRow {
 
 /** Entrances and open edges of a space that lie off its boundary and cannot be edited. */
 export function unmappedOpenings(space: Space): number {
-  return [...space.entrances, ...space.openEdges].filter(
-    (e) => !splitAlongBoundary(space.boundary, e.a, e.b),
-  ).length
+  return [...space.entrances, ...space.openEdges].filter((e) => !openingPieces(space, e)).length
 }
 
 /**
- * Opens an existing space for editing without losing anything the form can hold: entrances
- * spanning several edges are split per edge, open edges are kept, obstacles keep their kind and
- * height, and non-rectangular obstacles keep their outline.
+ * Opens an existing space for editing without losing anything the form can hold: each entrance
+ * or open edge is one row, also when it runs over several edges, and keeps its direction;
+ * obstacles keep their kind and height, and non-rectangular obstacles keep their outline.
  */
 export function spaceToPolygonForm(space: Space): PolygonForm {
   const vertices = space.boundary.map(([x, z]) => ({ xMm: mToMm(x), zMm: mToMm(z) }))
-  const rows = (a: Point, b: Point, kind: OpeningKind): OpeningRow[] =>
-    (splitAlongBoundary(space.boundary, a, b) ?? []).map((span) => ({ ...span, kind }))
+  const rows = (opening: { a: Point; b: Point }, kind: OpeningKind): OpeningRow[] => {
+    const row = openingToRow(space, vertices, opening, kind)
+    return row ? [row] : []
+  }
   const openings = [
-    ...space.entrances.flatMap((e) => rows(e.a, e.b, e.kind)),
-    ...space.openEdges.flatMap((e) => rows(e.a, e.b, 'open')),
+    ...space.entrances.flatMap((e) => rows(e, e.kind)),
+    ...space.openEdges.flatMap((e) => rows(e, 'open')),
   ]
   return {
     vertices,
@@ -852,9 +1127,21 @@ export function spaceToPolygonForm(space: Space): PolygonForm {
 // ---------------------------------------------------------------------------------------------
 // Warnings that do not block saving
 
-/** Short and zero-length edges, a broken main storefront, and openings that do not fit. */
+/** 边 2 上的次入口, or 边 3 → 边 6 的主入口, for warnings. */
+function openingName(row: OpeningRow): string {
+  const kind = OPENING_KIND_LABELS[row.kind]
+  return row.edge === row.toEdge
+    ? `边 ${row.edge + 1} 上的${kind}`
+    : `边 ${row.edge + 1} → 边 ${row.toEdge + 1} 的${kind}`
+}
+
+/**
+ * Short and zero-length edges, a broken main storefront, openings that do not fit or overlap,
+ * and openings longer than half the perimeter (saved in pieces).
+ */
 export function formWarnings(form: PolygonForm): string[] {
   const n = form.vertices.length
+  const ring = ringOf(form.vertices)
   const warnings: string[] = []
   form.vertices.forEach((_, i) => {
     const length = edgeLengthMm(form.vertices, i)
@@ -867,18 +1154,36 @@ export function formWarnings(form: PolygonForm): string[] {
   })
   if (!mainIsContinuous(form))
     warnings.push('主入口不连续：一个空间只能有一段连续的主入口，请把其余段改为次入口')
-  const rows = sortOpenings(form.openings)
-  rows.forEach((row, i) => {
-    const name = `边 ${row.edge + 1} 上的${OPENING_KIND_LABELS[row.kind]}`
-    const length = edgeLengthMm(form.vertices, row.edge)
-    if (row.edge >= n) warnings.push(`店面所在的边 ${row.edge + 1} 已不存在，已忽略`)
-    else if (Math.min(row.endMm, length) - Math.max(row.startMm, 0) < MIN_SPAN_MM)
+  const placed: { name: string; stretch: Stretch }[] = []
+  for (const row of sortOpenings(form.openings)) {
+    const name = openingName(row)
+    const missing = [row.edge, row.toEdge].find((edge) => !validEdge(ring, edge))
+    const stretch = rowStretch(ring, row)
+    if (missing !== undefined || !stretch) {
+      warnings.push(`店面所在的边 ${(missing ?? row.edge) + 1} 已不存在，已忽略`)
+      continue
+    }
+    if (stretch.length < MIN_SPAN_MM) {
       warnings.push(`${name}长度为 0，已忽略`)
-    else if (row.endMm > length + MIN_SPAN_MM || row.startMm < 0)
-      warnings.push(`${name}超出这条边，已截到边内`)
-    const next = rows[i + 1]
-    if (next && next.edge === row.edge && next.startMm < row.endMm - MIN_SPAN_MM)
-      warnings.push(`边 ${row.edge + 1} 上的店面互相重叠`)
-  })
+      continue
+    }
+    const outside = (edge: number, mm: number) =>
+      mm < 0 || mm > (ring.lengths[edge] ?? 0) + MIN_SPAN_MM
+    if (outside(row.edge, row.startMm) || outside(row.toEdge, row.endMm))
+      warnings.push(
+        row.edge === row.toEdge
+          ? `${name}超出这条边，已截到边内`
+          : `${name}起点或终点超出所在的边，已截到边内`,
+      )
+    const parts = shortPieces(ring, stretch).length
+    if (parts > 1)
+      warnings.push(
+        `${name}超过周长的一半，保存时拆成 ${parts} 段（一段店面只按两端之间较短的一侧理解）`,
+      )
+    for (const other of placed)
+      if (overlapMm(ring, other.stretch, stretch) > MIN_SPAN_MM)
+        warnings.push(`${other.name}与${name}互相重叠`)
+    placed.push({ name, stretch })
+  }
   return warnings
 }

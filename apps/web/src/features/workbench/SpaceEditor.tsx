@@ -19,6 +19,7 @@ import {
   deleteVertex,
   formWarnings,
   insertVertex,
+  openingRange,
   polygonToSpace,
   rectangleToPolygon,
   selectionEdges,
@@ -76,6 +77,8 @@ const BUMP_LABELS: Record<TemplateForm['bump'], string> = {
 }
 
 const mod = (i: number, n: number) => ((i % n) + n) % n
+/** Storefront ends on an arc or a diagonal edge are fractional; shown to 0.1 mm. */
+const roundMm = (mm: number) => Math.round(mm * 10) / 10
 
 /** The key sizes of each template; the shape is regenerated on every change. */
 function TemplateFields({
@@ -237,9 +240,11 @@ export function SpaceEditor({
     const form = initial ? spaceToPolygonForm(initial) : rectangleToPolygon(DEFAULT_RECTANGLE)
     return { form, edges: verticesToEdges(form.vertices) }
   })
+  // Start on the edges of the main entrance (or the first storefront).
   const [selection, setSelection] = useState<EdgeSelection>(() => {
-    const edge = shape.form.openings[0]?.edge ?? 0
-    return { from: edge, to: edge, startMm: 0, endMm: null }
+    const { openings } = shape.form
+    const row = openings.find((o) => o.kind === 'main') ?? openings[0]
+    return { from: row?.edge ?? 0, to: row?.toEdge ?? 0, startMm: 0, endMm: null }
   })
   const [message, setMessage] = useState<string | null>(null)
   const [name, setName] = useState(initialName ?? (initial ? '空间（修改）' : '空间'))
@@ -307,14 +312,16 @@ export function SpaceEditor({
     setMessage(null)
   }
   const storefront = (kind: OpeningKind | 'wall') => {
-    const { form: next, replaced } = setStorefront(form, sel, kind)
+    const { form: next, replaced, parts } = setStorefront(form, sel, kind)
     if (next === form) return setMessage('选中的范围长度为 0，请检查起点和终点')
     commit(next)
-    setMessage(
-      replaced
-        ? `一个空间只有一段主入口：原来的主入口（其余 ${replaced} 段）已恢复为墙，需要的话可再设为次入口`
-        : null,
-    )
+    const notes = [
+      replaced &&
+        `一个空间只有一段主入口：原来的主入口（其余 ${replaced} 段）已恢复为墙，需要的话可再设为次入口`,
+      parts > 1 &&
+        `选中的店面超过周长的一半，已拆成 ${parts} 段写入（一段店面只按两端之间较短的一侧理解）`,
+    ].filter(Boolean)
+    setMessage(notes.length ? notes.join('；') : null)
   }
   const arc = (options: ArcOptions) => {
     const result = arcEdge(form, sel.from, options)
@@ -488,18 +495,19 @@ export function SpaceEditor({
             <fieldset>
               <legend>店面（入口与开放边）</legend>
               <p className="hint">
-                主入口只能有一段连续店面；跨多条边时每条边一段。开放边不砌墙，也不算入口。
+                一段店面可跨多条边，沿边界顺序从起点走到终点。主入口只能有一段连续店面；开放边不砌墙，也不算入口。
               </p>
               {form.openings.length === 0 && (
                 <p className="hint">还没有入口：在“选中的边”里选好范围后设为主入口。</p>
               )}
-              {form.openings.map((o, i) => (
-                <div className="row" key={i}>
+              {form.openings.map((o, i) => {
+                const range = openingRange(o)
+                const edgeSelect = (label: string, value: number, key: 'edge' | 'toEdge') => (
                   <label className="field">
-                    所在边
+                    {label}
                     <select
-                      value={o.edge}
-                      onChange={(event) => setOpening(i, { edge: Number(event.target.value) })}
+                      value={value}
+                      onChange={(event) => setOpening(i, { [key]: Number(event.target.value) })}
                     >
                       {form.vertices.map((_, k) => (
                         <option key={k} value={k}>
@@ -508,33 +516,60 @@ export function SpaceEditor({
                       ))}
                     </select>
                   </label>
-                  <NumberInput
-                    label="起点"
-                    value={o.startMm}
-                    onChange={(v) => setOpening(i, { startMm: v })}
-                  />
-                  <NumberInput
-                    label="终点"
-                    value={o.endMm}
-                    onChange={(v) => setOpening(i, { endMm: v })}
-                  />
-                  <ChoiceInput
-                    label="类型"
-                    value={o.kind}
-                    options={OPENING_KIND_LABELS}
-                    onChange={(kind) => setOpening(i, { kind })}
-                  />
-                  <button
-                    type="button"
-                    aria-label={`删除边 ${o.edge + 1} 上的${OPENING_KIND_LABELS[o.kind]}`}
-                    onClick={() =>
-                      commit({ ...form, openings: form.openings.filter((_, k) => k !== i) })
-                    }
-                  >
-                    删除
-                  </button>
-                </div>
-              ))}
+                )
+                return (
+                  <div key={i}>
+                    <div className="row">
+                      <strong>
+                        {OPENING_KIND_LABELS[o.kind]}：{range}
+                      </strong>
+                      <button
+                        type="button"
+                        aria-label={`选中${range}的${OPENING_KIND_LABELS[o.kind]}`}
+                        onClick={() =>
+                          setSelection({
+                            from: o.edge,
+                            to: o.toEdge,
+                            startMm: o.startMm,
+                            endMm: o.endMm,
+                          })
+                        }
+                      >
+                        选中
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`删除${range}的${OPENING_KIND_LABELS[o.kind]}`}
+                        onClick={() =>
+                          commit({ ...form, openings: form.openings.filter((_, k) => k !== i) })
+                        }
+                      >
+                        删除
+                      </button>
+                    </div>
+                    <div className="row">
+                      {edgeSelect('起于', o.edge, 'edge')}
+                      <NumberInput
+                        label="起点（距该边起点）"
+                        value={roundMm(o.startMm)}
+                        onChange={(v) => setOpening(i, { startMm: v })}
+                      />
+                      {edgeSelect('止于', o.toEdge, 'toEdge')}
+                      <NumberInput
+                        label="终点（距该边起点）"
+                        value={roundMm(o.endMm)}
+                        onChange={(v) => setOpening(i, { endMm: v })}
+                      />
+                      <ChoiceInput
+                        label="类型"
+                        value={o.kind}
+                        options={OPENING_KIND_LABELS}
+                        onChange={(kind) => setOpening(i, { kind })}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
             </fieldset>
 
             <fieldset>

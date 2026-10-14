@@ -1,8 +1,41 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { signedArea } from '@store/shared'
-import type { Space } from '@store/shared'
+import { distance, openingPieces, signedArea } from '@store/shared'
+import type { Point, Space } from '@store/shared'
 import { PlanView } from './PlanView.tsx'
+
+/**
+ * The space with each entrance and open edge split into one piece per edge, for drawing only:
+ * PlanView draws an opening as the straight line between its ends, which for one along several
+ * edges (an arc storefront) would cut across the shop. The piece of the main entrance at the
+ * middle of the storefront goes first, so that PlanView's 主入口 label sits there.
+ */
+function piecewise(space: Space): Space {
+  const split = <T extends { a: Point; b: Point }>(opening: T, middleFirst: boolean): T[] => {
+    const pieces = openingPieces(space, opening)
+    if (!pieces || pieces.length < 2) return [opening]
+    const parts = pieces.map((piece) => ({ ...opening, a: piece.a, b: piece.b }))
+    if (!middleFirst) return parts
+    const total = pieces.reduce((sum, piece) => sum + distance(piece.a, piece.b), 0)
+    let walked = 0
+    const middle = pieces.findIndex((piece) => {
+      walked += distance(piece.a, piece.b)
+      return walked >= total / 2 - 1e-9
+    })
+    const head = parts[middle]
+    return head ? [head, ...parts.filter((_, i) => i !== middle)] : parts
+  }
+  // The entrance PlanView labels: the first main one, else the first one (see mainEntrance).
+  const main = Math.max(
+    0,
+    space.entrances.findIndex((e) => e.kind === 'main'),
+  )
+  return {
+    ...space,
+    entrances: space.entrances.flatMap((e, i) => split(e, i === main)),
+    openEdges: space.openEdges.flatMap((e) => split(e, false)),
+  }
+}
 
 /**
  * The space editor's plan preview: the usual plan with edge numbers on top, the selected edges
@@ -27,6 +60,7 @@ export function SpacePreview({
   const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
   const clockwise = signedArea(boundary) >= 0 ? 1 : -1
   const marked = new Set(selected)
+  const drawn = useMemo(() => piecewise(space), [space])
 
   const overlay = (
     <g className="space-edges">
@@ -73,7 +107,7 @@ export function SpacePreview({
 
   return (
     <>
-      <PlanView space={space} title="空间预览" svgRef={setSvg} />
+      <PlanView space={drawn} title="空间预览" svgRef={setSvg} />
       {svg && createPortal(overlay, svg)}
     </>
   )

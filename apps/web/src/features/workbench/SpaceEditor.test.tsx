@@ -17,7 +17,8 @@ function renderEditor(initial?: Space) {
     [...view.container.querySelectorAll('.space-edge-mark')].map((line) =>
       Number(line.parentElement?.getAttribute('data-edge')),
     )
-  return { submitted, marked }
+  const count = (selector: string) => view.container.querySelectorAll(selector).length
+  return { submitted, marked, count }
 }
 
 const click = (name: string) => fireEvent.click(screen.getByRole('button', { name }))
@@ -59,10 +60,8 @@ describe('SpaceEditor', () => {
     ])
     expect(space.height).toBe(3.2)
     expect(space.entrances).toEqual([{ a: [8, 8], b: [4, 8], kind: 'main' }])
-    expect(space.openEdges).toEqual([
-      { a: [5, 0], b: [5, 3] },
-      { a: [5, 3], b: [10, 3] },
-    ])
+    // The two notch walls are one open edge round the inner corner.
+    expect(space.openEdges).toEqual([{ a: [5, 0], b: [10, 3] }])
   })
 
   it('keeps the edge and coordinate tables in sync and shows the closing error', () => {
@@ -96,7 +95,7 @@ describe('SpaceEditor', () => {
   })
 
   it('turns the front edge into an arc and makes it the main storefront', () => {
-    const { submitted, marked } = renderEditor()
+    const { submitted, marked, count } = renderEditor()
     click('多边形')
     expect(marked()).toEqual([2])
     change('段数', 4)
@@ -107,9 +106,26 @@ describe('SpaceEditor', () => {
     const space = submitted()
     expect(space.boundary).toHaveLength(7)
     expect(space.boundary[4]).toEqual([4, 7])
-    expect(space.entrances).toHaveLength(4)
-    expect(space.entrances.every((e) => e.kind === 'main')).toBe(true)
-    expect(space.entrances[0]).toMatchObject({ b: [4, 7] })
+    // One main entrance along the whole arc, between the old corners, listed as one item.
+    expect(space.entrances).toEqual([{ a: [8, 6], b: [0, 6], kind: 'main' }])
+    expect(screen.getByText('主入口：第 3 条边 → 第 6 条边')).toBeTruthy()
+    // The preview draws it along the arc, one line per segment, not as a chord across the shop.
+    expect(count('.plan-entrance')).toBe(4)
+  })
+
+  it('splits a storefront longer than half the perimeter and says so', () => {
+    const { submitted } = renderEditor()
+    click('多边形')
+    change('起始边', 0)
+    change('结束边', 2)
+    click('设为开放边')
+    expect(screen.getByText(/已拆成 2 段写入/)).toBeTruthy()
+    expect(screen.getByText('开放边：第 1 条边 → 第 2 条边')).toBeTruthy()
+    expect(screen.getByText('开放边：第 2 条边 → 第 3 条边')).toBeTruthy()
+    expect(submitted().openEdges).toEqual([
+      { a: [0, 0], b: [8, 3] },
+      { a: [8, 3], b: [0, 6] },
+    ])
   })
 
   it('inserts and deletes vertices without losing unrelated entrances', () => {
@@ -174,15 +190,12 @@ describe('SpaceEditor', () => {
     }
     const { submitted } = renderEditor(initial)
     expect(screen.getByText('该障碍物为多边形，只能删除或原样保留')).toBeTruthy()
-    expect(screen.getAllByRole('button', { name: /^删除边 \d 上的/ })).toHaveLength(3)
+    // The entrance across edges 3 and 4 is one item, not split per edge.
+    expect(screen.getAllByRole('button', { name: /^删除第/ })).toHaveLength(2)
+    expect(screen.getByText('主入口：第 3 条边 → 第 4 条边')).toBeTruthy()
+    expect(screen.getByText('开放边：第 2 条边')).toBeTruthy()
 
-    const space = submitted()
-    expect(space.openEdges).toEqual(initial.openEdges)
-    expect(space.obstacles[0]).toEqual(initial.obstacles[0])
-    expect(space.obstacles[1]).toMatchObject({ kind: 'shaft', height: 2.5, label: '管井' })
-    expect(space.entrances).toEqual([
-      { a: [6, 6], b: [4, 6], kind: 'main' },
-      { a: [4, 6], b: [2, 6], kind: 'main' },
-    ])
+    // Saved without any change, the space is the same field for field.
+    expect(submitted()).toEqual(initial)
   })
 })
