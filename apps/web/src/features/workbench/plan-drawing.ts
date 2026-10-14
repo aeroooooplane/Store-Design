@@ -116,7 +116,11 @@ const ARC_TURN_DEG = 20
 /** "Short" for arc pieces: up to this length, or this share of the larger plan extent. */
 const ARC_PIECE_M = 2
 const ARC_PIECE_SHARE = 0.15
-/** A merged side never turns more than this in total, so a round shop keeps several chains. */
+/**
+ * A merged side never turns more than this in total, so a round shop keeps several chains. A
+ * longer arc is cut into the fewest equal parts within it (store-0293's 210° arc: three of 70°,
+ * not 90° + 90° + 30°).
+ */
 const SIDE_TURN_DEG = 90
 /**
  * A side whose chain would need more room than this many dimension offsets before it meets
@@ -127,6 +131,9 @@ const NOTCH_OFFSETS = 2.5
 
 const turnDeg = (u: Point, v: Point) =>
   (Math.acos(Math.max(-1, Math.min(1, u[0] * v[0] + u[1] * v[1]))) * 180) / Math.PI
+/** Signed turn from `u` to `v` in degrees. */
+const signedTurnDeg = (u: Point, v: Point) =>
+  (Math.atan2(u[0] * v[1] - u[1] * v[0], u[0] * v[0] + u[1] * v[1]) * 180) / Math.PI
 
 interface Edge {
   a: Point
@@ -148,26 +155,55 @@ export function boundarySides(boundary: readonly Point[]): Point[][] {
   const zs = boundary.map((p) => p[1])
   const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...zs) - Math.min(...zs))
   const piece = Math.max(ARC_PIECE_M, span * ARC_PIECE_SHARE)
-  const joins = (e: Edge, f: Edge) => {
-    const turn = turnDeg(e.dir, f.dir)
-    return (
-      turn < STRAIGHT_TURN_DEG || (turn < ARC_TURN_DEG && e.length <= piece && f.length <= piece)
-    )
+  const n = ring.length
+  const at = (i: number) => ring[((i % n) + n) % n] as Edge
+  const short = (e: Edge) => e.length <= piece
+  const straight = (e: Edge, f: Edge) => turnDeg(e.dir, f.dir) < STRAIGHT_TURN_DEG
+  const curved = (e: Edge, f: Edge) => turnDeg(e.dir, f.dir) < ARC_TURN_DEG && short(e) && short(f)
+  /** `e` goes on bending into `f`: both are pieces of one arc. */
+  const bends = (e: Edge, f: Edge) => curved(e, f) && !straight(e, f)
+  /**
+   * Edge i − 1 and edge i belong to one side. The first piece of an arc tangent to a long wall
+   * turns from it by only half a step (under 1° on store-0043's round corners), but it bends on
+   * with the next piece: it belongs to the arc, not to the wall.
+   */
+  const joins = (i: number) => {
+    const [e, f] = [at(i - 1), at(i)]
+    if (straight(e, f)) {
+      if (!short(e) && short(f) && bends(f, at(i + 1))) return false
+      if (short(e) && !short(f) && bends(at(i - 2), e)) return false
+      return true
+    }
+    return curved(e, f)
   }
   // Start at a corner, so a side is never split where the ring happens to begin.
-  const n = ring.length
-  let start = ring.findIndex((e, i) => !joins(ring[(i - 1 + n) % n] as Edge, e))
+  let start = ring.findIndex((_, i) => !joins(i))
   if (start < 0) start = 0
-  const sides: Edge[][] = []
+  const runs: Edge[][] = []
   for (let k = 0; k < n; k++) {
-    const edge = ring[(start + k) % n] as Edge
-    const side = sides[sides.length - 1]
-    const last = side?.[side.length - 1]
-    const first = side?.[0]
-    if (side && last && first && joins(last, edge) && turnDeg(first.dir, edge.dir) <= SIDE_TURN_DEG)
-      side.push(edge)
-    else sides.push([edge])
+    const run = runs[runs.length - 1]
+    if (run && joins(start + k)) run.push(at(start + k))
+    else runs.push([at(start + k)])
   }
+  // A run turning more than SIDE_TURN_DEG in total is cut into the fewest equal parts within it.
+  const sides = runs.flatMap((run): Edge[][] => {
+    // How far each edge has turned from the first one (pieces of an arc all turn the same way).
+    let sum = 0
+    const heading = run.map((edge, i) => {
+      if (i > 0) sum += signedTurnDeg((run[i - 1] as Edge).dir, edge.dir)
+      return Math.abs(sum)
+    })
+    const total = Math.max(...heading)
+    const parts = Math.ceil(total / SIDE_TURN_DEG - 1e-9)
+    if (parts <= 1) return [run]
+    const out: Edge[][] = Array.from({ length: parts }, () => [])
+    let part = 0
+    run.forEach((edge, i) => {
+      part = Math.max(part, Math.min(parts - 1, Math.floor(((heading[i] ?? 0) * parts) / total)))
+      out[part]?.push(edge)
+    })
+    return out.filter((side) => side.length > 0)
+  })
   return sides.map((side) => [(side[0] as Edge).a, ...side.map((e) => e.b)])
 }
 
