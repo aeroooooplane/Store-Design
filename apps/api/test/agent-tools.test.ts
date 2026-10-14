@@ -22,7 +22,7 @@ import type { TestApp } from './helpers.ts'
 
 let t: TestApp
 
-/** A table, a cashier, a cabinet. */
+/** A table, a cashier, a cabinet and a 1.3 m class side cabinet. */
 const seeds: AssetSeed[] = [
   {
     id: 'asset-1',
@@ -42,6 +42,15 @@ const seeds: AssetSeed[] = [
     d: 0.45,
     h: 2.4,
     front: '+Z',
+  },
+  {
+    id: 'asset-5',
+    name: '1.8米边桌配件柜',
+    fn: 'side_cabinet',
+    w: 0.5,
+    d: 1.8,
+    h: 1.214,
+    front: '+X',
   },
 ]
 
@@ -202,32 +211,39 @@ describe('generate_plans（当前行为）', () => {
       // Every prop comes from the seeded SI1.0 catalogue.
       expect(
         saved.layout?.items.every((i) =>
-          ['asset-1', 'asset-3', 'asset-4'].includes(i.assetId ?? ''),
+          ['asset-1', 'asset-3', 'asset-4', 'asset-5'].includes(i.assetId ?? ''),
         ),
       ).toBe(true)
     }
     // The planner is deterministic: lock what it places today ([model, cx, cz, rotation, w, d]).
     const placed = async (id: string) =>
       (await node(id)).layout?.items.map((i) => [i.assetId, i.cx, i.cz, i.rotation, i.w, i.d])
-    // An island shop stands no 2.4 m 配件柜 along its edge: tables and the cashier only.
+    // An island shop stands no 2.4 m 配件柜 along its edge, but one 1.3 m class 配件边柜 for its
+    // 48 ㎡ (one per 25 ㎡ from 20 ㎡), on the back edge right of the main aisle, 0.3 m in. Tables
+    // first: 尽量多放 keeps its 4 tables, moved 0.8 m forward to leave the back edge free.
     const cashier = ['asset-3', 0.971, 0.624, 0, 1.942, 0.648]
     const table = (cx: number, cz: number) => ['asset-1', cx, cz, 90, 1.8, 1]
-    expect(plans.map((p) => p.items)).toEqual([5, 3, 2])
+    const side = ['asset-5', 6.8, 0.55, 90, 1.8, 0.5]
+    expect(plans.map((p) => p.items)).toEqual([6, 4, 3])
     expect(await placed(plans[0]?.nodeId ?? '')).toEqual([
       cashier,
-      table(5.5, 1.4),
+      table(5.5, 2.2),
       table(1.8, 2.4),
-      table(5.5, 3.3),
+      table(5.5, 4.1),
       table(1.8, 4.3),
+      side,
     ])
     expect(await placed(plans[1]?.nodeId ?? '')).toEqual([
       cashier,
       table(5.5, 3.3),
       table(1.8, 4.3),
+      side,
     ])
-    expect(await placed(plans[2]?.nodeId ?? '')).toEqual([cashier, table(5.5, 3.3)])
-    for (const plan of plans)
-      expect(plan.notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子，未摆放配件柜')
+    expect(await placed(plans[2]?.nodeId ?? '')).toEqual([cashier, table(5.5, 3.3), side])
+    for (const plan of plans) {
+      expect(plan.notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子')
+      expect(plan.notes).toContain('中岛店按面积 48 ㎡ 放 1 个配件边柜（每 25 ㎡ 1 个，最多 3 个）')
+    }
   })
 
   it('numbers repeated names and always files the plans under the space above the current node', async () => {

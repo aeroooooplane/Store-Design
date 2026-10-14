@@ -122,6 +122,58 @@ describe('real shop drafts', () => {
     }
   })
 
+  it('stands a few 配件边柜 in the island shops where the tables leave room', () => {
+    // SI1.0 1.8米边桌配件柜 (0.5 × 1.8 × 1.214 m, front +X).
+    const withSide: PlannerCatalog = {
+      ...catalog,
+      sideCabinet: [
+        {
+          id: 'asset-34320268',
+          name: '1.8米边桌配件柜',
+          function: 'side_cabinet',
+          footprint: { w: 0.5, d: 1.8, h: 1.214 },
+          front: '+X',
+        },
+      ],
+    }
+    // One plan per draft and strategy, with and without side cabinets (planning is slow).
+    const plans = new Map(
+      [baodingBeiguo, shenyangBainaohui].map((shape) => [
+        shape,
+        STRATEGIES.map((strategy) => ({
+          side: planLayout({ space: shape.space, shopType: 'island', strategy, catalog: withSide }),
+          none: run(shape, strategy),
+        })),
+      ]),
+    )
+    const of = (shape: RealShape) => plans.get(shape) ?? []
+    const sides = (shape: RealShape) =>
+      of(shape).map((p) => byFunction(p.side.layout.items, 'side_cabinet'))
+    // store-0043（55 ㎡，应放 2 / 2 / 1 个）：尽量多放时桌子占满，没有边缘空间；按面积推荐一个在后边直段
+    // 主通道右侧，一个在右侧直边靠后的一半；尽量少放只有后边那一个。
+    const [max, area, min] = sides(baodingBeiguo)
+    expect(max).toEqual([])
+    expect(area?.map((i) => [i.cx, i.cz, i.rotation])).toEqual([
+      [5.74, 0.55, 90],
+      [7.596, 2.39, 180],
+    ])
+    expect(min?.map((i) => [i.cx, i.cz, i.rotation])).toEqual([[5.74, 0.55, 90]])
+    expect(of(baodingBeiguo)[1]?.side.notes).toContain(
+      '中岛店按面积 55 ㎡ 放 2 个配件边柜（每 25 ㎡ 1 个，最多 3 个）',
+    )
+    // store-0239（20.0 ㎡，应放 1 个）：店深 3.3 m，桌子靠后才放得下，边缘没有空间。
+    expect(sides(shenyangBainaohui).flat()).toEqual([])
+    expect(of(shenyangBainaohui)[1]?.side.notes).toContain(
+      '中岛店按面积 20 ㎡ 应放 1 个配件边柜（每 25 ㎡ 1 个，最多 3 个），中岛桌优先，边缘空间只放下 0 个',
+    )
+    // Tables first: as many as without side cabinets.
+    for (const p of [...plans.values()].flat())
+      expect(byFunction(p.side.layout.items, 'island_table')).toHaveLength(
+        byFunction(p.none.layout.items, 'island_table').length,
+      )
+  }, 30_000)
+
+  // About 5 s on its own (15 plans of detailed drafts), more on a busy machine.
   it('places tables in every draft but the 11.7 ㎡ arc platform', () => {
     for (const shape of [baodingBeiguo, shenyangBainaohui, nanchangWushang, shanghaiTpy]) {
       for (const strategy of STRATEGIES) {
@@ -136,7 +188,7 @@ describe('real shop drafts', () => {
       expect(layout.items).toEqual([])
       expect(notes).toContain('没有足够的墙面放收银台，请人工安排')
     }
-  })
+  }, 30_000)
 
   it('takes the wall opposite the entrance as the back wall', () => {
     // store-0043：圆角矩形，入口在下边，收银台靠上边的直段。

@@ -1,8 +1,10 @@
 export {
   DEFAULT_RULES,
   ISLAND_CABINET_MAX_H,
+  ISLAND_SIDE_CABINETS,
   NEAR_AXIS_DEG,
   planLayout,
+  sideCabinetsForArea,
   tablesForArea,
   usableArea,
 } from './planner.ts'
