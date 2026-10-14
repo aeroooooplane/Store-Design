@@ -10,7 +10,8 @@
     "test": "vitest run",
     "catalog:import": "node --env-file-if-exists=../../.env src/scripts/import-catalog.ts",
     "catalog:white": "node --env-file-if-exists=../../.env src/scripts/build-white-models.ts",
-    "catalog:finish": "node --env-file-if-exists=../../.env src/scripts/build-finish-models.ts"
+    "catalog:finish": "node --env-file-if-exists=../../.env src/scripts/build-finish-models.ts",
+    "display:import": "node --env-file-if-exists=../../.env src/scripts/import-display-rules.ts"
   },
   "dependencies": {
     "@fastify/cors": "11.3.1",
@@ -21,6 +22,7 @@
     "@store/database": "workspace:*",
     "@store/shared": "workspace:*",
     "drizzle-orm": "0.45.4",
+    "exceljs": "4.4.0",
     "fastify": "5.12.5",
     "fastify-type-provider-zod": "7.0.0",
     "fflate": "0.8.3",

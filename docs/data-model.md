@@ -232,6 +232,9 @@
 ### artworks
 灯箱与广告画面：`id, file_id, orientation(landscape|portrait), width, height, source_url, license_status, note, created_at`
 
+### display_rule_sets（已建，迁移 `0011_display_rules`）
+展陈规则，由 `pnpm display:import` 从 `资源库/10_产品与陈列/展陈规则.xlsx` 导入：`id, version（指引版本日期）, source_sha256（唯一，同一份 Excel 重复导入不新增）, rules jsonb（packages/shared/src/display 的 DisplayRules）, imported_at`。最新一行为现行规则，旧行保留，供按旧版本生成的展陈方案回看。托盘照片以 `stored_files`（root = resource）原地登记，`rules.photos[].fileId` 指向它。见 [展陈方案需求](display-plan-requirements.md)。
+
 ### layout_rules
 排布规则表，由清洗数据统计后导入，可调整：`id, key, shop_type null, area_min, area_max, hardness(soft|hard), weight, params jsonb, source, version, enabled`
 
