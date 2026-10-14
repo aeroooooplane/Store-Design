@@ -37,10 +37,9 @@ import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 import { ViewMemoryContext } from './view-memory.ts'
 import type { ViewState } from './view-memory.ts'
+import type { SiSwitch } from './si-switch.ts'
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
-/** Swaps the props of the step on screen to another SI style; says what it did, or null. */
-export type SiSwitch = (style: SiStyle) => string | null
 
 /** Where to land without an explicit choice: the draft's base, else the newest visible step. */
 export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string | null {
