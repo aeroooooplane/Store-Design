@@ -337,6 +337,21 @@ function coverSlide(pptx: Pptx, input: DisplayDeckInput) {
   text(slide, input.date, { x: 0.7, y: 6.6, w: 4, h: 0.4 }, 14, 'FFFFFF')
 }
 
+/** Grey box in the left panel where a render would go, so a missing picture is visible. */
+function missingPicture(slide: Slide, box: Box, label: string) {
+  slide.addText(label, {
+    ...box,
+    shape: 'rect',
+    fill: { color: '2B2D31' },
+    line: { color: '55585E', width: 1, dashType: 'dash' },
+    color: '9AA0A6',
+    fontFace: FONT,
+    fontSize: 11,
+    align: 'center',
+    valign: 'middle',
+  })
+}
+
 function overviewSlide(pptx: Pptx, input: DisplayDeckInput) {
   const slide = pptx.addSlide()
   leftPanel(slide, input, '平面布局图总览')
@@ -350,6 +365,8 @@ function overviewSlide(pptx: Pptx, input: DisplayDeckInput) {
       input.tables.map((t) => [t.label, input.overview?.marks[t.label]]),
       0.3,
     )
+  } else {
+    missingPicture(slide, { x: 0.2, y: 2.85, w: PANEL - 0.4, h: 3.0 }, '暂无效果图')
   }
   const right = { x: PANEL + 0.3, w: W - PANEL - 0.55 }
   if (input.plan) {
@@ -413,6 +430,7 @@ function tableSlide(pptx: Pptx, input: DisplayDeckInput, t: DisplayTable) {
       [[t.label, view.mark]],
       0.3,
     )
+  else missingPicture(slide, { x: 0.2, y: 2.45, w: PANEL - 0.4, h: 2.3 }, '暂无效果图')
   if (input.plan)
     marks(
       slide,
