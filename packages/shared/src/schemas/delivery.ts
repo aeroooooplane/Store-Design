@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { NodeDisplayExportRequestSchema } from '../display/api.ts'
 
 /** The numbered plan as PNG, base64; a whole-shop drawing at print size stays well below this. */
 export const MAX_PLAN_PNG_BASE64 = 24 * 1024 * 1024
@@ -12,6 +13,8 @@ export const DeliveryCreateSchema = z.strictObject({
     .string()
     .max(8 * 1024 * 1024)
     .optional(),
+  /** Include the 展陈方案 PPT (plan without legend numbers, and the plan area it shows). */
+  display: NodeDisplayExportRequestSchema.optional(),
 })
 export type DeliveryCreate = z.output<typeof DeliveryCreateSchema>
 
@@ -27,6 +30,8 @@ export const DeliverySchema = z.object({
   fullPdf: DeliveryFileSchema,
   showPdf: DeliveryFileSchema,
   zip: DeliveryFileSchema,
+  /** 展陈方案 PPT when the delivery included it. */
+  displayPpt: DeliveryFileSchema.nullable(),
   pages: z.object({ full: z.int(), show: z.int() }),
   views: z.int(),
   createdAt: z.iso.datetime({ offset: true }),

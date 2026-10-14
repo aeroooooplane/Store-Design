@@ -1,2 +1,5 @@
 export * from './rules.ts'
 export * from './engine.ts'
+export * from './projection.ts'
+export * from './api.ts'
+export * from './plan.ts'

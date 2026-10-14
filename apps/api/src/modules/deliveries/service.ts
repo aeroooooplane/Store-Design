@@ -28,6 +28,7 @@ import { exportProject } from '../exchange/service.ts'
 import { fileUrl } from '../files/routes.ts'
 import { requireActiveProject, resolveSpace } from '../nodes/service.ts'
 import { newestImages, pngSize, renderContext } from '../renders/service.ts'
+import { nodeDisplayFiles } from '../displays/node.ts'
 import { fullPdf, showPdf } from './pdf.ts'
 import type { DeliveryContent } from './pdf.ts'
 
@@ -215,6 +216,13 @@ export async function createDelivery(
     ),
   }
   const [full, show] = await Promise.all([fullPdf(content), showPdf(content)])
+  // 展陈方案 (docs/display-plan-requirements.md): the same frozen layout, from the render node.
+  const display = input.display
+    ? {
+        ...(await nodeDisplayFiles(db, dirs.roots, node.id, input.display)),
+        plan: Buffer.from(input.display.planPng, 'base64'),
+      }
+    : null
 
   const folderName = await freeFolderName(db, dirs.archiveRoot, (revision) =>
     deliveryFolderName(project.name, project.shopType, area, date, revision),
@@ -250,7 +258,30 @@ export async function createDelivery(
     files: {
       full: { name: names.full, bytes: full.data.length, sha256: sha256(full.data) },
       show: { name: names.show, bytes: show.data.length, sha256: sha256(show.data) },
+      ...(display
+        ? {
+            display: {
+              name: display.files.names.pptx,
+              bytes: display.files.pptx.length,
+              sha256: sha256(display.files.pptx),
+            },
+          }
+        : {}),
     },
+    display: display
+      ? {
+          ruleVersion: display.ruleVersion,
+          tables: display.tables.map((t) => ({
+            label: t.label,
+            kind: t.kind,
+            seat: t.seat,
+            orientation: t.orientation,
+            slots: t.slots,
+            modules: t.modules,
+            custom: t.custom,
+          })),
+        }
+      : null,
   }
   const folder: [string, Uint8Array][] = [
     [names.full, full.data],
@@ -262,13 +293,20 @@ export async function createDelivery(
     ...views.map((v) => [`02_效果图/${viewFile(v)}`, v.material.data] as [string, Uint8Array]),
     ['03_源文件与记录/项目.json', Buffer.from(`${JSON.stringify(exported, null, 2)}\n`)],
     ['03_源文件与记录/交付记录.json', Buffer.from(`${JSON.stringify(record, null, 2)}\n`)],
+    ...(display
+      ? ([
+          [display.files.names.pptx, display.files.pptx],
+          [`04_展陈方案/${display.files.names.xlsx}`, display.files.xlsx],
+          ['04_展陈方案/展陈平面.png', display.plan],
+        ] as [string, Uint8Array][])
+      : []),
   ]
-  // Pictures and PDFs are compressed already.
+  // Pictures, PDFs and Office files are compressed already.
   const zip = zipSync(
     Object.fromEntries(
       folder.map(([name, data]) => [
         `${folderName}/${name}`,
-        [data, { level: /\.(png|pdf)$/.test(name) ? 0 : 6 }],
+        [data, { level: /\.(png|pdf|pptx|xlsx)$/.test(name) ? 0 : 6 }],
       ]),
     ),
   )
@@ -297,6 +335,14 @@ export async function createDelivery(
   const fullRow = await store('pdf', names.full, full.data, 'application/pdf')
   const showRow = await store('pdf', names.show, show.data, 'application/pdf')
   const zipRow = await store('zip', `${folderName}.zip`, zip, 'application/zip')
+  const displayRow = display
+    ? await store(
+        'display',
+        display.files.names.pptx,
+        display.files.pptx,
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+      )
+    : null
 
   let archivePath: string | null = path.join(dirs.archiveRoot, folderName)
   try {
@@ -320,12 +366,14 @@ export async function createDelivery(
       fullPdfFileId: fullRow.id,
       showPdfFileId: showRow.id,
       zipFileId: zipRow.id,
+      displayPptFileId: displayRow?.id ?? null,
       archivePath,
       manifest: record,
     })
     .returning()
   if (!row) throw new Error('Delivery insert returned no row')
-  return toDelivery(row, new Map([fullRow, showRow, zipRow].map((r) => [r.id, r])))
+  const stored = [fullRow, showRow, zipRow, ...(displayRow ? [displayRow] : [])]
+  return toDelivery(row, new Map(stored.map((r) => [r.id, r])))
 }
 
 function toDelivery(row: DeliveryRow, files: ReadonlyMap<string, FileRow>): Delivery {
@@ -346,6 +394,7 @@ function toDelivery(row: DeliveryRow, files: ReadonlyMap<string, FileRow>): Deli
     fullPdf: file(row.fullPdfFileId),
     showPdf: file(row.showPdfFileId),
     zip: file(row.zipFileId),
+    displayPpt: row.displayPptFileId ? file(row.displayPptFileId) : null,
     pages: { full: manifest.pages?.full?.length ?? 0, show: manifest.pages?.show?.length ?? 0 },
     views: manifest.views?.length ?? 0,
     createdAt: row.createdAt.toISOString(),
@@ -365,7 +414,7 @@ export async function listDeliveries(
     .where(and(eq(deliveries.projectId, node.projectId), eq(deliveries.nodeId, nodeId)))
     .orderBy(desc(deliveries.createdAt))
   const ids = rows
-    .flatMap((r) => [r.fullPdfFileId, r.showPdfFileId, r.zipFileId])
+    .flatMap((r) => [r.fullPdfFileId, r.showPdfFileId, r.zipFileId, r.displayPptFileId])
     .filter((id): id is string => id !== null)
   const files = new Map(
     ids.length

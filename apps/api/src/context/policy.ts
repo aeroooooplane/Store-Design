@@ -30,6 +30,8 @@ export type Action =
   | 'layout:validate'
   | 'asset:read'
   | 'file:read'
+  | 'display:read'
+  | 'display:write'
 
 export interface ResourceRef {
   projectId?: string
