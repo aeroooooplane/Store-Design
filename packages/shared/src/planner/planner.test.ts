@@ -6,6 +6,7 @@ import { SpaceSchema, rectangleSpace } from '../schemas/space.ts'
 import type { SpaceInput } from '../schemas/space.ts'
 import { facingAfter, rotationFacing } from './orientation.ts'
 import { planLayout, tablesForArea } from './planner.ts'
+import { ARC, arcFront } from './shapes.fixture.ts'
 import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
 
 // Real catalogue sizes (资源库/04_模型库).
@@ -215,6 +216,32 @@ describe('planLayout', () => {
     const column = rectFromCenter(4.55, 3.55, 0.5, 0.5)
     for (const item of first.layout.items)
       expect(rectsOverlap(itemFootprint(item), column)).toBe(false)
+  })
+
+  it('treats an entrance along an arc storefront as one entrance, keeping every piece clear', () => {
+    const wholeArc = space({
+      ...arcFront,
+      entrances: [{ a: [...ARC[0]], b: [...ARC[8]], kind: 'main' }],
+      openEdges: [],
+    })
+    for (const s of [arcFront, wholeArc]) {
+      for (const strategy of STRATEGIES) {
+        const { layout, issues } = planLayout({
+          space: s,
+          shopType: 'side_hall',
+          strategy,
+          catalog,
+        })
+        expect(issues.filter((i) => i.severity === 'error')).toEqual([])
+        // One main aisle, centred on the middle of the arc (x = 5) and running straight back.
+        const aisle = { minX: 5 - 0.6, minZ: 0, maxX: 5 + 0.6, maxZ: 8 }
+        for (const island of byFunction(layout.items, 'island_table'))
+          expect(rectsOverlap(itemFootprint(island), aisle)).toBe(false)
+      }
+    }
+    // The chord (z = 7) no longer blocks the floor behind the arc: more tables than the 4 before.
+    const max = planLayout({ space: wholeArc, shopType: 'side_hall', strategy: 'max', catalog })
+    expect(byFunction(max.layout.items, 'island_table').length).toBeGreaterThan(4)
   })
 
   it('works for an island shop without any entrance and notes it', () => {

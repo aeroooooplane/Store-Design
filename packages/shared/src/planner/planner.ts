@@ -1,9 +1,11 @@
 import { PLAN_STRATEGY_LABELS } from '../enums.ts'
 import type { ItemFunction, PlanStrategy, ShopType } from '../enums.ts'
 import {
+  boundaryPath,
   distance,
   distanceToSegment,
   edges,
+  pathMidpoint,
   polygonArea,
   polygonOverlapsRect,
   rectGap,
@@ -99,12 +101,31 @@ interface Wall {
   distance: number
 }
 
+interface EntrancePiece {
+  /** Boundary edge the piece lies on; null for an entrance off the boundary. */
+  edge: number | null
+  a: Point
+  b: Point
+  /** Inward normal of that edge. */
+  n: Vec
+}
+
+/** An entrance as straight pieces along the boundary (one unless it turns a corner or follows an arc). */
+interface EntranceInfo {
+  pieces: EntrancePiece[]
+  mid: Point
+  /** Inward direction of the entrance as a whole. */
+  n: Vec
+}
+
 interface Placed {
   item: LayoutItem
   rect: Rect
 }
 
 const ALONG_STEP = 0.05
+/** How far an entrance end may lie from the boundary (as in validateSpace). */
+const ON_EDGE_M = 0.02
 
 function inward(u: Vec): Vec {
   // The ring is clockwise on the plan (x right, z down), so the interior lies to the left of u.
@@ -147,7 +168,7 @@ class Planner {
   readonly notes: string[] = []
   readonly placed: Placed[] = []
   readonly walls: Wall[]
-  readonly entranceNormal: Map<number, Vec> = new Map()
+  readonly entrances: (EntranceInfo | null)[]
   readonly mainEntrance: { mid: Point; n: Vec } | null
   readonly space: Space
   private counter = new Map<string, number>()
@@ -157,31 +178,59 @@ class Planner {
     this.boundary = toClockwise(space.boundary)
     this.bbox = aabb([...this.boundary])
     const ring = edges(this.boundary)
-    // Each entrance takes the inward normal of the boundary edge it lies on.
-    space.entrances.forEach((entrance, index) => {
+    const edgeNormal = (edge: number): Vec | null => {
+      const [a, b] = ring[edge] ?? []
+      const len = a && b ? distance(a, b) : 0
+      return a && b && len > 0 ? inward([(b[0] - a[0]) / len, (b[1] - a[1]) / len]) : null
+    }
+    // An entrance may run along several edges (an arc storefront): each piece keeps its edge's
+    // inward normal, and the entrance as a whole faces their length-weighted mean.
+    this.entrances = space.entrances.map((entrance): EntranceInfo | null => {
+      const path = boundaryPath(this.boundary, entrance.a, entrance.b, ON_EDGE_M)
+      if (path && path.length > 1) {
+        const pieces = path.flatMap((piece) => {
+          const n = edgeNormal(piece.edge)
+          return n ? [{ ...piece, n }] : []
+        })
+        const sum = pieces.reduce<Vec>(
+          (s, p) => {
+            const len = distance(p.a, p.b)
+            return [s[0] + p.n[0] * len, s[1] + p.n[1] * len]
+          },
+          [0, 0],
+        )
+        const len = Math.hypot(sum[0], sum[1])
+        const mid = pathMidpoint(path)
+        if (!mid || len === 0) return null
+        return { pieces, mid, n: [sum[0] / len + 0, sum[1] / len + 0] }
+      }
+      // One edge: the inward normal of the boundary edge nearest its midpoint.
       const mid: Point = [(entrance.a[0] + entrance.b[0]) / 2, (entrance.a[1] + entrance.b[1]) / 2]
       let best: { n: Vec; d: number } | null = null
-      for (const [a, b] of ring) {
+      ring.forEach(([a, b], edge) => {
         const d = distanceToSegment(mid, a, b)
-        const len = distance(a, b)
-        if (len > 0 && (!best || d < best.d))
-          best = { n: inward([(b[0] - a[0]) / len, (b[1] - a[1]) / len]), d }
+        const n = edgeNormal(edge)
+        if (n && (!best || d < best.d)) best = { n, d }
+      })
+      if (!best) return null
+      const { n } = best
+      // An entrance off the boundary (an invalid space) still keeps props clear but frees no wall.
+      return {
+        pieces: [{ edge: path?.[0]?.edge ?? null, a: entrance.a, b: entrance.b, n }],
+        mid,
+        n,
       }
-      if (best) this.entranceNormal.set(index, best.n)
     })
     const mainIndex = Math.max(
       0,
       space.entrances.findIndex((e) => e.kind === 'main'),
     )
-    const main = space.entrances[mainIndex]
-    const mainNormal = this.entranceNormal.get(mainIndex)
-    this.mainEntrance =
-      main && mainNormal
-        ? { mid: [(main.a[0] + main.b[0]) / 2, (main.a[1] + main.b[1]) / 2], n: mainNormal }
-        : null
+    const main = this.entrances[mainIndex]
+    this.mainEntrance = main ? { mid: main.mid, n: main.n } : null
     if (!this.mainEntrance) this.notes.push('空间没有入口，未预留入口缓冲与主通道')
 
-    this.walls = ring.flatMap(([a, b]): Wall[] => {
+    const entrancePieces = this.entrances.flatMap((e) => e?.pieces ?? [])
+    this.walls = ring.flatMap(([a, b], index): Wall[] => {
       const dx = b[0] - a[0]
       const dz = b[1] - a[1]
       const length = Math.hypot(dx, dz)
@@ -189,14 +238,10 @@ class Planner {
       if (length < 0.3 || (Math.abs(dx) > 1e-6 && Math.abs(dz) > 1e-6)) return []
       const u: Vec = [dx / length + 0, dz / length + 0]
       let intervals: [number, number][] = [[0, length]]
-      for (const entrance of space.entrances) {
-        if (
-          distanceToSegment(entrance.a, a, b) > 0.02 ||
-          distanceToSegment(entrance.b, a, b) > 0.02
-        )
-          continue
-        const ta = (entrance.a[0] - a[0]) * u[0] + (entrance.a[1] - a[1]) * u[1]
-        const tb = (entrance.b[0] - a[0]) * u[0] + (entrance.b[1] - a[1]) * u[1]
+      for (const piece of entrancePieces) {
+        if (piece.edge !== index) continue
+        const ta = (piece.a[0] - a[0]) * u[0] + (piece.a[1] - a[1]) * u[1]
+        const tb = (piece.b[0] - a[0]) * u[0] + (piece.b[1] - a[1]) * u[1]
         intervals = subtract(intervals, [Math.min(ta, tb) - 0.1, Math.max(ta, tb) + 0.1])
       }
       const mid: Point = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
@@ -211,19 +256,17 @@ class Planner {
   /** Soft keep-out areas: inside every entrance, and the main aisle for island tables. */
   zones(rules: PlannerRules, withAisle: boolean): Rect[] {
     const zones: Rect[] = []
-    this.space.entrances.forEach((entrance, index) => {
-      const n = this.entranceNormal.get(index)
-      if (!n) return
+    for (const { a, b, n } of this.entrances.flatMap((e) => e?.pieces ?? [])) {
       const depth = rules.entranceBuffer
       zones.push(
         aabb([
-          entrance.a,
-          entrance.b,
-          [entrance.a[0] + n[0] * depth, entrance.a[1] + n[1] * depth],
-          [entrance.b[0] + n[0] * depth, entrance.b[1] + n[1] * depth],
+          a,
+          b,
+          [a[0] + n[0] * depth, a[1] + n[1] * depth],
+          [b[0] + n[0] * depth, b[1] + n[1] * depth],
         ]),
       )
-    })
+    }
     if (withAisle && this.mainEntrance) {
       const { mid, n } = this.mainEntrance
       const span = Math.max(this.bbox.maxX - this.bbox.minX, this.bbox.maxZ - this.bbox.minZ)
@@ -256,7 +299,11 @@ class Planner {
     const padded = options.wallClearance > 0 ? expand(rect, options.wallClearance) : rect
     if (options.wallClearance > 0 && !rectInsidePolygon(padded, this.boundary)) return false
     if (this.space.obstacles.some((o) => polygonOverlapsRect(o.polygon, padded))) return false
-    if (this.space.entrances.some((e) => segmentIntersectsRectInterior(e.a, e.b, rect)))
+    if (
+      this.entrances.some((e) =>
+        e?.pieces.some((p) => segmentIntersectsRectInterior(p.a, p.b, rect)),
+      )
+    )
       return false
     if (options.zones.some((zone) => rectsOverlap(zone, rect))) return false
     const others = [
