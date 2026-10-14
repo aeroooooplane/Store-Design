@@ -49,7 +49,13 @@
 | PDF 清洗与来源 | [pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md) |
 | 待收集资料 | [input-materials.md](input-materials.md) |
 
-## 5. 历史记录
+## 5. 待处理反馈
+
+用户要求先记录、暂不修改的问题（原记在 roadmap.md，2026-10-13 随历史文档归档时迁到这里）：
+
+- 2026-10-12：平面识别速度慢（视觉模型每次约 20 秒）；识别界面不好看。
+
+## 6. 历史记录
 
 2026-09 至 10-04 的旧版（`demo/`）开发记录、训练实验和资料盘点已从 main 归档，清单与恢复命令见 [archive/INDEX.md](archive/INDEX.md)。仍原地保留的历史文档：[pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md)、[si-standards-review-20261001.md](si-standards-review-20261001.md)（有脚本引用）。
 
