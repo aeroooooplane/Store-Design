@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-13T10:53:01+08:00",
+ "generatedAt": "2026-10-14T16:28:13+08:00",
  "generator": {
   "script": "tools/store-archive/build_stores.py",
   "version": "0.1.0"
@@ -46,10 +46,10 @@
   "record_id_0923": null
  },
  "si": {
-  "value": null,
-  "source": null,
-  "confidence": "待定",
-  "confirmed": false,
+  "value": "SI1.0",
+  "source": "用户裁决",
+  "confidence": "已确认",
+  "confirmed": true,
   "evidence": {
    "飞书10-09": {
     "value": null,
@@ -63,7 +63,12 @@
    "图纸si字样": {},
    "图纸专属道具": {}
   },
-  "note": null
+  "note": null,
+  "auto_value": null,
+  "decision": {
+   "题号": 3,
+   "说明": "按建议"
+  }
  },
  "shop_type": {
   "value": "边厅店",
@@ -107,6 +112,6 @@
   "related_stores": null
  },
  "status": {
-  "stage1": "待裁决"
+  "stage1": "已裁决"
  }
 }

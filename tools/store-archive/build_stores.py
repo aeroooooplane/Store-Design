@@ -144,6 +144,24 @@ def describe_shop(row, snap_shop, hints, shop_pages) -> str:
     return "；".join(parts)
 
 
+def apply_decisions(record: dict, decisions: dict) -> None:
+    """用户裁决（阶段1裁决.json）覆盖自动取值，标记为已确认。"""
+    for key, name in (("si", "SI"), ("shop_type", "铺型")):
+        decided = decisions.get((record["store_id"], name))
+        if decided:
+            record[key] |= {
+                "auto_value": record[key]["value"],
+                "value": decided["裁决取值"],
+                "source": "用户裁决",
+                "confidence": "已确认",
+                "confirmed": True,
+                "decision": {"题号": decided["题号"], "说明": decided["说明"]},
+            }
+    pending = any(record[k]["confidence"] == "待定" for k in ("si", "shop_type"))
+    if any(record[k]["source"] == "用户裁决" for k in ("si", "shop_type")):
+        record["status"]["stage1"] = "待裁决" if pending else "已裁决"
+
+
 def field(value, source, evidence, confidence, confirmed=False):
     return {"value": value, "source": source, "confidence": confidence, "confirmed": confirmed, "evidence": evidence}
 
@@ -164,6 +182,8 @@ def main() -> None:
     stores, issues = [], []
     prescreen_path = args.out / "阶段1看图初审.json"
     prescreen = {(r["store_id"], r["字段"]): r for r in load_json(prescreen_path)["rows"]} if prescreen_path.exists() else {}
+    decisions_path = args.out / "阶段1裁决.json"
+    decisions = {(r["store_id"], r["字段"]): r for r in load_json(decisions_path)["rows"]} if decisions_path.exists() else {}
 
     def issue(store, field_name, problems, current, detail, path):
         """同一家店同一字段的多条问题合并成一行，方便在 Excel 里逐行裁决。"""
@@ -321,8 +341,15 @@ def main() -> None:
             "deferred": {"city": None, "mall": None, "floor": None, "mall_group": None, "related_stores": None},
             "status": {"stage1": "待裁决" if si_conf == "待定" or shop_conf == "待定" else "自动"},
         }
+        apply_decisions(record, decisions)
         store.update(record)
         stores.append(store)
+
+    for item in issues:
+        decided = decisions.get((item["store_id"], item["字段"]))
+        if decided:
+            item["你的裁决"] = decided["裁决取值"]
+            item["备注"] = decided["说明"]
 
     # 输出
     out = args.out
