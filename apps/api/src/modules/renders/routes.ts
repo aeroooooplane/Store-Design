@@ -6,7 +6,7 @@ import {
   MAX_RENDER_BYTES,
   NodeRenderListSchema,
   RenderImageSchema,
-  RenderModeSchema,
+  RENDERED_MODES,
 } from '@store/shared'
 import { AppError } from '../../lib/app-error.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
@@ -48,7 +48,8 @@ export const renderRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageR
         tags: ['renders'],
         summary: '保存浏览器渲染的一张视角图（请求体为 PNG）',
         consumes: ['image/png'],
-        params: NodeParams.extend({ cameraId: z.uuid(), mode: RenderModeSchema }),
+        // White renders are no longer made (2026-10-12); old ones are still read.
+        params: NodeParams.extend({ cameraId: z.uuid(), mode: z.enum(RENDERED_MODES) }),
         body: z.unknown().describe('PNG 图片'),
         response: { 201: RenderImageSchema, ...errors, 413: ApiErrorSchema },
       },

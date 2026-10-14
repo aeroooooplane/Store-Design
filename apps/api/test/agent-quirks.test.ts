@@ -10,7 +10,6 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { rectangleSpace } from '@store/shared'
 import type {
   NodeCameraList,
-  NodeCreated,
   NodeRenderList,
   NodeTree,
   ProjectExport,
@@ -27,6 +26,7 @@ import {
   postNode,
   runTool,
   seedAsset,
+  seedLegacyEdit,
 } from './fixtures.ts'
 import type { AssetSeed } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
@@ -306,68 +306,40 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
   })
 })
 
-describe("c. POST /projects/:id/nodes 接受 kind:'edit'", () => {
-  it("当前行为：kind:'edit' 可以建在空间、方案、白模甚至渲染下面，来源记为 user", async () => {
+describe("c. POST /projects/:id/nodes 不再接受 kind:'edit'（已修正）", () => {
+  it("refuses new 'edit' steps under any parent; old ones are still read and usable", async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
-    const edit = await create(project.id, {
-      parentId: space.id,
-      kind: 'edit',
-      name: '调整',
-      layout: layout(island('a', 2, 2)),
-    })
-    expect(edit).toMatchObject({ kind: 'edit', parentId: space.id, origin: 'user', strategy: null })
-    expect(edit.layout?.items[0]).toMatchObject({ id: 'a', cx: 2, cz: 2 })
-
-    // No stage rule for 'edit': it nests under every other stage.
     const plan = await create(project.id, {
       parentId: space.id,
       kind: 'plan',
       name: '方案',
       layout: layout(island('a', 2, 2)),
     })
-    const white = await create(project.id, {
-      parentId: plan.id,
-      kind: 'white',
-      name: '白模',
-      layout: layout(island('a', 2, 2)),
-    })
-    const render = await create(project.id, {
-      parentId: white.id,
-      kind: 'render',
-      name: '渲染',
-      siStyle: 'SI1.0',
-      layout: layout(island('a', 2, 2)),
-    })
-    for (const parent of [plan, white, render, edit]) {
-      const nested = await post(project.id, {
+    for (const parent of [space, plan]) {
+      const refused = await post(project.id, {
         parentId: parent.id,
         kind: 'edit',
         name: `调整 · ${parent.kind}`,
         layout: layout(island('a', 2, 2)),
       })
-      expect(nested.statusCode, parent.kind).toBe(201)
-      expect(nested.json<NodeCreated>().node).toMatchObject({ kind: 'edit', parentId: parent.id })
+      expect(refused.statusCode, parent.kind).toBe(400)
+      expect(refused.json().error).toMatchObject({ code: 'VALIDATION_FAILED' })
     }
-
-    // Only a missing parent is refused (by the request schema, as for any non-space node).
-    const orphan = await post(project.id, {
-      parentId: null,
-      kind: 'edit',
-      name: '孤立',
-      layout: layout(),
+    // An old step (as imported) still works as the plan level it stands for.
+    const legacy = await seedLegacyEdit(t, project.id, space.id, '调整', layout(island('a', 2, 2)))
+    const white = await create(project.id, {
+      parentId: legacy.id,
+      kind: 'white',
+      name: '白模',
+      layout: layout(island('a', 2, 2)),
     })
-    expect(orphan.statusCode).toBe(400)
-    expect(orphan.json().error).toMatchObject({
-      code: 'VALIDATION_FAILED',
-      message: '请求体校验失败',
-      details: [expect.objectContaining({ message: '该节点必须有父节点' })],
-    })
+    expect(white).toMatchObject({ kind: 'white', parentId: legacy.id })
   })
 })
 
-describe('d. 渲染上传仍接受 white 模式', () => {
-  it('当前行为：PUT …/renders/:cameraId/white 返回 201 但不出现在列表中；POST 没有这个路由', async () => {
+describe('d. 渲染上传不再接受 white 模式（已修正）', () => {
+  it('refuses PUT …/renders/:cameraId/white with 400 and stores nothing; material still uploads', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
     const plan = await create(project.id, {
@@ -402,18 +374,20 @@ describe('d. 渲染上传仍接受 white 模式', () => {
       headers: { 'content-type': 'image/png' },
       payload: png(96, 64),
     })
-    expect(put.statusCode).toBe(201)
-    expect(put.json<RenderImage>()).toMatchObject({
-      cameraId: camera.id,
-      mode: 'white',
-      width: 96,
-      height: 64,
-      stale: false,
+    expect(put.statusCode).toBe(400)
+    expect(put.json().error.code).toBe('VALIDATION_FAILED')
+    const material = await t.app.inject({
+      method: 'PUT',
+      url: url.replace(/white$/, 'material'),
+      headers: { 'content-type': 'image/png' },
+      payload: png(96, 64),
     })
+    expect(material.statusCode).toBe(201)
+    expect(material.json<RenderImage>()).toMatchObject({ cameraId: camera.id, mode: 'material' })
     const listed = (
       await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${render.id}/renders` })
     ).json<NodeRenderList>().images
-    expect(listed).toEqual([])
+    expect(listed.map((image) => image.mode)).toEqual(['material'])
 
     const posted = await t.app.inject({
       method: 'POST',

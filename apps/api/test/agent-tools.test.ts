@@ -14,6 +14,7 @@ import {
   layoutOf as layout,
   runTool,
   seedAsset,
+  seedLegacyEdit,
 } from './fixtures.ts'
 import type { AssetSeed, ToolCall } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
@@ -148,12 +149,7 @@ describe('get_state（当前行为）', () => {
     const white = await whiteOf(project.id, plan.id, [island('a', 2, 2)])
     const onWhite = (await run(project.id, white.id, 'get_state')).result
     expect(onWhite.currentNode).toMatchObject({ kind: 'white', stage: '三维效果' })
-    const edit = await create(project.id, {
-      parentId: space.id,
-      kind: 'edit',
-      name: '调整',
-      layout: layout(),
-    })
+    const edit = await seedLegacyEdit(t, project.id, space.id, '调整', layout())
     const onEdit = (await run(project.id, edit.id, 'get_state')).result
     expect(onEdit.currentNode).toMatchObject({ kind: 'edit', stage: '方案' })
 
@@ -535,12 +531,7 @@ describe('confirm_white（当前行为）', () => {
   it('accepts legacy edit nodes, refuses other stages and layouts with errors', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
-    const edit = await create(project.id, {
-      parentId: space.id,
-      kind: 'edit',
-      name: '调整',
-      layout: layout(island('a', 2, 2)),
-    })
+    const edit = await seedLegacyEdit(t, project.id, space.id, '调整', layout(island('a', 2, 2)))
     const fromEdit = await run(project.id, edit.id, 'confirm_white')
     expect(await node(fromEdit.nodeId)).toMatchObject({ kind: 'white', parentId: edit.id })
 

@@ -90,12 +90,16 @@ describe('NodeCreateSchema', () => {
     expect(messages({ parentId: null, kind: 'space', name: '空间' })).toContain(
       '空间节点必须包含空间',
     )
-    expect(messages({ parentId: null, kind: 'edit', name: '编辑', layout })).toContain(
+    expect(messages({ parentId: null, kind: 'white', name: '三维效果', layout })).toContain(
       '该节点必须有父节点',
     )
-    expect(messages({ parentId, kind: 'edit', name: '编辑', layout, strategy: 'max' })).toContain(
-      '只有生成方案节点可以记录排布策略',
-    )
+    expect(
+      messages({ parentId, kind: 'white', name: '三维效果', layout, strategy: 'max' }),
+    ).toContain('只有生成方案节点可以记录排布策略')
+    // The old 'edit' step is still read and imported, but no longer created.
+    expect(
+      NodeCreateSchema.safeParse({ parentId, kind: 'edit', name: '编辑', layout }).success,
+    ).toBe(false)
     expect(messages({ parentId, kind: 'render', name: '渲染', layout })).toContain(
       '渲染节点必须指定 SI 风格',
     )

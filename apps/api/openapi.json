@@ -2973,7 +2973,6 @@
                     "enum": [
                       "space",
                       "plan",
-                      "edit",
                       "white",
                       "render"
                     ]
@@ -10339,7 +10338,6 @@
             "schema": {
               "type": "string",
               "enum": [
-                "white",
                 "material"
               ]
             },

@@ -98,7 +98,7 @@ describe('history nodes', () => {
     const root = await spaceNode(project.id)
     const overlap = await post(project.id, {
       parentId: root.id,
-      kind: 'edit',
+      kind: 'plan',
       name: '重叠',
       layout: layout(island('a', 2, 2), island('b', 2.5, 2)),
     })
@@ -107,7 +107,7 @@ describe('history nodes', () => {
 
     const stretched = await post(project.id, {
       parentId: root.id,
-      kind: 'edit',
+      kind: 'plan',
       name: '拉伸',
       layout: layout(island('a', 2, 2, { w: 1.5 })),
     })
@@ -171,7 +171,7 @@ describe('history nodes', () => {
     const root = await spaceNode(first.id)
     const foreign = await post(second.id, {
       parentId: root.id,
-      kind: 'edit',
+      kind: 'plan',
       name: '跨项目',
       layout: layout(),
     })
@@ -184,7 +184,7 @@ describe('history nodes', () => {
     })
     const binned = await post(first.id, {
       parentId: root.id,
-      kind: 'edit',
+      kind: 'plan',
       name: '回收站',
       layout: layout(),
     })

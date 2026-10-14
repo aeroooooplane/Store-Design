@@ -4,7 +4,7 @@
  */
 import { expect, vi } from 'vitest'
 import { schema } from '@store/database'
-import { rectangleSpace } from '@store/shared'
+import { LayoutSchema, rectangleSpace } from '@store/shared'
 import type { Asset, DesignNode, NodeCameraList, NodeCreated, Project } from '@store/shared'
 import { loadConfig } from '../src/config/env.ts'
 import { systemContext } from '../src/context/actor.ts'
@@ -127,6 +127,31 @@ export function createSpace(
   space: object = rectangleSpace(8, 6, 3.2),
 ) {
   return createNode(t, projectId, { parentId: null, kind: 'space', name: '空间', space })
+}
+
+/**
+ * A step of the old 'edit' kind, written straight to the table as an import does: the API no
+ * longer creates them, but old projects still have them.
+ */
+export async function seedLegacyEdit(
+  t: TestApp,
+  projectId: string,
+  parentId: string,
+  name: string,
+  layout: object,
+): Promise<DesignNode> {
+  const [row] = await t.database.db
+    .insert(schema.designNodes)
+    .values({
+      projectId,
+      parentId,
+      kind: 'edit',
+      name,
+      layout: LayoutSchema.parse(layout),
+      origin: 'user',
+    })
+    .returning({ id: schema.designNodes.id })
+  return getNode(t, row?.id)
 }
 
 /** GET /nodes/:id; expects 200. */
