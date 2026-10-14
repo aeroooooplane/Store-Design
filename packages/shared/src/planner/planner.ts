@@ -5,9 +5,11 @@ import {
   distance,
   distanceToSegment,
   edges,
+  locatePoint,
   pathMidpoint,
   polygonArea,
   polygonOverlapsRect,
+  rectCorners,
   rectGap,
   rectInsidePolygon,
   rectsOverlap,
@@ -95,10 +97,12 @@ interface Wall {
   axis: 'x' | 'z'
   u: Vec
   n: Vec
-  /** Usable stretches along the wall, in metres from `a` (entrances removed). */
+  /** Usable stretches along the wall, in metres from `a` (entrances and open edges removed). */
   intervals: [number, number][]
-  /** Distance from the main entrance; the farthest wall is the back wall. */
+  /** Distance from the main entrance; orders the walls after the back wall. */
   distance: number
+  /** How far back the wall stands, measured from the main entrance along its inward normal. */
+  depth: number
 }
 
 interface EntrancePiece {
@@ -230,7 +234,11 @@ class Planner {
     if (!this.mainEntrance) this.notes.push('空间没有入口，未预留入口缓冲与主通道')
 
     const entrancePieces = this.entrances.flatMap((e) => e?.pieces ?? [])
-    this.walls = ring.flatMap(([a, b], index): Wall[] => {
+    // Nothing stands against an open edge: there is no wall there.
+    const openPieces = space.openEdges.flatMap(
+      (edge) => boundaryPath(this.boundary, edge.a, edge.b, ON_EDGE_M) ?? [],
+    )
+    const walls = ring.flatMap(([a, b], index): Wall[] => {
       const dx = b[0] - a[0]
       const dz = b[1] - a[1]
       const length = Math.hypot(dx, dz)
@@ -244,42 +252,91 @@ class Planner {
         const tb = (piece.b[0] - a[0]) * u[0] + (piece.b[1] - a[1]) * u[1]
         intervals = subtract(intervals, [Math.min(ta, tb) - 0.1, Math.max(ta, tb) + 0.1])
       }
+      for (const piece of openPieces) {
+        if (piece.edge !== index) continue
+        const ta = (piece.a[0] - a[0]) * u[0] + (piece.a[1] - a[1]) * u[1]
+        const tb = (piece.b[0] - a[0]) * u[0] + (piece.b[1] - a[1]) * u[1]
+        intervals = subtract(intervals, [Math.min(ta, tb), Math.max(ta, tb)])
+      }
       const mid: Point = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
-      const far = this.mainEntrance ? distance(mid, this.mainEntrance.mid) : 0
+      const main = this.mainEntrance
+      const far = main ? distance(mid, main.mid) : 0
+      const depth = main
+        ? (mid[0] - main.mid[0]) * main.n[0] + (mid[1] - main.mid[1]) * main.n[1]
+        : 0
       return intervals.length
-        ? [{ a, axis: Math.abs(dx) > 1e-6 ? 'x' : 'z', u, n: inward(u), intervals, distance: far }]
+        ? [
+            {
+              a,
+              axis: Math.abs(dx) > 1e-6 ? 'x' : 'z',
+              u,
+              n: inward(u),
+              intervals,
+              distance: far,
+              depth,
+            },
+          ]
         : []
     })
-    this.walls.sort((p, q) => q.distance - p.distance)
+    walls.sort((p, q) => q.distance - p.distance)
+    const back = this.backWall(walls)
+    this.walls = back ? [back, ...walls.filter((w) => w !== back)] : walls
   }
 
-  /** Soft keep-out areas: inside every entrance, and the main aisle for island tables. */
-  zones(rules: PlannerRules, withAisle: boolean): Rect[] {
-    const zones: Rect[] = []
-    for (const { a, b, n } of this.entrances.flatMap((e) => e?.pieces ?? [])) {
-      const depth = rules.entranceBuffer
-      zones.push(
-        aabb([
-          a,
-          b,
-          [a[0] + n[0] * depth, a[1] + n[1] * depth],
-          [b[0] + n[0] * depth, b[1] + n[1] * depth],
-        ]),
+  /**
+   * The wall farthest back along the main entrance's inward normal, among the walls that face
+   * the entrance. Short recesses (less than half the longest facing wall, such as the arms
+   * behind a block standing out of the back wall) are passed over; ties go to the longer wall.
+   * Measuring along the normal, not the straight-line distance, keeps a far side wall of an L
+   * shape or a long shop entered from its long side from being taken for the back wall.
+   */
+  backWall(walls: Wall[]): Wall | null {
+    const main = this.mainEntrance
+    if (!main) return null
+    const usable = (w: Wall) => w.intervals.reduce((sum, [s, e]) => sum + e - s, 0)
+    const facing = walls.filter((w) => w.n[0] * main.n[0] + w.n[1] * main.n[1] < -0.5)
+    const pool = facing.length ? facing : walls
+    const longest = Math.max(0, ...pool.map(usable))
+    let best: Wall | null = null
+    for (const wall of pool) {
+      if (usable(wall) < longest / 2 - 1e-9) continue
+      if (
+        !best ||
+        wall.depth > best.depth + 1e-6 ||
+        (wall.depth > best.depth - 1e-6 && usable(wall) > usable(best) + 1e-9)
       )
+        best = wall
+    }
+    return best
+  }
+
+  /**
+   * Soft keep-out areas: inside every entrance, and the main aisle for island tables. Both are
+   * strips along the entrance's own direction, so an entrance on a slanting wall or a cut corner
+   * keeps a slanting strip clear rather than its whole bounding box.
+   */
+  zones(rules: PlannerRules, withAisle: boolean): Polygon[] {
+    const zones: Polygon[] = []
+    const depth = rules.entranceBuffer
+    for (const { a, b, n } of this.entrances.flatMap((e) => e?.pieces ?? [])) {
+      zones.push([
+        a,
+        b,
+        [b[0] + n[0] * depth, b[1] + n[1] * depth],
+        [a[0] + n[0] * depth, a[1] + n[1] * depth],
+      ])
     }
     if (withAisle && this.mainEntrance) {
       const { mid, n } = this.mainEntrance
       const span = Math.max(this.bbox.maxX - this.bbox.minX, this.bbox.maxZ - this.bbox.minZ)
       const half = rules.aisle / 2
       const side: Vec = [-n[1], n[0]]
-      zones.push(
-        aabb([
-          [mid[0] + side[0] * half, mid[1] + side[1] * half],
-          [mid[0] - side[0] * half, mid[1] - side[1] * half],
-          [mid[0] + side[0] * half + n[0] * span, mid[1] + side[1] * half + n[1] * span],
-          [mid[0] - side[0] * half + n[0] * span, mid[1] - side[1] * half + n[1] * span],
-        ]),
-      )
+      zones.push([
+        [mid[0] + side[0] * half, mid[1] + side[1] * half],
+        [mid[0] + side[0] * half + n[0] * span, mid[1] + side[1] * half + n[1] * span],
+        [mid[0] - side[0] * half + n[0] * span, mid[1] - side[1] * half + n[1] * span],
+        [mid[0] - side[0] * half, mid[1] - side[1] * half],
+      ])
     }
     return zones
   }
@@ -288,7 +345,7 @@ class Planner {
   fits(
     rect: Rect,
     options: {
-      zones: Rect[]
+      zones: Polygon[]
       spacing: number
       wallClearance: number
       extra?: Rect[]
@@ -305,7 +362,7 @@ class Planner {
       )
     )
       return false
-    if (options.zones.some((zone) => rectsOverlap(zone, rect))) return false
+    if (options.zones.some((zone) => polygonOverlapsRect(zone, rect))) return false
     const others = [
       ...this.placed.map((p) => ({ rect: p.rect, island: p.item.function === 'island_table' })),
       ...(options.extra ?? []).map((r) => ({ rect: r, island: true })),
@@ -426,7 +483,7 @@ class Planner {
     const size = rotatedFootprint(asset, rotation)
     const area = (this.bbox.maxX - this.bbox.minX) * (this.bbox.maxZ - this.bbox.minZ)
     const grid = area > 200 ? 0.2 : 0.1
-    const zones = [...this.zones(rules, true), ...reserved]
+    const zones = [...this.zones(rules, true), ...reserved.map((r) => rectCorners(r))]
     const slots: Rect[] = []
     for (let z = this.bbox.minZ; z + size.d <= this.bbox.maxZ + 1e-9; z += grid) {
       for (let x = this.bbox.minX; x + size.w <= this.bbox.maxX + 1e-9; x += grid) {
@@ -489,12 +546,83 @@ function spread(slots: Rect[], count: number): Rect[] {
   return chosen
 }
 
-/** Usable floor area, the basis of the 按面积推荐 table count. */
-export function usableArea(space: Space): number {
-  return (
+/**
+ * Free floor (boundary minus obstacles) that no `width` × `width` square standing on free floor
+ * can reach: arms and strips narrower than `width`, slivers in sharp corners, gaps between a
+ * column and the wall. This is the part removed by a morphological opening with that square,
+ * approximated on a grid of about 0.1 m (coarser for very large spaces, at most 40 000 cells).
+ * A rectangle at least `width` across has none.
+ */
+function narrowArea(space: Space, width: number): number {
+  const xs = space.boundary.map((p) => p[0])
+  const zs = space.boundary.map((p) => p[1])
+  const [minX, minZ] = [Math.min(...xs), Math.min(...zs)]
+  const [spanX, spanZ] = [Math.max(...xs) - minX, Math.max(...zs) - minZ]
+  const cell = Math.max(0.1, Math.sqrt((spanX * spanZ) / 40000))
+  const nx = Math.ceil(spanX / cell)
+  const nz = Math.ceil(spanZ / cell)
+  const k = Math.ceil(width / cell - 1e-9)
+  const free = new Uint8Array(nx * nz)
+  let freeCount = 0
+  for (let i = 0; i < nx; i++) {
+    for (let j = 0; j < nz; j++) {
+      const p: Point = [minX + (i + 0.5) * cell, minZ + (j + 0.5) * cell]
+      if (locatePoint(p, space.boundary) !== 'inside') continue
+      if (space.obstacles.some((o) => locatePoint(p, o.polygon) !== 'outside')) continue
+      free[i * nz + j] = 1
+      freeCount++
+    }
+  }
+  if (!freeCount) return 0
+  // Summed-area table over an (nx + 1) × (nz + 1) grid; rectSum counts cells [i0, i1) × [j0, j1).
+  const prefix = (grid: Uint8Array, w: number, h: number): Int32Array => {
+    const sums = new Int32Array((w + 1) * (h + 1))
+    for (let i = 0; i < w; i++)
+      for (let j = 0; j < h; j++)
+        sums[(i + 1) * (h + 1) + j + 1] =
+          (grid[i * h + j] ?? 0) +
+          (sums[i * (h + 1) + j + 1] ?? 0) +
+          (sums[(i + 1) * (h + 1) + j] ?? 0) -
+          (sums[i * (h + 1) + j] ?? 0)
+    return sums
+  }
+  const rectSum = (sums: Int32Array, h: number, i0: number, j0: number, i1: number, j1: number) =>
+    (sums[i1 * (h + 1) + j1] ?? 0) -
+    (sums[i0 * (h + 1) + j1] ?? 0) -
+    (sums[i1 * (h + 1) + j0] ?? 0) +
+    (sums[i0 * (h + 1) + j0] ?? 0)
+  // Squares that fit: k × k windows of free cells, indexed by their first cell.
+  const [wx, wz] = [nx - k + 1, nz - k + 1]
+  if (wx <= 0 || wz <= 0) return freeCount * cell * cell
+  const freeSums = prefix(free, nx, nz)
+  const fits = new Uint8Array(wx * wz)
+  for (let i = 0; i < wx; i++)
+    for (let j = 0; j < wz; j++)
+      if (rectSum(freeSums, nz, i, j, i + k, j + k) === k * k) fits[i * wz + j] = 1
+  const fitSums = prefix(fits, wx, wz)
+  let narrow = 0
+  for (let i = 0; i < nx; i++) {
+    for (let j = 0; j < nz; j++) {
+      if (!free[i * nz + j]) continue
+      // Covered when some fitting square starts within k − 1 cells before it on both axes.
+      const [i0, j0] = [Math.max(0, i - k + 1), Math.max(0, j - k + 1)]
+      const [i1, j1] = [Math.min(wx, i + 1), Math.min(wz, j + 1)]
+      if (i0 >= i1 || j0 >= j1 || rectSum(fitSums, wz, i0, j0, i1, j1) === 0) narrow++
+    }
+  }
+  return narrow * cell * cell
+}
+
+/**
+ * Usable floor area, the basis of the 按面积推荐 table count: the boundary minus obstacles and,
+ * with `minWidth`, minus the floor too narrow for a `minWidth` square (see narrowArea), so arms
+ * and slivers no table can stand in do not raise the count.
+ */
+export function usableArea(space: Space, minWidth = 0): number {
+  const free =
     polygonArea(space.boundary) -
     space.obstacles.reduce((sum, o) => sum + polygonArea(o.polygon), 0)
-  )
+  return minWidth > 0 ? Math.max(0, free - narrowArea(space, minWidth)) : free
 }
 
 /** Initial heuristic carried over from the legacy planner, until cleaned store data gives a better rule. */
@@ -554,7 +682,21 @@ export function planLayout(input: PlannerInput): PlannerResult {
   if (island) {
     // 尽量多放 relaxes towards the same target as 按面积推荐, then keeps every slot, so it never
     // shows fewer tables; 尽量少放 asks for one.
-    requested = input.strategy === 'min' ? 1 : tablesForArea(usableArea(input.space))
+    // Floor narrower than a table plus the tightest walkway on both sides cannot take one even
+    // after every relaxation, so it does not count towards the table target.
+    const tightest = Math.min(
+      base.clearance,
+      ...RELAXATION_STEPS.filter((s) => s.rule === 'clearance').map((s) => s.value),
+    )
+    const tableWidth = Math.min(island.footprint.w, island.footprint.d) + 2 * tightest
+    if (input.strategy === 'min') requested = 1
+    else {
+      const area = usableArea(input.space, tableWidth)
+      const whole = usableArea(input.space)
+      requested = tablesForArea(area)
+      if (requested < tablesForArea(whole))
+        planner.notes.push(`桌数按面积推荐时未计入约 ${Math.round(whole - area)} ㎡ 狭窄区域`)
+    }
     let best = planner.bestPacking(island, rules, reserved(rules))
     for (const step of RELAXATION_STEPS) {
       if (best.slots.length >= requested) break
