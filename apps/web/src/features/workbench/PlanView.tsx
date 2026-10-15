@@ -5,11 +5,13 @@ import {
   facingAfter,
   itemElevation,
   itemMount,
+  itemTilt,
   mToMm,
   mainEntrance,
   mountedWall,
   embeddedWall,
   polygonArea,
+  rotationHandle,
   sceneFrame,
 } from '@store/shared'
 import type {
@@ -49,6 +51,12 @@ export interface PlanViewProps {
   assets?: ReadonlyMap<string, Asset> | undefined
   selectedId?: string | null | undefined
   onItemPointerDown?:
+    ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  /**
+   * Pointer down on the selected prop's rotation handle (drawn only when this is given): the
+   * editor turns the prop while the pointer moves (see snapRotation).
+   */
+  onRotateHandlePointerDown?:
     ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onBackgroundPointerDown?: (() => void) | undefined
   onFixturePointerDown?:
@@ -252,12 +260,37 @@ function embeddedBlock(item: LayoutItem, space: Space) {
 function symbolFor(item: LayoutItem, asset: Asset | undefined, symbol: PlanSymbol | undefined) {
   if (!asset || !symbol || item.placeholder) return null
   const rotation = item.rotation + symbolBaseRotation(asset.front, asset.footprint, symbol.size)
+  // A scaled LOGO draws its symbol scaled the same (1 symbol unit = 1 mm of the model).
+  const scale = 0.001 * (item.scale ?? 1)
   return (
     <g
       className="plan-symbol"
-      transform={`translate(${item.cx} ${item.cz}) rotate(${rotation}) scale(0.001) translate(${-symbol.center[0]} ${-symbol.center[1]})`}
+      transform={`translate(${item.cx} ${item.cz}) rotate(${rotation}) scale(${scale}) translate(${-symbol.center[0]} ${-symbol.center[1]})`}
     >
       {renderShapes(symbol.shapes)}
+    </g>
+  )
+}
+
+/**
+ * The rotation handle of the selected prop: a short stalk from behind the prop to a round grip
+ * (see rotationHandle), turning with the prop.
+ */
+function RotateHandle({
+  item,
+  size,
+  onPointerDown,
+}: {
+  item: LayoutItem
+  size: number
+  onPointerDown: (event: ReactPointerEvent<SVGGElement>) => void
+}) {
+  const [hx, hz] = rotationHandle(item, size * 2.2)
+  const [bx, bz] = rotationHandle(item, 0)
+  return (
+    <g className="plan-rotate-handle" data-rotate-handle={item.id} onPointerDown={onPointerDown}>
+      <line x1={bx} y1={bz} x2={hx} y2={hz} />
+      <circle cx={hx} cy={hz} r={size * 0.55} />
     </g>
   )
 }
@@ -276,6 +309,7 @@ export function PlanView({
   assets,
   selectedId,
   onItemPointerDown,
+  onRotateHandlePointerDown,
   onBackgroundPointerDown,
   onFixturePointerDown,
   drawingRect,
@@ -301,6 +335,11 @@ export function PlanView({
   const depth = bounds.maxZ - bounds.minZ
   const span = Math.max(width, depth, 1)
   const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
+  // The selected prop gets a rotation handle when the editor can turn it.
+  const rotatable =
+    onRotateHandlePointerDown && !compact
+      ? layout?.items.find((item) => item.id === selectedId && !item.locked)
+      : undefined
   const dimOffset = WALL_THICKNESS_M + fontSize * 2.4
   const { dims, radii } = useMemo(() => {
     if (compact) return { dims: [], radii: [] as RadiusMark[] }
@@ -523,6 +562,10 @@ export function PlanView({
           ]
           // The catalogue name (模型选用表) wins over the name saved with older layouts.
           const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
+          // Boxes are drawn at the nearest quarter turn and turned by the rest; plan symbols
+          // already turn by the whole rotation.
+          const tilt = itemTilt(item)
+          const turn = tilt ? `rotate(${tilt} ${item.cx} ${item.cz})` : undefined
           return (
             <g
               key={item.id}
@@ -533,14 +576,15 @@ export function PlanView({
               }
             >
               <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
-              {drawing ?? block(item)}
-              {!drawing && frontMarker(item, asset)}
+              {drawing && !mounted ? drawing : <g transform={turn}>{drawing ?? block(item)}</g>}
+              {!drawing && <g transform={turn}>{frontMarker(item, asset)}</g>}
               <rect
                 className="plan-item-frame"
                 x={item.cx - item.w / 2}
                 y={item.cz - item.d / 2}
                 width={item.w}
                 height={item.d}
+                transform={turn}
               />
               {!compact && numbers?.[item.id] !== undefined && (
                 <NumberBadge
@@ -588,6 +632,14 @@ export function PlanView({
             </g>
           )
         })}
+
+      {rotatable && onRotateHandlePointerDown && (
+        <RotateHandle
+          item={rotatable}
+          size={fontSize}
+          onPointerDown={(event) => onRotateHandlePointerDown(rotatable, event)}
+        />
+      )}
 
       {spacings.map((m, i) => {
         const half = tickHalf(m.a, m.b, fontSize * 0.25)
