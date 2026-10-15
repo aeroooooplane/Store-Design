@@ -1,5 +1,12 @@
 import type { Dispatch } from 'react'
-import { itemElevation, itemMount, mmToM, mToMm } from '@store/shared'
+import {
+  MAX_ITEM_SCALE,
+  MIN_ITEM_SCALE,
+  itemElevation,
+  itemMount,
+  mmToM,
+  mToMm,
+} from '@store/shared'
 import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
 import { TrashIcon } from '../../../components/icons.tsx'
 import type { EditorAction } from '../editor-state.ts'
@@ -82,8 +89,13 @@ export function PropertiesPanel({
   onRotate,
 }: PropertiesPanelProps) {
   const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
-  // Screens and light boxes may hang on the wall or be built into it (N1, 10-15).
-  const switchable = asset?.installation === 'wall' || asset?.installation === 'embedded'
+  // Screens and light boxes (信息化物料) may hang on the wall or be built into it (N1, 10-15);
+  // LOGOs only hang on it.
+  const switchable =
+    asset?.category === '信息化物料' &&
+    (asset.installation === 'wall' || asset.installation === 'embedded')
+  // LOGO may be resized uniformly (10-15): the width is typed, depth and height follow.
+  const resizable = selected?.function === 'signage' && !selected.locked
   if (!selected && fixture)
     return (
       <div className="wb-card properties" aria-label="选中道具">
@@ -113,6 +125,50 @@ export function PropertiesPanel({
               {selected.placeholder ? '（占位）' : ''}
             </output>
           </div>
+          {resizable && asset && (
+            <>
+              <label className="field-row">
+                宽度（等比缩放）
+                <input
+                  type="number"
+                  step={10}
+                  min={mToMm(asset.footprint.w * MIN_ITEM_SCALE)}
+                  max={mToMm(asset.footprint.w * MAX_ITEM_SCALE)}
+                  value={mToMm(asset.footprint.w * (selected.scale ?? 1))}
+                  onChange={(e) =>
+                    dispatch({
+                      type: 'scale',
+                      id: selected.id,
+                      asset,
+                      scale: mmToM(Number(e.target.value)) / asset.footprint.w,
+                      space,
+                      front: asset.front,
+                    })
+                  }
+                />
+              </label>
+              <div className="field-row">
+                缩放
+                <output>{Math.round((selected.scale ?? 1) * 100)}%</output>
+                <button
+                  type="button"
+                  disabled={(selected.scale ?? 1) === 1}
+                  onClick={() =>
+                    dispatch({
+                      type: 'scale',
+                      id: selected.id,
+                      asset,
+                      scale: 1,
+                      space,
+                      front: asset.front,
+                    })
+                  }
+                >
+                  原始尺寸
+                </button>
+              </div>
+            </>
+          )}
           {switchable && (
             <div className="field-row">
               安装方式

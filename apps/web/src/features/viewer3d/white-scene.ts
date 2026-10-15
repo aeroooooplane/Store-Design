@@ -308,6 +308,8 @@ export class WhiteScene {
       group.position.set(model.cx, elevation, model.cz)
       // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
       group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
+      // A LOGO resized in the properties panel (scale); a placeholder box is already sized.
+      group.scale.setScalar(url ? (item.scale ?? 1) : 1)
       // The footprint is already turned (w × d on the plan), so the box needs no rotation.
       placed.hit.scale.set(item.w, item.h, item.d)
       placed.hit.position.set(item.cx, elevation + item.h / 2, item.cz)

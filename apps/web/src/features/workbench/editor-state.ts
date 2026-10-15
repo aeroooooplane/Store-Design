@@ -7,7 +7,9 @@ import {
   fixtureRect,
   interiorPoint,
   itemMount,
+  mountedWall,
   roundM,
+  scaleItem,
   nextFixtureId,
   rotatedFootprint,
   snapFixtureRect,
@@ -92,6 +94,15 @@ export type EditorAction =
     }
   /** Height of a wall or ceiling piece above the floor. */
   | { type: 'elevate'; id: string; elevation: number }
+  /** A LOGO resized uniformly (属性面板“宽度”); a piece on a wall stays on it. */
+  | {
+      type: 'scale'
+      id: string
+      asset: Asset
+      scale: number
+      space: Space
+      front: FrontAxis | null
+    }
   | { type: 'undo' }
   | { type: 'redo' }
   /** The layout that reached the server; later edits keep the state dirty. */
@@ -290,7 +301,15 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           const size = action.asset
             ? rotatedFootprint(action.asset, rotation)
             : { w: item.d, d: item.w, h: item.h }
-          return { ...item, rotation, w: roundM(size.w), d: roundM(size.d), h: roundM(size.h) }
+          const turned = {
+            ...item,
+            rotation,
+            w: roundM(size.w),
+            d: roundM(size.d),
+            h: roundM(size.h),
+          }
+          // A resized LOGO keeps its scale through the turn.
+          return action.asset && item.scale ? scaleItem(turned, action.asset, item.scale) : turned
         },
         null,
       )
@@ -303,6 +322,21 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
             ? item
             : mountAs(item, action.mount, action.front, state.layout.items, action.space),
         null,
+      )
+    case 'scale':
+      return changeItem(
+        state,
+        action.id,
+        (item) => {
+          if (item.locked || !Number.isFinite(action.scale)) return item
+          const scaled = scaleItem(item, action.asset, action.scale)
+          if (scaled === item || itemMount(item) !== 'wall' || !mountedWall(item, action.space))
+            return scaled
+          // The back stays on the wall as the depth changes.
+          const placed = wallMountSnap(scaled, scaled.cx, scaled.cz, action.space, action.front)
+          return placed ? { ...scaled, cx: placed.cx, cz: placed.cz } : scaled
+        },
+        `scale:${action.id}`,
       )
     case 'elevate':
       return changeItem(
