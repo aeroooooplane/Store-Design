@@ -846,6 +846,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                                 strategy: ("max" | "area" | "min" | "case") | null;
                                 siStyle: ("SI1.0" | "SI2.0") | null;
@@ -894,6 +904,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                             } | null;
                         };
@@ -1168,6 +1188,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                         /** @enum {string} */
                         strategy?: "max" | "area" | "min" | "case";
@@ -1294,6 +1324,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                             };
                             issues: {
@@ -1496,6 +1536,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -1687,6 +1737,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -1878,6 +1938,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -2073,6 +2143,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -2201,6 +2281,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             };
                             revision: number;
                             /** Format: date-time */
@@ -2330,6 +2420,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -2385,6 +2485,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                                 revision: number;
                                 /** Format: date-time */
@@ -3881,6 +3991,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                                 issues: {
                                     code: string;
@@ -4030,6 +4150,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -5604,6 +5734,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -5724,6 +5864,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                             };
                             issues: {

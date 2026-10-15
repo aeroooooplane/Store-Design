@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras, itemElevation } from '@store/shared'
-import type { Asset, Camera, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
+import { defaultCameras, fixtureSolids, itemElevation } from '@store/shared'
+import type { Asset, Camera, Fixture, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
 import { finishModel } from './finish-model.ts'
 import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
@@ -79,6 +79,8 @@ export class WhiteScene {
   private readonly canvas: HTMLCanvasElement
   private readonly room = new THREE.Group()
   private readonly props = new THREE.Group()
+  /** 空心隔板: boxes in the wall material. */
+  private readonly fixtures = new THREE.Group()
   private readonly marks = new THREE.Group()
   /** Hit boxes of the props; picking tests these, not the models. */
   private readonly hits = new THREE.Group()
@@ -133,7 +135,15 @@ export class WhiteScene {
     this.sun.shadow.mapSize.set(2048, 2048)
     this.sun.shadow.bias = -0.00015
     this.sun.shadow.normalBias = 0.025
-    this.scene.add(this.sun, this.sun.target, this.room, this.props, this.marks, this.hits)
+    this.scene.add(
+      this.sun,
+      this.sun.target,
+      this.room,
+      this.fixtures,
+      this.props,
+      this.marks,
+      this.hits,
+    )
 
     // Registered before OrbitControls so a press on a prop can switch orbiting off first.
     canvas.addEventListener('pointerdown', this.onPointerDown)
@@ -205,7 +215,7 @@ export class WhiteScene {
         this.roomLooks.set(this.siStyle, materials)
       }
     }
-    for (const mesh of this.room.children) {
+    for (const mesh of [...this.room.children, ...this.fixtures.children]) {
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
         mesh.material = materials ? materials[surfaceName] : this.roomWhite
@@ -266,6 +276,27 @@ export class WhiteScene {
       placed.hit.position.set(item.cx, elevation + item.h / 2, item.cz)
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
+    this.sceneChanged()
+  }
+
+  /**
+   * 空心隔板 finished like the walls (white, or the wall material), with niches where the
+   * accessory cabinets stand (fixtureSolids).
+   */
+  setFixtures(fixtures: readonly Fixture[], items: readonly LayoutItem[]) {
+    this.fixtures.children.forEach(disposeGeometry)
+    this.fixtures.clear()
+    for (const { rect, bottom, top } of fixtures.flatMap((f) => fixtureSolids(f, items))) {
+      const [w, d, h] = [rect.maxX - rect.minX, rect.maxZ - rect.minZ, top - bottom]
+      const geometry = new THREE.BoxGeometry(w, h, d)
+      geometry.translate((rect.minX + rect.maxX) / 2, bottom + h / 2, (rect.minZ + rect.maxZ) / 2)
+      const box = new THREE.Mesh(geometry, this.roomWhite)
+      box.castShadow = true
+      box.receiveShadow = true
+      box.userData['surface'] = 'wall' satisfies RoomSurface
+      this.fixtures.add(box)
+    }
+    this.paintRoom()
     this.sceneChanged()
   }
 

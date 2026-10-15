@@ -1,19 +1,82 @@
 import type { Dispatch } from 'react'
 import { itemElevation, itemMount, mmToM, mToMm } from '@store/shared'
-import type { Asset, LayoutItem } from '@store/shared'
+import type { Asset, Fixture, LayoutItem } from '@store/shared'
 import { TrashIcon } from '../../../components/icons.tsx'
 import type { EditorAction } from '../editor-state.ts'
 import { ArcArrow } from './ArcArrow.tsx'
 
 interface PropertiesPanelProps {
   selected: LayoutItem | null
+  /** The selected 空心隔板, when a partition rather than a prop is selected. */
+  fixture?: Fixture | null | undefined
   assetMap: Map<string, Asset>
   dispatch: Dispatch<EditorAction>
   onRotate: (by: 90 | -90) => void
 }
 
+/** A 空心隔板: its size, height and position, each typed in millimetres. */
+function FixtureFields({
+  fixture,
+  dispatch,
+}: {
+  fixture: Fixture
+  dispatch: Dispatch<EditorAction>
+}) {
+  const field = (label: string, key: 'w' | 'd' | 'h' | 'cx' | 'cz') => (
+    <label className="field-row" key={key}>
+      {label}
+      <input
+        type="number"
+        step={10}
+        value={mToMm(fixture[key])}
+        onChange={(e) =>
+          dispatch({
+            type: 'updateFixture',
+            id: fixture.id,
+            patch: { [key]: mmToM(Number(e.target.value)) },
+          })
+        }
+      />
+    </label>
+  )
+  return (
+    <>
+      <div className="properties-head">
+        <h3>空心隔板</h3>
+        <button
+          type="button"
+          className="icon-button"
+          aria-label="删除空心隔板"
+          title="删除（Delete）"
+          onClick={() => dispatch({ type: 'remove', id: fixture.id })}
+        >
+          <TrashIcon />
+        </button>
+      </div>
+      {field('长（左右）', 'w')}
+      {field('宽（前后）', 'd')}
+      {field('高度', 'h')}
+      {field('水平位置', 'cx')}
+      {field('垂直位置', 'cz')}
+      <p className="hint">临时补丁：配件柜可以嵌在隔板里；拖动时边缘吸附墙体和配件柜。</p>
+    </>
+  )
+}
+
 /** The selected prop: size, position and rotation, or how to edit when nothing is selected. */
-export function PropertiesPanel({ selected, assetMap, dispatch, onRotate }: PropertiesPanelProps) {
+export function PropertiesPanel({
+  selected,
+  fixture,
+  assetMap,
+  dispatch,
+  onRotate,
+}: PropertiesPanelProps) {
+  if (!selected && fixture)
+    return (
+      <div className="wb-card properties" aria-label="选中道具">
+        <FixtureFields fixture={fixture} dispatch={dispatch} />
+      </div>
+    )
   return (
     <div className="wb-card properties" aria-label="选中道具">
       {selected ? (

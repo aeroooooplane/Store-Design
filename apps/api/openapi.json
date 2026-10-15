@@ -2231,6 +2231,61 @@
                                         "type": "null"
                                       }
                                     ]
+                                  },
+                                  "fixtures": {
+                                    "maxItems": 50,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 64
+                                        },
+                                        "kind": {
+                                          "type": "string",
+                                          "enum": [
+                                            "hollow_partition"
+                                          ]
+                                        },
+                                        "cx": {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        "cz": {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "kind",
+                                        "cx",
+                                        "cz",
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ],
+                                      "additionalProperties": false
+                                    }
                                   }
                                 },
                                 "required": [
@@ -2548,6 +2603,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [
@@ -3482,6 +3592,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -4134,6 +4298,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [
@@ -4948,6 +5167,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -5732,6 +6006,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -6497,6 +6826,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -7262,6 +7646,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -7669,6 +8108,61 @@
                               "type": "null"
                             }
                           ]
+                        },
+                        "fixtures": {
+                          "maxItems": 50,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 64
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "hollow_partition"
+                                ]
+                              },
+                              "cx": {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              "cz": {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              "w": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              },
+                              "d": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              },
+                              "h": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "cx",
+                              "cz",
+                              "w",
+                              "d",
+                              "h"
+                            ],
+                            "additionalProperties": false
+                          }
                         }
                       },
                       "required": [
@@ -8083,6 +8577,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -8364,6 +8912,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -12396,6 +12999,61 @@
                                     "type": "null"
                                   }
                                 ]
+                              },
+                              "fixtures": {
+                                "maxItems": 50,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "hollow_partition"
+                                      ]
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "cx",
+                                    "cz",
+                                    "w",
+                                    "d",
+                                    "h"
+                                  ],
+                                  "additionalProperties": false
+                                }
                               }
                             },
                             "required": [
@@ -13000,6 +13658,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -18337,6 +19049,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -18967,6 +19733,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [

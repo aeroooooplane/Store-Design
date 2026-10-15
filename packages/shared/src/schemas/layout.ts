@@ -8,6 +8,7 @@ import {
 } from '../geometry/index.ts'
 import type { Rect } from '../geometry/index.ts'
 import { EPSILON_M } from '../units.ts'
+import { fixtureIssues } from '../fixtures/index.ts'
 import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
 import { InstallationSchema } from './asset.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
@@ -62,11 +63,33 @@ export const PlanningSchema = z.object({
   note: z.string().trim().max(500).nullable().default(null),
 })
 
+export const FIXTURE_KINDS = ['hollow_partition'] as const
+export const FixtureKindSchema = z.enum(FIXTURE_KINDS)
+export type FixtureKind = z.infer<typeof FixtureKindSchema>
+export const MAX_FIXTURES = 50
+
+/**
+ * A hard-finish piece drawn on the plan (硬装构件). For now only 空心隔板: a box built around
+ * accessory cabinets, a stop-gap until cabinets can sit inside walls. Axis-aligned, by centre.
+ */
+export const FixtureSchema = z.object({
+  id: z.string().trim().min(1).max(64),
+  kind: FixtureKindSchema,
+  cx: CoordinateSchema,
+  cz: CoordinateSchema,
+  w: SizeSchema,
+  d: SizeSchema,
+  h: SizeSchema,
+})
+export type Fixture = z.output<typeof FixtureSchema>
+
 export const LayoutSchema = z
   .object({
     schemaVersion: z.literal(3),
     items: z.array(LayoutItemSchema).max(MAX_LAYOUT_ITEMS),
     planning: PlanningSchema.nullable().default(null),
+    /** Hard-finish pieces (空心隔板); absent in layouts without any. */
+    fixtures: z.array(FixtureSchema).max(MAX_FIXTURES).optional(),
   })
   .superRefine((layout, ctx) => {
     const seen = new Set<string>()
@@ -97,6 +120,8 @@ export type LayoutIssueCode =
   | 'item_blocks_entrance'
   | 'item_too_tall'
   | 'item_not_on_wall'
+  | 'fixture_outside_boundary'
+  | 'fixture_overlaps_item'
   | 'item_asset_unknown'
   | 'item_asset_size_mismatch'
 
@@ -252,5 +277,6 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
       }
     }
   })
+  issues.push(...fixtureIssues(space, layout))
   return issues
 }

@@ -11,7 +11,17 @@ import {
   polygonArea,
   sceneFrame,
 } from '@store/shared'
-import type { Asset, Issue, Layout, LayoutItem, Point, ShopType, Space } from '@store/shared'
+import type {
+  Asset,
+  Fixture,
+  Issue,
+  Layout,
+  LayoutItem,
+  Point,
+  Rect,
+  ShopType,
+  Space,
+} from '@store/shared'
 import {
   LABEL_OFFSET_EM,
   avoidOverlaps,
@@ -40,6 +50,10 @@ export interface PlanViewProps {
   onItemPointerDown?:
     ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onBackgroundPointerDown?: (() => void) | undefined
+  onFixturePointerDown?:
+    ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  /** A partition being drawn (画空心隔板), shown dashed until the pointer is released. */
+  drawingRect?: Rect | null | undefined
   svgRef?: Ref<SVGSVGElement> | undefined
   /** Compact thumbnails hide labels and dimensions. */
   compact?: boolean | undefined
@@ -227,6 +241,8 @@ export function PlanView({
   selectedId,
   onItemPointerDown,
   onBackgroundPointerDown,
+  onFixturePointerDown,
+  drawingRect,
   svgRef,
   compact = false,
   numbers,
@@ -403,6 +419,50 @@ export function PlanView({
             <title>{e.kind === 'main' ? '主入口' : '入口'}</title>
           </line>
         )),
+      )}
+
+      {/* 空心隔板 under the props: the cabinets built into them stay visible. */}
+      {(layout?.fixtures ?? []).map((f) => (
+        <g
+          key={f.id}
+          className={['plan-fixture', f.id === selectedId ? 'selected' : '']
+            .filter(Boolean)
+            .join(' ')}
+          data-fixture-id={f.id}
+          onPointerDown={
+            onFixturePointerDown ? (event) => onFixturePointerDown(f, event) : undefined
+          }
+        >
+          <title>{`空心隔板（${mToMm(f.w)} × ${mToMm(f.d)} × ${mToMm(f.h)} mm）`}</title>
+          <rect
+            x={f.cx - f.w / 2}
+            y={f.cz - f.d / 2}
+            width={f.w}
+            height={f.d}
+            fill={`url(#${hatch})`}
+          />
+          {!compact && (
+            <text
+              className="plan-label"
+              x={f.cx}
+              y={f.cz + f.d / 2 + fontSize * 0.6}
+              fontSize={fontSize * 0.7}
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              空心隔板 {mToMm(f.w)}×{mToMm(f.d)}
+            </text>
+          )}
+        </g>
+      ))}
+      {drawingRect && (
+        <rect
+          className="plan-fixture-draft"
+          x={drawingRect.minX}
+          y={drawingRect.minZ}
+          width={drawingRect.maxX - drawingRect.minX}
+          height={drawingRect.maxZ - drawingRect.minZ}
+        />
       )}
 
       {/* Floor props first, so the wall and ceiling pieces above them stay on top. */}

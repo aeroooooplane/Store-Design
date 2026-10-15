@@ -1,12 +1,27 @@
 import {
+  MIN_FIXTURE_M,
   defaultElevation,
+  defaultFixtureHeight,
+  fixtureRect,
   interiorPoint,
   itemMount,
   roundM,
+  nextFixtureId,
   rotatedFootprint,
+  snapFixtureRect,
   wallMountSnap,
 } from '@store/shared'
-import type { Asset, FrontAxis, Layout, LayoutItem, Point, Rotation, Space } from '@store/shared'
+import type {
+  Asset,
+  Fixture,
+  FrontAxis,
+  Layout,
+  LayoutItem,
+  Point,
+  Rect,
+  Rotation,
+  Space,
+} from '@store/shared'
 import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
@@ -45,7 +60,24 @@ export type EditorAction =
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
   | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
+  /** Removes a prop or a partition. */
   | { type: 'remove'; id: string }
+  /** 画空心隔板: a dragged rectangle, its edges stuck to walls and cabinets of `snapTo`. */
+  | { type: 'addFixture'; rect: Rect; space: Space; snap: boolean }
+  | {
+      type: 'moveFixture'
+      id: string
+      cx: number
+      cz: number
+      group?: string | undefined
+      snapTo?: Space | null | undefined
+    }
+  /** Size, position or height typed into the properties panel. */
+  | {
+      type: 'updateFixture'
+      id: string
+      patch: Partial<Pick<Fixture, 'cx' | 'cz' | 'w' | 'd' | 'h'>>
+    }
   /** A wall or ceiling piece added with `space` goes onto the nearest wall at a default height. */
   | { type: 'add'; asset: Asset; cx: number; cz: number; space?: Space | undefined }
   /** Height of a wall or ceiling piece above the floor. */
@@ -134,6 +166,29 @@ function mountNew(
   return { ...mounted, elevation: defaultElevation(mounted, items, space) }
 }
 
+const withFixtures = (layout: Layout, fixtures: Fixture[]): Layout =>
+  fixtures.length ? { ...layout, fixtures } : { ...layout, fixtures: undefined }
+
+/** The smaller non-zero of two edge shifts (0 when neither edge snapped). */
+const nearestShift = (a: number, b: number) =>
+  a === 0 ? b : b === 0 ? a : Math.abs(a) <= Math.abs(b) ? a : b
+
+function changeFixture(
+  state: EditorState,
+  id: string,
+  change: (fixture: Fixture) => Fixture,
+  key: string | null,
+): EditorState {
+  let changed = false
+  const fixtures = (state.layout.fixtures ?? []).map((f) => {
+    if (f.id !== id) return f
+    const next = change(f)
+    if (next !== f) changed = true
+    return next
+  })
+  return changed ? commit(state, withFixtures(state.layout, fixtures), key) : state
+}
+
 /** A fresh id for a new item of this function, e.g. island_table-3. */
 export function nextItemId(layout: Layout, fn: string): string {
   const used = new Set(layout.items.map((i) => i.id))
@@ -211,10 +266,68 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         `elevate:${action.id}`,
       )
     case 'remove': {
+      const fixtures = state.layout.fixtures?.filter((f) => f.id !== action.id)
+      if (fixtures && fixtures.length !== state.layout.fixtures?.length)
+        return commit(state, withFixtures(state.layout, fixtures), null, { selectedId: null })
       const items = state.layout.items.filter((item) => item.id !== action.id || item.locked)
       if (items.length === state.layout.items.length) return state
       return commit(state, { ...state.layout, items }, null, { selectedId: null })
     }
+    case 'addFixture': {
+      const rect = action.snap
+        ? snapFixtureRect(action.rect, action.space, state.layout.items)
+        : action.rect
+      const w = roundM(rect.maxX - rect.minX)
+      const d = roundM(rect.maxZ - rect.minZ)
+      if (w < MIN_FIXTURE_M || d < MIN_FIXTURE_M) return state
+      const fixture: Fixture = {
+        id: nextFixtureId(state.layout),
+        kind: 'hollow_partition',
+        cx: roundM((rect.minX + rect.maxX) / 2),
+        cz: roundM((rect.minZ + rect.maxZ) / 2),
+        w,
+        d,
+        h: defaultFixtureHeight(rect, state.layout.items, action.space),
+      }
+      const fixtures = [...(state.layout.fixtures ?? []), fixture]
+      return commit(state, withFixtures(state.layout, fixtures), null, { selectedId: fixture.id })
+    }
+    case 'moveFixture':
+      return changeFixture(
+        state,
+        action.id,
+        (f) => {
+          let cx = snap(action.cx)
+          let cz = snap(action.cz)
+          if (action.snapTo) {
+            // Whichever edge comes near a wall or cabinet pulls the whole box onto it.
+            const moved = fixtureRect({ ...f, cx, cz })
+            const stuck = snapFixtureRect(moved, action.snapTo, state.layout.items)
+            cx = roundM(cx + nearestShift(stuck.minX - moved.minX, stuck.maxX - moved.maxX))
+            cz = roundM(cz + nearestShift(stuck.minZ - moved.minZ, stuck.maxZ - moved.maxZ))
+          }
+          return cx === f.cx && cz === f.cz ? f : { ...f, cx, cz }
+        },
+        action.group ?? null,
+      )
+    case 'updateFixture':
+      return changeFixture(
+        state,
+        action.id,
+        (f) => {
+          const next = { ...f }
+          for (const [key, value] of Object.entries(action.patch) as [
+            keyof typeof action.patch,
+            number,
+          ][]) {
+            if (!Number.isFinite(value)) continue
+            next[key] =
+              key === 'cx' || key === 'cz' ? roundM(value) : roundM(Math.max(MIN_FIXTURE_M, value))
+          }
+          return next
+        },
+        `fixture:${action.id}`,
+      )
     case 'add': {
       const id = nextItemId(state.layout, action.asset.function)
       const size = rotatedFootprint(action.asset, 0)

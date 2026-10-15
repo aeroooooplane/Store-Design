@@ -114,6 +114,8 @@ export function PlanEditor({
   // The 3D effect stage shows materials by default; the white model stays one click away.
   // 显示间距 starts off each time: it is a check, not part of the drawing being edited.
   const [showSpacing, setShowSpacing] = useState(false)
+  // 画空心隔板: the next drag on the plan draws a partition.
+  const [drawingFixture, setDrawingFixture] = useState(false)
   const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
@@ -200,11 +202,22 @@ export function PlanEditor({
     finishDraft,
     onNodeCreated,
   })
-  const { svgRef, onItemPointerDown, onPointerMove, endDrag } = usePlanDrag(
+  const {
+    svgRef,
+    onItemPointerDown,
+    onFixturePointerDown,
+    onDrawPointerDown,
+    onPointerMove,
+    endDrag,
+    draft: drawnRect,
+  } = usePlanDrag(
     space,
     dispatch,
     (item) => frontOf(item.id),
+    drawingFixture,
+    () => setDrawingFixture(false),
   )
+  const selectedFixture = state.layout.fixtures?.find((f) => f.id === state.selectedId) ?? null
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
   function addAsset(asset: Asset) {
@@ -270,6 +283,8 @@ export function PlanEditor({
               saveState={saveState}
               spacing={showSpacing}
               onToggleSpacing={() => setShowSpacing((on) => !on)}
+              drawingFixture={drawingFixture}
+              onToggleDrawFixture={() => setDrawingFixture((on) => !on)}
             />
 
             {saveState === 'conflict' && (
@@ -293,7 +308,12 @@ export function PlanEditor({
               onPointerMove={onPointerMove}
               onPointerUp={endDrag}
               onPointerCancel={endDrag}
-              onKeyDown={onKeyDown}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && drawingFixture) setDrawingFixture(false)
+                else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
+                  dispatch({ type: 'remove', id: selectedFixture.id })
+                else onKeyDown(event)
+              }}
             >
               <div className={planMain ? 'view-mini' : 'view-main'}>
                 <Suspense fallback={<p className="notice">正在载入三维…</p>}>
@@ -325,7 +345,10 @@ export function PlanEditor({
                   />
                 )}
               </div>
-              <div className={planMain ? 'view-main' : 'view-mini'}>
+              <div
+                className={planMain ? 'view-main' : 'view-mini'}
+                onPointerDownCapture={planMain ? onDrawPointerDown : undefined}
+              >
                 <PlanView
                   svgRef={svgRef}
                   space={space}
@@ -335,6 +358,8 @@ export function PlanEditor({
                   assets={assetMap}
                   selectedId={state.selectedId}
                   onItemPointerDown={onItemPointerDown}
+                  onFixturePointerDown={onFixturePointerDown}
+                  drawingRect={drawnRect}
                   onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                   compact={!planMain}
                   spacing={showSpacing}
@@ -415,6 +440,7 @@ export function PlanEditor({
 
           <PropertiesPanel
             selected={selected}
+            fixture={selectedFixture}
             assetMap={assetMap}
             dispatch={dispatch}
             onRotate={rotateSelected}

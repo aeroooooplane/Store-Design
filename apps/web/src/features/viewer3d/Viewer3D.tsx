@@ -126,6 +126,10 @@ export function Viewer3D({
   }, [layout, assets])
 
   useEffect(() => {
+    sceneRef.current?.setFixtures(layout.fixtures ?? [], layout.items)
+  }, [layout.fixtures, layout.items])
+
+  useEffect(() => {
     sceneRef.current?.setLook(look, siStyle)
   }, [look, siStyle])
 
