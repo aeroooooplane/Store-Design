@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T11:09:56+08:00",
+ "generatedAt": "2026-10-15T17:06:49+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -74,15 +74,15 @@
   "schemaVersion": 1,
   "boundary": [
    [
-    0.0,
+    -0.276,
     0.0
    ],
    [
-    6.735,
+    6.761,
     0.0
    ],
    [
-    6.735,
+    6.761,
     2.402
    ],
    [
@@ -91,14 +91,14 @@
    ],
    [
     6.052,
-    4.109
+    3.886
    ],
    [
-    7.942,
-    4.109
+    8.139,
+    3.886
    ],
    [
-    7.942,
+    8.139,
     10.896
    ],
    [
@@ -115,38 +115,26 @@
    ],
    [
     8.047,
-    12.222
+    12.196
    ],
    [
     4.175,
-    12.222
+    12.196
    ],
    [
-    4.083,
-    10.87
+    4.175,
+    10.857
    ],
    [
-    4.083,
-    10.082
+    3.453,
+    10.857
    ],
    [
-    3.61,
-    10.082
-   ],
-   [
-    3.61,
-    7.719
-   ],
-   [
-    4.083,
-    7.719
-   ],
-   [
-    4.083,
+    3.453,
     3.151
    ],
    [
-    0.0,
+    -0.276,
     3.151
    ]
   ],
@@ -181,21 +169,33 @@
     "function": "screen",
     "category": "信息化物料",
     "source": "new",
-    "cx": 0.079,
-    "cz": 1.352,
+    "cx": -0.032,
+    "cz": 1.497,
     "w": 1.465,
     "d": 0.116,
     "h": 0.846,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
-     1.181,
-     0.158
+     1.47,
+     null
     ],
     "size_deviation_m": [
-     -0.284,
-     0.042
+     0.005,
+     null
     ],
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      0.026,
+      0.761
+     ],
+     [
+      0.026,
+      2.232
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "大厅左墙"
    },
    {
@@ -208,7 +208,7 @@
     "cx": 1.923,
     "cz": 1.503,
     "w": 1.8,
-    "d": 2.199,
+    "d": 1.01,
     "h": 0.907,
     "rotation": 0,
     "drawn_size_m": [
@@ -217,10 +217,12 @@
     ],
     "size_deviation_m": [
      -0.002,
-     -1.188
+     0.001
     ],
     "mount": "floor",
-    "note": "两侧各 2 只高脚凳，模型已包含"
+    "location": "interior",
+    "render_as": "model",
+    "note": "两侧各 2 只高脚凳，模型已包含；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
    },
    {
     "ref": "g03",
@@ -244,6 +246,8 @@
      0.015
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -253,18 +257,30 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 2.022,
-    "cz": 3.046,
-    "w": 1.549,
-    "d": 0.105,
+    "cx": 2.041,
+    "cz": 3.031,
+    "w": 1.51,
+    "d": 0.05,
     "h": null,
-    "rotation": 180,
+    "rotation": 180.0,
     "drawn_size_m": [
-     1.549,
-     0.105
+     1.51,
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      1.287,
+      3.006
+     ],
+     [
+      2.796,
+      3.006
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -275,17 +291,29 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 5.094,
-    "cz": 0.039,
+    "cz": 0.025,
     "w": 1.444,
-    "d": 0.079,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.444,
-     0.079
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.372,
+      0.0
+     ],
+     [
+      5.816,
+      0.0
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -296,20 +324,32 @@
     "category": "信息化物料",
     "source": "new",
     "cx": 6.984,
-    "cz": 4.024,
+    "cz": 4.051,
     "w": 1.465,
     "d": 0.116,
     "h": 0.846,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.47,
-     0.171
+     null
     ],
     "size_deviation_m": [
      0.005,
-     0.055
+     null
     ],
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      6.249,
+      4.109
+     ],
+     [
+      7.719,
+      4.109
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "通道顶墙"
    },
    {
@@ -334,6 +374,8 @@
      -0.002
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -358,6 +400,8 @@
      -0.002
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -382,6 +426,8 @@
      -0.002
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -391,18 +437,30 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 4.017,
+    "cx": 4.058,
     "cz": 6.177,
     "w": 1.51,
-    "d": 0.131,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.51,
-     0.131
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      4.083,
+      5.422
+     ],
+     [
+      4.083,
+      6.931
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "通道左墙"
    },
    {
@@ -427,6 +485,8 @@
      0.023
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": "嵌在左墙内"
    },
    {
@@ -451,6 +511,8 @@
      0.023
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": "嵌在左墙内"
    },
    {
@@ -460,18 +522,30 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 7.969,
+    "cx": 7.967,
     "cz": 6.045,
     "w": 1.51,
-    "d": 0.105,
+    "d": 0.05,
     "h": null,
-    "rotation": 90,
+    "rotation": 90.0,
     "drawn_size_m": [
      1.51,
-     0.105
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      7.942,
+      5.29
+     ],
+     [
+      7.942,
+      6.8
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "通道右墙"
    },
    {
@@ -481,18 +555,30 @@
     "function": "signage",
     "category": "软装道具",
     "source": "new",
-    "cx": 7.903,
+    "cx": 7.917,
     "cz": 8.973,
     "w": 1.195,
-    "d": 0.079,
+    "d": 0.05,
     "h": null,
-    "rotation": 90,
+    "rotation": 90.0,
     "drawn_size_m": [
      1.195,
-     0.079
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      7.942,
+      8.375
+     ],
+     [
+      7.942,
+      9.57
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "模型库只有 1.99 米徕卡墙"
    },
    {
@@ -517,16 +603,152 @@
      -0.009
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    }
   ]
  },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     -0.276,
+     0.0
+    ],
+    [
+     0.026,
+     0.0
+    ],
+    [
+     0.026,
+     3.151
+    ],
+    [
+     -0.276,
+     3.151
+    ]
+   ],
+   "label": "大厅左侧包墙（嵌 65 寸广告机）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.453,
+     3.151
+    ],
+    [
+     4.083,
+     3.151
+    ],
+    [
+     4.083,
+     7.719
+    ],
+    [
+     3.453,
+     7.719
+    ]
+   ],
+   "label": "通道左侧包墙（嵌灯箱）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.453,
+     7.719
+    ],
+    [
+     3.61,
+     7.719
+    ],
+    [
+     3.61,
+     10.082
+    ],
+    [
+     3.453,
+     10.082
+    ]
+   ],
+   "label": "配件柜背后包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.453,
+     10.082
+    ],
+    [
+     4.083,
+     10.082
+    ],
+    [
+     4.083,
+     10.857
+    ],
+    [
+     3.453,
+     10.857
+    ]
+   ],
+   "label": "通道左侧包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     6.052,
+     3.886
+    ],
+    [
+     8.139,
+     3.886
+    ],
+    [
+     8.139,
+     4.109
+    ],
+    [
+     6.052,
+     4.109
+    ]
+   ],
+   "label": "通道顶部包墙（嵌 65 寸广告机）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     7.942,
+     4.109
+    ],
+    [
+     8.139,
+     4.109
+    ],
+    [
+     8.139,
+     10.896
+    ],
+    [
+     7.942,
+     10.896
+    ]
+   ],
+   "label": "通道右侧包墙（嵌灯箱、徕卡墙）"
+  }
+ ],
  "summary": {
-  "boundary_area_m2": 54.64,
+  "boundary_area_m2": 60.95,
   "stated_area_m2": 80,
   "outer_size_m": [
-   8.05,
-   12.22
+   8.41,
+   12.2
   ],
   "height_source": "图注“店铺天花高度：3000mm”",
   "counts_by_function": {
@@ -550,7 +772,7 @@
   "notes": [
    "L 形异形店：门在底部，窄长通道向上通到收银大厅；大厅之上为库房 7.27㎡、直播间 18.69㎡（后场，不计入）",
    "图签面积 80㎡",
-   "边界不含后场；加上库房 7.27㎡、直播间 18.69㎡ 约 80㎡，与图注一致。配件柜嵌在左墙内，边界在嵌入处外扩"
+   "边界沿红色租赁线；网格斜线墙体都在租赁线以内，记为硬装包墙。边界不含后场，加上库房 7.27㎡、直播间 18.69㎡ 约 80㎡，与图注一致"
   ]
  }
 }

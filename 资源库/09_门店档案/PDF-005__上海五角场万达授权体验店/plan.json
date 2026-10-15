@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T11:09:56+08:00",
+ "generatedAt": "2026-10-15T17:06:50+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -141,29 +141,6 @@
     "label": "员工休息室 3.9㎡"
    },
    {
-    "kind": "fixed",
-    "polygon": [
-     [
-      0.0,
-      0.436
-     ],
-     [
-      0.46,
-      0.436
-     ],
-     [
-      0.46,
-      0.753
-     ],
-     [
-      0.0,
-      0.753
-     ]
-    ],
-    "height": null,
-    "label": "强弱电箱"
-   },
-   {
     "kind": "column",
     "polygon": [
      [
@@ -254,6 +231,29 @@
     ],
     "height": null,
     "label": "橱窗内嵌竖向灯箱 1200×2300"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      0.0,
+      0.436
+     ],
+     [
+      0.46,
+      0.436
+     ],
+     [
+      0.46,
+      0.753
+     ],
+     [
+      0.0,
+      0.753
+     ]
+    ],
+    "height": null,
+    "label": "强弱电箱（在包墙内）"
    }
   ],
   "calibration": {
@@ -272,17 +272,29 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 1.616,
-    "cz": 0.024,
+    "cz": 0.12,
     "w": 1.918,
-    "d": 0.048,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.918,
-     0.048
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.658,
+      0.095
+     ],
+     [
+      2.575,
+      0.095
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -307,6 +319,8 @@
      -0.016
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -317,17 +331,29 @@
     "category": "信息化物料",
     "source": "new",
     "cx": 4.477,
-    "cz": 1.775,
+    "cz": 1.733,
     "w": 2.187,
-    "d": 0.063,
+    "d": 0.1,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      2.187,
-     0.063
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      3.383,
+      1.783
+     ],
+     [
+      5.57,
+      1.783
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "模型库 98 寸为非原尺寸款，未自动对应"
    },
    {
@@ -337,18 +363,30 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 0.4,
+    "cx": 0.435,
     "cz": 3.269,
     "w": 1.704,
-    "d": 0.119,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.704,
-     0.119
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      0.46,
+      2.417
+     ],
+     [
+      0.46,
+      4.12
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -358,18 +396,30 @@
     "function": "screen",
     "category": null,
     "source": "new",
-    "cx": 0.361,
+    "cx": 0.435,
     "cz": 5.23,
     "w": 1.664,
-    "d": 0.198,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.664,
-     0.198
+     null
     ],
     "size_deviation_m": null,
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      0.46,
+      4.398
+     ],
+     [
+      0.46,
+      6.062
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -394,7 +444,9 @@
      -0.03
     ],
     "mount": "floor",
-    "note": null
+    "location": "interior",
+    "render_as": "model",
+    "note": "嵌在左墙空心包墙的凹位里"
    },
    {
     "ref": "g07",
@@ -418,6 +470,8 @@
      0.007
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -439,6 +493,8 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
    },
    {
@@ -460,6 +516,8 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
    },
    {
@@ -481,6 +539,8 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
    },
    {
@@ -505,6 +565,8 @@
      0.007
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -529,6 +591,8 @@
      -0.001
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -538,22 +602,34 @@
     "function": "screen",
     "category": "信息化物料",
     "source": "new",
-    "cx": 5.138,
-    "cz": 7.567,
+    "cx": 4.853,
+    "cz": 7.543,
     "w": 0.717,
     "d": 0.071,
     "h": 1.235,
-    "rotation": 90,
+    "rotation": 90.0,
     "drawn_size_m": [
      0.713,
-     0.071
+     null
     ],
     "size_deviation_m": [
      -0.004,
-     0.0
+     null
     ],
-    "mount": "wall",
-    "note": null
+    "wall_segment_m": [
+     [
+      4.818,
+      7.187
+     ],
+     [
+      4.818,
+      7.9
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在柱子左侧包柱内（用户 10-15 指出原标注位置不对）"
    },
    {
     "ref": "g14",
@@ -577,6 +653,8 @@
      -0.152
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -587,18 +665,30 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 4.358,
-    "cz": 9.413,
+    "cz": 9.415,
     "w": 1.347,
-    "d": 0.048,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.347,
-     0.048
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": null
+    "wall_segment_m": [
+     [
+      3.685,
+      9.39
+     ],
+     [
+      5.032,
+      9.39
+     ]
+    ],
+    "mount": "wall",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
    },
    {
     "ref": "g16",
@@ -607,19 +697,31 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 5.99,
+    "cx": 5.942,
     "cz": 7.718,
     "w": 0.808,
-    "d": 0.048,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      0.808,
-     0.048
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": null
+    "wall_segment_m": [
+     [
+      5.967,
+      7.314
+     ],
+     [
+      5.967,
+      8.122
+     ]
+    ],
+    "mount": "embedded",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "柱子右侧，朝店外右侧通道"
    },
    {
     "ref": "g17",
@@ -628,22 +730,102 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 5.99,
+    "cx": 5.942,
     "cz": 0.931,
     "w": 1.387,
-    "d": 0.048,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.387,
-     0.048
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
+    "wall_segment_m": [
+     [
+      5.967,
+      0.238
+     ],
+     [
+      5.967,
+      1.624
+     ]
+    ],
+    "mount": "embedded",
+    "location": "facade",
+    "render_as": "wall_image",
     "note": "员工休息室外墙，朝右侧通道"
    }
   ]
  },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     0.46,
+     0.0
+    ],
+    [
+     0.46,
+     7.963
+    ],
+    [
+     0.0,
+     7.963
+    ]
+   ],
+   "label": "左墙空心包墙（新做，点状填充；嵌灯箱、75 寸屏幕、1.6 米配件柜）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     0.0
+    ],
+    [
+     3.066,
+     0.0
+    ],
+    [
+     3.066,
+     0.095
+    ],
+    [
+     0.0,
+     0.095
+    ]
+   ],
+   "label": "背景墙包板（LOGO 墙）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     4.818,
+     7.131
+    ],
+    [
+     5.174,
+     7.131
+    ],
+    [
+     5.174,
+     8.082
+    ],
+    [
+     4.818,
+     8.082
+    ]
+   ],
+   "label": "包柱（嵌 55 寸竖屏）"
+  }
+ ],
  "summary": {
   "boundary_area_m2": 56.03,
   "stated_area_m2": 55.9,
@@ -673,7 +855,8 @@
   "checked_by": "Claude（看原图逐项修正）",
   "notes": [
    "草稿比例 12.42 mm/px 是错的（取自灯箱标注），已按底部和左侧尺寸链改为约 7.92 mm/px",
-   "门头有橱窗展示平台，记为固定物；右侧整面为防盗卷帘门，记为开放边"
+   "门头有橱窗展示平台，记为固定物；右侧整面为防盗卷帘门，记为开放边",
+   "左墙为新做空心包墙（硬装），门店边界仍按原有实墙；灯箱、75 寸屏幕内嵌于包墙，1.6 米配件柜放在包墙凹位"
   ]
  }
 }

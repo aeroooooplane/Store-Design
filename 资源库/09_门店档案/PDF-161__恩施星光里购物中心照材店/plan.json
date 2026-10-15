@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T11:09:55+08:00",
+ "generatedAt": "2026-10-15T17:06:47+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -91,11 +91,11 @@
    ],
    [
     0.0,
-    4.023
+    3.603
    ],
    [
     1.511,
-    4.023
+    3.603
    ]
   ],
   "height": 3.5,
@@ -244,29 +244,6 @@
     "kind": "fixed",
     "polygon": [
      [
-      1.511,
-      3.715
-     ],
-     [
-      2.015,
-      3.715
-     ],
-     [
-      2.015,
-      4.023
-     ],
-     [
-      1.511,
-      4.023
-     ]
-    ],
-    "height": null,
-    "label": "广告机墙（墙体）"
-   },
-   {
-    "kind": "fixed",
-    "polygon": [
-     [
       4.268,
       0.021
      ],
@@ -317,6 +294,8 @@
      0.007
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -341,6 +320,8 @@
      0.026
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -351,20 +332,32 @@
     "category": "信息化物料",
     "source": "new",
     "cx": 1.007,
-    "cz": 3.879,
+    "cz": 3.965,
     "w": 1.465,
     "d": 0.116,
     "h": 0.846,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.455,
-     0.119
+     null
     ],
     "size_deviation_m": [
      -0.01,
-     0.003
+     null
     ],
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      0.28,
+      4.023
+     ],
+     [
+      1.735,
+      4.023
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -374,18 +367,30 @@
     "function": "signage",
     "category": "软装道具",
     "source": "new",
-    "cx": 4.688,
+    "cx": 4.67,
     "cz": 3.327,
-    "w": 1.294,
-    "d": 0.056,
+    "w": 1.196,
+    "d": 0.05,
     "h": null,
-    "rotation": 90,
+    "rotation": 90.0,
     "drawn_size_m": [
-     1.294,
-     0.056
+     1.196,
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.695,
+      2.729
+     ],
+     [
+      4.695,
+      3.925
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "模型库只有 1.99 米徕卡墙"
    },
    {
@@ -410,6 +415,8 @@
      0.005
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -434,6 +441,8 @@
      0.005
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -458,6 +467,8 @@
      -0.0
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -468,17 +479,29 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 3.572,
-    "cz": 0.777,
+    "cz": 0.802,
     "w": 1.224,
-    "d": 0.028,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.224,
-     0.028
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.959,
+      0.777
+     ],
+     [
+      4.184,
+      0.777
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -489,23 +512,59 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 2.732,
-    "cz": 7.409,
+    "cz": 7.406,
     "w": 1.504,
-    "d": 0.056,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.504,
-     0.056
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": "门头，在边界线上"
+    "wall_segment_m": [
+     [
+      1.98,
+      7.381
+     ],
+     [
+      3.484,
+      7.381
+     ]
+    ],
+    "mount": "wall",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
    }
   ]
  },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     3.603
+    ],
+    [
+     2.015,
+     3.603
+    ],
+    [
+     2.015,
+     4.023
+    ],
+    [
+     0.0,
+     4.023
+    ]
+   ],
+   "label": "广告机包墙（新做，网格斜线）"
+  }
+ ],
  "summary": {
-  "boundary_area_m2": 34.2,
+  "boundary_area_m2": 34.83,
   "stated_area_m2": 31.9,
   "outer_size_m": [
    5.46,

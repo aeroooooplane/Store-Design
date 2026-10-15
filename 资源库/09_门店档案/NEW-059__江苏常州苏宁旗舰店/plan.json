@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T11:09:55+08:00",
+ "generatedAt": "2026-10-15T17:06:48+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -174,52 +174,6 @@
     ],
     "height": null,
     "label": "员工休息室 3.3㎡（含配电箱）"
-   },
-   {
-    "kind": "fixed",
-    "polygon": [
-     [
-      3.076,
-      0.0
-     ],
-     [
-      3.477,
-      0.0
-     ],
-     [
-      3.477,
-      0.511
-     ],
-     [
-      3.076,
-      0.511
-     ]
-    ],
-    "height": null,
-    "label": "墙体"
-   },
-   {
-    "kind": "fixed",
-    "polygon": [
-     [
-      5.868,
-      0.0
-     ],
-     [
-      10.005,
-      0.0
-     ],
-     [
-      10.005,
-      0.252
-     ],
-     [
-      5.868,
-      0.252
-     ]
-    ],
-    "height": null,
-    "label": "墙体"
    }
   ],
   "calibration": {
@@ -252,6 +206,8 @@
      0.038
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -276,6 +232,8 @@
      0.038
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -286,20 +244,32 @@
     "category": "信息化物料",
     "source": "new",
     "cx": 8.212,
-    "cz": 0.149,
+    "cz": 0.227,
     "w": 1.69,
     "d": 0.05,
     "h": 0.958,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.668,
-     0.173
+     null
     ],
     "size_deviation_m": [
      -0.022,
-     0.123
+     null
     ],
-    "mount": "wall",
+    "wall_segment_m": [
+     [
+      7.378,
+      0.252
+     ],
+     [
+      9.046,
+      0.252
+     ]
+    ],
+    "mount": "embedded",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": null
    },
    {
@@ -324,6 +294,8 @@
      -0.02
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -336,7 +308,7 @@
     "cx": 2.222,
     "cz": 2.95,
     "w": 1.8,
-    "d": 2.199,
+    "d": 0.99,
     "h": 0.907,
     "rotation": 0,
     "drawn_size_m": [
@@ -345,10 +317,12 @@
     ],
     "size_deviation_m": [
      0.001,
-     -1.208
+     0.001
     ],
     "mount": "floor",
-    "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列"
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
    },
    {
     "ref": "g06",
@@ -372,6 +346,8 @@
      -0.007
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -396,6 +372,8 @@
      -0.007
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -420,6 +398,8 @@
      0.004
     ],
     "mount": "floor",
+    "location": "interior",
+    "render_as": "model",
     "note": null
    },
    {
@@ -429,18 +409,30 @@
     "function": "signage",
     "category": "软装道具",
     "source": "new",
-    "cx": 0.067,
+    "cx": 0.025,
     "cz": 2.958,
     "w": 1.196,
-    "d": 0.055,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.196,
-     0.055
+     null
     ],
     "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      2.36
+     ],
+     [
+      0.0,
+      3.555
+     ]
+    ],
     "mount": "wall",
+    "location": "interior",
+    "render_as": "wall_image",
     "note": "模型库只有 1.99 米徕卡墙"
    },
    {
@@ -451,18 +443,30 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 5.073,
-    "cz": 4.381,
+    "cz": 4.375,
     "w": 1.463,
-    "d": 0.063,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.463,
-     0.063
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": null
+    "wall_segment_m": [
+     [
+      4.342,
+      4.35
+     ],
+     [
+      5.805,
+      4.35
+     ]
+    ],
+    "mount": "wall",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
    },
    {
     "ref": "g11",
@@ -472,18 +476,30 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 9.183,
-    "cz": 4.381,
+    "cz": 4.375,
     "w": 1.062,
-    "d": 0.063,
+    "d": 0.05,
     "h": null,
-    "rotation": 0,
+    "rotation": 0.0,
     "drawn_size_m": [
      1.062,
-     0.063
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": null
+    "wall_segment_m": [
+     [
+      8.652,
+      4.35
+     ],
+     [
+      9.714,
+      4.35
+     ]
+    ],
+    "mount": "wall",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
    },
    {
     "ref": "g12",
@@ -492,22 +508,124 @@
     "function": "signage",
     "category": "品牌标识",
     "source": "new",
-    "cx": 10.721,
+    "cx": 10.77,
     "cz": 2.851,
     "w": 1.455,
-    "d": 0.047,
+    "d": 0.05,
     "h": null,
-    "rotation": 270,
+    "rotation": 270.0,
     "drawn_size_m": [
      1.455,
-     0.047
+     null
     ],
     "size_deviation_m": null,
-    "mount": "facade",
-    "note": "右侧临主人流通道的玻璃面"
+    "wall_segment_m": [
+     [
+      10.745,
+      2.124
+     ],
+     [
+      10.745,
+      3.579
+     ]
+    ],
+    "mount": "wall",
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外右侧门楣（用户 10-15 指出：在店外门楣上，不在店内）"
    }
   ]
  },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.076,
+     0.0
+    ],
+    [
+     3.477,
+     0.0
+    ],
+    [
+     3.477,
+     0.511
+    ],
+    [
+     3.076,
+     0.511
+    ]
+   ],
+   "label": "包墙（新做）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.477,
+     0.0
+    ],
+    [
+     5.868,
+     0.0
+    ],
+    [
+     5.868,
+     0.039
+    ],
+    [
+     3.477,
+     0.039
+    ]
+   ],
+   "label": "配件柜背板包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.868,
+     0.0
+    ],
+    [
+     6.214,
+     0.0
+    ],
+    [
+     6.214,
+     0.511
+    ],
+    [
+     5.868,
+     0.511
+    ]
+   ],
+   "label": "包墙（新做）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     6.214,
+     0.0
+    ],
+    [
+     10.005,
+     0.0
+    ],
+    [
+     10.005,
+     0.252
+    ],
+    [
+     6.214,
+     0.252
+    ]
+   ],
+   "label": "广告机包墙（新做）"
+  }
+ ],
  "summary": {
   "boundary_area_m2": 46.74,
   "stated_area_m2": 47.5,

@@ -65,6 +65,10 @@ def render(repo: Path, folder: Path, source_path: str, use_plan: bool) -> Path:
         for o in space.get("obstacles", []):
             pts = [to_px(p, scale) for p in o["polygon"]]
             draw.polygon(pts, outline=(255, 140, 0), width=3)
+    if scale:
+        for h in data.get("hardscape", []):
+            pts = [to_px(p, scale) for p in h["polygon"]]
+            draw.polygon(pts, outline=(150, 60, 200), width=3)
     items = data.get("items") or data.get("layout", {}).get("items", [])
     if scale:
         for n, item in enumerate(items, 1):

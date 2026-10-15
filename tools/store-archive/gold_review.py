@@ -28,6 +28,7 @@ COLORS = {
 FUNCTION_LABELS = {"island_table": "中岛桌", "unboxing_table": "开箱桌", "cashier": "收银", "accessory_cabinet": "配件柜", "side_cabinet": "配件边柜",
                    "display_stand": "展示台", "screen": "屏幕", "signage": "灯箱与标识", "seating": "坐凳", "storage": "储物柜", "other": "其他"}
 FACING_TEXT = {0: "正面朝下", 90: "正面朝左", 180: "正面朝上", 270: "正面朝右"}
+MOUNT_TEXT = {"floor": "落地", "wall": "贴墙", "embedded": "内嵌墙内", "hanging": "吊挂"}
 
 
 def schematic(plan: dict) -> Image.Image:
@@ -48,6 +49,8 @@ def schematic(plan: dict) -> Image.Image:
     draw.polygon(poly, fill=(248, 248, 244), outline=(30, 30, 30), width=3)
     for o in plan["space"]["obstacles"]:
         draw.polygon([px(p) for p in o["polygon"]], fill=(210, 210, 210), outline=(120, 120, 120))
+    for h in plan.get("hardscape", []):
+        draw.polygon([px(p) for p in h["polygon"]], fill=(225, 205, 240), outline=(150, 60, 200))
     for e in plan["space"]["entrances"]:
         draw.line([px(e["a"]), px(e["b"])], fill=(220, 0, 0), width=6)
     for e in plan["space"].get("openEdges", []):
@@ -70,7 +73,7 @@ def schematic(plan: dict) -> Image.Image:
     draw.text((pad + w * k / 2 - 30, pad - 52), f"{mmw} mm", fill=(0, 0, 0), font=big)
     draw.line([(pad - 30, pad), (pad - 30, pad + d * k)], fill=(0, 0, 0), width=1)
     draw.text((4, pad + d * k / 2), f"{mmd}", fill=(0, 0, 0), font=big)
-    draw.text((pad, img.height - 24), "红线：入口　浅红：开放边　灰：柱与固定物　圆点：道具正面", fill=(80, 80, 80), font=font)
+    draw.text((pad, img.height - 24), "红线：入口　浅红：开放边　灰：柱与固定物　紫：硬装包墙　圆点：道具正面", fill=(80, 80, 80), font=font)
     return img
 
 
@@ -108,7 +111,7 @@ def main() -> None:
         rows = "".join(
             f"<tr><td>{n}</td><td>{html.escape(it['label'])}</td><td>{FUNCTION_LABELS.get(it['function'], it['function'])}</td>"
             f"<td>{html.escape(it['assetId'] or '（模型库无对应）')}</td><td>{round(it['w'] * 1000)}×{round(it['d'] * 1000)}</td>"
-            f"<td>{FACING_TEXT.get(it['rotation'], it['rotation'])}</td><td>{html.escape(it.get('note') or '')}</td></tr>"
+            f"<td>{FACING_TEXT.get(it['rotation'], str(it['rotation']) + '°')}{'（' + MOUNT_TEXT.get(it.get('mount'), '') + ('，店外门头' if it.get('location') == 'facade' else '') + '）' if it.get('mount') != 'floor' or it.get('location') == 'facade' else ''}</td><td>{html.escape(it.get('note') or '')}</td></tr>"
             for n, it in enumerate(plan["layout"]["items"], 1)
         )
         notes = "".join(f"<li>{html.escape(x)}</li>" for x in plan["review"]["notes"])
@@ -117,7 +120,7 @@ def main() -> None:
  <h2>{html.escape(plan['name'])} <small>{sid}｜{plan['si']}｜{plan['shop_type']}｜原图第 {plan['source']['page']} 页</small></h2>
  <p>外包尺寸 {s['outer_size_m'][0]} × {s['outer_size_m'][1]} m；边界面积 {s['boundary_area_m2']} ㎡（图注 {s['stated_area_m2'] or '无'}）；层高 {plan['space']['height']} m（{html.escape(s['height_source'] or '')}）<br>比例核对：{html.escape(checks)}</p>
  <ul>{notes}</ul>
- <div class="pair"><figure><img src="{embed(plan_crop(folder, plan), 1100)}"><figcaption>原图叠加：绿＝边界，红＝入口，橙＝柱与固定物，蓝＝道具（编号对应下表）</figcaption></figure>
+ <div class="pair"><figure><img src="{embed(plan_crop(folder, plan), 1100)}"><figcaption>原图叠加：绿＝边界，红＝入口，橙＝柱与固定物，紫＝硬装包墙，蓝＝道具（编号对应下表）</figcaption></figure>
  <figure><img src="{embed(sch, 900)}"><figcaption>示意平面图（工作台将看到的样子）</figcaption></figure></div>
  <table><tr><th>#</th><th>图上原文</th><th>用途</th><th>模型库型号</th><th>宽×深 mm</th><th>朝向</th><th>备注</th></tr>{rows}</table>
  <div class="verdict" data-id="{sid}"><label><input type="radio" name="v-{sid}" value="对">对</label>

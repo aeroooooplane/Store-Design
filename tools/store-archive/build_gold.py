@@ -12,6 +12,7 @@
 from __future__ import annotations
 
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -71,6 +72,73 @@ def match_asset(label: str, si: str, assets: list[dict]) -> dict | None:
     return best[1] if best else None
 
 
+def asset_size(asset):
+    return tuple(v / 1000 for v in asset["tight_face_bounds_xyz_mm"])
+
+
+def box_item(it, asset, func, mmpp, ox, oz):
+    """落地道具：图上占地框 + 正面朝向（下 / 左 / 上 / 右）。"""
+    x0, y0, x1, y1 = it["box"]
+    rotation = FACING[it.get("facing", "down")]
+    along_x = (x1 - x0) * mmpp / 1000
+    along_z = (y1 - y0) * mmpp / 1000
+    out = {}
+    if asset and "组合" in (asset.get("variant") or "") and along_x * along_z < 0.5 * asset["tight_face_bounds_xyz_mm"][0] * asset["tight_face_bounds_xyz_mm"][1] / 1e6:
+        out["drop_asset"] = True
+        asset = None
+    if asset:
+        fw, fd, fh = asset_size(asset)
+        if func in SYMMETRIC:
+            # 没有正面的道具：只比横向长度选 0° 或 90°（开箱桌型号尺寸含凳子，进深不能比）
+            rotation = 0 if abs(along_x - fw) <= abs(along_x - fd) else 90
+    drawn_w, drawn_d = (along_x, along_z) if rotation in (0, 180) else (along_z, along_x)
+    if asset and func == "unboxing_table" and "凳" in (asset.get("variant") or ""):
+        # 用户 2026-10-15：开箱桌碰撞尺寸与标注按桌体，不含凳子
+        w, d, h = round(fw, 3), round(drawn_d, 2), round(fh, 3)
+        out["body_only"] = True
+    elif asset:
+        w, d, h = round(fw, 3), round(fd, 3), round(fh, 3)
+    else:
+        w, d, h = round(drawn_w, 3), round(drawn_d, 3), it.get("h")
+    return out | {
+        "cx": round(((x0 + x1) / 2 - ox) * mmpp / 1000, 3),
+        "cz": round(((y0 + y1) / 2 - oz) * mmpp / 1000, 3),
+        "w": w, "d": d, "h": h, "rotation": rotation,
+        "drawn_size_m": [round(drawn_w, 3), round(drawn_d, 3)],
+        "size_deviation_m": [round(drawn_w - w, 3), round(drawn_d - d, 3)] if asset else None,
+    }
+
+
+DIRS = {"down": (0, 1), "up": (0, -1), "left": (-1, 0), "right": (1, 0)}
+
+
+def wall_item(it, asset, mmpp, ox, oz):
+    """沿墙道具：on_wall.a→b 是它在墙面线上占的那一段（原图像素），front 是正面的大致方向。
+    内嵌（mount=embedded）：正面落在墙面线上，机身在墙内；贴墙 / 落地靠墙：机身在墙面线前方；
+    门头（location=facade）：front 朝店外，机身在边界外。任意角度的斜墙按真实角度记。"""
+    (ax, ay), (bx, by) = it["on_wall"]["a"], it["on_wall"]["b"]
+    length = math.hypot(bx - ax, by - ay)
+    tx, ty = (bx - ax) / length, (by - ay) / length
+    want = DIRS[it["on_wall"]["front"]]
+    normals = [(-ty, tx), (ty, -tx)]
+    fx, fy = max(normals, key=lambda n: n[0] * want[0] + n[1] * want[1])
+    rotation = round(math.degrees(math.atan2(-fx, fy)) % 360, 1)
+    if asset:
+        w, d, h = (round(v, 3) for v in asset_size(asset))
+    else:
+        w, d, h = round(length * mmpp / 1000, 3), it.get("d_mm", 50) / 1000, it.get("h")
+    sign = -1 if it.get("mount") == "embedded" else 1
+    mx, my = (ax + bx) / 2, (ay + by) / 2
+    cx = (mx - ox) * mmpp / 1000 + sign * fx * d / 2
+    cz = (my - oz) * mmpp / 1000 + sign * fy * d / 2
+    return {
+        "cx": round(cx, 3), "cz": round(cz, 3), "w": w, "d": d, "h": h, "rotation": rotation,
+        "drawn_size_m": [round(length * mmpp / 1000, 3), None],
+        "size_deviation_m": [round(length * mmpp / 1000 - w, 3), None] if asset else None,
+        "wall_segment_m": [[round((ax - ox) * mmpp / 1000, 3), round((ay - oz) * mmpp / 1000, 3)], [round((bx - ox) * mmpp / 1000, 3), round((by - oz) * mmpp / 1000, 3)]],
+    }
+
+
 def main() -> None:
     parser = base_args(__doc__.splitlines()[0])
     parser.add_argument("stores", nargs="*")
@@ -125,30 +193,20 @@ def main() -> None:
         }
         items = []
         for n, it in enumerate(edits["items"], 1):
-            x0, y0, x1, y1 = it["box"]
-            rotation = FACING[it.get("facing", "down")]
-            along_x = (x1 - x0) * mmpp / 1000
-            along_z = (y1 - y0) * mmpp / 1000
-            drawn_w, drawn_d = (along_x, along_z) if rotation in (0, 180) else (along_z, along_x)
-            func = None
             asset = by_id.get(it["asset"]) if it.get("asset") not in (None, "auto") else (match_asset(it["label"], si, assets) if it.get("asset") == "auto" or "asset" not in it else None)
             note = it.get("note")
-            if asset and "组合" in (asset.get("variant") or "") and along_x * along_z < 0.5 * asset["tight_face_bounds_xyz_mm"][0] * asset["tight_face_bounds_xyz_mm"][1] / 1e6:
-                # 模型库只有多件组合款（如 4 件培训坐凳），图上是单件：不配型号，按单件计数
+            func = it.get("function") or function_of(it["label"])
+            mount = it.get("mount", "floor")
+            location = it.get("location", "interior")
+            if "on_wall" in it:
+                item = wall_item(it, asset, mmpp, ox, oz)
+            else:
+                item = box_item(it, asset, func, mmpp, ox, oz)
+            if item.pop("drop_asset", False):
                 note = "；".join(x for x in (note, f"模型库只有组合款 {asset['asset_id']}（{asset.get('variant')}），按单件记") if x)
                 asset = None
-            if asset:
-                fw, fd, fh = (v / 1000 for v in asset["tight_face_bounds_xyz_mm"])
-            func = it.get("function") or function_of(it["label"])
-            if asset and func in SYMMETRIC:
-                # 没有正面的道具（中岛桌等）：按型号尺寸选与图上一致的方向（0° 或 90°）
-                # 只比横向长度：有的型号（开箱桌）尺寸含两侧凳子，进深不能拿来比
-                fits0 = abs(along_x - fw)
-                fits90 = abs(along_x - fd)
-                rotation = 0 if fits0 <= fits90 else 90
-                drawn_w, drawn_d = (along_x, along_z) if rotation == 0 else (along_z, along_x)
-            w, d = (round(fw, 3), round(fd, 3)) if asset else (round(drawn_w, 3), round(drawn_d, 3))
-            h = round(fh, 3) if asset else it.get("h")
+            if item.pop("body_only", False):
+                note = "；".join(x for x in (note, "型号尺寸含两侧凳子；碰撞与尺寸标注按桌体") if x)
             items.append(
                 {
                     "ref": f"g{n:02d}",
@@ -157,15 +215,11 @@ def main() -> None:
                     "function": func,
                     "category": asset["category"] if asset else it.get("category"),
                     "source": it.get("source", "new"),
-                    "cx": round(((x0 + x1) / 2 - ox) * mmpp / 1000, 3),
-                    "cz": round(((y0 + y1) / 2 - oz) * mmpp / 1000, 3),
-                    "w": w,
-                    "d": d,
-                    "h": h,
-                    "rotation": rotation,
-                    "drawn_size_m": [round(drawn_w, 3), round(drawn_d, 3)],
-                    "size_deviation_m": [round(drawn_w - w, 3), round(drawn_d - d, 3)] if asset else None,
-                    "mount": it.get("mount", "floor"),
+                    **item,
+                    "mount": mount,
+                    "location": location,
+                    # 内嵌和贴墙的信息化物料、画面：三维只在墙面贴一张画面，不做实体
+                    "render_as": "wall_image" if mount in ("embedded", "wall") and func in ("screen", "signage") else "model",
                     "note": note,
                 }
             )
@@ -186,6 +240,11 @@ def main() -> None:
             "calibration_px": {"mmPerPixel": round(mmpp, 4), "originPx": [ox, oz], "checks": checks},
             "space": space,
             "layout": {"items": items},
+            # 硬装（设计新做的空心包墙、隔墙等）：门店边界仍按原有实墙，包墙另记一层
+            "hardscape": [
+                {"kind": h["kind"], "polygon": box_poly(h["box"]) if "box" in h else [m(p) for p in h["polygon"]], "label": h.get("label")}
+                for h in edits.get("hardscape_px", [])
+            ],
             "summary": {
                 "boundary_area_m2": round(abs(area) / 2, 2),
                 "stated_area_m2": edits.get("stated_area_m2"),
