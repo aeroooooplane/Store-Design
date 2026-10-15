@@ -82,6 +82,7 @@ export function DisplayTaskPage() {
       key={task.data.id}
       task={task.data}
       rules={rules.data.rules}
+      photos={rules.data.photos}
       ruleVersion={rules.data.version}
     />
   )
@@ -90,10 +91,11 @@ export function DisplayTaskPage() {
 interface TaskEditorProps {
   task: DisplayTask
   rules: NonNullable<ReturnType<typeof useDisplayRules>['data']>['rules']
+  photos: NonNullable<ReturnType<typeof useDisplayRules>['data']>['photos']
   ruleVersion: string
 }
 
-function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
+function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
   const update = useUpdateDisplayTask(task.id)
   const upload = useUploadTaskPicture(task.id)
   const detect = useDetectTables(task.id)
@@ -606,6 +608,8 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
                   <summary>各桌陈列内容（按展陈规则 {ruleVersion}，可逐位修改）</summary>
                   <SlotTable
                     rules={rules}
+                    photos={photos}
+                    si={task.siStyle}
                     tables={tables}
                     edits={draft.edits}
                     onChange={setEdits}
