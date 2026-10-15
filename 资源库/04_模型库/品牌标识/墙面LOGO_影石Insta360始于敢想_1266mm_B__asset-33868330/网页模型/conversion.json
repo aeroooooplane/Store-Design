@@ -1,0 +1,37 @@
+{
+  "id": "asset-33868330",
+  "name": "墙面LOGO_影石Insta360始于敢想_1266mm_B · 官方矢量自建",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "front": "+Z",
+  "builder": "apps/web/src/scripts/build-logo-models.ts",
+  "market": "domestic",
+  "dimensions": {
+    "w": 1.2663,
+    "h": 0.333533,
+    "d": 0.02183
+  },
+  "glbSha256": "c1c51df1c5634149d3f4e1cb22f1da98f00093fd4babc3c89c928524bf317980",
+  "bytes": 763808,
+  "variants": {
+    "overseas": {
+      "file": "overseas.glb",
+      "bytes": 429440,
+      "glbSha256": "df1b6bc20e1ea972ed05f220900fac4eb150e2b9db0d8a9fc300bb5a8d03d6fa"
+    }
+  },
+  "sources": [
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/CN-logo-black-on- transparent-rgb5.pdf",
+      "page": 1,
+      "sha256": "a2e6296f7dbca007ee4056fab666aa55c76b67cf39e3017f6d7a5f6aca854914"
+    },
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/Insta360.ai",
+      "page": 9,
+      "sha256": "b0c900bb3868818db29c5a248d3814ddf04a86092e537801d2bb4ef56a184ef8"
+    }
+  ],
+  "note": "以模型名对应的版本定尺寸，另一版等比缩放后居中放进同一范围（用户 10-15 L1）"
+}

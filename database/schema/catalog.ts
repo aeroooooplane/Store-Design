@@ -55,6 +55,10 @@ export const assets = pgTable(
     whiteGlbFileId: uuid('white_glb_file_id').references(() => storedFiles.id),
     /** Light textured copy for the material look (see apps/api assets/finish-models.ts). */
     finishGlbFileId: uuid('finish_glb_file_id').references(() => storedFiles.id),
+    /** The market glb_file_id shows, for models with a version per market (LOGO); else null. */
+    market: text('market'),
+    /** The other market's version of the model (conversion.json variants). */
+    otherMarketGlbFileId: uuid('other_market_glb_file_id').references(() => storedFiles.id),
     previewFileId: uuid('preview_file_id').references(() => storedFiles.id),
     productImageFileId: uuid('product_image_file_id').references(() => storedFiles.id),
     productImageMatch: text('product_image_match'),
@@ -70,6 +74,10 @@ export const assets = pgTable(
       sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall', 'ceiling', 'embedded')`,
     ),
     check('assets_footprint_source_known', sql`${t.footprintSource} IN ('glb', 'source')`),
+    check(
+      'assets_market_known',
+      sql`${t.market} IS NULL OR ${t.market} IN ('domestic', 'overseas')`,
+    ),
     check(
       'assets_category_known',
       sql`${t.category} IN ('软装道具', '信息化物料', '品牌标识', '非标陈列', '环境设施')`,

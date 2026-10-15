@@ -49,6 +49,8 @@ const asset = (id: string, name: string, fn: Asset['function'], w: number, d: nu
   glb: null,
   whiteGlb: null,
   finishGlb: null,
+  market: null,
+  otherMarketGlb: null,
   preview: null,
   productImage: null,
   productImageMatch: null,

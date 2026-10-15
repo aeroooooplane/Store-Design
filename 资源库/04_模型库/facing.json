@@ -49,7 +49,6 @@
     "asset-6952129": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
     "asset-33868330": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
     "asset-34293910": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
-    "asset-33868332": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
     "asset-37760531": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
     "asset-11483499": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
     "asset-3147733": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "墙面 LOGO / 画面：背面贴墙；SketchUp 包围盒 Y 为厚度，正面暂定 +Z，有网页模型后复核" },
@@ -70,6 +69,7 @@
     "asset-2587726": { "front": "+Z", "confidence": "medium", "installation": "floor", "note": "电子水牌带底座，落地摆放（用户 10-15 N1）" },
     "asset-2463847": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "LED 门头屏贴墙（用户 10-15 N1）；正面暂定 +Z" },
     "asset-11525629": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "LED 门头屏贴墙（用户 10-15 N1）；正面暂定 +Z" },
-    "asset-11511980": { "front": "+X", "confidence": "low", "installation": "wall", "note": "曲面 LED 屏贴墙（用户 10-15 N1）；长条弯折款，包围盒最长边在 Y，正面暂定 +X，待复核" }
+    "asset-11511980": { "front": "+X", "confidence": "low", "installation": "wall", "note": "曲面 LED 屏贴墙（用户 10-15 N1）；长条弯折款，包围盒最长边在 Y，正面暂定 +X，待复核" },
+    "asset-90000001": { "front": "+Z", "confidence": "high", "installation": "wall", "note": "徕卡联名墙面 LOGO，官方矢量自建，正面 +Z" }
   }
 }

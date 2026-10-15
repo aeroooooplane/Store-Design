@@ -1,0 +1,37 @@
+{
+  "id": "asset-34293910",
+  "name": "墙面LOGO_Insta360_Thinkbold_1092mm · 官方矢量自建",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "front": "+Z",
+  "builder": "apps/web/src/scripts/build-logo-models.ts",
+  "market": "overseas",
+  "dimensions": {
+    "w": 1.09181,
+    "h": 0.381572,
+    "d": 0.02
+  },
+  "glbSha256": "8dbfe5195159306bb302201c51f7b0373322eb0cdf359f5fa9a7d3a70f84b2f2",
+  "bytes": 429440,
+  "variants": {
+    "domestic": {
+      "file": "domestic.glb",
+      "bytes": 763824,
+      "glbSha256": "a2917b6eb81583ef491130e39dee97ffa71a807c622a211940fdf2abe328304f"
+    }
+  },
+  "sources": [
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/CN-logo-black-on- transparent-rgb5.pdf",
+      "page": 1,
+      "sha256": "a2e6296f7dbca007ee4056fab666aa55c76b67cf39e3017f6d7a5f6aca854914"
+    },
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/Insta360.ai",
+      "page": 9,
+      "sha256": "b0c900bb3868818db29c5a248d3814ddf04a86092e537801d2bb4ef56a184ef8"
+    }
+  ],
+  "note": "以模型名对应的版本定尺寸，另一版等比缩放后居中放进同一范围（用户 10-15 L1）"
+}

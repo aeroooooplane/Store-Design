@@ -1,0 +1,37 @@
+{
+  "id": "asset-33917980",
+  "name": "吊挂LOGO_影石Insta360_1867mm_短吊杆 · 官方矢量自建",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "front": "+Z",
+  "builder": "apps/web/src/scripts/build-logo-models.ts",
+  "market": "domestic",
+  "dimensions": {
+    "w": 1.86677,
+    "h": 0.49961,
+    "d": 0.06418
+  },
+  "glbSha256": "4c055633da81d10a27bbb8c4f6be9ebb716568e1a55e739f27d05d967eaf73e9",
+  "bytes": 374712,
+  "variants": {
+    "overseas": {
+      "file": "overseas.glb",
+      "bytes": 231864,
+      "glbSha256": "30551cfd86213033383b46b5b8f36932c6f276465f7bbc1460470873f5937342"
+    }
+  },
+  "sources": [
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/影石Insta360.ai",
+      "page": 4,
+      "sha256": "7c7fc34188e1ceba8d02caed887c56534f4dfacf234ef8f2cf8bd50176c0a85e"
+    },
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/Insta360.ai",
+      "page": 4,
+      "sha256": "b0c900bb3868818db29c5a248d3814ddf04a86092e537801d2bb4ef56a184ef8"
+    }
+  ],
+  "note": "以模型名对应的版本定尺寸，另一版等比缩放后居中放进同一范围（用户 10-15 L1）"
+}

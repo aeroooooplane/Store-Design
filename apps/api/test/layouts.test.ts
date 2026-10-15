@@ -193,6 +193,8 @@ describe('plannerCatalog', () => {
     glb: null,
     whiteGlb: null,
     finishGlb: null,
+    market: null,
+    otherMarketGlb: null,
     category: '软装道具',
     productImage: null,
     productImageMatch: null,

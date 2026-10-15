@@ -113,6 +113,13 @@
       "when": 1792061653257,
       "tag": "0015_asset_embedded_installation",
       "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792062835384,
+      "tag": "0016_asset_market_versions",
+      "breakpoints": true
     }
   ]
 }

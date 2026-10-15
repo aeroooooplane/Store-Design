@@ -76,6 +76,8 @@ async function loadCatalog(): Promise<Asset[]> {
     glb: null,
     whiteGlb: null,
     finishGlb: null,
+    market: null,
+    otherMarketGlb: null,
     preview: null,
     productImage: null,
     productImageMatch: null,

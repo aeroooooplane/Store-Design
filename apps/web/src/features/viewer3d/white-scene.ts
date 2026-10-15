@@ -2,14 +2,23 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { defaultCameras, fixtureSolids, itemElevation, itemMount, modelBox } from '@store/shared'
-import type { Asset, Camera, Fixture, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
+import type {
+  Asset,
+  Camera,
+  Fixture,
+  LayoutItem,
+  Market,
+  ShopType,
+  SiStyle,
+  Space,
+} from '@store/shared'
 import { finishModel } from './finish-model.ts'
 import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
-import { wallPicture } from './wall-picture.ts'
+import { signFaces, wallPicture } from './wall-picture.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
@@ -232,7 +241,11 @@ export class WhiteScene {
   }
 
   /** Brings the props in line with the layout; models load in the background. */
-  setItems(items: readonly LayoutItem[], assets: ReadonlyMap<string, Asset>) {
+  setItems(
+    items: readonly LayoutItem[],
+    assets: ReadonlyMap<string, Asset>,
+    market: Market = 'domestic',
+  ) {
     const seen = new Set<string>()
     for (const item of items) {
       seen.add(item.id)
@@ -243,10 +256,13 @@ export class WhiteScene {
           ? { url: catalogued?.preview?.url ?? null, front: catalogued?.front ?? null }
           : null
       const asset = !picture && item.assetId && !item.placeholder ? catalogued : undefined
+      // A LOGO in the other market's version (影石Insta360 ⇄ Insta360): one file for both looks.
+      const marketUrl =
+        asset?.market && asset.market !== market ? (asset.otherMarketGlb?.url ?? null) : null
       // The light white-model copy when there is one (see pnpm catalog:white).
-      const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
+      const url = marketUrl ?? asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       // The light material copy when there is one (see pnpm catalog:finish).
-      const finishUrl = asset?.finishGlb?.url ?? asset?.glb?.url ?? null
+      const finishUrl = marketUrl ?? asset?.finishGlb?.url ?? asset?.glb?.url ?? null
       const signature = picture
         ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
         : url
@@ -277,6 +293,9 @@ export class WhiteScene {
             wallPicture(item, picture.front, picture.url, () => this.requestRender()),
           )
         else this.fill(placed, url)
+        // A sign still without a web model shows its preview on both faces (双面侧招).
+        if (!picture && !url && catalogued?.standardName.includes('侧招') && catalogued.preview)
+          placed.white.add(signFaces(item, catalogued.preview.url, () => this.requestRender()))
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item

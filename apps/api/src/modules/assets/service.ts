@@ -13,6 +13,7 @@ const glbFiles = aliasedTable(storedFiles, 'glb_files')
 const previewFiles = aliasedTable(storedFiles, 'preview_files')
 const whiteFiles = aliasedTable(storedFiles, 'white_files')
 const finishFiles = aliasedTable(storedFiles, 'finish_files')
+const otherMarketFiles = aliasedTable(storedFiles, 'other_market_files')
 const imageFiles = aliasedTable(storedFiles, 'image_files')
 const symbolFiles = aliasedTable(storedFiles, 'symbol_files')
 
@@ -21,6 +22,7 @@ interface AssetFiles {
   preview: FileRow | null
   white: FileRow | null
   finish: FileRow | null
+  otherMarket: FileRow | null
   image: FileRow | null
   symbol: FileRow | null
 }
@@ -40,7 +42,7 @@ function fileRef(row: FileRow | null): FileRef | null {
 
 function toAsset(
   row: typeof assets.$inferSelect,
-  { glb, preview, white, finish, image, symbol }: AssetFiles,
+  { glb, preview, white, finish, otherMarket, image, symbol }: AssetFiles,
 ): Asset {
   return {
     id: row.id,
@@ -65,6 +67,8 @@ function toAsset(
     glb: fileRef(glb),
     whiteGlb: fileRef(white),
     finishGlb: fileRef(finish),
+    market: row.market as Asset['market'],
+    otherMarketGlb: fileRef(otherMarket),
     preview: fileRef(preview),
     productImage: fileRef(image),
     productImageMatch: image ? (row.productImageMatch as Asset['productImageMatch']) : null,
@@ -84,6 +88,7 @@ function selectAssets(db: Database, where: SQL | undefined) {
       preview: previewFiles,
       white: whiteFiles,
       finish: finishFiles,
+      otherMarket: otherMarketFiles,
       image: imageFiles,
       symbol: symbolFiles,
     })
@@ -92,6 +97,7 @@ function selectAssets(db: Database, where: SQL | undefined) {
     .leftJoin(previewFiles, eq(assets.previewFileId, previewFiles.id))
     .leftJoin(whiteFiles, eq(assets.whiteGlbFileId, whiteFiles.id))
     .leftJoin(finishFiles, eq(assets.finishGlbFileId, finishFiles.id))
+    .leftJoin(otherMarketFiles, eq(assets.otherMarketGlbFileId, otherMarketFiles.id))
     .leftJoin(imageFiles, eq(assets.productImageFileId, imageFiles.id))
     .leftJoin(symbolFiles, eq(assets.planSymbolFileId, symbolFiles.id))
     .where(where)

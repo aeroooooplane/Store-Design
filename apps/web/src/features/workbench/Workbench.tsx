@@ -315,6 +315,7 @@ function NodePanel({
       shopType={project.shopType}
       nodes={nodes}
       siStyle={project.siStyle}
+      market={project.market}
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}
