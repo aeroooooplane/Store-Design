@@ -1,0 +1,679 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-15T11:09:56+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-005",
+ "name": "上海五角场万达授权体验店",
+ "si": "SI1.0",
+ "shop_type": "边厅店",
+ "source": {
+  "page": 1,
+  "image_px": [
+   2400,
+   1695.9619952494063
+  ],
+  "pdf_scale": 2.8503562945368173
+ },
+ "calibration_px": {
+  "mmPerPixel": 7.9237,
+  "originPx": [
+   674,
+   250
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     1027,
+     1499
+    ],
+    "mm": 3740,
+    "what": "底部 3740",
+    "mm_per_px": 7.9237,
+    "error_pct": 0.0
+   },
+   {
+    "axis": "x",
+    "px": [
+     786,
+     975
+    ],
+    "mm": 1500,
+    "what": "底部双开门 1500",
+    "mm_per_px": 7.9365,
+    "error_pct": 0.16
+   },
+   {
+    "axis": "z",
+    "px": [
+     357,
+     550
+    ],
+    "mm": 1530,
+    "what": "左侧 1530",
+    "mm_per_px": 7.9275,
+    "error_pct": 0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     550,
+     765
+    ],
+    "mm": 1700,
+    "what": "左侧 1700",
+    "mm_per_px": 7.907,
+    "error_pct": -0.21
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    5.967,
+    0.0
+   ],
+   [
+    5.967,
+    9.39
+   ],
+   [
+    0.0,
+    9.39
+   ]
+  ],
+  "height": 3.0,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     0.887,
+     9.39
+    ],
+    "b": [
+     2.385,
+     9.39
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     5.967,
+     2.179
+    ],
+    "b": [
+     5.967,
+     7.314
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      3.066,
+      0.0
+     ],
+     [
+      5.967,
+      0.0
+     ],
+     [
+      5.967,
+      1.783
+     ],
+     [
+      3.066,
+      1.783
+     ]
+    ],
+    "height": null,
+    "label": "员工休息室 3.9㎡"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      0.0,
+      0.436
+     ],
+     [
+      0.46,
+      0.436
+     ],
+     [
+      0.46,
+      0.753
+     ],
+     [
+      0.0,
+      0.753
+     ]
+    ],
+    "height": null,
+    "label": "强弱电箱"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      5.174,
+      7.314
+     ],
+     [
+      5.967,
+      7.314
+     ],
+     [
+      5.967,
+      8.122
+     ],
+     [
+      5.174,
+      8.122
+     ]
+    ],
+    "height": null,
+    "label": "柱"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      0.0,
+      7.963
+     ],
+     [
+      0.372,
+      7.963
+     ],
+     [
+      0.372,
+      8.518
+     ],
+     [
+      0.0,
+      8.518
+     ]
+    ],
+    "height": null,
+    "label": "柱"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      2.773,
+      7.963
+     ],
+     [
+      4.833,
+      7.963
+     ],
+     [
+      4.833,
+      9.39
+     ],
+     [
+      2.773,
+      9.39
+     ]
+    ],
+    "height": null,
+    "label": "橱窗展示平台（X5 模型、小狗模型、绿植）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      4.833,
+      8.122
+     ],
+     [
+      5.967,
+      8.122
+     ],
+     [
+      5.967,
+      9.39
+     ],
+     [
+      4.833,
+      9.39
+     ]
+    ],
+    "height": null,
+    "label": "橱窗内嵌竖向灯箱 1200×2300"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 3740 mm = 472 px；x 向 1500 mm = 189 px；z 向 1530 mm = 193 px；z 向 1700 mm = 215 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "背景墙LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 1.616,
+    "cz": 0.024,
+    "w": 1.918,
+    "d": 0.048,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     1.918,
+     0.048
+    ],
+    "size_deviation_m": null,
+    "mount": "wall",
+    "note": null
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米收银台+开箱",
+    "assetId": "asset-24488377",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.359,
+    "cz": 1.505,
+    "w": 1.786,
+    "d": 0.602,
+    "h": 1.205,
+    "rotation": 0,
+    "drawn_size_m": [
+     1.799,
+     0.586
+    ],
+    "size_deviation_m": [
+     0.013,
+     -0.016
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g03",
+    "label": "98寸屏幕(横向)",
+    "assetId": null,
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 4.477,
+    "cz": 1.775,
+    "w": 2.187,
+    "d": 0.063,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     2.187,
+     0.063
+    ],
+    "size_deviation_m": null,
+    "mount": "wall",
+    "note": "模型库 98 寸为非原尺寸款，未自动对应"
+   },
+   {
+    "ref": "g04",
+    "label": "内嵌灯箱(1700*980mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.4,
+    "cz": 3.269,
+    "w": 1.704,
+    "d": 0.119,
+    "h": null,
+    "rotation": 270,
+    "drawn_size_m": [
+     1.704,
+     0.119
+    ],
+    "size_deviation_m": null,
+    "mount": "wall",
+    "note": null
+   },
+   {
+    "ref": "g05",
+    "label": "75寸屏幕(横向)",
+    "assetId": null,
+    "function": "screen",
+    "category": null,
+    "source": "new",
+    "cx": 0.361,
+    "cz": 5.23,
+    "w": 1.664,
+    "d": 0.198,
+    "h": null,
+    "rotation": 270,
+    "drawn_size_m": [
+     1.664,
+     0.198
+    ],
+    "size_deviation_m": null,
+    "mount": "wall",
+    "note": null
+   },
+   {
+    "ref": "g06",
+    "label": "1.6米配件柜 H:2400mm",
+    "assetId": "asset-323015",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 0.25,
+    "cz": 7.139,
+    "w": 1.6,
+    "d": 0.45,
+    "h": 2.4,
+    "rotation": 270,
+    "drawn_size_m": [
+     1.569,
+     0.42
+    ],
+    "size_deviation_m": [
+     -0.031,
+     -0.03
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g07",
+    "label": "1.8米ace中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.211,
+    "cz": 3.459,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "drawn_size_m": [
+     1.006,
+     1.807
+    ],
+    "size_deviation_m": [
+     0.006,
+     0.007
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g08",
+    "label": "培训坐凳",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 3.831,
+    "cz": 3.578,
+    "w": 0.452,
+    "d": 0.452,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     0.452,
+     0.452
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+   },
+   {
+    "ref": "g09",
+    "label": "培训坐凳",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 4.481,
+    "cz": 3.578,
+    "w": 0.452,
+    "d": 0.452,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     0.452,
+     0.452
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+   },
+   {
+    "ref": "g10",
+    "label": "培训坐凳",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 5.135,
+    "cz": 3.578,
+    "w": 0.444,
+    "d": 0.452,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     0.444,
+     0.452
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+   },
+   {
+    "ref": "g11",
+    "label": "1.8米X系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.211,
+    "cz": 5.614,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "drawn_size_m": [
+     1.006,
+     1.807
+    ],
+    "size_deviation_m": [
+     0.006,
+     0.007
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g12",
+    "label": "1.8米go系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 4.861,
+    "cz": 5.614,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "drawn_size_m": [
+     1.006,
+     1.799
+    ],
+    "size_deviation_m": [
+     0.006,
+     -0.001
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g13",
+    "label": "55寸广告机(竖向)",
+    "assetId": "asset-2597250",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.138,
+    "cz": 7.567,
+    "w": 0.717,
+    "d": 0.071,
+    "h": 1.235,
+    "rotation": 90,
+    "drawn_size_m": [
+     0.713,
+     0.071
+    ],
+    "size_deviation_m": [
+     -0.004,
+     0.0
+    ],
+    "mount": "wall",
+    "note": null
+   },
+   {
+    "ref": "g14",
+    "label": "电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.281,
+    "cz": 9.053,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 0,
+    "drawn_size_m": [
+     0.563,
+     0.198
+    ],
+    "size_deviation_m": [
+     0.013,
+     -0.152
+    ],
+    "mount": "floor",
+    "note": null
+   },
+   {
+    "ref": "g15",
+    "label": "门头LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 4.358,
+    "cz": 9.413,
+    "w": 1.347,
+    "d": 0.048,
+    "h": null,
+    "rotation": 0,
+    "drawn_size_m": [
+     1.347,
+     0.048
+    ],
+    "size_deviation_m": null,
+    "mount": "facade",
+    "note": null
+   },
+   {
+    "ref": "g16",
+    "label": "内嵌竖向灯箱(800*2300mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.99,
+    "cz": 7.718,
+    "w": 0.808,
+    "d": 0.048,
+    "h": null,
+    "rotation": 270,
+    "drawn_size_m": [
+     0.808,
+     0.048
+    ],
+    "size_deviation_m": null,
+    "mount": "facade",
+    "note": null
+   },
+   {
+    "ref": "g17",
+    "label": "内嵌灯箱(1700*980mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.99,
+    "cz": 0.931,
+    "w": 1.387,
+    "d": 0.048,
+    "h": null,
+    "rotation": 270,
+    "drawn_size_m": [
+     1.387,
+     0.048
+    ],
+    "size_deviation_m": null,
+    "mount": "facade",
+    "note": "员工休息室外墙，朝右侧通道"
+   }
+  ]
+ },
+ "summary": {
+  "boundary_area_m2": 56.03,
+  "stated_area_m2": 55.9,
+  "outer_size_m": [
+   5.97,
+   9.39
+  ],
+  "height_source": "本页没有层高，暂用 3.0 m",
+  "counts_by_function": {
+   "signage": 5,
+   "cashier": 1,
+   "screen": 4,
+   "accessory_cabinet": 1,
+   "island_table": 3,
+   "seating": 3
+  },
+  "counts_by_category": {
+   "品牌标识": 2,
+   "软装道具": 5,
+   "信息化物料": 6,
+   "未映射": 4
+  },
+  "matched_assets": 7
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "草稿比例 12.42 mm/px 是错的（取自灯箱标注），已按底部和左侧尺寸链改为约 7.92 mm/px",
+   "门头有橱窗展示平台，记为固定物；右侧整面为防盗卷帘门，记为开放边"
+  ]
+ }
+}
