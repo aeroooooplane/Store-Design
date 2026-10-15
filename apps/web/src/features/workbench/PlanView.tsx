@@ -8,6 +8,7 @@ import {
   mToMm,
   mainEntrance,
   mountedWall,
+  embeddedWall,
   polygonArea,
   sceneFrame,
 } from '@store/shared'
@@ -204,13 +205,48 @@ function mountedBlock(item: LayoutItem) {
  * of the cabinet below; a ceiling piece (or one off the wall) keeps its centre.
  */
 function mountedAnchor(item: LayoutItem, space: Space): { at: Point; angle: number } {
-  const face = itemMount(item) === 'wall' ? mountedWall(item, space) : null
+  const mount = itemMount(item)
+  const face =
+    mount === 'wall'
+      ? mountedWall(item, space)
+      : mount === 'embedded'
+        ? embeddedWall(item, space)
+        : null
   if (!face) return { at: [item.cx, item.cz], angle: 0 }
+  // On the wall face: a wall piece's back edge, a built-in piece's front edge.
+  const side = mount === 'embedded' ? 1 : -1
   const at: Point = [
-    item.cx - (face.inward[0] * item.w) / 2,
-    item.cz - (face.inward[1] * item.d) / 2,
+    item.cx + (side * face.inward[0] * item.w) / 2,
+    item.cz + (side * face.inward[1] * item.d) / 2,
   ]
   return { at, angle: face.along === 'x' ? 0 : -90 }
+}
+
+/**
+ * A piece built into the wall (内嵌): a solid outline inside the wall with its front, on the
+ * wall face, drawn bold.
+ */
+function embeddedBlock(item: LayoutItem, space: Space) {
+  const x = item.cx - item.w / 2
+  const y = item.cz - item.d / 2
+  const face = embeddedWall(item, space)
+  const front: [Point, Point] | null = face
+    ? face.along === 'x'
+      ? [
+          [x, item.cz + (face.inward[1] * item.d) / 2],
+          [x + item.w, item.cz + (face.inward[1] * item.d) / 2],
+        ]
+      : [
+          [item.cx + (face.inward[0] * item.w) / 2, y],
+          [item.cx + (face.inward[0] * item.w) / 2, y + item.d],
+        ]
+    : null
+  return (
+    <g className="plan-embedded">
+      <rect x={x} y={y} width={item.w} height={item.d} />
+      {front && <line x1={front[0][0]} y1={front[0][1]} x2={front[1][0]} y2={front[1][1]} />}
+    </g>
+  )
 }
 
 function symbolFor(item: LayoutItem, asset: Asset | undefined, symbol: PlanSymbol | undefined) {
@@ -472,7 +508,12 @@ export function PlanView({
           const asset = assetOf(item)
           const mounted = itemMount(item) !== 'floor'
           const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
-          const drawing = mounted ? mountedBlock(item) : symbolFor(item, asset, symbol)
+          const drawing =
+            itemMount(item) === 'embedded'
+              ? embeddedBlock(item, space)
+              : mounted
+                ? mountedBlock(item)
+                : symbolFor(item, asset, symbol)
           const anchor = mounted ? mountedAnchor(item, space) : null
           const classes = [
             'plan-item',
@@ -523,7 +564,9 @@ export function PlanView({
                       : undefined
                   }
                 >
-                  {name} 离地{mToMm(itemElevation(item))}
+                  {itemMount(item) === 'embedded'
+                    ? name
+                    : `${name} 离地${mToMm(itemElevation(item))}`}
                 </text>
               )}
               {!compact && !numbers && !anchor && (

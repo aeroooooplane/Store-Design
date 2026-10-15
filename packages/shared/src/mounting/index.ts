@@ -54,7 +54,8 @@ export function verticalRange(
 /**
  * Whether two items take up the same room. Floor props clash when their footprints overlap; a
  * wall or ceiling piece never clashes with a floor prop (a LOGO above a cabinet is normal); two
- * raised pieces clash when both their footprints and their heights overlap.
+ * raised pieces clash when both their footprints and their heights overlap. A built-in piece
+ * (embedded) is inside the wall and only meets other built-in pieces, the same way.
  */
 export function itemsCollide(
   a: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount' | 'elevation'>,
@@ -65,6 +66,8 @@ export function itemsCollide(
   const floorA = itemMount(a) === 'floor'
   const floorB = itemMount(b) === 'floor'
   if (floorA && floorB) return true
+  // Built-in pieces are inside the wall: they only meet other built-in pieces.
+  if ((itemMount(a) === 'embedded') !== (itemMount(b) === 'embedded')) return false
   if (floorA !== floorB) return false
   const [a0, a1] = verticalRange(a)
   const [b0, b1] = verticalRange(b)

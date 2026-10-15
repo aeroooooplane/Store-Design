@@ -6,8 +6,11 @@ export const FRONT_AXES = ['+Z', '-Z', '+X', '-X', 'any'] as const
 export const FrontAxisSchema = z.enum(FRONT_AXES)
 export type FrontAxis = z.infer<typeof FrontAxisSchema>
 
-/** How a model is installed: standing on the floor, against a wall or hanging from the ceiling. */
-export const INSTALLATIONS = ['floor', 'wall', 'ceiling'] as const
+/**
+ * How a model is installed: standing on the floor, against a wall, hanging from the ceiling, or
+ * built into a wall (embedded: front flush with the wall face, body inside it).
+ */
+export const INSTALLATIONS = ['floor', 'wall', 'ceiling', 'embedded'] as const
 export const InstallationSchema = z.enum(INSTALLATIONS)
 export type Installation = z.infer<typeof InstallationSchema>
 

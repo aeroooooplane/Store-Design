@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras, fixtureSolids, itemElevation, modelBox } from '@store/shared'
+import { defaultCameras, fixtureSolids, itemElevation, itemMount, modelBox } from '@store/shared'
 import type { Asset, Camera, Fixture, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
 import { finishModel } from './finish-model.ts'
 import { loadModel, loadSource } from './model-cache.ts'
@@ -9,6 +9,7 @@ import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
+import { wallPicture } from './wall-picture.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
@@ -235,12 +236,22 @@ export class WhiteScene {
     const seen = new Set<string>()
     for (const item of items) {
       seen.add(item.id)
-      const asset = item.assetId && !item.placeholder ? assets.get(item.assetId) : undefined
+      const catalogued = item.assetId ? assets.get(item.assetId) : undefined
+      // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
+      const picture =
+        itemMount(item) === 'embedded'
+          ? { url: catalogued?.preview?.url ?? null, front: catalogued?.front ?? null }
+          : null
+      const asset = !picture && item.assetId && !item.placeholder ? catalogued : undefined
       // The light white-model copy when there is one (see pnpm catalog:white).
       const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       // The light material copy when there is one (see pnpm catalog:finish).
       const finishUrl = asset?.finishGlb?.url ?? asset?.glb?.url ?? null
-      const signature = url ? `${url}|${finishUrl}` : `box:${item.w}:${item.d}:${item.h}`
+      const signature = picture
+        ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+        : url
+          ? `${url}|${finishUrl}`
+          : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
@@ -261,7 +272,11 @@ export class WhiteScene {
         placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
-        this.fill(placed, url)
+        if (picture)
+          placed.white.add(
+            wallPicture(item, picture.front, picture.url, () => this.requestRender()),
+          )
+        else this.fill(placed, url)
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item

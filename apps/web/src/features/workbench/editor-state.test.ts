@@ -415,3 +415,37 @@ describe('空心隔板', () => {
     expect(s.layout.fixtures).toHaveLength(1)
   })
 })
+
+describe('内嵌', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const screen = makeAsset({
+    id: 'asset-11479197',
+    name: '75寸横屏广告机',
+    materialCategory: '信息化物料',
+    function: 'screen',
+    installation: 'embedded',
+    footprint: { w: 1.69, d: 0.05, h: 0.958 },
+    front: '+Z',
+    placeable: false,
+  })
+
+  it('goes into the nearest wall with its front flush, the picture centred at 1.5 m', () => {
+    const s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
+    expect(s.layout.items[0]).toMatchObject({
+      mount: 'embedded',
+      cx: 3,
+      cz: -0.025,
+      rotation: 0,
+      elevation: 1.021,
+    })
+  })
+
+  it('switches between 贴墙 and 内嵌 in place', () => {
+    let s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'setMount', id, mount: 'wall', space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.8 })
+    s = editorReducer(s, { type: 'setMount', id, mount: 'embedded', space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.021 })
+  })
+})

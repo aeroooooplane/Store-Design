@@ -1,6 +1,8 @@
 import {
   MIN_FIXTURE_M,
   defaultElevation,
+  defaultEmbeddedElevation,
+  embeddedSnap,
   defaultFixtureHeight,
   fixtureRect,
   interiorPoint,
@@ -15,6 +17,7 @@ import type {
   Asset,
   Fixture,
   FrontAxis,
+  Installation,
   Layout,
   LayoutItem,
   Point,
@@ -80,6 +83,14 @@ export type EditorAction =
     }
   /** A wall or ceiling piece added with `space` goes onto the nearest wall at a default height. */
   | { type: 'add'; asset: Asset; cx: number; cz: number; space?: Space | undefined }
+  /** 贴墙 ⇄ 内嵌 from the properties panel: the piece moves onto or into the nearest wall. */
+  | {
+      type: 'setMount'
+      id: string
+      mount: Installation
+      space: Space
+      front: FrontAxis | null
+    }
   /** Height of a wall or ceiling piece above the floor. */
   | { type: 'elevate'; id: string; elevation: number }
   | { type: 'undo' }
@@ -141,7 +152,11 @@ function relocate(
   space: Space,
 ): LayoutItem {
   const next = { ...item, ...placed }
-  if (item.elevation === undefined || item.elevation === defaultElevation(item, items, space))
+  // A built-in piece's default height does not depend on where it is (mountedElevation).
+  if (
+    itemMount(item) !== 'embedded' &&
+    (item.elevation === undefined || item.elevation === defaultElevation(item, items, space))
+  )
     next.elevation = defaultElevation(next, items, space)
   const same = (['cx', 'cz', 'rotation', 'w', 'd', 'elevation'] as const).every(
     (k) => next[k] === item[k],
@@ -149,21 +164,45 @@ function relocate(
   return same ? item : next
 }
 
-/** A new wall piece goes onto the wall nearest to where it lands; ceiling pieces hang. */
-function mountNew(
+/** Where a wall or built-in piece snaps to near (cx, cz), or null. */
+function snapToWall(
   item: LayoutItem,
-  asset: Asset,
+  mount: Installation,
+  cx: number,
+  cz: number,
+  space: Space,
+  front: FrontAxis | null,
+  reach?: number,
+) {
+  if (mount === 'wall') return wallMountSnap(item, cx, cz, space, front, reach)
+  if (mount === 'embedded') return embeddedSnap(item, cx, cz, space, front, reach)
+  return null
+}
+
+/** Default height of a raised piece where it is. */
+function mountedElevation(item: LayoutItem, items: readonly LayoutItem[], space: Space) {
+  return itemMount(item) === 'embedded'
+    ? defaultEmbeddedElevation(item, space)
+    : defaultElevation(item, items, space)
+}
+
+/**
+ * A piece given another installation (a new one from the catalogue, or 贴墙 ⇄ 内嵌 switched in
+ * the properties panel): a wall or built-in piece goes onto the nearest wall, a ceiling piece
+ * hangs, each at its default height.
+ */
+function mountAs(
+  item: LayoutItem,
+  mount: Installation | null,
+  front: FrontAxis | null,
   items: readonly LayoutItem[],
   space: Space,
 ): LayoutItem {
-  const mount = asset.installation
-  if (mount !== 'wall' && mount !== 'ceiling') return item
+  if (!mount || mount === 'floor') return item
   let mounted: LayoutItem = { ...item, mount }
-  if (mount === 'wall') {
-    const placed = wallMountSnap(item, item.cx, item.cz, space, asset.front, Infinity)
-    if (placed) mounted = { ...mounted, ...placed }
-  }
-  return { ...mounted, elevation: defaultElevation(mounted, items, space) }
+  const placed = snapToWall(mounted, mount, item.cx, item.cz, space, front, Infinity)
+  if (placed) mounted = { ...mounted, ...placed }
+  return { ...mounted, elevation: mountedElevation(mounted, items, space) }
 }
 
 const withFixtures = (layout: Layout, fixtures: Fixture[]): Layout =>
@@ -212,8 +251,9 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           let { cx, cz } = action
           let exactX = false
           let exactZ = false
-          if (action.snapTo && itemMount(item) === 'wall') {
-            const placed = wallMountSnap(item, cx, cz, action.snapTo, action.front ?? null)
+          if (action.snapTo) {
+            const mount = itemMount(item)
+            const placed = snapToWall(item, mount, cx, cz, action.snapTo, action.front ?? null)
             if (placed) return relocate(item, placed, state.layout.items, action.snapTo)
           }
           if (action.snapTo) {
@@ -253,6 +293,16 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
             : { w: item.d, d: item.w, h: item.h }
           return { ...item, rotation, w: roundM(size.w), d: roundM(size.d), h: roundM(size.h) }
         },
+        null,
+      )
+    case 'setMount':
+      return changeItem(
+        state,
+        action.id,
+        (item) =>
+          item.locked || itemMount(item) === action.mount
+            ? item
+            : mountAs(item, action.mount, action.front, state.layout.items, action.space),
         null,
       )
     case 'elevate':
@@ -347,7 +397,13 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         locked: false,
       }
       const added = action.space
-        ? mountNew(item, action.asset, state.layout.items, action.space)
+        ? mountAs(
+            item,
+            action.asset.installation,
+            action.asset.front,
+            state.layout.items,
+            action.space,
+          )
         : item
       return commit(state, { ...state.layout, items: [...state.layout.items, added] }, null, {
         selectedId: id,

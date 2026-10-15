@@ -3,6 +3,8 @@ import {
   PLAN_STRATEGY_LABELS,
   RotationSchema,
   defaultElevation,
+  defaultEmbeddedElevation,
+  facingAfter,
   freshName,
   rotatedFootprint,
   roundM,
@@ -84,13 +86,13 @@ export const placeItemTool = tool({
     const base = tools.node?.layout ?? EMPTY_LAYOUT
     // A wall piece (墙面 LOGO, 画面) hangs right on the wall; a ceiling piece hangs from above.
     const mount =
-      asset.installation === 'wall' || asset.installation === 'ceiling' ? asset.installation : null
+      asset.installation === 'floor' || asset.installation === null ? null : asset.installation
     const placed = placeAlong(
       space,
       asset,
       input.along,
       input.position ?? 0.5,
-      mount === 'wall' ? 0 : wallGap(tools.project.shopType),
+      mount === 'wall' || mount === 'embedded' ? 0 : wallGap(tools.project.shopType),
       input.rotation,
     )
     const item: LayoutItem = {
@@ -103,7 +105,18 @@ export const placeItemTool = tool({
       placeholder: !asset.placeable,
       locked: false,
     }
-    if (mount) {
+    if (mount === 'embedded') {
+      // Placed with its back on the wall, then sunk in by its depth: the front is on the wall face.
+      const [fx, fz] = facingAfter(
+        asset.front && asset.front !== 'any' ? asset.front : '+Z',
+        item.rotation,
+      )
+      const depth = fx !== 0 ? item.w : item.d
+      item.cx = roundM(item.cx - fx * depth)
+      item.cz = roundM(item.cz - fz * depth)
+      item.mount = mount
+      item.elevation = defaultEmbeddedElevation(item, space)
+    } else if (mount) {
       item.mount = mount
       item.elevation = defaultElevation(item, base.items, space)
     }

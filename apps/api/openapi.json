@@ -2127,7 +2127,8 @@
                                           "enum": [
                                             "floor",
                                             "wall",
-                                            "ceiling"
+                                            "ceiling",
+                                            "embedded"
                                           ]
                                         },
                                         "elevation": {
@@ -2499,7 +2500,8 @@
                                         "enum": [
                                           "floor",
                                           "wall",
-                                          "ceiling"
+                                          "ceiling",
+                                          "embedded"
                                         ]
                                       },
                                       "elevation": {
@@ -3495,7 +3497,8 @@
                               "enum": [
                                 "floor",
                                 "wall",
-                                "ceiling"
+                                "ceiling",
+                                "embedded"
                               ]
                             },
                             "elevation": {
@@ -4194,7 +4197,8 @@
                                         "enum": [
                                           "floor",
                                           "wall",
-                                          "ceiling"
+                                          "ceiling",
+                                          "embedded"
                                         ]
                                       },
                                       "elevation": {
@@ -5063,7 +5067,8 @@
                                     "enum": [
                                       "floor",
                                       "wall",
-                                      "ceiling"
+                                      "ceiling",
+                                      "embedded"
                                     ]
                                   },
                                   "elevation": {
@@ -5902,7 +5907,8 @@
                                     "enum": [
                                       "floor",
                                       "wall",
-                                      "ceiling"
+                                      "ceiling",
+                                      "embedded"
                                     ]
                                   },
                                   "elevation": {
@@ -6722,7 +6728,8 @@
                                     "enum": [
                                       "floor",
                                       "wall",
-                                      "ceiling"
+                                      "ceiling",
+                                      "embedded"
                                     ]
                                   },
                                   "elevation": {
@@ -7542,7 +7549,8 @@
                                     "enum": [
                                       "floor",
                                       "wall",
-                                      "ceiling"
+                                      "ceiling",
+                                      "embedded"
                                     ]
                                   },
                                   "elevation": {
@@ -8004,7 +8012,8 @@
                                 "enum": [
                                   "floor",
                                   "wall",
-                                  "ceiling"
+                                  "ceiling",
+                                  "embedded"
                                 ]
                               },
                               "elevation": {
@@ -8480,7 +8489,8 @@
                               "enum": [
                                 "floor",
                                 "wall",
-                                "ceiling"
+                                "ceiling",
+                                "embedded"
                               ]
                             },
                             "elevation": {
@@ -8808,7 +8818,8 @@
                                     "enum": [
                                       "floor",
                                       "wall",
-                                      "ceiling"
+                                      "ceiling",
+                                      "embedded"
                                     ]
                                   },
                                   "elevation": {
@@ -12895,7 +12906,8 @@
                                       "enum": [
                                         "floor",
                                         "wall",
-                                        "ceiling"
+                                        "ceiling",
+                                        "embedded"
                                       ]
                                     },
                                     "elevation": {
@@ -13561,7 +13573,8 @@
                               "enum": [
                                 "floor",
                                 "wall",
-                                "ceiling"
+                                "ceiling",
+                                "embedded"
                               ]
                             },
                             "elevation": {
@@ -13967,7 +13980,8 @@
                                 "enum": [
                                   "floor",
                                   "wall",
-                                  "ceiling"
+                                  "ceiling",
+                                  "embedded"
                                 ]
                               },
                               {
@@ -14492,7 +14506,8 @@
                           "enum": [
                             "floor",
                             "wall",
-                            "ceiling"
+                            "ceiling",
+                            "embedded"
                           ]
                         },
                         {
@@ -19020,7 +19035,8 @@
                               "enum": [
                                 "floor",
                                 "wall",
-                                "ceiling"
+                                "ceiling",
+                                "embedded"
                               ]
                             },
                             "elevation": {
@@ -19697,7 +19713,8 @@
                                         "enum": [
                                           "floor",
                                           "wall",
-                                          "ceiling"
+                                          "ceiling",
+                                          "embedded"
                                         ]
                                       },
                                       "elevation": {
