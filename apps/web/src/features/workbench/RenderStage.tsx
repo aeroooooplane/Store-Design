@@ -316,6 +316,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   flaggedIds={NO_FLAGS}
                   look="material"
                   siStyle={siStyle}
+                  market={project.market}
                   onSelect={() => undefined}
                   onReady={() => setViewerReady(true)}
                   title={`${node.name} 三维材质`}

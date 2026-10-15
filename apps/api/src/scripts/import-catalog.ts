@@ -9,7 +9,7 @@ const database = createDatabase(config.databaseUrl)
 try {
   const report = await importCatalog(database.db, storageRoots(config))
   console.log(
-    `资产 ${report.assets} 件：有网页模型 ${report.withGlb}（白模轻量版 ${report.withWhite}，材质轻量版 ${report.withFinish}），可摆放 ${report.placeable}，有预览图 ${report.withPreview}，效果图 ${report.withProductImage}，平面图 ${report.withPlanSymbol}`,
+    `资产 ${report.assets} 件：有网页模型 ${report.withGlb}（白模轻量版 ${report.withWhite}，材质轻量版 ${report.withFinish}），可摆放 ${report.placeable}，有预览图 ${report.withPreview}，效果图 ${report.withProductImage}，平面图 ${report.withPlanSymbol}${report.retiredMissing ? `；清单中已删除、改为停用 ${report.retiredMissing}` : ''}`,
   )
   for (const problem of report.problems) console.warn(`  - ${problem}`)
 } finally {

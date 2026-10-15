@@ -36,7 +36,7 @@ import { StagePanel } from './StagePanel.tsx'
 import type { SiSwitch } from './si-switch.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { useViewMemory } from './view-memory.ts'
-import type { Stage } from '@store/shared'
+import type { Market, Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer, initialEditorState, newItemPoint } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
@@ -75,6 +75,8 @@ interface PlanEditorProps {
   nodes: NodeSummary[]
   /** Furniture of this SI style is offered in the model picker. */
   siStyle: SiStyle
+  /** The project's market (LOGO versions in 3D). */
+  market?: Market | undefined
   /** The shared draft, if it continues this node. */
   draft: Draft | null
   assets: Asset[]
@@ -95,6 +97,7 @@ export function PlanEditor({
   left,
   nodes,
   siStyle,
+  market,
   draft,
   assets,
   onNodeCreated,
@@ -343,6 +346,7 @@ export function PlanEditor({
                     onReady={onViewerReady}
                     look={isWhite ? look : 'white'}
                     siStyle={siStyle}
+                    market={market}
                     initialView={remembered.current.pose}
                     onViewChange={rememberPose}
                     title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}

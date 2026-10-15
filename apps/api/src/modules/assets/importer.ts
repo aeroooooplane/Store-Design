@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
-import { sql } from 'drizzle-orm'
+import { and, eq, notInArray, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
@@ -9,6 +9,7 @@ import {
   FrontAxisSchema,
   ImageMatchSchema,
   InstallationSchema,
+  MarketSchema,
   functionFor,
   roundM,
 } from '@store/shared'
@@ -61,6 +62,19 @@ const ConversionSchema = z.looseObject({
     h: z.number().positive(),
     d: z.number().positive(),
   }),
+  /** Models with a version per market (LOGO): the market model.glb shows … */
+  market: MarketSchema.optional(),
+  /** … and the other market's file next to it, the same size (build-logo-models.ts). */
+  variants: z
+    .partialRecord(
+      MarketSchema,
+      z.object({
+        file: z.string().regex(/^[\w.-]+\.glb$/),
+        bytes: z.int().positive(),
+        glbSha256: z.string().regex(/^[0-9a-f]{64}$/),
+      }),
+    )
+    .optional(),
 })
 
 /**
@@ -102,6 +116,8 @@ export interface CatalogImportReport {
   withPreview: number
   withProductImage: number
   withPlanSymbol: number
+  /** Models no longer in manifest.json, retired in the database by this import. */
+  retiredMissing: number
   problems: string[]
 }
 
@@ -215,6 +231,7 @@ export async function importCatalog(
     withPreview: 0,
     withProductImage: 0,
     withPlanSymbol: 0,
+    retiredMissing: 0,
     problems: [],
   }
 
@@ -234,6 +251,19 @@ export async function importCatalog(
       else if (facts.sha256 !== conversion.glbSha256 || facts.bytes !== conversion.bytes)
         report.problems.push(`${id}: model.glb 与 conversion.json 的哈希或字节数不一致，未挂接`)
       else glb = facts
+    }
+    // The other market's version of a LOGO, checked against its record like model.glb.
+    let otherMarket: FileFacts | undefined
+    const other = conversion?.market === 'domestic' ? 'overseas' : 'domestic'
+    const variant = conversion?.market ? conversion.variants?.[other] : undefined
+    if (web && glb && variant) {
+      const facts = await inspect(roots, `${web}/${variant.file}`)
+      if (typeof facts === 'string') report.problems.push(`${id}: ${facts}`)
+      else if (facts.sha256 !== variant.glbSha256 || facts.bytes !== variant.bytes)
+        report.problems.push(
+          `${id}: ${variant.file} 与 conversion.json 的哈希或字节数不一致，未挂接`,
+        )
+      else otherMarket = facts
     }
     const white = web && glb ? await lightModel(roots, report, id, web, glb, 'white') : undefined
     const finish = web && glb ? await lightModel(roots, report, id, web, glb, 'finish') : undefined
@@ -291,6 +321,7 @@ export async function importCatalog(
       const glbFileId = glb ? await registerFile(tx, glb, 'glb') : null
       const whiteGlbFileId = white ? await registerFile(tx, white, 'glb') : null
       const finishGlbFileId = finish ? await registerFile(tx, finish, 'glb') : null
+      const otherMarketGlbFileId = otherMarket ? await registerFile(tx, otherMarket, 'glb') : null
       const previewFileId = preview ? await registerFile(tx, preview, 'preview') : null
       const productImageFileId = productImage
         ? await registerFile(tx, productImage, 'product_image')
@@ -320,6 +351,8 @@ export async function importCatalog(
         glbFileId,
         whiteGlbFileId,
         finishGlbFileId,
+        market: otherMarket ? (conversion?.market ?? null) : null,
+        otherMarketGlbFileId,
         previewFileId,
         productImageFileId,
         productImageMatch: productImage ? (entry.product_image_match ?? null) : null,
@@ -345,5 +378,14 @@ export async function importCatalog(
     if (productImage) report.withProductImage++
     if (planSymbol) report.withPlanSymbol++
   }
+  // A model taken out of manifest.json (e.g. 全景相机 LOGO, 10-15) is retired where it was
+  // imported before: old layouts still show it, it is no longer offered or planned.
+  const listed = manifest.assets.map((entry) => entry.asset_id)
+  const dropped = await db
+    .update(schema.assets)
+    .set({ retired: true, importedAt: sql`now()` })
+    .where(and(notInArray(schema.assets.id, listed), eq(schema.assets.retired, false)))
+    .returning({ id: schema.assets.id })
+  report.retiredMissing = dropped.length
   return report
 }

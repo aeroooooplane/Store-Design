@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { ItemFunctionSchema } from '../enums.ts'
+import { ItemFunctionSchema, MarketSchema } from '../enums.ts'
 
 /** Native front direction of a model in its own GLB frame (Y up); `any` = no fixed front. */
 export const FRONT_AXES = ['+Z', '-Z', '+X', '-X', 'any'] as const
@@ -91,6 +91,13 @@ export const AssetSchema = z.object({
   whiteGlb: FileRefSchema.nullable(),
   /** Light textured copy used by the material look (renders, 3D effect); falls back to `glb`. */
   finishGlb: FileRefSchema.nullable(),
+  /**
+   * The market `glb` shows when a model comes in two versions (LOGO: 影石Insta360 in China,
+   * Insta360 abroad); null for every other model.
+   */
+  market: MarketSchema.nullable(),
+  /** The version for the other market, the same size; shown in projects of that market. */
+  otherMarketGlb: FileRefSchema.nullable(),
   preview: FileRefSchema.nullable(),
   /** Product picture from the category gallery (品类图库). */
   productImage: FileRefSchema.nullable(),

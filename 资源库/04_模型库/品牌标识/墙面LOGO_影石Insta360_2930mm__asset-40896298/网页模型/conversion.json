@@ -1,0 +1,37 @@
+{
+  "id": "asset-40896298",
+  "name": "墙面LOGO_影石Insta360_2930mm · 官方矢量自建",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "front": "+Z",
+  "builder": "apps/web/src/scripts/build-logo-models.ts",
+  "market": "domestic",
+  "dimensions": {
+    "w": 2.93032,
+    "h": 0.399772,
+    "d": 0.05
+  },
+  "glbSha256": "34a671929d7d521a91d98d3dbdbfda82b5adeb920c25f05b178ee566e2869a23",
+  "bytes": 370108,
+  "variants": {
+    "overseas": {
+      "file": "overseas.glb",
+      "bytes": 227260,
+      "glbSha256": "0072e8e594f5c6a738c0d5dd84860e3ec8dff5e07c37f8d5e9f2673dc2a3ad24"
+    }
+  },
+  "sources": [
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/影石Insta360.ai",
+      "page": 4,
+      "sha256": "7c7fc34188e1ceba8d02caed887c56534f4dfacf234ef8f2cf8bd50176c0a85e"
+    },
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/Insta360.ai",
+      "page": 4,
+      "sha256": "b0c900bb3868818db29c5a248d3814ddf04a86092e537801d2bb4ef56a184ef8"
+    }
+  ],
+  "note": "以模型名对应的版本定尺寸，另一版等比缩放后居中放进同一范围（用户 10-15 L1）"
+}

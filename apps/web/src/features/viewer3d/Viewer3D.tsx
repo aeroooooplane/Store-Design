@@ -1,7 +1,7 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { VIEW_ASPECT } from '@store/shared'
-import type { Asset, Camera, Layout, ShopType, SiStyle, Space } from '@store/shared'
+import type { Asset, Camera, Layout, Market, ShopType, SiStyle, Space } from '@store/shared'
 import { WhiteScene } from './white-scene.ts'
 import type { LoadStatus, Look, ViewPose } from './white-scene.ts'
 
@@ -32,6 +32,8 @@ interface Viewer3DProps {
   /** White model (default) or the material look of the renders. */
   look?: Look | undefined
   siStyle?: SiStyle | undefined
+  /** The project's market: LOGO models with a version per market show that one. */
+  market?: Market | undefined
   onSelect: (itemId: string | null) => void
   /** Leave out for a read-only view: props can be selected but not dragged. */
   onMove?:
@@ -60,6 +62,7 @@ export function Viewer3D({
   flaggedIds,
   look = 'white',
   siStyle = 'SI1.0',
+  market = 'domestic',
   onSelect,
   onMove,
   onReady,
@@ -122,8 +125,8 @@ export function Viewer3D({
   }, [space, shopType])
 
   useEffect(() => {
-    sceneRef.current?.setItems(layout.items, assets)
-  }, [layout, assets])
+    sceneRef.current?.setItems(layout.items, assets, market)
+  }, [layout, assets, market])
 
   useEffect(() => {
     sceneRef.current?.setFixtures(layout.fixtures ?? [], layout.items)

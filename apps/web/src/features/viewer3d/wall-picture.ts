@@ -93,3 +93,34 @@ export function wallPicture(
   }
   return plane
 }
+
+/**
+ * A sign without a web model (双面侧招, user 10-15 Z3): its preview on both large faces of the
+ * placeholder box, the faces across its thinnest side. Grouped relative to the box's group.
+ */
+export function signFaces(
+  item: Pick<LayoutItem, 'w' | 'd' | 'h'>,
+  url: string,
+  onLoad: () => void,
+): THREE.Group {
+  const group = new THREE.Group()
+  const acrossX = item.w < item.d
+  const [width, thickness] = acrossX ? [item.d, item.w] : [item.w, item.d]
+  const material = new THREE.MeshBasicMaterial({ color: '#d9dadc' })
+  for (const side of [1, -1]) {
+    const plane = new THREE.Mesh(new THREE.PlaneGeometry(width, item.h), material)
+    const offset = side * (thickness / 2 + IN_FRONT_M)
+    plane.position.set(acrossX ? offset : 0, item.h / 2, acrossX ? 0 : offset)
+    plane.rotation.y = acrossX ? (side * Math.PI) / 2 : side > 0 ? 0 : Math.PI
+    group.add(plane)
+  }
+  void croppedTexture(url)
+    .then((texture) => {
+      material.map = texture
+      material.color.set('#ffffff')
+      material.needsUpdate = true
+      onLoad()
+    })
+    .catch(() => undefined)
+  return group
+}

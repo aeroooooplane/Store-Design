@@ -1,0 +1,37 @@
+{
+  "id": "asset-90000001",
+  "name": "墙面LOGO_影石Insta360徕卡联名_2400mm · 官方矢量自建",
+  "unit": "m",
+  "upAxis": "Y",
+  "origin": "bottom-center",
+  "front": "+Z",
+  "builder": "apps/web/src/scripts/build-logo-models.ts",
+  "market": "domestic",
+  "dimensions": {
+    "w": 2.4,
+    "h": 0.509417,
+    "d": 0.03
+  },
+  "glbSha256": "446a6bb32e9e31c5acc0a7a0f8795216fdfb725ad13c947c3b4753fc6dfda796",
+  "bytes": 941928,
+  "variants": {
+    "overseas": {
+      "file": "overseas.glb",
+      "bytes": 1854172,
+      "glbSha256": "cb367dc47468343178f07c6283f012e900b9c531dbaa36f5248f982fa578a782"
+    }
+  },
+  "sources": [
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/门店-徕卡联名-中文新-转曲文件.ai",
+      "page": 1,
+      "sha256": "b584e808d89367a5cf43cdf783cba57bd198b28a32051cd960137e36fd559dbc"
+    },
+    {
+      "file": "资源库/04_模型库/品牌标识/_源文件/门店-徕卡联名.ai",
+      "page": 1,
+      "sha256": "7313a7f024d6cf0af92caf01ece1f20224220d09cf63573f9d059c00c61defa0"
+    }
+  ],
+  "note": "以模型名对应的版本定尺寸，另一版等比缩放后居中放进同一范围（用户 10-15 L1）"
+}
