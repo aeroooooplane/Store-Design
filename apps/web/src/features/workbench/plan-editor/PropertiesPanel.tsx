@@ -1,5 +1,5 @@
 import type { Dispatch } from 'react'
-import { mmToM, mToMm } from '@store/shared'
+import { itemElevation, itemMount, mmToM, mToMm } from '@store/shared'
 import type { Asset, LayoutItem } from '@store/shared'
 import { TrashIcon } from '../../../components/icons.tsx'
 import type { EditorAction } from '../editor-state.ts'
@@ -37,6 +37,24 @@ export function PropertiesPanel({ selected, assetMap, dispatch, onRotate }: Prop
               {selected.placeholder ? '（占位）' : ''}
             </output>
           </div>
+          {itemMount(selected) !== 'floor' && (
+            <label className="field-row">
+              {itemMount(selected) === 'wall' ? '离地高度（墙面）' : '离地高度（吊挂）'}
+              <input
+                type="number"
+                step={10}
+                min={0}
+                value={mToMm(itemElevation(selected))}
+                onChange={(e) =>
+                  dispatch({
+                    type: 'elevate',
+                    id: selected.id,
+                    elevation: mmToM(Number(e.target.value)),
+                  })
+                }
+              />
+            </label>
+          )}
           <label className="field-row">
             水平位置
             <input
@@ -97,7 +115,7 @@ export function PropertiesPanel({ selected, assetMap, dispatch, onRotate }: Prop
           <h3>选中道具</h3>
           <p className="hint">
             点击道具选中；拖动移动（靠近墙或道具会吸附，按住 Alt 关闭），方向键微调 10 mm（Shift 100
-            mm），R 旋转，Delete 删除。
+            mm），R 旋转，Delete 删除。墙面 LOGO、画面拖到墙边会自动贴墙并朝向店内。
           </p>
         </>
       )}

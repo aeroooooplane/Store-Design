@@ -8,6 +8,7 @@ import {
   AssetCategorySchema,
   FrontAxisSchema,
   ImageMatchSchema,
+  InstallationSchema,
   functionFor,
   roundM,
 } from '@store/shared'
@@ -69,7 +70,7 @@ const FacingSchema = z.object({
       front: FrontAxisSchema,
       staffSide: FrontAxisSchema.optional(),
       confidence: z.enum(['high', 'medium', 'low']),
-      installation: z.enum(['floor', 'wall']).optional(),
+      installation: InstallationSchema.optional(),
     }),
   ),
 })
@@ -251,7 +252,8 @@ export async function importCatalog(
     }
     if (Object.values(raw).some((v) => v < MIN_EXTENT_M))
       report.problems.push(`${id}: 某一方向尺寸为 0（平面画面），按 1 mm 记录`)
-    const placeable = glb !== undefined && installation === 'floor'
+    // Wall and ceiling pieces are placed by hand; the planner only picks floor models by function.
+    const placeable = glb !== undefined && installation !== null
 
     await db.transaction(async (tx) => {
       const glbFileId = glb ? await registerFile(tx, glb, 'glb') : null

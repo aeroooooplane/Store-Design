@@ -3,8 +3,11 @@ import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
   WALL_THICKNESS_M,
   facingAfter,
+  itemElevation,
+  itemMount,
   mToMm,
   mainEntrance,
+  mountedWall,
   polygonArea,
   sceneFrame,
 } from '@store/shared'
@@ -164,6 +167,33 @@ function block(item: LayoutItem) {
       )}
     </g>
   )
+}
+
+/** A wall or ceiling piece: a dashed outline over whatever stands below it. */
+function mountedBlock(item: LayoutItem) {
+  return (
+    <rect
+      className="plan-mounted"
+      x={item.cx - item.w / 2}
+      y={item.cz - item.d / 2}
+      width={item.w}
+      height={item.d}
+    />
+  )
+}
+
+/**
+ * Where a wall piece's number or label goes: on its back edge, along the wall, so it stays clear
+ * of the cabinet below; a ceiling piece (or one off the wall) keeps its centre.
+ */
+function mountedAnchor(item: LayoutItem, space: Space): { at: Point; angle: number } {
+  const face = itemMount(item) === 'wall' ? mountedWall(item, space) : null
+  if (!face) return { at: [item.cx, item.cz], angle: 0 }
+  const at: Point = [
+    item.cx - (face.inward[0] * item.w) / 2,
+    item.cz - (face.inward[1] * item.d) / 2,
+  ]
+  return { at, angle: face.along === 'x' ? 0 : -90 }
 }
 
 function symbolFor(item: LayoutItem, asset: Asset | undefined, symbol: PlanSymbol | undefined) {
@@ -357,63 +387,86 @@ export function PlanView({
         )),
       )}
 
-      {layout?.items.map((item) => {
-        const asset = assetOf(item)
-        const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
-        const drawing = symbolFor(item, asset, symbol)
-        const classes = [
-          'plan-item',
-          flagged.has(item.id) ? 'has-issue' : '',
-          item.id === selectedId ? 'selected' : '',
-        ]
-        // The catalogue name (模型选用表) wins over the name saved with older layouts.
-        const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
-        return (
-          <g
-            key={item.id}
-            className={classes.filter(Boolean).join(' ')}
-            data-item-id={item.id}
-            onPointerDown={
-              onItemPointerDown ? (event) => onItemPointerDown(item, event) : undefined
-            }
-          >
-            <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
-            {drawing ?? block(item)}
-            {!drawing && frontMarker(item, asset)}
-            <rect
-              className="plan-item-frame"
-              x={item.cx - item.w / 2}
-              y={item.cz - item.d / 2}
-              width={item.w}
-              height={item.d}
-            />
-            {!compact && numbers?.[item.id] !== undefined && (
-              <NumberBadge
-                no={numbers[item.id] ?? 0}
-                x={item.cx}
-                y={item.cz}
-                size={fontSize * 1.3}
+      {/* Floor props first, so the wall and ceiling pieces above them stay on top. */}
+      {[...(layout?.items ?? [])]
+        .sort((a, b) => Number(itemMount(a) !== 'floor') - Number(itemMount(b) !== 'floor'))
+        .map((item) => {
+          const asset = assetOf(item)
+          const mounted = itemMount(item) !== 'floor'
+          const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
+          const drawing = mounted ? mountedBlock(item) : symbolFor(item, asset, symbol)
+          const anchor = mounted ? mountedAnchor(item, space) : null
+          const classes = [
+            'plan-item',
+            mounted ? 'mounted' : '',
+            flagged.has(item.id) ? 'has-issue' : '',
+            item.id === selectedId ? 'selected' : '',
+          ]
+          // The catalogue name (模型选用表) wins over the name saved with older layouts.
+          const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
+          return (
+            <g
+              key={item.id}
+              className={classes.filter(Boolean).join(' ')}
+              data-item-id={item.id}
+              onPointerDown={
+                onItemPointerDown ? (event) => onItemPointerDown(item, event) : undefined
+              }
+            >
+              <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
+              {drawing ?? block(item)}
+              {!drawing && frontMarker(item, asset)}
+              <rect
+                className="plan-item-frame"
+                x={item.cx - item.w / 2}
+                y={item.cz - item.d / 2}
+                width={item.w}
+                height={item.d}
               />
-            )}
-            {!compact && !numbers && (
-              <text
-                className="plan-label"
-                x={item.cx}
-                y={item.cz}
-                fontSize={fontSize * 0.8}
-                textAnchor="middle"
-              >
-                <tspan x={item.cx} dy={-fontSize * 0.15}>
-                  {name}
-                </tspan>
-                <tspan x={item.cx} dy={fontSize * 0.95}>
-                  H:{mToMm(item.h)}mm
-                </tspan>
-              </text>
-            )}
-          </g>
-        )
-      })}
+              {!compact && numbers?.[item.id] !== undefined && (
+                <NumberBadge
+                  no={numbers[item.id] ?? 0}
+                  x={anchor ? anchor.at[0] : item.cx}
+                  y={anchor ? anchor.at[1] : item.cz}
+                  size={fontSize * 1.3}
+                />
+              )}
+              {!compact && !numbers && anchor && (
+                <text
+                  className="plan-label"
+                  x={anchor.at[0]}
+                  y={anchor.at[1]}
+                  fontSize={fontSize * 0.7}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  transform={
+                    anchor.angle
+                      ? `rotate(${anchor.angle} ${anchor.at[0]} ${anchor.at[1]})`
+                      : undefined
+                  }
+                >
+                  {name} 离地{mToMm(itemElevation(item))}
+                </text>
+              )}
+              {!compact && !numbers && !anchor && (
+                <text
+                  className="plan-label"
+                  x={item.cx}
+                  y={item.cz}
+                  fontSize={fontSize * 0.8}
+                  textAnchor="middle"
+                >
+                  <tspan x={item.cx} dy={-fontSize * 0.15}>
+                    {name}
+                  </tspan>
+                  <tspan x={item.cx} dy={fontSize * 0.95}>
+                    H:{mToMm(item.h)}mm
+                  </tspan>
+                </text>
+              )}
+            </g>
+          )
+        })}
 
       {!compact && numbers && entrance && (
         <FlowArrow

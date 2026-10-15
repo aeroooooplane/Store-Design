@@ -27,6 +27,10 @@ export function describeItem(item: LayoutItem) {
     height_mm: mm(item.h),
     rotation: item.rotation,
     placeholder: item.placeholder,
+    // Wall and ceiling pieces (LOGO, 画面) hang above the floor and do not clash with floor props.
+    ...(item.mount && item.mount !== 'floor'
+      ? { mount: item.mount, elevation_mm: mm(item.elevation ?? 0) }
+      : {}),
   }
 }
 

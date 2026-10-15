@@ -168,7 +168,8 @@ describe('importCatalog', () => {
       withGlb: 2,
       withWhite: 1,
       withFinish: 0,
-      placeable: 1,
+      // A wall piece with a web model is placed by hand too (the planner only uses floor models).
+      placeable: 2,
       withPreview: 1,
       withProductImage: 1,
       withPlanSymbol: 1,
@@ -249,7 +250,7 @@ describe('GET /assets', () => {
     expect(digital.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-3'])
     expect(items.find((a) => a.id === 'asset-2')).toMatchObject({
       installation: 'wall',
-      placeable: false,
+      placeable: true,
       whiteGlb: null,
     })
     // Without a web model the SketchUp bounds (X, Y, Z-up in mm) give the footprint.
@@ -263,7 +264,10 @@ describe('GET /assets', () => {
 
   it('filters by placeability and searches names literally', async () => {
     const placeable = await t.app.inject({ method: 'GET', url: '/api/v1/assets?placeable=true' })
-    expect(placeable.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-1'])
+    expect(placeable.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual([
+      'asset-1',
+      'asset-2',
+    ])
     const search = await t.app.inject({
       method: 'GET',
       url: `/api/v1/assets?q=${encodeURIComponent('收银')}`,

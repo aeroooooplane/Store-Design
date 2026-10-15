@@ -2,6 +2,7 @@ import { z } from 'zod'
 import {
   PLAN_STRATEGY_LABELS,
   RotationSchema,
+  defaultElevation,
   freshName,
   rotatedFootprint,
   roundM,
@@ -81,12 +82,15 @@ export const placeItemTool = tool({
     if (!asset || asset.retired)
       throw new AppError('VALIDATION_FAILED', `没有模型 ${input.modelId}`)
     const base = tools.node?.layout ?? EMPTY_LAYOUT
+    // A wall piece (墙面 LOGO, 画面) hangs right on the wall; a ceiling piece hangs from above.
+    const mount =
+      asset.installation === 'wall' || asset.installation === 'ceiling' ? asset.installation : null
     const placed = placeAlong(
       space,
       asset,
       input.along,
       input.position ?? 0.5,
-      wallGap(tools.project.shopType),
+      mount === 'wall' ? 0 : wallGap(tools.project.shopType),
       input.rotation,
     )
     const item: LayoutItem = {
@@ -98,6 +102,10 @@ export const placeItemTool = tool({
       h: asset.footprint.h,
       placeholder: !asset.placeable,
       locked: false,
+    }
+    if (mount) {
+      item.mount = mount
+      item.elevation = defaultElevation(item, base.items, space)
     }
     const outcome = await saveLayout(
       tools,
