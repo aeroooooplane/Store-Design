@@ -28,7 +28,7 @@ COLORS = {
 FUNCTION_LABELS = {"island_table": "中岛桌", "unboxing_table": "开箱桌", "cashier": "收银", "accessory_cabinet": "配件柜", "side_cabinet": "配件边柜",
                    "display_stand": "展示台", "screen": "屏幕", "signage": "灯箱与标识", "seating": "坐凳", "storage": "储物柜", "other": "其他"}
 FACING_TEXT = {0: "正面朝下", 90: "正面朝左", 180: "正面朝上", 270: "正面朝右"}
-MOUNT_TEXT = {"floor": "落地", "wall": "贴墙", "embedded": "内嵌墙内", "hanging": "吊挂"}
+MOUNT_TEXT = {"floor": "落地", "wall": "贴墙", "embedded": "内嵌墙内", "ceiling": "吊挂"}
 
 
 def schematic(plan: dict) -> Image.Image:

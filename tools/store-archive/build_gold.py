@@ -196,7 +196,7 @@ def main() -> None:
             asset = by_id.get(it["asset"]) if it.get("asset") not in (None, "auto") else (match_asset(it["label"], si, assets) if it.get("asset") == "auto" or "asset" not in it else None)
             note = it.get("note")
             func = it.get("function") or function_of(it["label"])
-            mount = it.get("mount", "floor")
+            mount = {"hanging": "ceiling"}.get(it.get("mount", "floor"), it.get("mount", "floor"))
             location = it.get("location", "interior")
             if "on_wall" in it:
                 item = wall_item(it, asset, mmpp, ox, oz)
@@ -216,7 +216,8 @@ def main() -> None:
                     "category": asset["category"] if asset else it.get("category"),
                     "source": it.get("source", "new"),
                     **item,
-                    "mount": mount,
+                    "mount": mount,  # floor / wall / embedded / ceiling，与工作台 #90 一致
+                    "elevation": it.get("elevation_mm") / 1000 if it.get("elevation_mm") is not None else None,  # 离地高度（米），平面图读不出时为 null
                     "location": location,
                     # 内嵌和贴墙的信息化物料、画面：三维只在墙面贴一张画面，不做实体
                     "render_as": "wall_image" if mount in ("embedded", "wall") and func in ("screen", "signage") else "model",

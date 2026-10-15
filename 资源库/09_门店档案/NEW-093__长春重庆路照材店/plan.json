@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T17:06:49+08:00",
+ "generatedAt": "2026-10-15T17:12:58+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -194,6 +194,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "大厅左墙"
@@ -220,6 +221,7 @@
      0.001
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "两侧各 2 只高脚凳，模型已包含；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
@@ -246,6 +248,7 @@
      0.015
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -279,6 +282,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -312,6 +316,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -348,6 +353,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "通道顶墙"
@@ -374,6 +380,7 @@
      -0.002
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -400,6 +407,7 @@
      -0.002
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -426,6 +434,7 @@
      -0.002
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -459,6 +468,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "通道左墙"
@@ -485,6 +495,7 @@
      0.023
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "嵌在左墙内"
@@ -511,6 +522,7 @@
      0.023
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "嵌在左墙内"
@@ -544,6 +556,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "通道右墙"
@@ -577,6 +590,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "模型库只有 1.99 米徕卡墙"
@@ -603,6 +617,7 @@
      -0.009
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null

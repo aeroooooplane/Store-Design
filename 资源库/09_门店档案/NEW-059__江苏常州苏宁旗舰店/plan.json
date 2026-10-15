@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T17:06:48+08:00",
+ "generatedAt": "2026-10-15T17:12:58+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -206,6 +206,7 @@
      0.038
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -232,6 +233,7 @@
      0.038
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -268,6 +270,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -294,6 +297,7 @@
      -0.02
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -320,6 +324,7 @@
      0.001
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
@@ -346,6 +351,7 @@
      -0.007
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -372,6 +378,7 @@
      -0.007
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -398,6 +405,7 @@
      0.004
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -431,6 +439,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "模型库只有 1.99 米徕卡墙"
@@ -464,6 +473,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "店外门楣"
@@ -497,6 +507,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "店外门楣"
@@ -530,6 +541,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "店外右侧门楣（用户 10-15 指出：在店外门楣上，不在店内）"

@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T17:06:50+08:00",
+ "generatedAt": "2026-10-15T17:12:58+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -293,6 +293,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -319,6 +320,7 @@
      -0.016
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -352,6 +354,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "模型库 98 寸为非原尺寸款，未自动对应"
@@ -385,6 +388,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -418,6 +422,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": null
@@ -444,6 +449,7 @@
      -0.03
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "嵌在左墙空心包墙的凹位里"
@@ -470,6 +476,7 @@
      0.007
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -493,6 +500,7 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
@@ -516,6 +524,7 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
@@ -539,6 +548,7 @@
     ],
     "size_deviation_m": null,
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
@@ -565,6 +575,7 @@
      0.007
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -591,6 +602,7 @@
      -0.001
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -627,6 +639,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "interior",
     "render_as": "wall_image",
     "note": "嵌在柱子左侧包柱内（用户 10-15 指出原标注位置不对）"
@@ -653,6 +666,7 @@
      -0.152
     ],
     "mount": "floor",
+    "elevation": null,
     "location": "interior",
     "render_as": "model",
     "note": null
@@ -686,6 +700,7 @@
      ]
     ],
     "mount": "wall",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "店外门楣"
@@ -719,6 +734,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "柱子右侧，朝店外右侧通道"
@@ -752,6 +768,7 @@
      ]
     ],
     "mount": "embedded",
+    "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
     "note": "员工休息室外墙，朝右侧通道"
