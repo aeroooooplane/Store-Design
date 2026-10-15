@@ -37,6 +37,11 @@ export const assets = pgTable(
     width: metres('width').notNull(),
     depth: metres('depth').notNull(),
     height: metres('height').notNull(),
+    /**
+     * The whole model around a smaller body (a 开箱桌 with its stools), relative to the body
+     * centre: { w, d, cx, cz } in metres; null when the model is the body (body-footprint.json).
+     */
+    extent: jsonb('extent').$type<{ w: number; d: number; cx: number; cz: number }>(),
     footprintSource: text('footprint_source').notNull(),
     front: text('front'),
     staffSide: text('staff_side'),

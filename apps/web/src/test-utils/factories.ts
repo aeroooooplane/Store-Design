@@ -21,6 +21,7 @@ export function makeAsset(overrides: Partial<Asset> = {}): Asset {
     installation: 'floor',
     footprint: { w: 1, d: 1.8, h: 0.9 },
     footprintSource: 'glb',
+    extent: null,
     front: '+Z',
     staffSide: null,
     facingConfidence: 'high',

@@ -83,9 +83,10 @@ export async function checkLayout(
   layout: Layout,
   kind: NodeKind | 'draft',
 ): Promise<Issue[]> {
-  const fit = checkAssetFit(layout, await catalogAssets(db))
+  const catalog = await catalogAssets(db)
+  const fit = checkAssetFit(layout, catalog)
   if (fit.length) throw new AppError('VALIDATION_FAILED', '布局中的模型引用无效', asIssues(fit))
-  const issues = asIssues(validateLayout(space, layout))
+  const issues = asIssues(validateLayout(space, layout, catalog))
   if ((kind === 'white' || kind === 'render') && issues.some((i) => i.severity === 'error')) {
     throw new AppError('VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题', issues)
   }
