@@ -237,6 +237,22 @@ svg.plan pattern * {
   stroke-width: 2px;
   stroke-dasharray: 5 3;
 }
+/* Rotation handle of the selected prop (see RotateHandle in PlanView). */
+.plan-rotate-handle {
+  cursor: grab;
+}
+.plan-rotate-handle line {
+  stroke: var(--ink);
+  stroke-width: 1.5px;
+}
+.plan-rotate-handle circle {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 2px;
+}
+.plan-rotate-handle:hover circle {
+  fill: var(--ink);
+}
 .plan-item.has-issue .plan-item-frame {
   stroke: var(--danger);
   stroke-width: 2px;
