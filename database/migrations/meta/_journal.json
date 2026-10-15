@@ -99,6 +99,13 @@
       "when": 1792051588307,
       "tag": "0013_asset_ceiling_installation",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792059313089,
+      "tag": "0014_asset_body_extent",
+      "breakpoints": true
     }
   ]
 }

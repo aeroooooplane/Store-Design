@@ -35,7 +35,8 @@ export async function validateDraftLayout(
   layout: Layout,
 ): Promise<Issue[]> {
   authorize(ctx.actor, 'layout:validate')
-  return [...checkAssetFit(layout, await catalogAssets(db)), ...validateLayout(space, layout)].map(
+  const catalog = await catalogAssets(db)
+  return [...checkAssetFit(layout, catalog), ...validateLayout(space, layout, catalog)].map(
     (issue) => ({ ...issue }),
   )
 }

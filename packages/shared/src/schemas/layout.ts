@@ -11,6 +11,7 @@ import { EPSILON_M } from '../units.ts'
 import { fixtureIssues } from '../fixtures/index.ts'
 import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
 import { InstallationSchema } from './asset.ts'
+import type { AssetExtent } from './asset.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
 import { openingPieces } from './space.ts'
 import type { IssueSeverity, Space } from './space.ts'
@@ -120,6 +121,7 @@ export type LayoutIssueCode =
   | 'item_blocks_entrance'
   | 'item_too_tall'
   | 'item_not_on_wall'
+  | 'item_extent_blocked'
   | 'fixture_outside_boundary'
   | 'fixture_overlaps_item'
   | 'item_asset_unknown'
@@ -136,6 +138,35 @@ export interface LayoutIssue {
 export interface AssetFit {
   footprint: { w: number; d: number; h: number }
   placeable: boolean
+  /** The whole model around a smaller body (a 开箱桌 with its stools), see AssetExtentSchema. */
+  extent?: AssetExtent | null
+}
+
+/**
+ * An offset in the model's own frame (X, Z) after a layout rotation, on the plan. Same
+ * convention as facingAfter and the viewer (three.js rotation.y = −rotation).
+ */
+export function turnOffset(x: number, z: number, rotation: number): [number, number] {
+  const theta = (-rotation * Math.PI) / 180
+  const cos = Math.cos(theta)
+  const sin = Math.sin(theta)
+  const clean = (v: number) => (Math.abs(v) < 1e-9 ? 0 : v)
+  return [clean(x * cos + z * sin), clean(-x * sin + z * cos)]
+}
+
+/**
+ * Where the whole model of an item stands on the plan: its centre and rotated size. Equal to the
+ * item's footprint unless the catalogue model has a smaller body (see AssetFit.extent).
+ */
+export function modelBox(
+  item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'rotation'>,
+  asset: Pick<AssetFit, 'extent'> | undefined,
+): { cx: number; cz: number; w: number; d: number } {
+  const extent = asset?.extent
+  if (!extent) return { cx: item.cx, cz: item.cz, w: item.w, d: item.d }
+  const [dx, dz] = turnOffset(extent.cx, extent.cz, item.rotation)
+  const size = rotatedFootprint({ footprint: { ...extent, h: 0 } }, item.rotation)
+  return { cx: item.cx + dx, cz: item.cz + dz, w: size.w, d: size.d }
 }
 
 /** Footprint of a real model after a quarter-turn rotation (props are never scaled). */
@@ -165,10 +196,43 @@ export function assetFitProblem(
   if (!asset) return 'unknown'
   if (!asset.placeable && !item.placeholder) return 'not_placeable'
   const expected = rotatedFootprint(asset, item.rotation)
-  return (['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - expected[k]) > EPSILON_M)
-    ? 'size'
+  const differs = (size: { w: number; d: number; h: number }) =>
+    (['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - size[k]) > EPSILON_M)
+  // Items placed before the body was corrected keep the whole model's size until reopened
+  // (fitBodyFootprints); they are still the real model.
+  const legacy = asset.extent
+    ? rotatedFootprint({ footprint: { ...asset.extent, h: asset.footprint.h } }, item.rotation)
     : null
+  return differs(expected) && (!legacy || differs(legacy)) ? 'size' : null
 }
+
+/**
+ * Items placed with the whole model's size (before body-footprint.json corrected their model)
+ * moved to the body: its size, and its centre where the body stands within the model. Other
+ * items are returned unchanged, so this is safe to apply to any layout, any number of times.
+ */
+export function fitBodyFootprints(layout: Layout, assets: ReadonlyMap<string, AssetFit>): Layout {
+  let changed = false
+  const items = layout.items.map((item) => {
+    const asset = item.assetId === null ? undefined : assets.get(item.assetId)
+    if (!asset?.extent || item.placeholder) return item
+    const legacy = rotatedFootprint(
+      { footprint: { ...asset.extent, h: asset.footprint.h } },
+      item.rotation,
+    )
+    if (Math.abs(item.w - legacy.w) > EPSILON_M || Math.abs(item.d - legacy.d) > EPSILON_M)
+      return item
+    const body = rotatedFootprint(asset, item.rotation)
+    if (Math.abs(item.w - body.w) <= EPSILON_M && Math.abs(item.d - body.d) <= EPSILON_M)
+      return item
+    const [dx, dz] = turnOffset(asset.extent.cx, asset.extent.cz, item.rotation)
+    changed = true
+    return { ...item, cx: roundMm(item.cx - dx), cz: roundMm(item.cz - dz), w: body.w, d: body.d }
+  })
+  return changed ? { ...layout, items } : layout
+}
+
+const roundMm = (v: number) => Math.round(v * 1000) / 1000 + 0
 
 /**
  * Items must reference known catalogue models at their true size (see assetFitProblem).
@@ -210,7 +274,11 @@ export function checkAssetFit(
  * the floor, so they do not block entrances or clash with floor props (see itemsCollide).
  * Aisle widths and spacing are soft rules handled by the planner.
  */
-export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
+export function validateLayout(
+  space: Space,
+  layout: Layout,
+  assets?: ReadonlyMap<string, AssetFit>,
+): LayoutIssue[] {
   const issues: LayoutIssue[] = []
   const footprints = layout.items.map((item) => ({ item, rect: itemFootprint(item) }))
 
@@ -278,5 +346,28 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
     }
   })
   issues.push(...fixtureIssues(space, layout))
+
+  // The stools of a 开箱桌 (the model beyond its body) may reach a wall or another prop: worth a
+  // look, not an error (confirmed by the user, 2026-10-15).
+  if (assets) {
+    for (const { item } of footprints) {
+      const asset = item.assetId === null ? undefined : assets.get(item.assetId)
+      if (!asset?.extent || item.placeholder) continue
+      const whole = { ...item, ...modelBox(item, asset) }
+      const box = itemFootprint(whole)
+      const blocked =
+        !rectInsidePolygon(box, space.boundary) ||
+        space.obstacles.some((o) => polygonOverlapsRect(o.polygon, box)) ||
+        footprints.some(({ item: other }) => other.id !== item.id && itemsCollide(whole, other))
+      if (blocked) {
+        issues.push({
+          code: 'item_extent_blocked',
+          severity: 'warning',
+          message: `${item.name}的凳子压到墙、障碍物或其他道具`,
+          itemIds: [item.id],
+        })
+      }
+    }
+  }
   return issues
 }

@@ -14005,6 +14005,39 @@
                               "source"
                             ]
                           },
+                          "extent": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "cx": {
+                                    "type": "number"
+                                  },
+                                  "cz": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "w",
+                                  "d",
+                                  "cx",
+                                  "cz"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
                           "front": {
                             "anyOf": [
                               {
@@ -14309,6 +14342,7 @@
                           "installation",
                           "footprint",
                           "footprintSource",
+                          "extent",
                           "front",
                           "staffSide",
                           "facingConfidence",
@@ -14494,6 +14528,39 @@
                       "enum": [
                         "glb",
                         "source"
+                      ]
+                    },
+                    "extent": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "cx": {
+                              "type": "number"
+                            },
+                            "cz": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "w",
+                            "d",
+                            "cx",
+                            "cz"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
                       ]
                     },
                     "front": {
@@ -14800,6 +14867,7 @@
                     "installation",
                     "footprint",
                     "footprintSource",
+                    "extent",
                     "front",
                     "staffSide",
                     "facingConfidence",
