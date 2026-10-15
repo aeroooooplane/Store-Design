@@ -313,12 +313,15 @@ export function summarizeDisplay(
   }
 }
 
-/** Photo of a slot's content for the PPT, preferring the requested kind, then the other one. */
+/**
+ * Picture of a slot's content, preferring the requested kind, then the other one. The guide's
+ * renders (效果图) by default: the user wants one look across the page and the PPT (2026-10-15).
+ */
 export function unitPhoto(
   rules: DisplayRules,
   unitId: string,
   si: SiStyle,
-  prefer: 'photo' | 'render' = 'photo',
+  prefer: 'photo' | 'render' = 'render',
 ) {
   const list = rules.photos.filter((p) => p.unit === unitId && p.si === si)
   return list.find((p) => p.kind === prefer) ?? list[0] ?? null

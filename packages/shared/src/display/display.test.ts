@@ -237,9 +237,9 @@ describe('planDisplay', () => {
     expect(summary.trays).toEqual([{ id: 'std', name: '普通托盘', count: 24 }])
   })
 
-  it('prefers real photos, then renders', () => {
-    expect(unitPhoto(makeRules(), 'a', 'SI2.0')?.file).toBe('p.jpg')
-    expect(unitPhoto(makeRules(), 'a', 'SI2.0', 'render')?.file).toBe('r.jpg')
+  it("prefers the guide's renders, then real photos", () => {
+    expect(unitPhoto(makeRules(), 'a', 'SI2.0')?.file).toBe('r.jpg')
+    expect(unitPhoto(makeRules(), 'a', 'SI2.0', 'photo')?.file).toBe('p.jpg')
     expect(unitPhoto(makeRules(), 'a', 'SI1.0')).toBeNull()
   })
 })

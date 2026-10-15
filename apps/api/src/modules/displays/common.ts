@@ -48,7 +48,7 @@ export async function rulesView(db: Database): Promise<DisplayRulesView> {
 
 export const applyEdits = applyDisplayEdits
 
-/** Tray photos of every slot content in the deck, for the style's SI version. */
+/** Tray pictures (the guide's renders) of every slot content in the deck, for the SI version. */
 export async function loadPhotos(
   roots: StorageRoots,
   rules: DisplayRules,
