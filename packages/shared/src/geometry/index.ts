@@ -29,3 +29,4 @@ export {
 } from './rect.ts'
 export { interiorPoint } from './interior.ts'
 export type { InteriorPointOptions } from './interior.ts'
+export { AGAINST_WALL_M, wallShift } from './follow-walls.ts'
