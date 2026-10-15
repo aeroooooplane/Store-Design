@@ -1,7 +1,13 @@
 import pptxgenjs from 'pptxgenjs'
 import sharp from 'sharp'
 import { DISPLAY_ORIENTATION_LABELS, HERO_SLOT, summarizeDisplay } from '@store/shared'
-import type { DisplayRules, DisplayTable, Market } from '@store/shared'
+import type {
+  DisplayPptViews,
+  DisplayRules,
+  DisplayTable,
+  Market,
+  PictureRect,
+} from '@store/shared'
 
 // The typings describe a CommonJS module; under NodeNext the ES build's default export is the class.
 const PptxGenJS = pptxgenjs as unknown as typeof pptxgenjs.default
@@ -39,6 +45,10 @@ export interface DisplayDeckInput {
   photos: Record<string, DeckImage | undefined>
   /** Side of the end slot on landscape tables as seen from the entrance. */
   landscapeEnd: 'left' | 'right'
+  /** Pages per table: the 3D view, the slot diagram, or both (3D first). */
+  views: DisplayPptViews
+  /** Table label → its 3D view from the browser, with where each slot's name goes. */
+  tables3d: Record<string, { image: DeckImage; names: Record<string, PictureRect> } | undefined>
   /** Open points (单店单议, empty slots) listed on the last slide. */
   pending: string[]
 }
@@ -402,9 +412,9 @@ function overviewSlide(pptx: Pptx, input: DisplayDeckInput) {
   })
 }
 
-function tableSlide(pptx: Pptx, input: DisplayDeckInput, t: DisplayTable) {
-  const slide = pptx.addSlide()
-  leftPanel(slide, input, '平面布局图')
+/** Left panel of a table page: its label, the render and the plan with the table marked. */
+function tablePanel(slide: Slide, input: DisplayDeckInput, t: DisplayTable, title: string) {
+  leftPanel(slide, input, title)
   slide.addText(`${t.label}桌`, {
     shape: 'roundRect',
     rectRadius: 0.2,
@@ -438,6 +448,79 @@ function tableSlide(pptx: Pptx, input: DisplayDeckInput, t: DisplayTable) {
       [[t.label, input.planMarks[t.label]]],
       0.3,
     )
+}
+
+/** Width of a label in em: CJK about 1 em, Latin about 0.55 em. */
+const ems = (label: string) =>
+  [...label].reduce((n, c) => n + (c.charCodeAt(0) > 0x2e80 ? 1 : 0.55), 0)
+
+/**
+ * The 3D page of a table: the browser's view of it from the entrance side, the tray pictures on
+ * stand-up cards, and the product names as editable text over each card's blank strip.
+ */
+function table3dSlide(
+  pptx: Pptx,
+  input: DisplayDeckInput,
+  t: DisplayTable,
+  shot: { image: DeckImage; names: Record<string, PictureRect> },
+) {
+  const slide = pptx.addSlide()
+  tablePanel(slide, input, t, '三维示意')
+  const area = { x: PANEL + 0.3, y: 0.35, w: W - PANEL - 0.55, h: 6.3 }
+  const placed = picture(slide, shot.image, area)
+  const labels = t.slots.flatMap((s) => {
+    const r = shot.names[s.slot]
+    if (!r) return []
+    const box = {
+      x: placed.x + r.x * placed.w,
+      y: placed.y + r.y * placed.h,
+      w: r.w * placed.w,
+      h: r.h * placed.h,
+    }
+    return [{ s, box, label: unitLabel(input.rules, s.unit) }]
+  })
+  // One size for the page: what fits every strip on one line, but not below 8 pt.
+  const size = Math.max(
+    8,
+    Math.min(
+      14,
+      ...labels.map(({ box, label }) =>
+        Math.min(box.h * 72 * 0.72, (box.w * 72 * 0.92) / Math.max(ems(label), 1)),
+      ),
+    ),
+  )
+  for (const { s, box, label } of labels) {
+    // A long name at that size widens its box around the strip's centre.
+    const w = Math.max(box.w, (ems(label) * size) / 72 / 0.9)
+    slide.addText(label, {
+      ...box,
+      x: box.x + (box.w - w) / 2,
+      w,
+      h: Math.max(box.h, (size * 1.3) / 72),
+      fill: { color: 'FFFFFF' },
+      color: s.unit ? (s.hero ? RED : INK) : MUTED,
+      bold: true,
+      fontFace: FONT,
+      fontSize: Math.round(size * 2) / 2,
+      align: 'center',
+      valign: 'middle',
+      margin: 0,
+    })
+  }
+  const footer = [
+    t.kind === 'island' && t.modules.length ? `中间配件模块：${t.modules.join('、')}` : '',
+    '视角：从入口方向看',
+  ]
+    .filter(Boolean)
+    .join('\u3000\u3000')
+  text(slide, footer, { x: area.x, y: 6.8, w: area.w, h: 0.4 }, 12, INK, false, 'center')
+  if (t.notes.length)
+    text(slide, t.notes.join('；'), { x: area.x, y: 0.05, w: area.w, h: 0.28 }, 10, RED)
+}
+
+function tableSlide(pptx: Pptx, input: DisplayDeckInput, t: DisplayTable) {
+  const slide = pptx.addSlide()
+  tablePanel(slide, input, t, '平面布局图')
 
   const area = { x: PANEL + 0.3, y: 0.3, w: W - PANEL - 0.55, h: 6.9 }
   const cx = area.x + area.w / 2
@@ -648,7 +731,12 @@ export async function buildDisplayDeck(input: DisplayDeckInput): Promise<Buffer>
   pptx.theme = { headFontFace: FONT, bodyFontFace: FONT }
   coverSlide(pptx, input)
   overviewSlide(pptx, input)
-  for (const t of input.tables) tableSlide(pptx, input, t)
+  for (const t of input.tables) {
+    const shot = input.views === 'plan' ? undefined : input.tables3d[t.label]
+    if (shot) table3dSlide(pptx, input, t, shot)
+    // Without its 3D view a table still gets the slot diagram rather than no page.
+    if (input.views !== '3d' || !shot) tableSlide(pptx, input, t)
+  }
   quantitySlide(pptx, input)
   return (await pptx.write({ outputType: 'nodebuffer' })) as Buffer
 }

@@ -187,8 +187,46 @@ export type NodeDisplay = z.infer<typeof NodeDisplaySchema>
 export const NodeDisplayUpdateSchema = z.strictObject({ edits: DisplayEditsSchema })
 export type NodeDisplayUpdate = z.output<typeof NodeDisplayUpdateSchema>
 
+/** Which pages each table gets in the PPT: the 3D view, the flat slot diagram, or both. */
+export const DISPLAY_PPT_VIEWS = ['both', '3d', 'plan'] as const
+export const DisplayPptViewsSchema = z.enum(DISPLAY_PPT_VIEWS)
+export type DisplayPptViews = z.infer<typeof DisplayPptViewsSchema>
+export const DISPLAY_PPT_VIEW_LABELS: Record<DisplayPptViews, string> = {
+  both: '三维 + 平面',
+  '3d': '只要三维',
+  plan: '只要平面',
+}
+
+const Unit = z.number().min(0).max(1)
+/** A rectangle on a picture, 0–1 of its width and height from the top-left corner. */
+export const PictureRectSchema = z.object({ x: Unit, y: Unit, w: Unit, h: Unit })
+export type PictureRect = z.infer<typeof PictureRectSchema>
+
+/**
+ * The 3D view of one table, drawn in the browser (the server has no WebGL): the picture, and
+ * where on it each slot's product name goes, so the PPT can lay editable text there.
+ */
+export const DisplayTableShotSchema = z.strictObject({
+  /** DisplayTable.sourceId */
+  table: z.string().min(1).max(100),
+  /** PNG or JPEG, base64 without the data: prefix. */
+  image: z
+    .string()
+    .min(16)
+    .max(8 * 1024 * 1024),
+  names: z.record(z.string().min(1).max(8), PictureRectSchema),
+})
+export type DisplayTableShot = z.output<typeof DisplayTableShotSchema>
+
+/** PPT options shared by both workflows. */
+export const DisplayPptOptionsSchema = z.strictObject({
+  views: DisplayPptViewsSchema.default('both'),
+  tables3d: z.array(DisplayTableShotSchema).max(40).default([]),
+})
+export type DisplayPptOptions = z.input<typeof DisplayPptOptionsSchema>
+
 /** The browser draws the plan (as for deliveries) and says which plan area the picture shows. */
-export const NodeDisplayExportRequestSchema = z.strictObject({
+export const NodeDisplayExportRequestSchema = DisplayPptOptionsSchema.extend({
   planPng: z
     .string()
     .min(16)
@@ -196,4 +234,10 @@ export const NodeDisplayExportRequestSchema = z.strictObject({
   /** SVG viewBox of the drawing in plan metres: x, z, width, depth. */
   planViewBox: z.tuple([z.number(), z.number(), z.number().positive(), z.number().positive()]),
 })
-export type NodeDisplayExportRequest = z.output<typeof NodeDisplayExportRequestSchema>
+export type NodeDisplayExportRequest = z.input<typeof NodeDisplayExportRequestSchema>
+/** The request as the server sees it, defaults filled in. */
+export type NodeDisplayExportBody = z.output<typeof NodeDisplayExportRequestSchema>
+
+/** A display task's export: the PPT options only (the pictures are already on the server). */
+export const DisplayTaskExportRequestSchema = DisplayPptOptionsSchema
+export type DisplayTaskExportBody = z.output<typeof DisplayTaskExportRequestSchema>

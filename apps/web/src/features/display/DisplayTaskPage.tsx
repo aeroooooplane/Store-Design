@@ -26,6 +26,9 @@ import {
   renderThumbnail,
 } from '../recognition/pdf-extract.ts'
 import { MarkedPicture } from './MarkedPicture.tsx'
+import { PptViewsSelect } from './PptViewsSelect.tsx'
+import { usePptViews } from './pptViews.ts'
+import { tableShots } from './table3d/shots.ts'
 import type { PictureMark } from './MarkedPicture.tsx'
 import { SlotTable } from './SlotTable.tsx'
 import {
@@ -100,6 +103,8 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
   const upload = useUploadTaskPicture(task.id)
   const detect = useDetectTables(task.id)
   const exporting = useExportDisplayTask(task.id)
+  const [pptViews, setPptViews] = usePptViews()
+  const [drawing, setDrawing] = useState(false)
   const fileInput = useRef<HTMLInputElement>(null)
   const folderInput = useRef<HTMLInputElement>(null)
   const [pdf, setPdf] = useState<PdfSource | null>(null)
@@ -229,9 +234,22 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
     setError(null)
     try {
       await saveDraft()
-      await exporting.mutateAsync()
+      setDrawing(true)
+      const tables3d =
+        pptViews === 'plan'
+          ? []
+          : await tableShots(tables, {
+              rules,
+              photos,
+              si: task.siStyle,
+              end: draft.edits.landscapeEnd,
+            })
+      setDrawing(false)
+      await exporting.mutateAsync({ views: pptViews, tables3d })
     } catch (caught) {
       setError(caught)
+    } finally {
+      setDrawing(false)
     }
   }
 
@@ -623,13 +641,18 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
             <div className="display-card-head">
               <h2>输出结果</h2>
               <span className="hint">{task.exports.length} 个 PPT</span>
+              <PptViewsSelect
+                value={pptViews}
+                onChange={setPptViews}
+                disabled={exporting.isPending}
+              />
               <button
                 type="button"
                 className="primary"
                 onClick={() => void makePpt()}
-                disabled={exporting.isPending || working || !draft.tables.length}
+                disabled={drawing || exporting.isPending || working || !draft.tables.length}
               >
-                {exporting.isPending ? '正在生成…' : '生成 PPT'}
+                {drawing ? '正在画三维…' : exporting.isPending ? '正在生成…' : '生成 PPT'}
               </button>
             </div>
             {task.exports.length === 0 ? (
