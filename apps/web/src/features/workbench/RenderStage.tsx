@@ -240,6 +240,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               layout={layout}
               assets={assets}
               numbers={numbers}
+              spacing
               title={`${node.name} 交付平面`}
             />
             <PlanView
