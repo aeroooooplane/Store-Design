@@ -2072,32 +2072,9 @@
                                           "maximum": 1000
                                         },
                                         "rotation": {
-                                          "anyOf": [
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                0
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                90
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                180
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                270
-                                              ]
-                                            }
-                                          ]
+                                          "type": "number",
+                                          "minimum": 0,
+                                          "exclusiveMaximum": 360
                                         },
                                         "w": {
                                           "type": "number",
@@ -2135,6 +2112,11 @@
                                           "type": "number",
                                           "minimum": 0,
                                           "maximum": 20
+                                        },
+                                        "scale": {
+                                          "type": "number",
+                                          "minimum": 0.2,
+                                          "maximum": 5
                                         }
                                       },
                                       "required": [
@@ -2445,32 +2427,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -2508,6 +2467,11 @@
                                         "type": "number",
                                         "minimum": 0,
                                         "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [
@@ -3442,32 +3406,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -3505,6 +3446,11 @@
                               "type": "number",
                               "minimum": 0,
                               "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -4142,32 +4088,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -4205,6 +4128,11 @@
                                         "type": "number",
                                         "minimum": 0,
                                         "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [
@@ -5012,32 +4940,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -5075,6 +4980,11 @@
                                     "type": "number",
                                     "minimum": 0,
                                     "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -5852,32 +5762,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -5915,6 +5802,11 @@
                                     "type": "number",
                                     "minimum": 0,
                                     "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -6673,32 +6565,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -6736,6 +6605,11 @@
                                     "type": "number",
                                     "minimum": 0,
                                     "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -7494,32 +7368,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -7557,6 +7408,11 @@
                                     "type": "number",
                                     "minimum": 0,
                                     "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -7957,32 +7813,9 @@
                                 "maximum": 1000
                               },
                               "rotation": {
-                                "anyOf": [
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      0
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      90
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      180
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      270
-                                    ]
-                                  }
-                                ]
+                                "type": "number",
+                                "minimum": 0,
+                                "exclusiveMaximum": 360
                               },
                               "w": {
                                 "type": "number",
@@ -8020,6 +7853,11 @@
                                 "type": "number",
                                 "minimum": 0,
                                 "maximum": 20
+                              },
+                              "scale": {
+                                "type": "number",
+                                "minimum": 0.2,
+                                "maximum": 5
                               }
                             },
                             "required": [
@@ -8434,32 +8272,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -8497,6 +8312,11 @@
                               "type": "number",
                               "minimum": 0,
                               "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -8763,32 +8583,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -8826,6 +8623,11 @@
                                     "type": "number",
                                     "minimum": 0,
                                     "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -12925,32 +12727,9 @@
                                       "maximum": 1000
                                     },
                                     "rotation": {
-                                      "anyOf": [
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            0
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            90
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            180
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            270
-                                          ]
-                                        }
-                                      ]
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
                                     },
                                     "w": {
                                       "type": "number",
@@ -12988,6 +12767,11 @@
                                       "type": "number",
                                       "minimum": 0,
                                       "maximum": 20
+                                    },
+                                    "scale": {
+                                      "type": "number",
+                                      "minimum": 0.2,
+                                      "maximum": 5
                                     }
                                   },
                                   "required": [
@@ -13592,32 +13376,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -13655,6 +13416,11 @@
                               "type": "number",
                               "minimum": 0,
                               "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -19054,32 +18820,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -19117,6 +18860,11 @@
                               "type": "number",
                               "minimum": 0,
                               "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -19732,32 +19480,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -19795,6 +19520,11 @@
                                         "type": "number",
                                         "minimum": 0,
                                         "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [

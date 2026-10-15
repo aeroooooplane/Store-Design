@@ -80,7 +80,7 @@ function facing(asset: SwapAsset | undefined, rotation: Rotation): PlanDirection
 function bestFit(asset: SwapAsset, item: LayoutItem, pieces: number): Rotation {
   const longAlongX = item.w >= item.d
   const kept = item.rotation
-  const turned = ((item.rotation + 90) % 360) as Rotation
+  const turned = (item.rotation + 90) % 360
   const misfit = (rotation: Rotation) => {
     const size = rotatedFootprint(asset, rotation)
     const w = longAlongX ? size.w * pieces : size.w

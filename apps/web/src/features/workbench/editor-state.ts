@@ -22,7 +22,6 @@ import type {
   LayoutItem,
   Point,
   Rect,
-  Rotation,
   Space,
 } from '@store/shared'
 import { magnetSnap } from './snap.ts'
@@ -287,7 +286,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         action.id,
         (item) => {
           if (item.locked) return item
-          const rotation = ((((item.rotation + (action.by ?? 90)) % 360) + 360) % 360) as Rotation
+          const rotation = (((item.rotation + (action.by ?? 90)) % 360) + 360) % 360
           const size = action.asset
             ? rotatedFootprint(action.asset, rotation)
             : { w: item.d, d: item.w, h: item.h }

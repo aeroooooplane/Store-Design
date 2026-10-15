@@ -1,13 +1,18 @@
 import { z } from 'zod'
 import { ItemFunctionSchema, PlanStrategySchema } from '../enums.ts'
 import {
-  polygonOverlapsRect,
-  rectFromCenter,
-  rectInsidePolygon,
-  segmentIntersectsRectInterior,
+  nearestQuarter,
+  obbBounds,
+  obbCorners,
+  obbInsidePolygon,
+  placedBox,
+  polygonOverlapsObb,
+  quarterTilt,
+  segmentIntersectsObbInterior,
+  turnPoint,
 } from '../geometry/index.ts'
-import type { Rect } from '../geometry/index.ts'
-import { EPSILON_M } from '../units.ts'
+import type { Point, Rect } from '../geometry/index.ts'
+import { EPSILON_M, roundM } from '../units.ts'
 import { fixtureIssues } from '../fixtures/index.ts'
 import { embeddedWall } from '../mounting/embedded.ts'
 import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
@@ -19,12 +24,28 @@ import type { IssueSeverity, Space } from './space.ts'
 
 export const MAX_LAYOUT_ITEMS = 200
 
-export const RotationSchema = z.union([z.literal(0), z.literal(90), z.literal(180), z.literal(270)])
+/**
+ * Turn of a prop in degrees, any angle from 0 to below 360 (confirmed by the user, 2026-10-14/15).
+ * Same convention as the viewer: three.js rotation.y = −rotation, a quarter turn takes +Z to −X.
+ */
+export const RotationSchema = z.number().finite().min(0).lt(360)
 export type Rotation = z.infer<typeof RotationSchema>
 
+/** An angle in degrees brought into 0 ≤ angle < 360, to a tenth of a degree. */
+export function normalizeRotation(angle: number): Rotation {
+  const tenth = Math.round(angle * 10) / 10
+  return (((tenth % 360) + 360) % 360) + 0
+}
+
+/** Smallest and largest LOGO scale (see LayoutItemSchema.scale). */
+export const MIN_ITEM_SCALE = 0.2
+export const MAX_ITEM_SCALE = 5
+
 /**
- * One placed prop. Positioned by footprint centre; `w`/`d` are the footprint after rotation
- * and must equal the real asset size (props are never stretched or mirrored).
+ * One placed prop. Positioned by footprint centre. `w`/`d` are the footprint at the nearest
+ * quarter turn of `rotation` (swapped at 90° and 270°); any further angle turns that box about
+ * its centre (see itemCorners). They must equal the real asset size (props are never stretched
+ * or mirrored), times `scale` for a LOGO.
  */
 export const LayoutItemSchema = z.object({
   id: z.string().trim().min(1).max(64),
@@ -48,6 +69,11 @@ export const LayoutItemSchema = z.object({
   mount: InstallationSchema.optional(),
   /** Height of the bottom above the floor (metres) for wall and ceiling pieces. */
   elevation: z.number().finite().min(0).max(20).optional(),
+  /**
+   * Uniform scale of a LOGO (signage) against its model, absent at 1; other props keep their true
+   * size. `w`/`d`/`h` already include it.
+   */
+  scale: z.number().finite().min(MIN_ITEM_SCALE).max(MAX_ITEM_SCALE).optional(),
 })
 
 export const RelaxationSchema = z.object({
@@ -111,8 +137,24 @@ export type LayoutItem = z.output<typeof LayoutItemSchema>
 export type Layout = z.output<typeof LayoutSchema>
 export type LayoutInput = z.input<typeof LayoutSchema>
 
-export function itemFootprint(item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'>): Rect {
-  return rectFromCenter(item.cx, item.cz, item.w, item.d)
+type Placed = Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'> & { rotation?: number | undefined }
+
+/**
+ * Axis-aligned rectangle around an item: its footprint at a quarter turn, the bounds of the
+ * turned box otherwise. Collision and fit checks use the true box (itemCorners, placedBox).
+ */
+export function itemFootprint(item: Placed): Rect {
+  return obbBounds(placedBox(item))
+}
+
+/** The four corners of the box an item takes, turned by its tilt off the nearest quarter turn. */
+export function itemCorners(item: Placed): [Point, Point, Point, Point] {
+  return obbCorners(placedBox(item))
+}
+
+/** What an item's rotation adds to its nearest quarter turn, in degrees (−45 ≤ tilt < 45). */
+export function itemTilt(item: { rotation?: number | undefined }): number {
+  return quarterTilt(item.rotation ?? 0)
 }
 
 export type LayoutIssueCode =
@@ -149,11 +191,7 @@ export interface AssetFit {
  * convention as facingAfter and the viewer (three.js rotation.y = −rotation).
  */
 export function turnOffset(x: number, z: number, rotation: number): [number, number] {
-  const theta = (-rotation * Math.PI) / 180
-  const cos = Math.cos(theta)
-  const sin = Math.sin(theta)
-  const clean = (v: number) => (Math.abs(v) < 1e-9 ? 0 : v)
-  return [clean(x * cos + z * sin), clean(-x * sin + z * cos)]
+  return turnPoint(x, z, rotation)
 }
 
 /**
@@ -171,12 +209,16 @@ export function modelBox(
   return { cx: item.cx + dx, cz: item.cz + dz, w: size.w, d: size.d }
 }
 
-/** Footprint of a real model after a quarter-turn rotation (props are never scaled). */
+/**
+ * Footprint of a real model as an item stores it: at the nearest quarter turn of `rotation`
+ * (width and depth swapped at 90° and 270°). Props are never stretched.
+ */
 export function rotatedFootprint(
   asset: Pick<AssetFit, 'footprint'>,
-  rotation: Rotation,
+  rotation: number,
 ): { w: number; d: number; h: number } {
-  const swap = rotation === 90 || rotation === 270
+  const quarter = nearestQuarter(rotation)
+  const swap = quarter === 90 || quarter === 270
   return {
     w: swap ? asset.footprint.d : asset.footprint.w,
     d: swap ? asset.footprint.w : asset.footprint.d,
@@ -188,16 +230,20 @@ export function rotatedFootprint(
 export type AssetFitProblem = 'unknown' | 'not_placeable' | 'size'
 
 /**
- * An item that references a catalogue model must keep the model's true size. Models without
- * a web model (信息化物料 for now) may only be used as placeholders.
+ * An item that references a catalogue model must keep the model's true size; a LOGO may be
+ * scaled uniformly (`scale`). Models without a web model (信息化物料 for now) may only be used
+ * as placeholders.
  */
 export function assetFitProblem(
-  item: Pick<LayoutItem, 'placeholder' | 'rotation' | 'w' | 'd' | 'h'>,
+  item: Pick<LayoutItem, 'placeholder' | 'rotation' | 'w' | 'd' | 'h'> &
+    Partial<Pick<LayoutItem, 'function' | 'scale'>>,
   asset: AssetFit | undefined,
 ): AssetFitProblem | null {
   if (!asset) return 'unknown'
   if (!asset.placeable && !item.placeholder) return 'not_placeable'
-  const expected = rotatedFootprint(asset, item.rotation)
+  const scale = item.scale ?? 1
+  if (scale !== 1 && item.function !== 'signage') return 'size'
+  const expected = scaledSize(rotatedFootprint(asset, item.rotation), scale)
   const differs = (size: { w: number; d: number; h: number }) =>
     (['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - size[k]) > EPSILON_M)
   // Items placed before the body was corrected keep the whole model's size until reopened
@@ -235,6 +281,32 @@ export function fitBodyFootprints(layout: Layout, assets: ReadonlyMap<string, As
 }
 
 const roundMm = (v: number) => Math.round(v * 1000) / 1000 + 0
+
+/** A size times a uniform scale, to the millimetre (as stored). */
+function scaledSize(size: { w: number; d: number; h: number }, scale: number) {
+  if (scale === 1) return size
+  return { w: roundM(size.w * scale), d: roundM(size.d * scale), h: roundM(size.h * scale) }
+}
+
+/**
+ * A LOGO (signage) scaled uniformly against its model: `scale` is clamped to
+ * MIN_ITEM_SCALE–MAX_ITEM_SCALE and the size follows; the centre stays. A piece on a wall should
+ * be snapped back onto it afterwards (wallMountSnap). Other props are returned unchanged.
+ */
+export function scaleItem<T extends Pick<LayoutItem, 'function' | 'rotation' | 'w' | 'd' | 'h'>>(
+  item: T & { scale?: number | undefined },
+  asset: Pick<AssetFit, 'footprint'>,
+  scale: number,
+): T & { scale?: number | undefined } {
+  if (item.function !== 'signage') return item
+  const clamped = Math.min(
+    MAX_ITEM_SCALE,
+    Math.max(MIN_ITEM_SCALE, Math.round(scale * 1000) / 1000),
+  )
+  const { scale: _old, ...rest } = item
+  const size = scaledSize(rotatedFootprint(asset, item.rotation), clamped)
+  return { ...(rest as T), ...size, ...(clamped === 1 ? {} : { scale: clamped }) }
+}
 
 /**
  * Items must reference known catalogue models at their true size (see assetFitProblem).
@@ -282,13 +354,14 @@ export function validateLayout(
   assets?: ReadonlyMap<string, AssetFit>,
 ): LayoutIssue[] {
   const issues: LayoutIssue[] = []
-  const footprints = layout.items.map((item) => ({ item, rect: itemFootprint(item) }))
+  // The true box of each item: turned by its tilt off the nearest quarter turn.
+  const footprints = layout.items.map((item) => ({ item, box: placedBox(item) }))
 
-  for (const { item, rect } of footprints) {
+  for (const { item, box } of footprints) {
     const mount = itemMount(item)
     // A built-in piece's body is inside the wall, beyond the boundary, clear of the floor.
     const builtIn = mount === 'embedded'
-    if (!builtIn && !rectInsidePolygon(rect, space.boundary)) {
+    if (!builtIn && !obbInsidePolygon(box, space.boundary)) {
       issues.push({
         code: 'item_outside_boundary',
         severity: 'error',
@@ -297,7 +370,7 @@ export function validateLayout(
       })
     }
     space.obstacles.forEach((obstacle, index) => {
-      if (!builtIn && polygonOverlapsRect(obstacle.polygon, rect)) {
+      if (!builtIn && polygonOverlapsObb(obstacle.polygon, box)) {
         issues.push({
           code: 'item_overlaps_obstacle',
           severity: 'error',
@@ -310,7 +383,7 @@ export function validateLayout(
       if (mount !== 'floor') return
       // An entrance along several edges is checked piece by piece, not along its chord.
       const pieces = openingPieces(space, entrance) ?? [entrance]
-      if (pieces.some((p) => segmentIntersectsRectInterior(p.a, p.b, rect))) {
+      if (pieces.some((p) => segmentIntersectsObbInterior(p.a, p.b, box))) {
         issues.push({
           code: 'item_blocks_entrance',
           severity: 'error',
@@ -366,10 +439,10 @@ export function validateLayout(
       const asset = item.assetId === null ? undefined : assets.get(item.assetId)
       if (!asset?.extent || item.placeholder) continue
       const whole = { ...item, ...modelBox(item, asset) }
-      const box = itemFootprint(whole)
+      const wholeBox = placedBox(whole)
       const blocked =
-        !rectInsidePolygon(box, space.boundary) ||
-        space.obstacles.some((o) => polygonOverlapsRect(o.polygon, box)) ||
+        !obbInsidePolygon(wholeBox, space.boundary) ||
+        space.obstacles.some((o) => polygonOverlapsObb(o.polygon, wholeBox)) ||
         footprints.some(({ item: other }) => other.id !== item.id && itemsCollide(whole, other))
       if (blocked) {
         issues.push({

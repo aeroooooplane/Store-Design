@@ -819,7 +819,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -830,6 +830,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -877,7 +878,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -888,6 +889,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -1161,7 +1163,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -1172,6 +1174,7 @@ export interface paths {
                                 /** @enum {string} */
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -1297,7 +1300,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -1308,6 +1311,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -1509,7 +1513,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1520,6 +1524,7 @@ export interface paths {
                                     /** @enum {string} */
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1710,7 +1715,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1721,6 +1726,7 @@ export interface paths {
                                     /** @enum {string} */
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1911,7 +1917,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1922,6 +1928,7 @@ export interface paths {
                                     /** @enum {string} */
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2116,7 +2123,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -2127,6 +2134,7 @@ export interface paths {
                                     /** @enum {string} */
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2254,7 +2262,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -2265,6 +2273,7 @@ export interface paths {
                                     /** @enum {string} */
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2393,7 +2402,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -2404,6 +2413,7 @@ export interface paths {
                                 /** @enum {string} */
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -2458,7 +2468,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -2469,6 +2479,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -3982,7 +3993,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -3993,6 +4004,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -4141,7 +4153,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -4152,6 +4164,7 @@ export interface paths {
                                 /** @enum {string} */
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -5737,7 +5750,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -5748,6 +5761,7 @@ export interface paths {
                                 /** @enum {string} */
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -5867,7 +5881,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -5878,6 +5892,7 @@ export interface paths {
                                         /** @enum {string} */
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
