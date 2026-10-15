@@ -449,3 +449,36 @@ describe('内嵌', () => {
     expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.021 })
   })
 })
+
+describe('LOGO 等比缩放', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.471 },
+    front: '+Z',
+  })
+  const added = () => editorReducer(state([]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+
+  it('takes a typed width, keeps the back on the wall, and turns with its scale', () => {
+    let s = added()
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 2 / 3.453, space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ scale: 0.579, w: 1.999, d: 0.029, h: 0.273 })
+    // Thinner, so the centre moves to keep the back on the back wall (z = 0).
+    expect(s.layout.items[0]?.cz).toBe(0.015)
+    s = editorReducer(s, { type: 'rotate', id, asset: logo })
+    expect(s.layout.items[0]).toMatchObject({ rotation: 90, scale: 0.579, w: 0.029, d: 1.999 })
+  })
+
+  it('goes back to the original size without a scale', () => {
+    let s = added()
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 1.5, space, front: '+Z' })
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 1, space, front: '+Z' })
+    expect(s.layout.items[0]?.scale).toBeUndefined()
+    expect(s.layout.items[0]).toMatchObject({ w: 3.453, d: 0.05, cz: 0.025 })
+  })
+})
