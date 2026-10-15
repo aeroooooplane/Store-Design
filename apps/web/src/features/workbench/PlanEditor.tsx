@@ -34,11 +34,13 @@ import type { Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
 import { editorReducer, initialEditorState, newItemPoint } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
+import { SpaceEditor } from './SpaceEditor.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import { IssuesPanel } from './plan-editor/IssuesPanel.tsx'
 import { PropertiesPanel } from './plan-editor/PropertiesPanel.tsx'
 import { useDraftAutosave } from './plan-editor/useDraftAutosave.ts'
+import { useEditWalls } from './plan-editor/useEditWalls.ts'
 import { useEditorKeys } from './plan-editor/useEditorKeys.ts'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
 import { usePlanDrag } from './plan-editor/usePlanDrag.ts'
@@ -175,6 +177,16 @@ export function PlanEditor({
     onNodeCreated,
     onRegisterSiSwitch,
   })
+  const editWalls = useEditWalls({
+    baseNode,
+    nodes,
+    space,
+    layout: state.layout,
+    create,
+    setPaused,
+    finishDraft,
+    onNodeCreated,
+  })
   const { svgRef, onItemPointerDown, onPointerMove, endDrag } = usePlanDrag(space, dispatch)
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
@@ -204,103 +216,123 @@ export function PlanEditor({
       left={
         <>
           {left}
-          <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
+          {/* No props are added while the walls are being edited. */}
+          {!editWalls.editing && (
+            <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
+          )}
         </>
       }
       center={
-        <section className="plan-editor wb-card" aria-label="平面编辑">
-          <h2 className="node-heading">{baseNode.name}</h2>
-          <EditorToolbar
-            view={view}
-            onSwitchView={switchView}
-            isWhite={isWhite}
-            look={look}
-            onSwitchLook={switchLook}
-            canUndo={state.past.length > 0}
-            canRedo={state.future.length > 0}
-            dispatch={dispatch}
-            saveState={saveState}
-          />
+        editWalls.editing ? (
+          <div className="wb-card">
+            <h2>修改墙体</h2>
+            <p className="hint">
+              保存为新的空间和方案，原来的方案及之后的三维效果、渲染都保留。靠墙的道具跟着墙移动，其余道具不动；改墙后越界或压住柱子、入口的道具会在检查中标出。
+            </p>
+            <ErrorMessage error={editWalls.error} />
+            <SpaceEditor
+              initial={space}
+              initialName={editWalls.initialName}
+              submitting={editWalls.submitting}
+              onCancel={editWalls.cancel}
+              onSubmit={editWalls.submit}
+            />
+          </div>
+        ) : (
+          <section className="plan-editor wb-card" aria-label="平面编辑">
+            <h2 className="node-heading">{baseNode.name}</h2>
+            <EditorToolbar
+              view={view}
+              onSwitchView={switchView}
+              isWhite={isWhite}
+              look={look}
+              onSwitchLook={switchLook}
+              canUndo={state.past.length > 0}
+              canRedo={state.future.length > 0}
+              dispatch={dispatch}
+              saveState={saveState}
+            />
 
-          {saveState === 'conflict' && (
-            <div className="error" role="alert">
-              草稿已在其他窗口被修改，本窗口已停止自动保存。
-              <button type="button" onClick={() => void reloadDraft()}>
-                载入最新草稿（放弃本窗口未保存的修改）
-              </button>
-            </div>
-          )}
-          {saveState === 'error' && <ErrorMessage error={saveError} />}
+            {saveState === 'conflict' && (
+              <div className="error" role="alert">
+                草稿已在其他窗口被修改，本窗口已停止自动保存。
+                <button type="button" onClick={() => void reloadDraft()}>
+                  载入最新草稿（放弃本窗口未保存的修改）
+                </button>
+              </div>
+            )}
+            {saveState === 'error' && <ErrorMessage error={saveError} />}
 
-          <div
-            className="plan-canvas"
-            tabIndex={0}
-            aria-label={
-              planMain
-                ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-                : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
-            }
-            onPointerMove={onPointerMove}
-            onPointerUp={endDrag}
-            onPointerCancel={endDrag}
-            onKeyDown={onKeyDown}
-          >
-            <div className={planMain ? 'view-mini' : 'view-main'}>
-              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
-                <Viewer3D
-                  ref={viewerRef}
+            <div
+              className="plan-canvas"
+              tabIndex={0}
+              aria-label={
+                planMain
+                  ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
+                  : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+              }
+              onPointerMove={onPointerMove}
+              onPointerUp={endDrag}
+              onPointerCancel={endDrag}
+              onKeyDown={onKeyDown}
+            >
+              <div className={planMain ? 'view-mini' : 'view-main'}>
+                <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                  <Viewer3D
+                    ref={viewerRef}
+                    space={space}
+                    shopType={shopType}
+                    layout={state.layout}
+                    assets={assetMap}
+                    selectedId={state.selectedId}
+                    flaggedIds={flaggedIds}
+                    onSelect={select}
+                    onMove={move}
+                    onReady={onViewerReady}
+                    look={isWhite ? look : 'white'}
+                    siStyle={siStyle}
+                    initialView={remembered.current.pose}
+                    onViewChange={rememberPose}
+                    title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
+                  />
+                </Suspense>
+                {planMain && (
+                  <button
+                    type="button"
+                    className="view-switch"
+                    aria-label="切换到三维"
+                    title="点击切换到三维"
+                    onClick={() => switchView('3d')}
+                  />
+                )}
+              </div>
+              <div className={planMain ? 'view-main' : 'view-mini'}>
+                <PlanView
+                  svgRef={svgRef}
                   space={space}
                   shopType={shopType}
                   layout={state.layout}
+                  issues={issues}
                   assets={assetMap}
                   selectedId={state.selectedId}
-                  flaggedIds={flaggedIds}
-                  onSelect={select}
-                  onMove={move}
-                  onReady={onViewerReady}
-                  look={isWhite ? look : 'white'}
-                  siStyle={siStyle}
-                  initialView={remembered.current.pose}
-                  onViewChange={rememberPose}
-                  title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
+                  onItemPointerDown={onItemPointerDown}
+                  onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
+                  compact={!planMain}
+                  title={`${baseNode.name} 平面`}
                 />
-              </Suspense>
-              {planMain && (
-                <button
-                  type="button"
-                  className="view-switch"
-                  aria-label="切换到三维"
-                  title="点击切换到三维"
-                  onClick={() => switchView('3d')}
-                />
-              )}
+                {!planMain && (
+                  <button
+                    type="button"
+                    className="view-switch"
+                    aria-label="切换到平面"
+                    title="点击切换到平面"
+                    onClick={() => switchView('plan')}
+                  />
+                )}
+              </div>
             </div>
-            <div className={planMain ? 'view-main' : 'view-mini'}>
-              <PlanView
-                svgRef={svgRef}
-                space={space}
-                shopType={shopType}
-                layout={state.layout}
-                issues={issues}
-                assets={assetMap}
-                selectedId={state.selectedId}
-                onItemPointerDown={onItemPointerDown}
-                onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
-                compact={!planMain}
-                title={`${baseNode.name} 平面`}
-              />
-              {!planMain && (
-                <button
-                  type="button"
-                  className="view-switch"
-                  aria-label="切换到平面"
-                  title="点击切换到平面"
-                  onClick={() => switchView('plan')}
-                />
-              )}
-            </div>
-          </div>
-        </section>
+          </section>
+        )
       }
       right={
         <>
@@ -332,6 +364,16 @@ export function PlanEditor({
                   disabled: saveState === 'idle' && !state.dirty,
                 },
               ]}
+              extra={
+                stage === 'plan'
+                  ? {
+                      label: '修改墙体',
+                      title: '改边界、入口、柱子或层高，另存为新的空间和方案',
+                      onClick: editWalls.start,
+                      disabled: create.isPending || editWalls.editing,
+                    }
+                  : undefined
+              }
               second={
                 stage === 'plan' || stage === 'white'
                   ? {

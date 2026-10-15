@@ -12,6 +12,8 @@ interface StagePanelProps {
   title: string
   /** Two actions side by side, then (optionally) one across the full width. */
   first: readonly [StageAction, StageAction]
+  /** Another plain action across the full width, between the two rows. */
+  extra?: StageAction | undefined
   second?: StageAction | undefined
   status?: ReactNode
   hint?: ReactNode
@@ -32,7 +34,7 @@ function ActionButton({ action }: { action: StageAction }) {
 }
 
 /** The current stage and what can be done in it (copy, discard, go to the next stage). */
-export function StagePanel({ title, first, second, status, hint }: StagePanelProps) {
+export function StagePanel({ title, first, extra, second, status, hint }: StagePanelProps) {
   return (
     <section className="stage-panel" aria-label={title}>
       <div className="stage-head">
@@ -43,6 +45,11 @@ export function StagePanel({ title, first, second, status, hint }: StagePanelPro
         <ActionButton action={first[0]} />
         <ActionButton action={first[1]} />
       </div>
+      {extra && (
+        <div className="stage-row single">
+          <ActionButton action={extra} />
+        </div>
+      )}
       {second && (
         <div className="stage-row single">
           <ActionButton action={second} />
