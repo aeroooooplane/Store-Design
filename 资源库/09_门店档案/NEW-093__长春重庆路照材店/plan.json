@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T17:12:58+08:00",
+ "generatedAt": "2026-10-15T18:51:57+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -175,6 +175,7 @@
     "d": 0.116,
     "h": 0.846,
     "rotation": 270.0,
+    "facing": 270.0,
     "drawn_size_m": [
      1.47,
      null
@@ -209,22 +210,23 @@
     "cx": 1.923,
     "cz": 1.503,
     "w": 1.8,
-    "d": 1.01,
+    "d": 1.0,
     "h": 0.907,
     "rotation": 0,
+    "facing": null,
     "drawn_size_m": [
      1.798,
      1.011
     ],
     "size_deviation_m": [
      -0.002,
-     0.001
+     0.011
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "两侧各 2 只高脚凳，模型已包含；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
+    "note": "两侧各 2 只高脚凳，模型已包含；型号尺寸含凳子；碰撞与尺寸标注按桌体"
    },
    {
     "ref": "g03",
@@ -239,6 +241,7 @@
     "d": 0.602,
     "h": 1.205,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.798,
      0.617
@@ -266,6 +269,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 180.0,
+    "facing": 180.0,
     "drawn_size_m": [
      1.51,
      null
@@ -300,6 +304,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.444,
      null
@@ -334,6 +339,7 @@
     "d": 0.116,
     "h": 0.846,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.47,
      null
@@ -371,6 +377,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      0.998,
      1.798
@@ -398,6 +405,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      0.998,
      1.798
@@ -425,6 +433,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      0.998,
      1.798
@@ -452,6 +461,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 270.0,
+    "facing": 270.0,
     "drawn_size_m": [
      1.51,
      null
@@ -486,6 +496,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 270,
+    "facing": 270,
     "drawn_size_m": [
      1.181,
      0.473
@@ -513,6 +524,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 270,
+    "facing": 270,
     "drawn_size_m": [
      1.181,
      0.473
@@ -540,6 +552,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 90.0,
+    "facing": 90.0,
     "drawn_size_m": [
      1.51,
      null
@@ -574,6 +587,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 90.0,
+    "facing": 90.0,
     "drawn_size_m": [
      1.195,
      null
@@ -608,6 +622,7 @@
     "d": 0.35,
     "h": 1.65,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      0.525,
      0.341

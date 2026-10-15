@@ -1,0 +1,760 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-15T18:51:57+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-085",
+ "name": "西塘古镇建新路店",
+ "si": "SI2.0",
+ "shop_type": "边厅店",
+ "source": {
+  "page": 16,
+  "image_px": [
+   2400,
+   1697.2482612639856
+  ],
+  "pdf_scale": 2.0159258139300475
+ },
+ "calibration_px": {
+  "mmPerPixel": 7.0003,
+  "originPx": [
+   287,
+   563
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     287,
+     1921
+    ],
+    "mm": 11440,
+    "what": "顶部总长 11440",
+    "mm_per_px": 7.0012,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "x",
+    "px": [
+     1136.5,
+     1921.2
+    ],
+    "mm": 5492,
+    "what": "底部门右侧 5492",
+    "mm_per_px": 6.9989,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "x",
+    "px": [
+     628.3,
+     957
+    ],
+    "mm": 2300,
+    "what": "顶部柱间 2300",
+    "mm_per_px": 6.9973,
+    "error_pct": -0.04
+   },
+   {
+    "axis": "z",
+    "px": [
+     563,
+     973.5
+    ],
+    "mm": 2875,
+    "what": "左侧总深 2875",
+    "mm_per_px": 7.0037,
+    "error_pct": 0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     563.1,
+     951.6
+    ],
+    "mm": 2719,
+    "what": "右侧总深 2719",
+    "mm_per_px": 6.9987,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "z",
+    "px": [
+     635.5,
+     877
+    ],
+    "mm": 1691,
+    "what": "右侧广告机段 1691",
+    "mm_per_px": 7.0021,
+    "error_pct": 0.03
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    11.438,
+    0.0
+   ],
+   [
+    11.438,
+    2.721
+   ],
+   [
+    0.0,
+    2.872
+   ]
+  ],
+  "height": 3.1,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     0.0,
+     0.676
+    ],
+    "b": [
+     0.0,
+     2.177
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     5.047,
+     2.804
+    ],
+    "b": [
+     5.943,
+     2.793
+    ]
+   }
+  ],
+  "openEdges": [],
+  "obstacles": [
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      2.24,
+      0.0
+     ],
+     [
+      2.387,
+      0.0
+     ],
+     [
+      2.387,
+      0.791
+     ],
+     [
+      2.24,
+      0.791
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      2.24,
+      2.03
+     ],
+     [
+      2.387,
+      2.03
+     ],
+     [
+      2.387,
+      2.84
+     ],
+     [
+      2.24,
+      2.842
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      4.69,
+      0.0
+     ],
+     [
+      4.837,
+      0.0
+     ],
+     [
+      4.837,
+      0.791
+     ],
+     [
+      4.69,
+      0.791
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      4.69,
+      2.03
+     ],
+     [
+      4.837,
+      2.03
+     ],
+     [
+      4.837,
+      2.808
+     ],
+     [
+      4.69,
+      2.81
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      6.321,
+      0.0
+     ],
+     [
+      6.468,
+      0.0
+     ],
+     [
+      6.468,
+      0.791
+     ],
+     [
+      6.321,
+      0.791
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      6.321,
+      2.03
+     ],
+     [
+      6.468,
+      2.03
+     ],
+     [
+      6.468,
+      2.786
+     ],
+     [
+      6.321,
+      2.788
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      8.771,
+      0.0
+     ],
+     [
+      8.918,
+      0.0
+     ],
+     [
+      8.918,
+      0.791
+     ],
+     [
+      8.771,
+      0.791
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      8.771,
+      2.03
+     ],
+     [
+      8.918,
+      2.03
+     ],
+     [
+      8.918,
+      2.754
+     ],
+     [
+      8.771,
+      2.756
+     ]
+    ],
+    "height": null,
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      10.99,
+      0.0
+     ],
+     [
+      11.34,
+      0.0
+     ],
+     [
+      11.34,
+      0.448
+     ],
+     [
+      10.99,
+      0.448
+     ]
+    ],
+    "height": null,
+    "label": "配电箱（在右侧包墙内，检修门朝店内）"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 11440 mm = 1634 px；x 向 5492 mm = 784.7 px；x 向 2300 mm = 328.70000000000005 px；z 向 2875 mm = 410.5 px；z 向 2719 mm = 388.5 px；z 向 1691 mm = 241.5 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "1.8米配件边柜(带托盘) H:900mm",
+    "assetId": "asset-33660153",
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.341,
+    "cz": 0.252,
+    "w": 1.8,
+    "d": 0.531,
+    "h": 1.214,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.027
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米储物边柜(带托盘) H:900mm",
+    "assetId": null,
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.539,
+    "cz": 0.252,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+   },
+   {
+    "ref": "g03",
+    "label": "电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.579,
+    "cz": 0.35,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     0.546,
+     0.35
+    ],
+    "size_deviation_m": [
+     -0.004,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g04",
+    "label": "1.8米储物边柜(带托盘) H:900mm",
+    "assetId": null,
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 7.62,
+    "cz": 0.252,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+   },
+   {
+    "ref": "g05",
+    "label": "1.8米开箱储物边柜 H:900mm",
+    "assetId": null,
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 9.972,
+    "cz": 0.252,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "靠墙边柜（台面两块开箱垫），不是带凳开箱桌；模型库无对应 SI2.0 型号"
+   },
+   {
+    "ref": "g06",
+    "label": "75寸广告机(横向)上加logo",
+    "assetId": "asset-11479197",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 11.015,
+    "cz": 1.355,
+    "w": 1.69,
+    "d": 0.05,
+    "h": 0.958,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.687,
+     null
+    ],
+    "size_deviation_m": [
+     -0.003,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      10.99,
+      0.511
+     ],
+     [
+      10.99,
+      2.198
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "内嵌右端包墙"
+   },
+   {
+    "ref": "g07",
+    "label": "1.8米收银边柜 H:900mm",
+    "assetId": "asset-33819654",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 9.972,
+    "cz": 2.457,
+    "w": 1.8,
+    "d": 0.502,
+    "h": 0.903,
+    "rotation": 180,
+    "facing": 180,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": [
+     -0.001,
+     0.002
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g08",
+    "label": "1.8米储物边柜(带托盘) H:900mm",
+    "assetId": null,
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 7.62,
+    "cz": 2.485,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 180,
+    "facing": 180,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+   },
+   {
+    "ref": "g09",
+    "label": "1.8米储物边柜(带托盘) H:900mm",
+    "assetId": null,
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.539,
+    "cz": 2.541,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 180,
+    "facing": 180,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+   },
+   {
+    "ref": "g10",
+    "label": "1.8米储物边柜(带托盘) H:900mm",
+    "assetId": null,
+    "function": "side_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.341,
+    "cz": 2.569,
+    "w": 1.799,
+    "d": 0.504,
+    "h": null,
+    "rotation": 180,
+    "facing": 180,
+    "drawn_size_m": [
+     1.799,
+     0.504
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+   },
+   {
+    "ref": "g11",
+    "label": "发光logo",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": -0.025,
+    "cz": 1.428,
+    "w": 1.47,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.47,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      0.693
+     ],
+     [
+      0.0,
+      2.163
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "左端门楼门上“影石Insta360”发光字（效果图第 5 页），图注 LOGO 高度 200mm"
+   },
+   {
+    "ref": "g12",
+    "label": "门楣装木匾+发光logo",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 5.496,
+    "cz": 2.824,
+    "w": 1.47,
+    "d": 0.05,
+    "h": null,
+    "rotation": 359.2,
+    "facing": 359.2,
+    "drawn_size_m": [
+     1.47,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.76,
+      2.809
+     ],
+     [
+      6.23,
+      2.79
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "临街门楣；效果图为“影翎 ANTIGRAVITY”发光字 1400×200"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     10.99,
+     0.0
+    ],
+    [
+     11.438,
+     0.0
+    ],
+    [
+     11.438,
+     2.721
+    ],
+    [
+     10.99,
+     2.727
+    ]
+   ],
+   "label": "右端包墙（新做，交叉线填充；内嵌 75 寸广告机、配电箱）"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 31.99,
+  "stated_area_m2": 33.0,
+  "outer_size_m": [
+   11.44,
+   2.87
+  ],
+  "height_source": "图注“店铺天花高度：3100mm”",
+  "counts_by_function": {
+   "side_cabinet": 6,
+   "screen": 2,
+   "unboxing_table": 1,
+   "cashier": 1,
+   "signage": 2
+  },
+  "counts_by_category": {
+   "软装道具": 8,
+   "信息化物料": 2,
+   "品牌标识": 2
+  },
+  "matched_assets": 4
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "草稿比例 7.043 mm/px 偏大约 0.6%，已按顶部 11440、左右总深 2875/2719 等尺寸链改为约 7.00 mm/px",
+   "红色虚线为租赁线：左、上、右为直线，底边（临街长边）为斜线，左端深 2875、右端 2719，按真实角度记",
+   "长边两侧 8 根交叉线填充圆头构件为原建筑立柱（立面 EL-05 柱子侧立面：150×790，下部星空灰铝复合板），记为柱",
+   "右端包墙内另有两根圆柱（约 x1910，y664/862），在包墙内，不单列",
+   "左端为石砌门楼（门洞 1500），临街长边有 900 对开门；主入口按门楼定，需用户确认",
+   "上下长边为原建筑窗墙（立面 EL-05），墙厚约 150，边界取店内侧租赁线"
+  ]
+ }
+}

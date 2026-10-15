@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T17:12:58+08:00",
+ "generatedAt": "2026-10-15T18:51:57+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -255,6 +255,7 @@
     "d": 0.05,
     "h": 0.958,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.702,
      null
@@ -292,6 +293,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.194,
      0.456
@@ -319,6 +321,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.189,
      0.456
@@ -346,6 +349,7 @@
     "d": 0.602,
     "h": 1.205,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.807,
      0.592
@@ -373,6 +377,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      1.006,
      1.807
@@ -400,6 +405,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 0,
+    "facing": null,
     "drawn_size_m": [
      0.995,
      1.797
@@ -427,6 +433,7 @@
     "d": 0.35,
     "h": 1.65,
     "rotation": 100.8,
+    "facing": 100.8,
     "drawn_size_m": [
      0.56,
      null
@@ -464,6 +471,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 270.0,
+    "facing": 270.0,
     "drawn_size_m": [
      0.801,
      null
@@ -498,6 +506,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 278.4,
+    "facing": 278.4,
     "drawn_size_m": [
      1.536,
      null
@@ -532,6 +541,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.493,
      null

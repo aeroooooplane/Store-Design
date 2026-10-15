@@ -21,8 +21,20 @@ from pathlib import Path
 from common import base_args, header, load_json, write_json
 
 MANIFEST = "资源库/04_模型库/manifest.json"
+FACING_FILE = "资源库/04_模型库/facing.json"
 FACING = {"down": 0, "left": 90, "up": 180, "right": 270}
+# 型号正面（facing.json，GLB 自身坐标）→ 旋转补偿：与工作台 orientation.ts 的 facingAfter 一致，
+# +Z 正面的型号转 rotation 后正面朝 FACING 方向；+X 正面的型号要多转 90°，依此类推
+FRONT_OFFSET = {"+Z": 0, "+X": 90, "-Z": 180, "-X": 270}
 SYMMETRIC = {"island_table", "display_stand", "seating", "unboxing_table"}
+# 开箱桌桌体（型号尺寸含凳子；用户 2026-10-15：碰撞与标注按桌体）：型号坐标下的桌体宽、深与桌体中心 x 偏移（米），
+# 由白模量出，与工作台窗口核对一致
+UNBOX_BODY = {
+    "asset-1788391": (1.8, 1.0, 0.0),
+    "asset-41277543": (1.8, 0.8, 0.0),
+    "asset-16469753": (1.8, 0.8, 0.0),
+    "asset-666964": (0.5, 1.8, -0.284),
+}
 FUNCTION_RULES = [
     (r"收银", "cashier"),
     (r"开箱", "unboxing_table"),
@@ -76,26 +88,38 @@ def asset_size(asset):
     return tuple(v / 1000 for v in asset["tight_face_bounds_xyz_mm"])
 
 
-def box_item(it, asset, func, mmpp, ox, oz):
-    """落地道具：图上占地框 + 正面朝向（下 / 左 / 上 / 右）。"""
+def box_item(it, asset, func, mmpp, ox, oz, fronts):
+    """落地道具：图上占地框 + 正面朝向（下 / 左 / 上 / 右，指道具在店里真实的顾客面）。
+    有型号时按 facing.json 的型号正面换算 rotation；没有正面（any）的对称道具按横向长度选 0° 或 90°。
+    开箱桌按桌体：w、d 取桌体，框中心即桌体中心，另记型号原点 model_origin_m（凳子在一侧时与桌体中心不同）。"""
     x0, y0, x1, y1 = it["box"]
-    rotation = FACING[it.get("facing", "down")]
+    facing = FACING[it.get("facing", "down")]
+    rotation = facing
     along_x = (x1 - x0) * mmpp / 1000
     along_z = (y1 - y0) * mmpp / 1000
     out = {}
     if asset and "组合" in (asset.get("variant") or "") and along_x * along_z < 0.5 * asset["tight_face_bounds_xyz_mm"][0] * asset["tight_face_bounds_xyz_mm"][1] / 1e6:
         out["drop_asset"] = True
         asset = None
+    body = UNBOX_BODY.get(asset["asset_id"]) if asset else None
+    front = fronts.get(asset["asset_id"], {}).get("front") if asset else None
     if asset:
         fw, fd, fh = asset_size(asset)
-        if func in SYMMETRIC:
-            # 没有正面的道具：只比横向长度选 0° 或 90°（开箱桌型号尺寸含凳子，进深不能比）
-            rotation = 0 if abs(along_x - fw) <= abs(along_x - fd) else 90
+        bw, bd = body[:2] if body else (fw, fd)
+        if front in FRONT_OFFSET:
+            rotation = (facing + FRONT_OFFSET[front]) % 360
+        elif func in SYMMETRIC or front == "any":
+            # 没有正面的道具：只比横向长度选 0° 或 90°
+            rotation = 0 if abs(along_x - bw) <= abs(along_x - bd) else 90
+            facing = None
     drawn_w, drawn_d = (along_x, along_z) if rotation in (0, 180) else (along_z, along_x)
-    if asset and func == "unboxing_table" and "凳" in (asset.get("variant") or ""):
-        # 用户 2026-10-15：开箱桌碰撞尺寸与标注按桌体，不含凳子
-        w, d, h = round(fw, 3), round(drawn_d, 2), round(fh, 3)
+    if body:
+        w, d, h = bw, bd, round(fh, 3)
         out["body_only"] = True
+        if body[2]:
+            a = math.radians(rotation)
+            out["model_origin_m"] = [round(((x0 + x1) / 2 - ox) * mmpp / 1000 - body[2] * math.cos(a), 3),
+                                     round(((y0 + y1) / 2 - oz) * mmpp / 1000 - body[2] * math.sin(a), 3)]
     elif asset:
         w, d, h = round(fw, 3), round(fd, 3), round(fh, 3)
     else:
@@ -103,7 +127,7 @@ def box_item(it, asset, func, mmpp, ox, oz):
     return out | {
         "cx": round(((x0 + x1) / 2 - ox) * mmpp / 1000, 3),
         "cz": round(((y0 + y1) / 2 - oz) * mmpp / 1000, 3),
-        "w": w, "d": d, "h": h, "rotation": rotation,
+        "w": w, "d": d, "h": h, "rotation": rotation, "facing": facing,
         "drawn_size_m": [round(drawn_w, 3), round(drawn_d, 3)],
         "size_deviation_m": [round(drawn_w - w, 3), round(drawn_d - d, 3)] if asset else None,
     }
@@ -112,7 +136,7 @@ def box_item(it, asset, func, mmpp, ox, oz):
 DIRS = {"down": (0, 1), "up": (0, -1), "left": (-1, 0), "right": (1, 0)}
 
 
-def wall_item(it, asset, mmpp, ox, oz):
+def wall_item(it, asset, mmpp, ox, oz, fronts):
     """沿墙道具：on_wall.a→b 是它在墙面线上占的那一段（原图像素），front 是正面的大致方向。
     内嵌（mount=embedded）：正面落在墙面线上，机身在墙内；贴墙 / 落地靠墙：机身在墙面线前方；
     门头（location=facade）：front 朝店外，机身在边界外。任意角度的斜墙按真实角度记。"""
@@ -122,7 +146,9 @@ def wall_item(it, asset, mmpp, ox, oz):
     want = DIRS[it["on_wall"]["front"]]
     normals = [(-ty, tx), (ty, -tx)]
     fx, fy = max(normals, key=lambda n: n[0] * want[0] + n[1] * want[1])
-    rotation = round(math.degrees(math.atan2(-fx, fy)) % 360, 1)
+    facing = round(math.degrees(math.atan2(-fx, fy)) % 360, 1)
+    front = fronts.get(asset["asset_id"], {}).get("front") if asset else None
+    rotation = round((facing + FRONT_OFFSET.get(front, 0)) % 360, 1)
     if asset:
         w, d, h = (round(v, 3) for v in asset_size(asset))
     else:
@@ -132,7 +158,7 @@ def wall_item(it, asset, mmpp, ox, oz):
     cx = (mx - ox) * mmpp / 1000 + sign * fx * d / 2
     cz = (my - oz) * mmpp / 1000 + sign * fy * d / 2
     return {
-        "cx": round(cx, 3), "cz": round(cz, 3), "w": w, "d": d, "h": h, "rotation": rotation,
+        "cx": round(cx, 3), "cz": round(cz, 3), "w": w, "d": d, "h": h, "rotation": rotation, "facing": facing,
         "drawn_size_m": [round(length * mmpp / 1000, 3), None],
         "size_deviation_m": [round(length * mmpp / 1000 - w, 3), None] if asset else None,
         "wall_segment_m": [[round((ax - ox) * mmpp / 1000, 3), round((ay - oz) * mmpp / 1000, 3)], [round((bx - ox) * mmpp / 1000, 3), round((by - oz) * mmpp / 1000, 3)]],
@@ -145,6 +171,7 @@ def main() -> None:
     args = parser.parse_args()
     assets = load_json(args.repo / MANIFEST)["assets"]
     by_id = {a["asset_id"]: a for a in assets}
+    fronts = load_json(args.repo / FACING_FILE)["assets"]
     folders = {p.name.split("__")[0]: p for p in args.out.iterdir() if p.is_dir() and "__" in p.name}
     stores = {s["store_id"]: s for s in load_json(args.out / "门店总表.json")["stores"]}
     for gold_dir in sorted((args.out / "_cache" / "gold").iterdir()):
@@ -199,14 +226,14 @@ def main() -> None:
             mount = {"hanging": "ceiling"}.get(it.get("mount", "floor"), it.get("mount", "floor"))
             location = it.get("location", "interior")
             if "on_wall" in it:
-                item = wall_item(it, asset, mmpp, ox, oz)
+                item = wall_item(it, asset, mmpp, ox, oz, fronts)
             else:
-                item = box_item(it, asset, func, mmpp, ox, oz)
+                item = box_item(it, asset, func, mmpp, ox, oz, fronts)
             if item.pop("drop_asset", False):
                 note = "；".join(x for x in (note, f"模型库只有组合款 {asset['asset_id']}（{asset.get('variant')}），按单件记") if x)
                 asset = None
             if item.pop("body_only", False):
-                note = "；".join(x for x in (note, "型号尺寸含两侧凳子；碰撞与尺寸标注按桌体") if x)
+                note = "；".join(x for x in (note, "型号尺寸含凳子；碰撞与尺寸标注按桌体") if x)
             items.append(
                 {
                     "ref": f"g{n:02d}",

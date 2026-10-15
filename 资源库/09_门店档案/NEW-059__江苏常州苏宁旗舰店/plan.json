@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T18:30:05+08:00",
+ "generatedAt": "2026-10-15T18:51:57+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -197,6 +197,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.196,
      0.488
@@ -224,6 +225,7 @@
     "d": 0.45,
     "h": 2.4,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.196,
      0.488
@@ -251,6 +253,7 @@
     "d": 0.05,
     "h": 0.958,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.668,
      null
@@ -288,6 +291,7 @@
     "d": 0.602,
     "h": 1.205,
     "rotation": 0,
+    "facing": 0,
     "drawn_size_m": [
      1.809,
      0.582
@@ -312,22 +316,23 @@
     "cx": 2.222,
     "cz": 2.95,
     "w": 1.8,
-    "d": 0.99,
+    "d": 1.0,
     "h": 0.907,
     "rotation": 0,
+    "facing": null,
     "drawn_size_m": [
      1.801,
      0.991
     ],
     "size_deviation_m": [
      0.001,
-     0.001
+     -0.009
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列；型号尺寸含两侧凳子；碰撞与尺寸标注按桌体"
+    "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列；型号尺寸含凳子；碰撞与尺寸标注按桌体"
    },
    {
     "ref": "g06",
@@ -342,6 +347,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      0.991,
      1.793
@@ -369,6 +375,7 @@
     "d": 1.8,
     "h": 1.327,
     "rotation": 90,
+    "facing": null,
     "drawn_size_m": [
      0.991,
      1.793
@@ -396,6 +403,7 @@
     "d": 0.35,
     "h": 1.65,
     "rotation": 90,
+    "facing": 90,
     "drawn_size_m": [
      0.551,
      0.354
@@ -423,6 +431,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 270.0,
+    "facing": 270.0,
     "drawn_size_m": [
      1.196,
      null
@@ -457,6 +466,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.463,
      null
@@ -491,6 +501,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 0.0,
+    "facing": 0.0,
     "drawn_size_m": [
      1.062,
      null
@@ -525,6 +536,7 @@
     "d": 0.05,
     "h": null,
     "rotation": 270.0,
+    "facing": 270.0,
     "drawn_size_m": [
      1.455,
      null

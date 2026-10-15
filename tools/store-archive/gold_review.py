@@ -62,9 +62,14 @@ def schematic(plan: dict) -> Image.Image:
             corners.append(px((it["cx"] + dx * math.cos(ang) - dz * math.sin(ang), it["cz"] + dx * math.sin(ang) + dz * math.cos(ang))))
         color = COLORS.get(it["function"], (90, 90, 90))
         draw.polygon(corners, outline=color, width=2, fill=tuple(int(c * 0.25 + 255 * 0.75) for c in color))
-        fx, fz = it["cx"] + math.sin(-ang) * 0 + (-math.sin(ang)) * it["d"] / 2 * 0, it["cz"]
-        front = px((it["cx"] - math.sin(ang) * it["d"] / 2, it["cz"] + math.cos(ang) * it["d"] / 2))
-        draw.ellipse([front[0] - 3, front[1] - 3, front[0] + 3, front[1] + 3], fill=color)
+        facing = it.get("facing", it["rotation"])
+        if facing is not None:
+            # 正面圆点画在真实朝向（facing）那一侧的边上；型号正面不在 +Z 时 rotation 与 facing 不同
+            f = math.radians(facing)
+            fx, fz = -math.sin(f), math.cos(f)
+            reach = abs(fx * math.cos(ang) + fz * math.sin(ang)) * it["w"] / 2 + abs(-fx * math.sin(ang) + fz * math.cos(ang)) * it["d"] / 2
+            front = px((it["cx"] + fx * reach, it["cz"] + fz * reach))
+            draw.ellipse([front[0] - 3, front[1] - 3, front[0] + 3, front[1] + 3], fill=color)
         cx, cy = px((it["cx"], it["cz"]))
         draw.text((cx - 6, cy - 9), str(n), fill=(0, 0, 0), font=big)
     mmw = round(w * 1000)
@@ -111,7 +116,7 @@ def main() -> None:
         rows = "".join(
             f"<tr><td>{n}</td><td>{html.escape(it['label'])}</td><td>{FUNCTION_LABELS.get(it['function'], it['function'])}</td>"
             f"<td>{html.escape(it['assetId'] or '（模型库无对应）')}</td><td>{round(it['w'] * 1000)}×{round(it['d'] * 1000)}</td>"
-            f"<td>{FACING_TEXT.get(it['rotation'], str(it['rotation']) + '°')}{'（' + MOUNT_TEXT.get(it.get('mount'), '') + ('，店外门头' if it.get('location') == 'facade' else '') + '）' if it.get('mount') != 'floor' or it.get('location') == 'facade' else ''}</td><td>{html.escape(it.get('note') or '')}</td></tr>"
+            f"<td>{'无正面' if it.get('facing', 0) is None else FACING_TEXT.get(it.get('facing', it['rotation']), str(it.get('facing', it['rotation'])) + '°')}{'（' + MOUNT_TEXT.get(it.get('mount'), '') + ('，店外门头' if it.get('location') == 'facade' else '') + '）' if it.get('mount') != 'floor' or it.get('location') == 'facade' else ''}</td><td>{html.escape(it.get('note') or '')}</td></tr>"
             for n, it in enumerate(plan["layout"]["items"], 1)
         )
         notes = "".join(f"<li>{html.escape(x)}</li>" for x in plan["review"]["notes"])
