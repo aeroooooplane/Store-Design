@@ -2121,6 +2121,19 @@
                                         "locked": {
                                           "default": false,
                                           "type": "boolean"
+                                        },
+                                        "mount": {
+                                          "type": "string",
+                                          "enum": [
+                                            "floor",
+                                            "wall",
+                                            "ceiling"
+                                          ]
+                                        },
+                                        "elevation": {
+                                          "type": "number",
+                                          "minimum": 0,
+                                          "maximum": 20
                                         }
                                       },
                                       "required": [
@@ -2425,6 +2438,19 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
                                       }
                                     },
                                     "required": [
@@ -3353,6 +3379,19 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
                             }
                           },
                           "required": [
@@ -3985,6 +4024,19 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
                                       }
                                     },
                                     "required": [
@@ -4786,6 +4838,19 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
                                   }
                                 },
                                 "required": [
@@ -5557,6 +5622,19 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
                                   }
                                 },
                                 "required": [
@@ -6309,6 +6387,19 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
                                   }
                                 },
                                 "required": [
@@ -7061,6 +7152,19 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
                                   }
                                 },
                                 "required": [
@@ -7455,6 +7559,19 @@
                               "locked": {
                                 "default": false,
                                 "type": "boolean"
+                              },
+                              "mount": {
+                                "type": "string",
+                                "enum": [
+                                  "floor",
+                                  "wall",
+                                  "ceiling"
+                                ]
+                              },
+                              "elevation": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 20
                               }
                             },
                             "required": [
@@ -7863,6 +7980,19 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
                             }
                           },
                           "required": [
@@ -8124,6 +8254,19 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
                                   }
                                 },
                                 "required": [
@@ -12143,6 +12286,19 @@
                                     "locked": {
                                       "default": false,
                                       "type": "boolean"
+                                    },
+                                    "mount": {
+                                      "type": "string",
+                                      "enum": [
+                                        "floor",
+                                        "wall",
+                                        "ceiling"
+                                      ]
+                                    },
+                                    "elevation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 20
                                     }
                                   },
                                   "required": [
@@ -12741,6 +12897,19 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
                             }
                           },
                           "required": [
@@ -13085,7 +13254,8 @@
                                 "type": "string",
                                 "enum": [
                                   "floor",
-                                  "wall"
+                                  "wall",
+                                  "ceiling"
                                 ]
                               },
                               {
@@ -13575,7 +13745,8 @@
                           "type": "string",
                           "enum": [
                             "floor",
-                            "wall"
+                            "wall",
+                            "ceiling"
                           ]
                         },
                         {
@@ -18063,6 +18234,19 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
                             }
                           },
                           "required": [
@@ -18673,6 +18857,19 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
                                       }
                                     },
                                     "required": [

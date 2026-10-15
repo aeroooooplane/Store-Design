@@ -62,7 +62,7 @@ export const assets = pgTable(
     check('assets_id_format', sql`${t.id} ~ '^asset-[0-9]+$'`),
     check(
       'assets_installation_known',
-      sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall')`,
+      sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall', 'ceiling')`,
     ),
     check('assets_footprint_source_known', sql`${t.footprintSource} IN ('glb', 'source')`),
     check(

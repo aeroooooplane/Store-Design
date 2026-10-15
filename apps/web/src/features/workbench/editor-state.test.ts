@@ -242,3 +242,114 @@ describe('magnetic snapping while moving', () => {
     expect(editorReducer(start, near).layout.items[0]).toMatchObject({ cx: 3.15, cz: 3.05 })
   })
 })
+
+describe('wall pieces', () => {
+  // 6 m × 4 m, 3 m high: back wall at z = 0, left wall at x = 0.
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.453 },
+    front: '+Z',
+    placeable: false,
+  })
+  const cabinet = item({
+    id: 'accessory_cabinet-1',
+    function: 'accessory_cabinet',
+    cx: 3,
+    cz: 0.275,
+    w: 2.4,
+    d: 0.55,
+    h: 2.4,
+  })
+
+  it('goes onto the nearest wall above the cabinet there when added', () => {
+    const added = editorReducer(state([cabinet]), {
+      type: 'add',
+      asset: logo,
+      cx: 3,
+      cz: 1,
+      space,
+    })
+    expect(added.layout.items[1]).toMatchObject({
+      mount: 'wall',
+      cx: 3,
+      cz: 0.025,
+      rotation: 0,
+      elevation: 2.5,
+      placeholder: true,
+    })
+  })
+
+  it('turns onto a side wall when dragged there and follows the props below', () => {
+    const start = editorReducer(state([cabinet]), {
+      type: 'add',
+      asset: logo,
+      cx: 3,
+      cz: 1,
+      space,
+    })
+    const moved = editorReducer(start, {
+      type: 'move',
+      id: 'signage-1',
+      cx: 0.2,
+      cz: 2,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(moved.layout.items[1]).toMatchObject({
+      cx: 0.025,
+      cz: 2,
+      rotation: 270,
+      w: 0.05,
+      d: 3.453,
+      elevation: 1.8,
+    })
+  })
+
+  it('follows the props below through every step of a drag across the room', () => {
+    let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    for (const [cx, cz] of [
+      [2.8, 0.3],
+      [1.5, 1.5],
+      [0.5, 2],
+      [0.2, 2],
+    ] as const) {
+      s = editorReducer(s, {
+        type: 'move',
+        id: 'signage-1',
+        cx,
+        cz,
+        group: 'drag',
+        snapTo: space,
+        front: '+Z',
+      })
+    }
+    expect(s.layout.items[1]).toMatchObject({ cx: 0.025, rotation: 270, elevation: 1.8 })
+  })
+
+  it('keeps a height typed in by hand when moved along the wall', () => {
+    let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    s = editorReducer(s, { type: 'elevate', id: 'signage-1', elevation: 2.6 })
+    s = editorReducer(s, {
+      type: 'move',
+      id: 'signage-1',
+      cx: 2.5,
+      cz: 0.1,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(s.layout.items[1]).toMatchObject({ cx: 2.5, cz: 0.025, elevation: 2.6 })
+  })
+
+  it('never gives a floor prop a height', () => {
+    const s = editorReducer(state([cabinet]), {
+      type: 'elevate',
+      id: 'accessory_cabinet-1',
+      elevation: 1,
+    })
+    expect(s.layout.items[0]?.elevation).toBeUndefined()
+  })
+})

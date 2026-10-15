@@ -182,6 +182,13 @@ svg.plan pattern * {
   stroke: var(--line-strong);
   stroke-dasharray: 4 3;
 }
+/* Wall and ceiling pieces: dashed, see-through, over the props below them. */
+.plan-mounted {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1px;
+  stroke-dasharray: 3 2;
+}
 .plan-item-frame {
   fill: transparent;
   stroke: none;

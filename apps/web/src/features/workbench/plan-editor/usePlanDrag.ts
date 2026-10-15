@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import type { Dispatch, PointerEvent as ReactPointerEvent } from 'react'
-import type { LayoutItem, Space } from '@store/shared'
+import type { FrontAxis, LayoutItem, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
 function toWorld(
@@ -13,10 +13,23 @@ function toWorld(
   return [point.x, point.y]
 }
 
-/** Dragging props on the plan: one undo step per drag, magnetic snapping unless Alt is held. */
-export function usePlanDrag(space: Space, dispatch: Dispatch<EditorAction>) {
+/**
+ * Dragging props on the plan: one undo step per drag, magnetic snapping unless Alt is held.
+ * `frontOf` gives a model's front, which a wall piece turns into the shop.
+ */
+export function usePlanDrag(
+  space: Space,
+  dispatch: Dispatch<EditorAction>,
+  frontOf: (item: LayoutItem) => FrontAxis | null,
+) {
   const svgRef = useRef<SVGSVGElement>(null)
-  const drag = useRef<{ id: string; dx: number; dz: number; group: string } | null>(null)
+  const drag = useRef<{
+    id: string
+    dx: number
+    dz: number
+    group: string
+    front: FrontAxis | null
+  } | null>(null)
 
   function onItemPointerDown(item: LayoutItem, event: ReactPointerEvent<SVGGElement>) {
     event.stopPropagation()
@@ -28,6 +41,7 @@ export function usePlanDrag(space: Space, dispatch: Dispatch<EditorAction>) {
       dx: world[0] - item.cx,
       dz: world[1] - item.cz,
       group: `drag:${item.id}:${event.timeStamp}`,
+      front: frontOf(item),
     }
     svgRef.current?.setPointerCapture(event.pointerId)
   }
@@ -44,6 +58,7 @@ export function usePlanDrag(space: Space, dispatch: Dispatch<EditorAction>) {
         group: drag.current.group,
         // Hold Alt to place freely without sticking to walls and neighbours.
         snapTo: event.altKey ? null : space,
+        front: drag.current.front,
       })
   }
 

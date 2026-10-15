@@ -6,8 +6,10 @@ export const FRONT_AXES = ['+Z', '-Z', '+X', '-X', 'any'] as const
 export const FrontAxisSchema = z.enum(FRONT_AXES)
 export type FrontAxis = z.infer<typeof FrontAxisSchema>
 
-export const INSTALLATIONS = ['floor', 'wall'] as const
+/** How a model is installed: standing on the floor, against a wall or hanging from the ceiling. */
+export const INSTALLATIONS = ['floor', 'wall', 'ceiling'] as const
 export const InstallationSchema = z.enum(INSTALLATIONS)
+export type Installation = z.infer<typeof InstallationSchema>
 
 export const SI_FAMILIES = ['SI1.0', 'SI2.0', '通用', '非标'] as const
 
@@ -60,7 +62,7 @@ export const AssetSchema = z.object({
   front: FrontAxisSchema.nullable(),
   staffSide: FrontAxisSchema.nullable(),
   facingConfidence: z.enum(['high', 'medium', 'low']).nullable(),
-  /** Has a verified web model and stands on the floor: the planner may use it. */
+  /** Has a verified web model and a known installation; the planner only uses floor models. */
   placeable: z.boolean(),
   /** Marked 删除 in 模型选用表: old layouts still show it; it is no longer offered or planned. */
   retired: z.boolean(),
