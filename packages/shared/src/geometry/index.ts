@@ -27,6 +27,20 @@ export {
   rectsOverlap,
   segmentIntersectsRectInterior,
 } from './rect.ts'
+export {
+  obbBounds,
+  obbCorners,
+  obbGap,
+  obbInsidePolygon,
+  obbsOverlap,
+  nearestQuarter,
+  placedBox,
+  quarterTilt,
+  polygonOverlapsObb,
+  segmentIntersectsObbInterior,
+  turnPoint,
+} from './obb.ts'
+export type { Obb } from './obb.ts'
 export { interiorPoint } from './interior.ts'
 export type { InteriorPointOptions } from './interior.ts'
 export { AGAINST_WALL_M, wallShift } from './follow-walls.ts'

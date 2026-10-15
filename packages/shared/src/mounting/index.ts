@@ -1,4 +1,5 @@
 import { edges, locatePoint } from '../geometry/polygon.ts'
+import { nearestQuarter, obbsOverlap, placedBox } from '../geometry/obb.ts'
 import { rectFromCenter, rectsOverlap } from '../geometry/rect.ts'
 import type { Point } from '../geometry/types.ts'
 import { rotationFacing } from '../planner/orientation.ts'
@@ -51,18 +52,19 @@ export function verticalRange(
   return [bottom, bottom + item.h]
 }
 
+/** Fields itemsCollide reads; without a rotation an item counts as unturned. */
+type Colliding = Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount' | 'elevation'> & {
+  rotation?: number | undefined
+}
+
 /**
- * Whether two items take up the same room. Floor props clash when their footprints overlap; a
- * wall or ceiling piece never clashes with a floor prop (a LOGO above a cabinet is normal); two
- * raised pieces clash when both their footprints and their heights overlap. A built-in piece
- * (embedded) is inside the wall and only meets other built-in pieces, the same way.
+ * Whether two items take up the same room. Floor props clash when their footprints overlap (as
+ * turned boxes); a wall or ceiling piece never clashes with a floor prop (a LOGO above a cabinet
+ * is normal); two raised pieces clash when both their footprints and their heights overlap. A
+ * built-in piece (embedded) is inside the wall and only meets other built-in pieces, the same way.
  */
-export function itemsCollide(
-  a: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount' | 'elevation'>,
-  b: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount' | 'elevation'>,
-): boolean {
-  if (!rectsOverlap(rectFromCenter(a.cx, a.cz, a.w, a.d), rectFromCenter(b.cx, b.cz, b.w, b.d)))
-    return false
+export function itemsCollide(a: Colliding, b: Colliding): boolean {
+  if (!obbsOverlap(placedBox(a), placedBox(b))) return false
   const floorA = itemMount(a) === 'floor'
   const floorB = itemMount(b) === 'floor'
   if (floorA && floorB) return true
@@ -168,9 +170,14 @@ export function mountedWall(
   return best?.face ?? null
 }
 
-/** Footprint after turning from `from` to `to` (quarter turns swap width and depth). */
+/**
+ * Footprint after turning from `from` to the quarter turn `to`: width and depth swap when the
+ * nearest quarter turn of `from` is a quarter off it.
+ */
 function turned(item: Pick<LayoutItem, 'w' | 'd'>, from: Rotation, to: Rotation) {
-  return (from - to) % 180 === 0 ? { w: item.w, d: item.d } : { w: item.d, d: item.w }
+  return (nearestQuarter(from) - to) % 180 === 0
+    ? { w: item.w, d: item.d }
+    : { w: item.d, d: item.w }
 }
 
 export interface WallPlacement {
