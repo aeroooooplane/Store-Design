@@ -1,6 +1,19 @@
 import { describe, expect, it } from 'vitest'
 import type { ShopType } from '../enums.ts'
-import { polygonOverlapsRect, rectFromCenter, rectGap, rectsOverlap } from '../geometry/index.ts'
+import {
+  boundaryPath,
+  distanceToSegment,
+  edges,
+  locatePoint,
+  pathMidpoint,
+  polygonOverlapsRect,
+  rectCorners,
+  rectFromCenter,
+  rectGap,
+  rectInsidePolygon,
+  rectsOverlap,
+  toClockwise,
+} from '../geometry/index.ts'
 import type { Point } from '../geometry/index.ts'
 import { itemFootprint } from '../schemas/layout.ts'
 import type { LayoutItem } from '../schemas/layout.ts'
@@ -23,6 +36,7 @@ import {
   lShape as lShop,
   trapezoid,
 } from './shapes.fixture.ts'
+import { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
 import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
 
 // Real catalogue sizes (资源库/04_模型库).
@@ -296,24 +310,29 @@ describe('planLayout', () => {
     const cabinetsOf = (items: LayoutItem[]) =>
       items.filter((i) => i.function === 'accessory_cabinet' || i.function === 'side_cabinet')
 
-    it.each(shapes)('%s：三种策略都不沿边界放高于 1.5 m 的柜子，矮柜照放', (_, s) => {
-      expect(DEFAULT_RULES.island.cabinetMaxHeight).toBe(ISLAND_CABINET_MAX_H)
-      for (const strategy of STRATEGIES) {
-        const { layout, issues, notes } = planLayout({
-          space: s,
-          shopType: 'island',
-          strategy,
-          catalog: mixed,
-        })
-        expect(issues.filter((i) => i.severity === 'error')).toEqual([])
-        const cabinets = cabinetsOf(layout.items)
-        for (const item of cabinets) expect(item.h).toBeLessThanOrEqual(ISLAND_CABINET_MAX_H)
-        if (strategy !== 'min') expect(cabinets.length).toBeGreaterThan(0)
-        expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子')
-        // The cashier still stands against the back of the shop.
-        expect(byFunction(layout.items, 'cashier')).toHaveLength(1)
-      }
-    })
+    it.each(shapes)(
+      '%s：三种策略都不沿边界放高于 1.5 m 的柜子，矮柜不超过按面积的个数',
+      (name, s) => {
+        expect(DEFAULT_RULES.island.cabinetMaxHeight).toBe(ISLAND_CABINET_MAX_H)
+        for (const strategy of STRATEGIES) {
+          const { layout, issues, notes } = planLayout({
+            space: s,
+            shopType: 'island',
+            strategy,
+            catalog: mixed,
+          })
+          expect(issues.filter((i) => i.severity === 'error')).toEqual([])
+          const cabinets = cabinetsOf(layout.items)
+          for (const item of cabinets) expect(item.h).toBeLessThanOrEqual(ISLAND_CABINET_MAX_H)
+          // A low cabinet in the cabinet list counts as a side cabinet: a few at most, by area.
+          expect(cabinets.length).toBeLessThanOrEqual(sideCabinetsForArea(usableArea(s), strategy))
+          if (name === '10×8 矩形') expect(cabinets.length).toBeGreaterThan(0)
+          expect(notes).toContain('中岛店不沿边界放高于 1.5 m 的柜子')
+          // The cashier still stands against the back of the shop.
+          expect(byFunction(layout.items, 'cashier')).toHaveLength(1)
+        }
+      },
+    )
 
     it('leaves the cabinets out and says so when the catalogue has only tall ones', () => {
       for (const strategy of STRATEGIES) {
@@ -509,4 +528,331 @@ describe('planLayout on irregular shops', () => {
       expect(max?.placed).toBeGreaterThanOrEqual(run(s, 'area').layout.planning?.requested ?? 0)
     }
   })
+})
+
+describe('side cabinets along the edge of an island shop', () => {
+  // 配件边柜 of the real catalogue: SI1.0 1.8米边桌配件柜 (front +X) and SI2.0 1.8米配件边柜(带托盘).
+  const si1Side = {
+    id: 'asset-34320268',
+    name: '1.8米边桌配件柜',
+    function: 'side_cabinet',
+    footprint: { w: 0.5, d: 1.8, h: 1.214 },
+    front: '+X',
+  } as const
+  const si2Side = {
+    id: 'asset-33660153',
+    name: '1.8米配件边柜(带托盘)',
+    function: 'side_cabinet',
+    footprint: { w: 1.8, d: 0.531, h: 1.214 },
+    front: '+Z',
+  } as const
+  const withSide: PlannerCatalog = { ...catalog, sideCabinet: [si1Side] }
+  const withSi2Side: PlannerCatalog = { ...catalog, sideCabinet: [si2Side] }
+  const plan = (
+    s: Space,
+    strategy: GeneratedStrategy,
+    cat: PlannerCatalog = withSide,
+    shopType: ShopType = 'island',
+  ) => planLayout({ space: s, shopType, strategy, catalog: cat })
+  const sidesOf = (items: LayoutItem[]) => byFunction(items, 'side_cabinet')
+  const fronts: Record<string, '+X' | '+Z'> = { [si1Side.id]: '+X', [si2Side.id]: '+Z' }
+
+  const strip = (a: Point, b: Point, n: Point, depth: number): Point[] => [
+    a,
+    b,
+    [b[0] + n[0] * depth, b[1] + n[1] * depth],
+    [a[0] + n[0] * depth, a[1] + n[1] * depth],
+  ]
+  /** Inward normal of a boundary piece: the side its midpoint moves into the shop. */
+  const pieceNormal = (s: Space, a: Point, b: Point): Point => {
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1])
+    const n: Point = [-(b[1] - a[1]) / len, (b[0] - a[0]) / len]
+    const probe: Point = [(a[0] + b[0]) / 2 + n[0] * 0.01, (a[1] + b[1]) / 2 + n[1] * 0.01]
+    return locatePoint(probe, s.boundary) === 'inside' ? n : [-n[0], -n[1]]
+  }
+  const piecesOf = (s: Space, a: Point, b: Point) =>
+    boundaryPath(toClockwise(s.boundary), a, b, 0.02) ?? []
+  /** The main entrance's midpoint and inward direction, as the planner takes them. */
+  const mainOf = (s: Space) => {
+    const entrance = s.entrances.find((e) => e.kind === 'main') ?? s.entrances[0]
+    if (!entrance) throw new Error('no entrance')
+    const pieces = piecesOf(s, entrance.a, entrance.b)
+    const sum = pieces.reduce<Point>(
+      (acc, p) => {
+        const n = pieceNormal(s, p.a, p.b)
+        const len = Math.hypot(p.b[0] - p.a[0], p.b[1] - p.a[1])
+        return [acc[0] + n[0] * len, acc[1] + n[1] * len]
+      },
+      [0, 0],
+    )
+    const len = Math.hypot(sum[0], sum[1])
+    return { mid: pathMidpoint(pieces) as Point, n: [sum[0] / len, sum[1] / len] as Point }
+  }
+  /** Entrance buffers (1 m) and the 1.2 m main aisle of an island shop. */
+  const keepOuts = (s: Space): Point[][] => {
+    const buffers = s.entrances.flatMap((e) =>
+      piecesOf(s, e.a, e.b).map((p) => strip(p.a, p.b, pieceNormal(s, p.a, p.b), 1)),
+    )
+    const { mid, n } = mainOf(s)
+    const side: Point = [-n[1], n[0]]
+    const at = (k: number): Point => [mid[0] + side[0] * k, mid[1] + side[1] * k]
+    return [...buffers, strip(at(0.6), at(-0.6), n, 100)]
+  }
+
+  it('asks for one per 25 ㎡ from 20 ㎡, three at most, and at most 3 / 2 / 1 by strategy', () => {
+    expect(DEFAULT_SIDE_CABINET_RULES).toMatchObject({
+      minArea: 20,
+      areaPerCabinet: 25,
+      maxCount: 3,
+      strategyMax: { max: 3, area: 2, min: 1 },
+      sideFromDepth: 0.5,
+    })
+    const counts = (area: number) => STRATEGIES.map((s) => sideCabinetsForArea(area, s))
+    expect(counts(15)).toEqual([0, 0, 0])
+    expect(counts(19.9)).toEqual([0, 0, 0])
+    expect(counts(20)).toEqual([1, 1, 1])
+    expect(counts(30)).toEqual([1, 1, 1])
+    expect(counts(49.9)).toEqual([1, 1, 1])
+    expect(counts(60)).toEqual([2, 2, 1])
+    expect(counts(120)).toEqual([3, 2, 1])
+    expect(counts(500)).toEqual([3, 2, 1])
+  })
+
+  it.each([
+    [15, rectangleSpace(5, 3, 3.2), [0, 0, 0], '中岛店面积 15 ㎡，不足 20 ㎡，不放配件边柜'],
+    [
+      30,
+      rectangleSpace(6, 5, 3.2),
+      [1, 1, 1],
+      '中岛店按面积 30 ㎡ 放 1 个配件边柜（每 25 ㎡ 1 个，最多 3 个）',
+    ],
+    [
+      60,
+      rectangleSpace(10, 6, 3.2),
+      [2, 2, 1],
+      '中岛店按面积 60 ㎡ 放 2 个配件边柜（每 25 ㎡ 1 个，最多 3 个）',
+    ],
+    [
+      120,
+      rectangleSpace(12, 10, 3.2),
+      [3, 2, 1],
+      '中岛店按面积 120 ㎡ 放 3 个配件边柜（每 25 ㎡ 1 个，最多 3 个）',
+    ],
+  ])(
+    '%s ㎡ 的中岛店：尽量多放、按面积推荐、尽量少放的个数符合规则，说明写明依据',
+    (_, s, expected, note) => {
+      const counts = STRATEGIES.map((strategy) => sidesOf(plan(s, strategy).layout.items).length)
+      expect(counts).toEqual(expected)
+      expect(plan(s, 'max').notes).toContain(note)
+    },
+    30_000,
+  )
+
+  it('names the strategy cap and the shortfall in the note', () => {
+    expect(plan(rectangleSpace(12, 10, 3.2), 'area').notes).toContain(
+      '中岛店按面积 120 ㎡ 放 2 个配件边柜（每 25 ㎡ 1 个，最多 3 个；按面积推荐最多 2 个）',
+    )
+    expect(plan(rectangleSpace(12, 10, 3.2), 'min').notes).toContain(
+      '中岛店按面积 120 ㎡ 放 1 个配件边柜（每 25 ㎡ 1 个，最多 3 个；尽量少放最多 1 个）',
+    )
+    // With the SI2.0 table 尽量多放 fills the floor of 120 ㎡: tables first, no edge left.
+    const si2: PlannerCatalog = {
+      ...withSi2Side,
+      island: [
+        {
+          id: 'asset-2',
+          name: '1.8米普通中岛桌',
+          function: 'island_table',
+          footprint: { w: 1.8, d: 0.804, h: 1.214 },
+          front: '+Z',
+        },
+      ],
+    }
+    const { layout, notes } = plan(rectangleSpace(12, 10, 3.2), 'max', si2)
+    expect(sidesOf(layout.items)).toEqual([])
+    expect(notes).toContain(
+      '中岛店按面积 120 ㎡ 应放 3 个配件边柜（每 25 ㎡ 1 个，最多 3 个），中岛桌优先，边缘空间只放下 0 个',
+    )
+  }, 30_000)
+
+  const cases: [string, Space][] = [
+    ['10×8 整面入口', rectangleSpace(10, 8, 3.2)],
+    [
+      '12×10 正面中段入口',
+      space({
+        ...rectangleSpace(12, 10, 3.2),
+        entrances: [{ a: [4.5, 10], b: [7.5, 10], kind: 'main' }],
+      }),
+    ],
+    [
+      '12×10 右侧加侧门',
+      space({
+        ...rectangleSpace(12, 10, 3.2),
+        entrances: [
+          { a: [1, 10], b: [11, 10], kind: 'main' },
+          { a: [12, 2], b: [12, 4], kind: 'side' },
+        ],
+      }),
+    ],
+    [
+      '10×8 左侧入口',
+      space({
+        ...rectangleSpace(10, 8, 3.2),
+        entrances: [{ a: [0, 1], b: [0, 7], kind: 'main' }],
+      }),
+    ],
+    [
+      '10×8 左侧开放',
+      space({ ...rectangleSpace(10, 8, 3.2), openEdges: [{ a: [0, 8], b: [0, 0] }] }),
+    ],
+    ['6×5', rectangleSpace(6, 5, 3.2)],
+    ['带柱子', withColumn],
+    ['U 形', uShape],
+    ...Object.entries(IRREGULAR_SHAPES),
+  ]
+
+  // Planning is slow on a busy machine: these run a dozen plans each.
+  it.each(cases)(
+    '%s：中岛桌数与不放边柜时相同；边柜不在入口边、开放边、主通道和入口缓冲区里，朝向店内，留足间距',
+    (_, s) => {
+      const { mid, n } = mainOf(s)
+      const depthOf = (p: Point) => (p[0] - mid[0]) * n[0] + (p[1] - mid[1]) * n[1]
+      const depths = s.boundary.map(depthOf)
+      const half = (Math.min(...depths) + Math.max(...depths)) / 2
+      const zones = keepOuts(s)
+      const open = [
+        ...s.entrances.flatMap((e) => piecesOf(s, e.a, e.b)),
+        ...s.openEdges.flatMap((e) => piecesOf(s, e.a, e.b)),
+      ]
+      let seen = 0
+      for (const strategy of STRATEGIES) {
+        const tables = byFunction(plan(s, strategy, catalog).layout.items, 'island_table').length
+        for (const cat of [withSide, withSi2Side]) {
+          const { layout, issues } = plan(s, strategy, cat)
+          expect(issues.filter((i) => i.severity === 'error')).toEqual([])
+          expect(byFunction(layout.items, 'island_table')).toHaveLength(tables)
+          const sides = sidesOf(layout.items)
+          seen += sides.length
+          expect(sides.length).toBeLessThanOrEqual(sideCabinetsForArea(usableArea(s), strategy))
+          for (const item of sides) {
+            const rect = itemFootprint(item)
+            // 0.3 m (wallGap) clear of the whole boundary, to the millimetre centres round to.
+            expect(rectInsidePolygon(rect, s.boundary)).toBe(true)
+            const toRect = (p: Point) =>
+              Math.hypot(
+                Math.max(rect.minX - p[0], 0, p[0] - rect.maxX),
+                Math.max(rect.minZ - p[1], 0, p[1] - rect.maxZ),
+              )
+            for (const [a, b] of edges(s.boundary)) {
+              const gap = Math.min(
+                toRect(a),
+                toRect(b),
+                ...rectCorners(rect).map((c) => distanceToSegment(c, a, b)),
+              )
+              expect(gap).toBeGreaterThanOrEqual(0.3 - 0.002)
+            }
+            for (const zone of zones) expect(polygonOverlapsRect(zone, rect)).toBe(false)
+            for (const other of layout.items.filter((i) => i.id !== item.id)) {
+              const otherRect = itemFootprint(other)
+              if (other.function === 'island_table')
+                expect(rectGap(rect, otherRect)).toBeGreaterThanOrEqual(0.9 - 1e-6)
+              else expect(rectsOverlap(rect, otherRect)).toBe(false)
+            }
+            // Its back stands 0.3 m off a wall, not an entrance or open edge; its front faces in.
+            const facing = facingAfter(fronts[item.assetId ?? ''] ?? '+Z', item.rotation)
+            const depth = facing[0] ? rect.maxX - rect.minX : rect.maxZ - rect.minZ
+            const back: Point = [
+              item.cx - (facing[0] * depth) / 2,
+              item.cz - (facing[1] * depth) / 2,
+            ]
+            const nearest = Math.min(
+              ...edges(s.boundary).map(([a, b]) => distanceToSegment(back, a, b)),
+            )
+            expect(nearest).toBeGreaterThan(0.29)
+            expect(nearest).toBeLessThan(0.31)
+            for (const piece of open)
+              expect(distanceToSegment(back, piece.a, piece.b)).toBeGreaterThan(0.35)
+            // On the side facing the main entrance, or in the back half of a side.
+            const along = facing[0] * n[0] + facing[1] * n[1]
+            if (along > -0.5) {
+              expect(Math.abs(along)).toBeLessThan(0.5)
+              for (const corner of rectCorners(rect))
+                expect(depthOf(corner)).toBeGreaterThanOrEqual(half - 1e-6)
+            }
+          }
+        }
+      }
+      expect(seen).toBeGreaterThan(0)
+    },
+    30_000,
+  )
+
+  it('judges per wall piece: an open side still takes one against a wall piece longer than the cabinet', () => {
+    // 8 × 14 m, the whole front an entrance; open edges along the front part of both sides, the
+    // back `openTo` metres of each side a wall.
+    const shop = (openTo: number) =>
+      space({
+        ...rectangleSpace(8, 14, 3.2),
+        openEdges: [
+          { a: [0, 14], b: [0, openTo] },
+          { a: [8, openTo], b: [8, 14] },
+        ],
+      })
+    const onSide = (item: LayoutItem) => facingAfter('+X', item.rotation)[1] === 0
+    // 8 of 14 m open on each side: the 6 m of wall left at the back of a side takes one beside the
+    // one on the back wall (尽量多放 fills the sides with tables first).
+    const open = plan(shop(6), 'area')
+    const sides = sidesOf(open.layout.items)
+    expect(sides).toHaveLength(2)
+    expect(sides.filter(onSide)).toHaveLength(1)
+    for (const item of sides.filter(onSide)) {
+      const rect = itemFootprint(item)
+      expect(rect.maxZ).toBeLessThanOrEqual(6 + 1e-6)
+      expect(rect.minZ).toBeGreaterThanOrEqual(0.3 - 1e-6)
+    }
+    expect(open.notes).toContain(
+      '中岛店按面积 112 ㎡ 放 2 个配件边柜（每 25 ㎡ 1 个，最多 3 个；按面积推荐最多 2 个）',
+    )
+    // 12.5 of 14 m open: the 1.5 m left is shorter than the 1.8 m cabinet, so the sides take none.
+    const short = plan(shop(1.5), 'area')
+    expect(sidesOf(short.layout.items)).toHaveLength(1)
+    expect(sidesOf(short.layout.items).some(onSide)).toBe(false)
+    expect(short.notes.join()).toContain('边缘空间只放下 1 个')
+  }, 30_000)
+
+  it('takes its numbers from the rules handed in, so measured store data can replace them', () => {
+    const s = rectangleSpace(10, 6, 3.2)
+    const withRules = (rules: Partial<typeof DEFAULT_SIDE_CABINET_RULES>) =>
+      planLayout({
+        space: s,
+        shopType: 'island',
+        strategy: 'max',
+        catalog: withSide,
+        sideCabinetRules: { ...DEFAULT_SIDE_CABINET_RULES, ...rules },
+      })
+    expect(sidesOf(withRules({}).layout.items)).toHaveLength(2)
+    const fewer = withRules({ areaPerCabinet: 60 })
+    expect(sidesOf(fewer.layout.items)).toHaveLength(1)
+    expect(fewer.notes).toContain('中岛店按面积 60 ㎡ 放 1 个配件边柜（每 60 ㎡ 1 个，最多 3 个）')
+    const none = withRules({ minArea: 80 })
+    expect(sidesOf(none.layout.items)).toEqual([])
+    expect(none.notes).toContain('中岛店面积 60 ㎡，不足 80 ㎡，不放配件边柜')
+    // Sides only from the very back: the back wall alone takes them.
+    const backOnly = sidesOf(withRules({ sideFromDepth: 1 }).layout.items)
+    expect(backOnly.length).toBeGreaterThan(0)
+    for (const item of backOnly) expect(facingAfter('+X', item.rotation)).toEqual([0, 1])
+  }, 30_000)
+
+  it('leaves side-hall shops and zones exactly as before', () => {
+    for (const shopType of ['side_hall', 'zone'] as const) {
+      // The whole run over 9 180 plans is compared outside the tests; here two shapes.
+      for (const s of [rectangleSpace(10, 8, 3.2), IRREGULAR_SHAPES.arcFront]) {
+        for (const strategy of STRATEGIES) {
+          expect(plan(s, strategy, withSide, shopType)).toEqual(
+            plan(s, strategy, catalog, shopType),
+          )
+        }
+      }
+    }
+  }, 30_000)
 })

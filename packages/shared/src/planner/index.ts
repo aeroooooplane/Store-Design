@@ -14,5 +14,7 @@ export type {
   PlannerResult,
   PlannerRules,
 } from './planner.ts'
+export { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
+export type { SideCabinetRules } from './side-cabinet-rules.ts'
 export { ROTATIONS, facingAfter, rotationFacing } from './orientation.ts'
 export type { PlanDirection } from './orientation.ts'
