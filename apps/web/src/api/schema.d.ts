@@ -3668,6 +3668,24 @@ export interface paths {
                         planPng: string;
                         planSvg?: string;
                         display?: {
+                            /**
+                             * @default both
+                             * @enum {string}
+                             */
+                            views?: "both" | "3d" | "plan";
+                            /** @default [] */
+                            tables3d?: {
+                                table: string;
+                                image: string;
+                                names: {
+                                    [key: string]: {
+                                        x: number;
+                                        y: number;
+                                        w: number;
+                                        h: number;
+                                    };
+                                };
+                            }[];
                             planPng: string;
                             planViewBox: [
                                 number,
@@ -8402,7 +8420,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 生成展陈方案 PPT 与展陈清单 Excel */
+        /**
+         * 生成展陈方案 PPT 与展陈清单 Excel
+         * @description 请求体可选：每张桌出三维页、平面页或两者，以及浏览器画好的各桌三维图。
+         */
         post: {
             parameters: {
                 query?: never;
@@ -8412,7 +8433,30 @@ export interface paths {
                 };
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @default both
+                         * @enum {string}
+                         */
+                        views?: "both" | "3d" | "plan";
+                        /** @default [] */
+                        tables3d?: {
+                            table: string;
+                            image: string;
+                            names: {
+                                [key: string]: {
+                                    x: number;
+                                    y: number;
+                                    w: number;
+                                    h: number;
+                                };
+                            };
+                        }[];
+                    } | null;
+                };
+            };
             responses: {
                 /** @description Default Response */
                 201: {
@@ -8471,6 +8515,22 @@ export interface paths {
                 };
                 /** @description Default Response */
                 409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                413: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -8864,6 +8924,24 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
+                        /**
+                         * @default both
+                         * @enum {string}
+                         */
+                        views?: "both" | "3d" | "plan";
+                        /** @default [] */
+                        tables3d?: {
+                            table: string;
+                            image: string;
+                            names: {
+                                [key: string]: {
+                                    x: number;
+                                    y: number;
+                                    w: number;
+                                    h: number;
+                                };
+                            };
+                        }[];
                         planPng: string;
                         planViewBox: [
                             number,

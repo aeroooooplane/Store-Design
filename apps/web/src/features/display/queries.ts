@@ -7,6 +7,7 @@ import {
   NodeDisplaySchema,
 } from '@store/shared'
 import type {
+  DisplayPptOptions,
   DisplayDetectRequest,
   DisplayEdits,
   DisplayExport,
@@ -154,11 +155,12 @@ export function useDetectTables(id: string) {
 export function useExportDisplayTask(id: string) {
   const client = useQueryClient()
   return useMutation({
-    mutationFn: async (): Promise<DisplayExport> =>
+    mutationFn: async (body: DisplayPptOptions): Promise<DisplayExport> =>
       DisplayExportSchema.parse(
         unwrap(
           await api.POST('/api/v1/display-tasks/{taskId}/export', {
             params: { path: { taskId: id } },
+            body,
           }),
         ),
       ),

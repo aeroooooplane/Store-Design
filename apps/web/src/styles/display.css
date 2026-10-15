@@ -474,3 +474,88 @@
   overflow: visible;
   padding: var(--space-1);
 }
+
+/* 陈列内容的三维：静态图上叠透明的产品选择，点开可旋转 */
+.slot-look {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-1);
+}
+.table3d-picture {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #eef1f5;
+  aspect-ratio: 3 / 2;
+}
+.table3d-picture img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.table3d-wait {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.table3d-pick {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  padding: 0;
+  border: 0;
+}
+.table3d-picture:hover .table3d-pick,
+.table3d-pick:focus-visible {
+  opacity: 0.18;
+  background: #2563eb;
+}
+.table3d-turn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  font-size: 12px;
+  padding: 4px 10px;
+  background: rgb(255 255 255 / 92%);
+}
+.table3d-dialog {
+  width: min(1100px, 92vw);
+  height: min(760px, 86vh);
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.table3d-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+.table3d-dialog::backdrop {
+  background: rgb(0 0 0 / 45%);
+}
+.table3d-dialog header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.table3d-live {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+  display: block;
+  cursor: grab;
+}
+.ppt-views {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}

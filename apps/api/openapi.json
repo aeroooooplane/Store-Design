@@ -11803,6 +11803,80 @@
                   "display": {
                     "type": "object",
                     "properties": {
+                      "views": {
+                        "default": "both",
+                        "type": "string",
+                        "enum": [
+                          "both",
+                          "3d",
+                          "plan"
+                        ]
+                      },
+                      "tables3d": {
+                        "default": [],
+                        "maxItems": 40,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "table": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "image": {
+                              "type": "string",
+                              "minLength": 16,
+                              "maxLength": 8388608
+                            },
+                            "names": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 8
+                              },
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "y": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "w",
+                                  "h"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "table",
+                            "image",
+                            "names"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
                       "planPng": {
                         "type": "string",
                         "minLength": 16,
@@ -28669,6 +28743,101 @@
         "tags": [
           "displays"
         ],
+        "description": "请求体可选：每张桌出三维页、平面页或两者，以及浏览器画好的各桌三维图。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "views": {
+                        "default": "both",
+                        "type": "string",
+                        "enum": [
+                          "both",
+                          "3d",
+                          "plan"
+                        ]
+                      },
+                      "tables3d": {
+                        "default": [],
+                        "maxItems": 40,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "table": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "image": {
+                              "type": "string",
+                              "minLength": 16,
+                              "maxLength": 8388608
+                            },
+                            "names": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 8
+                              },
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "y": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "w",
+                                  "h"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "table",
+                            "image",
+                            "names"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "schema": {
@@ -28828,6 +28997,43 @@
             }
           },
           "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "413": {
             "description": "Default Response",
             "content": {
               "application/json": {
@@ -30112,6 +30318,80 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "views": {
+                    "default": "both",
+                    "type": "string",
+                    "enum": [
+                      "both",
+                      "3d",
+                      "plan"
+                    ]
+                  },
+                  "tables3d": {
+                    "default": [],
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "table": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "image": {
+                          "type": "string",
+                          "minLength": 16,
+                          "maxLength": 8388608
+                        },
+                        "names": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 8
+                          },
+                          "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "y": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "w": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "h": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "w",
+                              "h"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "table",
+                        "image",
+                        "names"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
                   "planPng": {
                     "type": "string",
                     "minLength": 16,

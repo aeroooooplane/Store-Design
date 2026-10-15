@@ -1,4 +1,8 @@
+import { useMemo, useState } from 'react'
 import { DISPLAY_ORIENTATION_LABELS } from '@store/shared'
+import { photoOf } from './photos.ts'
+import { Table3DCard } from './table3d/Table3DCard.tsx'
+import type { TableViewContext } from './table3d/shots.ts'
 import type {
   DisplayEdits,
   DisplayRules,
@@ -23,14 +27,6 @@ const tableTitle = (t: DisplayTable) =>
     ? '边桌'
     : `${t.seat ?? '加桌'} 中岛桌 · ${DISPLAY_ORIENTATION_LABELS[t.orientation]}`
 
-/** The tray picture of a unit: the store's SI first, the guide's render before a real photo. */
-function photoOf(photos: DisplayRulesView['photos'], unit: string | null, si: SiStyle) {
-  if (!unit) return null
-  const rank = (p: DisplayRulesView['photos'][number]) =>
-    (p.si === si ? 0 : 2) + (p.kind === 'render' ? 0 : 1)
-  return photos.filter((p) => p.unit === unit).sort((a, b) => rank(a) - rank(b))[0] ?? null
-}
-
 /**
  * What every slot of every table holds, drawn the way the table stands (as on the PPT page):
  * portrait — L1–L3 left, R1–R3 right, the modules between, the end E towards the entrance;
@@ -47,6 +43,12 @@ export function SlotTable({
   disabled,
 }: SlotTableProps) {
   const labelOf = new Map(rules.units.map((u) => [u.id, u.label]))
+  const [look, setLook] = useState<'3d' | 'plan'>('3d')
+  const end = edits.landscapeEnd
+  const ctx = useMemo<TableViewContext>(
+    () => ({ rules, photos, si, end }),
+    [rules, photos, si, end],
+  )
   const setSlot = (table: DisplayTable, slot: string, unit: string | null) =>
     onChange({
       ...edits,
@@ -153,49 +155,81 @@ export function SlotTable({
   }
 
   return (
-    <div className="slot-tables">
-      {tables.map((t) => {
-        const changed =
-          Object.keys(edits.slots[t.sourceId] ?? {}).length + (edits.modules[t.sourceId] ? 1 : 0)
-        return (
-          <section key={t.sourceId} className="slot-table" aria-label={`${t.label}桌陈列`}>
-            <header>
-              <span className="picture-mark static">{t.label}</span>
-              <strong>{tableTitle(t)}</strong>
-              {t.custom && <span className="tag">单店单议</span>}
-              {changed > 0 && (
-                <>
-                  <span className="slot-changed">已改 {changed} 处</span>
-                  <button
-                    type="button"
-                    className="link-button"
-                    disabled={disabled}
-                    onClick={() => reset(t)}
-                  >
-                    恢复规则
-                  </button>
-                </>
-              )}
-            </header>
-            {board(t)}
-            {t.kind === 'island' && (
-              <label className="slot-modules">
-                <span>中间配件模块（用顿号分隔）</span>
-                <input
-                  defaultValue={t.modules.join('、')}
-                  key={t.modules.join()}
+    <>
+      <div className="tabs slot-look" role="group" aria-label="陈列内容显示方式">
+        {(
+          [
+            ['3d', '三维'],
+            ['plan', '平面'],
+          ] as const
+        ).map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            aria-pressed={look === value}
+            onClick={() => setLook(value)}
+          >
+            {label}
+          </button>
+        ))}
+        <span className="hint">
+          {look === '3d' ? '点立牌即可更换产品；“旋转查看”可拖动查看' : '点格子即可更换产品'}
+        </span>
+      </div>
+      <div className="slot-tables">
+        {tables.map((t) => {
+          const changed =
+            Object.keys(edits.slots[t.sourceId] ?? {}).length + (edits.modules[t.sourceId] ? 1 : 0)
+          return (
+            <section key={t.sourceId} className="slot-table" aria-label={`${t.label}桌陈列`}>
+              <header>
+                <span className="picture-mark static">{t.label}</span>
+                <strong>{tableTitle(t)}</strong>
+                {t.custom && <span className="tag">单店单议</span>}
+                {changed > 0 && (
+                  <>
+                    <span className="slot-changed">已改 {changed} 处</span>
+                    <button
+                      type="button"
+                      className="link-button"
+                      disabled={disabled}
+                      onClick={() => reset(t)}
+                    >
+                      恢复规则
+                    </button>
+                  </>
+                )}
+              </header>
+              {look === '3d' ? (
+                <Table3DCard
+                  table={t}
+                  ctx={ctx}
+                  units={rules.units}
                   disabled={disabled}
-                  onBlur={(event) => {
-                    if (event.target.value !== t.modules.join('、'))
-                      setModules(t, event.target.value)
-                  }}
+                  onPick={(slot, unit) => setSlot(t, slot, unit)}
                 />
-              </label>
-            )}
-            {t.notes.length > 0 && <p className="hint">{t.notes.join('；')}</p>}
-          </section>
-        )
-      })}
-    </div>
+              ) : (
+                board(t)
+              )}
+              {t.kind === 'island' && (
+                <label className="slot-modules">
+                  <span>中间配件模块（用顿号分隔）</span>
+                  <input
+                    defaultValue={t.modules.join('、')}
+                    key={t.modules.join()}
+                    disabled={disabled}
+                    onBlur={(event) => {
+                      if (event.target.value !== t.modules.join('、'))
+                        setModules(t, event.target.value)
+                    }}
+                  />
+                </label>
+              )}
+              {t.notes.length > 0 && <p className="hint">{t.notes.join('；')}</p>}
+            </section>
+          )
+        })}
+      </div>
+    </>
   )
 }

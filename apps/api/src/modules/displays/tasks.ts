@@ -9,6 +9,7 @@ import type {
   DisplayDetectRequest,
   DisplayExport,
   DisplayTask,
+  DisplayTaskExportBody,
   DisplayTaskCreate,
   DisplayTaskList,
   DisplayTaskState,
@@ -30,6 +31,7 @@ import {
   pendingOf,
   requireRules,
   storeDisplayFiles,
+  tableShots,
 } from './common.ts'
 import { detectTables } from './detect.ts'
 
@@ -293,6 +295,7 @@ export async function exportTask(
   ctx: RequestContext,
   roots: StorageRoots,
   id: string,
+  options: DisplayTaskExportBody,
 ): Promise<DisplayExport> {
   authorize(ctx.actor, 'display:write')
   const row = await requireTask(db, id)
@@ -350,6 +353,8 @@ export async function exportTask(
     ),
     photos: await loadPhotos(roots, rules, row.siStyle, tables),
     landscapeEnd: state.edits.landscapeEnd,
+    views: options.views,
+    tables3d: await tableShots(tables, options.tables3d),
     pending: pendingOf(tables),
   })
   const record = await storeDisplayFiles(

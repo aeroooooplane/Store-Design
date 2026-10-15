@@ -12,6 +12,9 @@ import type {
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { PlanView } from '../workbench/PlanView.tsx'
 import { MarkedPicture } from './MarkedPicture.tsx'
+import { PptViewsSelect } from './PptViewsSelect.tsx'
+import { usePptViews } from './pptViews.ts'
+import { tableShots } from './table3d/shots.ts'
 import { SlotTable } from './SlotTable.tsx'
 import {
   useDisplayRules,
@@ -53,6 +56,8 @@ export function DisplayPanel({
   const save = useSaveNodeDisplay(node.id)
   const exporting = useExportNodeDisplay(node.id)
   const [viewId, setViewId] = useState<string | null>(null)
+  const [pptViews, setPptViews] = usePptViews()
+  const [drawing, setDrawing] = useState(false)
   const [error, setError] = useState<unknown>(null)
   const [viewBox, setViewBox] = useState<{
     x: number
@@ -105,11 +110,27 @@ export function DisplayPanel({
   const rendered = data.views.some((v) => v.imageUrl)
 
   async function makePpt() {
+    if (!data || !rules.data) return
     setError(null)
+    setDrawing(true)
     try {
-      await exporting.mutateAsync(await exportPlan())
+      const plan = await exportPlan()
+      // The server has no WebGL: the 3D views are drawn here and sent along.
+      const tables3d =
+        pptViews === 'plan'
+          ? []
+          : await tableShots(data.tables, {
+              rules: rules.data.rules,
+              photos: rules.data.photos,
+              si: node.siStyle ?? project.siStyle,
+              end: data.edits.landscapeEnd,
+            })
+      setDrawing(false)
+      await exporting.mutateAsync({ ...plan, views: pptViews, tables3d })
     } catch (caught) {
       setError(caught)
+    } finally {
+      setDrawing(false)
     }
   }
 
@@ -156,14 +177,15 @@ export function DisplayPanel({
             <option value="right">端头统一在右侧</option>
           </select>
         )}
+        <PptViewsSelect value={pptViews} onChange={setPptViews} disabled={exporting.isPending} />
         <button
           type="button"
           className="primary"
           onClick={() => void makePpt()}
-          disabled={exporting.isPending || !rendered}
+          disabled={drawing || exporting.isPending || !rendered}
           title={rendered ? undefined : '渲染完成后才能生成'}
         >
-          {exporting.isPending ? '正在生成…' : '生成展陈方案 PPT'}
+          {drawing ? '正在画三维…' : exporting.isPending ? '正在生成…' : '生成展陈方案 PPT'}
         </button>
       </div>
       <div className="display-pictures">
