@@ -211,6 +211,16 @@ svg.plan pattern * {
   stroke-linejoin: round;
   pointer-events: none;
 }
+/* Pieces built into a wall (内嵌): solid outline in the wall, the front on the wall face bold. */
+.plan-embedded rect {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1px;
+}
+.plan-embedded line {
+  stroke: var(--ink);
+  stroke-width: 3px;
+}
 /* Wall and ceiling pieces: dashed, see-through, over the props below them. */
 .plan-mounted {
   fill: none;

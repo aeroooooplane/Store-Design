@@ -9,6 +9,7 @@ import {
 import type { Rect } from '../geometry/index.ts'
 import { EPSILON_M } from '../units.ts'
 import { fixtureIssues } from '../fixtures/index.ts'
+import { embeddedWall } from '../mounting/embedded.ts'
 import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
 import { InstallationSchema } from './asset.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
@@ -120,6 +121,7 @@ export type LayoutIssueCode =
   | 'item_blocks_entrance'
   | 'item_too_tall'
   | 'item_not_on_wall'
+  | 'item_not_in_wall'
   | 'fixture_outside_boundary'
   | 'fixture_overlaps_item'
   | 'item_asset_unknown'
@@ -215,7 +217,10 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
   const footprints = layout.items.map((item) => ({ item, rect: itemFootprint(item) }))
 
   for (const { item, rect } of footprints) {
-    if (!rectInsidePolygon(rect, space.boundary)) {
+    const mount = itemMount(item)
+    // A built-in piece's body is inside the wall, beyond the boundary, clear of the floor.
+    const builtIn = mount === 'embedded'
+    if (!builtIn && !rectInsidePolygon(rect, space.boundary)) {
       issues.push({
         code: 'item_outside_boundary',
         severity: 'error',
@@ -224,7 +229,7 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
       })
     }
     space.obstacles.forEach((obstacle, index) => {
-      if (polygonOverlapsRect(obstacle.polygon, rect)) {
+      if (!builtIn && polygonOverlapsRect(obstacle.polygon, rect)) {
         issues.push({
           code: 'item_overlaps_obstacle',
           severity: 'error',
@@ -233,7 +238,6 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
         })
       }
     })
-    const mount = itemMount(item)
     space.entrances.forEach((entrance, index) => {
       if (mount !== 'floor') return
       // An entrance along several edges is checked piece by piece, not along its chord.
@@ -252,6 +256,14 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
         code: 'item_too_tall',
         severity: 'error',
         message: `${item.name}高度超过层高`,
+        itemIds: [item.id],
+      })
+    }
+    if (builtIn && !embeddedWall(item, space)) {
+      issues.push({
+        code: 'item_not_in_wall',
+        severity: 'warning',
+        message: `${item.name}的正面没有落在墙面上`,
         itemIds: [item.id],
       })
     }

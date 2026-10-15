@@ -828,7 +828,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */
@@ -886,7 +886,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */
@@ -1170,7 +1170,7 @@ export interface paths {
                                 /** @default false */
                                 locked?: boolean;
                                 /** @enum {string} */
-                                mount?: "floor" | "wall" | "ceiling";
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                             }[];
                             /** @default null */
@@ -1306,7 +1306,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */
@@ -1518,7 +1518,7 @@ export interface paths {
                                     /** @default false */
                                     locked: boolean;
                                     /** @enum {string} */
-                                    mount?: "floor" | "wall" | "ceiling";
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                 }[];
                                 /** @default null */
@@ -1719,7 +1719,7 @@ export interface paths {
                                     /** @default false */
                                     locked: boolean;
                                     /** @enum {string} */
-                                    mount?: "floor" | "wall" | "ceiling";
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                 }[];
                                 /** @default null */
@@ -1920,7 +1920,7 @@ export interface paths {
                                     /** @default false */
                                     locked: boolean;
                                     /** @enum {string} */
-                                    mount?: "floor" | "wall" | "ceiling";
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                 }[];
                                 /** @default null */
@@ -2125,7 +2125,7 @@ export interface paths {
                                     /** @default false */
                                     locked: boolean;
                                     /** @enum {string} */
-                                    mount?: "floor" | "wall" | "ceiling";
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                 }[];
                                 /** @default null */
@@ -2263,7 +2263,7 @@ export interface paths {
                                     /** @default false */
                                     locked: boolean;
                                     /** @enum {string} */
-                                    mount?: "floor" | "wall" | "ceiling";
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                 }[];
                                 /** @default null */
@@ -2402,7 +2402,7 @@ export interface paths {
                                 /** @default false */
                                 locked?: boolean;
                                 /** @enum {string} */
-                                mount?: "floor" | "wall" | "ceiling";
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                             }[];
                             /** @default null */
@@ -2467,7 +2467,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */
@@ -3973,7 +3973,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */
@@ -4132,7 +4132,7 @@ export interface paths {
                                 /** @default false */
                                 locked?: boolean;
                                 /** @enum {string} */
-                                mount?: "floor" | "wall" | "ceiling";
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                             }[];
                             /** @default null */
@@ -4248,7 +4248,7 @@ export interface paths {
                                 category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                                 /** @enum {string} */
                                 function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
-                                installation: ("floor" | "wall" | "ceiling") | null;
+                                installation: ("floor" | "wall" | "ceiling" | "embedded") | null;
                                 footprint: {
                                     w: number;
                                     d: number;
@@ -4372,7 +4372,7 @@ export interface paths {
                             category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                             /** @enum {string} */
                             function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
-                            installation: ("floor" | "wall" | "ceiling") | null;
+                            installation: ("floor" | "wall" | "ceiling" | "embedded") | null;
                             footprint: {
                                 w: number;
                                 d: number;
@@ -5716,7 +5716,7 @@ export interface paths {
                                 /** @default false */
                                 locked?: boolean;
                                 /** @enum {string} */
-                                mount?: "floor" | "wall" | "ceiling";
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                             }[];
                             /** @default null */
@@ -5846,7 +5846,7 @@ export interface paths {
                                         /** @default false */
                                         locked: boolean;
                                         /** @enum {string} */
-                                        mount?: "floor" | "wall" | "ceiling";
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                     }[];
                                     /** @default null */

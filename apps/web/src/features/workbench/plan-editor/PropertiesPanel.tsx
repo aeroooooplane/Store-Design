@@ -1,6 +1,6 @@
 import type { Dispatch } from 'react'
 import { itemElevation, itemMount, mmToM, mToMm } from '@store/shared'
-import type { Asset, Fixture, LayoutItem } from '@store/shared'
+import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
 import { TrashIcon } from '../../../components/icons.tsx'
 import type { EditorAction } from '../editor-state.ts'
 import { ArcArrow } from './ArcArrow.tsx'
@@ -10,8 +10,17 @@ interface PropertiesPanelProps {
   /** The selected 空心隔板, when a partition rather than a prop is selected. */
   fixture?: Fixture | null | undefined
   assetMap: Map<string, Asset>
+  /** The space, to put a piece switched between 贴墙 and 内嵌 onto or into its wall. */
+  space: Space
   dispatch: Dispatch<EditorAction>
   onRotate: (by: 90 | -90) => void
+}
+
+const ELEVATION_LABELS: Record<Installation, string> = {
+  floor: '离地高度',
+  wall: '离地高度（墙面）',
+  ceiling: '离地高度（吊挂）',
+  embedded: '离地高度（内嵌）',
 }
 
 /** A 空心隔板: its size, height and position, each typed in millimetres. */
@@ -68,9 +77,13 @@ export function PropertiesPanel({
   selected,
   fixture,
   assetMap,
+  space,
   dispatch,
   onRotate,
 }: PropertiesPanelProps) {
+  const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
+  // Screens and light boxes may hang on the wall or be built into it (N1, 10-15).
+  const switchable = asset?.installation === 'wall' || asset?.installation === 'embedded'
   if (!selected && fixture)
     return (
       <div className="wb-card properties" aria-label="选中道具">
@@ -100,9 +113,34 @@ export function PropertiesPanel({
               {selected.placeholder ? '（占位）' : ''}
             </output>
           </div>
+          {switchable && (
+            <div className="field-row">
+              安装方式
+              <span className="tabs" role="group" aria-label="安装方式">
+                {(['wall', 'embedded'] as const).map((mount) => (
+                  <button
+                    key={mount}
+                    type="button"
+                    aria-pressed={itemMount(selected) === mount}
+                    onClick={() =>
+                      dispatch({
+                        type: 'setMount',
+                        id: selected.id,
+                        mount,
+                        space,
+                        front: asset?.front ?? null,
+                      })
+                    }
+                  >
+                    {mount === 'wall' ? '贴墙' : '内嵌'}
+                  </button>
+                ))}
+              </span>
+            </div>
+          )}
           {itemMount(selected) !== 'floor' && (
             <label className="field-row">
-              {itemMount(selected) === 'wall' ? '离地高度（墙面）' : '离地高度（吊挂）'}
+              {ELEVATION_LABELS[itemMount(selected)]}
               <input
                 type="number"
                 step={10}

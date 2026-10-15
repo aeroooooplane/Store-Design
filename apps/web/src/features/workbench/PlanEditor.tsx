@@ -442,6 +442,7 @@ export function PlanEditor({
             selected={selected}
             fixture={selectedFixture}
             assetMap={assetMap}
+            space={space}
             dispatch={dispatch}
             onRotate={rotateSelected}
           />
