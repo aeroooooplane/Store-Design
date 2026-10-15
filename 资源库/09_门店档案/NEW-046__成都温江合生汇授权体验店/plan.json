@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T18:51:57+08:00",
+ "generatedAt": "2026-10-15T19:15:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -259,7 +259,7 @@
     "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
-    "note": "画在新建墙体外侧（扶梯投影线一侧），按朝店外记"
+    "note": "画在新建墙体外侧（扶梯投影线一侧），朝店外（用户 10-15 确认）"
    },
    {
     "ref": "g02",
@@ -539,31 +539,6 @@
    },
    {
     "ref": "g11",
-    "label": "模特示意",
-    "assetId": null,
-    "function": "other",
-    "category": "软装道具",
-    "source": "new",
-    "cx": 0.454,
-    "cz": 0.628,
-    "w": 0.51,
-    "d": 0.426,
-    "h": null,
-    "rotation": 0,
-    "facing": 0,
-    "drawn_size_m": [
-     0.51,
-     0.426
-    ],
-    "size_deviation_m": null,
-    "mount": "floor",
-    "elevation": null,
-    "location": "interior",
-    "render_as": "model",
-    "note": "图上为浅灰色人形示意，可能只是示意图不是道具，待确认"
-   },
-   {
-    "ref": "g12",
     "label": "门楣装发光LOGO",
     "assetId": null,
     "function": "signage",
@@ -598,7 +573,7 @@
     "note": "左侧门楣，朝次人流通道"
    },
    {
-    "ref": "g13",
+    "ref": "g12",
     "label": "门楣装发光LOGO",
     "assetId": null,
     "function": "signage",
@@ -633,7 +608,7 @@
     "note": "右侧门楣，朝次人流通道"
    },
    {
-    "ref": "g14",
+    "ref": "g13",
     "label": "门楣装发光LOGO",
     "assetId": null,
     "function": "signage",
@@ -773,12 +748,11 @@
    "storage": 1,
    "cashier": 1,
    "accessory_cabinet": 1,
-   "island_table": 2,
-   "other": 1
+   "island_table": 2
   },
   "counts_by_category": {
    "信息化物料": 5,
-   "软装道具": 6,
+   "软装道具": 5,
    "品牌标识": 3
   },
   "matched_assets": 7
@@ -790,7 +764,8 @@
    "中岛店：上侧为新建墙体（H2650，网格填充，记为硬装），左、右、下三面开放；边界按租赁线 7000×3000",
    "租赁线与墙体/立柱之间四周各有 80 mm 门楣带（门楣高度 250 mm，LOGO 指定高度 250 mm），门楣 LOGO 记在边界线上朝外",
    "草稿比例 23.59 mm/px（按 LOGO 图框推算）错误，按尺寸链改为约 5.26 mm/px",
-   "上方扶梯投影线在边界外，不记"
+   "上方扶梯投影线在边界外，不记",
+   "用户 10-15：左上“模特示意”只是示意，不记为道具；墙体外侧 1200×1500 灯箱朝店外（扶梯方向）"
   ]
  }
 }

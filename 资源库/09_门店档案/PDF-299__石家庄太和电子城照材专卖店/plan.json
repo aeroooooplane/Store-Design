@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T18:51:57+08:00",
+ "generatedAt": "2026-10-15T19:15:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -237,7 +237,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "图上收银台画在上方租赁线外的“非使用区域”内，背靠租赁线、正面朝店内"
+    "note": "图上收银台画在上方租赁线外的“非使用区域”内，背靠租赁线、正面朝店内；用户 10-15 确认按原图保留在线外"
    },
    {
     "ref": "g02",

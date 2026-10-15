@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T18:51:57+08:00",
+ "generatedAt": "2026-10-15T19:15:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -406,7 +406,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+    "note": "SI2.0 储物边柜(带托盘)有模型，尚未上传到模型库（用户 10-15）；不套用配件边柜型号"
    },
    {
     "ref": "g03",
@@ -459,7 +459,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+    "note": "SI2.0 储物边柜(带托盘)有模型，尚未上传到模型库（用户 10-15）；不套用配件边柜型号"
    },
    {
     "ref": "g05",
@@ -484,7 +484,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "靠墙边柜（台面两块开箱垫），不是带凳开箱桌；模型库无对应 SI2.0 型号"
+    "note": "靠墙边柜（台面两块开箱垫），不是带凳开箱桌；模型库缺此款，未配型号"
    },
    {
     "ref": "g06",
@@ -575,7 +575,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+    "note": "SI2.0 储物边柜(带托盘)有模型，尚未上传到模型库（用户 10-15）；不套用配件边柜型号"
    },
    {
     "ref": "g09",
@@ -600,7 +600,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+    "note": "SI2.0 储物边柜(带托盘)有模型，尚未上传到模型库（用户 10-15）；不套用配件边柜型号"
    },
    {
     "ref": "g10",
@@ -625,7 +625,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库无 SI2.0 储物边柜，外形同 1.8米配件边柜(带托盘)"
+    "note": "SI2.0 储物边柜(带托盘)有模型，尚未上传到模型库（用户 10-15）；不套用配件边柜型号"
    },
    {
     "ref": "g11",
