@@ -55,6 +55,7 @@ function toAsset(
     installation: row.installation as Asset['installation'],
     footprint: { w: row.width, d: row.depth, h: row.height },
     footprintSource: row.footprintSource as Asset['footprintSource'],
+    extent: row.extent ?? null,
     front: row.front as FrontAxis | null,
     staffSide: row.staffSide as FrontAxis | null,
     facingConfidence: row.facingConfidence as Asset['facingConfidence'],

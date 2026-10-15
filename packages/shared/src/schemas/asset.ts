@@ -46,8 +46,23 @@ export type FileRef = z.infer<typeof FileRefSchema>
 const MetresSchema = z.number().finite().positive()
 
 /**
+ * The whole model around its body when the two differ: a 开箱桌 is placed, collides and is
+ * dimensioned by its table (`footprint`), while its stools still show in 3D and on the plan.
+ * Model frame (X width, Z depth), metres; `cx`/`cz` is the centre of the whole model relative
+ * to the centre of the body.
+ */
+export const AssetExtentSchema = z.object({
+  w: MetresSchema,
+  d: MetresSchema,
+  cx: z.number().finite(),
+  cz: z.number().finite(),
+})
+export type AssetExtent = z.infer<typeof AssetExtentSchema>
+
+/**
  * One catalogue entry. `footprint` is the size used for placement: the measured GLB box when a
- * web model exists, otherwise the SketchUp face bounds. Props are never scaled to fit.
+ * web model exists, otherwise the SketchUp face bounds, or the body alone where
+ * body-footprint.json corrects it (see `extent`). Props are never scaled to fit.
  */
 export const AssetSchema = z.object({
   id: z.string().regex(/^asset-\d+$/),
@@ -62,6 +77,7 @@ export const AssetSchema = z.object({
   installation: InstallationSchema.nullable(),
   footprint: z.object({ w: MetresSchema, d: MetresSchema, h: MetresSchema }),
   footprintSource: z.enum(['glb', 'source']),
+  extent: AssetExtentSchema.nullable(),
   front: FrontAxisSchema.nullable(),
   staffSide: FrontAxisSchema.nullable(),
   facingConfidence: z.enum(['high', 'medium', 'low']).nullable(),

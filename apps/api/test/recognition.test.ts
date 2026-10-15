@@ -39,6 +39,7 @@ const asset = (id: string, name: string, fn: Asset['function'], w: number, d: nu
   installation: 'floor',
   footprint: { w, d, h: 0.9 },
   footprintSource: 'glb',
+  extent: null,
   front: '+Z',
   staffSide: null,
   facingConfidence: 'high',

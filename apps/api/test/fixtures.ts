@@ -81,6 +81,7 @@ export async function seedAsset(t: TestApp, seed: AssetSeed = {}) {
     depth: seed.d ?? 1.8,
     height: seed.h ?? 1.327,
     footprintSource: 'glb',
+    extent: null,
     front: seed.front ?? 'any',
     placeable: true,
     glbFileId,

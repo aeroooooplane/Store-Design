@@ -4256,6 +4256,12 @@ export interface paths {
                                 };
                                 /** @enum {string} */
                                 footprintSource: "glb" | "source";
+                                extent: {
+                                    w: number;
+                                    d: number;
+                                    cx: number;
+                                    cz: number;
+                                } | null;
                                 front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                                 staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                                 facingConfidence: ("high" | "medium" | "low") | null;
@@ -4380,6 +4386,12 @@ export interface paths {
                             };
                             /** @enum {string} */
                             footprintSource: "glb" | "source";
+                            extent: {
+                                w: number;
+                                d: number;
+                                cx: number;
+                                cz: number;
+                            } | null;
                             front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                             staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                             facingConfidence: ("high" | "medium" | "low") | null;

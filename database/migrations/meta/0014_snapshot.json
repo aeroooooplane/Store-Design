@@ -1,5 +1,5 @@
 {
-  "id": "ed8f8e93-7493-4adc-a656-de4895f9a15a",
+  "id": "cad801b4-94f5-43f3-95fc-bd005bb1047c",
   "prevId": "8f130d6e-0f33-4ab1-888c-b74ada4d8c5e",
   "version": "7",
   "dialect": "postgresql",
@@ -1410,6 +1410,12 @@
           "primaryKey": false,
           "notNull": true
         },
+        "extent": {
+          "name": "extent",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
         "footprint_source": {
           "name": "footprint_source",
           "type": "text",
@@ -1622,7 +1628,7 @@
         },
         "assets_installation_known": {
           "name": "assets_installation_known",
-          "value": "\"assets\".\"installation\" IS NULL OR \"assets\".\"installation\" IN ('floor', 'wall', 'ceiling', 'embedded')"
+          "value": "\"assets\".\"installation\" IS NULL OR \"assets\".\"installation\" IN ('floor', 'wall', 'ceiling')"
         },
         "assets_footprint_source_known": {
           "name": "assets_footprint_source_known",

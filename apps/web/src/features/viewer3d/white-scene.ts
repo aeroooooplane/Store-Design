@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras, fixtureSolids, itemElevation, itemMount } from '@store/shared'
+import { defaultCameras, fixtureSolids, itemElevation, itemMount, modelBox } from '@store/shared'
 import type { Asset, Camera, Fixture, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
 import { finishModel } from './finish-model.ts'
 import { loadModel, loadSource } from './model-cache.ts'
@@ -283,7 +283,10 @@ export class WhiteScene {
       const group = placed.group
       // Wall and ceiling pieces hang at their height above the floor.
       const elevation = itemElevation(item)
-      group.position.set(item.cx, elevation, item.cz)
+      // The model is centred on the whole of it, which may reach beyond the item (a 开箱桌's
+      // stools on one side): the hit box and marks keep to the item.
+      const model = modelBox(item, url ? asset : undefined)
+      group.position.set(model.cx, elevation, model.cz)
       // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
       group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
       // The footprint is already turned (w × d on the plan), so the box needs no rotation.

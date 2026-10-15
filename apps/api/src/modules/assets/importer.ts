@@ -63,6 +63,22 @@ const ConversionSchema = z.looseObject({
   }),
 })
 
+/**
+ * Body sizes for models whose box takes in loose parts (a 开箱桌 with its stools): placement,
+ * collision and dimensions use the body, the model is still drawn whole (body-footprint.json).
+ */
+const BodyFootprintSchema = z.object({
+  assets: z.record(
+    z.string(),
+    z.looseObject({
+      w: z.number().positive(),
+      d: z.number().positive(),
+      /** Centre of the body relative to the centre of the whole model, [X, Z] in metres. */
+      offset: z.tuple([z.number(), z.number()]),
+    }),
+  ),
+})
+
 const FacingSchema = z.object({
   assets: z.record(
     z.string(),
@@ -188,6 +204,8 @@ export async function importCatalog(
   )
   const facingRaw = await optionalJson(path.join(roots.resource, inLibrary('facing.json')))
   const facing = facingRaw === undefined ? {} : FacingSchema.parse(facingRaw).assets
+  const bodyRaw = await optionalJson(path.join(roots.resource, inLibrary('body-footprint.json')))
+  const bodies = bodyRaw === undefined ? {} : BodyFootprintSchema.parse(bodyRaw).assets
   const report: CatalogImportReport = {
     assets: 0,
     withGlb: 0,
@@ -244,12 +262,26 @@ export async function importCatalog(
     const raw = conversion
       ? { w: conversion.dimensions.w, d: conversion.dimensions.d, h: conversion.dimensions.h }
       : { w: x / 1000, d: y / 1000, h: z / 1000 } // SketchUp: X width, Y depth, Z up
+    // A corrected body (a 开箱桌 without its stools) replaces the model box; the whole model is
+    // kept as the extent around it, for drawing and the stool check.
+    const body = bodies[id]
+    if (body && (body.w > raw.w + 0.01 || body.d > raw.d + 0.01))
+      report.problems.push(`${id}: 桌体尺寸大于整个模型，未采用桌体尺寸校正`)
+    const corrected = body && body.w <= raw.w + 0.01 && body.d <= raw.d + 0.01 ? body : null
     // Zero-thickness artwork is stored as 1 mm so every footprint stays a real box.
     const footprint = {
-      w: Math.max(raw.w, MIN_EXTENT_M),
-      d: Math.max(raw.d, MIN_EXTENT_M),
+      w: Math.max(corrected?.w ?? raw.w, MIN_EXTENT_M),
+      d: Math.max(corrected?.d ?? raw.d, MIN_EXTENT_M),
       h: Math.max(raw.h, MIN_EXTENT_M),
     }
+    const extent = corrected
+      ? {
+          w: roundM(raw.w),
+          d: roundM(raw.d),
+          cx: roundM(-corrected.offset[0]) + 0,
+          cz: roundM(-corrected.offset[1]) + 0,
+        }
+      : null
     if (Object.values(raw).some((v) => v < MIN_EXTENT_M))
       report.problems.push(`${id}: 某一方向尺寸为 0（平面画面），按 1 mm 记录`)
     // Wall and ceiling pieces are placed by hand; the planner only picks floor models by function.
@@ -277,6 +309,7 @@ export async function importCatalog(
         width: roundM(footprint.w),
         depth: roundM(footprint.d),
         height: roundM(footprint.h),
+        extent,
         footprintSource: conversion ? 'glb' : 'source',
         front: face?.front ?? null,
         staffSide: face?.staffSide ?? null,

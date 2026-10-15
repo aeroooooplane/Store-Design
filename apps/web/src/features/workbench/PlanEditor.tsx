@@ -9,7 +9,13 @@ import {
   useState,
 } from 'react'
 import type { ReactNode } from 'react'
-import { checkAssetFit, spaceAncestor, stageOf, validateLayout } from '@store/shared'
+import {
+  checkAssetFit,
+  fitBodyFootprints,
+  spaceAncestor,
+  stageOf,
+  validateLayout,
+} from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -96,7 +102,11 @@ export function PlanEditor({
 }: PlanEditorProps) {
   const create = useCreateNode(projectId)
   const startLayout = draft?.layout ?? baseNode.layout ?? EMPTY_LAYOUT
-  const [state, dispatch] = useReducer(editorReducer, startLayout, initialEditorState)
+  // Props placed before their model's body was corrected (开箱桌 sized with their stools) open at
+  // the body's size; the change is saved with the next edit.
+  const [state, dispatch] = useReducer(editorReducer, startLayout, (layout) =>
+    initialEditorState(fitBodyFootprints(layout, new Map(assets.map((a) => [a.id, a])))),
+  )
   // The design assistant sees what is selected on the plan.
   const setAgentSelection = useAgentSelection().set
   useEffect(() => {
@@ -126,7 +136,10 @@ export function PlanEditor({
 
   const assetMap = useMemo(() => new Map(assets.map((a) => [a.id, a])), [assets])
   const issues = useMemo(
-    () => [...checkAssetFit(state.layout, assetMap), ...validateLayout(space, state.layout)],
+    () => [
+      ...checkAssetFit(state.layout, assetMap),
+      ...validateLayout(space, state.layout, assetMap),
+    ],
     [state.layout, space, assetMap],
   )
   const errors = issues.filter((i) => i.severity === 'error')

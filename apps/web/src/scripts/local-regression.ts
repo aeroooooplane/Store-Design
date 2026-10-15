@@ -66,6 +66,7 @@ async function loadCatalog(): Promise<Asset[]> {
       h: Math.max(a.tight_face_bounds_xyz_mm[2], 1) / 1000,
     },
     footprintSource: 'source',
+    extent: null,
     front: null,
     staffSide: null,
     facingConfidence: null,

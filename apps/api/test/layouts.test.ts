@@ -183,6 +183,7 @@ describe('plannerCatalog', () => {
     installation: 'floor',
     footprint: { w: 1, d: 1.8, h: 1 },
     footprintSource: 'glb',
+    extent: null,
     front: 'any',
     staffSide: null,
     facingConfidence: 'high',
