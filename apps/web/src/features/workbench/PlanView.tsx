@@ -23,7 +23,8 @@ import {
   tickHalf,
   wallBands,
 } from './plan-drawing.ts'
-import type { RadiusMark } from './plan-drawing.ts'
+import type { RadiusMark, TextBox } from './plan-drawing.ts'
+import { placeSpacingLabels, spacingItems, spacingMarks } from './plan-spacing.ts'
 import { renderShapes, usePlanSymbols } from './plan-symbols.ts'
 import type { PlanSymbol } from './plan-symbols.ts'
 
@@ -47,6 +48,8 @@ export interface PlanViewProps {
    * legend (deliveryLegend), and the main customer-flow arrow.
    */
   numbers?: Readonly<Record<string, number>> | undefined
+  /** Clear distances around the 软装 props (see plan-spacing.ts); off unless asked for. */
+  spacing?: boolean | undefined
   title: string
 }
 
@@ -227,6 +230,7 @@ export function PlanView({
   svgRef,
   compact = false,
   numbers,
+  spacing = false,
   title,
 }: PlanViewProps) {
   const hatch = `hatch-${useId().replace(/:/g, '')}`
@@ -296,6 +300,20 @@ export function PlanView({
       ]
     : null
   const area = polygonArea(space.boundary)
+  const spacings = useMemo(() => {
+    if (!spacing || compact || !layout) return []
+    // Prop names (or numbers) stay readable: a spacing number never covers them.
+    const blocked: TextBox[] = layout.items
+      .filter((item) => itemMount(item) === 'floor')
+      .map((item) => ({
+        center: [item.cx, item.cz + (numbers ? 0 : fontSize * 0.3)],
+        axis: [1, 0],
+        halfW: numbers ? fontSize * 0.65 : Math.max(item.name.length, 7) * fontSize * 0.25,
+        halfH: numbers ? fontSize * 0.65 : fontSize * 0.9,
+      }))
+    const marks = spacingMarks(space, spacingItems(layout.items, assets))
+    return placeSpacingLabels(marks, fontSize * 0.8, blocked)
+  }, [spacing, compact, layout, assets, space, numbers, fontSize])
 
   return (
     <svg
@@ -467,6 +485,36 @@ export function PlanView({
             </g>
           )
         })}
+
+      {spacings.map((m, i) => {
+        const half = tickHalf(m.a, m.b, fontSize * 0.25)
+        return (
+          <g key={`s${i}`} className="plan-spacing">
+            <line x1={m.a[0]} y1={m.a[1]} x2={m.b[0]} y2={m.b[1]} />
+            {[m.a, m.b].map((p, k) => (
+              <line
+                key={k}
+                x1={p[0] - half[0]}
+                y1={p[1] - half[1]}
+                x2={p[0] + half[0]}
+                y2={p[1] + half[1]}
+              />
+            ))}
+            <text
+              x={m.text.center[0]}
+              y={m.text.center[1]}
+              fontSize={fontSize * 0.8}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              transform={
+                m.angle ? `rotate(${m.angle} ${m.text.center[0]} ${m.text.center[1]})` : undefined
+              }
+            >
+              {m.label}
+            </text>
+          </g>
+        )
+      })}
 
       {!compact && numbers && entrance && (
         <FlowArrow

@@ -619,7 +619,7 @@ export interface TextBox {
   halfH: number
 }
 
-function textBox(
+export function textBox(
   at: Point,
   outward: Point,
   label: string,

@@ -112,6 +112,8 @@ export function PlanEditor({
     () => remembered.current.view[stage] ?? (isWhite ? '3d' : 'plan'),
   )
   // The 3D effect stage shows materials by default; the white model stays one click away.
+  // 显示间距 starts off each time: it is a check, not part of the drawing being edited.
+  const [showSpacing, setShowSpacing] = useState(false)
   const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
@@ -266,6 +268,8 @@ export function PlanEditor({
               canRedo={state.future.length > 0}
               dispatch={dispatch}
               saveState={saveState}
+              spacing={showSpacing}
+              onToggleSpacing={() => setShowSpacing((on) => !on)}
             />
 
             {saveState === 'conflict' && (
@@ -333,6 +337,7 @@ export function PlanEditor({
                   onItemPointerDown={onItemPointerDown}
                   onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                   compact={!planMain}
+                  spacing={showSpacing}
                   title={`${baseNode.name} 平面`}
                 />
                 {!planMain && (

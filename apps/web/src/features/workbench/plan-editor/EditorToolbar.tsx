@@ -23,6 +23,9 @@ interface EditorToolbarProps {
   canRedo: boolean
   dispatch: Dispatch<EditorAction>
   saveState: SaveState
+  /** 显示间距: clear distances around the 软装 props on the plan. */
+  spacing: boolean
+  onToggleSpacing: () => void
 }
 
 /** View and look tabs, undo / redo and the draft's save state. */
@@ -36,6 +39,8 @@ export function EditorToolbar({
   canRedo,
   dispatch,
   saveState,
+  spacing,
+  onToggleSpacing,
 }: EditorToolbarProps) {
   return (
     <div className="toolbar">
@@ -64,6 +69,16 @@ export function EditorToolbar({
             白模
           </button>
         </div>
+      )}
+      {view === 'plan' && (
+        <button
+          type="button"
+          aria-pressed={spacing}
+          title="在平面上标出每件软装到最近软装或墙体的距离（100 mm–3 m）"
+          onClick={onToggleSpacing}
+        >
+          显示间距
+        </button>
       )}
       <span className="history-buttons">
         <button
