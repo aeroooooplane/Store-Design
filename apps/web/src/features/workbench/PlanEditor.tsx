@@ -131,6 +131,16 @@ export function PlanEditor({
     [issues],
   )
   const select = useCallback((id: string | null) => dispatch({ type: 'select', id }), [])
+  const itemsRef = useRef(state.layout.items)
+  itemsRef.current = state.layout.items
+  /** The model's front for an item id (a wall piece turns it into the shop). */
+  const frontOf = useCallback(
+    (id: string) => {
+      const assetId = itemsRef.current.find((i) => i.id === id)?.assetId
+      return (assetId ? assetMap.get(assetId)?.front : null) ?? null
+    },
+    [assetMap],
+  )
   // 3D drags: one undo step per drag, magnetic snapping unless Alt is held.
   const move = useCallback(
     (id: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) =>
@@ -141,8 +151,9 @@ export function PlanEditor({
         cz,
         group: gesture.group,
         snapTo: gesture.snap ? space : null,
+        front: frontOf(id),
       }),
-    [space],
+    [space, frontOf],
   )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
@@ -187,12 +198,16 @@ export function PlanEditor({
     finishDraft,
     onNodeCreated,
   })
-  const { svgRef, onItemPointerDown, onPointerMove, endDrag } = usePlanDrag(space, dispatch)
+  const { svgRef, onItemPointerDown, onPointerMove, endDrag } = usePlanDrag(
+    space,
+    dispatch,
+    (item) => frontOf(item.id),
+  )
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
   function addAsset(asset: Asset) {
     const [cx, cz] = newItemPoint(space)
-    dispatch({ type: 'add', asset, cx, cz })
+    dispatch({ type: 'add', asset, cx, cz, space })
   }
 
   function switchView(next: 'plan' | '3d') {

@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras } from '@store/shared'
+import { defaultCameras, itemElevation } from '@store/shared'
 import type { Asset, Camera, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
 import { finishModel } from './finish-model.ts'
 import { loadModel, loadSource } from './model-cache.ts'
@@ -256,12 +256,14 @@ export class WhiteScene {
       }
       placed.item = item
       const group = placed.group
-      group.position.set(item.cx, 0, item.cz)
+      // Wall and ceiling pieces hang at their height above the floor.
+      const elevation = itemElevation(item)
+      group.position.set(item.cx, elevation, item.cz)
       // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
       group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
       // The footprint is already turned (w × d on the plan), so the box needs no rotation.
       placed.hit.scale.set(item.w, item.h, item.d)
-      placed.hit.position.set(item.cx, item.h / 2, item.cz)
+      placed.hit.position.set(item.cx, elevation + item.h / 2, item.cz)
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
     this.sceneChanged()

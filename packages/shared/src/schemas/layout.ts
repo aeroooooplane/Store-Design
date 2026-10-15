@@ -4,11 +4,12 @@ import {
   polygonOverlapsRect,
   rectFromCenter,
   rectInsidePolygon,
-  rectsOverlap,
   segmentIntersectsRectInterior,
 } from '../geometry/index.ts'
 import type { Rect } from '../geometry/index.ts'
 import { EPSILON_M } from '../units.ts'
+import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
+import { InstallationSchema } from './asset.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
 import { openingPieces } from './space.ts'
 import type { IssueSeverity, Space } from './space.ts'
@@ -40,6 +41,10 @@ export const LayoutItemSchema = z.object({
   placeholder: z.boolean().default(false),
   /** Locked items are kept in place by the planner and the agent. */
   locked: z.boolean().default(false),
+  /** Wall and ceiling pieces (LOGO, 画面); absent for props standing on the floor. */
+  mount: InstallationSchema.optional(),
+  /** Height of the bottom above the floor (metres) for wall and ceiling pieces. */
+  elevation: z.number().finite().min(0).max(20).optional(),
 })
 
 export const RelaxationSchema = z.object({
@@ -91,6 +96,7 @@ export type LayoutIssueCode =
   | 'item_overlap'
   | 'item_blocks_entrance'
   | 'item_too_tall'
+  | 'item_not_on_wall'
   | 'item_asset_unknown'
   | 'item_asset_size_mismatch'
 
@@ -174,8 +180,10 @@ export function checkAssetFit(
 }
 
 /**
- * Hard constraints only: inside the boundary, clear of obstacles, entrances and each other,
- * and not taller than the ceiling. Aisle widths and spacing are soft rules handled by the planner.
+ * Hard constraints: inside the boundary, clear of obstacles, entrances and each other, and below
+ * the ceiling; a wall piece off the wall is only a warning. Wall and ceiling pieces hang above
+ * the floor, so they do not block entrances or clash with floor props (see itemsCollide).
+ * Aisle widths and spacing are soft rules handled by the planner.
  */
 export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
   const issues: LayoutIssue[] = []
@@ -200,7 +208,9 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
         })
       }
     })
+    const mount = itemMount(item)
     space.entrances.forEach((entrance, index) => {
+      if (mount !== 'floor') return
       // An entrance along several edges is checked piece by piece, not along its chord.
       const pieces = openingPieces(space, entrance) ?? [entrance]
       if (pieces.some((p) => segmentIntersectsRectInterior(p.a, p.b, rect))) {
@@ -212,7 +222,7 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
         })
       }
     })
-    if (item.h > space.height + EPSILON_M) {
+    if (verticalRange(item)[1] > space.height + EPSILON_M) {
       issues.push({
         code: 'item_too_tall',
         severity: 'error',
@@ -220,11 +230,19 @@ export function validateLayout(space: Space, layout: Layout): LayoutIssue[] {
         itemIds: [item.id],
       })
     }
+    if (mount === 'wall' && !mountedWall(item, space)) {
+      issues.push({
+        code: 'item_not_on_wall',
+        severity: 'warning',
+        message: `${item.name}没有贴在墙上`,
+        itemIds: [item.id],
+      })
+    }
   }
 
   footprints.forEach((first, i) => {
     for (const second of footprints.slice(i + 1)) {
-      if (rectsOverlap(first.rect, second.rect)) {
+      if (itemsCollide(first.item, second.item)) {
         issues.push({
           code: 'item_overlap',
           severity: 'error',

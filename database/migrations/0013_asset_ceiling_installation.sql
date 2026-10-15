@@ -1,0 +1,2 @@
+ALTER TABLE "assets" DROP CONSTRAINT "assets_installation_known";--> statement-breakpoint
+ALTER TABLE "assets" ADD CONSTRAINT "assets_installation_known" CHECK ("assets"."installation" IS NULL OR "assets"."installation" IN ('floor', 'wall', 'ceiling'));

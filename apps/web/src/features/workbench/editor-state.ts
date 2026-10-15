@@ -1,5 +1,12 @@
-import { interiorPoint, roundM, rotatedFootprint } from '@store/shared'
-import type { Asset, Layout, LayoutItem, Point, Rotation, Space } from '@store/shared'
+import {
+  defaultElevation,
+  interiorPoint,
+  itemMount,
+  roundM,
+  rotatedFootprint,
+  wallMountSnap,
+} from '@store/shared'
+import type { Asset, FrontAxis, Layout, LayoutItem, Point, Rotation, Space } from '@store/shared'
 import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
@@ -24,7 +31,8 @@ export type EditorAction =
   | { type: 'select'; id: string | null }
   /**
    * `group` joins the moves of one drag into one undo step; `snapTo` turns on magnetic
-   * snapping to the walls of this space and to other props.
+   * snapping to the walls of this space and to other props. A wall piece snaps onto the wall
+   * instead, turning its `front` (the model's) into the shop.
    */
   | {
       type: 'move'
@@ -33,11 +41,15 @@ export type EditorAction =
       cz: number
       group?: string | undefined
       snapTo?: Space | null | undefined
+      front?: FrontAxis | null | undefined
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
   | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
   | { type: 'remove'; id: string }
-  | { type: 'add'; asset: Asset; cx: number; cz: number }
+  /** A wall or ceiling piece added with `space` goes onto the nearest wall at a default height. */
+  | { type: 'add'; asset: Asset; cx: number; cz: number; space?: Space | undefined }
+  /** Height of a wall or ceiling piece above the floor. */
+  | { type: 'elevate'; id: string; elevation: number }
   | { type: 'undo' }
   | { type: 'redo' }
   /** The layout that reached the server; later edits keep the state dirty. */
@@ -86,6 +98,42 @@ function changeItem(
   return changed ? commit(state, { ...state.layout, items }, key) : state
 }
 
+/**
+ * A wall or ceiling piece moved (each step of a drag). Its height follows the props below it
+ * as long as it is still at the default height of where it was; a height typed in stays.
+ */
+function relocate(
+  item: LayoutItem,
+  placed: Partial<Pick<LayoutItem, 'cx' | 'cz' | 'rotation' | 'w' | 'd'>>,
+  items: readonly LayoutItem[],
+  space: Space,
+): LayoutItem {
+  const next = { ...item, ...placed }
+  if (item.elevation === undefined || item.elevation === defaultElevation(item, items, space))
+    next.elevation = defaultElevation(next, items, space)
+  const same = (['cx', 'cz', 'rotation', 'w', 'd', 'elevation'] as const).every(
+    (k) => next[k] === item[k],
+  )
+  return same ? item : next
+}
+
+/** A new wall piece goes onto the wall nearest to where it lands; ceiling pieces hang. */
+function mountNew(
+  item: LayoutItem,
+  asset: Asset,
+  items: readonly LayoutItem[],
+  space: Space,
+): LayoutItem {
+  const mount = asset.installation
+  if (mount !== 'wall' && mount !== 'ceiling') return item
+  let mounted: LayoutItem = { ...item, mount }
+  if (mount === 'wall') {
+    const placed = wallMountSnap(item, item.cx, item.cz, space, asset.front, Infinity)
+    if (placed) mounted = { ...mounted, ...placed }
+  }
+  return { ...mounted, elevation: defaultElevation(mounted, items, space) }
+}
+
 /** A fresh id for a new item of this function, e.g. island_table-3. */
 export function nextItemId(layout: Layout, fn: string): string {
   const used = new Set(layout.items.map((i) => i.id))
@@ -109,6 +157,10 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           let { cx, cz } = action
           let exactX = false
           let exactZ = false
+          if (action.snapTo && itemMount(item) === 'wall') {
+            const placed = wallMountSnap(item, cx, cz, action.snapTo, action.front ?? null)
+            if (placed) return relocate(item, placed, state.layout.items, action.snapTo)
+          }
           if (action.snapTo) {
             const snapped = magnetSnap(item, cx, cz, state.layout.items, action.snapTo)
             ;({ cx, cz } = snapped)
@@ -117,6 +169,8 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           }
           // A snapped axis keeps millimetres so the prop sits exactly against the wall.
           const next = { cx: exactX ? roundM(cx) : snap(cx), cz: exactZ ? roundM(cz) : snap(cz) }
+          if (action.snapTo && itemMount(item) !== 'floor')
+            return relocate(item, next, state.layout.items, action.snapTo)
           return next.cx === item.cx && next.cz === item.cz ? item : { ...item, ...next }
         },
         action.group ?? null,
@@ -146,6 +200,16 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         },
         null,
       )
+    case 'elevate':
+      return changeItem(
+        state,
+        action.id,
+        (item) =>
+          item.locked || itemMount(item) === 'floor' || !Number.isFinite(action.elevation)
+            ? item
+            : { ...item, elevation: roundM(Math.min(20, Math.max(0, action.elevation))) },
+        `elevate:${action.id}`,
+      )
     case 'remove': {
       const items = state.layout.items.filter((item) => item.id !== action.id || item.locked)
       if (items.length === state.layout.items.length) return state
@@ -169,7 +233,10 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         placeholder: !action.asset.placeable,
         locked: false,
       }
-      return commit(state, { ...state.layout, items: [...state.layout.items, item] }, null, {
+      const added = action.space
+        ? mountNew(item, action.asset, state.layout.items, action.space)
+        : item
+      return commit(state, { ...state.layout, items: [...state.layout.items, added] }, null, {
         selectedId: id,
       })
     }
