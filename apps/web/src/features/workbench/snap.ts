@@ -1,4 +1,4 @@
-import { edges, roundM } from '@store/shared'
+import { edges, itemTilt, roundM, wallFlushSnap } from '@store/shared'
 import type { LayoutItem, Space } from '@store/shared'
 
 /** Dragged props stick to walls and neighbours within this distance (metres). */
@@ -45,12 +45,26 @@ function bestShift(low: number, high: number, cross0: number, cross1: number, li
  * snapped centre and which axes snapped (those keep millimetre precision, not the 10 mm grid).
  */
 export function magnetSnap(
-  item: Pick<LayoutItem, 'id' | 'w' | 'd'>,
+  item: Pick<LayoutItem, 'id' | 'w' | 'd'> & { rotation?: number | undefined },
   cx: number,
   cz: number,
-  others: readonly Pick<LayoutItem, 'id' | 'cx' | 'cz' | 'w' | 'd'>[],
+  others: readonly (Pick<LayoutItem, 'id' | 'cx' | 'cz' | 'w' | 'd'> & {
+    rotation?: number | undefined
+  })[],
   space: Space,
 ): { cx: number; cz: number; snappedX: boolean; snappedZ: boolean } {
+  // A tilted prop has no axis-aligned edges: it only goes flush onto a wall it lies parallel to.
+  if (itemTilt(item)) {
+    const flush = wallFlushSnap(
+      { w: item.w, d: item.d, rotation: item.rotation ?? 0 },
+      cx,
+      cz,
+      space,
+    )
+    return flush
+      ? { cx: flush.cx, cz: flush.cz, snappedX: true, snappedZ: true }
+      : { cx, cz, snappedX: false, snappedZ: false }
+  }
   const hw = item.w / 2
   const hd = item.d / 2
   const xLines: Line[] = []
@@ -73,7 +87,8 @@ export function magnetSnap(
     }
   }
   for (const o of others) {
-    if (o.id === item.id) continue
+    // Tilted neighbours have no axis-aligned edges to line up with.
+    if (o.id === item.id || itemTilt(o)) continue
     const [l, r, t, bt] = [o.cx - o.w / 2, o.cx + o.w / 2, o.cz - o.d / 2, o.cz + o.d / 2]
     if (overlaps(cz - hd, cz + hd, t, bt, NEIGHBOUR_M)) {
       xLines.push({ at: l, from: t - NEIGHBOUR_M, to: bt + NEIGHBOUR_M, edges: ['low', 'high'] })
