@@ -1,4 +1,5 @@
-import type { Asset, PlannerAsset, PlannerCatalog, SiStyle } from '@store/shared'
+import { DEFAULT_SIDE_CABINET_RULES } from '@store/shared'
+import type { Asset, PlannerAsset, PlannerCatalog, SideCabinetRules, SiStyle } from '@store/shared'
 
 function familyRank(asset: Asset, style: SiStyle): number {
   if (asset.siFamily === style) return 0
@@ -15,16 +16,6 @@ function nameRank(asset: Asset, patterns: RegExp[]): number {
   return index < 0 ? patterns.length : index
 }
 
-/**
- * Height band of the 配件边柜 an island shop stands along its edge, in metres: the 1.3 m class
- * (catalogue 1.214–1.3 m), kept below ISLAND_CABINET_MAX_H so the shop stays open to view.
- */
-const SIDE_CABINET_HEIGHT = { min: 1.2, max: 1.4 }
-
-const inSideCabinetBand = (asset: Asset) =>
-  asset.footprint.h >= SIDE_CABINET_HEIGHT.min - 1e-9 &&
-  asset.footprint.h <= SIDE_CABINET_HEIGHT.max + 1e-9
-
 const toPlanner = (asset: Asset): PlannerAsset => ({
   id: asset.id,
   name: asset.name,
@@ -37,9 +28,14 @@ const toPlanner = (asset: Asset): PlannerAsset => ({
  * Chooses planner models from the placeable catalogue (retired models left out): the project's
  * SI family first, then 通用, then the standard model names; rotated-instance variants last. One
  * cabinet per length, so a wall is not lined with mixed display variants of the same size. The
- * 配件边柜 go apart (`sideCabinet`): only island shops stand them, a few along the edge.
+ * 配件边柜 go apart (`sideCabinet`): only island shops stand them, a few along the edge, chosen by
+ * `rules` (its preferred models, then its height band).
  */
-export function plannerCatalog(assets: Iterable<Asset>, style: SiStyle): PlannerCatalog {
+export function plannerCatalog(
+  assets: Iterable<Asset>,
+  style: SiStyle,
+  rules: SideCabinetRules = DEFAULT_SIDE_CABINET_RULES,
+): PlannerCatalog {
   const all = [...assets].filter((a) => a.placeable && !a.retired)
   const sorted = (list: Asset[], names: RegExp[]) =>
     [...list].sort(
@@ -63,14 +59,23 @@ export function plannerCatalog(assets: Iterable<Asset>, style: SiStyle): Planner
     return true
   })
   // Side cabinets (island shops only): the preferred family alone, as for the wall cabinets; within
-  // it the 1.2–1.4 m models first, then the shallowest, so they keep out of the walkway.
+  // it the rules' preferred models first, then those in its height band, then the shallowest, so
+  // they keep out of the walkway.
+  const preferred = rules.preferredAssets[style] ?? []
+  const preferredRank = (a: Asset) => {
+    const index = preferred.indexOf(a.id)
+    return index < 0 ? preferred.length : index
+  }
+  const inBand = (a: Asset) =>
+    a.footprint.h >= rules.preferHeight.min - 1e-9 && a.footprint.h <= rules.preferHeight.max + 1e-9
   const sideCabinets = sorted(
     all.filter((a) => a.function === 'side_cabinet'),
     [],
   ).sort(
     (a, b) =>
       familyRank(a, style) - familyRank(b, style) ||
-      Number(!inSideCabinetBand(a)) - Number(!inSideCabinetBand(b)) ||
+      preferredRank(a) - preferredRank(b) ||
+      Number(!inBand(a)) - Number(!inBand(b)) ||
       Math.min(a.footprint.w, a.footprint.d) - Math.min(b.footprint.w, b.footprint.d),
   )
   const sideFamily = sideCabinets[0] ? familyRank(sideCabinets[0], style) : 0

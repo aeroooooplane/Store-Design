@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
+import { DEFAULT_SIDE_CABINET_RULES, rectangleSpace } from '@store/shared'
 import type { Asset, LayoutCandidates } from '@store/shared'
 import { plannerCatalog } from '../src/modules/layouts/selection.ts'
 import { seedAsset } from './fixtures.ts'
@@ -258,5 +258,16 @@ describe('plannerCatalog', () => {
     // No side cabinet of the family: the next family, 通用 first.
     const noSi2 = assets.filter((a) => a.siFamily !== 'SI2.0')
     expect(plannerCatalog(noSi2, 'SI2.0').sideCabinet?.map((a) => a.id)).toEqual(['asset-41'])
+    // The preferred models and the height band come from the rules, which store data can replace.
+    const rules = {
+      ...DEFAULT_SIDE_CABINET_RULES,
+      preferHeight: { min: 0.8, max: 1 },
+      preferredAssets: { 'SI2.0': ['asset-28192911'] },
+    }
+    expect(plannerCatalog(assets, 'SI2.0', rules).sideCabinet?.map((a) => a.id)).toEqual([
+      'asset-28192911',
+      'asset-40',
+      'asset-33660153',
+    ])
   })
 })

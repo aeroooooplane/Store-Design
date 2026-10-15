@@ -23,6 +23,8 @@ import type { Layout, LayoutIssue, LayoutItem, Rotation } from '../schemas/layou
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
 import { rotationFacing } from './orientation.ts'
+import { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
+import type { SideCabinetRules } from './side-cabinet-rules.ts'
 
 export interface PlannerAsset {
   id: string
@@ -39,7 +41,7 @@ export interface PlannerCatalog {
   cabinet: PlannerAsset[]
   /**
    * Low 配件边柜 (about 1.3 m) an island shop stands along its edge, a few at most (see
-   * ISLAND_SIDE_CABINETS). Other shop types leave them out.
+   * SideCabinetRules). Other shop types leave them out.
    */
   sideCabinet?: PlannerAsset[]
 }
@@ -69,38 +71,6 @@ export interface PlannerRules {
  * leaves a clear gap there: 配件边柜, island tables and cashiers stand 0.9–1.43 m, 配件柜 2.4–2.43 m.
  */
 export const ISLAND_CABINET_MAX_H = 1.5
-
-/**
- * How many low cabinets (配件边柜) an island shop stands along its edge, and where (confirmed by
- * the user, 2026-10-14). They come after the island tables and the cashier and take only the edge
- * those leave free, so they never cost a table; they keep to the default guide values (no
- * relaxation). Side-hall shops and zones line their walls as before.
- */
-export const ISLAND_SIDE_CABINETS = {
-  /** Usable floor area (㎡, see usableArea) below which an island shop stands none. */
-  minArea: 20,
-  /** One cabinet per this much usable floor area (㎡), rounded down; at least one from minArea. */
-  areaPerCabinet: 25,
-  /** Most cabinets by area, however large the shop. */
-  maxCount: 3,
-  /** Most cabinets per strategy, below the count by area. */
-  strategyMax: { max: 3, area: 2, min: 1 } satisfies Record<GeneratedStrategy, number>,
-  /**
-   * Share of a side's boundary (front, back, left or right of the main entrance) that entrances
-   * and open edges must cover for the side to count as open.
-   */
-  openSideShare: 0.5,
-  /** With this many open sides or more, cabinets stand only on the side facing the main entrance. */
-  openSidesBackOnly: 3,
-} as const
-
-/** Side cabinets an island shop of this usable floor area (㎡) asks for under a strategy. */
-export function sideCabinetsForArea(area: number, strategy: GeneratedStrategy): number {
-  const rule = ISLAND_SIDE_CABINETS
-  if (area < rule.minArea) return 0
-  const byArea = Math.min(rule.maxCount, Math.max(1, Math.floor(area / rule.areaPerCabinet)))
-  return Math.min(byArea, rule.strategyMax[strategy])
-}
 
 export const DEFAULT_RULES: Record<ShopType, PlannerRules> = {
   side_hall: {
@@ -153,6 +123,8 @@ export interface PlannerInput {
   strategy: GeneratedStrategy
   catalog: PlannerCatalog
   rules?: Partial<PlannerRules>
+  /** The island shop's side cabinets; DEFAULT_SIDE_CABINET_RULES unless store data replaces it. */
+  sideCabinetRules?: SideCabinetRules
 }
 
 export interface PlannerResult {
@@ -586,43 +558,6 @@ class Planner {
   }
 
   /**
-   * How many sides of the shop (front, back, left, right of the main entrance) are open: at least
-   * `share` of the boundary length on that side is entrance or open edge. Each edge belongs to the
-   * side its inward normal points from (a 45° edge to the front or back).
-   */
-  openSides(share: number): number {
-    const main = this.mainEntrance
-    if (!main) return 0
-    const ring = edges(this.boundary)
-    const sideOf = ([a, b]: [Point, Point]): string => {
-      const len = distance(a, b)
-      const n = inward([(b[0] - a[0]) / len, (b[1] - a[1]) / len])
-      const along = n[0] * main.n[0] + n[1] * main.n[1]
-      if (along > 0.5 - 1e-9) return 'front'
-      if (along < -0.5 + 1e-9) return 'back'
-      return main.n[0] * n[1] - main.n[1] * n[0] > 0 ? 'right' : 'left'
-    }
-    const total = new Map<string, number>()
-    const open = new Map<string, number>()
-    const sides = ring.map((edge) => (distance(...edge) > 0 ? sideOf(edge) : null))
-    ring.forEach((edge, i) => {
-      const side = sides[i]
-      if (side) total.set(side, (total.get(side) ?? 0) + distance(...edge))
-    })
-    const pieces = [
-      ...this.entrances.flatMap((e) => e?.pieces ?? []),
-      ...this.space.openEdges.flatMap(
-        (edge) => boundaryPath(this.boundary, edge.a, edge.b, ON_EDGE_M) ?? [],
-      ),
-    ]
-    for (const piece of pieces) {
-      const side = piece.edge === null ? null : sides[piece.edge]
-      if (side) open.set(side, (open.get(side) ?? 0) + distance(piece.a, piece.b))
-    }
-    return [...total].filter(([side, len]) => (open.get(side) ?? 0) >= share * len - 1e-9).length
-  }
-
-  /**
    * At least `gap` (less the millimetre positions round to) from every boundary edge and obstacle,
    * measured as the true distance: a rounded or cut corner next to the prop counts by how near it
    * actually comes, not by a padded box.
@@ -653,9 +588,10 @@ class Planner {
 
   /**
    * Island shop: stands up to `count` low cabinets along the edge the tables and the cashier left
-   * free. The side facing the main entrance (the back wall) comes first, then the back half of
-   * the two sides; with `backOnly` (three or more open sides) the back wall alone. Never against
-   * an entrance or open edge, in the main aisle or an entrance buffer; `wallGap` from the whole
+   * free. The side facing the main entrance (the back wall) comes first, then the two sides beyond
+   * `sideFromDepth` of the shop's depth. Judged per wall piece: an open side still takes one
+   * against a piece of wall long enough for it. Never against an entrance or open edge, in the
+   * main aisle or an entrance buffer; `wallGap` from the whole
    * boundary and `clearance` from island tables. Each cabinet takes the slot farthest from the
    * props already along the edge, so a few cabinets spread out; the first model in `assets` that
    * fits anywhere is used. Returns how many stand, and how many of them on the back wall.
@@ -664,20 +600,19 @@ class Planner {
     assets: PlannerAsset[],
     count: number,
     rules: PlannerRules,
-    backOnly: boolean,
+    sideFromDepth: number,
   ): { placed: number; onBack: number } {
     const main = this.mainEntrance
     if (!main || !count) return { placed: 0, onBack: 0 }
     const depthOf = (p: Point) =>
       (p[0] - main.mid[0]) * main.n[0] + (p[1] - main.mid[1]) * main.n[1]
     const depths = this.boundary.map(depthOf)
-    const half = (Math.min(...depths) + Math.max(...depths)) / 2
+    const from = Math.min(...depths) + (Math.max(...depths) - Math.min(...depths)) * sideFromDepth
     const back = this.sideCabinetBack()
     const tiers: { wall: Wall; tier: number }[] = back ? [{ wall: back, tier: 0 }] : []
-    if (!backOnly)
-      for (const wall of this.walls)
-        if (Math.abs(wall.n[0] * main.n[0] + wall.n[1] * main.n[1]) < 0.5)
-          tiers.push({ wall, tier: 1 })
+    for (const wall of this.walls)
+      if (Math.abs(wall.n[0] * main.n[0] + wall.n[1] * main.n[1]) < 0.5)
+        tiers.push({ wall, tier: 1 })
     const zones = this.zones(rules, true)
     const centre = (r: Rect): Point => [(r.minX + r.maxX) / 2, (r.minZ + r.maxZ) / 2]
     const edgeProps = () =>
@@ -704,7 +639,7 @@ class Planner {
             const steps = Math.floor((t1 - t0 - along) / ALONG_STEP + 1e-9)
             for (let k = 0; k <= steps; k++) {
               const rect = this.wallRect(wall, t0 + k * ALONG_STEP, along, depth, rules.wallGap)
-              if (tier > 0 && Math.min(...rectCorners(rect).map(depthOf)) < half - 1e-9) continue
+              if (tier > 0 && Math.min(...rectCorners(rect).map(depthOf)) < from - 1e-9) continue
               const spread = Math.min(Infinity, ...others.map((c) => distance(c, centre(rect))))
               if (best && (best.tier < tier || (best.tier === tier && best.spread >= spread)))
                 continue
@@ -886,22 +821,19 @@ export function tablesForArea(area: number): number {
 }
 
 /**
- * How many side cabinets an island shop asks for (ISLAND_SIDE_CABINETS) and whether only the side
- * facing the main entrance takes them; or, when it stands none, the note saying why.
+ * How many side cabinets an island shop asks for (see SideCabinetRules); or, when it stands none,
+ * the note saying why.
  */
 function islandSideTarget(
   planner: Planner,
   strategy: GeneratedStrategy,
   area: number,
-): { target: number; backOnly: boolean } | string {
-  const rule = ISLAND_SIDE_CABINETS
+  rule: SideCabinetRules,
+): number | string {
   if (area < rule.minArea)
     return `中岛店面积 ${Math.floor(area)} ㎡，不足 ${rule.minArea} ㎡，不放配件边柜`
   if (!planner.mainEntrance) return '空间没有入口，分不出店的前后，未放配件边柜'
-  return {
-    target: sideCabinetsForArea(area, strategy),
-    backOnly: planner.openSides(rule.openSideShare) >= rule.openSidesBackOnly,
-  }
+  return sideCabinetsForArea(area, strategy, rule)
 }
 
 /** The note on the side cabinets of an island shop: how many, and on what basis. */
@@ -910,17 +842,15 @@ function sideCabinetNote(
   area: number,
   target: number,
   placed: number,
-  backOnly: boolean,
+  rule: SideCabinetRules,
 ): string {
-  const rule = ISLAND_SIDE_CABINETS
   // Rounded down, as the count is: 49.6 ㎡ reads 49 ㎡ and asks for one cabinet.
   const shown = Math.floor(area)
   const basis = [
     `每 ${rule.areaPerCabinet} ㎡ 1 个，最多 ${rule.maxCount} 个`,
-    ...(target < sideCabinetsForArea(area, 'max')
+    ...(target < sideCabinetsForArea(area, 'max', rule)
       ? [`${PLAN_STRATEGY_LABELS[strategy]}最多 ${rule.strategyMax[strategy]} 个`]
       : []),
-    ...(backOnly ? [`${rule.openSidesBackOnly} 面以上开敞，只放在正对主入口的一侧`] : []),
   ].join('；')
   return placed === target
     ? `中岛店按面积 ${shown} ㎡ 放 ${placed} 个配件边柜（${basis}）`
@@ -930,7 +860,7 @@ function sideCabinetNote(
 /**
  * Generates one layout for a polygon space. Cashier against the back wall, island tables in the
  * open floor away from entrances and the main aisle, cabinets along the remaining walls (an island
- * shop: a few low side cabinets, see ISLAND_SIDE_CABINETS). Guide values are relaxed one step at a
+ * shop: a few low side cabinets, see SideCabinetRules). Guide values are relaxed one step at a
  * time when the requested tables do not fit, and every relaxation is recorded in
  * `planning.relaxations`.
  */
@@ -1048,17 +978,20 @@ export function planLayout(input: PlannerInput): PlannerResult {
   let sideNote: string | null = null
   if (islandShop) {
     const area = usableArea(input.space)
-    const side = sideCabinets.length ? islandSideTarget(planner, input.strategy, area) : null
-    if (typeof side === 'string') sideNote = side
-    else if (side) {
-      const place = () => planner.placeSideCabinets(sideCabinets, side.target, base, side.backOnly)
+    const rule = input.sideCabinetRules ?? DEFAULT_SIDE_CABINET_RULES
+    const target = sideCabinets.length
+      ? islandSideTarget(planner, input.strategy, area, rule)
+      : null
+    if (typeof target === 'string') sideNote = target
+    else if (target !== null) {
+      const place = () => planner.placeSideCabinets(sideCabinets, target, base, rule.sideFromDepth)
       let result = place()
       // Short of the target, or some only found room on a side: try the tables clear of a band
       // along the back wall (the cabinets' first choice). That plan is kept only if it costs no
       // table and no further relaxation, and stands more cabinets, or as many with more on the
       // back wall.
       const back = planner.sideCabinetBack()
-      if ((result.placed < side.target || result.onBack < result.placed) && island && back) {
+      if ((result.placed < target || result.onBack < result.placed) && island && back) {
         const depth = Math.min(...sideCabinets.map((c) => Math.min(c.footprint.w, c.footprint.d)))
         const band = planner.wallBand(back, base.wallGap + depth + base.clearance)
         // The tables are packed against what stands so far: the cashier, not the first try.
@@ -1086,7 +1019,7 @@ export function planLayout(input: PlannerInput): PlannerResult {
         }
       }
       const { placed } = result
-      sideNote = sideCabinetNote(input.strategy, area, side.target, placed, side.backOnly)
+      sideNote = sideCabinetNote(input.strategy, area, target, placed, rule)
     }
   } else if (cabinets.length) {
     const walls = input.strategy === 'max' ? planner.walls : planner.walls.slice(0, 1)

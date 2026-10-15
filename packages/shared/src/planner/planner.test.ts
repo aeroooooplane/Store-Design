@@ -23,9 +23,7 @@ import { facingAfter, rotationFacing } from './orientation.ts'
 import {
   DEFAULT_RULES,
   ISLAND_CABINET_MAX_H,
-  ISLAND_SIDE_CABINETS,
   planLayout,
-  sideCabinetsForArea,
   tablesForArea,
   usableArea,
 } from './planner.ts'
@@ -38,6 +36,7 @@ import {
   lShape as lShop,
   trapezoid,
 } from './shapes.fixture.ts'
+import { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
 import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
 
 // Real catalogue sizes (资源库/04_模型库).
@@ -601,11 +600,12 @@ describe('side cabinets along the edge of an island shop', () => {
   }
 
   it('asks for one per 25 ㎡ from 20 ㎡, three at most, and at most 3 / 2 / 1 by strategy', () => {
-    expect(ISLAND_SIDE_CABINETS).toMatchObject({
+    expect(DEFAULT_SIDE_CABINET_RULES).toMatchObject({
       minArea: 20,
       areaPerCabinet: 25,
       maxCount: 3,
       strategyMax: { max: 3, area: 2, min: 1 },
+      sideFromDepth: 0.5,
     })
     const counts = (area: number) => STRATEGIES.map((s) => sideCabinetsForArea(area, s))
     expect(counts(15)).toEqual([0, 0, 0])
@@ -787,8 +787,9 @@ describe('side cabinets along the edge of an island shop', () => {
     30_000,
   )
 
-  it('stands them only on the side facing the main entrance when three or more sides are open', () => {
-    // 8 × 14 m, the whole front an entrance; open edges along the front part of both sides.
+  it('judges per wall piece: an open side still takes one against a wall piece longer than the cabinet', () => {
+    // 8 × 14 m, the whole front an entrance; open edges along the front part of both sides, the
+    // back `openTo` metres of each side a wall.
     const shop = (openTo: number) =>
       space({
         ...rectangleSpace(8, 14, 3.2),
@@ -797,20 +798,50 @@ describe('side cabinets along the edge of an island shop', () => {
           { a: [8, openTo], b: [8, 14] },
         ],
       })
-    // 8 of 14 m open on each side (57 %): the front and both sides are open.
+    const onSide = (item: LayoutItem) => facingAfter('+X', item.rotation)[1] === 0
+    // 8 of 14 m open on each side: the 6 m of wall left at the back of a side takes one beside the
+    // one on the back wall (尽量多放 fills the sides with tables first).
     const open = plan(shop(6), 'area')
     const sides = sidesOf(open.layout.items)
-    expect(sides.length).toBeGreaterThan(0)
-    for (const item of sides) {
-      expect(facingAfter('+X', item.rotation)).toEqual([0, 1])
-      expect(itemFootprint(item).minZ).toBeCloseTo(0.3, 2)
+    expect(sides).toHaveLength(2)
+    expect(sides.filter(onSide)).toHaveLength(1)
+    for (const item of sides.filter(onSide)) {
+      const rect = itemFootprint(item)
+      expect(rect.maxZ).toBeLessThanOrEqual(6 + 1e-6)
+      expect(rect.minZ).toBeGreaterThanOrEqual(0.3 - 1e-6)
     }
-    expect(open.notes.join()).toContain('3 面以上开敞，只放在正对主入口的一侧')
-    // 4 of 14 m (29 %): only the front is open, and the back half of a side takes one as well.
-    const partly = sidesOf(plan(shop(10), 'area').layout.items)
-    expect(partly.length).toBeGreaterThan(sides.length)
-    expect(partly.some((item) => facingAfter('+X', item.rotation)[1] === 0)).toBe(true)
-  })
+    expect(open.notes).toContain(
+      '中岛店按面积 112 ㎡ 放 2 个配件边柜（每 25 ㎡ 1 个，最多 3 个；按面积推荐最多 2 个）',
+    )
+    // 12.5 of 14 m open: the 1.5 m left is shorter than the 1.8 m cabinet, so the sides take none.
+    const short = plan(shop(1.5), 'area')
+    expect(sidesOf(short.layout.items)).toHaveLength(1)
+    expect(sidesOf(short.layout.items).some(onSide)).toBe(false)
+    expect(short.notes.join()).toContain('边缘空间只放下 1 个')
+  }, 30_000)
+
+  it('takes its numbers from the rules handed in, so measured store data can replace them', () => {
+    const s = rectangleSpace(10, 6, 3.2)
+    const withRules = (rules: Partial<typeof DEFAULT_SIDE_CABINET_RULES>) =>
+      planLayout({
+        space: s,
+        shopType: 'island',
+        strategy: 'max',
+        catalog: withSide,
+        sideCabinetRules: { ...DEFAULT_SIDE_CABINET_RULES, ...rules },
+      })
+    expect(sidesOf(withRules({}).layout.items)).toHaveLength(2)
+    const fewer = withRules({ areaPerCabinet: 60 })
+    expect(sidesOf(fewer.layout.items)).toHaveLength(1)
+    expect(fewer.notes).toContain('中岛店按面积 60 ㎡ 放 1 个配件边柜（每 60 ㎡ 1 个，最多 3 个）')
+    const none = withRules({ minArea: 80 })
+    expect(sidesOf(none.layout.items)).toEqual([])
+    expect(none.notes).toContain('中岛店面积 60 ㎡，不足 80 ㎡，不放配件边柜')
+    // Sides only from the very back: the back wall alone takes them.
+    const backOnly = sidesOf(withRules({ sideFromDepth: 1 }).layout.items)
+    expect(backOnly.length).toBeGreaterThan(0)
+    for (const item of backOnly) expect(facingAfter('+X', item.rotation)).toEqual([0, 1])
+  }, 30_000)
 
   it('leaves side-hall shops and zones exactly as before', () => {
     for (const shopType of ['side_hall', 'zone'] as const) {
