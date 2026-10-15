@@ -353,3 +353,65 @@ describe('wall pieces', () => {
     expect(s.layout.items[0]?.elevation).toBeUndefined()
   })
 })
+
+describe('空心隔板', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const cabinet = item({
+    id: 'accessory_cabinet-1',
+    function: 'accessory_cabinet',
+    cx: 3,
+    cz: 0.275,
+    w: 2.4,
+    d: 0.55,
+    h: 2.4,
+  })
+  const drawn = { minX: 1.25, maxX: 4.75, minZ: 0.06, maxZ: 0.62 }
+
+  it('adds a drawn partition stuck to the wall and cabinet, as tall as the cabinet', () => {
+    const s = editorReducer(state([cabinet]), {
+      type: 'addFixture',
+      rect: drawn,
+      space,
+      snap: true,
+    })
+    expect(s.layout.fixtures).toEqual([
+      { id: 'partition-1', kind: 'hollow_partition', cx: 3, cz: 0.275, w: 3.5, d: 0.55, h: 2.4 },
+    ])
+    expect(s.selectedId).toBe('partition-1')
+    expect(s.dirty).toBe(true)
+  })
+
+  it('ignores a click without a drag, and draws freely with Alt', () => {
+    const click = { minX: 2, maxX: 2.01, minZ: 1, maxZ: 1.01 }
+    expect(
+      editorReducer(state([]), { type: 'addFixture', rect: click, space, snap: true }).layout,
+    ).toEqual(state([]).layout)
+    const free = editorReducer(state([cabinet]), {
+      type: 'addFixture',
+      rect: drawn,
+      space,
+      snap: false,
+    })
+    expect(free.layout.fixtures?.[0]).toMatchObject({ cz: 0.34, d: 0.56 })
+  })
+
+  it('moves onto a cabinet edge, takes typed sizes, and is removed and undone', () => {
+    let s = editorReducer(state([cabinet]), { type: 'addFixture', rect: drawn, space, snap: true })
+    s = editorReducer(s, {
+      type: 'moveFixture',
+      id: 'partition-1',
+      cx: 2.93,
+      cz: 0.3,
+      snapTo: space,
+    })
+    // The left edge (1.18) is within 100 mm of nothing; the top edge sticks to the wall.
+    expect(s.layout.fixtures?.[0]).toMatchObject({ cx: 2.93, cz: 0.275 })
+    s = editorReducer(s, { type: 'updateFixture', id: 'partition-1', patch: { h: 3, w: 0.01 } })
+    expect(s.layout.fixtures?.[0]).toMatchObject({ h: 3, w: 0.05 })
+    s = editorReducer(s, { type: 'remove', id: 'partition-1' })
+    expect(s.layout.fixtures).toBeUndefined()
+    expect(s.layout.items).toHaveLength(1)
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.fixtures).toHaveLength(1)
+  })
+})

@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import type { Dispatch, PointerEvent as ReactPointerEvent } from 'react'
-import type { FrontAxis, LayoutItem, Space } from '@store/shared'
+import type { Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
 function toWorld(
@@ -13,23 +13,37 @@ function toWorld(
   return [point.x, point.y]
 }
 
+const rectOf = (a: Point, b: Point): Rect => ({
+  minX: Math.min(a[0], b[0]),
+  maxX: Math.max(a[0], b[0]),
+  minZ: Math.min(a[1], b[1]),
+  maxZ: Math.max(a[1], b[1]),
+})
+
 /**
- * Dragging props on the plan: one undo step per drag, magnetic snapping unless Alt is held.
- * `frontOf` gives a model's front, which a wall piece turns into the shop.
+ * Dragging props and partitions on the plan: one undo step per drag, magnetic snapping unless
+ * Alt is held. `frontOf` gives a model's front, which a wall piece turns into the shop. With
+ * `drawing` on (画空心隔板), a drag draws a partition instead; `onDrawn` ends the mode.
  */
 export function usePlanDrag(
   space: Space,
   dispatch: Dispatch<EditorAction>,
   frontOf: (item: LayoutItem) => FrontAxis | null,
+  drawing = false,
+  onDrawn?: () => void,
 ) {
   const svgRef = useRef<SVGSVGElement>(null)
   const drag = useRef<{
+    kind: 'item' | 'fixture'
     id: string
     dx: number
     dz: number
     group: string
     front: FrontAxis | null
   } | null>(null)
+  const drawStart = useRef<Point | null>(null)
+  /** The rectangle being drawn, shown on the plan until the pointer is released. */
+  const [draft, setDraft] = useState<Rect | null>(null)
 
   function onItemPointerDown(item: LayoutItem, event: ReactPointerEvent<SVGGElement>) {
     event.stopPropagation()
@@ -37,6 +51,7 @@ export function usePlanDrag(
     const world = toWorld(svgRef.current, event)
     if (!world || item.locked) return
     drag.current = {
+      kind: 'item',
       id: item.id,
       dx: world[0] - item.cx,
       dz: world[1] - item.cz,
@@ -46,24 +61,81 @@ export function usePlanDrag(
     svgRef.current?.setPointerCapture(event.pointerId)
   }
 
-  function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (!drag.current) return
+  function onFixturePointerDown(fixture: Fixture, event: ReactPointerEvent<SVGGElement>) {
+    event.stopPropagation()
+    dispatch({ type: 'select', id: fixture.id })
     const world = toWorld(svgRef.current, event)
-    if (world)
-      dispatch({
-        type: 'move',
-        id: drag.current.id,
-        cx: world[0] - drag.current.dx,
-        cz: world[1] - drag.current.dz,
-        group: drag.current.group,
-        // Hold Alt to place freely without sticking to walls and neighbours.
-        snapTo: event.altKey ? null : space,
-        front: drag.current.front,
-      })
+    if (!world) return
+    drag.current = {
+      kind: 'fixture',
+      id: fixture.id,
+      dx: world[0] - fixture.cx,
+      dz: world[1] - fixture.cz,
+      group: `drag:${fixture.id}:${event.timeStamp}`,
+      front: null,
+    }
+    svgRef.current?.setPointerCapture(event.pointerId)
   }
 
-  /** Pointer up or cancel on the canvas ends the drag. */
-  const endDrag = () => (drag.current = null)
+  /** In drawing mode a press anywhere on the plan (props included) starts a rectangle. */
+  function onDrawPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (!drawing) return
+    const world = toWorld(svgRef.current, event)
+    if (!world) return
+    event.stopPropagation()
+    drawStart.current = world
+    setDraft(rectOf(world, world))
+    event.currentTarget.setPointerCapture(event.pointerId)
+  }
 
-  return { svgRef, onItemPointerDown, onPointerMove, endDrag }
+  function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    const world = toWorld(svgRef.current, event)
+    if (!world) return
+    if (drawStart.current) {
+      setDraft(rectOf(drawStart.current, world))
+      return
+    }
+    if (!drag.current) return
+    // Hold Alt to place freely without sticking to walls and neighbours.
+    const snapTo = event.altKey ? null : space
+    const cx = world[0] - drag.current.dx
+    const cz = world[1] - drag.current.dz
+    const group = drag.current.group
+    if (drag.current.kind === 'fixture') {
+      dispatch({ type: 'moveFixture', id: drag.current.id, cx, cz, group, snapTo })
+      return
+    }
+    dispatch({
+      type: 'move',
+      id: drag.current.id,
+      cx,
+      cz,
+      group,
+      snapTo,
+      front: drag.current.front,
+    })
+  }
+
+  /** Pointer up on the canvas ends a drag or adds the drawn partition; cancel drops it. */
+  function endDrag(event?: ReactPointerEvent<HTMLDivElement>) {
+    drag.current = null
+    const start = drawStart.current
+    if (!start) return
+    drawStart.current = null
+    setDraft(null)
+    const world = event?.type === 'pointerup' ? toWorld(svgRef.current, event) : null
+    if (!world) return
+    dispatch({ type: 'addFixture', rect: rectOf(start, world), space, snap: !event?.altKey })
+    onDrawn?.()
+  }
+
+  return {
+    svgRef,
+    onItemPointerDown,
+    onFixturePointerDown,
+    onDrawPointerDown,
+    onPointerMove,
+    endDrag,
+    draft,
+  }
 }
