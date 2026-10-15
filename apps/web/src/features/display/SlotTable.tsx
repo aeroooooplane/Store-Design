@@ -23,11 +23,11 @@ const tableTitle = (t: DisplayTable) =>
     ? '边桌'
     : `${t.seat ?? '加桌'} 中岛桌 · ${DISPLAY_ORIENTATION_LABELS[t.orientation]}`
 
-/** The tray photo of a unit: the store's SI first, a real photo before a render. */
+/** The tray picture of a unit: the store's SI first, the guide's render before a real photo. */
 function photoOf(photos: DisplayRulesView['photos'], unit: string | null, si: SiStyle) {
   if (!unit) return null
   const rank = (p: DisplayRulesView['photos'][number]) =>
-    (p.si === si ? 0 : 2) + (p.kind === 'photo' ? 0 : 1)
+    (p.si === si ? 0 : 2) + (p.kind === 'render' ? 0 : 1)
   return photos.filter((p) => p.unit === unit).sort((a, b) => rank(a) - rank(b))[0] ?? null
 }
 
