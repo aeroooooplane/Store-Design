@@ -245,41 +245,211 @@
 }
 .slot-tables {
   display: grid;
-  gap: var(--space-1);
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: var(--space-2);
+  align-items: start;
 }
 .slot-table {
+  background: var(--paper, #fff);
   border: 1px solid var(--line-soft);
-  border-radius: var(--radius);
-  padding: 10px;
+  border-radius: var(--radius-lg, 10px);
+  padding: 12px 14px 14px;
 }
 .slot-table header {
   display: flex;
   align-items: center;
   gap: var(--space-1);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  font-size: 15px;
 }
-.slot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 8px;
+.slot-changed {
+  font-size: 12px;
+  color: #b45309;
+  background: #fef3c7;
+  border-radius: 999px;
+  padding: 1px 8px;
 }
-.slot-grid label,
-.slot-modules {
+.slot-table header .link-button {
+  margin-left: auto;
+}
+
+/* The table top, laid out as the table stands. */
+.slot-board {
   display: grid;
-  gap: 2px;
+  gap: 6px;
+  padding: 8px;
+  background: #e9edf3;
+  border: 2px solid #b8c4d6;
+  border-radius: 10px;
+}
+.slot-board.portrait {
+  grid-template-columns: 1fr 40px 1fr;
+  grid-template-areas:
+    'L1 M R1'
+    'L2 M R2'
+    'L3 M R3'
+    'E E E'
+    'X X X';
+}
+.slot-board.portrait .slot-cell.end {
+  justify-self: center;
+  width: calc((100% - 52px) / 2);
+}
+.slot-board.landscape {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+.slot-board.landscape.end-left {
+  grid-template-areas:
+    'E T1 T2 T3'
+    'E M M M'
+    'E B1 B2 B3';
+}
+.slot-board.landscape.end-right {
+  grid-template-areas:
+    'T1 T2 T3 E'
+    'M M M E'
+    'B1 B2 B3 E';
+}
+.slot-board.landscape .slot-cell.end {
+  align-self: center;
+}
+.slot-board.side {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    'W W W'
+    'S1 S2 S3';
+}
+.slot-wall {
+  grid-area: W;
+  background: #4b5563;
+  color: #fff;
+  font-size: 12px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 2px 0;
+}
+.slot-entrance {
+  grid-area: X;
+  text-align: center;
   font-size: 12px;
   color: var(--muted);
 }
-.slot-grid label.hero span {
-  color: #e60012;
-  font-weight: 600;
+.slot-modules-strip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  gap: 4px;
+  background: #fff;
+  border: 1px dashed #b8c4d6;
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 4px 2px;
 }
-.slot-grid label.hero select {
-  border-color: #e60012;
+.slot-board.landscape .slot-modules-strip {
+  flex-direction: row;
+  padding: 2px 4px;
+}
+
+/* One slot: code, tray photo, product. */
+.slot-cell {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  background: #fff;
+  border: 1px solid #c9d2df;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+}
+.slot-cell:hover,
+.slot-cell:focus-within {
+  border-color: #6b7a90;
+}
+.slot-cell:focus-within {
+  outline: 2px solid #2563eb;
+  outline-offset: 1px;
+}
+.slot-cell.missing {
+  background: transparent;
+  border-style: dashed;
+  cursor: default;
+}
+.slot-head {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  line-height: 1.4;
+}
+.slot-code {
+  font-weight: 700;
+  color: #374151;
+}
+.slot-badge {
+  color: #fff;
+  background: #e60012;
+  border-radius: 3px;
+  padding: 0 4px;
+}
+.slot-edited {
+  margin-left: auto;
+  color: #b45309;
+}
+.slot-photo {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #9ca3af;
+  font-size: 11px;
+}
+.slot-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slot-name {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #111827;
+  word-break: break-word;
+}
+.slot-name::after {
+  content: ' ▾';
+  color: #9ca3af;
+  font-weight: 400;
+}
+.slot-cell select {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.slot-cell.hero {
+  border: 2px solid #e60012;
+  box-shadow: 0 0 0 3px rgb(230 0 18 / 12%);
+}
+.slot-cell.edited {
+  background: #fffbeb;
+}
+.slot-cell.empty .slot-name {
+  color: #9ca3af;
+  font-weight: 400;
 }
 .slot-modules {
-  margin-top: 8px;
-  max-width: 320px;
+  display: grid;
+  gap: 2px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .display-exports {

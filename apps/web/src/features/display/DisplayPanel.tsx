@@ -225,6 +225,8 @@ export function DisplayPanel({
         <summary>各桌陈列内容（可逐位修改，自动保存）</summary>
         <SlotTable
           rules={rules.data.rules}
+          photos={rules.data.photos}
+          si={node.siStyle ?? project.siStyle}
           tables={data.tables}
           edits={data.edits}
           onChange={edit}
