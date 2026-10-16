@@ -29,6 +29,7 @@ FRONT_OFFSET = {"+Z": 0, "+X": 90, "-Z": 180, "-X": 270}
 SYMMETRIC = {"island_table", "display_stand", "seating", "unboxing_table"}
 # 靠墙柜类：型号进深与图上不同时背靠墙对齐（不按框中心），两侧包墙再改到与柜面齐平
 WALL_CABINETS = {"accessory_cabinet", "side_cabinet", "storage"}
+SIZE_TOL_M = 0.2  # 自动匹配的型号与图上框的宽、深相差超过这么多就不配
 FLUSH_TOL_M = 0.12  # 包墙正面与图上柜面相差这么多以内，视为同一面墙
 # 开箱桌桌体（型号尺寸含凳子；用户 2026-10-15：碰撞与标注按桌体）：型号坐标下的桌体宽、深与桌体中心 x 偏移（米），
 # 由白模量出，与工作台窗口核对一致
@@ -50,7 +51,7 @@ FUNCTION_RULES = [
     (r"广告机|屏|水牌", "screen"),
     (r"LOGO|logo|画面|灯箱|侧招|标识|slogan|slogon|徕卡", "signage"),
 ]
-KEYWORDS = ["中岛桌", "开箱桌", "收银台", "收银桌", "收银边柜", "边桌收银柜", "配件边柜", "边桌配件柜", "边桌储物柜", "储物边柜", "储物柜", "配件柜", "徕卡墙", "试飞台", "展示台", "字母凳", "子母凳", "培训坐凳", "电子水牌", "广告机", "灯箱"]
+KEYWORDS = ["中岛桌", "开箱桌", "收银台", "收银桌", "收银边柜", "边桌收银柜", "配件边柜", "边桌配件柜", "边桌储物柜", "储物边柜", "储物柜", "配件柜", "徕卡墙", "试飞台", "展示台", "字母凳", "子母凳", "培训坐凳", "电子水牌", "广告机", "灯箱", "收银"]
 
 
 # 图上叫法与模型库名称不同的同一类道具。用户 2026-10-15 确认：SI2.0 图上的“收银台”即模型库的“1.8米收银桌”
@@ -86,7 +87,11 @@ def match_asset(label: str, si: str, assets: list[dict]) -> dict | None:
             continue
         if orient and orient not in name:
             continue
-        score = 1 + (2 if type_name and type_name in label else 0) + (1 if a.get("si_family") == si else 0)
+        # 对上的关键词越多越优先（“边桌储物柜”同时对上“边桌储物柜”“储物柜”）；图上没写“开箱”就不选开箱款
+        hits = sum(1 for k in keys if k in name or any(x in name for x in ALIASES.get(k, ())))
+        score = hits + (2 if type_name and type_name in label else 0) + (1 if a.get("si_family") == si else 0) - (3 if "开箱" in name and "开箱" not in label else 0)
+        # 带收银功能的组合（“边桌储物柜+收银”）按收银类选
+        score += 3 if "收银" in label and "收银" in name else 0
         if not best or score > best[0]:
             best = (score, a)
     return best[1] if best else None
@@ -97,7 +102,7 @@ def asset_size(asset):
 
 
 def box_item(it, asset, func, mmpp, ox, oz, fronts):
-    """落地道具：图上占地框 + 正面朝向（下 / 左 / 上 / 右，指道具在店里真实的顾客面）。
+    """落地道具：图上占地框 + 正面朝向（下 / 左 / 上 / 右，指道具在店里真实的顾客面）；斜放的另给 tilt_deg。
     有型号时按 facing.json 的型号正面换算 rotation；没有正面（any）的对称道具按横向长度选 0° 或 90°。
     开箱桌按桌体：w、d 取桌体，框中心即桌体中心，另记型号原点 model_origin_m（凳子在一侧时与桌体中心不同）。"""
     x0, y0, x1, y1 = it["box"]
@@ -121,9 +126,14 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
             rotation = 0 if abs(along_x - bw) <= abs(along_x - bd) else 90
             facing = None
     drawn_w, drawn_d = (along_x, along_z) if rotation in (0, 180) else (along_z, along_x)
+    # 斜放的落地道具：box 按道具自身方向（未旋转时）画在真实中心上，tilt_deg 是再转的角度（与 rotation 同一约定）
+    tilt = it.get("tilt_deg", 0)
+    if tilt:
+        rotation = round((rotation + tilt) % 360, 1)
+        facing = None if facing is None else round((facing + tilt) % 360, 1)
     cx = ((x0 + x1) / 2 - ox) * mmpp / 1000
     cz = ((y0 + y1) / 2 - oz) * mmpp / 1000
-    if asset and not body and func in WALL_CABINETS and facing in (0, 90, 180, 270):
+    if asset and not body and not tilt and func in WALL_CABINETS and facing in (0, 90, 180, 270):
         # 用户 2026-10-16：柜子背靠墙，柜面以型号为准；两侧包墙在 flush_cladding 里改到与柜面齐平
         fx, fz = round(-math.sin(math.radians(facing))), round(math.cos(math.radians(facing)))
         drawn_depth = along_z if fx == 0 else along_x
@@ -281,6 +291,12 @@ def main() -> None:
                 item = wall_item(it, asset, mmpp, ox, oz, fronts)
             else:
                 item = box_item(it, asset, func, mmpp, ox, oz, fronts)
+                auto = it.get("asset") in (None, "auto") and "asset" not in it or it.get("asset") == "auto"
+                if asset and auto and not item.get("body_only") and item["size_deviation_m"] and max(abs(v) for v in item["size_deviation_m"]) > SIZE_TOL_M:
+                    # 图上没写尺寸时自动匹配只看名称，图上框与型号相差太大就不配（模型库缺款不套用）
+                    note = "；".join(x for x in (note, f"自动匹配的 {asset['asset_id']} 与图上尺寸相差超过 {SIZE_TOL_M} m，未配型号") if x)
+                    asset = None
+                    item = box_item(it, None, func, mmpp, ox, oz, fronts)
             if item.pop("drop_asset", False):
                 note = "；".join(x for x in (note, f"模型库只有组合款 {asset['asset_id']}（{asset.get('variant')}），按单件记") if x)
                 asset = None
