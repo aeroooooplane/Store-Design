@@ -1,4 +1,5 @@
 import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
+import { Route, Routes } from 'react-router'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Project } from '@store/shared'
 import { makeProject as project } from '../../test-utils/factories.ts'
@@ -178,5 +179,18 @@ describe('ProjectListPage', () => {
     expect(link.getAttribute('href')).toBe(
       '/api/v1/projects/11111111-1111-4111-8111-111111111111/export',
     )
+  })
+
+  it('opens a project by clicking a blank cell of its row', async () => {
+    renderWithClient(
+      <Routes>
+        <Route path="/" element={<ProjectListPage />} />
+        <Route path="/projects/:projectId" element={<p>工作台页面</p>} />
+      </Routes>,
+      { router: true },
+    )
+    const row = (await screen.findByText('澳门威尼斯人')).closest('tr') as HTMLElement
+    fireEvent.click(within(row).getByText('中岛店'))
+    expect(await screen.findByText('工作台页面')).toBeTruthy()
   })
 })
