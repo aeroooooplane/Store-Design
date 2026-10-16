@@ -1,4 +1,3 @@
-import { Link } from 'react-router'
 import type { AiModel, AiPurpose, AiSettings } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useAiOverview, useUpdateAiSettings } from './queries.ts'
@@ -88,7 +87,7 @@ export function SettingsPage() {
     <main className="page settings-page">
       <header className="page-header">
         <h1>设置</h1>
-        <Link to="/">← 项目列表</Link>
+        <p>全站设置，修改后立即保存</p>
       </header>
       <ErrorMessage error={overview.error ?? update.error} />
       {!data && !overview.error && <p className="notice">正在加载…</p>}
