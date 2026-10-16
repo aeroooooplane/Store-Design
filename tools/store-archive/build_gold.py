@@ -27,6 +27,9 @@ FACING = {"down": 0, "left": 90, "up": 180, "right": 270}
 # +Z 正面的型号转 rotation 后正面朝 FACING 方向；+X 正面的型号要多转 90°，依此类推
 FRONT_OFFSET = {"+Z": 0, "+X": 90, "-Z": 180, "-X": 270}
 SYMMETRIC = {"island_table", "display_stand", "seating", "unboxing_table"}
+# 靠墙柜类：型号进深与图上不同时背靠墙对齐（不按框中心），两侧包墙再改到与柜面齐平
+WALL_CABINETS = {"accessory_cabinet", "side_cabinet", "storage"}
+FLUSH_TOL_M = 0.12  # 包墙正面与图上柜面相差这么多以内，视为同一面墙
 # 开箱桌桌体（型号尺寸含凳子；用户 2026-10-15：碰撞与标注按桌体）：型号坐标下的桌体宽、深与桌体中心 x 偏移（米），
 # 由白模量出，与工作台窗口核对一致
 UNBOX_BODY = {
@@ -118,6 +121,19 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
             rotation = 0 if abs(along_x - bw) <= abs(along_x - bd) else 90
             facing = None
     drawn_w, drawn_d = (along_x, along_z) if rotation in (0, 180) else (along_z, along_x)
+    cx = ((x0 + x1) / 2 - ox) * mmpp / 1000
+    cz = ((y0 + y1) / 2 - oz) * mmpp / 1000
+    if asset and not body and func in WALL_CABINETS and facing in (0, 90, 180, 270):
+        # 用户 2026-10-16：柜子背靠墙，柜面以型号为准；两侧包墙在 flush_cladding 里改到与柜面齐平
+        fx, fz = round(-math.sin(math.radians(facing))), round(math.cos(math.radians(facing)))
+        drawn_depth = along_z if fx == 0 else along_x
+        a = math.radians(rotation)
+        model_depth = abs(fx * math.cos(a) + fz * math.sin(a)) * fw + abs(-fx * math.sin(a) + fz * math.cos(a)) * fd
+        shift = (model_depth - drawn_depth) / 2
+        old_front = (cz if fx == 0 else cx) + (fz or fx) * drawn_depth / 2
+        cx, cz = cx + fx * shift, cz + fz * shift
+        lo, hi = ((x0 - ox) * mmpp / 1000, (x1 - ox) * mmpp / 1000) if fx == 0 else ((y0 - oz) * mmpp / 1000, (y1 - oz) * mmpp / 1000)
+        out["front_line"] = {"axis": 1 if fx == 0 else 0, "old": old_front, "new": old_front + (fz or fx) * shift * 2, "span": (lo, hi)}
     if body:
         w, d, h = bw, bd, round(fh, 3)
         out["body_only"] = True
@@ -130,8 +146,8 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
     else:
         w, d, h = round(drawn_w, 3), round(drawn_d, 3), it.get("h")
     return out | {
-        "cx": round(((x0 + x1) / 2 - ox) * mmpp / 1000, 3),
-        "cz": round(((y0 + y1) / 2 - oz) * mmpp / 1000, 3),
+        "cx": round(cx, 3),
+        "cz": round(cz, 3),
         "w": w, "d": d, "h": h, "rotation": rotation, "facing": facing,
         "drawn_size_m": [round(drawn_w, 3), round(drawn_d, 3)],
         "size_deviation_m": [round(drawn_w - w, 3), round(drawn_d - d, 3)] if asset else None,
@@ -168,6 +184,36 @@ def wall_item(it, asset, mmpp, ox, oz, fronts):
         "size_deviation_m": [round(length * mmpp / 1000 - w, 3), None] if asset else None,
         "wall_segment_m": [[round((ax - ox) * mmpp / 1000, 3), round((ay - oz) * mmpp / 1000, 3)], [round((bx - ox) * mmpp / 1000, 3), round((by - oz) * mmpp / 1000, 3)]],
     }
+
+
+def flush_cladding(fronts_lines: list[dict], hardscape: list[dict], items: list[dict]) -> int:
+    """把与柜面同一面墙的包墙正面（两端挨着柜子的那几段）移到型号柜面上；墙上的内嵌画面随之平移。返回移动的边数。"""
+    moved = 0
+    for fl in fronts_lines:
+        k, old, new = fl["axis"], fl["old"], fl["new"]
+        if abs(new - old) < 0.005:
+            continue
+        lo, hi = fl["span"]
+        j = 1 - k
+        for h in hardscape:
+            poly = h["polygon"]
+            for i in range(len(poly)):
+                p, q = poly[i], poly[(i + 1) % len(poly)]
+                if abs(p[k] - q[k]) > 0.005 or abs(p[k] - old) > FLUSH_TOL_M:
+                    continue
+                a, b = sorted((p[j], q[j]))
+                if a > hi + 0.05 or b < lo - 0.05:
+                    continue
+                p[k] = q[k] = round(new, 3)
+                moved += 1
+                for it in items:
+                    seg = it.get("wall_segment_m")
+                    if seg and all(abs(e[k] - old) <= FLUSH_TOL_M for e in seg) and max(e[j] for e in seg) > a and min(e[j] for e in seg) < b:
+                        delta = new - seg[0][k]
+                        for e in seg:
+                            e[k] = round(e[k] + delta, 3)
+                        it["cx" if k == 0 else "cz"] = round(it["cx" if k == 0 else "cz"] + delta, 3)
+    return moved
 
 
 def main() -> None:
@@ -224,6 +270,7 @@ def main() -> None:
             },
         }
         items = []
+        front_lines = []
         for n, it in enumerate(edits["items"], 1):
             asset = by_id.get(it["asset"]) if it.get("asset") not in (None, "auto") else (match_asset(it["label"], si, assets) if it.get("asset") == "auto" or "asset" not in it else None)
             note = it.get("note")
@@ -237,6 +284,8 @@ def main() -> None:
             if item.pop("drop_asset", False):
                 note = "；".join(x for x in (note, f"模型库只有组合款 {asset['asset_id']}（{asset.get('variant')}），按单件记") if x)
                 asset = None
+            if "front_line" in item:
+                front_lines.append(item.pop("front_line"))
             if item.pop("body_only", False):
                 note = "；".join(x for x in (note, "型号尺寸含凳子；碰撞与尺寸标注按桌体") if x)
             items.append(
@@ -256,6 +305,11 @@ def main() -> None:
                     "note": note,
                 }
             )
+        hardscape = [
+            {"kind": h["kind"], "polygon": box_poly(h["box"]) if "box" in h else [m(p) for p in h["polygon"]], "label": h.get("label")}
+            for h in edits.get("hardscape_px", [])
+        ]
+        flushed = flush_cladding(front_lines, hardscape, items)
         xs = [p[0] for p in space["boundary"]]
         zs = [p[1] for p in space["boundary"]]
         area = 0.0
@@ -274,10 +328,7 @@ def main() -> None:
             "space": space,
             "layout": {"items": items},
             # 硬装（设计新做的空心包墙、隔墙等）：门店边界仍按原有实墙，包墙另记一层
-            "hardscape": [
-                {"kind": h["kind"], "polygon": box_poly(h["box"]) if "box" in h else [m(p) for p in h["polygon"]], "label": h.get("label")}
-                for h in edits.get("hardscape_px", [])
-            ],
+            "hardscape": hardscape,
             "summary": {
                 "boundary_area_m2": round(abs(area) / 2, 2),
                 "stated_area_m2": edits.get("stated_area_m2"),
@@ -287,7 +338,8 @@ def main() -> None:
                 "counts_by_category": dict(Counter(i["category"] or "未映射" for i in items)),
                 "matched_assets": sum(1 for i in items if i["assetId"]),
             },
-            "review": {"status": "待用户确认", "checked_by": "Claude（看原图逐项修正）", "notes": edits.get("notes", [])},
+            "review": {"status": "待用户确认", "checked_by": "Claude（看原图逐项修正）", "notes": edits.get("notes", [])
+                       + ([f"配件柜背靠墙按型号进深摆放，{flushed} 段包墙正面已改到与柜面齐平（用户 10-16 规则）"] if flushed else [])},
         }
         write_json(gold_dir / "plan.json", plan)
         write_json(folders[sid] / "plan.json", plan)

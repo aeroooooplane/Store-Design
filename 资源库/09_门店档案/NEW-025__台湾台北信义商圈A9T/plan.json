@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T12:44:16+08:00",
+ "generatedAt": "2026-10-16T16:14:40+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -432,7 +432,7 @@
     "function": "side_cabinet",
     "category": "软装道具",
     "source": "new",
-    "cx": 0.8,
+    "cx": 0.816,
     "cz": 1.07,
     "w": 1.8,
     "d": 0.531,
@@ -460,7 +460,7 @@
     "function": "side_cabinet",
     "category": "软装道具",
     "source": "new",
-    "cx": 0.8,
+    "cx": 0.816,
     "cz": 2.87,
     "w": 1.8,
     "d": 0.531,
