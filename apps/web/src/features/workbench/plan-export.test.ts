@@ -21,6 +21,7 @@ const STYLE_ORDER = [
   'stroke-dasharray',
   'stroke-linecap',
   'stroke-linejoin',
+  'paint-order',
   'opacity',
   'font-family',
   'font-weight',
@@ -107,8 +108,9 @@ describe('standaloneSvg', () => {
     expect(all[4]?.get('vector-effect')).toBe('non-scaling-stroke')
     expect(all[3]?.has('vector-effect')).toBe(false)
     expect(all[0]?.has('vector-effect')).toBe(false)
-    // Properties outside the list (paint-order) are not copied.
-    expect(text).not.toContain('paint-order')
+    // A label's white halo is drawn first, so it does not cover the text in the file (10-16:
+    // the spacing numbers were missing from the delivery PDFs).
+    expect(all[7]?.get('paint-order')).toBe('stroke')
   })
 
   it('keeps print colours: CSS colours as computed values, attribute colours as they are', () => {

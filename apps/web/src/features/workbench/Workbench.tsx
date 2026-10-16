@@ -340,7 +340,8 @@ function NodePanel({
               onCancel={() => setPanel('view')}
               onSubmit={(edited, name) =>
                 create.mutate(
-                  { parentId: current.id, kind: 'space', name, space: edited },
+                  // A sibling of the space it was edited from, under the same parent (10-16).
+                  { parentId: current.parentId, kind: 'space', name, space: edited },
                   { onSuccess: (created) => onSelect(created.node.id) },
                 )
               }
