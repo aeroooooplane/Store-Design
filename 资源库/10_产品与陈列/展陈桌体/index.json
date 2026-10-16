@@ -77,7 +77,7 @@
         "d": 0.14
       },
       "triangles": 26660,
-      "bytes": 209108,
+      "bytes": 448768,
       "sourceSha256": "0803d62bc89a64e1ec917220c0e1f3da3d0fb8ae3d65d75b90a3aaf879c82312"
     },
     {
@@ -155,7 +155,7 @@
         "d": 1.268
       },
       "triangles": 26200,
-      "bytes": 204384,
+      "bytes": 442864,
       "sourceSha256": "fd5f300665ffee7c04d399dfdf4d801cccfb35b9b138505e4ffc7ae5ae6f20b4"
     },
     {
@@ -239,7 +239,7 @@
         "d": 1.384
       },
       "triangles": 2300,
-      "bytes": 29320,
+      "bytes": 102928,
       "sourceSha256": "a0b5409535b03d288d89dd534187d2580e5e19b0de58b0880de7467937dd0265"
     },
     {
@@ -281,8 +281,8 @@
         }
       ],
       "strip": null,
-      "triangles": 81405,
-      "bytes": 498456,
+      "triangles": 158027,
+      "bytes": 1646656,
       "sourceSha256": "1273fce814ae27d1a9587c0ab00adf623e60e752d2b56b62bf1ed8ef0b4bde8a"
     },
     {
@@ -325,7 +325,7 @@
       ],
       "strip": null,
       "triangles": 16042,
-      "bytes": 189272,
+      "bytes": 378572,
       "sourceSha256": "6a5046e432be0a6da07b6dded1b8592509318275e038c61fb2defcb99cb1f8f0"
     }
   ]

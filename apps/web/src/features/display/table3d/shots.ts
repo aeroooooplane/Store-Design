@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import type {
   DisplayRules,
   DisplayRulesView,
@@ -56,6 +57,18 @@ export interface TableSnapshot {
 // One renderer for every 3D picture on the page, still or turning: a browser keeps only about
 // 16 WebGL contexts, and a page can show many tables.
 let renderer: THREE.WebGLRenderer | null = null
+let environment: THREE.Texture | null = null
+
+/** The workbench's room light, so that metals and stone read as they do there. */
+function lit(gl: THREE.WebGLRenderer, scene: THREE.Scene) {
+  if (!environment) {
+    const pmrem = new THREE.PMREMGenerator(gl)
+    environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+    pmrem.dispose()
+  }
+  scene.environment = environment
+  scene.environmentIntensity = 0.25
+}
 let queue: Promise<unknown> = Promise.resolve()
 
 function shared(width: number, height: number) {
@@ -68,7 +81,7 @@ function shared(width: number, height: number) {
   const size = renderer.getSize(new THREE.Vector2())
   if (size.x !== width || size.y !== height) renderer.setSize(width, height, false)
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 0.95
+  renderer.toneMappingExposure = 0.82
   return renderer
 }
 
@@ -77,6 +90,7 @@ export function drawInto(target: HTMLCanvasElement, scene: THREE.Scene, camera: 
   const ctx = target.getContext('2d')
   if (!ctx || !target.width || !target.height) return
   const gl = shared(target.width, target.height)
+  lit(gl, scene)
   gl.render(scene, camera)
   ctx.drawImage(gl.domElement, 0, 0)
 }
@@ -99,6 +113,7 @@ export function snapshotTable(
       const gl = shared(options.width, options.height)
       const camera = new THREE.PerspectiveCamera(30, options.width / options.height, 0.05, 50)
       built.frame(camera)
+      lit(gl, built.scene)
       gl.render(built.scene, camera)
       const url = gl.domElement.toDataURL(options.type ?? 'image/jpeg', 0.92)
       const slots: TableSnapshot['slots'] = {}
