@@ -22,7 +22,6 @@ export function ProjectPage() {
               导出项目
             </a>
           )}
-          <span className="hint">门店空间设计工作台</span>
         </span>
       </header>
       <ErrorMessage error={project.error} />
