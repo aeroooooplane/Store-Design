@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-15T18:51:57+08:00",
+ "generatedAt": "2026-10-16T12:42:16+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -277,22 +277,25 @@
    {
     "ref": "g02",
     "label": "1.8米收银台 H:900mm",
-    "assetId": null,
+    "assetId": "asset-24432224",
     "function": "cashier",
-    "category": null,
+    "category": "软装道具",
     "source": "new",
     "cx": 3.247,
     "cz": 1.142,
     "w": 1.8,
-    "d": 0.602,
-    "h": null,
+    "d": 0.603,
+    "h": 1.205,
     "rotation": 0,
     "facing": 0,
     "drawn_size_m": [
      1.8,
      0.602
     ],
-    "size_deviation_m": null,
+    "size_deviation_m": [
+     0.0,
+     -0.001
+    ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
@@ -792,11 +795,10 @@
   },
   "counts_by_category": {
    "品牌标识": 2,
-   "未映射": 1,
-   "信息化物料": 3,
-   "软装道具": 6
+   "软装道具": 7,
+   "信息化物料": 3
   },
-  "matched_assets": 7
+  "matched_assets": 8
  },
  "review": {
   "status": "待用户确认",

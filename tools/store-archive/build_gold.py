@@ -50,6 +50,11 @@ FUNCTION_RULES = [
 KEYWORDS = ["中岛桌", "开箱桌", "收银台", "收银桌", "收银边柜", "边桌收银柜", "配件边柜", "边桌配件柜", "边桌储物柜", "储物边柜", "储物柜", "配件柜", "徕卡墙", "试飞台", "展示台", "字母凳", "子母凳", "培训坐凳", "电子水牌", "广告机", "灯箱"]
 
 
+# 图上叫法与模型库名称不同的同一类道具。用户 2026-10-15 确认：SI2.0 图上的“收银台”即模型库的“1.8米收银桌”
+# （SI1.0 有同名“收银台”型号，按 SI 和型号名加分仍优先选它）
+ALIASES = {"收银台": ("收银桌",)}
+
+
 def function_of(label: str) -> str:
     return next((f for rx, f in FUNCTION_RULES if re.search(rx, label)), "other")
 
@@ -68,7 +73,7 @@ def match_asset(label: str, si: str, assets: list[dict]) -> dict | None:
             continue
         type_name = a.get("type_name") or ""
         name = f"{type_name}{a.get('standard_name') or ''}{a.get('variant') or ''}"
-        if not any(k in name or k.replace("子母", "字母") in name for k in keys):
+        if not any(k in name or k.replace("子母", "字母") in name or any(a in name for a in ALIASES.get(k, ())) for k in keys):
             continue
         if a.get("si_family") not in (si, "通用", None):
             continue
