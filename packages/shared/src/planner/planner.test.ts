@@ -6,6 +6,8 @@ import {
   edges,
   locatePoint,
   pathMidpoint,
+  placedBox,
+  polygonOverlapsObb,
   polygonOverlapsRect,
   rectCorners,
   rectFromCenter,
@@ -15,7 +17,7 @@ import {
   toClockwise,
 } from '../geometry/index.ts'
 import type { Point } from '../geometry/index.ts'
-import { itemFootprint } from '../schemas/layout.ts'
+import { itemCorners, itemFootprint } from '../schemas/layout.ts'
 import type { LayoutItem } from '../schemas/layout.ts'
 import { SpaceSchema, rectangleSpace } from '../schemas/space.ts'
 import type { Space, SpaceInput } from '../schemas/space.ts'
@@ -36,6 +38,7 @@ import {
   lShape as lShop,
   trapezoid,
 } from './shapes.fixture.ts'
+import { shanghaiTpy } from './real-shapes.fixture.ts'
 import { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
 import type { GeneratedStrategy, PlannerCatalog } from './planner.ts'
 
@@ -495,8 +498,9 @@ describe('planLayout on irregular shops', () => {
     const inward: Point = [-8 / len, 2 / len]
     const door = strip([8.5, 2], [9.5, 6], inward, 1.2)
     for (const strategy of STRATEGIES) {
+      // By the true outline: props at the slanting wall's angle have wider bounding boxes.
       for (const item of run(trapezoid, strategy).layout.items)
-        expect(polygonOverlapsRect(door, itemFootprint(item))).toBe(false)
+        expect(polygonOverlapsObb(door, placedBox(item))).toBe(false)
     }
   })
 
@@ -855,4 +859,75 @@ describe('side cabinets along the edge of an island shop', () => {
       }
     }
   }, 30_000)
+})
+
+describe('slanted walls', () => {
+  const tilted = (items: LayoutItem[]) => items.filter((item) => item.rotation % 90 !== 0)
+  const errors = (r: { issues: { severity: string }[] }) =>
+    r.issues.filter((i) => i.severity === 'error')
+
+  it('stands cabinets along a slanted wall at its own angle, flush at the wall gap (尽量多放)', () => {
+    // The trapezoid's right wall runs from (8, 0) to (10, 8); a side door sits in its middle.
+    const r = planLayout({ space: trapezoid, shopType: 'side_hall', strategy: 'max', catalog })
+    expect(errors(r)).toEqual([])
+    const slanted = tilted(r.layout.items).filter((i) => i.function === 'accessory_cabinet')
+    expect(slanted.length).toBeGreaterThan(0)
+    const off = (p: Point) => (2 * p[1] - 8 * (p[0] - 8)) / Math.sqrt(68)
+    for (const cabinet of slanted) {
+      const gaps = itemCorners(cabinet)
+        .map(off)
+        .sort((a, b) => a - b)
+      // Its back corners both keep the side-hall wall gap: it lies parallel to the wall.
+      expect(gaps[0]).toBeCloseTo(DEFAULT_RULES.side_hall.wallGap, 2)
+      expect(gaps[1]).toBeCloseTo(DEFAULT_RULES.side_hall.wallGap, 2)
+    }
+    // 按面积推荐 keeps to the back wall, as before.
+    const area = planLayout({ space: trapezoid, shopType: 'side_hall', strategy: 'area', catalog })
+    expect(tilted(area.layout.items)).toEqual([])
+  })
+
+  it('turns an island table near a slanted wall parallel to it', () => {
+    const si2Table: PlannerCatalog = {
+      ...catalog,
+      island: [
+        {
+          id: 'asset-2',
+          name: '1.8米普通中岛桌',
+          function: 'island_table',
+          footprint: { w: 1.8, d: 0.804, h: 1.214 },
+          front: '+Z',
+        },
+      ],
+    }
+    const r = planLayout({
+      space: shanghaiTpy.space,
+      shopType: 'island',
+      strategy: 'area',
+      catalog: si2Table,
+    })
+    expect(errors(r)).toEqual([])
+    const turned = tilted(r.layout.items).filter((i) => i.function === 'island_table')
+    expect(turned).toHaveLength(1)
+    expect(r.notes).toContain('靠近斜墙的 1 张中岛桌与斜墙平行摆放')
+    // Its long side runs along one of the slanted edges.
+    const table = turned[0] as LayoutItem
+    const corners = itemCorners(table)
+    const sides = [0, 1].map((k) => {
+      const a = corners[k] as Point
+      const b = corners[k + 1] as Point
+      return {
+        len: Math.hypot(b[0] - a[0], b[1] - a[1]),
+        dir: Math.atan2(b[1] - a[1], b[0] - a[0]),
+      }
+    })
+    const long = sides[0]!.len > sides[1]!.len ? sides[0]! : sides[1]!
+    const parallel = edges(toClockwise(shanghaiTpy.space.boundary)).some(([a, b]) => {
+      const dir = Math.atan2(b[1] - a[1], b[0] - a[0])
+      const diff = Math.abs(((dir - long.dir) % Math.PI) + Math.PI) % Math.PI
+      return Math.min(diff, Math.PI - diff) < 0.002
+    })
+    expect(parallel).toBe(true)
+    // The same tables, just as many as before.
+    expect(r.layout.planning).toMatchObject({ placed: 4 })
+  })
 })

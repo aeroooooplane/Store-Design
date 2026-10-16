@@ -16,9 +16,26 @@ import {
   segmentIntersectsRectInterior,
   toClockwise,
 } from '../geometry/index.ts'
+import {
+  obbBounds,
+  obbCorners,
+  obbGap,
+  obbInsidePolygon,
+  obbsOverlap,
+  polygonOverlapsObb,
+  quarterTilt,
+  segmentIntersectsObbInterior,
+  turnPoint,
+} from '../geometry/obb.ts'
+import type { Obb } from '../geometry/obb.ts'
 import type { Point, Polygon, Rect } from '../geometry/index.ts'
 import type { FrontAxis } from '../schemas/asset.ts'
-import { LayoutSchema, rotatedFootprint, validateLayout } from '../schemas/layout.ts'
+import {
+  LayoutSchema,
+  normalizeRotation,
+  rotatedFootprint,
+  validateLayout,
+} from '../schemas/layout.ts'
 import type { Layout, LayoutIssue, LayoutItem, Rotation } from '../schemas/layout.ts'
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
@@ -176,7 +193,58 @@ interface EntranceInfo {
 
 interface Placed {
   item: LayoutItem
+  /** Axis-aligned footprint; the bounds of `box` for a prop turned to a slanted wall. */
   rect: Rect
+  /** The true box of a prop standing at a slanted wall's angle; absent at quarter turns. */
+  box?: Obb
+}
+
+/**
+ * A boundary edge more than NEAR_AXIS_DEG off both axes (a slanted or arc wall). Props stand at
+ * its own angle against it (confirmed by the user, 2026-10-15), and island tables near it turn
+ * parallel to it.
+ */
+interface SlantWall {
+  /** Start of the edge on the boundary. */
+  a: Point
+  b: Point
+  /** Unit direction a → b, and the inward normal. */
+  u: Vec
+  n: Vec
+  /** Direction of `u` as a layout rotation: a prop at this rotation runs along the edge. */
+  angle: number
+  length: number
+  /** Usable stretches along the edge, in metres from `a` (entrances and open edges removed). */
+  intervals: [number, number][]
+}
+
+const FRONT_VECTORS: Record<Exclude<FrontAxis, 'any'>, Vec> = {
+  '+Z': [0, 1],
+  '-Z': [0, -1],
+  '+X': [1, 0],
+  '-X': [-1, 0],
+}
+const degreesOf = (v: Vec) => (Math.atan2(v[1], v[0]) * 180) / Math.PI
+const angleGap = (a: number, b: number) => {
+  const d = (((a - b) % 360) + 360) % 360
+  return Math.min(d, 360 - d)
+}
+const rectBox = (rect: Rect): Obb => ({
+  cx: (rect.minX + rect.maxX) / 2,
+  cz: (rect.minZ + rect.maxZ) / 2,
+  w: rect.maxX - rect.minX,
+  d: rect.maxZ - rect.minZ,
+  angle: 0,
+})
+
+/** Length along the unit direction `v` of a model turned to `rotation` (any angle). */
+function extentAlong(v: Vec, footprint: { w: number; d: number }, rotation: number): number {
+  const ux = turnPoint(1, 0, rotation)
+  const uz = turnPoint(0, 1, rotation)
+  return (
+    Math.abs(v[0] * ux[0] + v[1] * ux[1]) * footprint.w +
+    Math.abs(v[0] * uz[0] + v[1] * uz[1]) * footprint.d
+  )
 }
 
 const ALONG_STEP = 0.05
@@ -232,6 +300,8 @@ class Planner {
   readonly notes: string[] = []
   readonly placed: Placed[] = []
   readonly walls: Wall[]
+  /** Slanted and arc walls, which the quarter-turn walls above leave out. */
+  readonly slantWalls: SlantWall[]
   readonly entrances: (EntranceInfo | null)[]
   readonly mainEntrance: { mid: Point; n: Vec } | null
   readonly space: Space
@@ -350,6 +420,29 @@ class Planner {
     walls.sort((p, q) => q.distance - p.distance)
     const back = this.backWall(walls)
     this.walls = back ? [back, ...walls.filter((w) => w !== back)] : walls
+
+    this.slantWalls = ring.flatMap(([a, b], index): SlantWall[] => {
+      const dx = b[0] - a[0]
+      const dz = b[1] - a[1]
+      const length = Math.hypot(dx, dz)
+      const alongX = Math.abs(dz) <= Math.abs(dx) * NEAR_AXIS_TAN
+      const alongZ = Math.abs(dx) <= Math.abs(dz) * NEAR_AXIS_TAN
+      if (length < 0.3 || alongX || alongZ) return []
+      const u: Vec = [dx / length, dz / length]
+      const t = (p: Point) => (p[0] - a[0]) * u[0] + (p[1] - a[1]) * u[1]
+      let intervals: [number, number][] = [[0, length]]
+      for (const piece of entrancePieces) {
+        if (piece.edge !== index) continue
+        const [ta, tb] = [t(piece.a), t(piece.b)]
+        intervals = subtract(intervals, [Math.min(ta, tb) - 0.1, Math.max(ta, tb) + 0.1])
+      }
+      for (const piece of openPieces) {
+        if (piece.edge !== index) continue
+        const [ta, tb] = [t(piece.a), t(piece.b)]
+        intervals = subtract(intervals, [Math.min(ta, tb), Math.max(ta, tb)])
+      }
+      return [{ a, b, u, n: inward(u), angle: normalizeRotation(degreesOf(u)), length, intervals }]
+    })
   }
 
   /**
@@ -433,13 +526,219 @@ class Planner {
       return false
     if (options.zones.some((zone) => polygonOverlapsRect(zone, rect))) return false
     const others = [
-      ...this.placed.map((p) => ({ rect: p.rect, island: p.item.function === 'island_table' })),
-      ...(options.extra ?? []).map((r) => ({ rect: r, island: true })),
+      ...this.placed.map((p) => ({
+        rect: p.rect,
+        box: p.box,
+        island: p.item.function === 'island_table',
+      })),
+      ...(options.extra ?? []).map((r) => ({ rect: r, box: undefined, island: true })),
     ]
-    return others.every(({ rect: other, island }) => {
+    return others.every(({ rect: other, box, island }) => {
       const gap = options.spacing > 0 ? options.spacing : island ? (options.islandSpacing ?? 0) : 0
+      if (box) {
+        const mine = rectBox(rect)
+        return gap > 0 ? obbGap(mine, box) >= gap - 1e-9 : !obbsOverlap(mine, box)
+      }
       return gap > 0 ? rectGap(rect, other) >= gap - 1e-9 : !rectsOverlap(rect, other)
     })
+  }
+
+  /** fits() for a turned box (a prop at a slanted wall's angle); `skip` is the prop it replaces. */
+  fitsBox(
+    box: Obb,
+    options: {
+      zones: Polygon[]
+      spacing: number
+      wallClearance: number
+      islandSpacing?: number
+      skip?: Placed
+    },
+  ): boolean {
+    if (!obbInsidePolygon(box, this.boundary)) return false
+    const c = options.wallClearance
+    const padded = c > 0 ? { ...box, w: box.w + 2 * c, d: box.d + 2 * c } : box
+    if (c > 0 && !obbInsidePolygon(padded, this.boundary)) return false
+    if (this.space.obstacles.some((o) => polygonOverlapsObb(o.polygon, padded))) return false
+    if (
+      this.entrances.some((e) => e?.pieces.some((p) => segmentIntersectsObbInterior(p.a, p.b, box)))
+    )
+      return false
+    if (options.zones.some((zone) => polygonOverlapsObb(zone, box))) return false
+    return this.placed.every((p) => {
+      if (p === options.skip) return true
+      const other = p.box ?? rectBox(p.rect)
+      const island = p.item.function === 'island_table'
+      const gap = options.spacing > 0 ? options.spacing : island ? (options.islandSpacing ?? 0) : 0
+      return gap > 0 ? obbGap(box, other) >= gap - 1e-9 : !obbsOverlap(box, other)
+    })
+  }
+
+  /** The turned box of `asset` at `rotation` centred at `at` (rounded to the millimetre). */
+  boxAt(asset: PlannerAsset, rotation: number, at: Point): Obb {
+    const size = rotatedFootprint(asset, rotation)
+    return {
+      cx: roundM(at[0]),
+      cz: roundM(at[1]),
+      w: size.w,
+      d: size.d,
+      angle: quarterTilt(rotation),
+    }
+  }
+
+  /** Adds a prop standing at a slanted wall's angle. */
+  addBox(asset: PlannerAsset, rotation: number, box: Obb): void {
+    const fn = asset.function
+    const index = (this.counter.get(fn) ?? 0) + 1
+    this.counter.set(fn, index)
+    const size = rotatedFootprint(asset, rotation)
+    this.placed.push({
+      rect: obbBounds(box),
+      box,
+      item: {
+        id: `${fn}-${index}`,
+        assetId: asset.id,
+        function: fn,
+        name: asset.name.slice(0, 100),
+        cx: box.cx,
+        cz: box.cz,
+        rotation,
+        w: roundM(size.w),
+        d: roundM(size.d),
+        h: roundM(size.h),
+        placeholder: false,
+        locked: false,
+      },
+    })
+  }
+
+  /** Rotation against a slanted wall: the front into the shop, or the long side along it. */
+  slantRotation(asset: PlannerAsset, wall: SlantWall): number {
+    if (asset.front && asset.front !== 'any')
+      return normalizeRotation(degreesOf(wall.n) - degreesOf(FRONT_VECTORS[asset.front]))
+    return normalizeRotation(wall.angle + (asset.footprint.w >= asset.footprint.d ? 0 : 90))
+  }
+
+  /**
+   * Cabinets along the slanted walls at the walls' own angle, `wallGap` off them (as fillWalls
+   * does for the straight ones).
+   */
+  fillSlantWalls(cabinets: PlannerAsset[], limit: number, rules: PlannerRules): number {
+    const zones = this.zones(rules, false)
+    let count = 0
+    for (const wall of this.slantWalls) {
+      for (const [t0, t1] of wall.intervals) {
+        let s = t0
+        while (count < limit && s < t1) {
+          let advanced = false
+          for (const asset of cabinets) {
+            const rotation = this.slantRotation(asset, wall)
+            const along = extentAlong(wall.u, asset.footprint, rotation)
+            const across = extentAlong(wall.n, asset.footprint, rotation)
+            if (s + along > t1 + 1e-9) continue
+            const t = s + along / 2
+            const off = rules.wallGap + across / 2
+            const box = this.boxAt(asset, rotation, [
+              wall.a[0] + wall.u[0] * t + wall.n[0] * off,
+              wall.a[1] + wall.u[1] * t + wall.n[1] * off,
+            ])
+            if (
+              this.fitsBox(box, {
+                zones,
+                spacing: 0,
+                wallClearance: 0,
+                islandSpacing: rules.clearance,
+              })
+            ) {
+              this.addBox(asset, rotation, box)
+              s += along
+              count++
+              advanced = true
+              break
+            }
+          }
+          if (!advanced) s += 0.1
+        }
+      }
+    }
+    return count
+  }
+
+  /**
+   * Island tables near a slanted wall turn parallel to it (confirmed by the user, 2026-10-15):
+   * a table no other table could stand behind (within `clearance` plus a table's width of the
+   * wall) moves to `clearance` off the wall at the wall's angle, long side along it, when it fits
+   * there. With `fillRow` (尽量多放) more tables then go along each slanted wall where they fit.
+   * Returns how many turned and how many were added.
+   */
+  alignTablesToSlants(
+    island: PlannerAsset,
+    rules: PlannerRules,
+    fillRow: boolean,
+  ): { turned: number; added: number } {
+    let turned = 0
+    let added = 0
+    const zones = this.zones(rules, true)
+    const fp = island.footprint
+    const reach = rules.clearance + Math.min(fp.w, fp.d)
+    for (const wall of this.slantWalls) {
+      const along0 = normalizeRotation(wall.angle + (fp.w >= fp.d ? 0 : 90))
+      const across = extentAlong(wall.n, fp, along0)
+      const along = extentAlong(wall.u, fp, along0)
+      const off = rules.clearance + across / 2
+      const at = (t: number): Point => [
+        wall.a[0] + wall.u[0] * t + wall.n[0] * off,
+        wall.a[1] + wall.u[1] * t + wall.n[1] * off,
+      ]
+      for (const p of this.placed) {
+        if (p.item.function !== 'island_table' || p.box) continue
+        const corners = obbCorners(rectBox(p.rect))
+        const gap = Math.min(
+          ...corners.map((c) => (c[0] - wall.a[0]) * wall.n[0] + (c[1] - wall.a[1]) * wall.n[1]),
+        )
+        const t = (p.item.cx - wall.a[0]) * wall.u[0] + (p.item.cz - wall.a[1]) * wall.u[1]
+        if (gap > reach + 1e-9 || t < 0 || t > wall.length) continue
+        // Of the two ways along the wall, the one nearer the table's own turn.
+        const rotation =
+          angleGap(p.item.rotation, along0) <= 90 ? along0 : normalizeRotation(along0 + 180)
+        const box = this.boxAt(island, rotation, at(t))
+        if (
+          !this.fitsBox(box, {
+            zones,
+            spacing: rules.clearance,
+            wallClearance: rules.clearance,
+            skip: p,
+          })
+        )
+          continue
+        const size = rotatedFootprint(island, rotation)
+        p.box = box
+        p.rect = obbBounds(box)
+        p.item = {
+          ...p.item,
+          cx: box.cx,
+          cz: box.cz,
+          rotation,
+          w: roundM(size.w),
+          d: roundM(size.d),
+        }
+        turned++
+      }
+      if (!fillRow) continue
+      for (const [t0, t1] of wall.intervals) {
+        let t = t0 + along / 2
+        while (t <= t1 - along / 2 + 1e-9) {
+          const box = this.boxAt(island, along0, at(t))
+          if (
+            this.fitsBox(box, { zones, spacing: rules.clearance, wallClearance: rules.clearance })
+          ) {
+            this.addBox(island, along0, box)
+            added++
+            t += along + rules.clearance
+          } else t += 0.1
+        }
+      }
+    }
+    return { turned, added }
   }
 
   add(asset: PlannerAsset, rotation: Rotation, rect: Rect): void {
@@ -968,8 +1267,12 @@ export function planLayout(input: PlannerInput): PlannerResult {
   const plain = planTables(reserved)
   let tables = plain
   const undoTables = planner.snapshot()
+  // Tables near a slanted wall turn parallel to it; 尽量多放 adds more along it.
+  let slant = { turned: 0, added: 0 }
   const addTables = (t: typeof plain) => {
-    if (island) for (const rect of t.chosen.slots) planner.add(island, t.chosen.rotation, rect)
+    if (!island) return
+    for (const rect of t.chosen.slots) planner.add(island, t.chosen.rotation, rect)
+    slant = planner.alignTablesToSlants(island, t.rules, input.strategy === 'max')
   }
   addTables(plain)
 
@@ -1024,9 +1327,18 @@ export function planLayout(input: PlannerInput): PlannerResult {
   } else if (cabinets.length) {
     const walls = input.strategy === 'max' ? planner.walls : planner.walls.slice(0, 1)
     planner.fillWalls(cabinets, walls, input.strategy === 'min' ? 1 : Infinity, plain.rules)
+    // 尽量多放 lines the slanted walls too, at their own angle.
+    if (input.strategy === 'max') planner.fillSlantWalls(cabinets, Infinity, plain.rules)
   }
-  const { requested, rules, relaxed, chosen } = tables
-  planner.notes.push(...tables.notes, ...(sideNote ? [sideNote] : []))
+  const { rules, relaxed, chosen } = tables
+  const placedTables = chosen.slots.length + slant.added
+  const requested =
+    input.strategy === 'max' ? Math.max(tables.requested, placedTables) : tables.requested
+  const slantNote =
+    slant.turned + slant.added
+      ? [`靠近斜墙的 ${slant.turned + slant.added} 张中岛桌与斜墙平行摆放`]
+      : []
+  planner.notes.push(...tables.notes, ...slantNote, ...(sideNote ? [sideNote] : []))
 
   const items = planner.placed.map((p) => p.item)
   const relaxations = [...relaxed.entries()].map(([rule, v]) => ({
@@ -1043,7 +1355,7 @@ export function planLayout(input: PlannerInput): PlannerResult {
     planning: {
       strategy: input.strategy,
       requested,
-      placed: chosen.slots.length,
+      placed: placedTables,
       relaxations,
       note: `${PLAN_STRATEGY_LABELS[input.strategy]}：主通道 ${rules.aisle} m、道具间距 ${rules.clearance} m 为设计指导值，非消防验收${relaxNote}`.slice(
         0,
