@@ -15201,12 +15201,16 @@
                             "string",
                             "null"
                           ]
+                        },
+                        "recognitionCloud": {
+                          "type": "boolean"
                         }
                       },
                       "required": [
                         "agentModel",
                         "recognitionModel",
-                        "recognitionFallback"
+                        "recognitionFallback",
+                        "recognitionCloud"
                       ],
                       "additionalProperties": false
                     },
@@ -15280,6 +15284,9 @@
                       "string",
                       "null"
                     ]
+                  },
+                  "recognitionCloud": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -15309,12 +15316,16 @@
                         "string",
                         "null"
                       ]
+                    },
+                    "recognitionCloud": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
                     "agentModel",
                     "recognitionModel",
-                    "recognitionFallback"
+                    "recognitionFallback",
+                    "recognitionCloud"
                   ],
                   "additionalProperties": false
                 }

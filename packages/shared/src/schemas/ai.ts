@@ -29,6 +29,11 @@ export const AiSettingsSchema = z.object({
   recognitionModel: z.string(),
   /** Tried when local recognition fails (scale unknown, outline open, confidence < 0.6). */
   recognitionFallback: z.string().nullable(),
+  /**
+   * Whether plans may be sent to a remote vision model at all (off by default: plans are read
+   * on this machine). While off, the two choices above other than `local` are not used.
+   */
+  recognitionCloud: z.boolean(),
 })
 export type AiSettings = z.infer<typeof AiSettingsSchema>
 

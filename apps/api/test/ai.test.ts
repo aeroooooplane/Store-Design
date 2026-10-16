@@ -51,6 +51,7 @@ describe('AI without any key', () => {
       agentModel: null,
       recognitionModel: 'local',
       recognitionFallback: null,
+      recognitionCloud: false,
     })
     expect(overview.budget).toMatchObject({ limitCny: 50, spentCny: 0, exceeded: false })
   })
@@ -91,6 +92,8 @@ describe('AI with domestic keys', () => {
       agentModel: 'deepseek-flash',
       recognitionModel: 'local',
       recognitionFallback: 'qwen3-vl-plus',
+      // Plans stay on this machine until the user allows otherwise.
+      recognitionCloud: false,
     })
   })
 
@@ -105,7 +108,14 @@ describe('AI with domestic keys', () => {
       agentModel: 'qwen3-vl-flash',
       recognitionModel: 'local',
       recognitionFallback: 'qwen3-vl-flash',
+      recognitionCloud: false,
     })
+    const cloud = await t.app.inject({
+      method: 'PATCH',
+      url: '/api/v1/ai/settings',
+      payload: { recognitionCloud: true },
+    })
+    expect(cloud.json<AiSettings>().recognitionCloud).toBe(true)
 
     const notVision = await t.app.inject({
       method: 'PATCH',

@@ -907,7 +907,40 @@ describe('recognition API with a fallback model', () => {
     vi.unstubAllGlobals()
   })
 
+  const allowCloud = (on: boolean) =>
+    t.app.inject({
+      method: 'PATCH',
+      url: '/api/v1/ai/settings',
+      payload: { recognitionCloud: on },
+    })
+
+  it('keeps plans on this machine while cloud recognition is off', async () => {
+    await allowCloud(false)
+    const { id } = await newProject(t)
+    const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
+    const fetch = vi.fn()
+    vi.stubGlobal('fetch', fetch)
+    const local = await t.app.inject({
+      method: 'POST',
+      url: `/api/v1/uploads/${uploaded.id}/recognize`,
+      payload: {},
+    })
+    expect(local.statusCode).toBe(200)
+    const result = local.json<RecognizeResponse>()
+    expect(result.run).toMatchObject({ method: 'local', status: 'failed' })
+    expect(result.attempted).toBeNull()
+    const remote = await t.app.inject({
+      method: 'POST',
+      url: `/api/v1/uploads/${uploaded.id}/recognize`,
+      payload: { method: 'llm' },
+    })
+    expect(remote.statusCode).toBe(400)
+    expect(remote.json().error.message).toContain('云端识别未开启')
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
   it('hands a picture without vector content to the model, books the call and keeps both runs', async () => {
+    await allowCloud(true)
     const { id } = await newProject(t)
     const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
     const sent: { model: string; images: number }[] = []
