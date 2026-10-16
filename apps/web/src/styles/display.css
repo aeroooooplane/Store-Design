@@ -356,6 +356,8 @@
 .slot-cell {
   position: relative;
   display: grid;
+  font: inherit;
+  text-align: left;
   gap: 4px;
   min-width: 0;
   background: #fff;
@@ -424,14 +426,6 @@
   content: ' ▾';
   color: #9ca3af;
   font-weight: 400;
-}
-.slot-cell select {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  cursor: pointer;
 }
 .slot-cell.hero {
   border: 2px solid #e60012;
@@ -503,19 +497,13 @@
   color: var(--muted);
   font-size: 13px;
 }
-.table3d-pick {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  padding: 0;
-  border: 0;
+.table3d-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
 }
-.table3d-picture:hover .table3d-pick,
-.table3d-pick:focus-visible {
-  opacity: 0.18;
-  background: #2563eb;
-}
-.table3d-turn {
+.table3d-reset {
   position: absolute;
   right: 8px;
   bottom: 8px;
@@ -523,34 +511,74 @@
   padding: 4px 10px;
   background: rgb(255 255 255 / 92%);
 }
-.table3d-dialog {
-  width: min(1100px, 92vw);
-  height: min(760px, 86vh);
-  padding: 0;
-  border: 0;
-  border-radius: 12px;
-  overflow: hidden;
-}
-.table3d-dialog[open] {
+
+/* 选择陈列内容：带托盘缩略图的面板 */
+.unit-picker {
+  position: fixed;
+  z-index: 50;
+  width: 460px;
+  max-height: min(520px, 80vh);
   display: flex;
   flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--line-soft);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 18%);
 }
-.table3d-dialog::backdrop {
-  background: rgb(0 0 0 / 45%);
-}
-.table3d-dialog header {
+.unit-picker header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 10px 14px;
+  gap: 8px;
+  padding: 10px 12px;
   border-bottom: 1px solid var(--line-soft);
 }
-.table3d-live {
-  flex: 1;
+.unit-picker header .link-button {
+  margin-left: auto;
+}
+.unit-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 10px 12px 12px;
+  overflow-y: auto;
+}
+.unit-picker-grid button {
+  display: grid;
+  gap: 4px;
+  padding: 4px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #d5dbe4;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.unit-picker-grid button:hover {
+  border-color: #6b7a90;
+}
+.unit-picker-grid button[aria-pressed='true'] {
+  border: 2px solid #2563eb;
+  background: #eff6ff;
+}
+.unit-picker-photo {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f3f4f6;
+  color: #9ca3af;
+  font-size: 11px;
+}
+.unit-picker-photo img {
   width: 100%;
-  min-height: 0;
-  display: block;
-  cursor: grab;
+  height: 100%;
+  object-fit: cover;
+}
+.unit-picker-name {
+  font-size: 12px;
+  line-height: 1.3;
+  color: #111827;
+  word-break: break-word;
 }
 .ppt-views {
   display: inline-flex;

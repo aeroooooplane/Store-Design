@@ -23,27 +23,49 @@ export interface TableSceneInput {
 
 /**
  * What stands on one slot. The stand-up card below is the first version; a tray model made by the
- * designers can replace it later by returning its own object. `card` is the outline a click picks
- * and `name` where the product name sits (both world corners), so labels and the PPT follow.
+ * designers can replace it later by returning its own object. `card` is the part that turns to
+ * face the viewer (null when nothing should turn), `pick` what a click hits, and `outline` /
+ * `name` the card and its name strip in the card's own plane (x, y), for labels and the PPT.
  */
 export type SlotDresser = (
   place: SlotPlace,
   content: SlotContent,
   shape: TableShape,
   names: boolean,
-) => Promise<{ object: THREE.Object3D; card: THREE.Vector3[]; name: THREE.Vector3[] }>
+) => Promise<{
+  object: THREE.Object3D
+  card: THREE.Object3D | null
+  pick: THREE.Object3D
+  outline: [number, number][]
+  name: [number, number][]
+}>
+
+export interface SceneSlot {
+  slot: string
+  card: THREE.Object3D | null
+  pick: THREE.Object3D
+  outline: [number, number][]
+  name: [number, number][]
+}
 
 export interface TableScene {
   scene: THREE.Scene
+  /** Turns every card to face the camera (call before each render). */
+  faceCamera: (camera: THREE.Camera) => void
   /** Aims a camera from the entrance side, a little to the right, at the whole table; returns
    * the point it looks at. */
   frame: (camera: THREE.PerspectiveCamera) => THREE.Vector3
-  target: THREE.Vector3
-  slots: { slot: string; card: THREE.Vector3[]; name: THREE.Vector3[] }[]
+  /** Keeps looking at `target` from the same side and moves nearer or farther until the whole
+   * table just fits, so turning it never cuts it off. */
+  fit: (camera: THREE.PerspectiveCamera, target: THREE.Vector3) => void
+  slots: SceneSlot[]
+  /** The slot under a point of the picture (−1…1 both ways), if any. */
+  slotAt: (camera: THREE.Camera, ndc: { x: number; y: number }) => string | null
   dispose: () => void
 }
 
-const CARD = { w: 0.3, h: 0.4, head: 0.05, foot: 0.085, tilt: (48 * Math.PI) / 180 }
+/** Card size in metres: code strip on top, the tray picture, the name strip below. */
+const CARD = { w: 0.28, h: 0.31, head: 0.04, foot: 0.07 }
 const PX = 512
 const RED = '#e60012'
 const BACKGROUND = '#eef1f5'
@@ -142,7 +164,10 @@ async function cardTexture(content: SlotContent, names: boolean) {
   return texture
 }
 
-/** The first dresser: a stand-up card leaning back a little, on a silver tray. */
+/**
+ * The first dresser: a silver tray with a card standing on it that always turns to face the
+ * viewer, so the tray picture reads the same from any side.
+ */
 export const cardDresser: SlotDresser = async (place, content, shape, names) => {
   const group = new THREE.Group()
   const tray = new THREE.Mesh(
@@ -152,22 +177,35 @@ export const cardDresser: SlotDresser = async (place, content, shape, names) => 
   tray.position.set(place.x, shape.height + 0.006, place.z)
   group.add(tray)
   const pivot = new THREE.Group()
-  pivot.position.set(place.x, shape.height + 0.012, place.z + place.d * 0.35)
-  pivot.rotation.x = -CARD.tilt
+  pivot.position.set(place.x, shape.height + 0.012, place.z)
   const card = new THREE.Mesh(
     new THREE.PlaneGeometry(CARD.w, CARD.h),
-    new THREE.MeshBasicMaterial({ map: await cardTexture(content, names), toneMapped: false }),
+    new THREE.MeshBasicMaterial({
+      map: await cardTexture(content, names),
+      toneMapped: false,
+      side: THREE.DoubleSide,
+    }),
   )
   card.position.y = CARD.h / 2
   pivot.add(card)
   group.add(pivot)
-  group.updateMatrixWorld(true)
-  const at = (x: number, y: number) => new THREE.Vector3(x, y, 0).applyMatrix4(pivot.matrixWorld)
   const [l, r] = [-CARD.w / 2, CARD.w / 2]
   return {
     object: group,
-    card: [at(l, 0), at(r, 0), at(r, CARD.h), at(l, CARD.h)],
-    name: [at(l, 0), at(r, 0), at(r, CARD.foot), at(l, CARD.foot)],
+    card: pivot,
+    pick: card,
+    outline: [
+      [l, 0],
+      [r, 0],
+      [r, CARD.h],
+      [l, CARD.h],
+    ],
+    name: [
+      [l, 0],
+      [r, 0],
+      [r, CARD.foot],
+      [l, CARD.foot],
+    ],
   }
 }
 
@@ -208,6 +246,13 @@ function disposeTree(root: THREE.Object3D) {
       material.dispose()
     }
   })
+}
+
+/** Points of a slot's card plane (x, y in the card) in the world, as it stands now. */
+export function slotPoints(slot: SceneSlot, points: [number, number][]) {
+  const space = slot.card ?? slot.pick
+  space.updateWorldMatrix(true, false)
+  return points.map(([x, y]) => new THREE.Vector3(x, y, 0).applyMatrix4(space.matrixWorld))
 }
 
 /** Builds one table with what stands on its slots, ready to render from any camera. */
@@ -265,31 +310,33 @@ export async function buildTableScene(
     root.add(strip)
   }
 
-  const byslot = new Map(input.contents.map((c) => [c.slot, c]))
-  const slots: TableScene['slots'] = []
+  const bySlot = new Map(input.contents.map((c) => [c.slot, c]))
+  const slots: SceneSlot[] = []
   for (const place of shape.slots) {
-    const content = byslot.get(place.slot)
+    const content = bySlot.get(place.slot)
     if (!content) continue
     const dressed = await dress(place, content, shape, input.names)
+    dressed.pick.userData.slot = place.slot
     root.add(dressed.object)
-    slots.push({ slot: place.slot, card: dressed.card, name: dressed.name })
+    slots.push({ slot: place.slot, ...dressed })
+  }
+  root.updateMatrixWorld(true)
+
+  const faceCamera = (camera: THREE.Camera) => {
+    camera.updateMatrixWorld()
+    const turn = camera.getWorldQuaternion(new THREE.Quaternion())
+    for (const s of slots) s.card?.quaternion.copy(turn)
   }
 
-  root.updateMatrixWorld(true)
-  const target = new THREE.Vector3(0, shape.height + 0.1, 0)
-  // Everything that must be in the picture: the table and the cards.
-  const points = [
-    ...slots.flatMap((s) => s.card),
-    ...[-1, 1].flatMap((sx) =>
-      [-1, 1].flatMap((sz) =>
-        [0, shape.height].map(
-          (y) => new THREE.Vector3((sx * shape.width) / 2, y, (sz * shape.depth) / 2),
-        ),
+  const tableCorners = [-1, 1].flatMap((sx) =>
+    [-1, 1].flatMap((sz) =>
+      [0, shape.height].map(
+        (y) => new THREE.Vector3((sx * shape.width) / 2, y, (sz * shape.depth) / 2),
       ),
     ),
-  ]
+  )
   const azimuth = (14 * Math.PI) / 180
-  const elevation = (56 * Math.PI) / 180
+  const elevation = (60 * Math.PI) / 180
   const direction = new THREE.Vector3(
     Math.sin(azimuth) * Math.cos(elevation),
     Math.sin(elevation),
@@ -297,7 +344,7 @@ export async function buildTableScene(
   )
   const frame = (camera: THREE.PerspectiveCamera) => {
     // Centre what is seen and move until it just fits (its size is about 1 / distance).
-    const aim = target.clone()
+    const aim = new THREE.Vector3(0, shape.height + 0.1, 0)
     const right = new THREE.Vector3()
     const up = new THREE.Vector3()
     let distance = 3
@@ -306,6 +353,8 @@ export async function buildTableScene(
       camera.lookAt(aim)
       camera.updateMatrixWorld(true)
       camera.updateProjectionMatrix()
+      faceCamera(camera)
+      const points = [...tableCorners, ...slots.flatMap((s) => slotPoints(s, s.outline))]
       let [x0, x1, y0, y1] = [Infinity, -Infinity, Infinity, -Infinity]
       for (const p of points) {
         const v = p.clone().project(camera)
@@ -322,15 +371,48 @@ export async function buildTableScene(
         .addScaledVector(up, ((y0 + y1) / 2) * half)
       distance *= Math.max((x1 - x0) / 2, (y1 - y0) / 2) / 0.88
     }
+    camera.position.copy(aim).addScaledVector(direction, distance)
+    camera.lookAt(aim)
+    camera.updateMatrixWorld(true)
+    faceCamera(camera)
     return aim
   }
-  return {
-    scene,
-    frame,
-    target,
-    slots,
-    dispose: () => disposeTree(scene),
+
+  const fit = (camera: THREE.PerspectiveCamera, target: THREE.Vector3) => {
+    const back = camera.position.clone().sub(target)
+    let distance = back.length()
+    back.normalize()
+    for (let i = 0; i < 6; i++) {
+      camera.position.copy(target).addScaledVector(back, distance)
+      camera.updateMatrixWorld(true)
+      faceCamera(camera)
+      const points = [...tableCorners, ...slots.flatMap((s) => slotPoints(s, s.outline))]
+      const reach = Math.max(
+        ...points.map((p) => {
+          const v = p.clone().project(camera)
+          return Math.max(Math.abs(v.x), Math.abs(v.y))
+        }),
+      )
+      distance *= reach / 0.94
+    }
+    camera.position.copy(target).addScaledVector(back, distance)
+    camera.updateMatrixWorld(true)
+    faceCamera(camera)
   }
+
+  const raycaster = new THREE.Raycaster()
+  const picks = slots.map((s) => s.pick)
+  const slotAt = (camera: THREE.Camera, ndc: { x: number; y: number }) => {
+    faceCamera(camera)
+    root.updateMatrixWorld(true)
+    raycaster.setFromCamera(new THREE.Vector2(ndc.x, ndc.y), camera)
+    const hit = raycaster.intersectObjects(picks, true)[0]
+    let node: THREE.Object3D | null = hit?.object ?? null
+    while (node && typeof node.userData.slot !== 'string') node = node.parent
+    return node ? (node.userData.slot as string) : null
+  }
+
+  return { scene, faceCamera, frame, fit, slots, slotAt, dispose: () => disposeTree(scene) }
 }
 
 /** Bounding rectangle of world points on the camera's picture, 0–1 from the top-left. */
@@ -349,9 +431,9 @@ export function pictureRect(points: THREE.Vector3[], camera: THREE.Camera): Pict
 }
 
 /**
- * A tilted strip (corners bottom-left, bottom-right, top-right, top-left) as the rectangle that
- * fits it on the picture: the middle of its slanted edges, not the box around them, so a label
- * laid there covers the strip and not the picture above it.
+ * A strip (corners bottom-left, bottom-right, top-right, top-left) as the rectangle that fits it
+ * on the picture: the middle of its edges, not the box around them, so a label laid there covers
+ * the strip and not the picture above it.
  */
 export function stripRect(corners: THREE.Vector3[], camera: THREE.Camera): PictureRect {
   const [bl, br, tr, tl] = corners.map((p) => {

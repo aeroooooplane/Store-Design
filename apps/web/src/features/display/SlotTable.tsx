@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { DISPLAY_ORIENTATION_LABELS } from '@store/shared'
 import { photoOf } from './photos.ts'
+import { UnitPicker } from './UnitPicker.tsx'
+import type { PickerTarget } from './UnitPicker.tsx'
 import { Table3DCard } from './table3d/Table3DCard.tsx'
 import type { TableViewContext } from './table3d/shots.ts'
 import type {
@@ -44,6 +46,12 @@ export function SlotTable({
 }: SlotTableProps) {
   const labelOf = new Map(rules.units.map((u) => [u.id, u.label]))
   const [look, setLook] = useState<'3d' | 'plan'>('3d')
+  const [picking, setPicking] = useState<(PickerTarget & { table: DisplayTable }) | null>(null)
+  const pick = (t: DisplayTable, slot: string, at: { x: number; y: number }) => {
+    if (disabled) return
+    const current = t.slots.find((s) => s.slot === slot)?.unit ?? null
+    setPicking({ table: t, title: `${t.label}桌 ${slot}`, slot, current, at })
+  }
   const end = edits.landscapeEnd
   const ctx = useMemo<TableViewContext>(
     () => ({ rules, photos, si, end }),
@@ -80,8 +88,15 @@ export function SlotTable({
     const photo = photoOf(photos, s.unit, si)
     const name = s.unit ? (labelOf.get(s.unit) ?? s.unit) : '待定'
     return (
-      <label
+      <button
         key={code}
+        type="button"
+        disabled={disabled}
+        aria-label={`${t.label}桌 ${code}：${name}，点击更换`}
+        onClick={(event) => {
+          const r = event.currentTarget.getBoundingClientRect()
+          pick(t, code, { x: r.left, y: r.bottom + 4 })
+        }}
         className={[
           'slot-cell',
           code === 'E' && 'end',
@@ -103,21 +118,7 @@ export function SlotTable({
           {photo ? <img src={photo.url} alt="" loading="lazy" /> : <span>无照片</span>}
         </span>
         <span className="slot-name">{name}</span>
-        {/* Transparent over the whole slot: a click anywhere picks another unit. */}
-        <select
-          value={s.unit ?? ''}
-          disabled={disabled}
-          aria-label={`${t.label}桌 ${code}`}
-          onChange={(event) => setSlot(t, code, event.target.value || null)}
-        >
-          <option value="">待定</option>
-          {rules.units.map((u) => (
-            <option key={u.id} value={u.id}>
-              {u.label}
-            </option>
-          ))}
-        </select>
-      </label>
+      </button>
     )
   }
 
@@ -173,7 +174,7 @@ export function SlotTable({
           </button>
         ))}
         <span className="hint">
-          {look === '3d' ? '点立牌即可更换产品；“旋转查看”可拖动查看' : '点格子即可更换产品'}
+          {look === '3d' ? '拖动可旋转查看，点立牌即可更换产品' : '点格子即可更换产品'}
         </span>
       </div>
       <div className="slot-tables">
@@ -201,13 +202,7 @@ export function SlotTable({
                 )}
               </header>
               {look === '3d' ? (
-                <Table3DCard
-                  table={t}
-                  ctx={ctx}
-                  units={rules.units}
-                  disabled={disabled}
-                  onPick={(slot, unit) => setSlot(t, slot, unit)}
-                />
+                <Table3DCard table={t} ctx={ctx} onSlotClick={(slot, at) => pick(t, slot, at)} />
               ) : (
                 board(t)
               )}
@@ -230,6 +225,19 @@ export function SlotTable({
           )
         })}
       </div>
+      {picking && (
+        <UnitPicker
+          target={picking}
+          rules={rules}
+          photos={photos}
+          si={si}
+          onPick={(unit) => {
+            setSlot(picking.table, picking.slot, unit)
+            setPicking(null)
+          }}
+          onClose={() => setPicking(null)}
+        />
+      )}
     </>
   )
 }
