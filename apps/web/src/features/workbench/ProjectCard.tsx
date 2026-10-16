@@ -2,20 +2,33 @@ import { MARKET_LABELS, SHOP_TYPE_LABELS, SI_STYLES, mToMm, polygonArea } from '
 import type { Project, SiStyle, Space } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { formatDateTime } from '../../lib/format.ts'
-import { useUpdateProject } from '../projects/queries.ts'
 
 interface ProjectCardProps {
   project: Project
   space: Space | null
-  /** After the style changed: the step on screen swaps its props (see SI_SWAP). */
-  onSiChanged?: (style: SiStyle) => void
+  /** The SI style of the step on screen (each step has its own; the project's on a space). */
+  siStyle: SiStyle
+  /** Why the style cannot be switched here (a render keeps the style it was made in). */
+  siLocked?: string | null
+  /** A switch is under way. */
+  siBusy?: boolean
+  onSiSwitch?: (style: SiStyle) => void
   /** What the last switch did. */
   notice?: string | null
+  error?: unknown
 }
 
 /** Project name, the current space's size and the SI style switch (top of the left column). */
-export function ProjectCard({ project, space, onSiChanged, notice }: ProjectCardProps) {
-  const update = useUpdateProject()
+export function ProjectCard({
+  project,
+  space,
+  siStyle,
+  siLocked,
+  siBusy,
+  onSiSwitch,
+  notice,
+  error,
+}: ProjectCardProps) {
   const xs = space?.boundary.map((p) => p[0]) ?? []
   const zs = space?.boundary.map((p) => p[1]) ?? []
   return (
@@ -37,15 +50,14 @@ export function ProjectCard({ project, space, onSiChanged, notice }: ProjectCard
           <button
             key={style}
             type="button"
-            aria-pressed={project.siStyle === style}
-            disabled={update.isPending}
-            title="决定自动排布与添加模型中的软装道具；在方案或三维效果阶段切换时，另存一个换成该风格道具的新节点，原节点保留"
+            aria-pressed={siStyle === style}
+            disabled={siBusy || !!siLocked}
+            title={
+              siLocked ??
+              '当前节点的 SI 风格。在方案或三维效果节点上切换时，另存一个换成该风格道具的兄弟节点，原节点保留；换款后没改过再切回，直接回到原节点'
+            }
             onClick={() => {
-              if (project.siStyle === style) return
-              update.mutate(
-                { project, patch: { siStyle: style } },
-                { onSuccess: () => onSiChanged?.(style) },
-              )
+              if (siStyle !== style) onSiSwitch?.(style)
             }}
           >
             {style}
@@ -57,7 +69,8 @@ export function ProjectCard({ project, space, onSiChanged, notice }: ProjectCard
           {notice}
         </p>
       ) : null}
-      <ErrorMessage error={update.error} />
+      {siLocked ? <p className="hint">{siLocked}</p> : null}
+      <ErrorMessage error={error} />
     </section>
   )
 }
