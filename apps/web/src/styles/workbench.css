@@ -522,8 +522,10 @@ ul.issues li.warning {
   width: 100%;
   padding: 0;
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
   aspect-ratio: 3 / 2;
-  background: #e8eaed;
+  background: var(--line-soft);
 }
 .camera-thumb:hover {
   border-color: var(--ink);
@@ -548,11 +550,12 @@ ul.issues li.warning {
 }
 .camera-actions {
   display: flex;
-  gap: 2px;
+  gap: 4px;
 }
 .camera-actions button {
-  padding: 2px 6px;
+  padding: 2px 8px;
   font-size: 12px;
+  white-space: nowrap;
 }
 .link-button {
   border: 0;
@@ -709,7 +712,7 @@ ul.issues li.warning {
 
 /* History tree inside the narrow column: shrink to fit, never enlarge. */
 .wb-left .history {
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--paper);
   box-shadow: var(--shadow);
@@ -881,6 +884,21 @@ ul.issues li.warning {
 }
 .wb-right .camera-panel .toolbar .hint {
   display: none;
+}
+/* The right column is narrow: name on its own line, the two actions share the next one. */
+.wb-right .camera-meta {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+.wb-right .camera-meta > span:first-child {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.wb-right .camera-actions button {
+  flex: 1;
 }
 .space-summary {
   border: 1px solid var(--line-soft);

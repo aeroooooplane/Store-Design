@@ -4,7 +4,7 @@ import { NODE_KIND_LABELS } from '@store/shared'
 import type { NodeSummary } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useNodeVisibility, useRenameNode } from './api.ts'
-import { ROOT_ID, TREE_STYLE, applyOffsets, layoutTree } from './tree-layout.ts'
+import { ROOT_ID, TREE_STYLE, applyOffsets, layoutRadial, layoutTree } from './tree-layout.ts'
 import type { TreeOffsets } from './tree-layout.ts'
 
 interface HistoryTreeProps {
@@ -86,7 +86,13 @@ export function HistoryTree({
   } | null>(null)
 
   const base = useMemo(
-    () => layoutTree(projectName, nodes, nodeLabel, showHidden),
+    () =>
+      (TREE_STYLE.layout === 'radial' ? layoutRadial : layoutTree)(
+        projectName,
+        nodes,
+        nodeLabel,
+        showHidden,
+      ),
     [projectName, nodes, showHidden],
   )
   const layout = useMemo(() => applyOffsets(base, offsets), [base, offsets])
@@ -269,7 +275,7 @@ export function HistoryTree({
                 fill="none"
                 stroke={edge.color}
                 strokeWidth={edge.width}
-                markerEnd={`url(#${arrow})`}
+                markerEnd={layout.radial ? undefined : `url(#${arrow})`}
               />
             ))}
             {layout.boxes.map((box) => {
