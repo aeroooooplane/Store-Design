@@ -85,7 +85,7 @@ def match_asset(label: str, si: str, assets: list[dict]) -> dict | None:
             continue
         if inch and inch.group(1) + "寸" not in name:
             continue
-        if orient and orient not in name:
+        if orient and (inch or re.search(r"广告机|屏", label)) and orient not in name:  # 横竖向只约束屏幕；桌子写“竖版”指摆放方向
             continue
         # 对上的关键词越多越优先（“边桌储物柜”同时对上“边桌储物柜”“储物柜”）；图上没写“开箱”就不选开箱款
         hits = sum(1 for k in keys if k in name or any(x in name for x in ALIASES.get(k, ())))
