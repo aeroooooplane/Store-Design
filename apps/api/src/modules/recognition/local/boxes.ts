@@ -157,17 +157,22 @@ export function boxOfSize(
   }
   const lefts = cluster(xs)
   const tops = cluster(ys)
+  // Each side with the one position nearest the model's length past it: a dense drawing has
+  // lines every few pixels, and every pair of them would be millions of boxes.
   const pairs = (values: number[], length: number) => {
     const out: [number, number][] = []
     const slack = Math.max(length * SIZE_SLACK, 4)
     for (const a of values) {
+      let best: number | null = null
       for (const b of values) {
-        if (b > a && Math.abs(b - a - length) <= slack) out.push([a, b])
+        const off = Math.abs(b - a - length)
+        if (b > a && off <= slack && (best === null || off < Math.abs(best - a - length))) best = b
       }
+      if (best !== null) out.push([a, best])
     }
     return out
   }
-  let best: { box: Box; dist: number } | null = null
+  const candidates: { box: Box; dist: number }[] = []
   for (const [bw, bh] of w === d
     ? [[w, d]]
     : [
@@ -181,13 +186,12 @@ export function boxOfSize(
         const box: Box = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
         const [bx, by] = centre(box)
         const dist = Math.hypot(bx - cx, by - cy)
-        if (dist > reach || (best && dist >= best.dist)) continue
-        if (taken(box) || !closed(index, box)) continue
-        best = { box, dist }
+        if (dist <= reach) candidates.push({ box, dist })
       }
     }
   }
-  return best?.box ?? null
+  candidates.sort((p, q) => p.dist - q.dist)
+  return candidates.find(({ box }) => !taken(box) && closed(index, box))?.box ?? null
 }
 
 export const boxKey = (b: Box) =>

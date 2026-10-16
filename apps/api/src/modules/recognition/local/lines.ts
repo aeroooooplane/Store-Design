@@ -158,9 +158,12 @@ export const sideCoverages = (index: LineIndex, box: Box) => [
   coverage(index, false, box.x + box.w, box.y, box.y + box.h),
 ]
 
-/** All four sides drawn. */
+/** All four sides drawn (checked one by one: most candidates fail on the first). */
 export const closed = (index: LineIndex, box: Box) =>
-  sideCoverages(index, box).every((c) => c >= SIDE_COVERAGE)
+  coverage(index, true, box.y, box.x, box.x + box.w) >= SIDE_COVERAGE &&
+  coverage(index, true, box.y + box.h, box.x, box.x + box.w) >= SIDE_COVERAGE &&
+  coverage(index, false, box.x, box.y, box.y + box.h) >= SIDE_COVERAGE &&
+  coverage(index, false, box.x + box.w, box.y, box.y + box.h) >= SIDE_COVERAGE
 
 export function cluster(values: number[]): number[] {
   const sorted = [...values].sort((a, b) => a - b)

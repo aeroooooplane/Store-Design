@@ -23,7 +23,15 @@ import {
   fitsSize,
   sameBox,
 } from './boxes.ts'
-import { DEFAULT_ENTRANCE_M, axisLines, buildIndex, centre, cropContent, isRed } from './lines.ts'
+import {
+  DEFAULT_ENTRANCE_M,
+  axisLines,
+  buildIndex,
+  centre,
+  contains,
+  cropContent,
+  isRed,
+} from './lines.ts'
 import type { Box, Text } from './lines.ts'
 import { dimensionLine, dimensionMm, findScale } from './scale.ts'
 
@@ -113,10 +121,23 @@ export function recognizeVector(
   // Labels: texts that are not dimensions, with the box they sit in.
   const pageArea = content.width * content.height
   const propBox = (text: Text, within: Box | null) => {
-    const box =
+    const found =
       boxAround(centre(text), boxes, within, text.w * text.h * 1.5) ??
       boxFromLines(text, wallLines, index, within, pageArea)
-    return box && !betweenChains(box) ? box : null
+    const box = found && !betweenChains(found) ? found : null
+    // With the chains' scale known before the boundary, a name written beside its prop finds
+    // the prop by the model's size here already, so it can anchor the boundary.
+    const footprint = chainMmPerPixel
+      ? matchCatalog(text.text, catalog, undefined, siStyle).asset?.footprint
+      : undefined
+    if (!footprint || !chainMmPerPixel) return box
+    const w = (footprint.w * 1000) / chainMmPerPixel
+    const d = (footprint.d * 1000) / chainMmPerPixel
+    if (box && fitsSize(box, w, d)) return box
+    const sized = boxOfSize(text, wallLines, index, w, d, Math.max(w, d) * 1.2 + text.h * 2, (b) =>
+      within ? !contains(within, centre(b)) : false,
+    )
+    return sized ?? box
   }
   const label = (within: Box | null) =>
     content.texts

@@ -30,7 +30,7 @@ import { createNode, requireActiveProject } from '../nodes/service.ts'
 import { checkDraft, failureReason } from './check.ts'
 import { RELATIVE, answerToDraft, buildPrompt, parseAnswer, toPixels } from './llm.ts'
 import { recognizeVector } from './local.ts'
-import { cachedDimensionChains, readDimensionChains } from './ocr.ts'
+import { cachedReading, readDimensionChains, readPageTexts } from './ocr.ts'
 import type { ChainReading } from './ocr.ts'
 
 const { planUploads, projects, recognitionRuns, storedFiles } = schema
@@ -255,37 +255,52 @@ async function recognizeWithModel(
   return { draft, provider: spec.provider }
 }
 
+/** A page with fewer texts in Chinese than this had its text turned into outlines. */
+const OUTLINED_TEXT_BELOW = 3
+
 /**
- * The dimension chains of an upload's page with their numbers, read on this machine (OCR of the
- * picture where the vector content has the chains). A failure only costs the scale its best
- * evidence: it is noted, not raised.
+ * What OCR reads from an upload's page on this machine: the numbers of its dimension chains and,
+ * when the vector content carries (almost) no text, the page's texts. A failure only costs the
+ * draft that evidence: it is noted, not raised.
  */
-async function uploadChains(
+async function uploadReadings(
   db: Database,
   roots: StorageRoots,
   upload: UploadRow,
   vector: VectorContent,
-): Promise<{ chains: ChainReading[]; note: string | null }> {
+): Promise<{ chains: ChainReading[]; texts: VectorContent['texts']; notes: string[] }> {
+  const key = `${upload.id}:${vector.width}x${vector.height}:${vector.lines.length}`
+  let picture: Promise<Buffer> | null = null
+  const load = () =>
+    (picture ??= (async () => {
+      const [stored] = await db.select().from(storedFiles).where(eq(storedFiles.id, upload.fileId))
+      if (!stored) throw notFound('简图文件')
+      const { file } = await resolveStoredFile(roots, 'storage', stored.storageKey)
+      return readFile(file)
+    })())
+  const why = (error: unknown) => (error instanceof Error ? error.message : String(error))
+  const notes: string[] = []
+  let chains: ChainReading[] = []
   try {
-    const chains = await cachedDimensionChains(
-      `${upload.id}:${vector.width}x${vector.height}:${vector.lines.length}`,
-      async () => {
-        const [stored] = await db
-          .select()
-          .from(storedFiles)
-          .where(eq(storedFiles.id, upload.fileId))
-        if (!stored) return []
-        const { file } = await resolveStoredFile(roots, 'storage', stored.storageKey)
-        return readDimensionChains(await readFile(file), vector)
-      },
+    chains = await cachedReading(`chains:${key}`, async () =>
+      readDimensionChains(await load(), vector),
     )
-    return { chains, note: null }
   } catch (error) {
-    return {
-      chains: [],
-      note: `尺寸数字没能读取（${error instanceof Error ? error.message : String(error)}），比例改用其他依据`,
+    notes.push(`尺寸数字没能读取（${why(error)}），比例改用其他依据`)
+  }
+  let texts: VectorContent['texts'] = []
+  const named = vector.texts.filter((t) => /[\u4e00-\u9fff]/.test(t.text)).length
+  if (named < OUTLINED_TEXT_BELOW) {
+    try {
+      texts = await cachedReading(`texts:${key}`, async () => readPageTexts(await load(), vector))
+      if (texts.length) {
+        notes.push(`图上文字是转曲的，由本机 OCR 读出 ${texts.length} 处文字，道具名请核对`)
+      }
+    } catch (error) {
+      notes.push(`图上文字没能读取（${why(error)}），道具请手动摆放`)
     }
   }
+  return { chains, texts, notes }
 }
 
 /**
@@ -326,11 +341,12 @@ export async function recognize(
     let draft: RecognitionDraft | null = null
     let reason: string
     if (request.vector) {
-      const { chains, note } = await uploadChains(db, roots, upload, request.vector)
-      draft = checkDraft(
-        recognizeVector(request.vector, request, [...catalog.values()], siStyle, chains),
-      )
-      if (note) draft.notes.push(note)
+      const { chains, texts, notes } = await uploadReadings(db, roots, upload, request.vector)
+      const content = texts.length
+        ? { ...request.vector, texts: [...request.vector.texts, ...texts] }
+        : request.vector
+      draft = checkDraft(recognizeVector(content, request, [...catalog.values()], siStyle, chains))
+      draft.notes.push(...notes)
       reason = failureReason(draft) ?? ''
     } else {
       reason = '图片没有可读的矢量内容（本地识别只能读矢量 PDF）'
