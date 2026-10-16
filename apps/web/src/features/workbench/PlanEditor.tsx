@@ -48,6 +48,7 @@ import { IssuesPanel } from './plan-editor/IssuesPanel.tsx'
 import { PropertiesPanel } from './plan-editor/PropertiesPanel.tsx'
 import { useDraftAutosave } from './plan-editor/useDraftAutosave.ts'
 import { useEditWalls } from './plan-editor/useEditWalls.ts'
+import { useSpacingPreference } from './plan-editor/useSpacingPreference.ts'
 import { useEditorKeys } from './plan-editor/useEditorKeys.ts'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
 import { usePlanDrag } from './plan-editor/usePlanDrag.ts'
@@ -126,8 +127,8 @@ export function PlanEditor({
     () => remembered.current.view[stage] ?? (isWhite ? '3d' : 'plan'),
   )
   // The 3D effect stage shows materials by default; the white model stays one click away.
-  // 显示间距 starts off each time: it is a check, not part of the drawing being edited.
-  const [showSpacing, setShowSpacing] = useState(false)
+  // 显示间距: on by default; the choice carries over from step to step (10-16).
+  const [showSpacing, setShowSpacing] = useSpacingPreference()
   // 画空心隔板: the next drag on the plan draws a partition.
   const [drawingFixture, setDrawingFixture] = useState(false)
   const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
@@ -336,7 +337,7 @@ export function PlanEditor({
               dispatch={dispatch}
               saveState={saveState}
               spacing={showSpacing}
-              onToggleSpacing={() => setShowSpacing((on) => !on)}
+              onToggleSpacing={() => setShowSpacing(!showSpacing)}
               drawingFixture={drawingFixture}
               onToggleDrawFixture={() => setDrawingFixture((on) => !on)}
             />

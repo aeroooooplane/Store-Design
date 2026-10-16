@@ -37,7 +37,7 @@ interface EditWallsOptions {
 
 /**
  * 修改墙体 in the plan stage. Walls belong to the space, so the change is saved as a new space
- * (under the current one, as 修改空间 does) with a plan under it carrying this layout; the
+ * (a sibling of the current one, as 修改空间 does) with a plan under it carrying this layout; the
  * original space and plan and everything after them stay as they were. The 3D view of the
  * space carries over, and editing goes on in the new plan.
  */
@@ -55,7 +55,10 @@ export function useEditWalls({
   const [error, setError] = useState<unknown>(null)
   const viewMemory = useContext(ViewMemoryContext)
   const spaceId = spaceAncestor(nodes, baseNode.id)
-  const spaceName = nodes.find((n) => n.id === spaceId)?.name ?? '空间'
+  const spaceNode = nodes.find((n) => n.id === spaceId)
+  const spaceName = spaceNode?.name ?? '空间'
+  // The new space is a sibling of the old one, under the same parent (10-16).
+  const siblingParent = spaceNode?.parentId ?? null
   const namesUnder = (parentId: string | null) =>
     nodes.filter((n) => n.parentId === parentId).map((n) => n.name)
 
@@ -65,7 +68,7 @@ export function useEditWalls({
     setPaused(true)
     try {
       const newSpace = await create.mutateAsync({
-        parentId: spaceId,
+        parentId: siblingParent,
         kind: 'space',
         name,
         space: edited,
@@ -92,7 +95,7 @@ export function useEditWalls({
     start: () => setEditing(true),
     cancel: () => setEditing(false),
     submit: (edited: Space, name: string) => void submit(edited, name),
-    initialName: freshName(`${spaceName} · 改墙`, namesUnder(spaceId)),
+    initialName: freshName(`${spaceName} · 改墙`, namesUnder(siblingParent)),
     submitting: create.isPending,
     error,
   }
