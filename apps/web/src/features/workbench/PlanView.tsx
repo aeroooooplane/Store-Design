@@ -69,6 +69,8 @@ export interface PlanViewProps {
     ((item: LayoutItem, end: -1 | 1, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onFixturePointerDown?:
     ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  /** The wall a prop being turned has snapped to, highlighted while turning. */
+  guide?: { a: Point; b: Point } | null | undefined
   /** A partition being drawn (画空心隔板), shown dashed until the pointer is released. */
   drawingRect?: Rect | null | undefined
   svgRef?: Ref<SVGSVGElement> | undefined
@@ -318,6 +320,7 @@ export function PlanView({
   selectedId,
   onItemPointerDown,
   onRotateHandlePointerDown,
+  guide,
   onResizeHandlePointerDown,
   onBackgroundPointerDown,
   onFixturePointerDown,
@@ -347,7 +350,14 @@ export function PlanView({
   // The selected prop gets a rotation handle when the editor can turn it.
   const rotatable =
     onRotateHandlePointerDown && !compact
-      ? layout?.items.find((item) => item.id === selectedId && !item.locked)
+      ? layout?.items.find(
+          (item) =>
+            item.id === selectedId &&
+            !item.locked &&
+            // A wall or built-in piece takes its angle from the wall it is on.
+            itemMount(item) !== 'wall' &&
+            itemMount(item) !== 'embedded',
+        )
       : undefined
   const dimOffset = WALL_THICKNESS_M + fontSize * 2.4
   const { dims, radii } = useMemo(() => {
@@ -666,6 +676,15 @@ export function PlanView({
           ))
         })}
 
+      {guide && (
+        <line
+          className="plan-rotate-guide"
+          x1={guide.a[0]}
+          y1={guide.a[1]}
+          x2={guide.b[0]}
+          y2={guide.b[1]}
+        />
+      )}
       {rotatable && onRotateHandlePointerDown && (
         <RotateHandle
           item={rotatable}

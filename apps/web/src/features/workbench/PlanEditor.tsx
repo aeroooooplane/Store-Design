@@ -12,6 +12,7 @@ import type { ReactNode } from 'react'
 import {
   checkAssetFit,
   fitBodyFootprints,
+  snapRotation,
   spaceAncestor,
   stageOf,
   validateLayout,
@@ -198,6 +199,16 @@ export function PlanEditor({
     },
     [assetMap, space],
   )
+  // 3D ring turns: the same snapping as the plan handle (walls, then 15° steps; Alt frees it).
+  const rotate = useCallback(
+    (id: string, rotation: number, gesture: { group: string; snap: boolean }) => {
+      const item = itemsRef.current.find((i) => i.id === id)
+      if (!item) return
+      const snapped = snapRotation(rotation, item, space, !gesture.snap)
+      dispatch({ type: 'turn', id, rotation: snapped.rotation, group: gesture.group })
+    },
+    [space],
+  )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
   // Effects are registered in the same order as before: agent selection, undo / redo keys,
@@ -246,10 +257,12 @@ export function PlanEditor({
     onItemPointerDown,
     onFixturePointerDown,
     onResizeHandlePointerDown,
+    onRotateHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
     draft: drawnRect,
+    guide: rotationGuide,
   } = usePlanDrag(
     space,
     dispatch,
@@ -369,6 +382,7 @@ export function PlanEditor({
                     onSelect={select}
                     onMove={move}
                     onResize={resize}
+                    onRotate={rotate}
                     onReady={onViewerReady}
                     look={isWhite ? look : 'white'}
                     siStyle={siStyle}
@@ -403,6 +417,8 @@ export function PlanEditor({
                   onItemPointerDown={onItemPointerDown}
                   onFixturePointerDown={onFixturePointerDown}
                   onResizeHandlePointerDown={onResizeHandlePointerDown}
+                  onRotateHandlePointerDown={onRotateHandlePointerDown}
+                  guide={rotationGuide}
                   drawingRect={drawnRect}
                   onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                   compact={!planMain}

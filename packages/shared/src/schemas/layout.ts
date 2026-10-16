@@ -33,8 +33,9 @@ export type Rotation = z.infer<typeof RotationSchema>
 
 /** An angle in degrees brought into 0 ≤ angle < 360, to a tenth of a degree. */
 export function normalizeRotation(angle: number): Rotation {
-  const tenth = Math.round(angle * 10) / 10
-  return (((tenth % 360) + 360) % 360) + 0
+  // Wrap first, then round: rounding first leaves float noise from the wrap (124.60000000000002).
+  const tenth = Math.round((((angle % 360) + 360) % 360) * 10) / 10
+  return tenth >= 360 ? 0 : tenth + 0
 }
 
 /** Smallest and largest LOGO scale (see LayoutItemSchema.scale). */

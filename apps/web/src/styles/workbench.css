@@ -270,6 +270,13 @@ svg.plan pattern * {
 .plan-rotate-handle:hover circle {
   fill: var(--ink);
 }
+/* The wall a turned prop snapped parallel or square to. */
+.plan-rotate-guide {
+  stroke: var(--accent, #1677ff);
+  stroke-width: 3px;
+  stroke-dasharray: 6 4;
+  pointer-events: none;
+}
 .plan-item.has-issue .plan-item-frame {
   stroke: var(--danger);
   stroke-width: 2px;
