@@ -13,6 +13,8 @@ import {
   polygonArea,
   rotationHandle,
   sceneFrame,
+  widthAxis,
+  widthEnds,
 } from '@store/shared'
 import type {
   Asset,
@@ -59,6 +61,12 @@ export interface PlanViewProps {
   onRotateHandlePointerDown?:
     ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onBackgroundPointerDown?: (() => void) | undefined
+  /**
+   * Pointer down on an end of a LOGO (drawn, on hover, only when this is given): the editor
+   * resizes it while the pointer moves, the other end staying put (see scaleFromEnd).
+   */
+  onResizeHandlePointerDown?:
+    ((item: LayoutItem, end: -1 | 1, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onFixturePointerDown?:
     ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   /** A partition being drawn (画空心隔板), shown dashed until the pointer is released. */
@@ -310,6 +318,7 @@ export function PlanView({
   selectedId,
   onItemPointerDown,
   onRotateHandlePointerDown,
+  onResizeHandlePointerDown,
   onBackgroundPointerDown,
   onFixturePointerDown,
   drawingRect,
@@ -631,6 +640,30 @@ export function PlanView({
               )}
             </g>
           )
+        })}
+
+      {/* LOGO ends: grips that show on hover; dragging one resizes the LOGO uniformly. */}
+      {onResizeHandlePointerDown &&
+        !compact &&
+        (layout?.items ?? []).map((item) => {
+          const asset = assetOf(item)
+          if (item.function !== 'signage' || item.locked || !asset) return null
+          const [ux, uz] = widthAxis(item)
+          const grip = fontSize * 0.45
+          return widthEnds(item, asset.footprint).map(([x, z], k) => (
+            <g
+              key={`resize-${item.id}-${k}`}
+              className={
+                item.id === selectedId ? 'plan-resize-handle selected' : 'plan-resize-handle'
+              }
+              data-resize-handle={`${item.id}:${k ? 1 : -1}`}
+              style={{ cursor: Math.abs(ux) >= Math.abs(uz) ? 'ew-resize' : 'ns-resize' }}
+              onPointerDown={(event) => onResizeHandlePointerDown(item, k ? 1 : -1, event)}
+            >
+              <circle className="plan-resize-hit" cx={x} cy={z} r={grip * 1.3} />
+              <rect x={x - grip / 2} y={z - grip / 2} width={grip} height={grip} />
+            </g>
+          ))
         })}
 
       {rotatable && onRotateHandlePointerDown && (

@@ -238,6 +238,23 @@ svg.plan pattern * {
   stroke-dasharray: 5 3;
 }
 /* Rotation handle of the selected prop (see RotateHandle in PlanView). */
+/* LOGO end grips (resize): invisible until hovered or the LOGO is selected. */
+.plan-resize-handle .plan-resize-hit {
+  fill: transparent;
+}
+.plan-resize-handle rect {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.5px;
+  opacity: 0;
+}
+.plan-resize-handle:hover rect,
+.plan-resize-handle.selected rect {
+  opacity: 1;
+}
+.plan-resize-handle:hover rect {
+  fill: var(--ink);
+}
 .plan-rotate-handle {
   cursor: grab;
 }

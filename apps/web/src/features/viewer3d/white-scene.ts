@@ -1,13 +1,24 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras, fixtureSolids, itemElevation, itemMount, modelBox } from '@store/shared'
+import {
+  defaultCameras,
+  fixtureSolids,
+  frontCorners,
+  itemElevation,
+  itemMount,
+  modelBox,
+  scaleFromCorner,
+  turnPoint,
+} from '@store/shared'
 import type {
   Asset,
   Camera,
+  Corner,
   Fixture,
   LayoutItem,
   Market,
+  ModelSize,
   ShopType,
   SiStyle,
   Space,
@@ -47,6 +58,15 @@ export interface SceneHandlers {
     cz: number,
     gesture: { group: string; snap: boolean },
   ) => void
+  /**
+   * A LOGO dragged by a corner of its front (see scaleFromCorner): its new scale, centre and
+   * bottom height. Without it the corners do nothing.
+   */
+  onResize?: (
+    itemId: string,
+    placement: { scale: number; cx: number; cz: number; elevation: number },
+    gesture: { group: string },
+  ) => void
 }
 
 export interface LoadStatus {
@@ -70,7 +90,14 @@ interface PlacedItem {
   finishState: 'none' | 'loading' | 'ready' | 'failed'
   /** Invisible box over the footprint: what a click hits (cheap whatever the model). */
   hit: THREE.Mesh
+  /** A LOGO's model size at scale 1, for resizing by its corners; null for other props. */
+  model: ModelSize | null
 }
+
+/** Screen pixels within which the pointer is on a LOGO corner. */
+const CORNER_PX = 12
+/** Size of the corner grips drawn on the selected LOGO. */
+const GRIP_M = 0.04
 
 /** One unit box and one never-drawn material shared by every hit box. */
 const HIT_BOX = new THREE.BoxGeometry(1, 1, 1)
@@ -104,6 +131,14 @@ export class WhiteScene {
   private handlers: SceneHandlers | null = null
   private statusListener: ((status: LoadStatus) => void) | null = null
   private drag: { id: string; dx: number; dz: number; group: string } | null = null
+  /** A LOGO corner being dragged: the LOGO when the drag began and the plane of its front. */
+  private cornerDrag: {
+    start: LayoutItem
+    model: ModelSize
+    corner: Corner
+    plane: THREE.Plane
+    group: string
+  } | null = null
   private frame = 0
   private disposed = false
   private look: Look = 'white'
@@ -281,6 +316,7 @@ export class WhiteScene {
           finish: null,
           finishState: 'none',
           hit: new THREE.Mesh(HIT_BOX, HIT_MATERIAL),
+          model: null,
         }
         placed.hit.userData['itemId'] = item.id
         this.hits.add(placed.hit)
@@ -299,6 +335,7 @@ export class WhiteScene {
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item
+      placed.model = item.function === 'signage' && catalogued ? catalogued.footprint : null
       const group = placed.group
       // Wall and ceiling pieces hang at their height above the floor.
       const elevation = itemElevation(item)
@@ -344,8 +381,20 @@ export class WhiteScene {
   setMarks(selectedId: string | null, flagged: ReadonlySet<string>) {
     this.marks.children.forEach(disposeTree)
     this.marks.clear()
-    for (const { item } of this.items.values()) {
+    for (const { item, model } of this.items.values()) {
       const selected = item.id === selectedId
+      // The selected LOGO shows grips on the corners of its front: drag one to resize.
+      if (selected && model && this.handlers?.onResize && !item.locked) {
+        for (const { at } of frontCorners(item, model)) {
+          const grip = new THREE.Mesh(
+            new THREE.BoxGeometry(GRIP_M, GRIP_M, GRIP_M),
+            new THREE.MeshBasicMaterial({ color: '#111111', depthTest: false }),
+          )
+          grip.renderOrder = 10
+          grip.position.set(...at)
+          this.marks.add(grip)
+        }
+      }
       if (!selected && !flagged.has(item.id)) continue
       const mark = new THREE.Mesh(
         new THREE.PlaneGeometry(item.w + 0.08, item.d + 0.08),
@@ -623,8 +672,52 @@ export class WhiteScene {
     return point ? [point.x, point.z] : null
   }
 
+  /** The LOGO corner under the pointer (within CORNER_PX on screen), if any. */
+  private cornerAt(event: PointerEvent): { placed: PlacedItem; corner: Corner } | null {
+    if (!this.handlers?.onResize) return null
+    const rect = this.canvas.getBoundingClientRect()
+    let best: { placed: PlacedItem; corner: Corner; px: number } | null = null
+    for (const placed of this.items.values()) {
+      if (!placed.model || placed.item.locked) continue
+      for (const { corner, at } of frontCorners(placed.item, placed.model)) {
+        const p = new THREE.Vector3(...at).project(this.camera)
+        if (p.z > 1) continue
+        const x = ((p.x + 1) / 2) * rect.width + rect.left
+        const y = ((1 - p.y) / 2) * rect.height + rect.top
+        const px = Math.hypot(x - event.clientX, y - event.clientY)
+        if (px <= CORNER_PX && (!best || px < best.px)) best = { placed, corner, px }
+      }
+    }
+    return best
+  }
+
+  /** Starts resizing a LOGO by a corner; the pointer then moves on the plane of its front. */
+  private startResize(event: PointerEvent): boolean {
+    const hit = this.cornerAt(event)
+    if (!hit || !hit.placed.model) return false
+    const { item } = hit.placed
+    const model = hit.placed.model
+    const [fx, fz] = turnPoint(0, 1, item.rotation)
+    const front = (model.d * (item.scale ?? 1)) / 2
+    this.cornerDrag = {
+      start: item,
+      model,
+      corner: hit.corner,
+      plane: new THREE.Plane().setFromNormalAndCoplanarPoint(
+        new THREE.Vector3(fx, 0, fz),
+        new THREE.Vector3(item.cx + fx * front, 0, item.cz + fz * front),
+      ),
+      group: `resize3d:${item.id}:${event.timeStamp}`,
+    }
+    this.handlers?.onSelect(item.id)
+    this.controls.enabled = false
+    this.canvas.setPointerCapture(event.pointerId)
+    return true
+  }
+
   private readonly onPointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return
+    if (this.startResize(event)) return
     const placed = this.pick(event)
     this.handlers?.onSelect(placed?.item.id ?? null)
     if (!placed || placed.item.locked || !this.handlers?.onMove) return
@@ -641,7 +734,28 @@ export class WhiteScene {
   }
 
   private readonly onPointerMove = (event: PointerEvent) => {
-    if (!this.drag) return
+    if (this.cornerDrag) {
+      const { start, model, corner, plane, group } = this.cornerDrag
+      const point = this.ray(event).ray.intersectPlane(plane, new THREE.Vector3())
+      if (point) {
+        const placement = scaleFromCorner(start, model, corner, {
+          plan: [point.x, point.z],
+          y: point.y,
+        })
+        this.handlers?.onResize?.(start.id, placement, { group })
+      }
+      return
+    }
+    if (!this.drag) {
+      // A diagonal resize cursor over a LOGO corner.
+      const hit = this.cornerAt(event)
+      this.canvas.style.cursor = hit
+        ? hit.corner.x === hit.corner.y
+          ? 'nesw-resize'
+          : 'nwse-resize'
+        : ''
+      return
+    }
     const point = this.floorPoint(event)
     if (point) {
       this.handlers?.onMove?.(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz, {
@@ -652,8 +766,9 @@ export class WhiteScene {
   }
 
   private readonly endDrag = () => {
-    if (!this.drag) return
+    if (!this.drag && !this.cornerDrag) return
     this.drag = null
+    this.cornerDrag = null
     this.controls.enabled = true
   }
 }

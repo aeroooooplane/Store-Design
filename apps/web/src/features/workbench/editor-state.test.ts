@@ -482,3 +482,36 @@ describe('LOGO 等比缩放', () => {
     expect(s.layout.items[0]).toMatchObject({ w: 3.453, d: 0.05, cz: 0.025 })
   })
 })
+
+describe('LOGO 拖动改大小', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.471 },
+    front: '+Z',
+  })
+
+  it('moves to where the drag put it and keeps the back on the wall, one undo step', () => {
+    let s = editorReducer(state([]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    const id = s.layout.items[0]?.id ?? ''
+    const drag = (scale: number, cx: number) =>
+      editorReducer(s, {
+        type: 'scale',
+        id,
+        asset: logo,
+        scale,
+        at: { cx, cz: 0.025, elevation: 2 },
+        space,
+        front: '+Z',
+        group: 'resize:1',
+      })
+    s = drag(0.8, 2.655)
+    s = drag(0.579, 2.273)
+    expect(s.layout.items[0]).toMatchObject({ scale: 0.579, cx: 2.273, cz: 0.015, elevation: 2 })
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.items[0]?.scale).toBeUndefined()
+  })
+})

@@ -94,7 +94,10 @@ export type EditorAction =
     }
   /** Height of a wall or ceiling piece above the floor. */
   | { type: 'elevate'; id: string; elevation: number }
-  /** A LOGO resized uniformly (属性面板“宽度”); a piece on a wall stays on it. */
+  /**
+   * A LOGO resized uniformly (属性面板“宽度”, or dragged by an end or a corner: then `at` is
+   * where it goes, see shared/scaling); a piece on a wall stays on it. `group` joins one drag.
+   */
   | {
       type: 'scale'
       id: string
@@ -102,6 +105,8 @@ export type EditorAction =
       scale: number
       space: Space
       front: FrontAxis | null
+      at?: { cx: number; cz: number; elevation?: number | undefined } | undefined
+      group?: string | undefined
     }
   | { type: 'undo' }
   | { type: 'redo' }
@@ -329,14 +334,26 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         action.id,
         (item) => {
           if (item.locked || !Number.isFinite(action.scale)) return item
-          const scaled = scaleItem(item, action.asset, action.scale)
+          const resized = scaleItem(item, action.asset, action.scale)
+          const at = action.at
+          const scaled =
+            at && resized !== item
+              ? {
+                  ...resized,
+                  cx: roundM(at.cx),
+                  cz: roundM(at.cz),
+                  ...(at.elevation !== undefined && itemMount(item) !== 'floor'
+                    ? { elevation: roundM(Math.max(0, at.elevation)) }
+                    : {}),
+                }
+              : resized
           if (scaled === item || itemMount(item) !== 'wall' || !mountedWall(item, action.space))
             return scaled
           // The back stays on the wall as the depth changes.
           const placed = wallMountSnap(scaled, scaled.cx, scaled.cz, action.space, action.front)
           return placed ? { ...scaled, cx: placed.cx, cz: placed.cz } : scaled
         },
-        `scale:${action.id}`,
+        action.group ?? `scale:${action.id}`,
       )
     case 'elevate':
       return changeItem(
