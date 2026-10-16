@@ -6,6 +6,7 @@ import {
   angleBetween,
   rotationHandle,
   rotationTowards,
+  settleNearQuarter,
   snapRotation,
   turnItem,
   wallFlushSnap,
@@ -120,5 +121,14 @@ describe('dragging a tilted prop onto a slanted wall', () => {
   it('leaves it alone when not parallel or too far', () => {
     expect(wallFlushSnap({ ...board, rotation: rotation + 10 }, 3, 4.65, slanted)).toBeNull()
     expect(wallFlushSnap(board, 3, 4.2, slanted)).toBeNull()
+  })
+})
+
+describe('angles read from drawings and older files', () => {
+  it('counts angles within 3° of a quarter turn as that turn and keeps the others', () => {
+    expect([0, 2.9, 357.5, 88, 93, 181, 270].map((a) => settleNearQuarter(a))).toEqual([
+      0, 0, 0, 90, 90, 180, 270,
+    ])
+    expect([30, 3.5, 135, -20].map((a) => settleNearQuarter(a))).toEqual([30, 3.5, 135, 340])
   })
 })

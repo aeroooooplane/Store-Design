@@ -4,7 +4,7 @@
  * space description lists the edges, and edit_space moves and inserts vertices.
  */
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { rectFromCenter, rectInsidePolygon, rectangleSpace } from '@store/shared'
+import { itemCorners, obbInsidePolygon, placedBox, rectangleSpace } from '@store/shared'
 import type { LayoutItem, NodeTree, Point, Space } from '@store/shared'
 import { createProject, createSpace, getNode, runTool, seedAsset } from './fixtures.ts'
 import type { AssetSeed, ToolCall } from './fixtures.ts'
@@ -122,8 +122,8 @@ async function place(
   return item
 }
 
-const inside = (item: LayoutItem, boundary: Point[]) =>
-  rectInsidePolygon(rectFromCenter(item.cx, item.cz, item.w, item.d), boundary)
+/** Inside the shop by its true outline (turned when standing on a slanted wall). */
+const inside = (item: LayoutItem, boundary: Point[]) => obbInsidePolygon(placedBox(item), boundary)
 
 describe('place_item 贴真实的边', () => {
   it('L 形：前边分两段，position 按总长分布，不会放进缺口', async () => {
@@ -185,15 +185,20 @@ describe('place_item 贴真实的边', () => {
     }
   })
 
-  it('梯形：斜墙上取最接近的直角朝向，按退让后的矩形离斜墙 0.3 m；锐角处沿墙滑开', async () => {
+  it('梯形：斜墙上与墙平行、正面朝店内，背面离斜墙 0.3 m；锐角处沿墙滑开', async () => {
     const { project, space } = await shop('trapezoid')
+    // The slanted wall 6x + 2z = 60 faces into the shop along (−6, −2): the cabinet's front (+Z)
+    // turns that way, 108.4°; stored as at its nearest quarter turn (90°: 0.45 × 1.6).
     const slanted = await place(project.id, space.id, 'asset-4', 'right', 0.5)
-    expect(slanted).toMatchObject({ rotation: 90, w: 0.45, d: 1.6 })
-    expect(slanted.cx).toBeCloseTo(8.273, 3)
-    expect(slanted.cz).toBeCloseTo(2.758, 3)
-    // The corner nearest to the wall (6x + 2z = 60) keeps the gap.
-    const corner: Point = [slanted.cx + slanted.w / 2, slanted.cz + slanted.d / 2]
-    expect((60 - 6 * corner[0] - 2 * corner[1]) / Math.sqrt(40)).toBeCloseTo(0.3, 2)
+    expect(slanted.rotation).toBeCloseTo(108.4, 1)
+    expect(slanted).toMatchObject({ w: 0.45, d: 1.6 })
+    // Flush with the wall: both back corners keep the gap, the front ones are 0.45 m further in.
+    const gaps = itemCorners(slanted)
+      .map(([x, z]) => (60 - 6 * x - 2 * z) / Math.sqrt(40))
+      .sort((a, b) => a - b)
+    expect(gaps[0]).toBeCloseTo(0.3, 2)
+    expect(gaps[1]).toBeCloseTo(0.3, 2)
+    expect(gaps[2]).toBeCloseTo(0.75, 2)
     expect(inside(slanted, TRAPEZOID)).toBe(true)
     // The back right corner is acute: the cabinet slides left until it clears the slanted wall.
     const end = await place(project.id, space.id, 'asset-4', 'back', 1)

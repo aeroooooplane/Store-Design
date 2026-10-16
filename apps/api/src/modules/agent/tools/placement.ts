@@ -1,12 +1,15 @@
 import {
   DEFAULT_RULES,
-  polygonOverlapsRect,
-  rectFromCenter,
-  rectInsidePolygon,
+  NEAR_AXIS_DEG,
+  normalizeRotation,
+  obbInsidePolygon,
+  placedBox,
+  polygonOverlapsObb,
   rotatedFootprint,
   rotationFacing,
   roundM,
   sceneFrame,
+  turnPoint,
 } from '@store/shared'
 import type { FrontAxis, LayoutItem, Point, Rotation, ShopType, Space } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
@@ -80,11 +83,48 @@ function orient(asset: Placeable, inward: Point, override?: Rotation) {
 /** Half the extent of an axis-aligned w × d rectangle along the unit direction `v`. */
 const halfExtent = (v: Point, w: number, d: number) => (Math.abs(v[0]) * w + Math.abs(v[1]) * d) / 2
 
+/** Half the extent along the unit direction `v` of a model turned to `rotation` (any angle). */
+function turnedHalfExtent(v: Point, footprint: { w: number; d: number }, rotation: number) {
+  const ux = turnPoint(1, 0, rotation)
+  const uz = turnPoint(0, 1, rotation)
+  return (
+    (Math.abs(v[0] * ux[0] + v[1] * ux[1]) * footprint.w +
+      Math.abs(v[0] * uz[0] + v[1] * uz[1]) * footprint.d) /
+    2
+  )
+}
+
+const NEAR_AXIS_TAN = Math.tan((NEAR_AXIS_DEG * Math.PI) / 180)
+
+/** A slanted edge: more than NEAR_AXIS_DEG off both plan axes (straighter ones count as straight). */
+const slanted = (v: Point) =>
+  Math.min(Math.abs(v[0]), Math.abs(v[1])) >
+  Math.max(Math.abs(v[0]), Math.abs(v[1])) * NEAR_AXIS_TAN
+
+const FRONTS: Record<Exclude<FrontAxis, 'any'>, Point> = {
+  '+Z': [0, 1],
+  '-Z': [0, -1],
+  '+X': [1, 0],
+  '-X': [-1, 0],
+}
+const degrees = (v: Point) => (Math.atan2(v[1], v[0]) * 180) / Math.PI
+
+/**
+ * Rotation of a prop against a slanted edge, at the edge's own angle: its front faces `inward`,
+ * or its long side lies along `tangent` when it has no front.
+ */
+function alongSlant(asset: Placeable, inward: Point, tangent: Point, override?: Rotation) {
+  if (override !== undefined) return override
+  if (asset.front && asset.front !== 'any')
+    return normalizeRotation(degrees(inward) - degrees(FRONTS[asset.front]))
+  return normalizeRotation(degrees(tangent) + (asset.footprint.w >= asset.footprint.d ? 0 : 90))
+}
+
 /** Why a footprint cannot stand there, or null when it lies inside the shop clear of obstacles. */
 function misfit(space: Space, p: Placed): string | null {
-  const rect = rectFromCenter(p.cx, p.cz, p.w, p.d)
-  if (!rectInsidePolygon(rect, space.boundary)) return OUTSIDE
-  const index = space.obstacles.findIndex((o) => polygonOverlapsRect(o.polygon, rect))
+  const box = placedBox(p)
+  if (!obbInsidePolygon(box, space.boundary)) return OUTSIDE
+  const index = space.obstacles.findIndex((o) => polygonOverlapsObb(o.polygon, box))
   const hit = space.obstacles[index]
   return hit ? `会压住${hit.label ?? `障碍物 ${index + 1}`}` : null
 }
@@ -136,7 +176,12 @@ function wallOptions(
   return wallEdges(space, f)
     .filter((e) => e.side === side && e.length > 0)
     .map((edge) => {
-      const { rotation, size } = orient(asset, nearestAxis(edge.inward, wallIn), override)
+      // A slanted edge takes the prop at its own angle, flush with it; a straight one (within
+      // NEAR_AXIS_DEG) at the nearest quarter turn.
+      const rotation = slanted(edge.tangent)
+        ? alongSlant(asset, edge.inward, edge.tangent, override)
+        : orient(asset, nearestAxis(edge.inward, wallIn), override).rotation
+      const size = rotatedFootprint(asset, rotation)
       const forward = dot(edge.tangent, run) >= 0
       return {
         edge,
@@ -145,8 +190,8 @@ function wallOptions(
         rotation,
         w: size.w,
         d: size.d,
-        along: halfExtent(edge.tangent, size.w, size.d),
-        across: halfExtent(edge.inward, size.w, size.d),
+        along: turnedHalfExtent(edge.tangent, asset.footprint, rotation),
+        across: turnedHalfExtent(edge.inward, asset.footprint, rotation),
       }
     })
     .sort((x, y) => {
@@ -220,8 +265,8 @@ function againstWall(
  * works out the coordinates so the model never has to. `position` runs 0 → 1 over the wall's
  * real edges (left to right seen from the entrance, back to front on the side walls); the
  * prop's front faces into the shop, or its long side lies along the wall when it has no front.
- * On a slanted edge it takes the nearest quarter turn and its square footprint keeps `gap` off
- * the edge (any angle comes later). 'center' is the most open point of the floor, `position`
+ * On an edge more than NEAR_AXIS_DEG off the plan axes it stands at the edge's own angle, flush
+ * with it at `gap` (confirmed by the user, 2026-10-15). 'center' is the most open point of the floor, `position`
  * running across the shop through it. Throws when the prop would leave the shop or cover an
  * obstacle, so nothing out of bounds is saved.
  */
