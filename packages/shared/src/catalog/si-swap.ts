@@ -175,3 +175,46 @@ export function siSwapName(name: string, target: SiStyle): string {
   const base = name.replace(/（\d+）$/, '').replace(/ · SI[12]\.0$/, '')
   return `${base} · ${target}`
 }
+
+/**
+ * The SI style a layout's props are of: the style most of its swappable props belong to (a prop
+ * listed for swapping to SI2.0 is an SI1.0 one, and the other way round), or null when it has
+ * none (an empty plan, only shared props).
+ */
+export function layoutSi(layout: Layout): SiStyle | null {
+  let si1 = 0
+  let si2 = 0
+  for (const item of layout.items) {
+    if (!item.assetId) continue
+    if (item.assetId in SI_SWAP['SI2.0']) si1++
+    else if (item.assetId in SI_SWAP['SI1.0']) si2++
+  }
+  return si1 === si2 ? null : si1 > si2 ? 'SI1.0' : 'SI2.0'
+}
+
+/**
+ * The SI style of a step: its own when it was saved with one, else that of its props, else the
+ * project's (steps saved before nodes kept their style).
+ */
+export function nodeSiStyle(
+  node: { siStyle: SiStyle | null; layout: Layout | null },
+  projectSi: SiStyle,
+): SiStyle {
+  return node.siStyle ?? (node.layout ? layoutSi(node.layout) : null) ?? projectSi
+}
+
+/** The same props in the same places (to the millimetre): an untouched copy of a layout. */
+export function sameLayoutProps(a: Layout, b: Layout): boolean {
+  if (a.items.length !== b.items.length) return false
+  const byId = new Map(b.items.map((item) => [item.id, item]))
+  return a.items.every((item) => {
+    const other = byId.get(item.id)
+    return (
+      !!other &&
+      other.assetId === item.assetId &&
+      other.rotation === item.rotation &&
+      Math.abs(other.cx - item.cx) <= 0.001 &&
+      Math.abs(other.cz - item.cz) <= 0.001
+    )
+  })
+}

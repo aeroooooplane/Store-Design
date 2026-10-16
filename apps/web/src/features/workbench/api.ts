@@ -54,19 +54,18 @@ export function useTree(projectId: string) {
   })
 }
 
+/** A node's full data; nodes never change after creation (except name/hidden, in the tree). */
+export const nodeQuery = (nodeId: string) => ({
+  queryKey: workbenchKeys.node(nodeId),
+  staleTime: Infinity,
+  queryFn: async () =>
+    NodeSchema.parse(
+      unwrap(await api.GET('/api/v1/nodes/{nodeId}', { params: { path: { nodeId } } })),
+    ),
+})
+
 export function useNode(nodeId: string | null) {
-  return useQuery({
-    queryKey: workbenchKeys.node(nodeId ?? 'none'),
-    enabled: nodeId !== null,
-    // Nodes never change after creation (except name/hidden, which the tree carries).
-    staleTime: Infinity,
-    queryFn: async () =>
-      NodeSchema.parse(
-        unwrap(
-          await api.GET('/api/v1/nodes/{nodeId}', { params: { path: { nodeId: nodeId ?? '' } } }),
-        ),
-      ),
-  })
+  return useQuery({ ...nodeQuery(nodeId ?? 'none'), enabled: nodeId !== null })
 }
 
 /** The whole catalogue: placeable models plus those that can only be placeholders. */
