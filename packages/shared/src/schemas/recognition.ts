@@ -53,7 +53,20 @@ export const VectorContentSchema = z.object({
       }),
     )
     .max(5000),
-  lines: z.array(z.object({ x1: Px, y1: Px, x2: Px, y2: Px, color: Colour })).max(20_000),
+  // Width (px) of a stroked line, and whether it was drawn with a dash pattern.
+  lines: z
+    .array(
+      z.object({
+        x1: Px,
+        y1: Px,
+        x2: Px,
+        y2: Px,
+        color: Colour,
+        w: z.number().min(0).max(1000).optional(),
+        dash: z.boolean().optional(),
+      }),
+    )
+    .max(60_000),
   rects: z.array(z.object({ x: Px, y: Px, w: Px, h: Px, color: Colour })).max(5000),
 })
 export type VectorContent = z.infer<typeof VectorContentSchema>

@@ -5049,6 +5049,8 @@ export interface paths {
                                 x2: number;
                                 y2: number;
                                 color?: string;
+                                w?: number;
+                                dash?: boolean;
                             }[];
                             rects: {
                                 x: number;
@@ -8286,6 +8288,8 @@ export interface paths {
                                 x2: number;
                                 y2: number;
                                 color?: string;
+                                w?: number;
+                                dash?: boolean;
                             }[];
                             rects: {
                                 x: number;

@@ -79,7 +79,10 @@ export function findScale(
   boundary: Box | null,
   calibration: RecognizeRequest['calibration'],
   labelled: { text: Text; box: Box | null; sizeM: number | null; knownM: number | null }[],
+  /** The outline's own area in px² when it is not a rectangle (else the box's). */
+  boundaryAreaPx?: number,
 ): ScaleResult {
+  const outlineArea = boundary ? (boundaryAreaPx ?? boundary.w * boundary.h) : 0
   const originPx: [number, number] = boundary ? [boundary.x, boundary.y] : [0, 0]
   if (calibration) {
     const px = Math.hypot(calibration.a[0] - calibration.b[0], calibration.a[1] - calibration.b[1])
@@ -116,7 +119,7 @@ export function findScale(
   if (boundary) {
     for (const a of areas) {
       ratios.push({
-        ratio: Math.sqrt((a.m2 * 1e6) / (boundary.w * boundary.h)),
+        ratio: Math.sqrt((a.m2 * 1e6) / outlineArea),
         text: a.text,
         kind: 'area',
       })
@@ -130,7 +133,7 @@ export function findScale(
   const cluster = (r: number) => ratios.filter((o) => Math.abs(o.ratio - r) / r <= RATIO_TOLERANCE)
   const plausible = (r: number) => {
     if (!boundary) return 0.5
-    const m2 = (boundary.w * boundary.h * r * r) / 1e6
+    const m2 = (outlineArea * r * r) / 1e6
     return m2 >= 3 && m2 <= 2000 ? 0.5 : 0
   }
   const agreeing =
