@@ -210,6 +210,9 @@ table.projects td {
   border-bottom: 1px solid var(--line-soft);
   padding: 12px 16px;
 }
+table.projects td.project-name {
+  font-weight: 600;
+}
 table.projects tr:last-child td {
   border-bottom: 0;
 }
