@@ -9,7 +9,11 @@ import {
 } from '../src/modules/recognition/local/dimension-chain.ts'
 import type { ChainReading } from '../src/modules/recognition/local/dimension-chain.ts'
 import { findScale } from '../src/modules/recognition/local/scale.ts'
-import { readDimensionChains } from '../src/modules/recognition/ocr.ts'
+import {
+  cachedReading,
+  readDimensionChains,
+  readPageTexts,
+} from '../src/modules/recognition/ocr.ts'
 
 type Line = VectorContent['lines'][number]
 
@@ -143,4 +147,37 @@ describe('reading dimension numbers (local OCR)', () => {
     ])
     expect(chainScale(readings)?.mmPerPixel).toBeCloseTo(10, 1)
   }, 60_000)
+
+  it('reads the texts of a page whose text is outlines, either way round', async () => {
+    const label = (x: number, y: number, text: string, turn = 0) =>
+      `<text x="0" y="0" transform="translate(${x} ${y}) rotate(${turn})" font-family="DejaVu Sans, Arial, sans-serif" font-size="20">${text}</text>`
+    // A picture of 1200 × 900; the vector content (no texts) is drawn at half that size.
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900"><rect width="1200" height="900" fill="#fff"/>${label(200, 200, 'LOGO WALL')}${label(1000, 700, 'CASHIER 1800', -90)}${label(500, 300, 'TABLE', 90)}</svg>`
+    const picture = await sharp(Buffer.from(svg)).png().toBuffer()
+    const content: VectorContent = { width: 600, height: 450, texts: [], lines: [], rects: [] }
+    const texts = await readPageTexts(picture, content)
+    const found = (word: string) => texts.find((t) => t.text.replace(/\s+/g, '').includes(word))
+    const wall = found('LOGOWALL')
+    expect(wall).toBeDefined()
+    // In the vector content's pixels: half the picture's.
+    expect(wall?.x).toBeGreaterThan(90)
+    expect(wall?.x).toBeLessThan(110)
+    expect(wall?.w).toBeGreaterThan(wall?.h ?? Infinity)
+    // Bottom to top and top to bottom are both read upright; their boxes stand tall.
+    const cashier = found('CASHIER1800')
+    expect(cashier).toBeDefined()
+    expect(cashier?.h).toBeGreaterThan(cashier?.w ?? Infinity)
+    expect(found('TABLE')).toBeDefined()
+  }, 60_000)
+
+  it('keeps a reading per key and drops failed ones', async () => {
+    let loads = 0
+    const load = async () => ++loads
+    expect(await cachedReading('test:a', load)).toBe(1)
+    expect(await cachedReading('test:a', load)).toBe(1)
+    await expect(
+      cachedReading('test:b', async () => Promise.reject(new Error('x'))),
+    ).rejects.toThrow()
+    expect(await cachedReading('test:b', load)).toBe(2)
+  })
 })
