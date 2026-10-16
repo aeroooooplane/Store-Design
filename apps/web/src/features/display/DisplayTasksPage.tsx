@@ -34,8 +34,6 @@ export function DisplayTasksPage() {
         <h1>门店展陈方案</h1>
         <span className="page-header-end">
           <p>{rules.data ? `展陈规则 ${rules.data.version}` : '中岛桌 · 边桌 · 托盘'}</p>
-          <Link to="/">项目</Link>
-          <Link to="/settings">设置</Link>
         </span>
       </header>
       <ErrorMessage error={rules.error} />

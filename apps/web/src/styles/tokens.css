@@ -32,6 +32,9 @@
   --warn-soft: #fff1c9;
   --danger: #b4233c;
   --danger-soft: #fdeaed;
+  /* Red markers on drawings and renders (table labels, the main slot): must stay visible on any picture. */
+  --mark: #e60012;
+  --mark-hover: #c40010;
   /* Shape */
   --radius: 8px;
   --radius-lg: 14px;
