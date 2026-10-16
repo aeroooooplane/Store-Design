@@ -133,17 +133,19 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
         facing = None if facing is None else round((facing + tilt) % 360, 1)
     cx = ((x0 + x1) / 2 - ox) * mmpp / 1000
     cz = ((y0 + y1) / 2 - oz) * mmpp / 1000
-    if asset and not body and not tilt and func in WALL_CABINETS and facing in (0, 90, 180, 270):
-        # 用户 2026-10-16：柜子背靠墙，柜面以型号为准；两侧包墙在 flush_cladding 里改到与柜面齐平
-        fx, fz = round(-math.sin(math.radians(facing))), round(math.cos(math.radians(facing)))
-        drawn_depth = along_z if fx == 0 else along_x
+    if asset and not body and func in WALL_CABINETS and facing is not None:
+        # 用户 2026-10-16：柜子背靠墙，柜面以型号为准；两侧包墙在 flush_cladding 里改到与柜面齐平（斜墙同样适用）
+        f = math.radians(facing)
+        nx, nz = -math.sin(f), math.cos(f)  # 柜面朝外的单位法向
+        base_x_dir = FACING[it.get("facing", "down")] in (90, 270)  # 未斜放时进深沿 x
+        drawn_depth, drawn_width = (along_x, along_z) if base_x_dir else (along_z, along_x)
         a = math.radians(rotation)
-        model_depth = abs(fx * math.cos(a) + fz * math.sin(a)) * fw + abs(-fx * math.sin(a) + fz * math.cos(a)) * fd
+        model_depth = abs(nx * math.cos(a) + nz * math.sin(a)) * fw + abs(-nx * math.sin(a) + nz * math.cos(a)) * fd
         shift = (model_depth - drawn_depth) / 2
-        old_front = (cz if fx == 0 else cx) + (fz or fx) * drawn_depth / 2
-        cx, cz = cx + fx * shift, cz + fz * shift
-        lo, hi = ((x0 - ox) * mmpp / 1000, (x1 - ox) * mmpp / 1000) if fx == 0 else ((y0 - oz) * mmpp / 1000, (y1 - oz) * mmpp / 1000)
-        out["front_line"] = {"axis": 1 if fx == 0 else 0, "old": old_front, "new": old_front + (fz or fx) * shift * 2, "span": (lo, hi)}
+        old_front = cx * nx + cz * nz + drawn_depth / 2
+        mid_t = cx * nz - cz * nx
+        cx, cz = cx + nx * shift, cz + nz * shift
+        out["front_line"] = {"n": (nx, nz), "old": old_front, "new": old_front + shift * 2, "span": (mid_t - drawn_width / 2, mid_t + drawn_width / 2)}
     if body:
         w, d, h = bw, bd, round(fh, 3)
         out["body_only"] = True
@@ -197,32 +199,44 @@ def wall_item(it, asset, mmpp, ox, oz, fronts):
 
 
 def flush_cladding(fronts_lines: list[dict], hardscape: list[dict], items: list[dict]) -> int:
-    """把与柜面同一面墙的包墙正面（两端挨着柜子的那几段）移到型号柜面上；墙上的内嵌画面随之平移。返回移动的边数。"""
+    """把与柜面同一面墙的包墙正面（两端挨着柜子的那几段）移到型号柜面上；墙上的内嵌画面随之平移。返回移动的边数。
+    柜面线用法向 n 表示：点 p 到柜面的位置是 p·n，沿墙的位置是 p·t（t 为 n 转 90°），斜墙也适用。"""
     moved = 0
     for fl in fronts_lines:
-        k, old, new = fl["axis"], fl["old"], fl["new"]
+        (nx, nz), old, new = fl["n"], fl["old"], fl["new"]
         if abs(new - old) < 0.005:
             continue
         lo, hi = fl["span"]
-        j = 1 - k
+
+        def dn(e):
+            return e[0] * nx + e[1] * nz
+
+        def dt(e):
+            return e[0] * nz - e[1] * nx
+
+        def push(e):
+            k = new - dn(e)
+            e[0], e[1] = round(e[0] + nx * k, 3), round(e[1] + nz * k, 3)
+
         for h in hardscape:
             poly = h["polygon"]
             for i in range(len(poly)):
                 p, q = poly[i], poly[(i + 1) % len(poly)]
-                if abs(p[k] - q[k]) > 0.005 or abs(p[k] - old) > FLUSH_TOL_M:
+                if abs(dn(p) - dn(q)) > 0.005 or abs(dn(p) - old) > FLUSH_TOL_M:
                     continue
-                a, b = sorted((p[j], q[j]))
+                a, b = sorted((dt(p), dt(q)))
                 if a > hi + 0.05 or b < lo - 0.05:
                     continue
-                p[k] = q[k] = round(new, 3)
+                push(p)
+                push(q)
                 moved += 1
                 for it in items:
                     seg = it.get("wall_segment_m")
-                    if seg and all(abs(e[k] - old) <= FLUSH_TOL_M for e in seg) and max(e[j] for e in seg) > a and min(e[j] for e in seg) < b:
-                        delta = new - seg[0][k]
+                    if seg and all(abs(dn(e) - old) <= FLUSH_TOL_M for e in seg) and max(dt(e) for e in seg) > a and min(dt(e) for e in seg) < b:
+                        k = new - dn(seg[0])
                         for e in seg:
-                            e[k] = round(e[k] + delta, 3)
-                        it["cx" if k == 0 else "cz"] = round(it["cx" if k == 0 else "cz"] + delta, 3)
+                            push(e)
+                        it["cx"], it["cz"] = round(it["cx"] + nx * k, 3), round(it["cz"] + nz * k, 3)
     return moved
 
 

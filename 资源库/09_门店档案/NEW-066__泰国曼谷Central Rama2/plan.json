@@ -1,0 +1,695 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-066",
+ "name": "泰国曼谷Central Rama2",
+ "si": "SI1.0",
+ "shop_type": "中岛店",
+ "source": {
+  "page": 16,
+  "image_px": [
+   2400,
+   1697.2482612639856
+  ],
+  "pdf_scale": 2.0159258139300475
+ },
+ "calibration_px": {
+  "mmPerPixel": 7.0009,
+  "originPx": [
+   528.3,
+   300.9
+  ],
+  "checks": [
+   {
+    "axis": "z",
+    "px": [
+     0,
+     801.5
+    ],
+    "mm": 5610,
+    "what": "左侧直边 5610（斜边，px 为两角点直线距离）",
+    "mm_per_px": 6.9994,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "z",
+    "px": [
+     0,
+     799.8
+    ],
+    "mm": 5600,
+    "what": "右侧直边总长 5600（斜边，px 为两角点直线距离）",
+    "mm_per_px": 7.0018,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "z",
+    "px": [
+     0,
+     629.0
+    ],
+    "mm": 4404,
+    "what": "右侧原商场隔墙段 4404（隔墙长边）",
+    "mm_per_px": 7.0016,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "x",
+    "px": [
+     0,
+     792.3
+    ],
+    "mm": 5546,
+    "what": "上侧弧长 5546（租赁线圆弧拟合，px 为弧长）",
+    "mm_per_px": 6.9999,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "x",
+    "px": [
+     0,
+     1019.4
+    ],
+    "mm": 7138,
+    "what": "下侧弧长 7138（租赁线圆弧拟合，px 为弧长）",
+    "mm_per_px": 7.0022,
+    "error_pct": 0.02
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    2.576,
+    0.0
+   ],
+   [
+    3.812,
+    0.629
+   ],
+   [
+    5.093,
+    1.158
+   ],
+   [
+    6.413,
+    1.583
+   ],
+   [
+    7.762,
+    1.902
+   ],
+   [
+    7.649,
+    2.481
+   ],
+   [
+    6.804,
+    6.804
+   ],
+   [
+    6.688,
+    7.398
+   ],
+   [
+    4.953,
+    6.984
+   ],
+   [
+    3.254,
+    6.442
+   ],
+   [
+    1.6,
+    5.774
+   ],
+   [
+    0.0,
+    4.985
+   ]
+  ],
+  "height": 3.0,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     0.0,
+     4.985
+    ],
+    "b": [
+     2.576,
+     0.0
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     3.812,
+     0.629
+    ],
+    "b": [
+     5.093,
+     1.158
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     5.093,
+     1.158
+    ],
+    "b": [
+     6.413,
+     1.583
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     1.6,
+     5.774
+    ],
+    "b": [
+     3.254,
+     6.442
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     3.254,
+     6.442
+    ],
+    "b": [
+     4.953,
+     6.984
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     2.576,
+     0.0
+    ],
+    "b": [
+     3.812,
+     0.629
+    ]
+   },
+   {
+    "a": [
+     3.812,
+     0.629
+    ],
+    "b": [
+     5.093,
+     1.158
+    ]
+   },
+   {
+    "a": [
+     5.093,
+     1.158
+    ],
+    "b": [
+     6.413,
+     1.583
+    ]
+   },
+   {
+    "a": [
+     6.413,
+     1.583
+    ],
+    "b": [
+     7.762,
+     1.902
+    ]
+   },
+   {
+    "a": [
+     7.762,
+     1.902
+    ],
+    "b": [
+     7.649,
+     2.481
+    ]
+   },
+   {
+    "a": [
+     6.804,
+     6.804
+    ],
+    "b": [
+     6.688,
+     7.398
+    ]
+   },
+   {
+    "a": [
+     6.688,
+     7.398
+    ],
+    "b": [
+     4.953,
+     6.984
+    ]
+   },
+   {
+    "a": [
+     4.953,
+     6.984
+    ],
+    "b": [
+     3.254,
+     6.442
+    ]
+   },
+   {
+    "a": [
+     3.254,
+     6.442
+    ],
+    "b": [
+     1.6,
+     5.774
+    ]
+   },
+   {
+    "a": [
+     1.6,
+     5.774
+    ],
+    "b": [
+     0.0,
+     4.985
+    ]
+   },
+   {
+    "a": [
+     0.0,
+     4.985
+    ],
+    "b": [
+     2.576,
+     0.0
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      7.597,
+      2.481
+     ],
+     [
+      7.649,
+      2.481
+     ],
+     [
+      6.804,
+      6.804
+     ],
+     [
+      6.755,
+      6.804
+     ]
+    ],
+    "height": null,
+    "label": "原商场隔墙（约 100 mm 厚、长 4404，骑在租赁线上；此处只记租赁线以内一半）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      6.761,
+      6.138
+     ],
+     [
+      6.819,
+      5.843
+     ],
+     [
+      6.937,
+      5.867
+     ],
+     [
+      6.88,
+      6.162
+     ]
+    ],
+    "height": null,
+    "label": "配电箱 HV Boxes（约 300×120 mm，贴商场隔墙，落在边桌+储物柜背部范围内）"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "z 向 5610 mm = 801.5 px；z 向 5600 mm = 799.8 px；z 向 4404 mm = 629.0 px；x 向 5546 mm = 792.3 px；x 向 7138 mm = 1019.4 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "1.8米X系列中岛桌（复用） H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.911,
+    "cz": 1.881,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 23.2,
+    "facing": null,
+    "drawn_size_m": [
+     1.0,
+     1.801
+    ],
+    "size_deviation_m": [
+     0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "斜放，长边与左侧直边方向相近（约 23.3°）"
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米Ace系列中岛桌（复用） H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 4.656,
+    "cz": 2.631,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 23.2,
+    "facing": null,
+    "drawn_size_m": [
+     1.0,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "斜放约 23.3°"
+   },
+   {
+    "ref": "g03",
+    "label": "1.8米go系列中岛桌（复用） H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.884,
+    "cz": 4.27,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 23.2,
+    "facing": null,
+    "drawn_size_m": [
+     1.0,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "斜放约 23.3°"
+   },
+   {
+    "ref": "g04",
+    "label": "培训坐凳（复用）",
+    "assetId": "asset-569180",
+    "function": "seating",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.63,
+    "cz": 5.02,
+    "w": 1.25,
+    "d": 1.261,
+    "h": 0.35,
+    "rotation": 23.3,
+    "facing": null,
+    "drawn_size_m": [
+     1.201,
+     1.2
+    ],
+    "size_deviation_m": [
+     -0.049,
+     -0.061
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上 4 只 450×450 方凳 2×2 排布，外包约 1.2×1.2 m，按 4 件组合记一个；物料清单数量 4"
+   },
+   {
+    "ref": "g05",
+    "label": "1.8米收银台（复用） H:900mm",
+    "assetId": "asset-24488377",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 5.433,
+    "cz": 5.22,
+    "w": 1.786,
+    "d": 0.602,
+    "h": 1.205,
+    "rotation": 101.1,
+    "facing": 101.1,
+    "drawn_size_m": [
+     1.801,
+     0.601
+    ],
+    "size_deviation_m": [
+     0.015,
+     -0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "与右侧隔墙平行（约 11.1°）；与右侧柜子之间约 800 mm 为店员通道，顾客面按朝店内（左）记，待确认"
+   },
+   {
+    "ref": "g06",
+    "label": "1.8米配件柜+开箱桌（复用） H:900mm",
+    "assetId": "asset-666964",
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "model_origin_m": [
+     6.834,
+     3.659
+    ],
+    "cx": 7.112,
+    "cz": 3.713,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 0.902,
+    "rotation": 191.1,
+    "facing": 101.1,
+    "drawn_size_m": [
+     0.5,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "背靠原商场隔墙，正面朝店内；图上 0.5×1.8 m 柜体，未画凳子；型号尺寸含凳子；碰撞与尺寸标注按桌体"
+   },
+   {
+    "ref": "g07",
+    "label": "1.8米边桌+储物柜（复用） H:900mm",
+    "assetId": "asset-752992",
+    "function": "storage",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 6.768,
+    "cz": 5.48,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 1.214,
+    "rotation": 191.1,
+    "facing": 101.1,
+    "drawn_size_m": [
+     0.5,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "背靠原商场隔墙，正面朝店内"
+   },
+   {
+    "ref": "g08",
+    "label": "电子水牌（复用）",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 7.293,
+    "cz": 2.598,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 191.1,
+    "facing": 191.1,
+    "drawn_size_m": [
+     0.55,
+     0.35
+    ],
+    "size_deviation_m": [
+     0.0,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "柜列上端，屏幕朝上侧通道（物料清单：43寸电子水牌）"
+   },
+   {
+    "ref": "g09",
+    "label": "电子水牌（复用）",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 6.52,
+    "cz": 6.573,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 11.1,
+    "facing": 11.1,
+    "drawn_size_m": [
+     0.55,
+     0.35
+    ],
+    "size_deviation_m": [
+     0.0,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "柜列下端，屏幕朝下侧通道（物料清单：43寸电子水牌）"
+   },
+   {
+    "ref": "g10",
+    "label": "门楣装悬挂式发光logo（LOGO）",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 1.266,
+    "cz": 2.482,
+    "w": 1.38,
+    "d": 0.05,
+    "h": 0.3,
+    "rotation": 117.3,
+    "facing": 117.3,
+    "drawn_size_m": [
+     1.38,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      1.605,
+      1.88
+     ],
+     [
+      0.971,
+      3.106
+     ]
+    ],
+    "mount": "ceiling",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "model",
+    "note": "左侧门楣悬挂发光 LOGO，图上虚线框长约 1380 mm，LOGO 高 300mm；模型库缺此长度款（吊挂 LOGO 只有 1267/1778/1867 mm）"
+   }
+  ]
+ },
+ "hardscape": [],
+ "summary": {
+  "boundary_area_m2": 35.47,
+  "stated_area_m2": 35.5,
+  "outer_size_m": [
+   7.76,
+   7.4
+  ],
+  "height_source": "图注店铺天花高度、公区天花高度、门楣高度均为“/”（未给）；LOGO 高度 300mm",
+  "counts_by_function": {
+   "island_table": 3,
+   "seating": 1,
+   "cashier": 1,
+   "unboxing_table": 1,
+   "storage": 1,
+   "screen": 2,
+   "signage": 1
+  },
+  "counts_by_category": {
+   "软装道具": 7,
+   "信息化物料": 2,
+   "品牌标识": 1
+  },
+  "matched_assets": 9
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "中岛店（异形）：平面为环形扇区——上、下两边是同心圆弧租赁线（上侧内弧弧长 5546、R≈17.4 m；下侧外弧弧长 7138、R≈23.9 m），左右两边为径向直边（左 5610、右 5600）；整店在图上斜放约 11°～27°，按原图像素坐标照记，道具用 tilt_deg",
+   "圆弧按租赁线红色虚线拟合圆心后每段约 4.5° 折线（每弧 4 段）",
+   "右侧中段 4404 为原商场隔墙（约 100 mm，骑在租赁线上），两只柜子背靠隔墙内侧；隔墙以外上下两端 600/596 段开放",
+   "左、上、下三面开放；右侧仅隔墙段不开放",
+   "比例约 7.00 mm/px（1:40@A3），草稿 1.738 mm/px 错得很远；草稿无边界、道具全按文字中心放，位置全错",
+   "物料清单（第 12 页）：收银台 1、中岛桌 3、配件柜+开箱桌 1、边桌+储物柜 1、培训坐凳 4、43寸电子水牌 2、无线摄像头 6（平面未画位置，未记）；与平面一致",
+   "图注：本店软装+水牌*2 均复用泰国曼谷 Dusit Central Park 店物料",
+   "50*50mm 方管（管内走线）在柜列上端靠隔墙处，尺寸太小未记",
+   "图注面积 35.5㎡（中文栏写 35m²）"
+  ]
+ }
+}
