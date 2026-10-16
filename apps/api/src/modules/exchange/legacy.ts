@@ -6,6 +6,7 @@ import {
   polygonInsidePolygon,
   rectangleSpace,
   roundM,
+  settleNearQuarter,
 } from '@store/shared'
 import type {
   AssetFit,
@@ -125,13 +126,9 @@ function convertItems(
   const converted = items
     .filter((item) => item.type !== 'structure')
     .map((item, index): LayoutItem => {
-      const turned = (((item.rotation ?? 0) % 360) + 360) % 360
-      let rotation: Rotation = 0
-      if (turned === 0 || turned === 90 || turned === 180 || turned === 270) rotation = turned
-      else
-        warnings.push(
-          `${where}：${item.name} 的旋转 ${item.rotation} 不是 90° 的整数倍，按 0° 处理`,
-        )
+      // Any angle is kept (within 3° of a quarter turn it is that turn); the size is checked
+      // against the model at its nearest quarter turn (reconcileAssets).
+      const rotation: Rotation = settleNearQuarter(item.rotation ?? 0)
       let id = item.id.length <= 64 ? item.id : `item-${index + 1}`
       while (used.has(id)) id = `${id}-dup`.slice(-64)
       used.add(id)

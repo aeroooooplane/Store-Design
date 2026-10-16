@@ -192,3 +192,17 @@ export function wallFlushSnap(
   const round = (v: number) => Math.round(v * 1000) / 1000 + 0
   return { cx: round(cx - nx * best.shift), cz: round(cz - nz * best.shift), wall: best.wall }
 }
+
+/** Read or imported angles within this many degrees of a quarter turn count as that turn. */
+export const QUARTER_SNAP_DEG = 3
+
+/**
+ * An angle read from a drawing or an older file: within `within` degrees of a quarter turn it is
+ * that turn (drawings are rarely exact), otherwise kept, to a tenth of a degree (confirmed by the
+ * user, 2026-10-15).
+ */
+export function settleNearQuarter(angle: number, within = QUARTER_SNAP_DEG): number {
+  const rotation = normalizeRotation(angle)
+  const quarter = nearestQuarter(rotation)
+  return angleBetween(rotation, quarter) <= within + 1e-9 ? quarter : rotation
+}

@@ -60,7 +60,8 @@ const run: RecognitionRun = {
         cz: 2,
         w: 1.8,
         d: 1,
-        rotation: 90,
+        // Read 2° off a quarter turn: counts as 90°.
+        rotation: 92,
         confidence: 0.5,
         note: '「中岛桌」有多种尺寸，请选择型号',
       },
@@ -74,7 +75,8 @@ const run: RecognitionRun = {
         cz: 0.3,
         w: 1.2,
         d: 0.45,
-        rotation: 0,
+        // A slanted cabinet keeps its angle.
+        rotation: 30,
         confidence: 0.9,
         note: null,
       },
@@ -208,6 +210,7 @@ describe('RecognitionPanel', () => {
       rotation: 90,
       w: 1.8,
     })
+    expect(confirm.layout.items[1]).toMatchObject({ assetId: 'asset-2', rotation: 30, w: 1.2 })
   })
 
   it('explains a failed run and refuses files it cannot read', async () => {

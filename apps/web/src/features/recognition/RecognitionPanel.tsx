@@ -1,6 +1,11 @@
 import { useMemo, useRef, useState } from 'react'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
-import { ITEM_SOURCE_LABELS, RECOGNITION_MIN_CONFIDENCE } from '@store/shared'
+import {
+  ITEM_SOURCE_LABELS,
+  RECOGNITION_MIN_CONFIDENCE,
+  rotatedFootprint,
+  settleNearQuarter,
+} from '@store/shared'
 import type {
   Asset,
   DraftItem,
@@ -21,12 +26,6 @@ import type { PdfPage } from './pdf-extract.ts'
 import { useConfirmRun, useRecognize, useUploadPlan } from './queries.ts'
 
 const DEFAULT_HEIGHT_MM = 3200
-
-/** Layout rotations are quarter turns; a recognised angle snaps to the nearest. */
-function quarterTurn(degrees: number): 0 | 90 | 180 | 270 {
-  const turns = Math.round((((degrees % 360) + 360) % 360) / 90) % 4
-  return ([0, 90, 180, 270] as const)[turns] ?? 0
-}
 
 interface PdfSource {
   doc: PDFDocumentProxy
@@ -53,7 +52,9 @@ function toLayout(
     .map((item) => {
       const assetId = choices.has(item.ref) ? (choices.get(item.ref) ?? null) : item.assetId
       const asset = assetId ? assets.get(assetId) : undefined
-      const turned = item.rotation % 180 !== 0
+      // Within 3° of a quarter turn a recognised angle is that turn; others are kept.
+      const rotation = settleNearQuarter(item.rotation)
+      const size = asset ? rotatedFootprint(asset, rotation) : null
       return {
         id: item.ref,
         assetId: asset?.id ?? null,
@@ -61,9 +62,9 @@ function toLayout(
         name: asset?.name ?? item.label,
         cx: item.cx,
         cz: item.cz,
-        rotation: quarterTurn(item.rotation),
-        w: asset ? (turned ? asset.footprint.d : asset.footprint.w) : item.w,
-        d: asset ? (turned ? asset.footprint.w : asset.footprint.d) : item.d,
+        rotation,
+        w: size?.w ?? item.w,
+        d: size?.d ?? item.d,
         h: asset?.footprint.h ?? 1,
         placeholder: !asset?.placeable,
         locked: false,
