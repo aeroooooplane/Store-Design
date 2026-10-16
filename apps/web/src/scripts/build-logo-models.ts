@@ -467,8 +467,9 @@ interface LogoSpec {
 }
 
 const NEW_LEICA_ID = 'asset-90000001'
-const LEICA_WIDTH_M = 2.4
-const LEICA_DEPTH_M = 0.03
+/** Default width of the Leica co-brand LOGO (user 10-16: 880 mm); height follows the artwork. */
+const LEICA_WIDTH_M = 0.88
+const LEICA_DEPTH_M = 0.015
 
 const LOGOS: LogoSpec[] = [
   {
@@ -566,7 +567,7 @@ const LOGOS: LogoSpec[] = [
   },
 ]
 
-/** Smallest thickness of extruded letters (the panel prints thinner). */
+/** Smallest thickness of letters taken from SketchUp bounds (a size given in the spec is used as is). */
 const MIN_DEPTH_M = 0.02
 const ROD_M = 0.015
 
@@ -603,7 +604,7 @@ function build(
       solids: [box('panel', w, h, d, 0, 0, 0), ...extrude(placed, d / 2, d / 2 + 0.0005, true)],
     }
   }
-  const depth = Math.max(d, MIN_DEPTH_M)
+  const depth = spec.size ? d : Math.max(d, MIN_DEPTH_M)
   if (spec.kind === 'hanging') {
     // Letters at the bottom of the bounds, on a back rail hung from two rods up to the top.
     const placed = transform(art, 1, markW / 2, 0, 0, 0)
@@ -694,7 +695,7 @@ async function main() {
         )
     }
     const other: Market = spec.named === 'domestic' ? 'overseas' : 'domestic'
-    const depth = spec.kind === 'panel' ? d : Math.max(d, MIN_DEPTH_M)
+    const depth = spec.kind === 'panel' ? d : spec.size ? d : Math.max(d, MIN_DEPTH_M)
     const conversion = {
       id: spec.id,
       name: `${spec.folder.split('__')[0]} · 官方矢量自建`,
@@ -767,6 +768,13 @@ async function updateCatalogue(
     }
     entry['web_model'] = `${folder}/网页模型`
     entry['preview'] = `${folder}/预览-新版字标.png`
+    // A self-built model's name, folder and size follow its spec (e.g. a new default width).
+    if (spec.size) {
+      entry['folder'] = folder
+      entry['tight_face_bounds_xyz_mm'] = [w, d, h].map((v) => Math.round(v * 1000))
+      if (spec.id === NEW_LEICA_ID)
+        entry['variant'] = `影石Insta360徕卡联名_${Math.round(w * 1000)}mm`
+    }
   }
   await writeFile(ManifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
 

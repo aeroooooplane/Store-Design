@@ -3669,7 +3669,7 @@
       "additional_views": [],
       "tight_face_bounds_xyz_mm": [
         500,
-        0,
+        5,
         100
       ],
       "source_sha256": "a15e1b54e166c513e8740b290d0743b7c50e6ccd5e27e2d16d2499df5429356f",
@@ -10700,7 +10700,7 @@
       "asset_id": "asset-90000001",
       "si_family": "通用",
       "standard_name": "墙面LOGO",
-      "variant": "影石Insta360徕卡联名_2400mm",
+      "variant": "影石Insta360徕卡联名_880mm",
       "match": "通用",
       "confidence": "高（官方矢量自建）",
       "judgment": "影石 × 徕卡联名墙面 LOGO，整体模组不可拆（用户 10-15 L3）",
@@ -10708,9 +10708,9 @@
       "source_skp": null,
       "additional_views": [],
       "tight_face_bounds_xyz_mm": [
-        2400,
-        30,
-        509
+        880,
+        15,
+        187
       ],
       "named_sha256": null,
       "material_category": "展陈物料",
@@ -10724,12 +10724,12 @@
       "plan_symbol": null,
       "category": "品牌标识",
       "category_si": null,
-      "folder": "品牌标识/墙面LOGO_影石Insta360徕卡联名_2400mm__asset-90000001",
+      "folder": "品牌标识/墙面LOGO_影石Insta360徕卡联名_880mm__asset-90000001",
       "product_image_source": null,
       "plan_symbol_source": null,
       "display_name": "影石徕卡联名墙面LOGO",
-      "web_model": "品牌标识/墙面LOGO_影石Insta360徕卡联名_2400mm__asset-90000001/网页模型",
-      "preview": "品牌标识/墙面LOGO_影石Insta360徕卡联名_2400mm__asset-90000001/预览-新版字标.png"
+      "web_model": "品牌标识/墙面LOGO_影石Insta360徕卡联名_880mm__asset-90000001/网页模型",
+      "preview": "品牌标识/墙面LOGO_影石Insta360徕卡联名_880mm__asset-90000001/预览-新版字标.png"
     }
   ],
   "type_aliases": {
@@ -10739,7 +10739,7 @@
     "1.8米储物边柜(H1.3米)": "1.8米储物边柜（高1.3米）",
     "3.0米徕卡墙": "3米徕卡墙"
   },
-  "images_refreshed": "2026-10-15",
+  "images_refreshed": "2026-10-16",
   "gallery_notes": {},
   "selection_table_applied": "2026-10-10"
 }
