@@ -277,7 +277,6 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
         <span className="page-header-end">
           <p>先识别图纸，再校准平面图和效果图上的桌子编号，最后生成 PPT · 展陈规则 {ruleVersion}</p>
           <Link to="/display">展陈方案列表</Link>
-          <Link to="/">项目</Link>
         </span>
       </header>
 
