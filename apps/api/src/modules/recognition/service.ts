@@ -311,7 +311,16 @@ export async function recognize(
     .from(projects)
     .where(eq(projects.id, upload.projectId))
   const siStyle = project?.siStyle ?? 'SI1.0'
-  const method = request.method ?? (settings.recognitionModel === LOCAL_MODEL_ID ? 'local' : 'llm')
+  // Plans go to a remote model only while the user has the cloud switch on.
+  const cloud = settings.recognitionCloud
+  if (request.method === 'llm' && !cloud) {
+    throw new AppError(
+      'VALIDATION_FAILED',
+      '云端识别未开启：图纸只在本机识别。如需改用外部模型，请到设置中开启“允许云端识别”',
+    )
+  }
+  const method =
+    request.method ?? (!cloud || settings.recognitionModel === LOCAL_MODEL_ID ? 'local' : 'llm')
 
   if (method === 'local') {
     let draft: RecognitionDraft | null = null
@@ -336,7 +345,7 @@ export async function recognize(
       fallbackOf: null,
     })
     if (!reason) return { run: toRun(attempted), attempted: null }
-    const fallback = settings.recognitionFallback
+    const fallback = cloud ? settings.recognitionFallback : null
     if (!fallback) return { run: toRun(attempted), attempted: null }
     const { draft: modelDraft, provider } = await recognizeWithModel(
       db,

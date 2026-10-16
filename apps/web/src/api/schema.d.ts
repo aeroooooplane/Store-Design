@@ -4673,6 +4673,7 @@ export interface paths {
                                 agentModel: string | null;
                                 recognitionModel: string;
                                 recognitionFallback: string | null;
+                                recognitionCloud: boolean;
                             };
                             budget: {
                                 day: string;
@@ -4721,6 +4722,7 @@ export interface paths {
                         agentModel?: string | null;
                         recognitionModel?: string;
                         recognitionFallback?: string | null;
+                        recognitionCloud?: boolean;
                     };
                 };
             };
@@ -4735,6 +4737,7 @@ export interface paths {
                             agentModel: string | null;
                             recognitionModel: string;
                             recognitionFallback: string | null;
+                            recognitionCloud: boolean;
                         };
                     };
                 };

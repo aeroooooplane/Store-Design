@@ -25,6 +25,7 @@ import type { ImageTool, Trace } from './PlanImage.tsx'
 import { scaleFromPoints, toPicturePoints, toTracedSpace } from './trace.ts'
 import type { EdgeKind, Px, TracedSpace } from './trace.ts'
 import type { PdfPage } from './pdf-extract.ts'
+import { useAiOverview } from '../settings/queries.ts'
 import { useConfirmRun, useRecognize, useUploadPlan } from './queries.ts'
 
 const DEFAULT_HEIGHT_MM = 3200
@@ -174,6 +175,8 @@ export function RecognitionPanel({
   const [traced, setTraced] = useState<TracedSpace | null>(null)
   const [editorKey, setEditorKey] = useState(0)
 
+  // A remote model may read the plan only while the user has allowed it in the settings.
+  const cloud = useAiOverview().data?.settings.recognitionCloud ?? false
   const uploadPlan = useUploadPlan(projectId)
   const recognize = useRecognize(upload?.id ?? '')
   const confirm = useConfirmRun(projectId, upload?.id ?? '')
@@ -283,8 +286,8 @@ export function RecognitionPanel({
     if (!upload) return
     setLocalError(null)
     const request: RecognizeRequest = {
-      ...(vector && !useModel ? { vector } : {}),
-      ...(useModel ? { method: 'llm' as const } : {}),
+      ...(vector && !(cloud && useModel) ? { vector } : {}),
+      ...(cloud && useModel ? { method: 'llm' as const } : {}),
       ...(crop ? { crop } : {}),
       ...(points && knownMm > 0 ? { calibration: { a: points.a, b: points.b, mm: knownMm } } : {}),
     }
@@ -448,14 +451,16 @@ export function RecognitionPanel({
                   )}
                 </>
               )}
-              <label className="hint">
-                <input
-                  type="checkbox"
-                  checked={useModel}
-                  onChange={(e) => setUseModel(e.target.checked)}
-                />{' '}
-                直接用模型识别
-              </label>
+              {cloud && (
+                <label className="hint">
+                  <input
+                    type="checkbox"
+                    checked={useModel}
+                    onChange={(e) => setUseModel(e.target.checked)}
+                  />{' '}
+                  直接用模型识别（图纸会发到外部）
+                </label>
+              )}
               <button
                 type="button"
                 className="primary"
@@ -497,7 +502,9 @@ export function RecognitionPanel({
                 <p className="error">
                   {run.error}
                   {draft && draft.confidence < RECOGNITION_MIN_CONFIDENCE
-                    ? '。可以指定一段已知长度后重新识别，或勾选“直接用模型识别”。'
+                    ? cloud
+                      ? '。可以指定一段已知长度后重新识别，或勾选“直接用模型识别”。'
+                      : '。可以指定一段已知长度后重新识别。'
                     : ''}
                   {!traced ? ' 也可以点“描边界”，在原图上描出店铺边界。' : ''}
                 </p>
