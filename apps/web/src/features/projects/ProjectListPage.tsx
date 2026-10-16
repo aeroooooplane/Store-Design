@@ -37,7 +37,11 @@ export function ProjectListPage() {
     <main className="page">
       <header className="page-header">
         <h1>项目</h1>
-        <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
+        <p>
+          {list.data
+            ? `共 ${total} 个${status === 'active' ? '项目' : '已删除项目'}`
+            : 'SI1.0 / SI2.0 · 平面 · 白模 · 效果'}
+        </p>
       </header>
 
       <CreateProjectForm />
@@ -130,15 +134,19 @@ export function ProjectListPage() {
           <tbody>
             {list.data.items.map((project) => (
               <tr key={project.id}>
-                <td>{project.name}</td>
+                <td className="project-name">{project.name}</td>
                 <td>{SHOP_TYPE_LABELS[project.shopType]}</td>
                 <td>{MARKET_LABELS[project.market]}</td>
-                <td>{project.siStyle}</td>
+                <td>
+                  <span className={project.siStyle === 'SI2.0' ? 'tag si-2' : 'tag'}>
+                    {project.siStyle}
+                  </span>
+                </td>
                 <td>{formatDateTime(project.updatedAt)}</td>
                 <td className="actions">
                   {project.deletedAt === null ? (
                     <>
-                      <Link className="button primary" to={`/projects/${project.id}`}>
+                      <Link className="button" to={`/projects/${project.id}`}>
                         打开
                       </Link>
                       <a

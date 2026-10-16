@@ -578,14 +578,24 @@ ul.issues li.warning {
   gap: 4px;
 }
 .tag {
+  display: inline-block;
   font-size: 11px;
-  padding: 0 4px;
-  border: 1px solid var(--line-strong);
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
   color: var(--muted);
 }
 .tag.done {
   border-color: var(--ink);
+  background: var(--accent-soft);
   color: var(--ink);
+}
+.tag.si-2 {
+  border-color: var(--brand);
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 600;
 }
 
 /* Icon buttons (undo / redo, delete) */
