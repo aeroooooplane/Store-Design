@@ -8,7 +8,7 @@ import type {
   SiStyle,
 } from '@store/shared'
 import { photoOf } from '../photos.ts'
-import { buildTableScene, pictureRect, stripRect } from './scene.ts'
+import { buildTableScene, pictureRect, slotPoints, stripRect } from './scene.ts'
 import type { SlotContent } from './scene.ts'
 
 /** What the 3D views need besides the table: names and pictures of the units, the SI, the end. */
@@ -52,9 +52,33 @@ export interface TableSnapshot {
   slots: Record<string, { card: PictureRect; name: PictureRect }>
 }
 
-// One renderer for every still picture: a browser keeps only about 16 WebGL contexts.
+// One renderer for every 3D picture on the page, still or turning: a browser keeps only about
+// 16 WebGL contexts, and a page can show many tables.
 let renderer: THREE.WebGLRenderer | null = null
 let queue: Promise<unknown> = Promise.resolve()
+
+function shared(width: number, height: number) {
+  renderer ??= new THREE.WebGLRenderer({
+    canvas: document.createElement('canvas'),
+    antialias: true,
+    preserveDrawingBuffer: true,
+  })
+  renderer.setPixelRatio(1)
+  const size = renderer.getSize(new THREE.Vector2())
+  if (size.x !== width || size.y !== height) renderer.setSize(width, height, false)
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+  renderer.toneMappingExposure = 0.95
+  return renderer
+}
+
+/** Renders a scene with the shared renderer and copies the picture onto a 2D canvas. */
+export function drawInto(target: HTMLCanvasElement, scene: THREE.Scene, camera: THREE.Camera) {
+  const ctx = target.getContext('2d')
+  if (!ctx || !target.width || !target.height) return
+  const gl = shared(target.width, target.height)
+  gl.render(scene, camera)
+  ctx.drawImage(gl.domElement, 0, 0)
+}
 
 /** Draws one table from the entrance side; pictures are made one at a time. */
 export function snapshotTable(
@@ -70,22 +94,17 @@ export function snapshotTable(
       names: options.names,
     })
     try {
-      renderer ??= new THREE.WebGLRenderer({
-        canvas: document.createElement('canvas'),
-        antialias: true,
-        preserveDrawingBuffer: true,
-      })
-      renderer.setPixelRatio(1)
-      renderer.setSize(options.width, options.height, false)
-      renderer.toneMapping = THREE.ACESFilmicToneMapping
-      renderer.toneMappingExposure = 0.95
+      const gl = shared(options.width, options.height)
       const camera = new THREE.PerspectiveCamera(30, options.width / options.height, 0.05, 50)
       built.frame(camera)
-      renderer.render(built.scene, camera)
-      const url = renderer.domElement.toDataURL(options.type ?? 'image/jpeg', 0.92)
+      gl.render(built.scene, camera)
+      const url = gl.domElement.toDataURL(options.type ?? 'image/jpeg', 0.92)
       const slots: TableSnapshot['slots'] = {}
       for (const s of built.slots)
-        slots[s.slot] = { card: pictureRect(s.card, camera), name: stripRect(s.name, camera) }
+        slots[s.slot] = {
+          card: pictureRect(slotPoints(s, s.outline), camera),
+          name: stripRect(slotPoints(s, s.name), camera),
+        }
       return { url, slots }
     } finally {
       built.dispose()
