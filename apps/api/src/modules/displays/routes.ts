@@ -15,10 +15,12 @@ import {
   NodeDisplayUpdateSchema,
   UPLOAD_MAX_BYTES,
   DisplayTaskExportRequestSchema,
+  DisplayBodyListSchema,
 } from '@store/shared'
 import type { AppConfig } from '../../config/env.ts'
 import { requireRevision } from '../../lib/revision.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
+import { listDisplayBodies } from './bodies.ts'
 import { rulesView } from './common.ts'
 import { exportNodeDisplay, getNodeDisplay, updateNodeDisplay } from './node.ts'
 import * as tasks from './tasks.ts'
@@ -59,6 +61,18 @@ export const displayRoutes: FastifyPluginAsyncZod<{
       },
     },
     () => rulesView(db),
+  )
+
+  app.get(
+    '/display-bodies',
+    {
+      schema: {
+        tags: ['displays'],
+        summary: '展陈三维用的真实桌体（去掉产品后的中岛桌与带托盘边柜）及下载链接',
+        response: { 200: DisplayBodyListSchema, ...errors },
+      },
+    },
+    () => listDisplayBodies(db, roots),
   )
 
   // ---- Workflow 2: display tasks from uploaded pictures ----

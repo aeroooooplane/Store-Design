@@ -6797,6 +6797,129 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/display-bodies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 展陈三维用的真实桌体（去掉产品后的中岛桌与带托盘边柜）及下载链接 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            bodies: {
+                                asset: string;
+                                /** @enum {string} */
+                                kind: "island" | "side";
+                                /** @enum {string} */
+                                si: "SI1.0" | "SI2.0";
+                                name: string;
+                                file: string;
+                                top: number;
+                                size: {
+                                    x: number;
+                                    z: number;
+                                };
+                                center: {
+                                    x: number;
+                                    z: number;
+                                };
+                                /** @enum {string} */
+                                long: "x" | "z";
+                                end: (1 | -1) | null;
+                                front: ("+x" | "-x" | "+z" | "-z") | null;
+                                recesses: {
+                                    x: number;
+                                    z: number;
+                                    w: number;
+                                    d: number;
+                                }[];
+                                strip: {
+                                    x: number;
+                                    z: number;
+                                    w: number;
+                                    d: number;
+                                } | null;
+                                triangles: number;
+                                bytes: number;
+                                sourceSha256: string;
+                                url: string;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/display-tasks": {
         parameters: {
             query?: never;
@@ -8637,6 +8760,8 @@ export interface paths {
                                 /** @enum {string} */
                                 kind: "island" | "side";
                                 sourceId: string;
+                                /** @default null */
+                                assetId: string | null;
                                 plan: {
                                     cx: number;
                                     cz: number;
@@ -8818,6 +8943,8 @@ export interface paths {
                                 /** @enum {string} */
                                 kind: "island" | "side";
                                 sourceId: string;
+                                /** @default null */
+                                assetId: string | null;
                                 plan: {
                                     cx: number;
                                     cz: number;

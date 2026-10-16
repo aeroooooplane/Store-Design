@@ -11,6 +11,7 @@
     "catalog:import": "node --env-file-if-exists=../../.env src/scripts/import-catalog.ts",
     "catalog:white": "node --env-file-if-exists=../../.env src/scripts/build-white-models.ts",
     "catalog:finish": "node --env-file-if-exists=../../.env src/scripts/build-finish-models.ts",
+    "display:bodies": "node --env-file-if-exists=../../.env src/scripts/build-display-bodies.ts",
     "display:import": "node --env-file-if-exists=../../.env src/scripts/import-display-rules.ts"
   },
   "dependencies": {
