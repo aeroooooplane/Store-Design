@@ -330,8 +330,9 @@ export async function buildTableScene(
   const shape = real?.shape ?? drawn
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(BACKGROUND)
-  scene.add(new THREE.HemisphereLight('#ffffff', '#8a8f98', 1.7))
-  const sun = new THREE.DirectionalLight('#ffffff', 1.3)
+  // The workbench's lights (with its room environment, set when drawing).
+  scene.add(new THREE.HemisphereLight('#ffffff', '#7b7770', 1.1))
+  const sun = new THREE.DirectionalLight('#fff4e8', 1.6)
   sun.position.set(2, 4, 3)
   scene.add(sun)
 

@@ -2,8 +2,9 @@ import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import type { Document, Primitive } from '@gltf-transform/core'
-import { flatten, join, meshopt, prune, simplify, weld } from '@gltf-transform/functions'
-import { MeshoptEncoder, MeshoptSimplifier } from 'meshoptimizer'
+import { flatten, join, meshopt, prune, textureCompress, weld } from '@gltf-transform/functions'
+import { MeshoptEncoder } from 'meshoptimizer'
+import sharp from 'sharp'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import { DisplayBodyIndexSchema } from '@store/shared'
@@ -16,7 +17,7 @@ import { getIO, meshTriangles } from '../assets/gltf-tools.ts'
 /**
  * Bare display tables for the 3D views (2026-10-16): the library's island tables and tray side
  * cabinets come with products, stands and price cards modelled on them. Everything above the
- * table top is cut away, leaving the real body. Where the trays stood (their footprints, nearly
+ * table top is cut away, leaving the real body with its materials (textures shrunk). Where the trays stood (their footprints, nearly
  * flush with the top) is kept as `recesses`: the view covers them with silver plates and stands
  * the slot cards on them. The result goes into the library (small files).
  */
@@ -56,7 +57,8 @@ const STRIP_WIDTH = 0.14
 /** A footprint smaller than this on either side is a price card or a seam, not a tray. */
 const MIN_RECESS = 0.1
 const GRID = 0.004
-const TRIANGLE_BUDGET = 30_000
+/** Longest texture side: a table fills a card of a few hundred pixels. */
+const TEXTURE_PX = 512
 
 interface Triangle {
   a: number[]
@@ -239,7 +241,7 @@ function bakeWorld(document: Document) {
   const root = document.getRoot()
   const buffer = root.listBuffers()[0] ?? document.createBuffer()
   const accessor = (
-    type: 'VEC3' | 'SCALAR',
+    type: 'VEC2' | 'VEC3' | 'SCALAR',
     array: Float32Array<ArrayBuffer> | Uint32Array<ArrayBuffer>,
   ) => document.createAccessor().setType(type).setBuffer(buffer).setArray(array)
   for (const node of root.listNodes()) {
@@ -299,6 +301,14 @@ function bakeWorld(document: Document) {
         .setAttribute('POSITION', accessor('VEC3', positions))
         .setIndices(accessor('SCALAR', indices))
       if (normals) copy.setAttribute('NORMAL', accessor('VEC3', normals))
+      // Texture coordinates do not move with the placement.
+      for (const semantic of ['TEXCOORD_0', 'TEXCOORD_1']) {
+        const uv = prim.getAttribute(semantic)
+        if (uv?.getType() !== 'VEC2') continue
+        const values = new Float32Array(count * 2)
+        for (let i = 0; i < count; i++) values.set(uv.getElement(i, []), i * 2)
+        copy.setAttribute(semantic, accessor('VEC2', values))
+      }
       baked.addPrimitive(copy)
     }
     node.setMesh(baked).setMatrix([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
@@ -388,30 +398,28 @@ export async function buildDisplayBody(
   for (const mesh of document.getRoot().listMeshes())
     for (const prim of mesh.listPrimitives())
       clip(prim, top + KEEP_ABOVE_TOP, top, strip ? [...found, strip] : found)
-  // Plain colours only: textures would make the file large and the view does not need them.
+  // The look comes from the base colour and its texture (stone top, wood, fabric); the other
+  // maps add little at this size and much to the file.
   const root = document.getRoot()
   for (const material of root.listMaterials()) {
     material
-      .setBaseColorTexture(null)
       .setMetallicRoughnessTexture(null)
       .setNormalTexture(null)
       .setOcclusionTexture(null)
       .setEmissiveTexture(null)
   }
-  for (const texture of root.listTextures()) texture.dispose()
   for (const mesh of root.listMeshes())
     for (const prim of mesh.listPrimitives())
       for (const semantic of prim.listSemantics())
-        if (semantic.startsWith('TEXCOORD') || semantic.startsWith('COLOR'))
-          prim.setAttribute(semantic, null)
-  // One part per material, then fewer triangles: the body is seen whole, never up close.
+        if (semantic.startsWith('COLOR')) prim.setAttribute(semantic, null)
+  // One part per material. No simplification: it pressed the cabinet top's two layers into each
+  // other (flickering stripes); the bodies are small enough as they are.
   await document.transform(prune(), join({ keepNamed: false }), weld())
-  const ratio = Math.min(1, TRIANGLE_BUDGET / Math.max(1, meshTriangles(document)))
-  if (ratio < 1)
-    await document.transform(
-      simplify({ simplifier: MeshoptSimplifier, ratio, error: 0.006, lockBorder: false }),
-    )
-  await document.transform(prune(), meshopt({ encoder: MeshoptEncoder, level: 'medium' }))
+  await document.transform(
+    prune(),
+    textureCompress({ encoder: sharp, resize: [TEXTURE_PX, TEXTURE_PX], quality: 80 }),
+    meshopt({ encoder: MeshoptEncoder, level: 'medium' }),
+  )
   const bytes = await io.writeBinary(document)
   await mkdir(path.dirname(target), { recursive: true })
   await writeFile(target, bytes)
