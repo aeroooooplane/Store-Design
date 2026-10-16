@@ -8,6 +8,7 @@ import {
   unitPhoto,
 } from './engine.ts'
 import type { DisplayTableInput } from './engine.ts'
+import { rotatedFootprint } from '../schemas/layout.ts'
 import { HERO_SLOT, ISLAND_SLOTS, SIDE_SLOTS, checkRules, diffRules } from './rules.ts'
 import type { DisplayRules } from './rules.ts'
 
@@ -158,6 +159,16 @@ describe('numbering and orientation', () => {
   it('is portrait when the long side runs towards the entrance', () => {
     expect(tableOrientation({ w: 0.8, d: 1.8 }, bottom)).toBe('portrait')
     expect(tableOrientation({ w: 1.8, d: 0.8 }, bottom)).toBe('landscape')
+  })
+
+  it('judges a tilted table by its nearest quarter turn', () => {
+    // Stored as at the nearest quarter turn (rotatedFootprint): 110° and 75° are near 90°, so a
+    // 1.8 × 0.8 table runs towards the entrance; at 30° it is near 0° and lies across it.
+    const table = { footprint: { w: 1.8, d: 0.8, h: 1.214 } }
+    for (const rotation of [75, 90, 110])
+      expect(tableOrientation(rotatedFootprint(table, rotation), bottom)).toBe('portrait')
+    for (const rotation of [0, 30, 160])
+      expect(tableOrientation(rotatedFootprint(table, rotation), bottom)).toBe('landscape')
   })
 
   it('finds the inward side of the main entrance', () => {
