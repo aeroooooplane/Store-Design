@@ -12,6 +12,7 @@ import type {
   RecognitionRun,
   RecognizeRequest,
   RecognizeResponse,
+  VectorContent,
 } from '@store/shared'
 import { chat } from '../../ai/chat.ts'
 import { LOCAL_MODEL_ID, findModel } from '../../ai/models.ts'
@@ -29,6 +30,8 @@ import { createNode, requireActiveProject } from '../nodes/service.ts'
 import { checkDraft, failureReason } from './check.ts'
 import { RELATIVE, answerToDraft, buildPrompt, parseAnswer, toPixels } from './llm.ts'
 import { recognizeVector } from './local.ts'
+import { cachedDimensionChains, readDimensionChains } from './ocr.ts'
+import type { ChainReading } from './ocr.ts'
 
 const { planUploads, projects, recognitionRuns, storedFiles } = schema
 type UploadRow = typeof planUploads.$inferSelect
@@ -253,6 +256,39 @@ async function recognizeWithModel(
 }
 
 /**
+ * The dimension chains of an upload's page with their numbers, read on this machine (OCR of the
+ * picture where the vector content has the chains). A failure only costs the scale its best
+ * evidence: it is noted, not raised.
+ */
+async function uploadChains(
+  db: Database,
+  roots: StorageRoots,
+  upload: UploadRow,
+  vector: VectorContent,
+): Promise<{ chains: ChainReading[]; note: string | null }> {
+  try {
+    const chains = await cachedDimensionChains(
+      `${upload.id}:${vector.width}x${vector.height}:${vector.lines.length}`,
+      async () => {
+        const [stored] = await db
+          .select()
+          .from(storedFiles)
+          .where(eq(storedFiles.id, upload.fileId))
+        if (!stored) return []
+        const { file } = await resolveStoredFile(roots, 'storage', stored.storageKey)
+        return readDimensionChains(await readFile(file), vector)
+      },
+    )
+    return { chains, note: null }
+  } catch (error) {
+    return {
+      chains: [],
+      note: `尺寸数字没能读取（${error instanceof Error ? error.message : String(error)}），比例改用其他依据`,
+    }
+  }
+}
+
+/**
  * Reads an upload: locally from the vector content when the setting says so (and the browser
  * could extract any), otherwise with the chosen model. A local attempt that fails the rules
  * (scale, closed boundary, confidence) is kept and the fallback model takes over.
@@ -281,7 +317,11 @@ export async function recognize(
     let draft: RecognitionDraft | null = null
     let reason: string
     if (request.vector) {
-      draft = checkDraft(recognizeVector(request.vector, request, [...catalog.values()], siStyle))
+      const { chains, note } = await uploadChains(db, roots, upload, request.vector)
+      draft = checkDraft(
+        recognizeVector(request.vector, request, [...catalog.values()], siStyle, chains),
+      )
+      if (note) draft.notes.push(note)
       reason = failureReason(draft) ?? ''
     } else {
       reason = '图片没有可读的矢量内容（本地识别只能读矢量 PDF）'

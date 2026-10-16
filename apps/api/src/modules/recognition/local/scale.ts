@@ -1,5 +1,7 @@
 import type { RecognitionScale, RecognizeRequest } from '@store/shared'
 import { AXIS_TOLERANCE_PX, RATIO_TOLERANCE, centre } from './lines.ts'
+import { chainScale } from './dimension-chain.ts'
+import type { ChainReading } from './dimension-chain.ts'
 import type { Box, Line, Text } from './lines.ts'
 
 /** Dimension text: "5400", "5400 mm", "6.5米", "3450 长墙净尺寸" → millimetres. */
@@ -81,6 +83,8 @@ export function findScale(
   labelled: { text: Text; box: Box | null; sizeM: number | null; knownM: number | null }[],
   /** The outline's own area in px² when it is not a rectangle (else the box's). */
   boundaryAreaPx?: number,
+  /** Dimension chain spans with their numbers read from the picture. */
+  chains: readonly ChainReading[] = [],
 ): ScaleResult {
   const outlineArea = boundary ? (boundaryAreaPx ?? boundary.w * boundary.h) : 0
   const originPx: [number, number] = boundary ? [boundary.x, boundary.y] : [0, 0]
@@ -99,7 +103,36 @@ export function findScale(
       }
     }
   }
+  // The dimension chains first: two or more spans agreeing settle the scale (unless the shop
+  // would come out absurdly small or large).
+  const chain = chainScale(chains)
+  if (chain && chain.used.length >= 2) {
+    const m2 = (outlineArea * chain.mmPerPixel ** 2) / 1e6
+    // Three or more agreeing spans outweigh the outline: an odd area means the outline is wrong.
+    if (!boundary || chain.used.length >= 3 || (m2 >= 3 && m2 <= 2000)) {
+      const shown = chain.used.slice(0, 6).map((r) => r.mm)
+      return {
+        scale: {
+          method: 'dimension',
+          reference: `尺寸链 ${chain.used.length} 段（${shown.join('、')}${chain.used.length > shown.length ? ' 等' : ''}）`,
+          mmPerPixel: chain.mmPerPixel,
+          originPx,
+          verified: true,
+        },
+        notes: [
+          `比例按尺寸链 ${chain.used.length} 段读数交叉核对得出（1 px = ${chain.mmPerPixel.toFixed(2)} mm）` +
+            (chains.length > chain.used.length
+              ? `，另有 ${chains.length - chain.used.length} 段读数不一致已忽略`
+              : ''),
+        ],
+      }
+    }
+  }
   const ratios: { ratio: number; text: string; kind: 'dimension' | 'item' | 'area' }[] = []
+  // A lone chain reading is one vote among the others.
+  for (const r of chain?.used.length === 1 ? chain.used : []) {
+    ratios.push({ ratio: r.mm / (r.b - r.a), text: String(r.mm), kind: 'dimension' })
+  }
   for (const d of dimensions) {
     const px = dimensionPixels(d.text, d.line, boundary)
     if (px && px > 0) ratios.push({ ratio: d.mm / px, text: d.text.text.trim(), kind: 'dimension' })

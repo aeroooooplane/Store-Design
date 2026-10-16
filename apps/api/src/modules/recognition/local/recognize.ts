@@ -10,6 +10,8 @@ import type {
 } from '@store/shared'
 import { countInLabel, matchCatalog, sizeInLabel } from '../check.ts'
 import { findBoundary } from './boundary.ts'
+import { chainLineTest, chainScale } from './dimension-chain.ts'
+import type { ChainReading } from './dimension-chain.ts'
 import { findRegion, inRing, ringArea } from './region.ts'
 import type { PxPoint } from './region.ts'
 import { OBSTACLE_WORDS, boxAround, boxFromLines, boxKey, sameBox } from './boxes.ts'
@@ -22,8 +24,35 @@ export function recognizeVector(
   request: Pick<RecognizeRequest, 'crop' | 'calibration'>,
   catalog: readonly Asset[],
   siStyle?: string,
+  /** Dimension chain spans with their numbers, read from the page picture (raw page pixels). */
+  pageChains: readonly ChainReading[] = [],
 ): RecognitionDraft {
   const content = cropContent(raw, request.crop)
+  // The scale is the page's: spans in the crop first, the whole page's when it has too few.
+  const crop = request.crop
+  const inCrop = crop
+    ? pageChains.filter((r) => {
+        const mid = (r.a + r.b) / 2
+        const [x, y] = r.horizontal ? [mid, r.at] : [r.at, mid]
+        return x >= crop.x && x <= crop.x + crop.w && y >= crop.y && y <= crop.y + crop.h
+      })
+    : pageChains
+  const chains = inCrop.length >= 2 ? inCrop : pageChains
+  const chain = chainScale(chains)
+  const chainMmPerPixel = chain && chain.used.length >= 2 ? chain.mmPerPixel : null
+  // The read chains' own lines are left out of the outline. Boxes keep them (props are often
+  // dimensioned along their own sides), but a box between two chain lines is no prop.
+  const onChain = chainLineTest(inCrop, crop ?? undefined)
+  const drawn = content.lines.filter((l) => !onChain(l))
+  const betweenChains = (b: Box) => {
+    const side = (x1: number, y1: number, x2: number, y2: number) => onChain({ x1, y1, x2, y2 })
+    const right = b.x + b.w
+    const bottom = b.y + b.h
+    return (
+      (side(b.x, b.y, right, b.y) && side(b.x, bottom, right, bottom)) ||
+      (side(b.x, b.y, b.x, bottom) && side(right, b.y, right, bottom))
+    )
+  }
   const lines = axisLines(content)
   const boxes: Box[] = content.rects.map((r) => ({
     x: r.x,
@@ -75,6 +104,12 @@ export function recognizeVector(
 
   // Labels: texts that are not dimensions, with the box they sit in.
   const pageArea = content.width * content.height
+  const propBox = (text: Text, within: Box | null) => {
+    const box =
+      boxAround(centre(text), boxes, within, text.w * text.h * 1.5) ??
+      boxFromLines(text, wallLines, index, within, pageArea)
+    return box && !betweenChains(box) ? box : null
+  }
   const label = (within: Box | null) =>
     content.texts
       .filter((t) => dimensionMm(t.text) === null && t.text.trim().length >= 2)
@@ -87,10 +122,7 @@ export function recognizeVector(
           OBSTACLE_WORDS.some(([re]) => re.test(text.text))
         return {
           text,
-          box: relevant
-            ? (boxAround(centre(text), boxes, within, text.w * text.h * 1.5) ??
-              boxFromLines(text, wallLines, index, within, pageArea))
-            : null,
+          box: relevant ? propBox(text, within) : null,
           sizeM: sizeInLabel(text.text),
           // The one size the catalogue has for this name (null when several sizes exist).
           knownM: match.asset ? Math.max(match.asset.footprint.w, match.asset.footprint.d) : null,
@@ -110,16 +142,21 @@ export function recognizeVector(
     ...named.filter((a) => /店|铺|总面积/.test(a.text) && a.m2 >= 5).map((a) => a.m2),
   )
   const early = shopM2
-    ? findScale(dimensions, [], null, request.calibration, unbounded).scale
+    ? findScale(dimensions, [], null, request.calibration, unbounded, undefined, chains).scale
     : null
   const expectedArea = early?.verified ? (shopM2 * 1e6) / early.mmPerPixel ** 2 : null
-  // Pixels per metre from the sized prop names, roughly: to tell a wall body from a cabinet.
+  // Pixels per metre, from the dimension chains or roughly from the sized prop names: to tell a
+  // wall body from a cabinet.
   const perMetre = unbounded.flatMap((l) => {
     const m = l.sizeM ?? l.knownM
     return l.box && m ? [Math.max(l.box.w, l.box.h) / m] : []
   })
   perMetre.sort((a, b) => a - b)
-  const pxPerM = perMetre.length ? (perMetre[Math.floor(perMetre.length / 2)] ?? null) : null
+  const pxPerM = chainMmPerPixel
+    ? 1000 / chainMmPerPixel
+    : perMetre.length
+      ? (perMetre[Math.floor(perMetre.length / 2)] ?? null)
+      : null
   // Any outline first: the closed region of the drawing that holds the props (corners, slanted
   // walls, arcs); a rectangle of drawn sides when no region closes round them.
   const titleBlockPoints = content.texts
@@ -129,7 +166,7 @@ export function recognizeVector(
       ),
     )
     .map((t): PxPoint => centre(t))
-  const region = findRegion(content.width, content.height, content.lines, anchors, {
+  const region = findRegion(content.width, content.height, drawn, anchors, {
     expectedArea,
     thinPx: pxPerM ? pxPerM * 0.25 : null,
     pxPerM,
@@ -177,6 +214,7 @@ export function recognizeVector(
     request.calibration,
     labelled,
     outline ? ringArea(outline) : undefined,
+    chains,
   )
   notes.push(...scaleNotes)
   if (!scale) {

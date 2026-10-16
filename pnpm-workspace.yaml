@@ -5,6 +5,8 @@ packages:
 
 allowBuilds:
   esbuild: true
+  # Its install script only fetches the CUDA build; the CPU build ships in the package.
+  onnxruntime-node: false
 
 minimumReleaseAgeExclude:
   - drizzle-orm@0.45.4
