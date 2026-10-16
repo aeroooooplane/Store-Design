@@ -899,12 +899,12 @@ describe('slanted walls', () => {
         },
       ],
     }
-    const r = planLayout({
-      space: shanghaiTpy.space,
-      shopType: 'island',
-      strategy: 'area',
-      catalog: si2Table,
-    })
+    // The shape alone: the side door on the 6° right wall would keep tables off that wall.
+    const space = {
+      ...shanghaiTpy.space,
+      entrances: shanghaiTpy.space.entrances.filter((e) => e.kind === 'main'),
+    }
+    const r = planLayout({ space, shopType: 'island', strategy: 'area', catalog: si2Table })
     expect(errors(r)).toEqual([])
     const turned = tilted(r.layout.items).filter((i) => i.function === 'island_table')
     expect(turned).toHaveLength(1)
