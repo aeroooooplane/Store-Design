@@ -175,6 +175,29 @@ export function PlanEditor({
       }),
     [space, frontOf],
   )
+  // 3D corner drags of a LOGO: one undo step per drag, the scale and place worked out there.
+  const resize = useCallback(
+    (
+      id: string,
+      placement: { scale: number; cx: number; cz: number; elevation: number },
+      gesture: { group: string },
+    ) => {
+      const assetId = itemsRef.current.find((i) => i.id === id)?.assetId
+      const asset = assetId ? assetMap.get(assetId) : undefined
+      if (!asset) return
+      dispatch({
+        type: 'scale',
+        id,
+        asset,
+        scale: placement.scale,
+        at: placement,
+        space,
+        front: asset.front,
+        group: gesture.group,
+      })
+    },
+    [assetMap, space],
+  )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
 
   // Effects are registered in the same order as before: agent selection, undo / redo keys,
@@ -222,6 +245,7 @@ export function PlanEditor({
     svgRef,
     onItemPointerDown,
     onFixturePointerDown,
+    onResizeHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
@@ -232,6 +256,7 @@ export function PlanEditor({
     (item) => frontOf(item.id),
     drawingFixture,
     () => setDrawingFixture(false),
+    (item) => (item.assetId ? assetMap.get(item.assetId) : undefined),
   )
   const selectedFixture = state.layout.fixtures?.find((f) => f.id === state.selectedId) ?? null
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
@@ -343,6 +368,7 @@ export function PlanEditor({
                     flaggedIds={flaggedIds}
                     onSelect={select}
                     onMove={move}
+                    onResize={resize}
                     onReady={onViewerReady}
                     look={isWhite ? look : 'white'}
                     siStyle={siStyle}
@@ -376,6 +402,7 @@ export function PlanEditor({
                   selectedId={state.selectedId}
                   onItemPointerDown={onItemPointerDown}
                   onFixturePointerDown={onFixturePointerDown}
+                  onResizeHandlePointerDown={onResizeHandlePointerDown}
                   drawingRect={drawnRect}
                   onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                   compact={!planMain}

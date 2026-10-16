@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import type { Dispatch, PointerEvent as ReactPointerEvent } from 'react'
-import type { Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
+import { scaleFromEnd } from '@store/shared'
+import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
 function toWorld(
@@ -23,7 +24,8 @@ const rectOf = (a: Point, b: Point): Rect => ({
 /**
  * Dragging props and partitions on the plan: one undo step per drag, magnetic snapping unless
  * Alt is held. `frontOf` gives a model's front, which a wall piece turns into the shop. With
- * `drawing` on (画空心隔板), a drag draws a partition instead; `onDrawn` ends the mode.
+ * `drawing` on (画空心隔板), a drag draws a partition instead; `onDrawn` ends the mode. A LOGO's
+ * end grip resizes it uniformly, the other end staying put (`assetOf` gives its model).
  */
 export function usePlanDrag(
   space: Space,
@@ -31,6 +33,7 @@ export function usePlanDrag(
   frontOf: (item: LayoutItem) => FrontAxis | null,
   drawing = false,
   onDrawn?: () => void,
+  assetOf?: (item: LayoutItem) => Asset | undefined,
 ) {
   const svgRef = useRef<SVGSVGElement>(null)
   const drag = useRef<{
@@ -40,6 +43,13 @@ export function usePlanDrag(
     dz: number
     group: string
     front: FrontAxis | null
+  } | null>(null)
+  /** An end grip being dragged: the LOGO as it was when the drag began, so its other end stays. */
+  const resize = useRef<{
+    start: LayoutItem
+    end: -1 | 1
+    asset: Asset
+    group: string
   } | null>(null)
   const drawStart = useRef<Point | null>(null)
   /** The rectangle being drawn, shown on the plan until the pointer is released. */
@@ -77,6 +87,19 @@ export function usePlanDrag(
     svgRef.current?.setPointerCapture(event.pointerId)
   }
 
+  function onResizeHandlePointerDown(
+    item: LayoutItem,
+    end: -1 | 1,
+    event: ReactPointerEvent<SVGGElement>,
+  ) {
+    event.stopPropagation()
+    dispatch({ type: 'select', id: item.id })
+    const asset = assetOf?.(item)
+    if (!asset || item.locked) return
+    resize.current = { start: item, end, asset, group: `resize:${item.id}:${event.timeStamp}` }
+    svgRef.current?.setPointerCapture(event.pointerId)
+  }
+
   /** In drawing mode a press anywhere on the plan (props included) starts a rectangle. */
   function onDrawPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (!drawing) return
@@ -93,6 +116,21 @@ export function usePlanDrag(
     if (!world) return
     if (drawStart.current) {
       setDraft(rectOf(drawStart.current, world))
+      return
+    }
+    if (resize.current) {
+      const { start, end, asset, group } = resize.current
+      const placed = scaleFromEnd(start, asset.footprint, end, world)
+      dispatch({
+        type: 'scale',
+        id: start.id,
+        asset,
+        scale: placed.scale,
+        at: { cx: placed.cx, cz: placed.cz },
+        space,
+        front: asset.front,
+        group,
+      })
       return
     }
     if (!drag.current) return
@@ -119,6 +157,7 @@ export function usePlanDrag(
   /** Pointer up on the canvas ends a drag or adds the drawn partition; cancel drops it. */
   function endDrag(event?: ReactPointerEvent<HTMLDivElement>) {
     drag.current = null
+    resize.current = null
     const start = drawStart.current
     if (!start) return
     drawStart.current = null
@@ -133,6 +172,7 @@ export function usePlanDrag(
     svgRef,
     onItemPointerDown,
     onFixturePointerDown,
+    onResizeHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
