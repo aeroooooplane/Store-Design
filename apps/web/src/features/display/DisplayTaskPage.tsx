@@ -326,7 +326,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
                 </select>
               </label>
               <label>
-                <span>SI 版本（决定托盘照片）</span>
+                <span>SI 版本（决定托盘照片和桌体）</span>
                 <select
                   value={task.siStyle}
                   onChange={(event) =>

@@ -11,6 +11,7 @@ const table = (
     label: 'A',
     kind,
     sourceId: 't',
+    assetId: null,
     plan: { cx: 0, cz: 0, w: 0.8, d: 1.8 },
     orientation,
     ruleTables: 3,

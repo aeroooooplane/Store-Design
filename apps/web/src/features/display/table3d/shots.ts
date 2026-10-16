@@ -8,6 +8,7 @@ import type {
   SiStyle,
 } from '@store/shared'
 import { photoOf } from '../photos.ts'
+import { bodyFor } from './bodies.ts'
 import { buildTableScene, pictureRect, slotPoints, stripRect } from './scene.ts'
 import type { SlotContent } from './scene.ts'
 
@@ -92,6 +93,7 @@ export function snapshotTable(
       end: ctx.end,
       contents: slotContents(table, ctx),
       names: options.names,
+      body: await bodyFor(table, ctx.si),
     })
     try {
       const gl = shared(options.width, options.height)

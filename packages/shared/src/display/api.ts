@@ -187,6 +187,50 @@ export type NodeDisplay = z.infer<typeof NodeDisplaySchema>
 export const NodeDisplayUpdateSchema = z.strictObject({ edits: DisplayEditsSchema })
 export type NodeDisplayUpdate = z.output<typeof NodeDisplayUpdateSchema>
 
+/**
+ * A bare display table cut from a library model (`pnpm display:bodies`): where its top is, how
+ * it lies in the model and where its tray recesses are, all in the model's own metres.
+ */
+export const DisplayBodySchema = z.object({
+  asset: z.string().min(1),
+  kind: z.enum(['island', 'side']),
+  si: SiStyleSchema,
+  name: z.string(),
+  file: z.string().min(1),
+  top: z.number(),
+  size: z.object({ x: z.number().positive(), z: z.number().positive() }),
+  center: z.object({ x: z.number(), z: z.number() }),
+  long: z.enum(['x', 'z']),
+  /** Island tables: the end slot E's side along the long axis. */
+  end: z.union([z.literal(1), z.literal(-1)]).nullable(),
+  /** Side cabinets: the side the trays face. */
+  front: z.enum(['+x', '-x', '+z', '-z']).nullable(),
+  recesses: z.array(
+    z.object({ x: z.number(), z: z.number(), w: z.number().positive(), d: z.number().positive() }),
+  ),
+  /** Island tables: the sunk accessory-module strip between the tray rows. */
+  strip: z
+    .object({ x: z.number(), z: z.number(), w: z.number().positive(), d: z.number().positive() })
+    .nullable(),
+  triangles: z.int().nonnegative(),
+  bytes: z.int().nonnegative(),
+  sourceSha256: z.string(),
+})
+export type DisplayBody = z.infer<typeof DisplayBodySchema>
+
+/** 资源库/10_产品与陈列/展陈桌体/index.json */
+export const DisplayBodyIndexSchema = z.object({
+  schemaVersion: z.literal(1),
+  tool: z.string(),
+  bodies: z.array(DisplayBodySchema),
+})
+export type DisplayBodyIndex = z.infer<typeof DisplayBodyIndexSchema>
+
+export const DisplayBodyListSchema = z.object({
+  bodies: z.array(DisplayBodySchema.extend({ url: z.string() })),
+})
+export type DisplayBodyList = z.infer<typeof DisplayBodyListSchema>
+
 /** Which pages each table gets in the PPT: the 3D view, the flat slot diagram, or both. */
 export const DISPLAY_PPT_VIEWS = ['both', '3d', 'plan'] as const
 export const DisplayPptViewsSchema = z.enum(DISPLAY_PPT_VIEWS)

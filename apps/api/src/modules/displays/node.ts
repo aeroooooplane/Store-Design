@@ -104,6 +104,7 @@ async function compute(db: Database, nodeId: string): Promise<Computed> {
         cz: item.cz,
         w: item.w,
         d: item.d,
+        assetId: item.assetId ?? null,
       },
     ]
   })

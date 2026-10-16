@@ -136,6 +136,7 @@
 | 方法 | 路径 | 说明 |
 |---|---|---|
 | GET | `/display-rules/current` | 现行展陈规则（版本、产品、托盘、版式），未导入时 404 |
+| GET | `/display-bodies` | 展陈三维用的真实桌体（资源库/10_产品与陈列/展陈桌体）：桌面高度、朝向、托盘位、模块条及下载链接；文件缺失时返回空列表，网页改用程序画的桌子 |
 | GET | `/nodes/{id}/display` | 渲染节点的展陈方案：按指引编号的中岛桌与边桌、各槽位产品（含用户修改）、平面与每个视角效果图上的标签位置（由视角投影算出）、历次导出 |
 | PUT | `/nodes/{id}/display` | 保存修改 `{ orientation, landscapeEnd, slots, modules }`，带 `If-Match` |
 | POST | `/nodes/{id}/display/export` | 生成展陈方案 PPT 与展陈清单 Excel：请求体 `{ planPng, planViewBox, views?, tables3d? }`，`planPng` 为浏览器绘制的无编号平面图及其范围（米）；`views` 为每张桌出 `both`（三维 + 平面，默认）、`3d` 或 `plan`；`tables3d` 为浏览器画好的各桌三维图（JPEG base64）及每个陈列位产品名的位置（0–1），PPT 在那里放可编辑文字。缺三维图的桌改出平面页 |

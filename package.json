@@ -21,6 +21,7 @@
     "catalog:import": "pnpm --filter @store/api catalog:import",
     "catalog:white": "pnpm --filter @store/api catalog:white",
     "catalog:finish": "pnpm --filter @store/api catalog:finish",
+    "display:bodies": "pnpm --filter @store/api display:bodies",
     "display:import": "pnpm --filter @store/api display:import",
     "library:refresh": "node tools/library/refresh-library.mjs",
     "library:table": "node tools/library/build-selection-table.mjs",

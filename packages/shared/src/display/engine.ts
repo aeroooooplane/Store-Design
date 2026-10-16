@@ -24,6 +24,8 @@ export interface DisplayTableInput {
   cz: number
   w: number
   d: number
+  /** Library model of the table, when known (picks the real table body for the 3D view). */
+  assetId?: string | null
 }
 
 /** The main entrance: a point on it and the unit vector pointing into the store. */
@@ -44,6 +46,8 @@ export const DisplayTableSchema = z.object({
   label: z.string(),
   kind: z.enum(['island', 'side']),
   sourceId: z.string(),
+  /** Library model of the table, when known. */
+  assetId: z.string().nullable().default(null),
   plan: z.object({ cx: z.number(), cz: z.number(), w: z.number(), d: z.number() }),
   orientation: DisplayOrientationSchema,
   /** The guide's table count the layout was taken from (2, 3, 4 or side). */
@@ -233,6 +237,7 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
       label: letter(i),
       kind: 'island',
       sourceId: t.id,
+      assetId: t.assetId ?? null,
       plan: { cx: t.cx, cz: t.cz, w: t.w, d: t.d },
       orientation,
       ruleTables,
@@ -255,6 +260,7 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
       label: letter(islands.length + i),
       kind: 'side',
       sourceId: t.id,
+      assetId: t.assetId ?? null,
       plan: { cx: t.cx, cz: t.cz, w: t.w, d: t.d },
       orientation: sideOrientation,
       ruleTables: 'side',

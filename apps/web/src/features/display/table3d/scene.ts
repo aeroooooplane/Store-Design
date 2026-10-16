@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import type { DisplayTable, PictureRect } from '@store/shared'
+import type { BodyMeta } from './bodies.ts'
 import { tableShape } from './layout.ts'
 import type { SlotPlace, TableShape } from './layout.ts'
 
@@ -19,6 +20,8 @@ export interface TableSceneInput {
   end: 'left' | 'right'
   contents: SlotContent[]
   names: boolean
+  /** The real table (a bare library model); without it a plain table is drawn. */
+  body?: { meta: BodyMeta; model: THREE.Object3D } | null
 }
 
 /**
@@ -172,7 +175,7 @@ export const cardDresser: SlotDresser = async (place, content, shape, names) => 
   const group = new THREE.Group()
   const tray = new THREE.Mesh(
     new THREE.BoxGeometry(place.w, 0.012, place.d),
-    new THREE.MeshStandardMaterial({ color: '#c5cad1', metalness: 0.5, roughness: 0.35 }),
+    new THREE.MeshStandardMaterial({ color: '#d5d9df', metalness: 0.15, roughness: 0.45 }),
   )
   tray.position.set(place.x, shape.height + 0.006, place.z)
   group.add(tray)
@@ -234,9 +237,10 @@ function stripTexture(modules: string[], w: number, d: number) {
   return texture
 }
 
-function disposeTree(root: THREE.Object3D) {
-  root.traverse((node) => {
-    if (!(node instanceof THREE.Mesh)) return
+/** Frees what the scene made; a body model belongs to the page-wide model cache and stays. */
+function disposeTree(node: THREE.Object3D) {
+  if (node.userData.shared) return
+  if (node instanceof THREE.Mesh) {
     const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
     mesh.geometry.dispose()
     const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
@@ -245,7 +249,68 @@ function disposeTree(root: THREE.Object3D) {
       map?.dispose()
       material.dispose()
     }
-  })
+  }
+  for (const child of node.children) disposeTree(child)
+}
+
+type Rect = { x: number; z: number; w: number; d: number }
+const FRONT: Record<'+x' | '-x' | '+z' | '-z', [number, number]> = {
+  '+x': [1, 0],
+  '-x': [-1, 0],
+  '+z': [0, 1],
+  '-z': [0, -1],
+}
+/** A tray this close to a slot's place on the drawn layout takes the slot's card. */
+const SNAP = 0.25
+
+/**
+ * Turns a real table into the view's frame: the end slot E towards the viewer (portrait) or to
+ * the chosen side (landscape), a side cabinet's trays towards the viewer. The drawn layout's
+ * slots are stretched onto its top, and its trays and module strip come along.
+ */
+function placeBody(
+  body: NonNullable<TableSceneInput['body']>,
+  drawn: TableShape,
+  table: DisplayTable,
+  end: 'left' | 'right',
+) {
+  const { meta } = body
+  const along: [number, number] = meta.long === 'x' ? [1, 0] : [0, 1]
+  const sign = meta.end ?? -1
+  const from: [number, number] =
+    meta.kind === 'island' ? [along[0] * sign, along[1] * sign] : FRONT[meta.front ?? '+z']
+  const to: [number, number] =
+    meta.kind === 'side' || table.orientation === 'portrait'
+      ? [0, 1]
+      : end === 'left'
+        ? [-1, 0]
+        : [1, 0]
+  const angle = Math.atan2(to[0], to[1]) - Math.atan2(from[0], from[1])
+  const [cos, sin] = [Math.cos(angle), Math.sin(angle)]
+  // Same turn as Object3D.rotation.y = angle.
+  const turn = (x: number, z: number): [number, number] => [x * cos + z * sin, -x * sin + z * cos]
+  const quarter = Math.abs(Math.round(angle / (Math.PI / 2))) % 2 === 1
+  const rect = (r: Rect): Rect => {
+    const [x, z] = turn(r.x - meta.center.x, r.z - meta.center.z)
+    return { x, z, w: quarter ? r.d : r.w, d: quarter ? r.w : r.d }
+  }
+  const object = new THREE.Group()
+  object.userData.shared = true
+  body.model.position.set(-meta.center.x, 0, -meta.center.z)
+  object.add(body.model)
+  object.rotation.y = angle
+  const width = quarter ? meta.size.z : meta.size.x
+  const depth = quarter ? meta.size.x : meta.size.z
+  const [sx, sz] = [width / drawn.width, depth / drawn.depth]
+  const shape: TableShape = {
+    ...drawn,
+    width,
+    depth,
+    height: meta.top,
+    slots: drawn.slots.map((p) => ({ ...p, x: p.x * sx, z: p.z * sz })),
+    strip: meta.strip ? rect(meta.strip) : null,
+  }
+  return { object, shape, trays: meta.recesses.map(rect) }
 }
 
 /** Points of a slot's card plane (x, y in the card) in the world, as it stands now. */
@@ -260,7 +325,9 @@ export async function buildTableScene(
   input: TableSceneInput,
   dress: SlotDresser = cardDresser,
 ): Promise<TableScene> {
-  const shape = tableShape(input.table, input.end)
+  const drawn = tableShape(input.table, input.end)
+  const real = input.body ? placeBody(input.body, drawn, input.table, input.end) : null
+  const shape = real?.shape ?? drawn
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(BACKGROUND)
   scene.add(new THREE.HemisphereLight('#ffffff', '#8a8f98', 1.7))
@@ -276,18 +343,21 @@ export async function buildTableScene(
   )
   floor.rotation.x = -Math.PI / 2
   root.add(floor)
-  const top = new THREE.Mesh(
-    new THREE.BoxGeometry(shape.width + 0.02, 0.04, shape.depth + 0.02),
-    new THREE.MeshStandardMaterial({ color: '#f6f6f4', roughness: 0.55 }),
-  )
-  top.position.y = shape.height - 0.02
-  root.add(top)
-  const body = new THREE.Mesh(
-    new THREE.BoxGeometry(shape.width - 0.06, shape.height - 0.04, shape.depth - 0.06),
-    new THREE.MeshStandardMaterial({ color: '#3a3d42', roughness: 0.7 }),
-  )
-  body.position.y = (shape.height - 0.04) / 2
-  root.add(body)
+  if (real) root.add(real.object)
+  else {
+    const top = new THREE.Mesh(
+      new THREE.BoxGeometry(shape.width + 0.02, 0.04, shape.depth + 0.02),
+      new THREE.MeshStandardMaterial({ color: '#f6f6f4', roughness: 0.55 }),
+    )
+    top.position.y = shape.height - 0.02
+    root.add(top)
+    const body = new THREE.Mesh(
+      new THREE.BoxGeometry(shape.width - 0.06, shape.height - 0.04, shape.depth - 0.06),
+      new THREE.MeshStandardMaterial({ color: '#3a3d42', roughness: 0.7 }),
+    )
+    body.position.y = (shape.height - 0.04) / 2
+    root.add(body)
+  }
   if (shape.wall) {
     const wall = new THREE.Mesh(
       new THREE.BoxGeometry(shape.width + 0.3, 1.5, 0.05),
@@ -306,19 +376,41 @@ export async function buildTableScene(
       }),
     )
     strip.rotation.x = -Math.PI / 2
-    strip.position.set(x, shape.height + 0.003, z)
+    strip.position.set(x, shape.height + 0.004, z)
     root.add(strip)
   }
 
   const bySlot = new Map(input.contents.map((c) => [c.slot, c]))
   const slots: SceneSlot[] = []
+  // On a real table each slot takes the nearest free tray; its plate covers the tray's place.
+  const free = [...(real?.trays ?? [])]
   for (const place of shape.slots) {
     const content = bySlot.get(place.slot)
     if (!content) continue
-    const dressed = await dress(place, content, shape, input.names)
+    let at = place
+    if (real) {
+      const near = free
+        .map((t, i) => ({ i, t, gap: Math.hypot(t.x - place.x, t.z - place.z) }))
+        .filter((c) => c.gap <= SNAP)
+        .sort((a, b) => a.gap - b.gap)[0]
+      if (near) {
+        free.splice(near.i, 1)
+        at = { ...place, x: near.t.x, z: near.t.z, w: near.t.w, d: near.t.d }
+      }
+    }
+    const dressed = await dress(at, content, shape, input.names)
     dressed.pick.userData.slot = place.slot
     root.add(dressed.object)
     slots.push({ slot: place.slot, ...dressed })
+  }
+  // Trays no slot uses (an iPad stand, a spare place) are covered with a plain silver plate.
+  for (const t of free) {
+    const plate = new THREE.Mesh(
+      new THREE.BoxGeometry(t.w, 0.012, t.d),
+      new THREE.MeshStandardMaterial({ color: '#d5d9df', metalness: 0.15, roughness: 0.45 }),
+    )
+    plate.position.set(t.x, shape.height + 0.006, t.z)
+    root.add(plate)
   }
   root.updateMatrixWorld(true)
 

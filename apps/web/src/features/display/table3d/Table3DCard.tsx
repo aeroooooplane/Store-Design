@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import type { DisplayTable } from '@store/shared'
+import { bodyFor } from './bodies.ts'
 import { buildTableScene } from './scene.ts'
 import type { TableScene } from './scene.ts'
 import { drawInto, shotAspect, slotContents, viewKey } from './shots.ts'
@@ -93,33 +94,38 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
   // Rebuild the table whenever what stands on it changes; keep the current view.
   useEffect(() => {
     let live = true
-    buildTableScene({
-      table,
-      end: ctx.end,
-      contents: slotContents(table, ctx),
-      names: true,
-    }).then(
-      (next) => {
-        if (!live) {
-          next.dispose()
-          return
-        }
-        const cam = camera.current
-        const orbit = controls.current
-        built.current?.dispose()
-        built.current = next
-        if (cam && orbit && !aim.current) {
-          aim.current = next.frame(cam)
-          orbit.target.copy(aim.current)
-          orbit.update()
-        }
-        setState('ready')
-        draw.current()
-      },
-      () => {
-        if (live) setState('failed')
-      },
-    )
+    bodyFor(table, ctx.si)
+      .then((body) =>
+        buildTableScene({
+          table,
+          end: ctx.end,
+          contents: slotContents(table, ctx),
+          names: true,
+          body,
+        }),
+      )
+      .then(
+        (next) => {
+          if (!live) {
+            next.dispose()
+            return
+          }
+          const cam = camera.current
+          const orbit = controls.current
+          built.current?.dispose()
+          built.current = next
+          if (cam && orbit && !aim.current) {
+            aim.current = next.frame(cam)
+            orbit.target.copy(aim.current)
+            orbit.update()
+          }
+          setState('ready')
+          draw.current()
+        },
+        () => {
+          if (live) setState('failed')
+        },
+      )
     return () => {
       live = false
     }
