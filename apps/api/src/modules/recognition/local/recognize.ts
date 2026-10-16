@@ -8,13 +8,21 @@ import type {
   RecognizeRequest,
   VectorContent,
 } from '@store/shared'
-import { countInLabel, matchCatalog, sizeInLabel } from '../check.ts'
+import { WALL_REACH_M, countInLabel, matchCatalog, sizeInLabel } from '../check.ts'
 import { findBoundary } from './boundary.ts'
 import { chainLineTest, chainScale } from './dimension-chain.ts'
 import type { ChainReading } from './dimension-chain.ts'
 import { findRegion, inRing, ringArea } from './region.ts'
 import type { PxPoint } from './region.ts'
-import { OBSTACLE_WORDS, boxAround, boxFromLines, boxKey, sameBox } from './boxes.ts'
+import {
+  OBSTACLE_WORDS,
+  boxAround,
+  boxFromLines,
+  boxKey,
+  boxOfSize,
+  fitsSize,
+  sameBox,
+} from './boxes.ts'
 import { DEFAULT_ENTRANCE_M, axisLines, buildIndex, centre, cropContent, isRed } from './lines.ts'
 import type { Box, Text } from './lines.ts'
 import { dimensionLine, dimensionMm, findScale } from './scale.ts'
@@ -220,6 +228,18 @@ export function recognizeVector(
   if (!scale) {
     return { space: null, items: [], scale: null, pending, confidence: 0, notes }
   }
+  // On the wall: within this of the outline a prop is the shop's (a screen on the wall's face,
+  // its centre a little past the traced edge).
+  const wallReachPx = (WALL_REACH_M * 1000) / scale.mmPerPixel
+  const onOutline = ([x, y]: PxPoint) =>
+    outline?.some(([x1, y1], i) => {
+      const [x2, y2] = outline[(i + 1) % outline.length] ?? [x1, y1]
+      const len2 = (x2 - x1) ** 2 + (y2 - y1) ** 2
+      const t = len2
+        ? Math.max(0, Math.min(1, ((x - x1) * (x2 - x1) + (y - y1) * (y2 - y1)) / len2))
+        : 0
+      return Math.hypot(x - x1 - t * (x2 - x1), y - y1 - t * (y2 - y1)) <= wallReachPx
+    }) ?? false
   const toM = (px: number, axis: 0 | 1) =>
     roundM(((px - scale.originPx[axis]) * scale.mmPerPixel) / 1000)
   const lenM = (px: number) => roundM((px * scale.mmPerPixel) / 1000)
@@ -230,7 +250,8 @@ export function recognizeVector(
   const usedBoxes = new Set<string>()
   let ref = 0
 
-  for (const { text, box } of labelled) {
+  for (const { text, box: labelBox } of labelled) {
+    let box = labelBox
     const label = text.text.trim()
     const obstacleKind = OBSTACLE_WORDS.find(([re]) => re.test(label))?.[1]
     if (obstacleKind && box && boundary && insideOutline(centre(box))) {
@@ -254,6 +275,27 @@ export function recognizeVector(
 
     const drawn = box ? { w: lenM(box.w), d: lenM(box.h) } : undefined
     const match = matchCatalog(label, catalog, drawn, siStyle)
+    // A prop of known size whose box does not fit (the name written beside it, the box found
+    // being the gap round the text; a screen drawn as a strip on the wall): the closed box of
+    // its size nearest the name.
+    const footprintPx = match.asset
+      ? {
+          w: (match.asset.footprint.w * 1000) / scale.mmPerPixel,
+          d: (match.asset.footprint.d * 1000) / scale.mmPerPixel,
+        }
+      : null
+    if (footprintPx && !(box && fitsSize(box, footprintPx.w, footprintPx.d))) {
+      const sized = boxOfSize(
+        text,
+        wallLines,
+        index,
+        footprintPx.w,
+        footprintPx.d,
+        Math.max(footprintPx.w, footprintPx.d) * 1.2 + text.h * 2,
+        (b) => usedBoxes.has(boxKey(b)),
+      )
+      if (sized) box = sized
+    }
     if (match.function === 'other' && !match.asset) continue
     const count = countInLabel(label)
     const red = isRed(text.color) || (box ? isRed(box.color) : false)
@@ -285,7 +327,7 @@ export function recognizeVector(
       const rotation = footprint && b && b.w >= b.h !== footprint.w >= footprint.d ? 90 : 0
       const source = red
         ? 'requested'
-        : boundary && !insideOutline([px, py])
+        : boundary && !insideOutline([px, py]) && !onOutline([px, py])
           ? 'outside'
           : 'existing'
       return {
