@@ -19,6 +19,8 @@ import type { Box, Line, LineIndex } from './lines.ts'
 
 /** A side this close to the page edge (as a fraction of the page) runs along the sheet frame. */
 const PAGE_EDGE_FRACTION = 0.05
+/** Side positions tried per axis, the most drawn first. */
+const MAX_POSITIONS = 40
 /** The stated shop area and a boundary's area agree within this factor. */
 const AREA_FACTOR = 1.5
 
@@ -92,7 +94,13 @@ export function findBoundary(
       entry.length += Math.hypot(l.x1 - l.x2, l.y1 - l.y2)
       total.set(key, entry)
     }
-    return cluster([...total.values()].filter((e) => e.length >= minSide).map((e) => e.pos))
+    // The most drawn positions only: a dense drawing (tens of thousands of lines) would otherwise
+    // try every combination of hundreds of positions.
+    const strong = [...total.values()]
+      .filter((e) => e.length >= minSide)
+      .sort((p, q) => q.length - p.length)
+      .slice(0, MAX_POSITIONS)
+    return cluster(strong.map((e) => e.pos))
   }
   // A side along a page edge is the sheet frame's: the shop sits inside with its dimensions.
   const margin = (length: number) => (pos: number) =>

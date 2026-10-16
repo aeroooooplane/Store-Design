@@ -53,6 +53,32 @@ function colourOf(args: unknown): string | undefined {
 }
 
 const MIN_LINE_PX = 3
+/** Pieces a Bézier curve (an arc wall, a door swing) is cut into. */
+const CURVE_PIECES = 8
+/** A filled shape smaller than this (pixels, both ways) is lettering: its curves are dropped. */
+const GLYPH_PX = 24
+
+/** Coordinates and widths are kept to a tenth of a pixel (smaller requests, same drawing). */
+const tenth = (v: number) => Math.round(v * 10) / 10
+
+/** Points along a cubic Bézier after `p0`, its end included. */
+function cubicPoints(
+  p0: [number, number],
+  c1: [number, number],
+  c2: [number, number],
+  p3: [number, number],
+): [number, number][] {
+  const points: [number, number][] = []
+  for (let k = 1; k <= CURVE_PIECES; k++) {
+    const t = k / CURVE_PIECES
+    const u = 1 - t
+    points.push([
+      u * u * u * p0[0] + 3 * u * u * t * c1[0] + 3 * u * t * t * c2[0] + t * t * t * p3[0],
+      u * u * u * p0[1] + 3 * u * u * t * c1[1] + 3 * u * t * t * c2[1] + t * t * t * p3[1],
+    ])
+  }
+  return points
+}
 
 /** Scale that renders the page with this many pixels on its long side. */
 export function pageScale(page: PDFPageProxy, longSidePx: number): number {
@@ -99,12 +125,32 @@ export async function extractPageVector(
     ctm: Matrix
     stroke: string | undefined
     fill: string | undefined
+    /** Line width in user space, and whether a dash pattern is set. */
+    lineWidth: number
+    dash: boolean
   }
   const stack: GState[] = []
-  let state: GState = { ctm: base, stroke: undefined, fill: undefined }
-  const pushLine = (a: [number, number], b: [number, number], color?: string) => {
+  let state: GState = { ctm: base, stroke: undefined, fill: undefined, lineWidth: 1, dash: false }
+  /** Pixels per user-space unit of the current transform. */
+  const ctmScale = () =>
+    Math.sqrt(Math.abs(state.ctm[0] * state.ctm[3] - state.ctm[1] * state.ctm[2]))
+  const pushLine = (
+    a: [number, number],
+    b: [number, number],
+    color: string | undefined,
+    stroked: boolean,
+  ) => {
     if (Math.hypot(a[0] - b[0], a[1] - b[1]) < MIN_LINE_PX) return
-    content.lines.push({ x1: a[0], y1: a[1], x2: b[0], y2: b[1], ...(color ? { color } : {}) })
+    const width = stroked ? tenth(state.lineWidth * ctmScale()) : 0
+    content.lines.push({
+      x1: tenth(a[0]),
+      y1: tenth(a[1]),
+      x2: tenth(b[0]),
+      y2: tenth(b[1]),
+      ...(color ? { color } : {}),
+      ...(width > 0 ? { w: width } : {}),
+      ...(stroked && state.dash ? { dash: true } : {}),
+    })
   }
   const pushRect = (x: number, y: number, w: number, h: number, color?: string) => {
     const [ax, ay] = apply(state.ctm, x, y)
@@ -120,16 +166,35 @@ export async function extractPageVector(
   /** A path being built, in user space, until it is stroked or filled. */
   let path: {
     segments: [[number, number], [number, number]][]
+    /** Pieces of Bézier curves, kept apart: a small filled shape of them is lettering. */
+    curves: [[number, number], [number, number]][]
     rects: [number, number, number, number][]
-  } = { segments: [], rects: [] }
+  } = { segments: [], curves: [], rects: [] }
   let current: [number, number] | null = null
   let subpathStart: [number, number] | null = null
-  const flush = (color?: string) => {
+  const flush = (color: string | undefined, stroked: boolean) => {
     for (const [a, b] of path.segments) {
-      pushLine(apply(state.ctm, ...a), apply(state.ctm, ...b), color)
+      pushLine(apply(state.ctm, ...a), apply(state.ctm, ...b), color, stroked)
+    }
+    if (path.curves.length) {
+      const pixels = path.curves.flatMap(([a, b]) => [
+        apply(state.ctm, ...a),
+        apply(state.ctm, ...b),
+      ])
+      const xs = pixels.map((p) => p[0])
+      const ys = pixels.map((p) => p[1])
+      const glyph =
+        !stroked &&
+        Math.max(...xs) - Math.min(...xs) < GLYPH_PX &&
+        Math.max(...ys) - Math.min(...ys) < GLYPH_PX
+      if (!glyph) {
+        for (const [a, b] of path.curves) {
+          pushLine(apply(state.ctm, ...a), apply(state.ctm, ...b), color, stroked)
+        }
+      }
     }
     for (const [x, y, w, h] of path.rects) pushRect(x, y, w, h, color)
-    path = { segments: [], rects: [] }
+    path = { segments: [], curves: [], rects: [] }
     current = null
     subpathStart = null
   }
@@ -145,11 +210,35 @@ export async function extractPageVector(
     if (current && subpathStart) path.segments.push([current, subpathStart])
     current = subpathStart
   }
+  /** A cubic Bézier from the current point, kept as straight pieces. */
+  const curveTo = (c1: [number, number], c2: [number, number], end: [number, number]) => {
+    if (current) {
+      let from = current
+      for (const p of cubicPoints(current, c1, c2, end)) {
+        path.curves.push([from, p])
+        from = p
+      }
+    }
+    current = end
+  }
+  /** A quadratic Bézier from the current point, raised to a cubic. */
+  const quadTo = (c: [number, number], end: [number, number]) => {
+    const p0 = current
+    if (!p0) {
+      current = end
+      return
+    }
+    curveTo(
+      [p0[0] + ((c[0] - p0[0]) * 2) / 3, p0[1] + ((c[1] - p0[1]) * 2) / 3],
+      [end[0] + ((c[0] - end[0]) * 2) / 3, end[1] + ((c[1] - end[1]) * 2) / 3],
+      end,
+    )
+  }
   /** Strokes or fills the path built so far (or drops it: endPath is a clip, not a drawing). */
   const paintPath = (op: number) => {
     if (op === OPS['stroke'] || op === OPS['closeStroke']) {
       if (op === OPS['closeStroke']) closePath()
-      flush(state.stroke)
+      flush(state.stroke, true)
     } else if (
       op === OPS['fill'] ||
       op === OPS['eoFill'] ||
@@ -158,9 +247,9 @@ export async function extractPageVector(
       op === OPS['closeFillStroke'] ||
       op === OPS['closeEOFillStroke']
     ) {
-      flush(state.fill ?? state.stroke)
+      flush(state.fill ?? state.stroke, false)
     } else if (op === OPS['endPath']) {
-      path = { segments: [], rects: [] }
+      path = { segments: [], curves: [], rects: [] }
       current = null
       subpathStart = null
     }
@@ -191,6 +280,16 @@ export async function extractPageVector(
       case OPS['setFillCMYKColor']:
         state.fill = colourOf(args) ?? state.fill
         break
+      case OPS['setLineWidth']: {
+        const [width] = args as [number]
+        if (typeof width === 'number' && Number.isFinite(width)) state.lineWidth = width
+        break
+      }
+      case OPS['setDash']: {
+        const [pattern] = args as [ArrayLike<number> | undefined]
+        state.dash = Boolean(pattern && Array.from(pattern).some((v) => v > 0))
+        break
+      }
       case OPS['moveTo']: {
         const [x, y] = args as [number, number]
         moveTo(x, y)
@@ -223,9 +322,14 @@ export async function extractPageVector(
             const op = data[k++]
             if (op === 0) moveTo(data[k++] ?? 0, data[k++] ?? 0)
             else if (op === 1) lineTo(data[k++] ?? 0, data[k++] ?? 0)
-            else if (op === 2 || op === 3) {
-              k += op === 2 ? 6 : 4
-              current = null
+            else if (op === 2) {
+              const n = (i: number) => data[k + i] ?? 0
+              curveTo([n(0), n(1)], [n(2), n(3)], [n(4), n(5)])
+              k += 6
+            } else if (op === 3) {
+              const n = (i: number) => data[k + i] ?? 0
+              quadTo([n(0), n(1)], [n(2), n(3)])
+              k += 4
             } else if (op === 4) closePath()
             else break
           }
@@ -246,11 +350,19 @@ export async function extractPageVector(
                 coords[k++] ?? 0,
               ])
             } else if (op === OPS['curveTo']) {
+              const n = (i: number) => coords[k + i] ?? 0
+              curveTo([n(0), n(1)], [n(2), n(3)], [n(4), n(5)])
               k += 6
-              current = null
-            } else if (op === OPS['curveTo2'] || op === OPS['curveTo3']) {
+            } else if (op === OPS['curveTo2']) {
+              // The first control point is the current point.
+              const n = (i: number) => coords[k + i] ?? 0
+              curveTo(current ?? [n(0), n(1)], [n(0), n(1)], [n(2), n(3)])
               k += 4
-              current = null
+            } else if (op === OPS['curveTo3']) {
+              // The second control point is the end point.
+              const n = (i: number) => coords[k + i] ?? 0
+              curveTo([n(0), n(1)], [n(2), n(3)], [n(2), n(3)])
+              k += 4
             }
           }
         }

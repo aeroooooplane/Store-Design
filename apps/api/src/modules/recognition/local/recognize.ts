@@ -10,16 +10,10 @@ import type {
 } from '@store/shared'
 import { countInLabel, matchCatalog, sizeInLabel } from '../check.ts'
 import { findBoundary } from './boundary.ts'
+import { findRegion, inRing, ringArea } from './region.ts'
+import type { PxPoint } from './region.ts'
 import { OBSTACLE_WORDS, boxAround, boxFromLines, boxKey, sameBox } from './boxes.ts'
-import {
-  DEFAULT_ENTRANCE_M,
-  axisLines,
-  buildIndex,
-  centre,
-  contains,
-  cropContent,
-  isRed,
-} from './lines.ts'
+import { DEFAULT_ENTRANCE_M, axisLines, buildIndex, centre, cropContent, isRed } from './lines.ts'
 import type { Box, Text } from './lines.ts'
 import { dimensionLine, dimensionMm, findScale } from './scale.ts'
 
@@ -118,13 +112,60 @@ export function recognizeVector(
   const early = shopM2
     ? findScale(dimensions, [], null, request.calibration, unbounded).scale
     : null
-  const boundary = findBoundary(content, wallLines, anchors, {
-    pageEdges: !request.crop,
-    expectedArea: early?.verified ? (shopM2 * 1e6) / early.mmPerPixel ** 2 : null,
+  const expectedArea = early?.verified ? (shopM2 * 1e6) / early.mmPerPixel ** 2 : null
+  // Pixels per metre from the sized prop names, roughly: to tell a wall body from a cabinet.
+  const perMetre = unbounded.flatMap((l) => {
+    const m = l.sizeM ?? l.knownM
+    return l.box && m ? [Math.max(l.box.w, l.box.h) / m] : []
   })
-  if (boundary) {
+  perMetre.sort((a, b) => a - b)
+  const pxPerM = perMetre.length ? (perMetre[Math.floor(perMetre.length / 2)] ?? null) : null
+  // Any outline first: the closed region of the drawing that holds the props (corners, slanted
+  // walls, arcs); a rectangle of drawn sides when no region closes round them.
+  const titleBlockPoints = content.texts
+    .filter((t) =>
+      /^(?:client|project|scale|drawing (?:title|number)|drawn by|checked by)\b/i.test(
+        t.text.trim(),
+      ),
+    )
+    .map((t): PxPoint => centre(t))
+  const region = findRegion(content.width, content.height, content.lines, anchors, {
+    expectedArea,
+    thinPx: pxPerM ? pxPerM * 0.25 : null,
+    pxPerM,
+    avoid: titleBlockPoints,
+  })
+  const rectangle = region
+    ? null
+    : findBoundary(content, wallLines, anchors, { pageEdges: !request.crop, expectedArea })
+  const boundary: Box | null = region
+    ? (() => {
+        const xs = region.map((p) => p[0])
+        const ys = region.map((p) => p[1])
+        const x = Math.min(...xs)
+        const y = Math.min(...ys)
+        return { x, y, w: Math.max(...xs) - x, h: Math.max(...ys) - y }
+      })()
+    : rectangle
+  /** The outline in pixels: the region, or the rectangle's corners. */
+  const outline: PxPoint[] | null = region
+    ? region
+    : rectangle
+      ? [
+          [rectangle.x, rectangle.y],
+          [rectangle.x + rectangle.w, rectangle.y],
+          [rectangle.x + rectangle.w, rectangle.y + rectangle.h],
+          [rectangle.x, rectangle.y + rectangle.h],
+        ]
+      : null
+  const insideOutline = (p: PxPoint) => (outline ? inRing(p, outline) : false)
+  if (region) {
     notes.push(
-      `边界取${anchors.length ? '包含道具的最小' : '图中最大的'}闭合矩形（${Math.round(boundary.w)} × ${Math.round(boundary.h)} px）；异形门店请在校对时调整`,
+      `边界取包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
+    )
+  } else if (rectangle) {
+    notes.push(
+      `边界取${anchors.length ? '包含道具的最小' : '图中最大的'}闭合矩形（${Math.round(rectangle.w)} × ${Math.round(rectangle.h)} px）；异形门店请用“描边界”调整`,
     )
   }
   const labelled = label(boundary)
@@ -135,6 +176,7 @@ export function recognizeVector(
     boundary,
     request.calibration,
     labelled,
+    outline ? ringArea(outline) : undefined,
   )
   notes.push(...scaleNotes)
   if (!scale) {
@@ -153,7 +195,7 @@ export function recognizeVector(
   for (const { text, box } of labelled) {
     const label = text.text.trim()
     const obstacleKind = OBSTACLE_WORDS.find(([re]) => re.test(label))?.[1]
-    if (obstacleKind && box && boundary && contains(boundary, centre(box))) {
+    if (obstacleKind && box && boundary && insideOutline(centre(box))) {
       obstacles.push({
         kind: obstacleKind,
         polygon: [
@@ -205,7 +247,7 @@ export function recognizeVector(
       const rotation = footprint && b && b.w >= b.h !== footprint.w >= footprint.d ? 90 : 0
       const source = red
         ? 'requested'
-        : boundary && !contains(boundary, [px, py])
+        : boundary && !insideOutline([px, py])
           ? 'outside'
           : 'existing'
       return {
@@ -242,42 +284,32 @@ export function recognizeVector(
   }
 
   let space: RecognitionDraft['space'] = null
-  if (boundary) {
-    const b = boundary
-    const polygon: [number, number][] = [
-      [toM(b.x, 0), toM(b.y, 1)],
-      [toM(b.x + b.w, 0), toM(b.y, 1)],
-      [toM(b.x + b.w, 0), toM(b.y + b.h, 1)],
-      [toM(b.x, 0), toM(b.y + b.h, 1)],
-    ]
+  if (boundary && outline) {
+    const polygon: [number, number][] = outline.map(([x, y]) => [toM(x, 0), toM(y, 1)])
     const entranceText =
       content.texts.find((t) => /主入口|主人流通道/.test(t.text)) ??
       content.texts.find((t) => /入口|人流通道/.test(t.text))
     if (entranceText) {
       const [tx, ty] = centre(entranceText)
-      const sides: { a: Point; b: Point; dist: number }[] = polygon.map((p, i) => {
-        const q = polygon[(i + 1) % polygon.length] ?? p
-        const px = [toM(tx, 0), toM(ty, 1)] as const
-        const horizontal = p[1] === q[1]
-        const dist = horizontal ? Math.abs(px[1] - p[1]) : Math.abs(px[0] - p[0])
-        return { a: p, b: q, dist }
+      // The edge nearest the text, any direction; the entrance is centred on the text along it.
+      const p: Point = [toM(tx, 0), toM(ty, 1)]
+      const sides = polygon.map((a, i) => {
+        const b = polygon[(i + 1) % polygon.length] ?? a
+        const len = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1
+        const u: Point = [(b[0] - a[0]) / len, (b[1] - a[1]) / len]
+        const t = Math.max(0, Math.min(len, (p[0] - a[0]) * u[0] + (p[1] - a[1]) * u[1]))
+        const dist = Math.hypot(p[0] - (a[0] + u[0] * t), p[1] - (a[1] + u[1] * t))
+        return { a, u, len, t, dist }
       })
-      const side = sides.sort((p, q) => p.dist - q.dist)[0]
+      const side = sides.filter((s) => s.len >= 0.3).sort((q, r) => q.dist - r.dist)[0]
       if (side) {
-        const horizontal = side.a[1] === side.b[1]
-        const along = horizontal ? toM(tx, 0) : toM(ty, 1)
-        const lo = Math.min(horizontal ? side.a[0] : side.a[1], horizontal ? side.b[0] : side.b[1])
-        const hi = Math.max(horizontal ? side.a[0] : side.a[1], horizontal ? side.b[0] : side.b[1])
-        const start = Math.max(
-          lo,
-          Math.min(hi - DEFAULT_ENTRANCE_M, along - DEFAULT_ENTRANCE_M / 2),
-        )
-        const end = Math.min(hi, start + DEFAULT_ENTRANCE_M)
-        entrances.push(
-          horizontal
-            ? { a: [roundM(start), side.a[1]], b: [roundM(end), side.a[1]], kind: 'main' }
-            : { a: [side.a[0], roundM(start)], b: [side.a[0], roundM(end)], kind: 'main' },
-        )
+        const width = Math.min(DEFAULT_ENTRANCE_M, side.len)
+        const start = Math.max(0, Math.min(side.len - width, side.t - width / 2))
+        const at = (t: number): [number, number] => [
+          roundM(side.a[0] + side.u[0] * t),
+          roundM(side.a[1] + side.u[1] * t),
+        ]
+        entrances.push({ a: at(start), b: at(start + width), kind: 'main' })
         notes.push(
           `入口按「${entranceText.text.trim()}」文字所靠的边界边放置，宽度默认 ${DEFAULT_ENTRANCE_M} m`,
         )
