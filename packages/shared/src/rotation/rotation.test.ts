@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { obbCorners, placedBox } from '../geometry/obb.ts'
 import { locatePoint } from '../geometry/polygon.ts'
+import { normalizeRotation } from '../schemas/layout.ts'
 import { SpaceSchema, rectangleSpace } from '../schemas/space.ts'
 import {
   angleBetween,
@@ -130,5 +131,14 @@ describe('angles read from drawings and older files', () => {
       0, 0, 0, 90, 90, 180, 270,
     ])
     expect([30, 3.5, 135, -20].map((a) => settleNearQuarter(a))).toEqual([30, 3.5, 135, 340])
+  })
+})
+
+describe('normalizeRotation', () => {
+  it('wraps into 0–360 and rounds to a tenth of a degree without float noise', () => {
+    expect([124.6, 484.6, -235.4, 359.96, -0.04, 720].map(normalizeRotation)).toEqual([
+      124.6, 124.6, 124.6, 0, 0, 0,
+    ])
+    expect(String(normalizeRotation(484.6))).toBe('124.6')
   })
 })

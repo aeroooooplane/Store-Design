@@ -7,6 +7,7 @@ import {
   frontCorners,
   itemElevation,
   itemMount,
+  itemTilt,
   modelBox,
   scaleFromCorner,
   turnPoint,
@@ -24,6 +25,7 @@ import type {
   Space,
 } from '@store/shared'
 import { finishModel } from './finish-model.ts'
+import { createRotateRing, placeRotateRing, rotationOnFloor } from './rotate-ring.ts'
 import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
@@ -67,6 +69,11 @@ export interface SceneHandlers {
     placement: { scale: number; cx: number; cz: number; elevation: number },
     gesture: { group: string },
   ) => void
+  /**
+   * The selected prop turned by its rotation ring: the angle the pointer points it at; `snap`
+   * is off while Alt is held. Without it no ring is shown.
+   */
+  onRotate?: (itemId: string, rotation: number, gesture: { group: string; snap: boolean }) => void
 }
 
 export interface LoadStatus {
@@ -139,6 +146,9 @@ export class WhiteScene {
     plane: THREE.Plane
     group: string
   } | null = null
+  /** The ring round the selected prop (see rotate-ring.ts), and a turn being dragged on it. */
+  private ring: THREE.Group | null = null
+  private turnDrag: { id: string; centre: [number, number]; group: string } | null = null
   private frame = 0
   private disposed = false
   private look: Look = 'white'
@@ -343,13 +353,16 @@ export class WhiteScene {
       // stools on one side): the hit box and marks keep to the item.
       const model = modelBox(item, url ? asset : undefined)
       group.position.set(model.cx, elevation, model.cz)
-      // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
-      group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
+      // A box already has the footprint at its nearest quarter turn and turns only by the tilt
+      // beyond it; a model turns by the whole rotation (legacy: +Z front → −X at 90°).
+      group.rotation.y = ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
       // A LOGO resized in the properties panel (scale) shows at that size, like its plan symbol;
       // a placeholder box is drawn at the item's size already.
       group.scale.setScalar(url ? (item.scale ?? 1) : 1)
-      // The footprint is already turned (w × d on the plan), so the box needs no rotation.
+      // The footprint is already at its nearest quarter turn (w × d on the plan): a box turns
+      // only by the tilt beyond it.
       placed.hit.scale.set(item.w, item.h, item.d)
+      placed.hit.rotation.y = (-itemTilt(item) * Math.PI) / 180
       placed.hit.position.set(item.cx, elevation + item.h / 2, item.cz)
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
@@ -381,6 +394,7 @@ export class WhiteScene {
   setMarks(selectedId: string | null, flagged: ReadonlySet<string>) {
     this.marks.children.forEach(disposeTree)
     this.marks.clear()
+    this.ring = null
     for (const { item, model } of this.items.values()) {
       const selected = item.id === selectedId
       // The selected LOGO shows grips on the corners of its front: drag one to resize.
@@ -395,6 +409,20 @@ export class WhiteScene {
           this.marks.add(grip)
         }
       }
+      // The selected prop on the floor or ceiling shows its rotation ring (a wall piece takes
+      // its angle from the wall).
+      if (
+        selected &&
+        this.handlers?.onRotate &&
+        !item.locked &&
+        itemMount(item) !== 'wall' &&
+        itemMount(item) !== 'embedded'
+      ) {
+        const ring = createRotateRing(item)
+        placeRotateRing(ring, item)
+        this.marks.add(ring)
+        this.ring = ring
+      }
       if (!selected && !flagged.has(item.id)) continue
       const mark = new THREE.Mesh(
         new THREE.PlaneGeometry(item.w + 0.08, item.d + 0.08),
@@ -405,7 +433,8 @@ export class WhiteScene {
           depthWrite: false,
         }),
       )
-      mark.rotation.x = -Math.PI / 2
+      // Flat on the floor, turned by the tilt beyond the nearest quarter turn.
+      mark.rotation.set(-Math.PI / 2, 0, (-itemTilt(item) * Math.PI) / 180)
       mark.position.set(item.cx, 0.003, item.cz)
       this.marks.add(mark)
     }
@@ -715,9 +744,34 @@ export class WhiteScene {
     return true
   }
 
+  /** Whether the pointer is on the selected prop's rotation ring. */
+  private onRing(event: PointerEvent): string | null {
+    if (!this.ring || !this.handlers?.onRotate) return null
+    this.ring.updateMatrixWorld(true)
+    const hit = this.ray(event).intersectObjects(this.ring.children, false)[0]
+    const id: unknown = hit?.object.userData['rotateRing']
+    return typeof id === 'string' ? id : null
+  }
+
+  /** Starts turning the selected prop by its ring; the pointer then points it round. */
+  private startTurn(event: PointerEvent): boolean {
+    const id = this.onRing(event)
+    const placed = id ? this.items.get(id) : undefined
+    if (!placed) return false
+    this.turnDrag = {
+      id: placed.item.id,
+      centre: [placed.item.cx, placed.item.cz],
+      group: `turn3d:${placed.item.id}:${event.timeStamp}`,
+    }
+    this.controls.enabled = false
+    this.canvas.setPointerCapture(event.pointerId)
+    return true
+  }
+
   private readonly onPointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return
     if (this.startResize(event)) return
+    if (this.startTurn(event)) return
     const placed = this.pick(event)
     this.handlers?.onSelect(placed?.item.id ?? null)
     if (!placed || placed.item.locked || !this.handlers?.onMove) return
@@ -734,6 +788,12 @@ export class WhiteScene {
   }
 
   private readonly onPointerMove = (event: PointerEvent) => {
+    if (this.turnDrag) {
+      const { id, centre, group } = this.turnDrag
+      const rotation = rotationOnFloor(this.ray(event).ray, centre)
+      if (rotation !== null) this.handlers?.onRotate?.(id, rotation, { group, snap: !event.altKey })
+      return
+    }
     if (this.cornerDrag) {
       const { start, model, corner, plane, group } = this.cornerDrag
       const point = this.ray(event).ray.intersectPlane(plane, new THREE.Vector3())
@@ -753,7 +813,9 @@ export class WhiteScene {
         ? hit.corner.x === hit.corner.y
           ? 'nesw-resize'
           : 'nwse-resize'
-        : ''
+        : this.onRing(event)
+          ? 'grab'
+          : ''
       return
     }
     const point = this.floorPoint(event)
@@ -766,9 +828,10 @@ export class WhiteScene {
   }
 
   private readonly endDrag = () => {
-    if (!this.drag && !this.cornerDrag) return
+    if (!this.drag && !this.cornerDrag && !this.turnDrag) return
     this.drag = null
     this.cornerDrag = null
+    this.turnDrag = null
     this.controls.enabled = true
   }
 }

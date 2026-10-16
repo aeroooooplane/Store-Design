@@ -13,6 +13,7 @@ import {
   nextFixtureId,
   rotatedFootprint,
   snapFixtureRect,
+  turnItem,
   wallMountSnap,
 } from '@store/shared'
 import type {
@@ -64,6 +65,11 @@ export type EditorAction =
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
   | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
+  /**
+   * Turns a prop to any angle (the rotation handle, the 3D ring, the angle field); `group`
+   * joins the steps of one drag into one undo step.
+   */
+  | { type: 'turn'; id: string; rotation: number; group?: string | undefined }
   /** Removes a prop or a partition. */
   | { type: 'remove'; id: string }
   /** 画空心隔板: a dragged rectangle, its edges stuck to walls and cabinets of `snapTo`. */
@@ -317,6 +323,15 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           return action.asset && item.scale ? scaleItem(turned, action.asset, item.scale) : turned
         },
         null,
+      )
+    case 'turn':
+      // Width and depth follow the nearest quarter turn; size and LOGO scale are kept.
+      return changeItem(
+        state,
+        action.id,
+        (item) =>
+          item.locked || !Number.isFinite(action.rotation) ? item : turnItem(item, action.rotation),
+        action.group ?? null,
       )
     case 'setMount':
       return changeItem(

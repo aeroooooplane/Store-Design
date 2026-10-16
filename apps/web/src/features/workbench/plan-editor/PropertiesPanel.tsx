@@ -246,7 +246,22 @@ export function PropertiesPanel({
           </label>
           <div className="field-row">
             旋转角度
-            <output>{selected.rotation}°</output>
+            <input
+              type="number"
+              step={1}
+              min={0}
+              max={359.9}
+              aria-label="旋转角度（度）"
+              className="angle-input"
+              value={selected.rotation}
+              disabled={selected.locked}
+              onChange={(e) => {
+                const rotation = Number(e.target.value)
+                if (e.target.value !== '' && Number.isFinite(rotation))
+                  dispatch({ type: 'turn', id: selected.id, rotation })
+              }}
+            />
+            °
             <span className="history-buttons">
               <button
                 type="button"
@@ -272,7 +287,8 @@ export function PropertiesPanel({
           <h3>选中道具</h3>
           <p className="hint">
             点击道具选中；拖动移动（靠近墙或道具会吸附，按住 Alt 关闭），方向键微调 10 mm（Shift 100
-            mm），R 旋转，Delete 删除。墙面 LOGO、画面拖到墙边会自动贴墙并朝向店内。
+            mm），R 旋转 90°，拖动道具背后的圆形手柄可转任意角度（靠近墙会吸附平行或垂直，按住 Alt
+            关闭），Delete 删除。墙面 LOGO、画面拖到墙边会自动贴墙并朝向店内。
           </p>
         </>
       )}

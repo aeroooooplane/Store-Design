@@ -515,3 +515,37 @@ describe('LOGO 拖动改大小', () => {
     expect(s.layout.items[0]?.scale).toBeUndefined()
   })
 })
+
+describe('转到任意角度', () => {
+  const id = 'island_table-1'
+
+  it('turns to any angle, swapping width and depth only when the nearest quarter turn changes', () => {
+    const tilted = editorReducer(state([item()]), { type: 'turn', id, rotation: 30 })
+    expect(tilted.layout.items[0]).toMatchObject({ rotation: 30, w: 1.8, d: 0.9 })
+    const past = editorReducer(tilted, { type: 'turn', id, rotation: 100 })
+    expect(past.layout.items[0]).toMatchObject({ rotation: 100, w: 0.9, d: 1.8 })
+    // A quarter turn from there keeps the tilt.
+    const quarter = editorReducer(past, { type: 'rotate', id })
+    expect(quarter.layout.items[0]).toMatchObject({ rotation: 190, w: 1.8, d: 0.9 })
+  })
+
+  it('keeps a LOGO at its scale and leaves locked props alone', () => {
+    const logo = item({ function: 'signage', w: 2, d: 0.1, h: 1, scale: 2 })
+    const turned = editorReducer(state([logo]), { type: 'turn', id, rotation: 45 })
+    expect(turned.layout.items[0]).toMatchObject({ rotation: 45, w: 0.1, d: 2, scale: 2 })
+    const locked = state([item({ locked: true })])
+    expect(editorReducer(locked, { type: 'turn', id, rotation: 30 })).toBe(locked)
+    expect(
+      editorReducer(state([item()]), { type: 'turn', id, rotation: Number.NaN }).layout,
+    ).toEqual(state([item()]).layout)
+  })
+
+  it('makes one undo step of one drag of the handle', () => {
+    let s = state([item()])
+    for (const rotation of [5, 12, 20, 33]) {
+      s = editorReducer(s, { type: 'turn', id, rotation, group: 'turn:a' })
+    }
+    expect(s.layout.items[0]?.rotation).toBe(33)
+    expect(editorReducer(s, { type: 'undo' }).layout.items[0]?.rotation).toBe(0)
+  })
+})

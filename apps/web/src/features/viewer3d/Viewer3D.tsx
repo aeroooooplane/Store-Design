@@ -41,6 +41,8 @@ interface Viewer3DProps {
     | undefined
   /** A LOGO dragged by a corner of its front; leave out where LOGOs cannot be resized. */
   onResize?: SceneHandlers['onResize'] | undefined
+  /** Turns the selected prop by its ring; leave out for no ring. */
+  onRotate?: SceneHandlers['onRotate'] | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   /** Where the camera starts instead of the default front view (e.g. the view last used). */
@@ -68,6 +70,7 @@ export function Viewer3D({
   onSelect,
   onMove,
   onResize,
+  onRotate,
   onReady,
   initialView,
   onViewChange,
@@ -115,8 +118,8 @@ export function Viewer3D({
 
   // Latest callbacks without re-creating the scene.
   useEffect(() => {
-    sceneRef.current?.setHandlers({ onSelect, onMove, onResize })
-  }, [onSelect, onMove, onResize])
+    sceneRef.current?.setHandlers({ onSelect, onMove, onResize, onRotate })
+  }, [onSelect, onMove, onResize, onRotate])
 
   useEffect(() => {
     // The view resets only when a different space is shown, not after every edit; the first

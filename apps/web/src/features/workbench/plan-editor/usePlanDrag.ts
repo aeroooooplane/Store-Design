@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import type { Dispatch, PointerEvent as ReactPointerEvent } from 'react'
-import { scaleFromEnd } from '@store/shared'
+import { rotationTowards, scaleFromEnd, snapRotation } from '@store/shared'
 import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
@@ -51,6 +51,10 @@ export function usePlanDrag(
     asset: Asset
     group: string
   } | null>(null)
+  /** The rotation handle being dragged: the prop's centre and size, which a turn keeps. */
+  const turn = useRef<{ item: LayoutItem; group: string } | null>(null)
+  /** The wall a turned prop has snapped parallel or square to, shown while turning. */
+  const [guide, setGuide] = useState<{ a: Point; b: Point } | null>(null)
   const drawStart = useRef<Point | null>(null)
   /** The rectangle being drawn, shown on the plan until the pointer is released. */
   const [draft, setDraft] = useState<Rect | null>(null)
@@ -100,6 +104,15 @@ export function usePlanDrag(
     svgRef.current?.setPointerCapture(event.pointerId)
   }
 
+  /** The rotation handle: the prop turns towards the pointer (see snapRotation). */
+  function onRotateHandlePointerDown(item: LayoutItem, event: ReactPointerEvent<SVGGElement>) {
+    event.stopPropagation()
+    dispatch({ type: 'select', id: item.id })
+    if (item.locked) return
+    turn.current = { item, group: `turn:${item.id}:${event.timeStamp}` }
+    svgRef.current?.setPointerCapture(event.pointerId)
+  }
+
   /** In drawing mode a press anywhere on the plan (props included) starts a rectangle. */
   function onDrawPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (!drawing) return
@@ -116,6 +129,19 @@ export function usePlanDrag(
     if (!world) return
     if (drawStart.current) {
       setDraft(rectOf(drawStart.current, world))
+      return
+    }
+    if (turn.current) {
+      // Hold Alt to turn freely; otherwise it snaps to nearby walls, then to 15° steps.
+      const { item, group } = turn.current
+      const snapped = snapRotation(
+        rotationTowards([item.cx, item.cz], world),
+        item,
+        space,
+        event.altKey,
+      )
+      setGuide(snapped.wall ? { a: snapped.wall.a, b: snapped.wall.b } : null)
+      dispatch({ type: 'turn', id: item.id, rotation: snapped.rotation, group })
       return
     }
     if (resize.current) {
@@ -158,6 +184,8 @@ export function usePlanDrag(
   function endDrag(event?: ReactPointerEvent<HTMLDivElement>) {
     drag.current = null
     resize.current = null
+    turn.current = null
+    setGuide(null)
     const start = drawStart.current
     if (!start) return
     drawStart.current = null
@@ -173,9 +201,11 @@ export function usePlanDrag(
     onItemPointerDown,
     onFixturePointerDown,
     onResizeHandlePointerDown,
+    onRotateHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
     draft,
+    guide,
   }
 }
