@@ -21,7 +21,7 @@
   border-radius: var(--radius-lg);
   counter-reset: step;
   position: sticky;
-  top: var(--space-2);
+  top: calc(var(--nav-height) + var(--space-2));
 }
 .display-steps li {
   counter-increment: step;

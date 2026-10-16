@@ -50,6 +50,9 @@ legend {
 /* History tree (colours and sizes: TREE_STYLE in tree-layout.ts) */
 .history {
   border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--paper);
 }
 .history-head {
   margin: 0;
@@ -325,7 +328,7 @@ svg.plan pattern * {
 }
 .space-editor-preview {
   position: sticky;
-  top: var(--space-2);
+  top: calc(var(--nav-height) + var(--space-2));
   border: 1px solid var(--line);
 }
 table.rows {
@@ -654,6 +657,10 @@ ul.issues li.warning {
 .workbench-bar a {
   text-decoration: none;
   color: var(--muted);
+  font-weight: 500;
+}
+.workbench-bar a:hover {
+  color: var(--ink);
 }
 .wb-layout {
   display: grid;
@@ -670,8 +677,8 @@ ul.issues li.warning {
   gap: 14px;
   min-width: 0;
   position: sticky;
-  top: 12px;
-  max-height: calc(100vh - 24px);
+  top: calc(var(--nav-height) + 12px);
+  max-height: calc(100vh - var(--nav-height) - 24px);
   overflow: auto;
   scrollbar-width: thin;
 }
@@ -680,7 +687,7 @@ ul.issues li.warning {
 }
 .wb-card {
   background: var(--paper);
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
   padding: 14px;

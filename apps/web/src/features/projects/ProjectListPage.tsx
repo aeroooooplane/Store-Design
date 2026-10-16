@@ -36,12 +36,8 @@ export function ProjectListPage() {
   return (
     <main className="page">
       <header className="page-header">
-        <h1>门店空间设计工作台</h1>
-        <span className="page-header-end">
-          <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
-          <Link to="/display">展陈方案</Link>
-          <Link to="/settings">设置</Link>
-        </span>
+        <h1>项目</h1>
+        <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
       </header>
 
       <CreateProjectForm />

@@ -1,33 +1,65 @@
 /*
- * Design tokens. Started from the legacy Swiss style; softened 2026-10-10 at the user's request
- * (gentler greys, rounded corners, a muted slate accent).
+ * Design tokens. 2026-10-16 redesign: Insta360 brand (ink black + brand yellow #FFD200, sampled from
+ * insta360.com/cn stylesheets) on a warm grey-white canvas; the warm greys follow the SI2.0 store finishes.
+ * The variable names of the earlier theme are kept, so older rules pick up the new look.
+ * Yellow is only a fill/indicator colour (never text on white); text and primary buttons stay ink black.
  */
+@import '@fontsource-variable/inter';
+
 :root {
+  /* Surfaces */
   --paper: #fff;
-  --ink: #2b3036;
-  --muted: #6b7280;
-  --surface: #f5f6f8;
-  --canvas: #f0f2f5;
-  --fill-strong: #d9dde2;
-  --line: #dde1e6;
-  --line-soft: #eceef1;
-  --line-strong: #9aa2ab;
-  --plan-paper: #fbfbfc;
-  --accent: #36495c;
-  --accent-soft: #e7edf3;
+  --canvas: #f4f3ef;
+  --surface: #f8f7f3;
+  --fill-strong: #e3e0d6;
+  --plan-paper: #fdfcf8;
+  /* Text */
+  --ink: #111;
+  --muted: #6b675f;
+  /* Lines */
+  --line: #e3e0d6;
+  --line-soft: #eeece4;
+  --line-strong: #a6a297;
+  /* Brand and states */
+  --brand: #ffd200;
+  --brand-ink: #111;
+  --accent: #111;
+  --accent-hover: #2b2a27;
+  --accent-soft: #fff3b0;
+  --ok: #1d7a4d;
+  --ok-soft: #e5f4ea;
+  --warn: #9a5b00;
+  --warn-soft: #fff1c9;
   --danger: #b4233c;
-  --radius: 6px;
-  --radius-lg: 10px;
-  --shadow: 0 1px 2px rgb(16 24 40 / 5%);
-  --font-sans: Arial, 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  --danger-soft: #fdeaed;
+  /* Shape */
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --shadow: 0 1px 2px rgb(20 18 10 / 6%), 0 1px 3px rgb(20 18 10 / 6%);
+  --shadow-pop: 0 8px 28px rgb(20 18 10 / 16%);
+  /* Type: Inter for Latin and digits, system fonts for Chinese */
+  --font-sans:
+    'Inter Variable', Inter, 'HarmonyOS Sans SC', 'PingFang SC', 'Microsoft YaHei UI',
+    'Microsoft YaHei', sans-serif;
+  --fs-xs: 12px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 22px;
+  /* Spacing (multiples of 4) */
+  --space-half: 4px;
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;
   --space-4: 32px;
+  --nav-height: 52px;
   font-family: var(--font-sans);
+  font-size: var(--fs-md);
   color: var(--ink);
-  background: var(--paper);
+  background: var(--canvas);
   font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
 }
 * {
   box-sizing: border-box;
@@ -53,12 +85,12 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
 ::selection {
-  color: var(--paper);
-  background: var(--ink);
+  color: var(--ink);
+  background: var(--brand);
 }
 [hidden] {
   display: none !important;
