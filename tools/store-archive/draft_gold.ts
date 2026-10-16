@@ -1,6 +1,7 @@
 // 阶段 3a：用工作台的本地识别（与网页、API 同一套代码）给金标准门店的主平面页出草稿。
 // 结果写到 资源库/09_门店档案/_cache/gold/<store_id>/draft.json，供看图修正后生成 plan.json。
-// 用法（仓库根目录，先 pnpm install）：node tools/store-archive/draft_gold.ts [--repo "D:/text demo"]
+// 用法（仓库根目录，先 pnpm install）：node tools/store-archive/draft_gold.ts [--repo "D:/text demo"] [store_id ...]
+// 不带店号时处理名单里全部门店。
 import { readFile, mkdir, writeFile } from 'node:fs/promises'
 import { createRequire } from 'node:module'
 import path from 'node:path'
@@ -15,6 +16,7 @@ const LONG_SIDE_PX = 2400
 const thisRepo = path.resolve(import.meta.dirname, '../..')
 const at = process.argv.indexOf('--repo')
 const repo = at >= 0 ? process.argv[at + 1]! : 'D:/text demo'
+const only = process.argv.slice(2).filter((a, i, all) => a !== '--repo' && all[i - 1] !== '--repo')
 const archive = path.join(thisRepo, '资源库/09_门店档案')
 
 const fromWeb = createRequire(path.join(thisRepo, 'apps/web/package.json'))
@@ -88,6 +90,7 @@ const pathOf = new Map(sources.sources.map((s) => [s.source_id, s.path]))
 const catalog = await loadCatalog()
 
 for (const row of gold) {
+  if (only.length && !only.includes(row.store_id)) continue
   const file = path.join(repo, pathOf.get(row.store_id)!)
   const doc = await pdfjs.getDocument({
     data: new Uint8Array(await readFile(file)),
