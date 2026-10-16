@@ -91,12 +91,14 @@ export function axisLines(content: VectorContent): Line[] {
 export interface LineIndex {
   h: Map<number, Line[]>
   v: Map<number, Line[]>
+  /** Coverages already worked out: the boundary search asks for the same sides many times. */
+  covered: Map<string, number>
 }
 
 export const bucket = (pos: number) => Math.round(pos / CLUSTER_PX)
 
 export function buildIndex(lines: Line[]): LineIndex {
-  const index: LineIndex = { h: new Map(), v: new Map() }
+  const index: LineIndex = { h: new Map(), v: new Map(), covered: new Map() }
   for (const l of lines) {
     const horizontal = Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX
     const vertical = Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX
@@ -114,6 +116,21 @@ export function buildIndex(lines: Line[]): LineIndex {
 
 /** How much of the segment [a, b] at position `at` (on the other axis) the lines cover. */
 function coverage(index: LineIndex, horizontal: boolean, at: number, a: number, b: number): number {
+  const key = `${horizontal ? 'h' : 'v'}${at},${a},${b}`
+  const known = index.covered.get(key)
+  if (known !== undefined) return known
+  const value = measureCoverage(index, horizontal, at, a, b)
+  index.covered.set(key, value)
+  return value
+}
+
+function measureCoverage(
+  index: LineIndex,
+  horizontal: boolean,
+  at: number,
+  a: number,
+  b: number,
+): number {
   const spans: [number, number][] = []
   for (const l of (horizontal ? index.h : index.v).get(bucket(at)) ?? []) {
     const pos = horizontal ? (l.y1 + l.y2) / 2 : (l.x1 + l.x2) / 2
