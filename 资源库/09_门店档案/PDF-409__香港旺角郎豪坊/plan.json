@@ -1,0 +1,772 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-19T12:35:07+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-409",
+ "name": "香港旺角郎豪坊",
+ "si": "SI2.0",
+ "shop_type": "边厅店",
+ "source": {
+  "page": 12,
+  "image_px": [
+   2400,
+   1696.7254408060453
+  ],
+  "pdf_scale": 2.0151133501259446
+ },
+ "calibration_px": {
+  "mmPerPixel": 5.2999,
+  "originPx": [
+   636.1,
+   317.4
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     832.9,
+     1466.9
+    ],
+    "mm": 3360,
+    "what": "底部门口 3360（电动水晶卷帘开口）",
+    "mm_per_px": 5.2997,
+    "error_pct": -0.0
+   },
+   {
+    "axis": "x",
+    "px": [
+     689.2,
+     832.9
+    ],
+    "mm": 760,
+    "what": "底部左橱窗玻璃 760",
+    "mm_per_px": 5.2888,
+    "error_pct": -0.21
+   },
+   {
+    "axis": "x",
+    "px": [
+     1466.9,
+     1627.2
+    ],
+    "mm": 850,
+    "what": "底部右橱窗玻璃 850（到右侧原墙面）",
+    "mm_per_px": 5.3026,
+    "error_pct": 0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     614.9,
+     1384.1
+    ],
+    "mm": 4080,
+    "what": "右侧总深 4080（斜墙内面到门口玻璃）",
+    "mm_per_px": 5.3042,
+    "error_pct": 0.08
+   },
+   {
+    "axis": "z",
+    "px": [
+     614.9,
+     1340.7
+    ],
+    "mm": 3850,
+    "what": "右侧 3850（到卷帘线）",
+    "mm_per_px": 5.3045,
+    "error_pct": 0.09
+   },
+   {
+    "axis": "z",
+    "px": [
+     1340.7,
+     1384.1
+    ],
+    "mm": 230,
+    "what": "右侧 230（卷帘线到玻璃）",
+    "mm_per_px": 5.2995,
+    "error_pct": -0.01
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    2.901,
+    0.0
+   ],
+   [
+    5.253,
+    1.577
+   ],
+   [
+    5.253,
+    5.663
+   ],
+   [
+    0.322,
+    5.663
+   ],
+   [
+    0.282,
+    5.461
+   ],
+   [
+    0.381,
+    5.442
+   ],
+   [
+    0.142,
+    4.205
+   ],
+   [
+    0.081,
+    3.89
+   ],
+   [
+    0.374,
+    3.454
+   ],
+   [
+    0.0,
+    3.204
+   ],
+   [
+    1.542,
+    0.906
+   ],
+   [
+    2.06,
+    1.254
+   ]
+  ],
+  "height": 2.45,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     1.073,
+     5.663
+    ],
+    "b": [
+     4.373,
+     5.663
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     0.142,
+     4.205
+    ],
+    "b": [
+     0.352,
+     5.295
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     1.073,
+     5.663
+    ],
+    "b": [
+     4.373,
+     5.663
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      2.06,
+      1.383
+     ],
+     [
+      2.06,
+      1.254
+     ],
+     [
+      2.901,
+      0.0
+     ],
+     [
+      4.963,
+      1.383
+     ]
+    ],
+    "height": null,
+    "label": "员工休息室 2.3㎡（两扇 M723 暗门，消防喉在仓里，内有强弱电箱、原有新风管）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      4.592,
+      5.032
+     ],
+     [
+      5.253,
+      5.032
+     ],
+     [
+      5.253,
+      5.423
+     ],
+     [
+      4.592,
+      5.423
+     ]
+    ],
+    "height": null,
+    "label": "右下暗门后小间（通右橱窗，暗门宽约 370）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      0.381,
+      5.218
+     ],
+     [
+      1.073,
+      5.218
+     ],
+     [
+      1.073,
+      5.663
+     ],
+     [
+      0.381,
+      5.663
+     ]
+    ],
+    "height": 0.15,
+    "label": "左橱窗地台 H150（橱窗，电子水牌放在上面；用户 10-19 规则）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      4.373,
+      5.446
+     ],
+     [
+      5.253,
+      5.446
+     ],
+     [
+      5.253,
+      5.663
+     ],
+     [
+      4.373,
+      5.663
+     ]
+    ],
+    "height": 0.15,
+    "label": "右橱窗地台 H150（橱窗，LED 屏放在上面；用户 10-19 规则）"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 3360 mm = 634.0000000000001 px；x 向 760 mm = 143.69999999999993 px；x 向 850 mm = 160.29999999999995 px；z 向 4080 mm = 769.1999999999999 px；z 向 3850 mm = 725.8000000000001 px；z 向 230 mm = 43.399999999999864 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "2.4米AVBU配件柜 H:2400mm",
+    "assetId": "asset-36887885",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 0.943,
+    "cz": 2.398,
+    "w": 2.4,
+    "d": 0.55,
+    "h": 2.425,
+    "rotation": 303.8,
+    "facing": 303.8,
+    "drawn_size_m": [
+     2.389,
+     0.46
+    ],
+    "size_deviation_m": [
+     -0.011,
+     -0.09
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上原文“2.4米AVBU配件櫃 H:2400mm”，沿左斜墙（33.8°）斜放；图上柜深约 460，型号 550，按图上框中心放"
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米中岛桌 H:900mm",
+    "assetId": "asset-24312623",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.708,
+    "cz": 3.074,
+    "w": 1.8,
+    "d": 0.804,
+    "h": 1.214,
+    "rotation": 0,
+    "facing": null,
+    "drawn_size_m": [
+     1.799,
+     0.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.004
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上原文“1.8米中島桌”"
+   },
+   {
+    "ref": "g03",
+    "label": "1.8米中岛桌 H:900mm",
+    "assetId": "asset-24312623",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.708,
+    "cz": 4.773,
+    "w": 1.8,
+    "d": 0.804,
+    "h": 1.214,
+    "rotation": 0,
+    "facing": null,
+    "drawn_size_m": [
+     1.799,
+     0.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.004
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上原文“1.8米中島桌”"
+   },
+   {
+    "ref": "g04",
+    "label": "1.5米收银边桌 H:900mm（含开箱位）",
+    "assetId": null,
+    "function": "cashier",
+    "category": null,
+    "source": "new",
+    "cx": 4.842,
+    "cz": 2.257,
+    "w": 1.51,
+    "d": 0.5,
+    "h": null,
+    "rotation": 90,
+    "facing": 90,
+    "drawn_size_m": [
+     1.51,
+     0.5
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上原文“1.5米收銀邊桌 H:900mm”，桌面内写“開箱”；物料清单 1.5m SI2.0 收银边柜 W1500×D500×H900；模型库缺此款（只有 1.8 米）"
+   },
+   {
+    "ref": "g05",
+    "label": "75寸广告机(横向)",
+    "assetId": "asset-11479197",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 4.617,
+    "cz": 4.022,
+    "w": 1.69,
+    "d": 0.05,
+    "h": 0.958,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.69,
+     null
+    ],
+    "size_deviation_m": [
+     -0.0,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      4.592,
+      3.177
+     ],
+     [
+      4.592,
+      4.867
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "图上原文“75寸廣告機(橫向)+1.8米儲物櫃内嵌”；物料清单 TCL 75P30X；嵌在右侧新做墙内，朝店内"
+   },
+   {
+    "ref": "g06",
+    "label": "1.8米储物柜（内嵌）",
+    "assetId": null,
+    "function": "storage",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 4.842,
+    "cz": 4.022,
+    "w": 1.69,
+    "d": 0.5,
+    "h": 0.9,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.69,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.592,
+      3.177
+     ],
+     [
+      4.592,
+      4.867
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "与 75 寸广告机同一面墙（图上同一条标注）；物料清单 1.8m SI2.0 储物边柜 W1800×D500×H900，图上内嵌位实长约 1690；模型库缺 SI2.0 储物边柜"
+   },
+   {
+    "ref": "g07",
+    "label": "43寸电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.722,
+    "cz": 5.413,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     0.55,
+     0.35
+    ],
+    "size_deviation_m": [
+     -0.0,
+     -0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上原文“電子水牌”，在左橱窗内，寸数取物料清单“43寸電子水牌（國內）”；屏幕朝向图上未标，暂定朝主人流通道"
+   },
+   {
+    "ref": "g08",
+    "label": "LED屏",
+    "assetId": null,
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 4.839,
+    "cz": 5.557,
+    "w": 0.65,
+    "d": 0.15,
+    "h": null,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     0.65,
+     0.15
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "在右橱窗内（玻璃后），图上 650×150；物料清单未列，模型库缺此款"
+   },
+   {
+    "ref": "g09",
+    "label": "铝复合板形象墙+LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 3.326,
+    "cz": 1.528,
+    "w": 0.881,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     0.881,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.885,
+      1.503
+     ],
+     [
+      3.767,
+      1.503
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "图上原文“鋁複合板形象墻+LOGO”，在休息室前墙正中，取虚线 LOGO 范围约 880 宽"
+   },
+   {
+    "ref": "g10",
+    "label": "不锈钢背板+发光LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 2.728,
+    "cz": 5.688,
+    "w": 1.15,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.15,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.153,
+      5.663
+     ],
+     [
+      3.302,
+      5.663
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "图上原文“不鏽鋼背板+發光LOGO”，门楣（高 400）上，LOGO 高 300，宽约 1150"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     3.204
+    ],
+    [
+     0.05,
+     3.237
+    ],
+    [
+     1.38,
+     1.253
+    ],
+    [
+     1.762,
+     1.509
+    ],
+    [
+     2.06,
+     1.503
+    ],
+    [
+     2.06,
+     1.254
+    ],
+    [
+     1.542,
+     0.906
+    ]
+   ],
+   "label": "左斜墙包墙（新做）：配件柜背板 60 mm + 斜墙凹位处整块包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     2.06,
+     1.383
+    ],
+    [
+     4.963,
+     1.383
+    ],
+    [
+     5.253,
+     1.577
+    ],
+    [
+     5.253,
+     3.012
+    ],
+    [
+     5.092,
+     3.012
+    ],
+    [
+     5.092,
+     1.503
+    ],
+    [
+     2.06,
+     1.503
+    ]
+   ],
+   "label": "休息室前墙（新做，铝复合板形象墙，含两扇 M723 暗门洞）+ 收银边桌背后包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     4.592,
+     3.012
+    ],
+    [
+     5.253,
+     3.012
+    ],
+    [
+     5.253,
+     5.032
+    ],
+    [
+     4.592,
+     5.032
+    ]
+   ],
+   "label": "右侧广告机墙（新做），内嵌 75 寸横屏广告机 + 1.8 米储物柜，墙面与收银边桌正面齐平"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.508,
+     3.544
+    ],
+    [
+     0.507,
+     3.544
+    ],
+    [
+     0.232,
+     3.956
+    ],
+    [
+     0.211,
+     4.192
+    ],
+    [
+     0.142,
+     4.205
+    ],
+    [
+     0.216,
+     3.98
+    ]
+   ],
+   "label": "左下墙垛包板（新做），与配件柜正面齐平"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     4.402,
+     5.403
+    ],
+    [
+     4.647,
+     5.403
+    ],
+    [
+     4.647,
+     5.453
+    ],
+    [
+     4.402,
+     5.453
+    ]
+   ],
+   "label": "右橱窗顶部包板（新做）"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 23.07,
+  "stated_area_m2": 23,
+  "outer_size_m": [
+   5.25,
+   5.66
+  ],
+  "height_source": "图注“店鋪天花高度：2.45m”（外立面 2.75 m，门楣 400 mm）",
+  "counts_by_function": {
+   "accessory_cabinet": 1,
+   "island_table": 2,
+   "cashier": 1,
+   "screen": 3,
+   "storage": 1,
+   "signage": 2
+  },
+  "counts_by_category": {
+   "软装道具": 4,
+   "未映射": 1,
+   "信息化物料": 3,
+   "品牌标识": 2
+  },
+  "matched_assets": 5
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "异形边厅：左侧与上方是两道互相垂直的原有斜墙（与水平成 33.8°），右侧原墙竖直，底部临主人流通道",
+   "比例另用斜向尺寸核对：上斜墙 3455（625+2830）、左斜墙 4800（1510+2770+525）均为 5.30 mm/px",
+   "左下原有消防门（EXIT 出口）向店外开；左上斜墙在配件柜上端有凹位，凹位整块包墙",
+   "物料清单另有有线摄像头 5 个，平面图未画，不列",
+   "配件柜背靠墙按型号进深摆放，2 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
+  ]
+ }
+}

@@ -1,0 +1,1028 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-19T12:33:28+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-279",
+ "name": "深圳海雅缤纷城",
+ "si": "SI2.0",
+ "shop_type": "边厅店",
+ "source": {
+  "page": 13,
+  "image_px": [
+   2400,
+   1697.3871733966746
+  ],
+  "pdf_scale": 1.4251781472684086
+ },
+ "calibration_px": {
+  "mmPerPixel": 8.8411,
+  "originPx": [
+   794.5,
+   266.6
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     794.5,
+     1481.6
+    ],
+    "mm": 6070,
+    "what": "顶部总宽 6070（租赁线到租赁线）",
+    "mm_per_px": 8.8342,
+    "error_pct": -0.08
+   },
+   {
+    "axis": "x",
+    "px": [
+     820.25,
+     1466.9
+    ],
+    "mm": 5710,
+    "what": "底部门头净宽 5710（两侧门框之间）",
+    "mm_per_px": 8.8301,
+    "error_pct": -0.12
+   },
+   {
+    "axis": "x",
+    "px": [
+     1414.0,
+     1481.6
+    ],
+    "mm": 600,
+    "what": "顶部右侧 600（右上柱宽）",
+    "mm_per_px": 8.8757,
+    "error_pct": 0.39
+   },
+   {
+    "axis": "z",
+    "px": [
+     266.55,
+     1417.9
+    ],
+    "mm": 10175,
+    "what": "右侧总深 10175",
+    "mm_per_px": 8.8375,
+    "error_pct": -0.04
+   },
+   {
+    "axis": "z",
+    "px": [
+     266.7,
+     1284.15
+    ],
+    "mm": 8990,
+    "what": "左侧总深 8990",
+    "mm_per_px": 8.8358,
+    "error_pct": -0.06
+   },
+   {
+    "axis": "z",
+    "px": [
+     416.15,
+     1284.15
+    ],
+    "mm": 7670,
+    "what": "左侧 7670（休息室隔墙面以下）",
+    "mm_per_px": 8.8364,
+    "error_pct": -0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     713.6,
+     982.9
+    ],
+    "mm": 2380,
+    "what": "右侧 2380（2.4 米配件柜）",
+    "mm_per_px": 8.8377,
+    "error_pct": -0.04
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    5.476,
+    0.0
+   ],
+   [
+    5.476,
+    0.599
+   ],
+   [
+    6.075,
+    0.599
+   ],
+   [
+    6.075,
+    10.179
+   ],
+   [
+    5.946,
+    10.182
+   ],
+   [
+    5.217,
+    10.18
+   ],
+   [
+    4.489,
+    10.145
+   ],
+   [
+    3.763,
+    10.075
+   ],
+   [
+    3.041,
+    9.971
+   ],
+   [
+    2.326,
+    9.834
+   ],
+   [
+    1.617,
+    9.662
+   ],
+   [
+    0.918,
+    9.459
+   ],
+   [
+    0.228,
+    9.222
+   ],
+   [
+    0.0,
+    9.135
+   ]
+  ],
+  "height": 3.0,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     5.946,
+     10.182
+    ],
+    "b": [
+     0.228,
+     9.222
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     6.075,
+     0.599
+    ],
+    "b": [
+     6.075,
+     2.222
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     6.075,
+     8.037
+    ],
+    "b": [
+     6.075,
+     8.938
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     5.946,
+     10.182
+    ],
+    "b": [
+     5.217,
+     10.18
+    ]
+   },
+   {
+    "a": [
+     5.217,
+     10.18
+    ],
+    "b": [
+     4.489,
+     10.145
+    ]
+   },
+   {
+    "a": [
+     4.489,
+     10.145
+    ],
+    "b": [
+     3.763,
+     10.075
+    ]
+   },
+   {
+    "a": [
+     3.763,
+     10.075
+    ],
+    "b": [
+     3.041,
+     9.971
+    ]
+   },
+   {
+    "a": [
+     3.041,
+     9.971
+    ],
+    "b": [
+     2.326,
+     9.834
+    ]
+   },
+   {
+    "a": [
+     2.326,
+     9.834
+    ],
+    "b": [
+     1.617,
+     9.662
+    ]
+   },
+   {
+    "a": [
+     1.617,
+     9.662
+    ],
+    "b": [
+     0.918,
+     9.459
+    ]
+   },
+   {
+    "a": [
+     0.918,
+     9.459
+    ],
+    "b": [
+     0.228,
+     9.222
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      4.018,
+      0.0
+     ],
+     [
+      4.018,
+      1.202
+     ],
+     [
+      0.0,
+      1.202
+     ]
+    ],
+    "height": null,
+    "label": "员工休息室 5.4㎡（右墙设乙级防火暗门）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      5.476,
+      2.222
+     ],
+     [
+      6.075,
+      2.222
+     ],
+     [
+      6.075,
+      2.872
+     ],
+     [
+      5.476,
+      2.872
+     ]
+    ],
+    "height": null,
+    "label": "强弱电箱（暗门）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      5.476,
+      3.15
+     ],
+     [
+      6.075,
+      3.15
+     ],
+     [
+      6.075,
+      3.951
+     ],
+     [
+      5.476,
+      3.951
+     ]
+    ],
+    "height": null,
+    "label": "柱（右侧中部，包在新做墙内）"
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      5.268,
+      6.375
+     ],
+     [
+      5.919,
+      6.633
+     ],
+     [
+      5.662,
+      7.284
+     ],
+     [
+      5.01,
+      7.027
+     ]
+    ],
+    "height": null,
+    "label": "斜向结构柱（约 700×700，转约 22°，包在新做墙内）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      4.91,
+      7.337
+     ],
+     [
+      5.976,
+      7.337
+     ],
+     [
+      5.976,
+      8.037
+     ],
+     [
+      4.91,
+      8.037
+     ]
+    ],
+    "height": 0.15,
+    "label": "场景橱窗地台 H150（上面放假山模型、无人机模型、发光字）"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 6070 mm = 687.0999999999999 px；x 向 5710 mm = 646.6500000000001 px；x 向 600 mm = 67.59999999999991 px；z 向 10175 mm = 1151.3500000000001 px；z 向 8990 mm = 1017.45 px；z 向 7670 mm = 868.0000000000001 px；z 向 2380 mm = 269.29999999999995 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "1.8米收银台 H:900mm（收银+开箱）",
+    "assetId": "asset-24432224",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.102,
+    "cz": 2.323,
+    "w": 1.8,
+    "d": 0.603,
+    "h": 1.205,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.8,
+     0.6
+    ],
+    "size_deviation_m": [
+     0.0,
+     -0.003
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米中岛桌 H:900mm",
+    "assetId": "asset-24312623",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.703,
+    "cz": 4.523,
+    "w": 1.8,
+    "d": 0.804,
+    "h": 1.214,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.802,
+     0.801
+    ],
+    "size_deviation_m": [
+     0.002,
+     -0.003
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g03",
+    "label": "1.8米开箱桌 H:900mm",
+    "assetId": "asset-16469753",
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.604,
+    "cz": 4.523,
+    "w": 1.8,
+    "d": 0.8,
+    "h": 0.902,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.802,
+     0.8
+    ],
+    "size_deviation_m": [
+     0.002,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "框取桌体；两侧各 2 只凳子未另列；型号尺寸含凳子；碰撞与尺寸标注按桌体"
+   },
+   {
+    "ref": "g04",
+    "label": "1.8米中岛桌 H:900mm",
+    "assetId": "asset-24312623",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.703,
+    "cz": 7.225,
+    "w": 1.8,
+    "d": 0.804,
+    "h": 1.214,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.802,
+     0.801
+    ],
+    "size_deviation_m": [
+     0.002,
+     -0.003
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g05",
+    "label": "1.8米中岛桌 H:900mm",
+    "assetId": "asset-24312623",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.604,
+    "cz": 7.225,
+    "w": 1.8,
+    "d": 0.804,
+    "h": 1.214,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.802,
+     0.8
+    ],
+    "size_deviation_m": [
+     0.002,
+     -0.004
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g06",
+    "label": "2.4米AVBU配件柜 H:2400mm",
+    "assetId": "asset-36887885",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 5.412,
+    "cz": 5.147,
+    "w": 2.4,
+    "d": 0.55,
+    "h": 2.425,
+    "rotation": 90,
+    "facing": 90,
+    "drawn_size_m": [
+     2.392,
+     0.461
+    ],
+    "size_deviation_m": [
+     -0.008,
+     -0.089
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g07",
+    "label": "电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.667,
+    "cz": 9.898,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     0.551,
+     0.35
+    ],
+    "size_deviation_m": [
+     0.001,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "物料清单为 43 寸电子水牌（国内）；立在门头右端内侧"
+   },
+   {
+    "ref": "g08",
+    "label": "内嵌86寸广告机（横向）",
+    "assetId": "asset-11525433",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.103,
+    "cz": 6.853,
+    "w": 1.93,
+    "d": 0.194,
+    "h": 1.104,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     1.931,
+     null
+    ],
+    "size_deviation_m": [
+     0.001,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      0.2,
+      5.887
+     ],
+     [
+      0.2,
+      7.818
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在左墙包墙内，内框 1929 宽"
+   },
+   {
+    "ref": "g09",
+    "label": "徕卡品牌墙+发光LOGO（W3000）",
+    "assetId": null,
+    "function": "signage",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 0.225,
+    "cz": 3.522,
+    "w": 3.002,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     3.002,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.2,
+      2.021
+     ],
+     [
+      0.2,
+      5.023
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "立面 D：3000 宽画框组合（物料清单 1200×800×1、1040×570×2、730×570×1、410×570×3）"
+   },
+   {
+    "ref": "g10",
+    "label": "内嵌灯箱(1200*2300mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 5.162,
+    "cz": 3.088,
+    "w": 1.251,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.251,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      5.137,
+      2.462
+     ],
+     [
+      5.137,
+      3.713
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在右上包墙内"
+   },
+   {
+    "ref": "g11",
+    "label": "发光slogan",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 2.21,
+    "cz": 1.348,
+    "w": 1.441,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.441,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      1.49,
+      1.323
+     ],
+     [
+      2.931,
+      1.323
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "休息室前隔墙墙面（立面 C，宽度按立面估约 1.44 m）"
+   },
+   {
+    "ref": "g12",
+    "label": "门楣装LED屏幕+发光logo",
+    "assetId": null,
+    "function": "screen",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 3.043,
+    "cz": 9.959,
+    "w": 2.148,
+    "d": 0.05,
+    "h": null,
+    "rotation": 9.5,
+    "facing": 9.5,
+    "drawn_size_m": [
+     2.148,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      1.988,
+      9.757
+     ],
+     [
+      4.107,
+      10.112
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外弧形门楣中段 2125 宽（立面 A：1820/2125/1820 三段，两侧为星空灰铝复合板）；按弧线弦向近似；LOGO 指定高度 300 mm"
+   },
+   {
+    "ref": "g13",
+    "label": "内嵌灯箱(1100*2400mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 6.05,
+    "cz": 9.559,
+    "w": 1.101,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     1.101,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      6.075,
+      9.008
+     ],
+     [
+      6.075,
+      10.109
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "立面 B（外立面）：嵌在右前墙垛外侧，朝店外右侧通道"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     1.202
+    ],
+    [
+     4.018,
+     1.202
+    ],
+    [
+     4.018,
+     1.323
+    ],
+    [
+     0.0,
+     1.323
+    ]
+   ],
+   "label": "休息室前隔墙（新做，120 mm）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     1.323
+    ],
+    [
+     0.2,
+     1.323
+    ],
+    [
+     0.2,
+     8.019
+    ],
+    [
+     0.228,
+     8.019
+    ],
+    [
+     0.228,
+     9.222
+    ],
+    [
+     0.0,
+     9.135
+    ]
+   ],
+   "label": "左墙包墙（新做，200 mm，内嵌 86 寸广告机，门头处为门框）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.137,
+     2.222
+    ],
+    [
+     5.476,
+     2.222
+    ],
+    [
+     5.476,
+     3.951
+    ],
+    [
+     5.137,
+     3.951
+    ]
+   ],
+   "label": "右上包墙（新做，内嵌 1200×2300 灯箱），正面与配件柜柜面齐平"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.476,
+     2.872
+    ],
+    [
+     6.075,
+     2.872
+    ],
+    [
+     6.075,
+     3.15
+    ],
+    [
+     5.476,
+     3.15
+    ]
+   ],
+   "label": "电箱与柱之间包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.687,
+     3.951
+    ],
+    [
+     6.075,
+     3.951
+    ],
+    [
+     6.075,
+     6.343
+    ],
+    [
+     5.687,
+     6.343
+    ]
+   ],
+   "label": "配件柜背后包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.227,
+     6.343
+    ],
+    [
+     6.075,
+     6.343
+    ],
+    [
+     6.075,
+     7.337
+    ],
+    [
+     4.909,
+     7.337
+    ],
+    [
+     4.909,
+     7.134
+    ]
+   ],
+   "label": "斜柱包墙（左侧斜面顺柱子角度），下接场景橱窗"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.946,
+     8.938
+    ],
+    [
+     6.075,
+     8.938
+    ],
+    [
+     6.075,
+     10.179
+    ],
+    [
+     5.946,
+     10.179
+    ]
+   ],
+   "label": "右前包墙（门框，外侧嵌 1100×2400 灯箱）"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 59.56,
+  "stated_area_m2": 59.0,
+  "outer_size_m": [
+   6.08,
+   10.18
+  ],
+  "height_source": "图注“店铺天花高度：软膜3000mm、灯槽3200mm”，取软膜 3.0 m",
+  "counts_by_function": {
+   "cashier": 1,
+   "island_table": 3,
+   "unboxing_table": 1,
+   "accessory_cabinet": 1,
+   "screen": 3,
+   "signage": 4
+  },
+  "counts_by_category": {
+   "软装道具": 7,
+   "信息化物料": 4,
+   "品牌标识": 2
+  },
+  "matched_assets": 8
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "异形边厅：门头为弧形租赁线（半径约 15.5 m，圆心角约 23°），由于弧度平缓，按约 2.9° 一段折线（门框之间 8 段）近似，比每 15° 一段更贴合；右上角租赁线绕结构柱缺角 600×600",
+   "边界取红色租赁线：顶 6070、右 10175；左墙 200 包墙、休息室前 120 隔墙、右侧电箱/柱/配件柜/斜柱外包墙均为新做（网格斜线），记 hardscape",
+   "门头整面电动水晶卷帘门，内侧还有商场原有防火卷帘轨道，记为主入口兼开放边",
+   "右侧两处消防出口：右上 2.4 米高垭口通往店外常闭消防暗门；右侧中下 900 常闭消防暗门；另有原有消防门封堵（墙外，不影响边界）",
+   "右侧墙面：电箱前包墙（嵌 1200×2300 灯箱）与 2.4 米配件柜柜面齐平（x=1385.7）；斜柱包墙左面顺柱子 22° 斜下，下接场景橱窗（x=1349.8）",
+   "比例 1:50@A3，矢量尺寸链核对约 8.836 mm/px；顶部 '5670' 实测为 5470（5470+600=6070），按总尺寸核对",
+   "配件柜背靠墙按型号进深摆放，1 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
+  ]
+ }
+}
