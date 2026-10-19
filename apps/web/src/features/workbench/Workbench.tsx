@@ -123,12 +123,19 @@ export function Workbench({ project }: { project: Project }) {
   async function switchSi(style: SiStyle) {
     setSiBusy(true)
     try {
-      const notice = (await siSwitch.current?.(style)) ?? null
+      const result = (await siSwitch.current?.(style)) ?? { ok: true, message: null }
+      // Nothing was created: say why, and leave the project's default style as it was.
+      if (!result.ok) {
+        setSiNotice(result.message)
+        return
+      }
       // New generations and models added later follow the latest choice.
       if (project.siStyle !== style) {
         await updateProject.mutateAsync({ project, patch: { siStyle: style } })
       }
-      setSiNotice(notice ?? `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`)
+      setSiNotice(
+        result.message ?? `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`,
+      )
     } catch {
       setSiNotice(null)
     } finally {
