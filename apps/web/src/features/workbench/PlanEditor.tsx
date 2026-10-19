@@ -241,6 +241,7 @@ export function PlanEditor({
     assetMap,
     siStyle,
     projectSi,
+    draftOnThisStep: draft?.baseNodeId === baseNode.id,
     create,
     setPaused,
     finishDraft,
