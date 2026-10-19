@@ -20,6 +20,12 @@ export const ObstacleSchema = z.object({
   polygon: z.array(PointSchema).min(3).max(100),
   height: SizeSchema.nullable().default(null),
   label: z.string().trim().max(100).nullable().default(null),
+  /**
+   * A fixture added on site after the shell (a showcase platform, hollow cladding): it counts
+   * as floor area (props are simply kept off it), unlike columns and shafts of the shell, which
+   * take their floor away. Default false: part of the shell.
+   */
+  addedLater: z.boolean().optional(),
 })
 
 export const EntranceSchema = SegmentSchema.extend({ kind: z.enum(ENTRANCE_KINDS) })

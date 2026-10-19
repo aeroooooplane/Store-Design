@@ -193,3 +193,55 @@ describe('rectangleSpace', () => {
     expect(space.entrances).toEqual([{ a: [0, 6], b: [8, 6], kind: 'main' }])
   })
 })
+
+describe('addedLater obstacles', () => {
+  const base = {
+    schemaVersion: 1,
+    boundary: [
+      [0, 0],
+      [8, 0],
+      [8, 6],
+      [0, 6],
+    ],
+    height: 3.2,
+    entrances: [{ a: [3, 6], b: [5, 6], kind: 'main' }],
+  }
+  it('reads old spaces without the flag as part of the shell', () => {
+    const space = SpaceSchema.parse({
+      ...base,
+      obstacles: [
+        {
+          kind: 'column',
+          polygon: [
+            [1, 1],
+            [1.4, 1],
+            [1.4, 1.4],
+            [1, 1.4],
+          ],
+        },
+      ],
+    })
+    expect(space.obstacles[0]?.addedLater).toBeUndefined()
+  })
+
+  it('keeps a showcase platform marked as added after the shell', () => {
+    const space = SpaceSchema.parse({
+      ...base,
+      obstacles: [
+        {
+          kind: 'fixed',
+          polygon: [
+            [0, 0],
+            [3, 0],
+            [3, 0.6],
+            [0, 0.6],
+          ],
+          height: 0.15,
+          label: '橱窗地台 H150',
+          addedLater: true,
+        },
+      ],
+    })
+    expect(space.obstacles[0]).toMatchObject({ addedLater: true, height: 0.15 })
+  })
+})
