@@ -1208,6 +1208,7 @@ export interface paths {
                         siStyle?: "SI1.0" | "SI2.0";
                         /** Format: uuid */
                         sourceNodeId?: string;
+                        allowLayoutErrors?: boolean;
                     };
                 };
             };
