@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T12:33:28+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -206,8 +206,8 @@
       9.39
      ]
     ],
-    "height": null,
-    "label": "橱窗展示平台（X5 模型、小狗模型、绿植）"
+    "height": 0.15,
+    "label": "橱窗展示地台 H150（橱窗，上面放模型道具：X5 模型、小狗模型、绿植）"
    },
    {
     "kind": "fixed",

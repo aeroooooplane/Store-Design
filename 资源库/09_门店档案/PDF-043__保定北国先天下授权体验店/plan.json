@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T12:33:28+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -611,8 +611,8 @@
       2.464
      ]
     ],
-    "height": null,
-    "label": "橱窗造景区 5.6m²（橱窗台，摆单车与人模造景；左下角让出电子水牌位置）"
+    "height": 0.15,
+    "label": "橱窗造景地台 H150（橱窗，上面放单车与人模造景；左下角让出电子水牌位置）"
    },
    {
     "kind": "fixed",

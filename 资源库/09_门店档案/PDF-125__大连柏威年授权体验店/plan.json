@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T12:33:28+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -331,8 +331,8 @@
       7.772
      ]
     ],
-    "height": null,
-    "label": "模特橱窗（点状填充台面 + 斜向玻璃，内有模特道具）"
+    "height": 0.15,
+    "label": "模特橱窗地台 H150（点状填充台面 + 斜向玻璃，上面放模特道具）"
    }
   ],
   "calibration": {

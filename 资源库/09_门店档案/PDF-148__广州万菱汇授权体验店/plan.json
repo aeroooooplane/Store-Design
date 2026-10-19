@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T12:33:28+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -566,8 +566,8 @@
       15.738
      ]
     ],
-    "height": null,
-    "label": "AVBU 大橱窗 3.1㎡（场景橱窗，底座 H100；内有无人机模型、假山场景，后墙和右墙贴大海报，左侧 X8 全景无人机发光字）"
+    "height": 0.15,
+    "label": "AVBU 大橱窗地台 H150（3.1㎡，上面放无人机模型、假山场景；后墙和右墙贴大海报）"
    }
   ],
   "calibration": {

@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T12:33:28+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -377,6 +377,29 @@
     ],
     "height": null,
     "label": "斜向结构柱（约 700×700，转约 22°，包在新做墙内）"
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      4.91,
+      7.337
+     ],
+     [
+      5.976,
+      7.337
+     ],
+     [
+      5.976,
+      8.037
+     ],
+     [
+      4.91,
+      8.037
+     ]
+    ],
+    "height": 0.15,
+    "label": "场景橱窗地台 H150（上面放假山模型、无人机模型、发光字）"
    }
   ],
   "calibration": {
@@ -585,31 +608,6 @@
    },
    {
     "ref": "g08",
-    "label": "场景橱窗 底座H:100mm（假山模型+无人机模型+影翎/X8全景无人机发光字）",
-    "assetId": null,
-    "function": "display",
-    "category": "软装道具",
-    "source": "new",
-    "cx": 5.443,
-    "cz": 7.687,
-    "w": 1.065,
-    "d": 0.7,
-    "h": null,
-    "rotation": 0,
-    "facing": 0,
-    "drawn_size_m": [
-     1.065,
-     0.7
-    ],
-    "size_deviation_m": null,
-    "mount": "floor",
-    "elevation": null,
-    "location": "interior",
-    "render_as": "model",
-    "note": "非标定制，模型库缺此款；朝向按发光字朝门头（店外）记"
-   },
-   {
-    "ref": "g09",
     "label": "内嵌86寸广告机（横向）",
     "assetId": "asset-11525433",
     "function": "screen",
@@ -647,7 +645,7 @@
     "note": "嵌在左墙包墙内，内框 1929 宽"
    },
    {
-    "ref": "g10",
+    "ref": "g09",
     "label": "徕卡品牌墙+发光LOGO（W3000）",
     "assetId": null,
     "function": "signage",
@@ -682,7 +680,7 @@
     "note": "立面 D：3000 宽画框组合（物料清单 1200×800×1、1040×570×2、730×570×1、410×570×3）"
    },
    {
-    "ref": "g11",
+    "ref": "g10",
     "label": "内嵌灯箱(1200*2300mm)",
     "assetId": null,
     "function": "signage",
@@ -717,7 +715,7 @@
     "note": "嵌在右上包墙内"
    },
    {
-    "ref": "g12",
+    "ref": "g11",
     "label": "发光slogan",
     "assetId": null,
     "function": "signage",
@@ -752,7 +750,7 @@
     "note": "休息室前隔墙墙面（立面 C，宽度按立面估约 1.44 m）"
    },
    {
-    "ref": "g13",
+    "ref": "g12",
     "label": "门楣装LED屏幕+发光logo",
     "assetId": null,
     "function": "screen",
@@ -787,7 +785,7 @@
     "note": "店外弧形门楣中段 2125 宽（立面 A：1820/2125/1820 三段，两侧为星空灰铝复合板）；按弧线弦向近似；LOGO 指定高度 300 mm"
    },
    {
-    "ref": "g14",
+    "ref": "g13",
     "label": "内嵌灯箱(1100*2400mm)",
     "assetId": null,
     "function": "signage",
@@ -1005,11 +1003,10 @@
    "unboxing_table": 1,
    "accessory_cabinet": 1,
    "screen": 3,
-   "display": 1,
    "signage": 4
   },
   "counts_by_category": {
-   "软装道具": 8,
+   "软装道具": 7,
    "信息化物料": 4,
    "品牌标识": 2
   },

@@ -284,7 +284,8 @@ def main() -> None:
             "entrances": [{"kind": e["kind"], "a": m(e["a"]), "b": m(e["b"])} for e in edits.get("entrances_px", [])],
             "openEdges": [{"a": m(e["a"]), "b": m(e["b"])} for e in edits.get("open_edges_px", [])],
             "obstacles": [
-                {"kind": o["kind"], "polygon": box_poly(o["box"]) if "box" in o else [m(p) for p in o["polygon"]], "height": None, "label": o.get("label")}
+                {"kind": o["kind"], "polygon": box_poly(o["box"]) if "box" in o else [m(p) for p in o["polygon"]],
+                 "height": o.get("height_m"), "label": o.get("label")}  # 高度（米）：橱窗地台 0.15，其余平面图读不出为 null
                 for o in edits.get("obstacles_px", [])
             ],
             "calibration": {
