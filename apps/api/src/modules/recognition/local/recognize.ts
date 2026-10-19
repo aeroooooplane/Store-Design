@@ -15,6 +15,7 @@ import type { ChainReading } from './dimension-chain.ts'
 import { findRegion, inRing, ringArea } from './region.ts'
 import type { PxPoint } from './region.ts'
 import {
+  ADDED_LATER_WORDS,
   OBSTACLE_WORDS,
   boxAround,
   boxFromLines,
@@ -286,6 +287,7 @@ export function recognizeVector(
         ],
         height: null,
         label,
+        ...(ADDED_LATER_WORDS.test(label) ? { addedLater: true } : {}),
       })
       usedBoxes.add(boxKey(box))
       continue

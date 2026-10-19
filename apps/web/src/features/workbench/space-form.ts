@@ -78,6 +78,8 @@ export interface ObstacleRow {
    * be kept or deleted. Null for the editable axis-aligned rectangles.
    */
   polygon: [number, number][] | null
+  /** A fixture added after the shell (counts as area, kept clear of props); see ObstacleSchema. */
+  addedLater?: boolean
 }
 
 export interface PolygonForm {
@@ -977,6 +979,7 @@ function obstacleToSpace(row: ObstacleRow) {
     label: row.label.trim() || null,
     height: row.heightMm === null ? null : mmToM(row.heightMm),
     polygon: row.polygon ?? [point(x, z), point(x + w, z), point(x + w, z + d), point(x, z + d)],
+    ...(row.addedLater ? { addedLater: true } : {}),
   }
 }
 
@@ -1093,6 +1096,7 @@ function obstacleToRow(o: Obstacle): ObstacleRow {
     wMm: mToMm(Math.max(...xs) - x),
     dMm: mToMm(Math.max(...zs) - z),
     polygon: isAxisRectangle(o.polygon) ? null : o.polygon.map((p) => [p[0], p[1]]),
+    ...(o.addedLater ? { addedLater: true } : {}),
   }
 }
 
