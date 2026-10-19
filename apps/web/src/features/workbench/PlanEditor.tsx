@@ -75,8 +75,10 @@ interface PlanEditorProps {
   left: ReactNode
   /** The project's history, to place copies next to their original. */
   nodes: NodeSummary[]
-  /** Furniture of this SI style is offered in the model picker. */
+  /** The step's own SI style: its furniture is offered in the model picker. */
   siStyle: SiStyle
+  /** The project's, for steps saved before nodes kept their style. */
+  projectSi: SiStyle
   /** The project's market (LOGO versions in 3D). */
   market?: Market | undefined
   /** The shared draft, if it continues this node. */
@@ -99,6 +101,7 @@ export function PlanEditor({
   left,
   nodes,
   siStyle,
+  projectSi,
   market,
   draft,
   assets,
@@ -237,6 +240,7 @@ export function PlanEditor({
     layout: state.layout,
     assetMap,
     siStyle,
+    projectSi,
     create,
     setPaused,
     finishDraft,

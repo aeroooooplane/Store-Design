@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest'
 import type { Asset } from '../schemas/asset.ts'
 import type { Layout, LayoutItem } from '../schemas/layout.ts'
-import { SI_SWAP, siSwapName, swapLayoutSi } from './si-swap.ts'
+import {
+  SI_SWAP,
+  layoutSi,
+  nodeSiStyle,
+  sameLayoutProps,
+  siSwapName,
+  swapLayoutSi,
+} from './si-swap.ts'
 
 type Mini = Pick<Asset, 'id' | 'name' | 'function' | 'footprint' | 'front' | 'placeable'>
 const asset = (
@@ -134,5 +141,33 @@ describe('SI_SWAP', () => {
   it('names the switched copy after the step it came from', () => {
     expect(siSwapName('方案 · 按面积推荐', 'SI2.0')).toBe('方案 · 按面积推荐 · SI2.0')
     expect(siSwapName('方案 · 按面积推荐 · SI2.0（2）', 'SI1.0')).toBe('方案 · 按面积推荐 · SI1.0')
+  })
+})
+
+describe('the SI style of a step', () => {
+  // asset-2595882 is listed for swapping to SI2.0 (an SI1.0 cabinet), asset-34327615 the other way.
+  const si1 = item('a', 'asset-2595882', 1, 0.3)
+  const si2 = item('b', 'asset-34327615', 3, 0.3)
+
+  it('is the style most of its swappable props belong to', () => {
+    expect(layoutSi(layout(si1))).toBe('SI1.0')
+    expect(layoutSi(layout(si2, { ...si2, id: 'c' }, si1))).toBe('SI2.0')
+    expect(layoutSi(layout(si1, si2))).toBeNull()
+    expect(layoutSi(layout(item('p', null, 2, 2)))).toBeNull()
+  })
+
+  it('is the step’s own when saved with one, else its props’, else the project’s', () => {
+    expect(nodeSiStyle({ siStyle: 'SI2.0', layout: layout(si1) }, 'SI1.0')).toBe('SI2.0')
+    expect(nodeSiStyle({ siStyle: null, layout: layout(si2) }, 'SI1.0')).toBe('SI2.0')
+    expect(nodeSiStyle({ siStyle: null, layout: layout() }, 'SI2.0')).toBe('SI2.0')
+    expect(nodeSiStyle({ siStyle: null, layout: null }, 'SI1.0')).toBe('SI1.0')
+  })
+
+  it('tells an untouched copy of a layout from a changed one', () => {
+    const swapped = swapLayoutSi(layout(si1), 'SI2.0', catalog).layout
+    expect(sameLayoutProps(swapped, swapLayoutSi(layout(si1), 'SI2.0', catalog).layout)).toBe(true)
+    const moved = { ...swapped, items: swapped.items.map((i) => ({ ...i, cx: i.cx + 0.1 })) }
+    expect(sameLayoutProps(moved, swapped)).toBe(false)
+    expect(sameLayoutProps(layout(si1), layout(si1, si2))).toBe(false)
   })
 })

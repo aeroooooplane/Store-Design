@@ -53,7 +53,14 @@ export const setStyleTool = tool({
       tools.db,
       tools.ctx,
       tools.project.id,
-      { parentId, kind: stage, name, layout: swap.layout, sourceNodeId: node.id },
+      {
+        parentId,
+        kind: stage,
+        name,
+        layout: swap.layout,
+        siStyle: input.siStyle,
+        sourceNodeId: node.id,
+      },
       { origin: 'agent' },
     )
     return {

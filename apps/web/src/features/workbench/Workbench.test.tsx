@@ -285,6 +285,94 @@ describe('Workbench', () => {
     )
   })
 
+  describe('each step keeps its own SI style', () => {
+    const cabinet: LayoutItem = {
+      ...table,
+      id: 'c1',
+      assetId: 'asset-2595882',
+      function: 'accessory_cabinet',
+      name: 'SI1.0 1.2米配件柜',
+      cx: 2,
+      cz: 0.225,
+      w: 1.2,
+      d: 0.45,
+      h: 2.4,
+      placeholder: false,
+    }
+    const assets = [
+      catalogAsset('asset-2595882', 'SI1.0', 1.2, 0.45, '+Z'),
+      catalogAsset('asset-34327615', 'SI2.0', 1.2, 0.54, '+Z'),
+    ]
+    const pressed = () =>
+      within(screen.getByRole('group', { name: 'SI 风格' }))
+        .getAllByRole('button')
+        .filter((b) => b.getAttribute('aria-pressed') === 'true')
+        .map((b) => b.textContent)
+    const posts = () => server.calls.filter((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
+
+    it('shows the original in its own style after a switch, and goes back to it from an untouched copy', async () => {
+      server = fakeApi(
+        [designNode(S1, null), designNode(P1, S1, { name: '方案 A', layout: layout([cabinet]) })],
+        null,
+        assets,
+      )
+      renderWorkbench(`?node=${P1}`)
+      await screen.findByRole('button', { name: '撤回' })
+      expect(pressed()).toEqual(['SI1.0'])
+
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      expect(posts()[0]?.body).toMatchObject({ name: '方案 A · SI2.0', siStyle: 'SI2.0' })
+      await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
+
+      // The bug: clicking back on A showed it in SI2.0.
+      fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
+      await screen.findByRole('heading', { name: '方案 A' })
+      await waitFor(() => expect(pressed()).toEqual(['SI1.0']))
+
+      // On A again: its untouched SI2.0 copy is already there, so no second copy.
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      expect(posts()).toHaveLength(1)
+
+      // On the untouched copy: back to A, the copy stays.
+      await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
+      fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
+      expect(await screen.findByRole('heading', { name: '方案 A' })).toBeTruthy()
+      expect(await screen.findByText(/已回到 SI1.0 的“方案 A”/)).toBeTruthy()
+      expect(posts()).toHaveLength(1)
+      expect(screen.getByRole('button', { name: '方案 A · SI2.0' })).toBeTruthy()
+    })
+
+    it('switches a copy changed since its switch into a new sibling of the other style', async () => {
+      const B = '55555555-5555-4555-8555-555555555555'
+      const moved: LayoutItem = { ...cabinet, assetId: 'asset-34327615', cx: 4, cz: 0.27, d: 0.54 }
+      server = fakeApi(
+        [
+          designNode(S1, null),
+          designNode(P1, S1, { name: '方案 A', layout: layout([cabinet]) }),
+          designNode(B, S1, {
+            name: '方案 A · SI2.0',
+            siStyle: 'SI2.0',
+            layout: layout([moved]),
+          }),
+        ],
+        null,
+        assets,
+      )
+      renderWorkbench(`?node=${B}`)
+      await screen.findByRole('button', { name: '撤回' })
+      await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
+
+      fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
+      expect(await screen.findByRole('heading', { name: '方案 A · SI1.0' })).toBeTruthy()
+      const c = posts()[0]?.body as { siStyle: string; parentId: string; layout: Layout }
+      expect(c).toMatchObject({ siStyle: 'SI1.0', parentId: S1 })
+      // Made from B as changed: the cabinet stays where it was moved to.
+      expect(c.layout.items[0]).toMatchObject({ assetId: 'asset-2595882', cx: 4 })
+    })
+  })
+
   it('keeps plan or 3D when moving to another plan of the same space', async () => {
     server = fakeApi(
       [
