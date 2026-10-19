@@ -63,10 +63,15 @@ function catalogAsset(
 }
 
 /** In-memory stand-in for the node, draft, asset and layout APIs. */
-function fakeApi(nodes: DesignNode[], draft: Draft | null, assets: Asset[] = []) {
+function fakeApi(
+  nodes: DesignNode[],
+  draft: Draft | null,
+  assets: Asset[] = [],
+  options: { failCreate?: boolean } = {},
+) {
   const state = { nodes: [...nodes], draft, project }
-  const fail = (status: number, code: string) =>
-    json(status, { error: { code, message: code, requestId: 'r' } })
+  const fail = (status: number, code: string, message = code) =>
+    json(status, { error: { code, message, requestId: 'r' } })
 
   const { calls, fetchMock } = stubFetch(({ request, url, route, body, ifMatch }) => {
     if (route === `GET /api/v1/projects/${PID}/nodes`) {
@@ -97,6 +102,9 @@ function fakeApi(nodes: DesignNode[], draft: Draft | null, assets: Asset[] = [])
       return new Response(null, { status: 204 })
     }
     if (route === `POST /api/v1/projects/${PID}/nodes`) {
+      if (options.failCreate) {
+        return fail(400, 'VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题')
+      }
       const input = body as Partial<DesignNode> & Pick<DesignNode, 'kind' | 'name' | 'parentId'>
       const created = designNode(crypto.randomUUID(), input.parentId, {
         ...input,
@@ -371,6 +379,83 @@ describe('Workbench', () => {
       expect(c).toMatchObject({ siStyle: 'SI1.0', parentId: S1 })
       // Made from B as changed: the cabinet stays where it was moved to.
       expect(c.layout.items[0]).toMatchObject({ assetId: 'asset-2595882', cx: 4 })
+    })
+
+    it('keeps the edits of the original step when switching from its draft', async () => {
+      const edited: LayoutItem = { ...cabinet, cx: 3 }
+      const draft: Draft = {
+        projectId: PID,
+        baseNodeId: P1,
+        layout: layout([edited]),
+        revision: 2,
+        updatedAt: '2026-10-19T04:00:00.000Z',
+      }
+      server = fakeApi(
+        [designNode(S1, null), designNode(P1, S1, { name: '方案 A', layout: layout([cabinet]) })],
+        draft,
+        assets,
+      )
+      renderWorkbench(`?node=${P1}`)
+      await screen.findByRole('button', { name: '撤回' })
+
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      // The switched copy is made from the edited layout…
+      const created = posts()[0]?.body as { layout: Layout }
+      expect(created.layout.items[0]).toMatchObject({ cx: 3 })
+      // …and the edits stay on the original step as its draft (not dropped, not lost).
+      expect(server.calls.some((c) => c.method === 'DELETE')).toBe(false)
+      expect(server.state.draft?.baseNodeId).toBe(P1)
+
+      // The original step is marked as carrying the draft; clicking it opens the edits again.
+      fireEvent.keyDown(screen.getByRole('button', { name: '方案 A（有草稿）' }), { key: 'Enter' })
+      await screen.findByRole('heading', { name: '方案 A' })
+      expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
+    })
+
+    it('says the switch failed when the server refuses the new step', async () => {
+      server = fakeApi(
+        [designNode(S1, null), designNode(P1, S1, { name: '方案 A', layout: layout([cabinet]) })],
+        null,
+        assets,
+        { failCreate: true },
+      )
+      renderWorkbench(`?node=${P1}`)
+      await screen.findByRole('button', { name: '撤回' })
+
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      expect(
+        await screen.findByText(/切换失败：进入三维效果前须先解决越界、重叠等问题，没有新建节点/),
+      ).toBeTruthy()
+      // Nothing was created, and the project's default style did not change either.
+      expect(server.calls.some((c) => c.method === 'PATCH')).toBe(false)
+      expect(screen.queryByRole('heading', { name: '方案 A · SI2.0' })).toBeNull()
+    })
+
+    it('lets a white model take the swapped layout even when the new sizes overlap', async () => {
+      const W = '66666666-6666-4666-8666-666666666666'
+      server = fakeApi(
+        [
+          designNode(S1, null),
+          designNode(P1, S1, { name: '方案 A' }),
+          designNode(W, P1, {
+            kind: 'white',
+            name: '三维效果',
+            siStyle: 'SI1.0',
+            layout: layout([cabinet]),
+          }),
+        ],
+        null,
+        assets,
+      )
+      renderWorkbench(`?node=${W}`)
+      await screen.findByRole('heading', { name: '三维效果' })
+
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      await waitFor(() => expect(posts()).toHaveLength(1))
+      const created = posts()[0]?.body as { kind: string; allowLayoutErrors?: boolean }
+      expect(created).toMatchObject({ kind: 'white', allowLayoutErrors: true })
+      expect(screen.queryByText(/切换失败/)).toBeNull()
     })
   })
 

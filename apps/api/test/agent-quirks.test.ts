@@ -482,3 +482,48 @@ describe('e. 导入不合规的项目', () => {
     expect(await projectCount()).toBe(before)
   })
 })
+
+describe('e. 三维节点带着换款后的越界保存（新增）', () => {
+  it('takes a layout with errors when allowLayoutErrors is set, and refuses it otherwise', async () => {
+    const project = await newProject('换款越界')
+    const space = await spaceOf(project.id)
+    const plan = await create(project.id, {
+      parentId: space.id,
+      kind: 'plan',
+      name: '方案',
+      layout: layout(island('a', 2, 2)),
+    })
+    const outside = layout(island('a', 20, 2))
+    const refused = await post(project.id, {
+      parentId: plan.id,
+      kind: 'white',
+      name: '白模',
+      layout: outside,
+    })
+    expect(refused.statusCode).toBe(400)
+    expect(refused.json().error.message).toContain('进入三维效果前须先解决越界、重叠等问题')
+    // The SI switch swaps sizes without regard to collisions: the white step takes the layout
+    // and the errors come back as issues to report.
+    const accepted = await post(project.id, {
+      parentId: plan.id,
+      kind: 'white',
+      name: '白模 · 换款',
+      layout: outside,
+      allowLayoutErrors: true,
+    })
+    expect(accepted.statusCode).toBe(201)
+    expect(accepted.json().issues.some((i: { severity: string }) => i.severity === 'error')).toBe(
+      true,
+    )
+    // Render nodes keep the strict check: nothing to look at through a wall.
+    const render = await post(project.id, {
+      parentId: plan.id,
+      kind: 'render',
+      name: '渲染',
+      layout: outside,
+      siStyle: 'SI1.0',
+      allowLayoutErrors: true,
+    })
+    expect(render.statusCode).toBe(400)
+  })
+})
