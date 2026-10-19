@@ -256,6 +256,32 @@ describe('recognizeVector', () => {
     expect(island?.cz).toBeCloseTo((350 - oy) / 100, 2)
   })
 
+  it('marks showcase platforms as added later, columns as the shell', () => {
+    const content: VectorContent = {
+      ...SKETCH,
+      rects: [
+        ...SKETCH.rects,
+        // 橱窗地台 800 × 400 mm, at the front of the shop.
+        { x: 560, y: 380, w: 80, h: 40, color: '#000000' },
+        // 柱 300 × 300 mm.
+        { x: 150, y: 150, w: 30, h: 30, color: '#000000' },
+      ],
+      texts: [
+        ...SKETCH.texts,
+        { text: '橱窗地台', x: 570, y: 390, w: 60, h: 12 },
+        { text: '结构柱', x: 158, y: 158, w: 36, h: 12 },
+      ],
+    }
+    const draft = recognizeVector(content, {}, CATALOG)
+    const obstacles = draft.space?.obstacles ?? []
+    expect(obstacles.find((o) => o.label === '橱窗地台')).toMatchObject({
+      kind: 'fixed',
+      addedLater: true,
+    })
+    expect(obstacles.find((o) => o.label === '结构柱')).toMatchObject({ kind: 'column' })
+    expect(obstacles.find((o) => o.label === '结构柱')?.addedLater).toBeUndefined()
+  })
+
   it('keeps props on the wall face in the shop, only farther ones outside', () => {
     const item = (label: string, cz: number) => ({
       ref: label,

@@ -931,3 +931,29 @@ describe('slanted walls', () => {
     expect(r.layout.planning).toMatchObject({ placed: 4 })
   })
 })
+
+describe('usableArea and fixtures added after the shell', () => {
+  const shell = () => rectangleSpace(9, 7, 3.2)
+  const obstacle = (kind: 'column' | 'shaft' | 'fixed', addedLater?: boolean) => ({
+    kind,
+    polygon: [
+      [4.3, 3.3],
+      [4.8, 3.3],
+      [4.8, 3.8],
+      [4.3, 3.8],
+    ] as [number, number][],
+    height: null,
+    label: null,
+    ...(addedLater ? { addedLater } : {}),
+  })
+
+  it('takes columns and shafts off the floor but counts platforms added later as floor', () => {
+    expect(usableArea(space({ ...shell(), obstacles: [obstacle('column')] }))).toBeCloseTo(62.75, 6)
+    expect(usableArea(space({ ...shell(), obstacles: [obstacle('shaft')] }))).toBeCloseTo(62.75, 6)
+    // A showcase platform is floor with props kept off it: the shop does not get smaller.
+    expect(usableArea(space({ ...shell(), obstacles: [obstacle('fixed', true)] }))).toBeCloseTo(
+      63,
+      6,
+    )
+  })
+})
