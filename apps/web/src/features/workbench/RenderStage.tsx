@@ -18,7 +18,9 @@ import type {
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { DisplayPanel } from '../display/DisplayPanel.tsx'
-import { displayKeys, useNodeDisplay } from '../display/queries.ts'
+import { storedPptViews } from '../display/pptViews.ts'
+import { displayKeys, useDisplayRules, useNodeDisplay } from '../display/queries.ts'
+import { tableShots } from '../display/table3d/shots.ts'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import {
   renderArchiveUrl,
@@ -84,6 +86,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const planRef = useRef<SVGSVGElement>(null)
   const displayPlanRef = useRef<SVGSVGElement>(null)
   const display = useNodeDisplay(node.id)
+  const displayRules = useDisplayRules()
   const hasDisplay = (display.data?.tables.length ?? 0) > 0
   const [withDisplay, setWithDisplay] = useState(true)
   const deliveries = useDeliveries(node.id)
@@ -170,6 +173,22 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     return { planPng: plan.png, planViewBox: [box.x, box.y, box.width, box.height] }
   }
 
+  /** The 展陈 PPT's request: its plan, and the 3D views unless only the slot diagrams are wanted. */
+  async function displayExport() {
+    const views = storedPptViews()
+    const data = display.data
+    const tables3d =
+      views === 'plan' || !data || !displayRules.data
+        ? []
+        : await tableShots(data.tables, {
+            rules: displayRules.data.rules,
+            photos: displayRules.data.photos,
+            si: siStyle,
+            end: data.edits.landscapeEnd,
+          })
+    return { ...(await exportDisplayPlan()), views, tables3d }
+  }
+
   /** Draws the numbered plan at print size, then the server builds both PDFs and the ZIP. */
   async function deliver() {
     const svg = planRef.current
@@ -180,7 +199,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
       await createDelivery.mutateAsync({
         planPng: plan.png,
         planSvg: plan.svg,
-        ...(hasDisplay && withDisplay ? { display: await exportDisplayPlan() } : {}),
+        ...(hasDisplay && withDisplay ? { display: await displayExport() } : {}),
       })
     } catch (caught) {
       if (!createDelivery.isError) setError(caught)
@@ -240,6 +259,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               layout={layout}
               assets={assets}
               numbers={numbers}
+              spacing
               title={`${node.name} 交付平面`}
             />
             <PlanView
@@ -296,6 +316,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   flaggedIds={NO_FLAGS}
                   look="material"
                   siStyle={siStyle}
+                  market={project.market}
                   onSelect={() => undefined}
                   onReady={() => setViewerReady(true)}
                   title={`${node.name} 三维材质`}

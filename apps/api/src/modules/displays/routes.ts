@@ -14,10 +14,13 @@ import {
   NodeDisplaySchema,
   NodeDisplayUpdateSchema,
   UPLOAD_MAX_BYTES,
+  DisplayTaskExportRequestSchema,
+  DisplayBodyListSchema,
 } from '@store/shared'
 import type { AppConfig } from '../../config/env.ts'
 import { requireRevision } from '../../lib/revision.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
+import { listDisplayBodies } from './bodies.ts'
 import { rulesView } from './common.ts'
 import { exportNodeDisplay, getNodeDisplay, updateNodeDisplay } from './node.ts'
 import * as tasks from './tasks.ts'
@@ -58,6 +61,18 @@ export const displayRoutes: FastifyPluginAsyncZod<{
       },
     },
     () => rulesView(db),
+  )
+
+  app.get(
+    '/display-bodies',
+    {
+      schema: {
+        tags: ['displays'],
+        summary: '展陈三维用的真实桌体（去掉产品后的中岛桌与带托盘边柜）及下载链接',
+        response: { 200: DisplayBodyListSchema, ...errors },
+      },
+    },
+    () => listDisplayBodies(db, roots),
   )
 
   // ---- Workflow 2: display tasks from uploaded pictures ----
@@ -212,16 +227,29 @@ export const displayRoutes: FastifyPluginAsyncZod<{
   app.post(
     '/display-tasks/:taskId/export',
     {
+      bodyLimit: EXPORT_BODY_LIMIT,
       config: { rateLimit: { max: 20, timeWindow: '1 minute' } },
       schema: {
         tags: ['displays'],
         summary: '生成展陈方案 PPT 与展陈清单 Excel',
+        description: '请求体可选：每张桌出三维页、平面页或两者，以及浏览器画好的各桌三维图。',
         params: TaskParams,
-        response: { 201: DisplayExportSchema, ...errors },
+        body: DisplayTaskExportRequestSchema.nullish(),
+        response: { 201: DisplayExportSchema, ...errors, 413: ApiErrorSchema },
       },
     },
     async (request, reply) =>
-      reply.code(201).send(await tasks.exportTask(db, request.ctx, roots, request.params.taskId)),
+      reply
+        .code(201)
+        .send(
+          await tasks.exportTask(
+            db,
+            request.ctx,
+            roots,
+            request.params.taskId,
+            DisplayTaskExportRequestSchema.parse(request.body ?? {}),
+          ),
+        ),
   )
 
   // ---- Workflow 1: the display of a render node ----

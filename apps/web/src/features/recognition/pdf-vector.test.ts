@@ -10,6 +10,8 @@ import { extractPageVector, pageScale } from './pdf-vector.ts'
 
 /** The subset of pdfjs-dist 5.7 `OPS` that pdf-vector reads. */
 const OPS = {
+  setLineWidth: 2,
+  setDash: 6,
   save: 10,
   restore: 11,
   transform: 12,
@@ -87,8 +89,13 @@ const packedRect = (x: number, y: number, w: number, h: number) => [
   DRAW.closePath,
 ]
 
-const extract = (ops: Op[], scale = 1, W = 100, H = 100) =>
+const extractRaw = (ops: Op[], scale = 1, W = 100, H = 100) =>
   extractPageVector(fakePage(W, H, ops), scale, OPS)
+/** Geometry and colours only: stroke width and dashes have tests of their own. */
+const extract = async (ops: Op[], scale = 1, W = 100, H = 100) => {
+  const content = await extractRaw(ops, scale, W, H)
+  return { ...content, lines: content.lines.map(({ w: _w, dash: _dash, ...line }) => line) }
+}
 
 describe('pageScale', () => {
   it('fits the long side of the page to the given pixels', () => {
@@ -132,8 +139,9 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
       OPS,
     )
     expect(content.lines).toEqual([
-      { x1: 20, y1: 180, x2: 120, y2: 180, color: '#ff0000' },
-      { x1: 120, y1: 180, x2: 120, y2: 120, color: '#ff0000' },
+      // The default stroke width of 1 is 2 px at this scale.
+      { x1: 20, y1: 180, x2: 120, y2: 180, color: '#ff0000', w: 2 },
+      { x1: 120, y1: 180, x2: 120, y2: 120, color: '#ff0000', w: 2 },
     ])
     expect(content.rects).toEqual([])
   })
@@ -179,7 +187,7 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
     ])
   })
 
-  it('skips quadratic curves (code 3, four numbers) like cubic ones', async () => {
+  it('reads quadratic curves (code 3, four numbers); pieces under 3 px are dropped', async () => {
     const content = await extract([
       path(OPS.stroke, [
         DRAW.moveTo,
@@ -204,13 +212,15 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
         70,
       ]),
     ])
+    // The small curve's pieces are too short to keep; the segment after it starts at its end.
     expect(content.lines).toEqual([
       { x1: 0, y1: 40, x2: 10, y2: 40 },
+      { x1: 20, y1: 40, x2: 30, y2: 40 },
       { x1: 0, y1: 30, x2: 10, y2: 30 },
     ])
   })
 
-  it('skips curves, and the segment right after a curve', async () => {
+  it('cuts cubic curves into eight straight pieces and goes on from their end', async () => {
     const content = await extract([
       path(OPS.stroke, [
         DRAW.moveTo,
@@ -231,7 +241,67 @@ describe('extractPageVector: pdf.js 5 packed paths', () => {
         50,
       ]),
     ])
-    expect(content.lines).toEqual([{ x1: 60, y1: 50, x2: 90, y2: 50 }])
+    // Straight segments come first, then the curve's pieces.
+    expect(content.lines).toHaveLength(10)
+    expect(content.lines.slice(0, 2)).toEqual([
+      { x1: 30, y1: 50, x2: 60, y2: 50 },
+      { x1: 60, y1: 50, x2: 90, y2: 50 },
+    ])
+    expect(content.lines[2]).toMatchObject({ x1: 0, y1: 50 })
+    expect(content.lines[9]).toMatchObject({ x2: 30, y2: 50 })
+  })
+
+  it('follows a quarter circle drawn as one cubic curve', async () => {
+    // The usual cubic for a quarter circle of radius 40 round (50, 50), in page space.
+    const k = 40 * 0.5523
+    const content = await extract([
+      path(OPS.stroke, [DRAW.moveTo, 90, 50, DRAW.curveTo, 90, 50 + k, 50 + k, 90, 50, 90]),
+    ])
+    expect(content.lines).toHaveLength(8)
+    for (const l of content.lines) {
+      // Viewport y is flipped: the centre is at (50, 50) there too.
+      expect(Math.hypot(l.x2 - 50, l.y2 - 50)).toBeCloseTo(40, 0)
+    }
+  })
+
+  it('keeps the stroke width in pixels and marks dashed strokes', async () => {
+    const content = await extractRaw(
+      [
+        [OPS.setLineWidth, [2]],
+        [OPS.setDash, [[3, 2], 0]],
+        path(OPS.stroke, [DRAW.moveTo, 0, 10, DRAW.lineTo, 40, 10]),
+        [OPS.setDash, [[], 0]],
+        path(OPS.stroke, [DRAW.moveTo, 0, 20, DRAW.lineTo, 40, 20]),
+        // Filled shapes have no stroke width.
+        path(OPS.fill, [...packedRect(50, 50, 20, 20)]),
+      ],
+      2,
+    )
+    expect(content.lines[0]).toEqual({ x1: 0, y1: 180, x2: 80, y2: 180, w: 4, dash: true })
+    expect(content.lines[1]).toEqual({ x1: 0, y1: 160, x2: 80, y2: 160, w: 4 })
+    expect(content.lines.slice(2).every((l) => l.w === undefined && !l.dash)).toBe(true)
+  })
+
+  it('drops the curves of small filled shapes (lettering), not of large ones', async () => {
+    const curve = (x: number, size: number) =>
+      path(OPS.fill, [
+        DRAW.moveTo,
+        x,
+        10,
+        DRAW.curveTo,
+        x,
+        10 + size,
+        x + size,
+        10 + size,
+        x + size,
+        10,
+        DRAW.closePath,
+      ])
+    const small = await extract([curve(0, 10)])
+    // Only the closing straight edge of the small shape is left.
+    expect(small.lines).toEqual([{ x1: 10, y1: 90, x2: 0, y2: 90 }])
+    const large = await extract([curve(0, 60)])
+    expect(large.lines.length).toBeGreaterThan(8)
   })
 
   it('colours filled paths with the fill colour, else the stroke colour', async () => {
@@ -348,14 +418,15 @@ describe('extractPageVector: pdf.js 4 paths and loose operators', () => {
     ])
     expect(content.lines).toEqual([
       { x1: 0, y1: 100, x2: 10, y2: 100 },
-      // The curve breaks the chain; closePath still joins the last point to the start.
+      // The curve's pieces are too short to keep; the path goes on from its end.
+      { x1: 3, y1: 97, x2: 3, y2: 80 },
       { x1: 3, y1: 80, x2: 0, y2: 100 },
     ])
     // The 1 × 1 rectangle is too small; the other is kept in pixels, top-left based.
     expect(content.rects).toEqual([{ x: 50, y: 40, w: 10, h: 10, color: '#ff0001' }])
   })
 
-  it('skips four coordinates for curveTo2 and curveTo3', async () => {
+  it('reads four coordinates for curveTo2 and curveTo3 (these tiny curves leave no piece)', async () => {
     const content = await extract([
       [
         OPS.constructPath,

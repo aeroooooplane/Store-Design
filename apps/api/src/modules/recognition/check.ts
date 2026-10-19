@@ -1,5 +1,6 @@
 import {
   RECOGNITION_MIN_CONFIDENCE,
+  distanceToBoundary,
   functionFor,
   isSimplePolygon,
   locatePoint,
@@ -10,6 +11,8 @@ import type { Asset, DraftItem, ItemFunction, RecognitionDraft } from '@store/sh
 /** No shop is smaller; a smaller "boundary" is a detail drawing or a wrong scale. */
 const MIN_AREA_M2 = 5
 const MAX_AREA_M2 = 5000
+/** Props this close to the boundary (m) are on its wall (a screen on the wall face), not outside. */
+export const WALL_REACH_M = 0.3
 
 /** "1.2米配件柜" → 1.2; "1800mm" → 1.8; "2*1.2配件柜" → 1.2 (the width, after the count). */
 export function sizeInLabel(label: string): number | null {
@@ -63,9 +66,45 @@ export interface CatalogMatch {
 const usable = (a: Asset) => !a.retired && a.placeable
 
 /**
- * Which catalogue model a label on the plan means. An exact name wins; otherwise the
- * function word plus a size (from the label or the drawn box) narrows the family; a
- * function word alone picks the family's usual model and says so.
+ * Words naming a kind of sign or screen. A label with one means only models named with it too:
+ * a light box is no logo, though both are signage of about the same size.
+ */
+const KIND_WORDS = ['灯箱', 'logo', '海报', '徕卡墙', '水牌', '广告机']
+
+/** Screen size in inches ("75寸广告机", "55 inch") and which way it stands. */
+function screenOf(label: string): { inches: number | null; way: '横' | '竖' | null } {
+  const inches = /(\d{2,3})\s*(?:寸|吋|英寸|inch)/i.exec(label)?.[1]
+  const way = /横|horizontal/i.test(label) ? '横' : /竖|vertical/i.test(label) ? '竖' : null
+  return { inches: inches ? Number(inches) : null, way }
+}
+
+/** The words of a name without sizes, units and punctuation. */
+const nameWords = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/\d+(?:\.\d+)?\s*(?:米|mm|m|寸)?/g, '')
+    .replace(/[()（）·_\-+*:：\s]/g, '')
+
+/**
+ * How well a model's name fits the label: the label's characters it shares, less a little for
+ * each of its own the label lacks ("开箱桌" is an 开箱桌 rather than an 开箱储物柜; plain "收银" is
+ * the plain 收银台).
+ */
+function likeness(label: string, asset: Asset): number {
+  const want = nameWords(label)
+  const own = nameWords(asset.standardName || asset.name)
+  let shared = 0
+  for (const ch of new Set(want)) if (own.includes(ch)) shared++
+  const extra = [...own].filter((ch) => !want.includes(ch)).length
+  return shared - extra * 0.1
+}
+
+/**
+ * Which catalogue model a label on the plan means. An exact name (of the project's SI family
+ * or 通用) wins; otherwise the function word plus a size (from the label or the drawn box)
+ * narrows the family, and the name closest to the label goes first; a function word alone picks
+ * the family's usual model and says so. Models without a web model stand in as placeholders
+ * when the family has nothing else (screens).
  */
 export function matchCatalog(
   label: string,
@@ -80,16 +119,56 @@ export function matchCatalog(
   const exact = catalog
     .filter((a) => normaliseLabel(a.name) === name && !a.retired)
     .sort((a, b) => rank(a) - rank(b))[0]
-  if (exact) return { asset: exact, function: exact.function, confidence: 0.95, note: null }
+  // A name of the other SI family stands for its own family's counterpart when there is one.
+  const counterpart = (a: Asset) =>
+    rank(a) === 2 && catalog.some((o) => o.function === a.function && usable(o) && rank(o) === 0)
+  if (exact && !counterpart(exact)) {
+    return { asset: exact, function: exact.function, confidence: 0.95, note: null }
+  }
 
   if (fn === 'other') return { asset: null, function: 'other', confidence: 0.3, note: null }
-  const family = catalog.filter((a) => a.function === fn && usable(a))
+  const lower = name.toLowerCase()
+  // The kind named first: "75寸广告机上加logo" is a screen with a logo on it.
+  const kind = KIND_WORDS.map((k) => ({ k, at: lower.indexOf(k) }))
+    .filter((w) => w.at >= 0)
+    .sort((p, q) => p.at - q.at)[0]?.k
+  const ofKind = (a: Asset) => !kind || a.name.toLowerCase().includes(kind)
+  const placeable = catalog.filter((a) => a.function === fn && usable(a) && ofKind(a))
+  // Only screens stand in without a web model: a light box or a poster without one has its own
+  // picture, which a drawing's label does not tell.
+  const placeholders =
+    fn === 'screen'
+      ? catalog.filter((a) => a.function === fn && !a.retired && !a.placeable && ofKind(a))
+      : []
+  let family = placeable.length ? placeable : placeholders
   if (!family.length) {
     return {
       asset: null,
       function: fn,
       confidence: 0.5,
       note: '模型库中没有这类模型，已按占位处理',
+    }
+  }
+  const placeholderNote = placeable.length ? '' : '（模型库中没有网页模型，按占位显示）'
+  // Screens go by their inches and which way they stand.
+  const screen = screenOf(name)
+  const sized =
+    screen.inches === null ? [] : family.filter((a) => a.name.includes(`${screen.inches}寸`))
+  if (sized.length) family = sized
+  // Screens stand landscape unless the label says otherwise.
+  const turned = family.filter((a) => a.name.includes(`${screen.way ?? '横'}屏`))
+  if (sized.length && turned.length) family = turned
+  else if (screen.way && turned.length) family = turned
+  const closer = (a: Asset, b: Asset) => likeness(name, b) - likeness(name, a)
+  if (sized.length) {
+    const chosen = [...family].sort((a, b) => rank(a) - rank(b) || closer(a, b))[0]
+    if (chosen) {
+      return {
+        asset: chosen,
+        function: fn,
+        confidence: 0.8,
+        note: `按名称与寸数对应到「${chosen.name}」${placeholderNote}`,
+      }
     }
   }
   const longSide = (a: Asset) => Math.max(a.footprint.w, a.footprint.d)
@@ -100,12 +179,15 @@ export function matchCatalog(
   const size = sizeInLabel(name) ?? (drawnSize ? Math.max(drawnSize.w, drawnSize.d) : null)
   if (size !== null) {
     const tolerance = sizeInLabel(name) !== null ? 0.15 : 0.25
+    const gap = (a: Asset) => Math.abs(longSide(a) - size)
     const bySize = family
-      .filter((a) => Math.abs(longSide(a) - size) <= tolerance)
+      .filter((a) => gap(a) <= tolerance)
       .sort(
         (a, b) =>
           rank(a) - rank(b) ||
-          Math.abs(longSide(a) - size) - Math.abs(longSide(b) - size) ||
+          Math.round(gap(a) * 10) - Math.round(gap(b) * 10) ||
+          closer(a, b) ||
+          gap(a) - gap(b) ||
           depthGap(a) - depthGap(b),
       )
     if (bySize[0]) {
@@ -113,18 +195,18 @@ export function matchCatalog(
         asset: bySize[0],
         function: fn,
         confidence: sizeInLabel(name) !== null ? 0.85 : 0.7,
-        note: `按名称与尺寸对应到「${bySize[0].name}」`,
+        note: `按名称与尺寸对应到「${bySize[0].name}」${placeholderNote}`,
       }
     }
   }
   const sizes = new Set(family.map((a) => longSide(a).toFixed(1)))
-  const preferred = [...family].sort((a, b) => rank(a) - rank(b))[0]
+  const preferred = [...family].sort((a, b) => rank(a) - rank(b) || closer(a, b))[0]
   if (sizes.size === 1 && preferred) {
     return {
       asset: preferred,
       function: fn,
       confidence: 0.65,
-      note: `按名称对应到「${preferred.name}」，请确认`,
+      note: `按名称对应到「${preferred.name}」，请确认${placeholderNote}`,
     }
   }
   return {
@@ -179,7 +261,10 @@ export function checkDraft(draft: RecognitionDraft): RecognitionDraft {
 
   const items: DraftItem[] = draft.items.map((item) => {
     if (!space || item.source === 'outside') return item
-    const inside = locatePoint([item.cx, item.cz], space.boundary) !== 'outside'
+    const at: [number, number] = [item.cx, item.cz]
+    const inside =
+      locatePoint(at, space.boundary) !== 'outside' ||
+      distanceToBoundary(at, space.boundary) <= WALL_REACH_M
     if (inside) return item
     return {
       ...item,

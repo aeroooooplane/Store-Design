@@ -318,6 +318,8 @@ const legacyBackup = {
             w: 1.8,
             d: 1,
             h: 0.9,
+            // Any angle is kept now (it used to be imported as 0° with a warning).
+            rotation: 30,
           },
           {
             id: 'real',
@@ -339,7 +341,8 @@ const legacyBackup = {
             w: 1.2,
             d: 0.45,
             h: 1.5,
-            rotation: 90,
+            // Within 3° of a quarter turn: that turn.
+            rotation: 91,
             assetId: 'asset-999',
           },
           {
@@ -417,6 +420,7 @@ describe('project import and export', () => {
       cz: 2.11,
       placeholder: true,
       function: 'island_table',
+      rotation: 30,
     })
     expect(plan.layout?.items[1]).toMatchObject({ assetId: 'asset-1', placeholder: false })
     expect(plan.layout?.items[2]).toMatchObject({ assetId: null, placeholder: true, rotation: 90 })

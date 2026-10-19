@@ -67,7 +67,8 @@ export function deliveryLegend(
     const asset = item.assetId ? assets.get(item.assetId) : undefined
     const key = asset
       ? `asset:${item.assetId}:${item.placeholder ? 'box' : 'model'}`
-      : `box:${item.name}:${mm(item.w)}x${mm(item.d)}x${mm(item.h)}`
+      : // A box without a model, long side first: turned a quarter it is still the same box.
+        `box:${item.name}:${mm(Math.max(item.w, item.d))}x${mm(Math.min(item.w, item.d))}x${mm(item.h)}`
     let group = groups.get(key)
     if (!group) {
       group = {

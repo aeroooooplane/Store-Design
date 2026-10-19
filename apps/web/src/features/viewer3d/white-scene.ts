@@ -1,14 +1,37 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
-import { defaultCameras } from '@store/shared'
-import type { Asset, Camera, LayoutItem, ShopType, SiStyle, Space } from '@store/shared'
+import {
+  defaultCameras,
+  fixtureSolids,
+  frontCorners,
+  itemElevation,
+  itemMount,
+  itemTilt,
+  modelBox,
+  scaleFromCorner,
+  turnPoint,
+} from '@store/shared'
+import type {
+  Asset,
+  Camera,
+  Corner,
+  Fixture,
+  LayoutItem,
+  Market,
+  ModelSize,
+  ShopType,
+  SiStyle,
+  Space,
+} from '@store/shared'
 import { finishModel } from './finish-model.ts'
+import { createRotateRing, placeRotateRing, rotationOnFloor } from './rotate-ring.ts'
 import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
+import { signFaces, wallPicture } from './wall-picture.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
@@ -37,6 +60,20 @@ export interface SceneHandlers {
     cz: number,
     gesture: { group: string; snap: boolean },
   ) => void
+  /**
+   * A LOGO dragged by a corner of its front (see scaleFromCorner): its new scale, centre and
+   * bottom height. Without it the corners do nothing.
+   */
+  onResize?: (
+    itemId: string,
+    placement: { scale: number; cx: number; cz: number; elevation: number },
+    gesture: { group: string },
+  ) => void
+  /**
+   * The selected prop turned by its rotation ring: the angle the pointer points it at; `snap`
+   * is off while Alt is held. Without it no ring is shown.
+   */
+  onRotate?: (itemId: string, rotation: number, gesture: { group: string; snap: boolean }) => void
 }
 
 export interface LoadStatus {
@@ -60,7 +97,14 @@ interface PlacedItem {
   finishState: 'none' | 'loading' | 'ready' | 'failed'
   /** Invisible box over the footprint: what a click hits (cheap whatever the model). */
   hit: THREE.Mesh
+  /** A LOGO's model size at scale 1, for resizing by its corners; null for other props. */
+  model: ModelSize | null
 }
+
+/** Screen pixels within which the pointer is on a LOGO corner. */
+const CORNER_PX = 12
+/** Size of the corner grips drawn on the selected LOGO. */
+const GRIP_M = 0.04
 
 /** One unit box and one never-drawn material shared by every hit box. */
 const HIT_BOX = new THREE.BoxGeometry(1, 1, 1)
@@ -79,6 +123,8 @@ export class WhiteScene {
   private readonly canvas: HTMLCanvasElement
   private readonly room = new THREE.Group()
   private readonly props = new THREE.Group()
+  /** 空心隔板: boxes in the wall material. */
+  private readonly fixtures = new THREE.Group()
   private readonly marks = new THREE.Group()
   /** Hit boxes of the props; picking tests these, not the models. */
   private readonly hits = new THREE.Group()
@@ -92,6 +138,17 @@ export class WhiteScene {
   private handlers: SceneHandlers | null = null
   private statusListener: ((status: LoadStatus) => void) | null = null
   private drag: { id: string; dx: number; dz: number; group: string } | null = null
+  /** A LOGO corner being dragged: the LOGO when the drag began and the plane of its front. */
+  private cornerDrag: {
+    start: LayoutItem
+    model: ModelSize
+    corner: Corner
+    plane: THREE.Plane
+    group: string
+  } | null = null
+  /** The ring round the selected prop (see rotate-ring.ts), and a turn being dragged on it. */
+  private ring: THREE.Group | null = null
+  private turnDrag: { id: string; centre: [number, number]; group: string } | null = null
   private frame = 0
   private disposed = false
   private look: Look = 'white'
@@ -133,7 +190,15 @@ export class WhiteScene {
     this.sun.shadow.mapSize.set(2048, 2048)
     this.sun.shadow.bias = -0.00015
     this.sun.shadow.normalBias = 0.025
-    this.scene.add(this.sun, this.sun.target, this.room, this.props, this.marks, this.hits)
+    this.scene.add(
+      this.sun,
+      this.sun.target,
+      this.room,
+      this.fixtures,
+      this.props,
+      this.marks,
+      this.hits,
+    )
 
     // Registered before OrbitControls so a press on a prop can switch orbiting off first.
     canvas.addEventListener('pointerdown', this.onPointerDown)
@@ -205,7 +270,7 @@ export class WhiteScene {
         this.roomLooks.set(this.siStyle, materials)
       }
     }
-    for (const mesh of this.room.children) {
+    for (const mesh of [...this.room.children, ...this.fixtures.children]) {
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
         mesh.material = materials ? materials[surfaceName] : this.roomWhite
@@ -221,16 +286,33 @@ export class WhiteScene {
   }
 
   /** Brings the props in line with the layout; models load in the background. */
-  setItems(items: readonly LayoutItem[], assets: ReadonlyMap<string, Asset>) {
+  setItems(
+    items: readonly LayoutItem[],
+    assets: ReadonlyMap<string, Asset>,
+    market: Market = 'domestic',
+  ) {
     const seen = new Set<string>()
     for (const item of items) {
       seen.add(item.id)
-      const asset = item.assetId && !item.placeholder ? assets.get(item.assetId) : undefined
+      const catalogued = item.assetId ? assets.get(item.assetId) : undefined
+      // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
+      const picture =
+        itemMount(item) === 'embedded'
+          ? { url: catalogued?.preview?.url ?? null, front: catalogued?.front ?? null }
+          : null
+      const asset = !picture && item.assetId && !item.placeholder ? catalogued : undefined
+      // A LOGO in the other market's version (影石Insta360 ⇄ Insta360): one file for both looks.
+      const marketUrl =
+        asset?.market && asset.market !== market ? (asset.otherMarketGlb?.url ?? null) : null
       // The light white-model copy when there is one (see pnpm catalog:white).
-      const url = asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
+      const url = marketUrl ?? asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       // The light material copy when there is one (see pnpm catalog:finish).
-      const finishUrl = asset?.finishGlb?.url ?? asset?.glb?.url ?? null
-      const signature = url ? `${url}|${finishUrl}` : `box:${item.w}:${item.d}:${item.h}`
+      const finishUrl = marketUrl ?? asset?.finishGlb?.url ?? asset?.glb?.url ?? null
+      const signature = picture
+        ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+        : url
+          ? `${url}|${finishUrl}`
+          : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
@@ -244,6 +326,7 @@ export class WhiteScene {
           finish: null,
           finishState: 'none',
           hit: new THREE.Mesh(HIT_BOX, HIT_MATERIAL),
+          model: null,
         }
         placed.hit.userData['itemId'] = item.id
         this.hits.add(placed.hit)
@@ -251,19 +334,59 @@ export class WhiteScene {
         placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
-        this.fill(placed, url)
+        if (picture)
+          placed.white.add(
+            wallPicture(item, picture.front, picture.url, () => this.requestRender()),
+          )
+        else this.fill(placed, url)
+        // A sign still without a web model shows its preview on both faces (双面侧招).
+        if (!picture && !url && catalogued?.standardName.includes('侧招') && catalogued.preview)
+          placed.white.add(signFaces(item, catalogued.preview.url, () => this.requestRender()))
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item
+      placed.model = item.function === 'signage' && catalogued ? catalogued.footprint : null
       const group = placed.group
-      group.position.set(item.cx, 0, item.cz)
-      // A box already has the rotated footprint; a model turns (legacy: +Z front → −X at 90°).
-      group.rotation.y = url ? (-item.rotation * Math.PI) / 180 : 0
-      // The footprint is already turned (w × d on the plan), so the box needs no rotation.
+      // Wall and ceiling pieces hang at their height above the floor.
+      const elevation = itemElevation(item)
+      // The model is centred on the whole of it, which may reach beyond the item (a 开箱桌's
+      // stools on one side): the hit box and marks keep to the item.
+      const model = modelBox(item, url ? asset : undefined)
+      group.position.set(model.cx, elevation, model.cz)
+      // A box already has the footprint at its nearest quarter turn and turns only by the tilt
+      // beyond it; a model turns by the whole rotation (legacy: +Z front → −X at 90°).
+      group.rotation.y = ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
+      // A LOGO resized in the properties panel (scale) shows at that size, like its plan symbol;
+      // a placeholder box is drawn at the item's size already.
+      group.scale.setScalar(url ? (item.scale ?? 1) : 1)
+      // The footprint is already at its nearest quarter turn (w × d on the plan): a box turns
+      // only by the tilt beyond it.
       placed.hit.scale.set(item.w, item.h, item.d)
-      placed.hit.position.set(item.cx, item.h / 2, item.cz)
+      placed.hit.rotation.y = (-itemTilt(item) * Math.PI) / 180
+      placed.hit.position.set(item.cx, elevation + item.h / 2, item.cz)
     }
     for (const id of [...this.items.keys()]) if (!seen.has(id)) this.removeItem(id)
+    this.sceneChanged()
+  }
+
+  /**
+   * 空心隔板 finished like the walls (white, or the wall material), with niches where the
+   * accessory cabinets stand (fixtureSolids).
+   */
+  setFixtures(fixtures: readonly Fixture[], items: readonly LayoutItem[]) {
+    this.fixtures.children.forEach(disposeGeometry)
+    this.fixtures.clear()
+    for (const { rect, bottom, top } of fixtures.flatMap((f) => fixtureSolids(f, items))) {
+      const [w, d, h] = [rect.maxX - rect.minX, rect.maxZ - rect.minZ, top - bottom]
+      const geometry = new THREE.BoxGeometry(w, h, d)
+      geometry.translate((rect.minX + rect.maxX) / 2, bottom + h / 2, (rect.minZ + rect.maxZ) / 2)
+      const box = new THREE.Mesh(geometry, this.roomWhite)
+      box.castShadow = true
+      box.receiveShadow = true
+      box.userData['surface'] = 'wall' satisfies RoomSurface
+      this.fixtures.add(box)
+    }
+    this.paintRoom()
     this.sceneChanged()
   }
 
@@ -271,8 +394,35 @@ export class WhiteScene {
   setMarks(selectedId: string | null, flagged: ReadonlySet<string>) {
     this.marks.children.forEach(disposeTree)
     this.marks.clear()
-    for (const { item } of this.items.values()) {
+    this.ring = null
+    for (const { item, model } of this.items.values()) {
       const selected = item.id === selectedId
+      // The selected LOGO shows grips on the corners of its front: drag one to resize.
+      if (selected && model && this.handlers?.onResize && !item.locked) {
+        for (const { at } of frontCorners(item, model)) {
+          const grip = new THREE.Mesh(
+            new THREE.BoxGeometry(GRIP_M, GRIP_M, GRIP_M),
+            new THREE.MeshBasicMaterial({ color: '#111111', depthTest: false }),
+          )
+          grip.renderOrder = 10
+          grip.position.set(...at)
+          this.marks.add(grip)
+        }
+      }
+      // The selected prop on the floor or ceiling shows its rotation ring (a wall piece takes
+      // its angle from the wall).
+      if (
+        selected &&
+        this.handlers?.onRotate &&
+        !item.locked &&
+        itemMount(item) !== 'wall' &&
+        itemMount(item) !== 'embedded'
+      ) {
+        const ring = createRotateRing(item)
+        placeRotateRing(ring, item)
+        this.marks.add(ring)
+        this.ring = ring
+      }
       if (!selected && !flagged.has(item.id)) continue
       const mark = new THREE.Mesh(
         new THREE.PlaneGeometry(item.w + 0.08, item.d + 0.08),
@@ -283,7 +433,8 @@ export class WhiteScene {
           depthWrite: false,
         }),
       )
-      mark.rotation.x = -Math.PI / 2
+      // Flat on the floor, turned by the tilt beyond the nearest quarter turn.
+      mark.rotation.set(-Math.PI / 2, 0, (-itemTilt(item) * Math.PI) / 180)
       mark.position.set(item.cx, 0.003, item.cz)
       this.marks.add(mark)
     }
@@ -550,8 +701,77 @@ export class WhiteScene {
     return point ? [point.x, point.z] : null
   }
 
+  /** The LOGO corner under the pointer (within CORNER_PX on screen), if any. */
+  private cornerAt(event: PointerEvent): { placed: PlacedItem; corner: Corner } | null {
+    if (!this.handlers?.onResize) return null
+    const rect = this.canvas.getBoundingClientRect()
+    let best: { placed: PlacedItem; corner: Corner; px: number } | null = null
+    for (const placed of this.items.values()) {
+      if (!placed.model || placed.item.locked) continue
+      for (const { corner, at } of frontCorners(placed.item, placed.model)) {
+        const p = new THREE.Vector3(...at).project(this.camera)
+        if (p.z > 1) continue
+        const x = ((p.x + 1) / 2) * rect.width + rect.left
+        const y = ((1 - p.y) / 2) * rect.height + rect.top
+        const px = Math.hypot(x - event.clientX, y - event.clientY)
+        if (px <= CORNER_PX && (!best || px < best.px)) best = { placed, corner, px }
+      }
+    }
+    return best
+  }
+
+  /** Starts resizing a LOGO by a corner; the pointer then moves on the plane of its front. */
+  private startResize(event: PointerEvent): boolean {
+    const hit = this.cornerAt(event)
+    if (!hit || !hit.placed.model) return false
+    const { item } = hit.placed
+    const model = hit.placed.model
+    const [fx, fz] = turnPoint(0, 1, item.rotation)
+    const front = (model.d * (item.scale ?? 1)) / 2
+    this.cornerDrag = {
+      start: item,
+      model,
+      corner: hit.corner,
+      plane: new THREE.Plane().setFromNormalAndCoplanarPoint(
+        new THREE.Vector3(fx, 0, fz),
+        new THREE.Vector3(item.cx + fx * front, 0, item.cz + fz * front),
+      ),
+      group: `resize3d:${item.id}:${event.timeStamp}`,
+    }
+    this.handlers?.onSelect(item.id)
+    this.controls.enabled = false
+    this.canvas.setPointerCapture(event.pointerId)
+    return true
+  }
+
+  /** Whether the pointer is on the selected prop's rotation ring. */
+  private onRing(event: PointerEvent): string | null {
+    if (!this.ring || !this.handlers?.onRotate) return null
+    this.ring.updateMatrixWorld(true)
+    const hit = this.ray(event).intersectObjects(this.ring.children, false)[0]
+    const id: unknown = hit?.object.userData['rotateRing']
+    return typeof id === 'string' ? id : null
+  }
+
+  /** Starts turning the selected prop by its ring; the pointer then points it round. */
+  private startTurn(event: PointerEvent): boolean {
+    const id = this.onRing(event)
+    const placed = id ? this.items.get(id) : undefined
+    if (!placed) return false
+    this.turnDrag = {
+      id: placed.item.id,
+      centre: [placed.item.cx, placed.item.cz],
+      group: `turn3d:${placed.item.id}:${event.timeStamp}`,
+    }
+    this.controls.enabled = false
+    this.canvas.setPointerCapture(event.pointerId)
+    return true
+  }
+
   private readonly onPointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return
+    if (this.startResize(event)) return
+    if (this.startTurn(event)) return
     const placed = this.pick(event)
     this.handlers?.onSelect(placed?.item.id ?? null)
     if (!placed || placed.item.locked || !this.handlers?.onMove) return
@@ -568,7 +788,36 @@ export class WhiteScene {
   }
 
   private readonly onPointerMove = (event: PointerEvent) => {
-    if (!this.drag) return
+    if (this.turnDrag) {
+      const { id, centre, group } = this.turnDrag
+      const rotation = rotationOnFloor(this.ray(event).ray, centre)
+      if (rotation !== null) this.handlers?.onRotate?.(id, rotation, { group, snap: !event.altKey })
+      return
+    }
+    if (this.cornerDrag) {
+      const { start, model, corner, plane, group } = this.cornerDrag
+      const point = this.ray(event).ray.intersectPlane(plane, new THREE.Vector3())
+      if (point) {
+        const placement = scaleFromCorner(start, model, corner, {
+          plan: [point.x, point.z],
+          y: point.y,
+        })
+        this.handlers?.onResize?.(start.id, placement, { group })
+      }
+      return
+    }
+    if (!this.drag) {
+      // A diagonal resize cursor over a LOGO corner.
+      const hit = this.cornerAt(event)
+      this.canvas.style.cursor = hit
+        ? hit.corner.x === hit.corner.y
+          ? 'nesw-resize'
+          : 'nwse-resize'
+        : this.onRing(event)
+          ? 'grab'
+          : ''
+      return
+    }
     const point = this.floorPoint(event)
     if (point) {
       this.handlers?.onMove?.(this.drag.id, point[0] - this.drag.dx, point[1] - this.drag.dz, {
@@ -579,8 +828,10 @@ export class WhiteScene {
   }
 
   private readonly endDrag = () => {
-    if (!this.drag) return
+    if (!this.drag && !this.cornerDrag && !this.turnDrag) return
     this.drag = null
+    this.cornerDrag = null
+    this.turnDrag = null
     this.controls.enabled = true
   }
 }

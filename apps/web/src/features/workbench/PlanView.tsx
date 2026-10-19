@@ -3,12 +3,30 @@ import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
   WALL_THICKNESS_M,
   facingAfter,
+  itemElevation,
+  itemMount,
+  itemTilt,
   mToMm,
   mainEntrance,
+  mountedWall,
+  embeddedWall,
   polygonArea,
+  rotationHandle,
   sceneFrame,
+  widthAxis,
+  widthEnds,
 } from '@store/shared'
-import type { Asset, Issue, Layout, LayoutItem, Point, ShopType, Space } from '@store/shared'
+import type {
+  Asset,
+  Fixture,
+  Issue,
+  Layout,
+  LayoutItem,
+  Point,
+  Rect,
+  ShopType,
+  Space,
+} from '@store/shared'
 import {
   LABEL_OFFSET_EM,
   avoidOverlaps,
@@ -20,7 +38,8 @@ import {
   tickHalf,
   wallBands,
 } from './plan-drawing.ts'
-import type { RadiusMark } from './plan-drawing.ts'
+import type { RadiusMark, TextBox } from './plan-drawing.ts'
+import { placeSpacingLabels, spacingItems, spacingMarks } from './plan-spacing.ts'
 import { renderShapes, usePlanSymbols } from './plan-symbols.ts'
 import type { PlanSymbol } from './plan-symbols.ts'
 
@@ -35,7 +54,25 @@ export interface PlanViewProps {
   selectedId?: string | null | undefined
   onItemPointerDown?:
     ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  /**
+   * Pointer down on the selected prop's rotation handle (drawn only when this is given): the
+   * editor turns the prop while the pointer moves (see snapRotation).
+   */
+  onRotateHandlePointerDown?:
+    ((item: LayoutItem, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   onBackgroundPointerDown?: (() => void) | undefined
+  /**
+   * Pointer down on an end of a LOGO (drawn, on hover, only when this is given): the editor
+   * resizes it while the pointer moves, the other end staying put (see scaleFromEnd).
+   */
+  onResizeHandlePointerDown?:
+    ((item: LayoutItem, end: -1 | 1, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  onFixturePointerDown?:
+    ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
+  /** The wall a prop being turned has snapped to, highlighted while turning. */
+  guide?: { a: Point; b: Point } | null | undefined
+  /** A partition being drawn (画空心隔板), shown dashed until the pointer is released. */
+  drawingRect?: Rect | null | undefined
   svgRef?: Ref<SVGSVGElement> | undefined
   /** Compact thumbnails hide labels and dimensions. */
   compact?: boolean | undefined
@@ -44,6 +81,8 @@ export interface PlanViewProps {
    * legend (deliveryLegend), and the main customer-flow arrow.
    */
   numbers?: Readonly<Record<string, number>> | undefined
+  /** Clear distances around the 软装 props (see plan-spacing.ts); off unless asked for. */
+  spacing?: boolean | undefined
   title: string
 }
 
@@ -166,15 +205,102 @@ function block(item: LayoutItem) {
   )
 }
 
+/** A wall or ceiling piece: a dashed outline over whatever stands below it. */
+function mountedBlock(item: LayoutItem) {
+  return (
+    <rect
+      className="plan-mounted"
+      x={item.cx - item.w / 2}
+      y={item.cz - item.d / 2}
+      width={item.w}
+      height={item.d}
+    />
+  )
+}
+
+/**
+ * Where a wall piece's number or label goes: on its back edge, along the wall, so it stays clear
+ * of the cabinet below; a ceiling piece (or one off the wall) keeps its centre.
+ */
+function mountedAnchor(item: LayoutItem, space: Space): { at: Point; angle: number } {
+  const mount = itemMount(item)
+  const face =
+    mount === 'wall'
+      ? mountedWall(item, space)
+      : mount === 'embedded'
+        ? embeddedWall(item, space)
+        : null
+  if (!face) return { at: [item.cx, item.cz], angle: 0 }
+  // On the wall face: a wall piece's back edge, a built-in piece's front edge.
+  const side = mount === 'embedded' ? 1 : -1
+  const at: Point = [
+    item.cx + (side * face.inward[0] * item.w) / 2,
+    item.cz + (side * face.inward[1] * item.d) / 2,
+  ]
+  return { at, angle: face.along === 'x' ? 0 : -90 }
+}
+
+/**
+ * A piece built into the wall (内嵌): a solid outline inside the wall with its front, on the
+ * wall face, drawn bold.
+ */
+function embeddedBlock(item: LayoutItem, space: Space) {
+  const x = item.cx - item.w / 2
+  const y = item.cz - item.d / 2
+  const face = embeddedWall(item, space)
+  const front: [Point, Point] | null = face
+    ? face.along === 'x'
+      ? [
+          [x, item.cz + (face.inward[1] * item.d) / 2],
+          [x + item.w, item.cz + (face.inward[1] * item.d) / 2],
+        ]
+      : [
+          [item.cx + (face.inward[0] * item.w) / 2, y],
+          [item.cx + (face.inward[0] * item.w) / 2, y + item.d],
+        ]
+    : null
+  return (
+    <g className="plan-embedded">
+      <rect x={x} y={y} width={item.w} height={item.d} />
+      {front && <line x1={front[0][0]} y1={front[0][1]} x2={front[1][0]} y2={front[1][1]} />}
+    </g>
+  )
+}
+
 function symbolFor(item: LayoutItem, asset: Asset | undefined, symbol: PlanSymbol | undefined) {
   if (!asset || !symbol || item.placeholder) return null
   const rotation = item.rotation + symbolBaseRotation(asset.front, asset.footprint, symbol.size)
+  // A scaled LOGO draws its symbol scaled the same (1 symbol unit = 1 mm of the model).
+  const scale = 0.001 * (item.scale ?? 1)
   return (
     <g
       className="plan-symbol"
-      transform={`translate(${item.cx} ${item.cz}) rotate(${rotation}) scale(0.001) translate(${-symbol.center[0]} ${-symbol.center[1]})`}
+      transform={`translate(${item.cx} ${item.cz}) rotate(${rotation}) scale(${scale}) translate(${-symbol.center[0]} ${-symbol.center[1]})`}
     >
       {renderShapes(symbol.shapes)}
+    </g>
+  )
+}
+
+/**
+ * The rotation handle of the selected prop: a short stalk from behind the prop to a round grip
+ * (see rotationHandle), turning with the prop.
+ */
+function RotateHandle({
+  item,
+  size,
+  onPointerDown,
+}: {
+  item: LayoutItem
+  size: number
+  onPointerDown: (event: ReactPointerEvent<SVGGElement>) => void
+}) {
+  const [hx, hz] = rotationHandle(item, size * 2.2)
+  const [bx, bz] = rotationHandle(item, 0)
+  return (
+    <g className="plan-rotate-handle" data-rotate-handle={item.id} onPointerDown={onPointerDown}>
+      <line x1={bx} y1={bz} x2={hx} y2={hz} />
+      <circle cx={hx} cy={hz} r={size * 0.55} />
     </g>
   )
 }
@@ -193,10 +319,16 @@ export function PlanView({
   assets,
   selectedId,
   onItemPointerDown,
+  onRotateHandlePointerDown,
+  guide,
+  onResizeHandlePointerDown,
   onBackgroundPointerDown,
+  onFixturePointerDown,
+  drawingRect,
   svgRef,
   compact = false,
   numbers,
+  spacing = false,
   title,
 }: PlanViewProps) {
   const hatch = `hatch-${useId().replace(/:/g, '')}`
@@ -215,6 +347,18 @@ export function PlanView({
   const depth = bounds.maxZ - bounds.minZ
   const span = Math.max(width, depth, 1)
   const fontSize = Math.min(0.24, Math.max(0.11, span / 60))
+  // The selected prop gets a rotation handle when the editor can turn it.
+  const rotatable =
+    onRotateHandlePointerDown && !compact
+      ? layout?.items.find(
+          (item) =>
+            item.id === selectedId &&
+            !item.locked &&
+            // A wall or built-in piece takes its angle from the wall it is on.
+            itemMount(item) !== 'wall' &&
+            itemMount(item) !== 'embedded',
+        )
+      : undefined
   const dimOffset = WALL_THICKNESS_M + fontSize * 2.4
   const { dims, radii } = useMemo(() => {
     if (compact) return { dims: [], radii: [] as RadiusMark[] }
@@ -266,6 +410,20 @@ export function PlanView({
       ]
     : null
   const area = polygonArea(space.boundary)
+  const spacings = useMemo(() => {
+    if (!spacing || compact || !layout) return []
+    // Prop names (or numbers) stay readable: a spacing number never covers them.
+    const blocked: TextBox[] = layout.items
+      .filter((item) => itemMount(item) === 'floor')
+      .map((item) => ({
+        center: [item.cx, item.cz + (numbers ? 0 : fontSize * 0.3)],
+        axis: [1, 0],
+        halfW: numbers ? fontSize * 0.65 : Math.max(item.name.length, 7) * fontSize * 0.25,
+        halfH: numbers ? fontSize * 0.65 : fontSize * 0.9,
+      }))
+    const marks = spacingMarks(space, spacingItems(layout.items, assets))
+    return placeSpacingLabels(marks, fontSize * 0.8, blocked)
+  }, [spacing, compact, layout, assets, space, numbers, fontSize])
 
   return (
     <svg
@@ -357,60 +515,210 @@ export function PlanView({
         )),
       )}
 
-      {layout?.items.map((item) => {
-        const asset = assetOf(item)
-        const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
-        const drawing = symbolFor(item, asset, symbol)
-        const classes = [
-          'plan-item',
-          flagged.has(item.id) ? 'has-issue' : '',
-          item.id === selectedId ? 'selected' : '',
-        ]
-        // The catalogue name (模型选用表) wins over the name saved with older layouts.
-        const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
-        return (
-          <g
-            key={item.id}
-            className={classes.filter(Boolean).join(' ')}
-            data-item-id={item.id}
-            onPointerDown={
-              onItemPointerDown ? (event) => onItemPointerDown(item, event) : undefined
-            }
-          >
-            <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
-            {drawing ?? block(item)}
-            {!drawing && frontMarker(item, asset)}
-            <rect
-              className="plan-item-frame"
-              x={item.cx - item.w / 2}
-              y={item.cz - item.d / 2}
-              width={item.w}
-              height={item.d}
-            />
-            {!compact && numbers?.[item.id] !== undefined && (
-              <NumberBadge
-                no={numbers[item.id] ?? 0}
-                x={item.cx}
-                y={item.cz}
-                size={fontSize * 1.3}
+      {/* 空心隔板 under the props: the cabinets built into them stay visible. */}
+      {(layout?.fixtures ?? []).map((f) => (
+        <g
+          key={f.id}
+          className={['plan-fixture', f.id === selectedId ? 'selected' : '']
+            .filter(Boolean)
+            .join(' ')}
+          data-fixture-id={f.id}
+          onPointerDown={
+            onFixturePointerDown ? (event) => onFixturePointerDown(f, event) : undefined
+          }
+        >
+          <title>{`空心隔板（${mToMm(f.w)} × ${mToMm(f.d)} × ${mToMm(f.h)} mm）`}</title>
+          <rect
+            x={f.cx - f.w / 2}
+            y={f.cz - f.d / 2}
+            width={f.w}
+            height={f.d}
+            fill={`url(#${hatch})`}
+          />
+          {!compact && (
+            <text
+              className="plan-label"
+              x={f.cx}
+              y={f.cz + f.d / 2 + fontSize * 0.6}
+              fontSize={fontSize * 0.7}
+              textAnchor="middle"
+              dominantBaseline="middle"
+            >
+              空心隔板 {mToMm(f.w)}×{mToMm(f.d)}
+            </text>
+          )}
+        </g>
+      ))}
+      {drawingRect && (
+        <rect
+          className="plan-fixture-draft"
+          x={drawingRect.minX}
+          y={drawingRect.minZ}
+          width={drawingRect.maxX - drawingRect.minX}
+          height={drawingRect.maxZ - drawingRect.minZ}
+        />
+      )}
+
+      {/* Floor props first, so the wall and ceiling pieces above them stay on top. */}
+      {[...(layout?.items ?? [])]
+        .sort((a, b) => Number(itemMount(a) !== 'floor') - Number(itemMount(b) !== 'floor'))
+        .map((item) => {
+          const asset = assetOf(item)
+          const mounted = itemMount(item) !== 'floor'
+          const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
+          const drawing =
+            itemMount(item) === 'embedded'
+              ? embeddedBlock(item, space)
+              : mounted
+                ? mountedBlock(item)
+                : symbolFor(item, asset, symbol)
+          const anchor = mounted ? mountedAnchor(item, space) : null
+          const classes = [
+            'plan-item',
+            mounted ? 'mounted' : '',
+            flagged.has(item.id) ? 'has-issue' : '',
+            item.id === selectedId ? 'selected' : '',
+          ]
+          // The catalogue name (模型选用表) wins over the name saved with older layouts.
+          const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
+          // Boxes are drawn at the nearest quarter turn and turned by the rest; plan symbols
+          // already turn by the whole rotation.
+          const tilt = itemTilt(item)
+          const turn = tilt ? `rotate(${tilt} ${item.cx} ${item.cz})` : undefined
+          return (
+            <g
+              key={item.id}
+              className={classes.filter(Boolean).join(' ')}
+              data-item-id={item.id}
+              onPointerDown={
+                onItemPointerDown ? (event) => onItemPointerDown(item, event) : undefined
+              }
+            >
+              <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
+              {drawing && !mounted ? drawing : <g transform={turn}>{drawing ?? block(item)}</g>}
+              {!drawing && <g transform={turn}>{frontMarker(item, asset)}</g>}
+              <rect
+                className="plan-item-frame"
+                x={item.cx - item.w / 2}
+                y={item.cz - item.d / 2}
+                width={item.w}
+                height={item.d}
+                transform={turn}
               />
-            )}
-            {!compact && !numbers && (
-              <text
-                className="plan-label"
-                x={item.cx}
-                y={item.cz}
-                fontSize={fontSize * 0.8}
-                textAnchor="middle"
-              >
-                <tspan x={item.cx} dy={-fontSize * 0.15}>
-                  {name}
-                </tspan>
-                <tspan x={item.cx} dy={fontSize * 0.95}>
-                  H:{mToMm(item.h)}mm
-                </tspan>
-              </text>
-            )}
+              {!compact && numbers?.[item.id] !== undefined && (
+                <NumberBadge
+                  no={numbers[item.id] ?? 0}
+                  x={anchor ? anchor.at[0] : item.cx}
+                  y={anchor ? anchor.at[1] : item.cz}
+                  size={fontSize * 1.3}
+                />
+              )}
+              {!compact && !numbers && anchor && (
+                <text
+                  className="plan-label"
+                  x={anchor.at[0]}
+                  y={anchor.at[1]}
+                  fontSize={fontSize * 0.7}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  transform={
+                    anchor.angle
+                      ? `rotate(${anchor.angle} ${anchor.at[0]} ${anchor.at[1]})`
+                      : undefined
+                  }
+                >
+                  {itemMount(item) === 'embedded'
+                    ? name
+                    : `${name} 离地${mToMm(itemElevation(item))}`}
+                </text>
+              )}
+              {!compact && !numbers && !anchor && (
+                <text
+                  className="plan-label"
+                  x={item.cx}
+                  y={item.cz}
+                  fontSize={fontSize * 0.8}
+                  textAnchor="middle"
+                >
+                  <tspan x={item.cx} dy={-fontSize * 0.15}>
+                    {name}
+                  </tspan>
+                  <tspan x={item.cx} dy={fontSize * 0.95}>
+                    H:{mToMm(item.h)}mm
+                  </tspan>
+                </text>
+              )}
+            </g>
+          )
+        })}
+
+      {/* LOGO ends: grips that show on hover; dragging one resizes the LOGO uniformly. */}
+      {onResizeHandlePointerDown &&
+        !compact &&
+        (layout?.items ?? []).map((item) => {
+          const asset = assetOf(item)
+          if (item.function !== 'signage' || item.locked || !asset) return null
+          const [ux, uz] = widthAxis(item)
+          const grip = fontSize * 0.45
+          return widthEnds(item, asset.footprint).map(([x, z], k) => (
+            <g
+              key={`resize-${item.id}-${k}`}
+              className={
+                item.id === selectedId ? 'plan-resize-handle selected' : 'plan-resize-handle'
+              }
+              data-resize-handle={`${item.id}:${k ? 1 : -1}`}
+              style={{ cursor: Math.abs(ux) >= Math.abs(uz) ? 'ew-resize' : 'ns-resize' }}
+              onPointerDown={(event) => onResizeHandlePointerDown(item, k ? 1 : -1, event)}
+            >
+              <circle className="plan-resize-hit" cx={x} cy={z} r={grip * 1.3} />
+              <rect x={x - grip / 2} y={z - grip / 2} width={grip} height={grip} />
+            </g>
+          ))
+        })}
+
+      {guide && (
+        <line
+          className="plan-rotate-guide"
+          x1={guide.a[0]}
+          y1={guide.a[1]}
+          x2={guide.b[0]}
+          y2={guide.b[1]}
+        />
+      )}
+      {rotatable && onRotateHandlePointerDown && (
+        <RotateHandle
+          item={rotatable}
+          size={fontSize}
+          onPointerDown={(event) => onRotateHandlePointerDown(rotatable, event)}
+        />
+      )}
+
+      {spacings.map((m, i) => {
+        const half = tickHalf(m.a, m.b, fontSize * 0.25)
+        return (
+          <g key={`s${i}`} className="plan-spacing">
+            <line x1={m.a[0]} y1={m.a[1]} x2={m.b[0]} y2={m.b[1]} />
+            {[m.a, m.b].map((p, k) => (
+              <line
+                key={k}
+                x1={p[0] - half[0]}
+                y1={p[1] - half[1]}
+                x2={p[0] + half[0]}
+                y2={p[1] + half[1]}
+              />
+            ))}
+            <text
+              x={m.text.center[0]}
+              y={m.text.center[1]}
+              fontSize={fontSize * 0.8}
+              textAnchor="middle"
+              dominantBaseline="middle"
+              transform={
+                m.angle ? `rotate(${m.angle} ${m.text.center[0]} ${m.text.center[1]})` : undefined
+              }
+            >
+              {m.label}
+            </text>
           </g>
         )
       })}

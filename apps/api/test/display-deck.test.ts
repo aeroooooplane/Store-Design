@@ -47,27 +47,29 @@ function slideTexts(pptx: Buffer): string[] {
 }
 
 describe('展陈方案 PPT', () => {
+  const base = () => ({
+    title: '影石测试店',
+    date: '2026-10-14',
+    market: 'domestic' as const,
+    subtitle: 'SI2.0 · 边厅店',
+    rules,
+    tables,
+    plan: picture,
+    planMarks: {
+      A: { x: 0.3, y: 0.6 },
+      B: { x: 0.6, y: 0.6 },
+      C: { x: 0.6, y: 0.3 },
+      D: { x: 0.1, y: 0.5 },
+    },
+    overview: { image: picture, marks: { A: { x: 0.2, y: 0.7 } } },
+    tableViews: { A: { image: picture, mark: { x: 0.2, y: 0.7 } } },
+    photos: { X6: picture },
+    landscapeEnd: 'left' as const,
+    pending: ['示例'],
+  })
+
   it('has a cover, the overview, one slide per table and the counts, all as editable text', async () => {
-    const pptx = await buildDisplayDeck({
-      title: '影石测试店',
-      date: '2026-10-14',
-      market: 'domestic',
-      subtitle: 'SI2.0 · 边厅店',
-      rules,
-      tables,
-      plan: picture,
-      planMarks: {
-        A: { x: 0.3, y: 0.6 },
-        B: { x: 0.6, y: 0.6 },
-        C: { x: 0.6, y: 0.3 },
-        D: { x: 0.1, y: 0.5 },
-      },
-      overview: { image: picture, marks: { A: { x: 0.2, y: 0.7 } } },
-      tableViews: { A: { image: picture, mark: { x: 0.2, y: 0.7 } } },
-      photos: { X6: picture },
-      landscapeEnd: 'left',
-      pending: ['示例'],
-    })
+    const pptx = await buildDisplayDeck({ ...base(), views: 'plan', tables3d: {} })
     const slides = slideTexts(pptx)
     expect(slides).toHaveLength(1 + 1 + 4 + 1)
     expect(slides[0]).toContain('影石测试店')
@@ -82,6 +84,25 @@ describe('展陈方案 PPT', () => {
     expect(slides[6]).toContain('|25|')
     expect(slides[6]).toContain('|24|')
     expect(slides[6]).toContain('待确认：示例')
+  })
+
+  it('adds a 3D page before the slot diagram, with the product names as editable text', async () => {
+    const names = {
+      L1: { x: 0.1, y: 0.5, w: 0.2, h: 0.05 },
+      E: { x: 0.4, y: 0.8, w: 0.2, h: 0.05 },
+    }
+    const tables3d = { A: { image: picture, names } }
+    const both = slideTexts(await buildDisplayDeck({ ...base(), views: 'both', tables3d }))
+    // Table A gets two pages; B, C and D have no 3D view and keep their slot diagram.
+    expect(both).toHaveLength(1 + 1 + 5 + 1)
+    expect(both[2]).toContain('三维示意')
+    expect(both[2]).toContain('Luna Ultra + 创作者')
+    expect(both[2]).toContain('中间配件模块：C3、D8')
+    expect(both[3]).toContain('平面布局图')
+    const only3d = slideTexts(await buildDisplayDeck({ ...base(), views: '3d', tables3d }))
+    expect(only3d).toHaveLength(1 + 1 + 4 + 1)
+    expect(only3d[2]).toContain('三维示意')
+    expect(only3d[3]).toContain('平面布局图')
   })
 })
 

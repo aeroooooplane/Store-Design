@@ -22,7 +22,7 @@ import type {
   DisplayTableInput,
   Layout,
   NodeDisplay,
-  NodeDisplayExportRequest,
+  NodeDisplayExportBody,
 } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
@@ -42,6 +42,7 @@ import {
   pendingOf,
   requireRules,
   storeDisplayFiles,
+  tableShots,
 } from './common.ts'
 import type { DisplayFiles } from './common.ts'
 
@@ -103,6 +104,7 @@ async function compute(db: Database, nodeId: string): Promise<Computed> {
         cz: item.cz,
         w: item.w,
         d: item.d,
+        assetId: item.assetId ?? null,
       },
     ]
   })
@@ -231,7 +233,7 @@ export async function nodeDisplayFiles(
   db: Database,
   roots: StorageRoots,
   nodeId: string,
-  request: NodeDisplayExportRequest,
+  request: NodeDisplayExportBody,
 ): Promise<{ files: DisplayFiles; tables: DisplayTable[]; ruleVersion: string }> {
   const { display, project, imageFiles } = await compute(db, nodeId)
   if (!display.tables.length) {
@@ -289,6 +291,8 @@ export async function nodeDisplayFiles(
     tableViews,
     photos: await loadPhotos(roots, ruleSet.rules, si, display.tables),
     landscapeEnd: display.edits.landscapeEnd,
+    views: request.views,
+    tables3d: await tableShots(display.tables, request.tables3d),
     pending: pendingOf(display.tables),
   })
   return { files, tables: display.tables, ruleVersion: ruleSet.version }
@@ -299,7 +303,7 @@ export async function exportNodeDisplay(
   ctx: RequestContext,
   roots: StorageRoots,
   nodeId: string,
-  request: NodeDisplayExportRequest,
+  request: NodeDisplayExportBody,
 ): Promise<DisplayExport> {
   const node = await findRenderNode(db, nodeId)
   authorize(ctx.actor, 'display:write', { projectId: node.projectId })

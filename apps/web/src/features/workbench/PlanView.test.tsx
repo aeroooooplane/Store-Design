@@ -1,7 +1,7 @@
-import { cleanup, render } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { cleanup, fireEvent, render } from '@testing-library/react'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { WALL_THICKNESS_M, rectangleSpace, sceneFrame } from '@store/shared'
-import type { Layout, Point, Space } from '@store/shared'
+import type { Layout, LayoutItem, Point, Space } from '@store/shared'
 import { PlanView } from './PlanView.tsx'
 
 afterEach(cleanup)
@@ -108,5 +108,67 @@ describe('PlanView openings across several edges', () => {
       [8, 1, 8, 2],
     ])
     expect(labels(svg)).toHaveLength(1)
+  })
+})
+
+describe('PlanView props at any angle', () => {
+  const prop = (overrides: Partial<LayoutItem>): LayoutItem => ({
+    id: 'a',
+    assetId: null,
+    function: 'island_table',
+    name: '中岛桌',
+    cx: 3,
+    cz: 2,
+    rotation: 0,
+    w: 1,
+    d: 1.8,
+    h: 0.9,
+    placeholder: false,
+    locked: false,
+    ...overrides,
+  })
+  const draw = (item: LayoutItem, extra: Partial<Parameters<typeof PlanView>[0]> = {}) => {
+    const layout: Layout = { schemaVersion: 3, items: [item], planning: null }
+    const { container } = render(
+      <PlanView space={rectangleSpace(6, 4, 3)} layout={layout} title="平面" {...extra} />,
+    )
+    return container.querySelector('svg') as SVGSVGElement
+  }
+
+  it('turns the block and its frame by the tilt off the nearest quarter turn', () => {
+    const tilted = draw(prop({ rotation: 100, w: 1.8, d: 1 }))
+    const frame = tilted.querySelector('.plan-item-frame')
+    expect(frame?.getAttribute('transform')).toBe('rotate(10 3 2)')
+    expect(frame?.getAttribute('width')).toBe('1.8')
+    cleanup()
+    const upright = draw(prop({ rotation: 90, w: 1.8, d: 1 }))
+    expect(upright.querySelector('.plan-item-frame')?.getAttribute('transform')).toBeNull()
+  })
+
+  it('shows a rotation handle on the selected, unlocked prop when the editor can turn it', () => {
+    const onRotate = vi.fn()
+    const svg = draw(prop({}), { selectedId: 'a', onRotateHandlePointerDown: onRotate })
+    const handle = svg.querySelector('[data-rotate-handle="a"]')
+    expect(handle).not.toBeNull()
+    // Behind the prop (−Z) at 0°.
+    const circle = handle?.querySelector('circle')
+    expect(Number(circle?.getAttribute('cx'))).toBeCloseTo(3, 6)
+    expect(Number(circle?.getAttribute('cy'))).toBeLessThan(2 - 0.9)
+    if (handle) fireEvent.pointerDown(handle)
+    expect(onRotate).toHaveBeenCalledWith(expect.objectContaining({ id: 'a' }), expect.anything())
+    cleanup()
+    // Not selected, locked, or without the editor's handler: no handle.
+    expect(
+      draw(prop({}), { onRotateHandlePointerDown: onRotate }).querySelector('.plan-rotate-handle'),
+    ).toBeNull()
+    cleanup()
+    expect(
+      draw(prop({ locked: true }), {
+        selectedId: 'a',
+        onRotateHandlePointerDown: onRotate,
+      }).querySelector('.plan-rotate-handle'),
+    ).toBeNull()
+    cleanup()
+    expect(draw(prop({}), { selectedId: 'a' }).querySelector('.plan-rotate-handle')).toBeNull()
   })
 })

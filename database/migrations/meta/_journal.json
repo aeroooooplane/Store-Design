@@ -92,6 +92,34 @@
       "when": 1791971932792,
       "tag": "0012_display_tasks",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1792051588307,
+      "tag": "0013_asset_ceiling_installation",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1792059313089,
+      "tag": "0014_asset_body_extent",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1792061653257,
+      "tag": "0015_asset_embedded_installation",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1792062835384,
+      "tag": "0016_asset_market_versions",
+      "breakpoints": true
     }
   ]
 }

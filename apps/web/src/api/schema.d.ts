@@ -819,7 +819,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -827,6 +827,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -843,6 +847,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                                 strategy: ("max" | "area" | "min" | "case") | null;
                                 siStyle: ("SI1.0" | "SI2.0") | null;
@@ -864,7 +878,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -872,6 +886,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -888,6 +906,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                             } | null;
                         };
@@ -1135,7 +1163,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -1143,6 +1171,10 @@ export interface paths {
                                 placeholder?: boolean;
                                 /** @default false */
                                 locked?: boolean;
+                                /** @enum {string} */
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -1159,6 +1191,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                         /** @enum {string} */
                         strategy?: "max" | "area" | "min" | "case";
@@ -1258,7 +1300,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -1266,6 +1308,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -1282,6 +1328,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                             };
                             issues: {
@@ -1457,7 +1513,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1465,6 +1521,10 @@ export interface paths {
                                     placeholder: boolean;
                                     /** @default false */
                                     locked: boolean;
+                                    /** @enum {string} */
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                    elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1481,6 +1541,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -1645,7 +1715,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1653,6 +1723,10 @@ export interface paths {
                                     placeholder: boolean;
                                     /** @default false */
                                     locked: boolean;
+                                    /** @enum {string} */
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                    elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1669,6 +1743,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -1833,7 +1917,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -1841,6 +1925,10 @@ export interface paths {
                                     placeholder: boolean;
                                     /** @default false */
                                     locked: boolean;
+                                    /** @enum {string} */
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                    elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1857,6 +1945,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -2025,7 +2123,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -2033,6 +2131,10 @@ export interface paths {
                                     placeholder: boolean;
                                     /** @default false */
                                     locked: boolean;
+                                    /** @enum {string} */
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                    elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2049,6 +2151,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             } | null;
                         };
                     };
@@ -2150,7 +2262,7 @@ export interface paths {
                                     name: string;
                                     cx: number;
                                     cz: number;
-                                    rotation: 0 | 90 | 180 | 270;
+                                    rotation: number;
                                     w: number;
                                     d: number;
                                     h: number;
@@ -2158,6 +2270,10 @@ export interface paths {
                                     placeholder: boolean;
                                     /** @default false */
                                     locked: boolean;
+                                    /** @enum {string} */
+                                    mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                    elevation?: number;
+                                    scale?: number;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2174,6 +2290,16 @@ export interface paths {
                                     /** @default null */
                                     note: string | null;
                                 } | null;
+                                fixtures?: {
+                                    id: string;
+                                    /** @enum {string} */
+                                    kind: "hollow_partition";
+                                    cx: number;
+                                    cz: number;
+                                    w: number;
+                                    d: number;
+                                    h: number;
+                                }[];
                             };
                             revision: number;
                             /** Format: date-time */
@@ -2276,7 +2402,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -2284,6 +2410,10 @@ export interface paths {
                                 placeholder?: boolean;
                                 /** @default false */
                                 locked?: boolean;
+                                /** @enum {string} */
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -2300,6 +2430,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -2328,7 +2468,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -2336,6 +2476,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -2352,6 +2496,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                                 revision: number;
                                 /** Format: date-time */
@@ -3525,6 +3679,24 @@ export interface paths {
                         planPng: string;
                         planSvg?: string;
                         display?: {
+                            /**
+                             * @default both
+                             * @enum {string}
+                             */
+                            views?: "both" | "3d" | "plan";
+                            /** @default [] */
+                            tables3d?: {
+                                table: string;
+                                image: string;
+                                names: {
+                                    [key: string]: {
+                                        x: number;
+                                        y: number;
+                                        w: number;
+                                        h: number;
+                                    };
+                                };
+                            }[];
                             planPng: string;
                             planViewBox: [
                                 number,
@@ -3821,7 +3993,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -3829,6 +4001,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -3845,6 +4021,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 };
                                 issues: {
                                     code: string;
@@ -3967,7 +4153,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -3975,6 +4161,10 @@ export interface paths {
                                 placeholder?: boolean;
                                 /** @default false */
                                 locked?: boolean;
+                                /** @enum {string} */
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -3991,6 +4181,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -4079,7 +4279,7 @@ export interface paths {
                                 category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                                 /** @enum {string} */
                                 function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
-                                installation: ("floor" | "wall") | null;
+                                installation: ("floor" | "wall" | "ceiling" | "embedded") | null;
                                 footprint: {
                                     w: number;
                                     d: number;
@@ -4087,6 +4287,12 @@ export interface paths {
                                 };
                                 /** @enum {string} */
                                 footprintSource: "glb" | "source";
+                                extent: {
+                                    w: number;
+                                    d: number;
+                                    cx: number;
+                                    cz: number;
+                                } | null;
                                 front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                                 staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                                 facingConfidence: ("high" | "medium" | "low") | null;
@@ -4108,6 +4314,14 @@ export interface paths {
                                     sha256: string;
                                 } | null;
                                 finishGlb: {
+                                    /** Format: uuid */
+                                    fileId: string;
+                                    url: string;
+                                    bytes: number;
+                                    sha256: string;
+                                } | null;
+                                market: ("domestic" | "overseas") | null;
+                                otherMarketGlb: {
                                     /** Format: uuid */
                                     fileId: string;
                                     url: string;
@@ -4203,7 +4417,7 @@ export interface paths {
                             category: "软装道具" | "信息化物料" | "品牌标识" | "非标陈列" | "环境设施";
                             /** @enum {string} */
                             function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
-                            installation: ("floor" | "wall") | null;
+                            installation: ("floor" | "wall" | "ceiling" | "embedded") | null;
                             footprint: {
                                 w: number;
                                 d: number;
@@ -4211,6 +4425,12 @@ export interface paths {
                             };
                             /** @enum {string} */
                             footprintSource: "glb" | "source";
+                            extent: {
+                                w: number;
+                                d: number;
+                                cx: number;
+                                cz: number;
+                            } | null;
                             front: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                             staffSide: ("+Z" | "-Z" | "+X" | "-X" | "any") | null;
                             facingConfidence: ("high" | "medium" | "low") | null;
@@ -4232,6 +4452,14 @@ export interface paths {
                                 sha256: string;
                             } | null;
                             finishGlb: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                bytes: number;
+                                sha256: string;
+                            } | null;
+                            market: ("domestic" | "overseas") | null;
+                            otherMarketGlb: {
                                 /** Format: uuid */
                                 fileId: string;
                                 url: string;
@@ -4445,6 +4673,7 @@ export interface paths {
                                 agentModel: string | null;
                                 recognitionModel: string;
                                 recognitionFallback: string | null;
+                                recognitionCloud: boolean;
                             };
                             budget: {
                                 day: string;
@@ -4493,6 +4722,7 @@ export interface paths {
                         agentModel?: string | null;
                         recognitionModel?: string;
                         recognitionFallback?: string | null;
+                        recognitionCloud?: boolean;
                     };
                 };
             };
@@ -4507,6 +4737,7 @@ export interface paths {
                             agentModel: string | null;
                             recognitionModel: string;
                             recognitionFallback: string | null;
+                            recognitionCloud: boolean;
                         };
                     };
                 };
@@ -4821,6 +5052,8 @@ export interface paths {
                                 x2: number;
                                 y2: number;
                                 color?: string;
+                                w?: number;
+                                dash?: boolean;
                             }[];
                             rects: {
                                 x: number;
@@ -5538,7 +5771,7 @@ export interface paths {
                                 name: string;
                                 cx: number;
                                 cz: number;
-                                rotation: 0 | 90 | 180 | 270;
+                                rotation: number;
                                 w: number;
                                 d: number;
                                 h: number;
@@ -5546,6 +5779,10 @@ export interface paths {
                                 placeholder?: boolean;
                                 /** @default false */
                                 locked?: boolean;
+                                /** @enum {string} */
+                                mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                elevation?: number;
+                                scale?: number;
                             }[];
                             /** @default null */
                             planning?: {
@@ -5562,6 +5799,16 @@ export interface paths {
                                 /** @default null */
                                 note?: string | null;
                             } | null;
+                            fixtures?: {
+                                id: string;
+                                /** @enum {string} */
+                                kind: "hollow_partition";
+                                cx: number;
+                                cz: number;
+                                w: number;
+                                d: number;
+                                h: number;
+                            }[];
                         };
                     };
                 };
@@ -5655,7 +5902,7 @@ export interface paths {
                                         name: string;
                                         cx: number;
                                         cz: number;
-                                        rotation: 0 | 90 | 180 | 270;
+                                        rotation: number;
                                         w: number;
                                         d: number;
                                         h: number;
@@ -5663,6 +5910,10 @@ export interface paths {
                                         placeholder: boolean;
                                         /** @default false */
                                         locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -5679,6 +5930,16 @@ export interface paths {
                                         /** @default null */
                                         note: string | null;
                                     } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
                                 } | null;
                             };
                             issues: {
@@ -6478,6 +6739,129 @@ export interface paths {
                                 si: "SI1.0" | "SI2.0";
                                 /** @enum {string} */
                                 kind: "photo" | "render";
+                                url: string;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/display-bodies": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 展陈三维用的真实桌体（去掉产品后的中岛桌与带托盘边柜）及下载链接 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            bodies: {
+                                asset: string;
+                                /** @enum {string} */
+                                kind: "island" | "side";
+                                /** @enum {string} */
+                                si: "SI1.0" | "SI2.0";
+                                name: string;
+                                file: string;
+                                top: number;
+                                size: {
+                                    x: number;
+                                    z: number;
+                                };
+                                center: {
+                                    x: number;
+                                    z: number;
+                                };
+                                /** @enum {string} */
+                                long: "x" | "z";
+                                end: (1 | -1) | null;
+                                front: ("+x" | "-x" | "+z" | "-z") | null;
+                                recesses: {
+                                    x: number;
+                                    z: number;
+                                    w: number;
+                                    d: number;
+                                }[];
+                                strip: {
+                                    x: number;
+                                    z: number;
+                                    w: number;
+                                    d: number;
+                                } | null;
+                                triangles: number;
+                                bytes: number;
+                                sourceSha256: string;
                                 url: string;
                             }[];
                         };
@@ -7907,6 +8291,8 @@ export interface paths {
                                 x2: number;
                                 y2: number;
                                 color?: string;
+                                w?: number;
+                                dash?: boolean;
                             }[];
                             rects: {
                                 x: number;
@@ -8195,7 +8581,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** 生成展陈方案 PPT 与展陈清单 Excel */
+        /**
+         * 生成展陈方案 PPT 与展陈清单 Excel
+         * @description 请求体可选：每张桌出三维页、平面页或两者，以及浏览器画好的各桌三维图。
+         */
         post: {
             parameters: {
                 query?: never;
@@ -8205,7 +8594,30 @@ export interface paths {
                 };
                 cookie?: never;
             };
-            requestBody?: never;
+            requestBody: {
+                content: {
+                    "application/json": {
+                        /**
+                         * @default both
+                         * @enum {string}
+                         */
+                        views?: "both" | "3d" | "plan";
+                        /** @default [] */
+                        tables3d?: {
+                            table: string;
+                            image: string;
+                            names: {
+                                [key: string]: {
+                                    x: number;
+                                    y: number;
+                                    w: number;
+                                    h: number;
+                                };
+                            };
+                        }[];
+                    } | null;
+                };
+            };
             responses: {
                 /** @description Default Response */
                 201: {
@@ -8264,6 +8676,22 @@ export interface paths {
                 };
                 /** @description Default Response */
                 409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                413: {
                     headers: {
                         [name: string]: unknown;
                     };
@@ -8339,6 +8767,8 @@ export interface paths {
                                 /** @enum {string} */
                                 kind: "island" | "side";
                                 sourceId: string;
+                                /** @default null */
+                                assetId: string | null;
                                 plan: {
                                     cx: number;
                                     cz: number;
@@ -8520,6 +8950,8 @@ export interface paths {
                                 /** @enum {string} */
                                 kind: "island" | "side";
                                 sourceId: string;
+                                /** @default null */
+                                assetId: string | null;
                                 plan: {
                                     cx: number;
                                     cz: number;
@@ -8657,6 +9089,24 @@ export interface paths {
             requestBody: {
                 content: {
                     "application/json": {
+                        /**
+                         * @default both
+                         * @enum {string}
+                         */
+                        views?: "both" | "3d" | "plan";
+                        /** @default [] */
+                        tables3d?: {
+                            table: string;
+                            image: string;
+                            names: {
+                                [key: string]: {
+                                    x: number;
+                                    y: number;
+                                    w: number;
+                                    h: number;
+                                };
+                            };
+                        }[];
                         planPng: string;
                         planViewBox: [
                             number,

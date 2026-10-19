@@ -2072,32 +2072,9 @@
                                           "maximum": 1000
                                         },
                                         "rotation": {
-                                          "anyOf": [
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                0
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                90
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                180
-                                              ]
-                                            },
-                                            {
-                                              "type": "number",
-                                              "enum": [
-                                                270
-                                              ]
-                                            }
-                                          ]
+                                          "type": "number",
+                                          "minimum": 0,
+                                          "exclusiveMaximum": 360
                                         },
                                         "w": {
                                           "type": "number",
@@ -2121,6 +2098,25 @@
                                         "locked": {
                                           "default": false,
                                           "type": "boolean"
+                                        },
+                                        "mount": {
+                                          "type": "string",
+                                          "enum": [
+                                            "floor",
+                                            "wall",
+                                            "ceiling",
+                                            "embedded"
+                                          ]
+                                        },
+                                        "elevation": {
+                                          "type": "number",
+                                          "minimum": 0,
+                                          "maximum": 20
+                                        },
+                                        "scale": {
+                                          "type": "number",
+                                          "minimum": 0.2,
+                                          "maximum": 5
                                         }
                                       },
                                       "required": [
@@ -2218,6 +2214,61 @@
                                         "type": "null"
                                       }
                                     ]
+                                  },
+                                  "fixtures": {
+                                    "maxItems": 50,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "id": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 64
+                                        },
+                                        "kind": {
+                                          "type": "string",
+                                          "enum": [
+                                            "hollow_partition"
+                                          ]
+                                        },
+                                        "cx": {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        "cz": {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "id",
+                                        "kind",
+                                        "cx",
+                                        "cz",
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ],
+                                      "additionalProperties": false
+                                    }
                                   }
                                 },
                                 "required": [
@@ -2376,32 +2427,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -2425,6 +2453,25 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling",
+                                          "embedded"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [
@@ -2522,6 +2569,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [
@@ -3304,32 +3406,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -3353,6 +3432,25 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling",
+                                "embedded"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -3443,6 +3541,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -3936,32 +4088,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -3985,6 +4114,25 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling",
+                                          "embedded"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [
@@ -4082,6 +4230,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [
@@ -4737,32 +4940,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -4786,6 +4966,25 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling",
+                                      "embedded"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -4883,6 +5082,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -5508,32 +5762,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -5557,6 +5788,25 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling",
+                                      "embedded"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -5654,6 +5904,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -6260,32 +6565,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -6309,6 +6591,25 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling",
+                                      "embedded"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -6406,6 +6707,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -7012,32 +7368,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -7061,6 +7394,25 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling",
+                                      "embedded"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -7158,6 +7510,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -7406,32 +7813,9 @@
                                 "maximum": 1000
                               },
                               "rotation": {
-                                "anyOf": [
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      0
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      90
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      180
-                                    ]
-                                  },
-                                  {
-                                    "type": "number",
-                                    "enum": [
-                                      270
-                                    ]
-                                  }
-                                ]
+                                "type": "number",
+                                "minimum": 0,
+                                "exclusiveMaximum": 360
                               },
                               "w": {
                                 "type": "number",
@@ -7455,6 +7839,25 @@
                               "locked": {
                                 "default": false,
                                 "type": "boolean"
+                              },
+                              "mount": {
+                                "type": "string",
+                                "enum": [
+                                  "floor",
+                                  "wall",
+                                  "ceiling",
+                                  "embedded"
+                                ]
+                              },
+                              "elevation": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 20
+                              },
+                              "scale": {
+                                "type": "number",
+                                "minimum": 0.2,
+                                "maximum": 5
                               }
                             },
                             "required": [
@@ -7552,6 +7955,61 @@
                               "type": "null"
                             }
                           ]
+                        },
+                        "fixtures": {
+                          "maxItems": 50,
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 64
+                              },
+                              "kind": {
+                                "type": "string",
+                                "enum": [
+                                  "hollow_partition"
+                                ]
+                              },
+                              "cx": {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              "cz": {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              "w": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              },
+                              "d": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              },
+                              "h": {
+                                "type": "number",
+                                "exclusiveMinimum": 0,
+                                "maximum": 50
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "kind",
+                              "cx",
+                              "cz",
+                              "w",
+                              "d",
+                              "h"
+                            ],
+                            "additionalProperties": false
+                          }
                         }
                       },
                       "required": [
@@ -7814,32 +8272,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -7863,6 +8298,25 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling",
+                                "embedded"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -7953,6 +8407,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -8075,32 +8583,9 @@
                                     "maximum": 1000
                                   },
                                   "rotation": {
-                                    "anyOf": [
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          0
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          90
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          180
-                                        ]
-                                      },
-                                      {
-                                        "type": "number",
-                                        "enum": [
-                                          270
-                                        ]
-                                      }
-                                    ]
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   },
                                   "w": {
                                     "type": "number",
@@ -8124,6 +8609,25 @@
                                   "locked": {
                                     "default": false,
                                     "type": "boolean"
+                                  },
+                                  "mount": {
+                                    "type": "string",
+                                    "enum": [
+                                      "floor",
+                                      "wall",
+                                      "ceiling",
+                                      "embedded"
+                                    ]
+                                  },
+                                  "elevation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 20
+                                  },
+                                  "scale": {
+                                    "type": "number",
+                                    "minimum": 0.2,
+                                    "maximum": 5
                                   }
                                 },
                                 "required": [
@@ -8221,6 +8725,61 @@
                                   "type": "null"
                                 }
                               ]
+                            },
+                            "fixtures": {
+                              "maxItems": 50,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 64
+                                  },
+                                  "kind": {
+                                    "type": "string",
+                                    "enum": [
+                                      "hollow_partition"
+                                    ]
+                                  },
+                                  "cx": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "cz": {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0,
+                                    "maximum": 50
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "kind",
+                                  "cx",
+                                  "cz",
+                                  "w",
+                                  "d",
+                                  "h"
+                                ],
+                                "additionalProperties": false
+                              }
                             }
                           },
                           "required": [
@@ -11046,6 +11605,80 @@
                   "display": {
                     "type": "object",
                     "properties": {
+                      "views": {
+                        "default": "both",
+                        "type": "string",
+                        "enum": [
+                          "both",
+                          "3d",
+                          "plan"
+                        ]
+                      },
+                      "tables3d": {
+                        "default": [],
+                        "maxItems": 40,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "table": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "image": {
+                              "type": "string",
+                              "minLength": 16,
+                              "maxLength": 8388608
+                            },
+                            "names": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 8
+                              },
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "y": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "w",
+                                  "h"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "table",
+                            "image",
+                            "names"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
                       "planPng": {
                         "type": "string",
                         "minLength": 16,
@@ -12094,32 +12727,9 @@
                                       "maximum": 1000
                                     },
                                     "rotation": {
-                                      "anyOf": [
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            0
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            90
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            180
-                                          ]
-                                        },
-                                        {
-                                          "type": "number",
-                                          "enum": [
-                                            270
-                                          ]
-                                        }
-                                      ]
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
                                     },
                                     "w": {
                                       "type": "number",
@@ -12143,6 +12753,25 @@
                                     "locked": {
                                       "default": false,
                                       "type": "boolean"
+                                    },
+                                    "mount": {
+                                      "type": "string",
+                                      "enum": [
+                                        "floor",
+                                        "wall",
+                                        "ceiling",
+                                        "embedded"
+                                      ]
+                                    },
+                                    "elevation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 20
+                                    },
+                                    "scale": {
+                                      "type": "number",
+                                      "minimum": 0.2,
+                                      "maximum": 5
                                     }
                                   },
                                   "required": [
@@ -12240,6 +12869,61 @@
                                     "type": "null"
                                   }
                                 ]
+                              },
+                              "fixtures": {
+                                "maxItems": 50,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "hollow_partition"
+                                      ]
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "cx",
+                                    "cz",
+                                    "w",
+                                    "d",
+                                    "h"
+                                  ],
+                                  "additionalProperties": false
+                                }
                               }
                             },
                             "required": [
@@ -12692,32 +13376,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -12741,6 +13402,25 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling",
+                                "embedded"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -12831,6 +13511,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -13085,7 +13819,9 @@
                                 "type": "string",
                                 "enum": [
                                   "floor",
-                                  "wall"
+                                  "wall",
+                                  "ceiling",
+                                  "embedded"
                                 ]
                               },
                               {
@@ -13121,6 +13857,39 @@
                             "enum": [
                               "glb",
                               "source"
+                            ]
+                          },
+                          "extent": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "cx": {
+                                    "type": "number"
+                                  },
+                                  "cz": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "w",
+                                  "d",
+                                  "cx",
+                                  "cz"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
                             ]
                           },
                           "front": {
@@ -13292,6 +14061,56 @@
                               }
                             ]
                           },
+                          "market": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "domestic",
+                                  "overseas"
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "otherMarketGlb": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "fileId": {
+                                    "type": "string",
+                                    "format": "uuid",
+                                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                                  },
+                                  "url": {
+                                    "type": "string"
+                                  },
+                                  "bytes": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 9007199254740991
+                                  },
+                                  "sha256": {
+                                    "type": "string",
+                                    "pattern": "^[0-9a-f]{64}$"
+                                  }
+                                },
+                                "required": [
+                                  "fileId",
+                                  "url",
+                                  "bytes",
+                                  "sha256"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
                           "preview": {
                             "anyOf": [
                               {
@@ -13427,6 +14246,7 @@
                           "installation",
                           "footprint",
                           "footprintSource",
+                          "extent",
                           "front",
                           "staffSide",
                           "facingConfidence",
@@ -13436,6 +14256,8 @@
                           "glb",
                           "whiteGlb",
                           "finishGlb",
+                          "market",
+                          "otherMarketGlb",
                           "preview",
                           "productImage",
                           "productImageMatch",
@@ -13575,7 +14397,9 @@
                           "type": "string",
                           "enum": [
                             "floor",
-                            "wall"
+                            "wall",
+                            "ceiling",
+                            "embedded"
                           ]
                         },
                         {
@@ -13611,6 +14435,39 @@
                       "enum": [
                         "glb",
                         "source"
+                      ]
+                    },
+                    "extent": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0
+                            },
+                            "cx": {
+                              "type": "number"
+                            },
+                            "cz": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "w",
+                            "d",
+                            "cx",
+                            "cz"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
                       ]
                     },
                     "front": {
@@ -13782,6 +14639,56 @@
                         }
                       ]
                     },
+                    "market": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "enum": [
+                            "domestic",
+                            "overseas"
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "otherMarketGlb": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "fileId": {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            "url": {
+                              "type": "string"
+                            },
+                            "bytes": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 9007199254740991
+                            },
+                            "sha256": {
+                              "type": "string",
+                              "pattern": "^[0-9a-f]{64}$"
+                            }
+                          },
+                          "required": [
+                            "fileId",
+                            "url",
+                            "bytes",
+                            "sha256"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
                     "preview": {
                       "anyOf": [
                         {
@@ -13917,6 +14824,7 @@
                     "installation",
                     "footprint",
                     "footprintSource",
+                    "extent",
                     "front",
                     "staffSide",
                     "facingConfidence",
@@ -13926,6 +14834,8 @@
                     "glb",
                     "whiteGlb",
                     "finishGlb",
+                    "market",
+                    "otherMarketGlb",
                     "preview",
                     "productImage",
                     "productImageMatch",
@@ -14291,12 +15201,16 @@
                             "string",
                             "null"
                           ]
+                        },
+                        "recognitionCloud": {
+                          "type": "boolean"
                         }
                       },
                       "required": [
                         "agentModel",
                         "recognitionModel",
-                        "recognitionFallback"
+                        "recognitionFallback",
+                        "recognitionCloud"
                       ],
                       "additionalProperties": false
                     },
@@ -14370,6 +15284,9 @@
                       "string",
                       "null"
                     ]
+                  },
+                  "recognitionCloud": {
+                    "type": "boolean"
                   }
                 },
                 "additionalProperties": false
@@ -14399,12 +15316,16 @@
                         "string",
                         "null"
                       ]
+                    },
+                    "recognitionCloud": {
+                      "type": "boolean"
                     }
                   },
                   "required": [
                     "agentModel",
                     "recognitionModel",
-                    "recognitionFallback"
+                    "recognitionFallback",
+                    "recognitionCloud"
                   ],
                   "additionalProperties": false
                 }
@@ -15059,7 +15980,7 @@
                         }
                       },
                       "lines": {
-                        "maxItems": 20000,
+                        "maxItems": 60000,
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -15087,6 +16008,14 @@
                             "color": {
                               "type": "string",
                               "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "w": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1000
+                            },
+                            "dash": {
+                              "type": "boolean"
                             }
                           },
                           "required": [
@@ -18014,32 +18943,9 @@
                               "maximum": 1000
                             },
                             "rotation": {
-                              "anyOf": [
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    0
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    90
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    180
-                                  ]
-                                },
-                                {
-                                  "type": "number",
-                                  "enum": [
-                                    270
-                                  ]
-                                }
-                              ]
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             },
                             "w": {
                               "type": "number",
@@ -18063,6 +18969,25 @@
                             "locked": {
                               "default": false,
                               "type": "boolean"
+                            },
+                            "mount": {
+                              "type": "string",
+                              "enum": [
+                                "floor",
+                                "wall",
+                                "ceiling",
+                                "embedded"
+                              ]
+                            },
+                            "elevation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 20
+                            },
+                            "scale": {
+                              "type": "number",
+                              "minimum": 0.2,
+                              "maximum": 5
                             }
                           },
                           "required": [
@@ -18153,6 +19078,60 @@
                             "type": "null"
                           }
                         ]
+                      },
+                      "fixtures": {
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 64
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "hollow_partition"
+                              ]
+                            },
+                            "cx": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "cz": {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            "w": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "d": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            },
+                            "h": {
+                              "type": "number",
+                              "exclusiveMinimum": 0,
+                              "maximum": 50
+                            }
+                          },
+                          "required": [
+                            "id",
+                            "kind",
+                            "cx",
+                            "cz",
+                            "w",
+                            "d",
+                            "h"
+                          ]
+                        }
                       }
                     },
                     "required": [
@@ -18624,32 +19603,9 @@
                                         "maximum": 1000
                                       },
                                       "rotation": {
-                                        "anyOf": [
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              0
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              90
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              180
-                                            ]
-                                          },
-                                          {
-                                            "type": "number",
-                                            "enum": [
-                                              270
-                                            ]
-                                          }
-                                        ]
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       },
                                       "w": {
                                         "type": "number",
@@ -18673,6 +19629,25 @@
                                       "locked": {
                                         "default": false,
                                         "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling",
+                                          "embedded"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
                                       }
                                     },
                                     "required": [
@@ -18770,6 +19745,61 @@
                                       "type": "null"
                                     }
                                   ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
                                 }
                               },
                               "required": [
@@ -21156,6 +22186,357 @@
                     "importedAt",
                     "rules",
                     "photos"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/display-bodies": {
+      "get": {
+        "summary": "展陈三维用的真实桌体（去掉产品后的中岛桌与带托盘边柜）及下载链接",
+        "tags": [
+          "displays"
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bodies": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "asset": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "island",
+                              "side"
+                            ]
+                          },
+                          "si": {
+                            "type": "string",
+                            "enum": [
+                              "SI1.0",
+                              "SI2.0"
+                            ]
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "file": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "top": {
+                            "type": "number"
+                          },
+                          "size": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              },
+                              "z": {
+                                "type": "number",
+                                "exclusiveMinimum": 0
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "z"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "center": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number"
+                              },
+                              "z": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "z"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "long": {
+                            "type": "string",
+                            "enum": [
+                              "x",
+                              "z"
+                            ]
+                          },
+                          "end": {
+                            "anyOf": [
+                              {
+                                "anyOf": [
+                                  {
+                                    "type": "number",
+                                    "enum": [
+                                      1
+                                    ]
+                                  },
+                                  {
+                                    "type": "number",
+                                    "enum": [
+                                      -1
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "front": {
+                            "anyOf": [
+                              {
+                                "type": "string",
+                                "enum": [
+                                  "+x",
+                                  "-x",
+                                  "+z",
+                                  "-z"
+                                ]
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "recesses": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "x": {
+                                  "type": "number"
+                                },
+                                "z": {
+                                  "type": "number"
+                                },
+                                "w": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                },
+                                "d": {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0
+                                }
+                              },
+                              "required": [
+                                "x",
+                                "z",
+                                "w",
+                                "d"
+                              ],
+                              "additionalProperties": false
+                            }
+                          },
+                          "strip": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number"
+                                  },
+                                  "z": {
+                                    "type": "number"
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  },
+                                  "d": {
+                                    "type": "number",
+                                    "exclusiveMinimum": 0
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "z",
+                                  "w",
+                                  "d"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "null"
+                              }
+                            ]
+                          },
+                          "triangles": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "bytes": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 9007199254740991
+                          },
+                          "sourceSha256": {
+                            "type": "string"
+                          },
+                          "url": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "asset",
+                          "kind",
+                          "si",
+                          "name",
+                          "file",
+                          "top",
+                          "size",
+                          "center",
+                          "long",
+                          "end",
+                          "front",
+                          "recesses",
+                          "strip",
+                          "triangles",
+                          "bytes",
+                          "sourceSha256",
+                          "url"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "bodies"
                   ],
                   "additionalProperties": false
                 }
@@ -26392,7 +27773,7 @@
                         }
                       },
                       "lines": {
-                        "maxItems": 20000,
+                        "maxItems": 60000,
                         "type": "array",
                         "items": {
                           "type": "object",
@@ -26420,6 +27801,14 @@
                             "color": {
                               "type": "string",
                               "pattern": "^#[0-9a-f]{6}$"
+                            },
+                            "w": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 1000
+                            },
+                            "dash": {
+                              "type": "boolean"
                             }
                           },
                           "required": [
@@ -27566,6 +28955,101 @@
         "tags": [
           "displays"
         ],
+        "description": "请求体可选：每张桌出三维页、平面页或两者，以及浏览器画好的各桌三维图。",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "views": {
+                        "default": "both",
+                        "type": "string",
+                        "enum": [
+                          "both",
+                          "3d",
+                          "plan"
+                        ]
+                      },
+                      "tables3d": {
+                        "default": [],
+                        "maxItems": 40,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "table": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 100
+                            },
+                            "image": {
+                              "type": "string",
+                              "minLength": 16,
+                              "maxLength": 8388608
+                            },
+                            "names": {
+                              "type": "object",
+                              "propertyNames": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 8
+                              },
+                              "additionalProperties": {
+                                "type": "object",
+                                "properties": {
+                                  "x": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "y": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "w": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  },
+                                  "h": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "maximum": 1
+                                  }
+                                },
+                                "required": [
+                                  "x",
+                                  "y",
+                                  "w",
+                                  "h"
+                                ]
+                              }
+                            }
+                          },
+                          "required": [
+                            "table",
+                            "image",
+                            "names"
+                          ],
+                          "additionalProperties": false
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
+        },
         "parameters": [
           {
             "schema": {
@@ -27760,6 +29244,43 @@
                 }
               }
             }
+          },
+          "413": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
           }
         }
       }
@@ -27898,6 +29419,13 @@
                           "sourceId": {
                             "type": "string"
                           },
+                          "assetId": {
+                            "default": null,
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "plan": {
                             "type": "object",
                             "properties": {
@@ -28030,6 +29558,7 @@
                           "label",
                           "kind",
                           "sourceId",
+                          "assetId",
                           "plan",
                           "orientation",
                           "ruleTables",
@@ -28562,6 +30091,13 @@
                           "sourceId": {
                             "type": "string"
                           },
+                          "assetId": {
+                            "default": null,
+                            "type": [
+                              "string",
+                              "null"
+                            ]
+                          },
                           "plan": {
                             "type": "object",
                             "properties": {
@@ -28694,6 +30230,7 @@
                           "label",
                           "kind",
                           "sourceId",
+                          "assetId",
                           "plan",
                           "orientation",
                           "ruleTables",
@@ -29009,6 +30546,80 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "views": {
+                    "default": "both",
+                    "type": "string",
+                    "enum": [
+                      "both",
+                      "3d",
+                      "plan"
+                    ]
+                  },
+                  "tables3d": {
+                    "default": [],
+                    "maxItems": 40,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "table": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 100
+                        },
+                        "image": {
+                          "type": "string",
+                          "minLength": 16,
+                          "maxLength": 8388608
+                        },
+                        "names": {
+                          "type": "object",
+                          "propertyNames": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 8
+                          },
+                          "additionalProperties": {
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "y": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "w": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              },
+                              "h": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1
+                              }
+                            },
+                            "required": [
+                              "x",
+                              "y",
+                              "w",
+                              "h"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "table",
+                        "image",
+                        "names"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
                   "planPng": {
                     "type": "string",
                     "minLength": 16,

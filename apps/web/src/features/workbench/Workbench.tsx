@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { spaceAncestor } from '@store/shared'
+import { nodeSiStyle, spaceAncestor } from '@store/shared'
 import type {
   Asset,
   DesignNode,
@@ -28,12 +28,14 @@ import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
-import { ProjectCard } from './ProjectCard.tsx'
+import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
-import { WorkbenchLayout } from './WorkbenchLayout.tsx'
+import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
+import type { LeftTab } from './WorkbenchLayout.tsx'
+import { useUpdateProject } from '../projects/queries.ts'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 import { ViewMemoryContext } from './view-memory.ts'
 import type { ViewState } from './view-memory.ts'
@@ -73,6 +75,8 @@ export function Workbench({ project }: { project: Project }) {
   // The 3D view and plan/3D choice of each space, kept while moving between its steps.
   const viewMemory = useRef(new Map<string, ViewState>())
   const [siNotice, setSiNotice] = useState<string | null>(null)
+  // The left tab, kept while moving between steps; null means the stage decides.
+  const [leftTab, setLeftTab] = useState<LeftTab | null>(null)
   const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
     siSwitch.current = swap
   }, [])
@@ -104,11 +108,32 @@ export function Workbench({ project }: { project: Project }) {
     setPanel({ nodeId, kind: 'view' })
   }
 
-  function siChanged(style: SiStyle) {
-    setSiNotice(
-      siSwitch.current?.(style) ??
-        `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`,
-    )
+  // The SI style shown is the selected step's own (每个节点各自对应一个 SI); a space shows the
+  // project's, which new generations use.
+  const selected = useNode(selectedId).data
+  const shownSi =
+    selected && selected.kind !== 'space' ? nodeSiStyle(selected, project.siStyle) : project.siStyle
+  const siLocked =
+    selected?.kind === 'render'
+      ? `渲染节点的 SI（${shownSi}）在出图时已定；请回到方案或三维效果节点切换。`
+      : null
+  const updateProject = useUpdateProject()
+  const [siBusy, setSiBusy] = useState(false)
+
+  async function switchSi(style: SiStyle) {
+    setSiBusy(true)
+    try {
+      const notice = (await siSwitch.current?.(style)) ?? null
+      // New generations and models added later follow the latest choice.
+      if (project.siStyle !== style) {
+        await updateProject.mutateAsync({ project, patch: { siStyle: style } })
+      }
+      setSiNotice(notice ?? `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`)
+    } catch {
+      setSiNotice(null)
+    } finally {
+      setSiBusy(false)
+    }
   }
 
   const loadError = tree.error ?? draft.error ?? assets.error
@@ -118,25 +143,18 @@ export function Workbench({ project }: { project: Project }) {
   }
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
+  const cardSpaceData = cardSpace.data?.space ?? null
   const left = (
-    <>
-      <ProjectCard
-        project={project}
-        space={cardSpace.data?.space ?? null}
-        onSiChanged={siChanged}
-        notice={siNotice}
-      />
-      <HistoryTree
-        projectId={project.id}
-        projectName={project.name}
-        nodes={nodes}
-        selectedId={selectedId}
-        draftBaseId={draft.data?.baseNodeId ?? null}
-        onSelect={select}
-        onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
-        newSpaceDisabled={creatingSpace}
-      />
-    </>
+    <HistoryTree
+      projectId={project.id}
+      projectName={project.name}
+      nodes={nodes}
+      selectedId={selectedId}
+      draftBaseId={draft.data?.baseNodeId ?? null}
+      onSelect={select}
+      onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
+      newSpaceDisabled={creatingSpace}
+    />
   )
 
   const content = creatingSpace ? (
@@ -171,7 +189,25 @@ export function Workbench({ project }: { project: Project }) {
   ) : null
   return (
     <AgentSelectionProvider>
-      <ViewMemoryContext.Provider value={viewMemory.current}>{content}</ViewMemoryContext.Provider>
+      <ProjectCard
+        project={project}
+        space={cardSpaceData}
+        siStyle={shownSi}
+        siLocked={siLocked}
+        siBusy={siBusy}
+        onSiSwitch={(style) => void switchSi(style)}
+        notice={siNotice}
+        error={updateProject.error}
+      />
+      <WorkbenchInfoContext.Provider
+        value={<ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />}
+      >
+        <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
+          <ViewMemoryContext.Provider value={viewMemory.current}>
+            {content}
+          </ViewMemoryContext.Provider>
+        </LeftTabContext.Provider>
+      </WorkbenchInfoContext.Provider>
       <AgentDock
         projectId={project.id}
         nodeId={creatingSpace ? null : selectedId}
@@ -314,7 +350,9 @@ function NodePanel({
       space={space}
       shopType={project.shopType}
       nodes={nodes}
-      siStyle={project.siStyle}
+      siStyle={nodeSiStyle(current, project.siStyle)}
+      projectSi={project.siStyle}
+      market={project.market}
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}
@@ -339,7 +377,8 @@ function NodePanel({
               onCancel={() => setPanel('view')}
               onSubmit={(edited, name) =>
                 create.mutate(
-                  { parentId: current.id, kind: 'space', name, space: edited },
+                  // A sibling of the space it was edited from, under the same parent (10-16).
+                  { parentId: current.parentId, kind: 'space', name, space: edited },
                   { onSuccess: (created) => onSelect(created.node.id) },
                 )
               }

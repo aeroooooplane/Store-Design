@@ -413,8 +413,9 @@ describe('symbols', () => {
 })
 
 /**
- * 草稿样例（门店图纸窗口清洗试点，AI 看图得到、未经用户核实；与
- * packages/shared/src/planner/real-shapes.fixture.ts 相同的坐标，按 x, z 依次排列，单位米）。
+ * 草稿样例（门店图纸窗口清洗试点，AI 看图得到、未经用户核实；按 x, z 依次排列，单位米）。
+ * packages/shared/src/planner/real-shapes.fixture.ts 已改用金标准，这里仍保留草稿坐标：它们的弧线
+ * 分段密集（store-0293 的弧有 65 段），正好用来测尺寸标注怎么切分长弧和圆角。
  */
 const draft = (flat: number[]): Space => {
   const boundary: [number, number][] = []

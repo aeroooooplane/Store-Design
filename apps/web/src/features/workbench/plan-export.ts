@@ -8,6 +8,9 @@ const STYLE_PROPS = [
   'stroke-dasharray',
   'stroke-linecap',
   'stroke-linejoin',
+  // Labels with a white halo draw the halo first (paint-order: stroke); without it the halo
+  // covers the text in the exported file (spacing numbers vanished from the PDFs, 10-16).
+  'paint-order',
   'opacity',
   'font-family',
   'font-weight',

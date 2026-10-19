@@ -1,11 +1,56 @@
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
-import type { PointerEvent as ReactPointerEvent } from 'react'
+import type { PointerEvent as ReactPointerEvent, ReactNode } from 'react'
+import {
+  Eye,
+  EyeOff,
+  Maximize2,
+  Minimize2,
+  PanelTopClose,
+  PanelTopOpen,
+  Pencil,
+  Plus,
+  RotateCcw,
+} from 'lucide-react'
 import { NODE_KIND_LABELS } from '@store/shared'
 import type { NodeSummary } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useNodeVisibility, useRenameNode } from './api.ts'
-import { ROOT_ID, TREE_STYLE, applyOffsets, layoutTree } from './tree-layout.ts'
+import { ROOT_ID, TREE_STYLE, applyOffsets, layoutRadial, layoutTree } from './tree-layout.ts'
 import type { TreeOffsets } from './tree-layout.ts'
+
+/** A square icon button; the label is its accessible name and its tooltip. */
+function IconButton({
+  label,
+  hint,
+  pressed,
+  expanded,
+  disabled,
+  onClick,
+  children,
+}: {
+  label: string
+  hint?: string
+  pressed?: boolean
+  expanded?: boolean
+  disabled?: boolean
+  onClick: () => void
+  children: ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      className="icon-button"
+      aria-label={label}
+      title={hint ?? label}
+      aria-pressed={pressed}
+      aria-expanded={expanded}
+      disabled={disabled}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  )
+}
 
 interface HistoryTreeProps {
   projectId: string
@@ -86,7 +131,13 @@ export function HistoryTree({
   } | null>(null)
 
   const base = useMemo(
-    () => layoutTree(projectName, nodes, nodeLabel, showHidden),
+    () =>
+      (TREE_STYLE.layout === 'radial' ? layoutRadial : layoutTree)(
+        projectName,
+        nodes,
+        nodeLabel,
+        showHidden,
+      ),
     [projectName, nodes, showHidden],
   )
   const layout = useMemo(() => applyOffsets(base, offsets), [base, offsets])
@@ -163,24 +214,8 @@ export function HistoryTree({
   const hasOffsets = Object.keys(offsets).length > 0
   return (
     <section className={enlarged ? 'history enlarged' : 'history'} aria-label="历史树">
-      <div className="toolbar history-head">
-        <h2>历史</h2>
-        {selected && renaming === null && (
-          <>
-            <span className="hint">当前：{nodeLabel(selected)}</span>
-            <button type="button" onClick={() => setRenaming(selected.name)}>
-              改名
-            </button>
-            <button
-              type="button"
-              disabled={visibility.isPending}
-              onClick={() => visibility.mutate({ nodeId: selected.id, hidden: !selected.hidden })}
-            >
-              {selected.hidden ? '恢复显示' : '隐藏'}
-            </button>
-          </>
-        )}
-        {selected && renaming !== null && (
+      <div className="history-head">
+        {renaming !== null && selected ? (
           <form
             className="history-rename"
             onSubmit={(event) => {
@@ -204,37 +239,64 @@ export function HistoryTree({
               取消
             </button>
           </form>
+        ) : (
+          <div className="history-icons" role="toolbar" aria-label="历史操作">
+            {selected && (
+              <IconButton label="改名" onClick={() => setRenaming(selected.name)}>
+                <Pencil size={15} />
+              </IconButton>
+            )}
+            {selected && (
+              <IconButton
+                label={selected.hidden ? '恢复显示' : '隐藏'}
+                disabled={visibility.isPending}
+                onClick={() => visibility.mutate({ nodeId: selected.id, hidden: !selected.hidden })}
+              >
+                {selected.hidden ? <Eye size={15} /> : <EyeOff size={15} />}
+              </IconButton>
+            )}
+            <IconButton label="新建空间" disabled={newSpaceDisabled} onClick={onNewSpace}>
+              <Plus size={15} />
+            </IconButton>
+            {hasOffsets && (
+              <IconButton label="重置位置" hint="恢复自动排列" onClick={resetPositions}>
+                <RotateCcw size={15} />
+              </IconButton>
+            )}
+            <span className="history-icons-end">
+              <IconButton
+                label={enlarged ? '还原' : '放大'}
+                pressed={enlarged}
+                onClick={() => setEnlarged(!enlarged)}
+              >
+                {enlarged ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
+              </IconButton>
+              {!enlarged && (
+                <IconButton
+                  label={collapsed ? '展开树图' : '收起树图'}
+                  expanded={!collapsed}
+                  onClick={() => setCollapsed(!collapsed)}
+                >
+                  {collapsed ? <PanelTopOpen size={15} /> : <PanelTopClose size={15} />}
+                </IconButton>
+              )}
+            </span>
+          </div>
         )}
-        <span className="history-tools">
-          <label className="hint">
+        <div className="history-sub">
+          <span className="hint history-current">
+            {selected ? `当前：${nodeLabel(selected)}` : '还没有节点'}
+          </span>
+          <label className="history-switch">
             <input
               type="checkbox"
+              role="switch"
               checked={showHidden}
               onChange={(e) => setShowHidden(e.target.checked)}
-            />{' '}
+            />
             显示已隐藏
           </label>
-          <button type="button" disabled={newSpaceDisabled} onClick={onNewSpace}>
-            新建空间
-          </button>
-          {hasOffsets && (
-            <button type="button" onClick={resetPositions} title="恢复自动排列">
-              重置位置
-            </button>
-          )}
-          <button type="button" aria-pressed={enlarged} onClick={() => setEnlarged(!enlarged)}>
-            {enlarged ? '还原' : '放大'}
-          </button>
-          {!enlarged && (
-            <button
-              type="button"
-              aria-expanded={!collapsed}
-              onClick={() => setCollapsed(!collapsed)}
-            >
-              {collapsed ? '展开树图' : '收起树图'}
-            </button>
-          )}
-        </span>
+        </div>
       </div>
       <ErrorMessage error={visibility.error ?? rename.error} />
       {(!collapsed || enlarged) && (
@@ -269,7 +331,7 @@ export function HistoryTree({
                 fill="none"
                 stroke={edge.color}
                 strokeWidth={edge.width}
-                markerEnd={`url(#${arrow})`}
+                markerEnd={layout.radial ? undefined : `url(#${arrow})`}
               />
             ))}
             {layout.boxes.map((box) => {

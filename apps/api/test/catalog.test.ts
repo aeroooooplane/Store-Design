@@ -168,7 +168,8 @@ describe('importCatalog', () => {
       withGlb: 2,
       withWhite: 1,
       withFinish: 0,
-      placeable: 1,
+      // A wall piece with a web model is placed by hand too (the planner only uses floor models).
+      placeable: 2,
       withPreview: 1,
       withProductImage: 1,
       withPlanSymbol: 1,
@@ -199,6 +200,39 @@ describe('importCatalog', () => {
     expect(row).toMatchObject({ placeable: false, glbFileId: null })
     await put(`${webDir('asset-1')}/model.glb`, glb)
     await importCatalog(t.database.db, roots())
+  })
+
+  it('places a model by its body where body-footprint.json corrects it, keeping the whole as extent', async () => {
+    // asset-2's model is 1 × 1.8 m; its body is the 0.5 m on the −X side (stools on +X).
+    // asset-1's entry is larger than its model: refused and reported.
+    await put(
+      `${LIBRARY_DIR}/body-footprint.json`,
+      JSON.stringify({
+        assets: {
+          'asset-2': { w: 0.5, d: 1.8, offset: [-0.25, 0] },
+          'asset-1': { w: 2, d: 1.8, offset: [0, 0] },
+        },
+      }),
+    )
+    const report = await importCatalog(t.database.db, roots())
+    expect(report.problems).toContainEqual(expect.stringContaining('asset-1: 桌体尺寸大于整个模型'))
+    const rows = await t.database.db.select().from(schema.assets)
+    const byId = new Map(rows.map((r) => [r.id, r]))
+    expect(byId.get('asset-2')).toMatchObject({
+      width: 0.5,
+      depth: 1.8,
+      height: 1.327,
+      extent: { w: 1, d: 1.8, cx: 0.25, cz: 0 },
+    })
+    expect(byId.get('asset-1')).toMatchObject({ width: 1, depth: 1.8, extent: null })
+    // Without the table the model is its own body again.
+    await rm(path.join(resource, LIBRARY_DIR, 'body-footprint.json'))
+    await importCatalog(t.database.db, roots())
+    const [restored] = await t.database.db
+      .select()
+      .from(schema.assets)
+      .where(eq(schema.assets.id, 'asset-2'))
+    expect(restored).toMatchObject({ width: 1, extent: null })
   })
 })
 
@@ -249,7 +283,7 @@ describe('GET /assets', () => {
     expect(digital.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-3'])
     expect(items.find((a) => a.id === 'asset-2')).toMatchObject({
       installation: 'wall',
-      placeable: false,
+      placeable: true,
       whiteGlb: null,
     })
     // Without a web model the SketchUp bounds (X, Y, Z-up in mm) give the footprint.
@@ -263,7 +297,10 @@ describe('GET /assets', () => {
 
   it('filters by placeability and searches names literally', async () => {
     const placeable = await t.app.inject({ method: 'GET', url: '/api/v1/assets?placeable=true' })
-    expect(placeable.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual(['asset-1'])
+    expect(placeable.json<{ items: Asset[] }>().items.map((a) => a.id)).toEqual([
+      'asset-1',
+      'asset-2',
+    ])
     const search = await t.app.inject({
       method: 'GET',
       url: `/api/v1/assets?q=${encodeURIComponent('收银')}`,

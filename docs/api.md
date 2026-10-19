@@ -136,14 +136,15 @@
 | 方法 | 路径 | 说明 |
 |---|---|---|
 | GET | `/display-rules/current` | 现行展陈规则（版本、产品、托盘、版式），未导入时 404 |
+| GET | `/display-bodies` | 展陈三维用的真实桌体（资源库/10_产品与陈列/展陈桌体）：桌面高度、朝向、托盘位、模块条及下载链接；文件缺失时返回空列表，网页改用程序画的桌子 |
 | GET | `/nodes/{id}/display` | 渲染节点的展陈方案：按指引编号的中岛桌与边桌、各槽位产品（含用户修改）、平面与每个视角效果图上的标签位置（由视角投影算出）、历次导出 |
 | PUT | `/nodes/{id}/display` | 保存修改 `{ orientation, landscapeEnd, slots, modules }`，带 `If-Match` |
-| POST | `/nodes/{id}/display/export` | 生成展陈方案 PPT 与展陈清单 Excel：请求体 `{ planPng, planViewBox }` 为浏览器绘制的无编号平面图及其范围（米） |
+| POST | `/nodes/{id}/display/export` | 生成展陈方案 PPT 与展陈清单 Excel：请求体 `{ planPng, planViewBox, views?, tables3d? }`，`planPng` 为浏览器绘制的无编号平面图及其范围（米）；`views` 为每张桌出 `both`（三维 + 平面，默认）、`3d` 或 `plan`；`tables3d` 为浏览器画好的各桌三维图（JPEG base64）及每个陈列位产品名的位置（0–1），PPT 在那里放可编辑文字。缺三维图的桌改出平面页 |
 | GET / POST | `/display-tasks` | 上传式展陈任务（工作流 2）列表与新建 `{ name, market, siStyle }` |
 | GET / PATCH / DELETE | `/display-tasks/{id}` | 任务详情、修改（入口、桌子、标签位置、槽位修改，带 `If-Match`）、删除（软删除） |
 | PUT | `/display-tasks/{id}/{plan|render}` | 上传平面图或效果图（PNG/JPEG 原始字节，查询参数 `originalName`、`page`，带 `If-Match`） |
 | POST | `/display-tasks/{id}/detect` | 识别桌子：矢量 PDF 页带浏览器提取的 `vector` 时本地找“中岛桌”标注与桌面外框，否则用视觉模型；效果图由视觉模型框桌、程序按远近与左右对号。返回更新后的任务 |
-| POST | `/display-tasks/{id}/export` | 按任务生成展陈方案 PPT 与清单 |
+| POST | `/display-tasks/{id}/export` | 按任务生成展陈方案 PPT 与清单；请求体可省略，或带 `{ views, tables3d }`（同上） |
 
 任务不建正式项目；`state`（入口、桌子、修改）与工作流 1 的数据结构一致，以后可加“转为项目”。
 

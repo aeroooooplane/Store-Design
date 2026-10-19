@@ -49,7 +49,12 @@ function fakeApi(agentModel: string | null) {
               },
             ]
           : [],
-        settings: { agentModel, recognitionModel: 'local', recognitionFallback: null },
+        settings: {
+          agentModel,
+          recognitionModel: 'local',
+          recognitionFallback: null,
+          recognitionCloud: false,
+        },
         budget: { day: '2026-10-12', limitCny: 50, spentCny: 0, remainingCny: 50, exceeded: false },
       })
     }

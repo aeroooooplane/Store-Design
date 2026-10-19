@@ -187,8 +187,90 @@ export type NodeDisplay = z.infer<typeof NodeDisplaySchema>
 export const NodeDisplayUpdateSchema = z.strictObject({ edits: DisplayEditsSchema })
 export type NodeDisplayUpdate = z.output<typeof NodeDisplayUpdateSchema>
 
+/**
+ * A bare display table cut from a library model (`pnpm display:bodies`): where its top is, how
+ * it lies in the model and where its tray recesses are, all in the model's own metres.
+ */
+export const DisplayBodySchema = z.object({
+  asset: z.string().min(1),
+  kind: z.enum(['island', 'side']),
+  si: SiStyleSchema,
+  name: z.string(),
+  file: z.string().min(1),
+  top: z.number(),
+  size: z.object({ x: z.number().positive(), z: z.number().positive() }),
+  center: z.object({ x: z.number(), z: z.number() }),
+  long: z.enum(['x', 'z']),
+  /** Island tables: the end slot E's side along the long axis. */
+  end: z.union([z.literal(1), z.literal(-1)]).nullable(),
+  /** Side cabinets: the side the trays face. */
+  front: z.enum(['+x', '-x', '+z', '-z']).nullable(),
+  recesses: z.array(
+    z.object({ x: z.number(), z: z.number(), w: z.number().positive(), d: z.number().positive() }),
+  ),
+  /** Island tables: the sunk accessory-module strip between the tray rows. */
+  strip: z
+    .object({ x: z.number(), z: z.number(), w: z.number().positive(), d: z.number().positive() })
+    .nullable(),
+  triangles: z.int().nonnegative(),
+  bytes: z.int().nonnegative(),
+  sourceSha256: z.string(),
+})
+export type DisplayBody = z.infer<typeof DisplayBodySchema>
+
+/** 资源库/10_产品与陈列/展陈桌体/index.json */
+export const DisplayBodyIndexSchema = z.object({
+  schemaVersion: z.literal(1),
+  tool: z.string(),
+  bodies: z.array(DisplayBodySchema),
+})
+export type DisplayBodyIndex = z.infer<typeof DisplayBodyIndexSchema>
+
+export const DisplayBodyListSchema = z.object({
+  bodies: z.array(DisplayBodySchema.extend({ url: z.string() })),
+})
+export type DisplayBodyList = z.infer<typeof DisplayBodyListSchema>
+
+/** Which pages each table gets in the PPT: the 3D view, the flat slot diagram, or both. */
+export const DISPLAY_PPT_VIEWS = ['both', '3d', 'plan'] as const
+export const DisplayPptViewsSchema = z.enum(DISPLAY_PPT_VIEWS)
+export type DisplayPptViews = z.infer<typeof DisplayPptViewsSchema>
+export const DISPLAY_PPT_VIEW_LABELS: Record<DisplayPptViews, string> = {
+  both: '三维 + 平面',
+  '3d': '只要三维',
+  plan: '只要平面',
+}
+
+const Unit = z.number().min(0).max(1)
+/** A rectangle on a picture, 0–1 of its width and height from the top-left corner. */
+export const PictureRectSchema = z.object({ x: Unit, y: Unit, w: Unit, h: Unit })
+export type PictureRect = z.infer<typeof PictureRectSchema>
+
+/**
+ * The 3D view of one table, drawn in the browser (the server has no WebGL): the picture, and
+ * where on it each slot's product name goes, so the PPT can lay editable text there.
+ */
+export const DisplayTableShotSchema = z.strictObject({
+  /** DisplayTable.sourceId */
+  table: z.string().min(1).max(100),
+  /** PNG or JPEG, base64 without the data: prefix. */
+  image: z
+    .string()
+    .min(16)
+    .max(8 * 1024 * 1024),
+  names: z.record(z.string().min(1).max(8), PictureRectSchema),
+})
+export type DisplayTableShot = z.output<typeof DisplayTableShotSchema>
+
+/** PPT options shared by both workflows. */
+export const DisplayPptOptionsSchema = z.strictObject({
+  views: DisplayPptViewsSchema.default('both'),
+  tables3d: z.array(DisplayTableShotSchema).max(40).default([]),
+})
+export type DisplayPptOptions = z.input<typeof DisplayPptOptionsSchema>
+
 /** The browser draws the plan (as for deliveries) and says which plan area the picture shows. */
-export const NodeDisplayExportRequestSchema = z.strictObject({
+export const NodeDisplayExportRequestSchema = DisplayPptOptionsSchema.extend({
   planPng: z
     .string()
     .min(16)
@@ -196,4 +278,10 @@ export const NodeDisplayExportRequestSchema = z.strictObject({
   /** SVG viewBox of the drawing in plan metres: x, z, width, depth. */
   planViewBox: z.tuple([z.number(), z.number(), z.number().positive(), z.number().positive()]),
 })
-export type NodeDisplayExportRequest = z.output<typeof NodeDisplayExportRequestSchema>
+export type NodeDisplayExportRequest = z.input<typeof NodeDisplayExportRequestSchema>
+/** The request as the server sees it, defaults filled in. */
+export type NodeDisplayExportBody = z.output<typeof NodeDisplayExportRequestSchema>
+
+/** A display task's export: the PPT options only (the pictures are already on the server). */
+export const DisplayTaskExportRequestSchema = DisplayPptOptionsSchema
+export type DisplayTaskExportBody = z.output<typeof DisplayTaskExportRequestSchema>

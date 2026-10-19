@@ -1,4 +1,3 @@
-import { Link } from 'react-router'
 import type { AiModel, AiPurpose, AiSettings } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useAiOverview, useUpdateAiSettings } from './queries.ts'
@@ -10,8 +9,12 @@ function price(model: AiModel): string {
   return `输入 ${model.price.inputCny} 元 / 输出 ${model.price.outputCny} 元（每百万 token）`
 }
 
+/** Asked before plans may leave this machine. */
+export const CLOUD_CONFIRM =
+  '开启后，识别失败或选用外部模型时，上传的图纸会发送到外部模型服务（如通义千问）识别，图纸内容会离开本机。确定开启吗？'
+
 interface ChoiceProps {
-  id: keyof AiSettings
+  id: Exclude<keyof AiSettings, 'recognitionCloud'>
   label: string
   hint: string
   models: AiModel[]
@@ -84,7 +87,7 @@ export function SettingsPage() {
     <main className="page settings-page">
       <header className="page-header">
         <h1>设置</h1>
-        <Link to="/">← 项目列表</Link>
+        <p>全站设置，修改后立即保存</p>
       </header>
       <ErrorMessage error={overview.error ?? update.error} />
       {!data && !overview.error && <p className="notice">正在加载…</p>}
@@ -106,14 +109,42 @@ export function SettingsPage() {
               disabled={busy}
               onChange={(v) => v && update.mutate({ agentModel: v })}
             />
+            <div className="settings-row">
+              <label htmlFor="recognitionCloud">云端识别</label>
+              <div className="settings-control">
+                <label className="hint">
+                  <input
+                    id="recognitionCloud"
+                    type="checkbox"
+                    checked={settings.recognitionCloud}
+                    disabled={busy}
+                    onChange={(e) => {
+                      const on = e.target.checked
+                      if (on && !window.confirm(CLOUD_CONFIRM)) return
+                      update.mutate({ recognitionCloud: on })
+                    }}
+                  />{' '}
+                  允许把图纸发到外部模型识别
+                </label>
+                <p className={settings.recognitionCloud ? 'error' : 'hint'}>
+                  {settings.recognitionCloud
+                    ? '已开启：识别失败或选用外部模型时，图纸会发到外部。'
+                    : '默认关闭：图纸只在本机识别，不会发到外部。下面两项在开启后才生效。'}
+                </p>
+              </div>
+            </div>
             <Choice
               id="recognitionModel"
               label="平面识别"
-              hint="上传简图时先用它识别。本地识别不收费。"
+              hint={
+                settings.recognitionCloud
+                  ? '上传简图时先用它识别。本地识别不收费。'
+                  : '云端识别关闭时一律用本地识别（不收费）。'
+              }
               models={models.filter(can('recognition'))}
               value={settings.recognitionModel}
               empty="本地识别不可用。"
-              disabled={busy}
+              disabled={busy || !settings.recognitionCloud}
               onChange={(v) => v && update.mutate({ recognitionModel: v })}
             />
             <Choice
@@ -130,7 +161,7 @@ export function SettingsPage() {
               value={settings.recognitionFallback}
               empty=""
               allowNone
-              disabled={busy}
+              disabled={busy || !settings.recognitionCloud}
               onChange={(v) => update.mutate({ recognitionFallback: v })}
             />
             {update.isSuccess && (

@@ -12,6 +12,7 @@ import type {
   RecognitionRun,
   RecognizeRequest,
   RecognizeResponse,
+  VectorContent,
 } from '@store/shared'
 import { chat } from '../../ai/chat.ts'
 import { LOCAL_MODEL_ID, findModel } from '../../ai/models.ts'
@@ -29,6 +30,8 @@ import { createNode, requireActiveProject } from '../nodes/service.ts'
 import { checkDraft, failureReason } from './check.ts'
 import { RELATIVE, answerToDraft, buildPrompt, parseAnswer, toPixels } from './llm.ts'
 import { recognizeVector } from './local.ts'
+import { cachedReading, readDimensionChains, readPageTexts } from './ocr.ts'
+import type { ChainReading } from './ocr.ts'
 
 const { planUploads, projects, recognitionRuns, storedFiles } = schema
 type UploadRow = typeof planUploads.$inferSelect
@@ -252,6 +255,54 @@ async function recognizeWithModel(
   return { draft, provider: spec.provider }
 }
 
+/** A page with fewer texts in Chinese than this had its text turned into outlines. */
+const OUTLINED_TEXT_BELOW = 3
+
+/**
+ * What OCR reads from an upload's page on this machine: the numbers of its dimension chains and,
+ * when the vector content carries (almost) no text, the page's texts. A failure only costs the
+ * draft that evidence: it is noted, not raised.
+ */
+async function uploadReadings(
+  db: Database,
+  roots: StorageRoots,
+  upload: UploadRow,
+  vector: VectorContent,
+): Promise<{ chains: ChainReading[]; texts: VectorContent['texts']; notes: string[] }> {
+  const key = `${upload.id}:${vector.width}x${vector.height}:${vector.lines.length}`
+  let picture: Promise<Buffer> | null = null
+  const load = () =>
+    (picture ??= (async () => {
+      const [stored] = await db.select().from(storedFiles).where(eq(storedFiles.id, upload.fileId))
+      if (!stored) throw notFound('简图文件')
+      const { file } = await resolveStoredFile(roots, 'storage', stored.storageKey)
+      return readFile(file)
+    })())
+  const why = (error: unknown) => (error instanceof Error ? error.message : String(error))
+  const notes: string[] = []
+  let chains: ChainReading[] = []
+  try {
+    chains = await cachedReading(`chains:${key}`, async () =>
+      readDimensionChains(await load(), vector),
+    )
+  } catch (error) {
+    notes.push(`尺寸数字没能读取（${why(error)}），比例改用其他依据`)
+  }
+  let texts: VectorContent['texts'] = []
+  const named = vector.texts.filter((t) => /[\u4e00-\u9fff]/.test(t.text)).length
+  if (named < OUTLINED_TEXT_BELOW) {
+    try {
+      texts = await cachedReading(`texts:${key}`, async () => readPageTexts(await load(), vector))
+      if (texts.length) {
+        notes.push(`图上文字是转曲的，由本机 OCR 读出 ${texts.length} 处文字，道具名请核对`)
+      }
+    } catch (error) {
+      notes.push(`图上文字没能读取（${why(error)}），道具请手动摆放`)
+    }
+  }
+  return { chains, texts, notes }
+}
+
 /**
  * Reads an upload: locally from the vector content when the setting says so (and the browser
  * could extract any), otherwise with the chosen model. A local attempt that fails the rules
@@ -275,13 +326,27 @@ export async function recognize(
     .from(projects)
     .where(eq(projects.id, upload.projectId))
   const siStyle = project?.siStyle ?? 'SI1.0'
-  const method = request.method ?? (settings.recognitionModel === LOCAL_MODEL_ID ? 'local' : 'llm')
+  // Plans go to a remote model only while the user has the cloud switch on.
+  const cloud = settings.recognitionCloud
+  if (request.method === 'llm' && !cloud) {
+    throw new AppError(
+      'VALIDATION_FAILED',
+      '云端识别未开启：图纸只在本机识别。如需改用外部模型，请到设置中开启“允许云端识别”',
+    )
+  }
+  const method =
+    request.method ?? (!cloud || settings.recognitionModel === LOCAL_MODEL_ID ? 'local' : 'llm')
 
   if (method === 'local') {
     let draft: RecognitionDraft | null = null
     let reason: string
     if (request.vector) {
-      draft = checkDraft(recognizeVector(request.vector, request, [...catalog.values()], siStyle))
+      const { chains, texts, notes } = await uploadReadings(db, roots, upload, request.vector)
+      const content = texts.length
+        ? { ...request.vector, texts: [...request.vector.texts, ...texts] }
+        : request.vector
+      draft = checkDraft(recognizeVector(content, request, [...catalog.values()], siStyle, chains))
+      draft.notes.push(...notes)
       reason = failureReason(draft) ?? ''
     } else {
       reason = '图片没有可读的矢量内容（本地识别只能读矢量 PDF）'
@@ -296,7 +361,7 @@ export async function recognize(
       fallbackOf: null,
     })
     if (!reason) return { run: toRun(attempted), attempted: null }
-    const fallback = settings.recognitionFallback
+    const fallback = cloud ? settings.recognitionFallback : null
     if (!fallback) return { run: toRun(attempted), attempted: null }
     const { draft: modelDraft, provider } = await recognizeWithModel(
       db,

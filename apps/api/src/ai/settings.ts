@@ -13,6 +13,7 @@ const KEYS = {
   agentModel: 'ai.agent.model',
   recognitionModel: 'ai.recognition.model',
   recognitionFallback: 'ai.recognition.fallback',
+  recognitionCloud: 'ai.recognition.cloud',
 } as const
 
 /** Preferred first when nothing is chosen yet. */
@@ -56,6 +57,7 @@ export async function readSettings(db: Database, ai: AppConfig['ai']): Promise<A
     typeof recognition === 'string' && recognitionModels.some((m) => m.id === recognition)
       ? recognition
       : LOCAL_MODEL_ID
+  const cloud = saved.get(KEYS.recognitionCloud)
   return {
     agentModel:
       typeof agent === 'string' && agentModels.some((m) => m.id === agent)
@@ -74,6 +76,8 @@ export async function readSettings(db: Database, ai: AppConfig['ai']): Promise<A
               FALLBACK_ORDER,
               fallbackModels.filter((m) => m.id !== recognitionModel),
             ),
+    // Off until the user turns it on: plans leave this machine only by their choice.
+    recognitionCloud: cloud === true,
   }
 }
 

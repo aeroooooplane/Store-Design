@@ -26,6 +26,9 @@ import {
   renderThumbnail,
 } from '../recognition/pdf-extract.ts'
 import { MarkedPicture } from './MarkedPicture.tsx'
+import { PptViewsSelect } from './PptViewsSelect.tsx'
+import { usePptViews } from './pptViews.ts'
+import { tableShots } from './table3d/shots.ts'
 import type { PictureMark } from './MarkedPicture.tsx'
 import { SlotTable } from './SlotTable.tsx'
 import {
@@ -82,6 +85,7 @@ export function DisplayTaskPage() {
       key={task.data.id}
       task={task.data}
       rules={rules.data.rules}
+      photos={rules.data.photos}
       ruleVersion={rules.data.version}
     />
   )
@@ -90,14 +94,17 @@ export function DisplayTaskPage() {
 interface TaskEditorProps {
   task: DisplayTask
   rules: NonNullable<ReturnType<typeof useDisplayRules>['data']>['rules']
+  photos: NonNullable<ReturnType<typeof useDisplayRules>['data']>['photos']
   ruleVersion: string
 }
 
-function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
+function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
   const update = useUpdateDisplayTask(task.id)
   const upload = useUploadTaskPicture(task.id)
   const detect = useDetectTables(task.id)
   const exporting = useExportDisplayTask(task.id)
+  const [pptViews, setPptViews] = usePptViews()
+  const [drawing, setDrawing] = useState(false)
   const fileInput = useRef<HTMLInputElement>(null)
   const folderInput = useRef<HTMLInputElement>(null)
   const [pdf, setPdf] = useState<PdfSource | null>(null)
@@ -227,9 +234,22 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
     setError(null)
     try {
       await saveDraft()
-      await exporting.mutateAsync()
+      setDrawing(true)
+      const tables3d =
+        pptViews === 'plan'
+          ? []
+          : await tableShots(tables, {
+              rules,
+              photos,
+              si: task.siStyle,
+              end: draft.edits.landscapeEnd,
+            })
+      setDrawing(false)
+      await exporting.mutateAsync({ views: pptViews, tables3d })
     } catch (caught) {
       setError(caught)
+    } finally {
+      setDrawing(false)
     }
   }
 
@@ -257,7 +277,6 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
         <span className="page-header-end">
           <p>先识别图纸，再校准平面图和效果图上的桌子编号，最后生成 PPT · 展陈规则 {ruleVersion}</p>
           <Link to="/display">展陈方案列表</Link>
-          <Link to="/">项目</Link>
         </span>
       </header>
 
@@ -306,7 +325,7 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
                 </select>
               </label>
               <label>
-                <span>SI 版本（决定托盘照片）</span>
+                <span>SI 版本（决定托盘照片和桌体）</span>
                 <select
                   value={task.siStyle}
                   onChange={(event) =>
@@ -606,6 +625,8 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
                   <summary>各桌陈列内容（按展陈规则 {ruleVersion}，可逐位修改）</summary>
                   <SlotTable
                     rules={rules}
+                    photos={photos}
+                    si={task.siStyle}
                     tables={tables}
                     edits={draft.edits}
                     onChange={setEdits}
@@ -619,13 +640,18 @@ function TaskEditor({ task, rules, ruleVersion }: TaskEditorProps) {
             <div className="display-card-head">
               <h2>输出结果</h2>
               <span className="hint">{task.exports.length} 个 PPT</span>
+              <PptViewsSelect
+                value={pptViews}
+                onChange={setPptViews}
+                disabled={exporting.isPending}
+              />
               <button
                 type="button"
                 className="primary"
                 onClick={() => void makePpt()}
-                disabled={exporting.isPending || working || !draft.tables.length}
+                disabled={drawing || exporting.isPending || working || !draft.tables.length}
               >
-                {exporting.isPending ? '正在生成…' : '生成 PPT'}
+                {drawing ? '正在画三维…' : exporting.isPending ? '正在生成…' : '生成 PPT'}
               </button>
             </div>
             {task.exports.length === 0 ? (

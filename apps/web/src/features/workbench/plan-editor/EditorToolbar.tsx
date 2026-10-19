@@ -23,6 +23,12 @@ interface EditorToolbarProps {
   canRedo: boolean
   dispatch: Dispatch<EditorAction>
   saveState: SaveState
+  /** 显示间距: clear distances around the 软装 props on the plan. */
+  spacing: boolean
+  onToggleSpacing: () => void
+  /** 画空心隔板: the next drag on the plan draws a partition. */
+  drawingFixture: boolean
+  onToggleDrawFixture: () => void
 }
 
 /** View and look tabs, undo / redo and the draft's save state. */
@@ -36,6 +42,10 @@ export function EditorToolbar({
   canRedo,
   dispatch,
   saveState,
+  spacing,
+  onToggleSpacing,
+  drawingFixture,
+  onToggleDrawFixture,
 }: EditorToolbarProps) {
   return (
     <div className="toolbar">
@@ -64,6 +74,26 @@ export function EditorToolbar({
             白模
           </button>
         </div>
+      )}
+      {view === 'plan' && (
+        <button
+          type="button"
+          aria-pressed={spacing}
+          title="在平面上标出每件软装到最近软装或墙体的距离（100 mm–3 m）"
+          onClick={onToggleSpacing}
+        >
+          显示间距
+        </button>
+      )}
+      {view === 'plan' && (
+        <button
+          type="button"
+          aria-pressed={drawingFixture}
+          title="在平面上拖出一个矩形，边缘吸附墙体和配件柜（按住 Alt 不吸附，Esc 取消）"
+          onClick={onToggleDrawFixture}
+        >
+          画空心隔板
+        </button>
       )}
       <span className="history-buttons">
         <button

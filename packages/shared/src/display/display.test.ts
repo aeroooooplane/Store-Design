@@ -8,6 +8,7 @@ import {
   unitPhoto,
 } from './engine.ts'
 import type { DisplayTableInput } from './engine.ts'
+import { rotatedFootprint } from '../schemas/layout.ts'
 import { HERO_SLOT, ISLAND_SLOTS, SIDE_SLOTS, checkRules, diffRules } from './rules.ts'
 import type { DisplayRules } from './rules.ts'
 
@@ -160,6 +161,16 @@ describe('numbering and orientation', () => {
     expect(tableOrientation({ w: 1.8, d: 0.8 }, bottom)).toBe('landscape')
   })
 
+  it('judges a tilted table by its nearest quarter turn', () => {
+    // Stored as at the nearest quarter turn (rotatedFootprint): 110° and 75° are near 90°, so a
+    // 1.8 × 0.8 table runs towards the entrance; at 30° it is near 0° and lies across it.
+    const table = { footprint: { w: 1.8, d: 0.8, h: 1.214 } }
+    for (const rotation of [75, 90, 110])
+      expect(tableOrientation(rotatedFootprint(table, rotation), bottom)).toBe('portrait')
+    for (const rotation of [0, 30, 160])
+      expect(tableOrientation(rotatedFootprint(table, rotation), bottom)).toBe('landscape')
+  })
+
   it('finds the inward side of the main entrance', () => {
     const space = {
       boundary: [
@@ -237,9 +248,9 @@ describe('planDisplay', () => {
     expect(summary.trays).toEqual([{ id: 'std', name: '普通托盘', count: 24 }])
   })
 
-  it('prefers real photos, then renders', () => {
-    expect(unitPhoto(makeRules(), 'a', 'SI2.0')?.file).toBe('p.jpg')
-    expect(unitPhoto(makeRules(), 'a', 'SI2.0', 'render')?.file).toBe('r.jpg')
+  it("prefers the guide's renders, then real photos", () => {
+    expect(unitPhoto(makeRules(), 'a', 'SI2.0')?.file).toBe('r.jpg')
+    expect(unitPhoto(makeRules(), 'a', 'SI2.0', 'photo')?.file).toBe('p.jpg')
     expect(unitPhoto(makeRules(), 'a', 'SI1.0')).toBeNull()
   })
 })

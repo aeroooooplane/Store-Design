@@ -1,13 +1,18 @@
 import { z } from 'zod'
-import { ItemFunctionSchema } from '../enums.ts'
+import { ItemFunctionSchema, MarketSchema } from '../enums.ts'
 
 /** Native front direction of a model in its own GLB frame (Y up); `any` = no fixed front. */
 export const FRONT_AXES = ['+Z', '-Z', '+X', '-X', 'any'] as const
 export const FrontAxisSchema = z.enum(FRONT_AXES)
 export type FrontAxis = z.infer<typeof FrontAxisSchema>
 
-export const INSTALLATIONS = ['floor', 'wall'] as const
+/**
+ * How a model is installed: standing on the floor, against a wall, hanging from the ceiling, or
+ * built into a wall (embedded: front flush with the wall face, body inside it).
+ */
+export const INSTALLATIONS = ['floor', 'wall', 'ceiling', 'embedded'] as const
 export const InstallationSchema = z.enum(INSTALLATIONS)
+export type Installation = z.infer<typeof InstallationSchema>
 
 export const SI_FAMILIES = ['SI1.0', 'SI2.0', '通用', '非标'] as const
 
@@ -41,8 +46,23 @@ export type FileRef = z.infer<typeof FileRefSchema>
 const MetresSchema = z.number().finite().positive()
 
 /**
+ * The whole model around its body when the two differ: a 开箱桌 is placed, collides and is
+ * dimensioned by its table (`footprint`), while its stools still show in 3D and on the plan.
+ * Model frame (X width, Z depth), metres; `cx`/`cz` is the centre of the whole model relative
+ * to the centre of the body.
+ */
+export const AssetExtentSchema = z.object({
+  w: MetresSchema,
+  d: MetresSchema,
+  cx: z.number().finite(),
+  cz: z.number().finite(),
+})
+export type AssetExtent = z.infer<typeof AssetExtentSchema>
+
+/**
  * One catalogue entry. `footprint` is the size used for placement: the measured GLB box when a
- * web model exists, otherwise the SketchUp face bounds. Props are never scaled to fit.
+ * web model exists, otherwise the SketchUp face bounds, or the body alone where
+ * body-footprint.json corrects it (see `extent`). Props are never scaled to fit.
  */
 export const AssetSchema = z.object({
   id: z.string().regex(/^asset-\d+$/),
@@ -57,10 +77,11 @@ export const AssetSchema = z.object({
   installation: InstallationSchema.nullable(),
   footprint: z.object({ w: MetresSchema, d: MetresSchema, h: MetresSchema }),
   footprintSource: z.enum(['glb', 'source']),
+  extent: AssetExtentSchema.nullable(),
   front: FrontAxisSchema.nullable(),
   staffSide: FrontAxisSchema.nullable(),
   facingConfidence: z.enum(['high', 'medium', 'low']).nullable(),
-  /** Has a verified web model and stands on the floor: the planner may use it. */
+  /** Has a verified web model and a known installation; the planner only uses floor models. */
   placeable: z.boolean(),
   /** Marked 删除 in 模型选用表: old layouts still show it; it is no longer offered or planned. */
   retired: z.boolean(),
@@ -70,6 +91,13 @@ export const AssetSchema = z.object({
   whiteGlb: FileRefSchema.nullable(),
   /** Light textured copy used by the material look (renders, 3D effect); falls back to `glb`. */
   finishGlb: FileRefSchema.nullable(),
+  /**
+   * The market `glb` shows when a model comes in two versions (LOGO: 影石Insta360 in China,
+   * Insta360 abroad); null for every other model.
+   */
+  market: MarketSchema.nullable(),
+  /** The version for the other market, the same size; shown in projects of that market. */
+  otherMarketGlb: FileRefSchema.nullable(),
   preview: FileRefSchema.nullable(),
   /** Product picture from the category gallery (品类图库). */
   productImage: FileRefSchema.nullable(),

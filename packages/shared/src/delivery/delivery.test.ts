@@ -74,4 +74,18 @@ describe('deliveryLegend', () => {
     expect(legend.entries[2]).toMatchObject({ assetId: null, placeholder: true })
     expect(legend.entries[2]?.size).toEqual({ w: 1.2, d: 0.6, h: 0.8 })
   })
+
+  it('lists a box without a model once whichever way it is turned, tilted or not', () => {
+    const box = { function: 'other' as const, name: '待定道具', h: 0.8, placeholder: true }
+    const legend = deliveryLegend(
+      [
+        item('a', { ...box, w: 0.6, d: 1.2 }),
+        item('b', { ...box, w: 1.2, d: 0.6, rotation: 90 }),
+        item('c', { ...box, w: 1.2, d: 0.6, rotation: 75 }),
+        item('d', { ...box, w: 0.6, d: 1.2, rotation: 30 }),
+      ],
+      new Map(),
+    )
+    expect(legend.entries.map((e) => [e.name, e.count])).toEqual([['待定道具', 4]])
+  })
 })

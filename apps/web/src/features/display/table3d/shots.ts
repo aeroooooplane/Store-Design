@@ -1,0 +1,162 @@
+import * as THREE from 'three'
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import type {
+  DisplayRules,
+  DisplayRulesView,
+  DisplayTable,
+  DisplayTableShot,
+  PictureRect,
+  SiStyle,
+} from '@store/shared'
+import { photoOf } from '../photos.ts'
+import { bodyFor } from './bodies.ts'
+import { buildTableScene, pictureRect, slotPoints, stripRect } from './scene.ts'
+import type { SlotContent } from './scene.ts'
+
+/** What the 3D views need besides the table: names and pictures of the units, the SI, the end. */
+export interface TableViewContext {
+  rules: DisplayRules
+  photos: DisplayRulesView['photos']
+  si: SiStyle
+  end: 'left' | 'right'
+}
+
+export function slotContents(table: DisplayTable, ctx: TableViewContext): SlotContent[] {
+  const labelOf = new Map(ctx.rules.units.map((u) => [u.id, u.label]))
+  return table.slots.map((s) => ({
+    slot: s.slot,
+    hero: s.hero,
+    name: s.unit ? (labelOf.get(s.unit) ?? s.unit) : '待定',
+    empty: !s.unit,
+    photo: photoOf(ctx.photos, s.unit, ctx.si)?.url ?? null,
+  }))
+}
+
+/** Picture shape: tall for a portrait island table (its long side runs away), wide otherwise. */
+export const shotAspect = (table: DisplayTable) =>
+  table.kind === 'island' && table.orientation === 'portrait' ? 4 / 5 : 16 / 10
+
+/** Same table, same contents, same picture: the key of a cached view. */
+export const viewKey = (table: DisplayTable, ctx: TableViewContext, names: boolean) =>
+  JSON.stringify([
+    table.sourceId,
+    table.orientation,
+    table.slots,
+    table.modules,
+    ctx.si,
+    ctx.end,
+    names,
+  ])
+
+export interface TableSnapshot {
+  url: string
+  /** Slot → its card and its name strip on the picture. */
+  slots: Record<string, { card: PictureRect; name: PictureRect }>
+}
+
+// One renderer for every 3D picture on the page, still or turning: a browser keeps only about
+// 16 WebGL contexts, and a page can show many tables.
+let renderer: THREE.WebGLRenderer | null = null
+let environment: THREE.Texture | null = null
+
+/** The workbench's room light, so that metals and stone read as they do there. */
+function lit(gl: THREE.WebGLRenderer, scene: THREE.Scene) {
+  if (!environment) {
+    const pmrem = new THREE.PMREMGenerator(gl)
+    environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
+    pmrem.dispose()
+  }
+  scene.environment = environment
+  scene.environmentIntensity = 0.25
+}
+let queue: Promise<unknown> = Promise.resolve()
+
+function shared(width: number, height: number) {
+  renderer ??= new THREE.WebGLRenderer({
+    canvas: document.createElement('canvas'),
+    antialias: true,
+    preserveDrawingBuffer: true,
+  })
+  renderer.setPixelRatio(1)
+  const size = renderer.getSize(new THREE.Vector2())
+  if (size.x !== width || size.y !== height) renderer.setSize(width, height, false)
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+  renderer.toneMappingExposure = 0.82
+  return renderer
+}
+
+/** Renders a scene with the shared renderer and copies the picture onto a 2D canvas. */
+export function drawInto(target: HTMLCanvasElement, scene: THREE.Scene, camera: THREE.Camera) {
+  const ctx = target.getContext('2d')
+  if (!ctx || !target.width || !target.height) return
+  const gl = shared(target.width, target.height)
+  lit(gl, scene)
+  gl.render(scene, camera)
+  ctx.drawImage(gl.domElement, 0, 0)
+}
+
+/** Draws one table from the entrance side; pictures are made one at a time. */
+export function snapshotTable(
+  table: DisplayTable,
+  ctx: TableViewContext,
+  options: { width: number; height: number; names: boolean; type?: 'image/jpeg' | 'image/png' },
+): Promise<TableSnapshot> {
+  const run = async () => {
+    const built = await buildTableScene({
+      table,
+      end: ctx.end,
+      contents: slotContents(table, ctx),
+      names: options.names,
+      body: await bodyFor(table, ctx.si),
+    })
+    try {
+      const gl = shared(options.width, options.height)
+      const camera = new THREE.PerspectiveCamera(30, options.width / options.height, 0.05, 50)
+      built.frame(camera)
+      lit(gl, built.scene)
+      gl.render(built.scene, camera)
+      const url = gl.domElement.toDataURL(options.type ?? 'image/jpeg', 0.92)
+      const slots: TableSnapshot['slots'] = {}
+      for (const s of built.slots)
+        slots[s.slot] = {
+          card: pictureRect(slotPoints(s, s.outline), camera),
+          name: stripRect(slotPoints(s, s.name), camera),
+        }
+      return { url, slots }
+    } finally {
+      built.dispose()
+    }
+  }
+  const next = queue.then(run, run)
+  queue = next.catch(() => undefined)
+  return next
+}
+
+/**
+ * The 3D view of every table for the PPT: no names on the cards (the PPT writes them as editable
+ * text over each card's name strip). A table whose picture fails keeps its slot diagram.
+ */
+export async function tableShots(
+  tables: DisplayTable[],
+  ctx: TableViewContext,
+): Promise<DisplayTableShot[]> {
+  const shots: DisplayTableShot[] = []
+  for (const table of tables) {
+    try {
+      const aspect = shotAspect(table)
+      const shot = await snapshotTable(table, ctx, {
+        width: Math.round(aspect >= 1 ? 2000 : 1600 * aspect),
+        height: Math.round(aspect >= 1 ? 2000 / aspect : 1600),
+        names: false,
+      })
+      shots.push({
+        table: table.sourceId,
+        image: shot.url.slice(shot.url.indexOf(',') + 1),
+        names: Object.fromEntries(Object.entries(shot.slots).map(([slot, r]) => [slot, r.name])),
+      })
+    } catch {
+      // No WebGL here: the PPT falls back to the slot diagrams.
+    }
+  }
+  return shots
+}

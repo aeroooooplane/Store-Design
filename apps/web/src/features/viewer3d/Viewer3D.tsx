@@ -1,9 +1,9 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { VIEW_ASPECT } from '@store/shared'
-import type { Asset, Camera, Layout, ShopType, SiStyle, Space } from '@store/shared'
+import type { Asset, Camera, Layout, Market, ShopType, SiStyle, Space } from '@store/shared'
 import { WhiteScene } from './white-scene.ts'
-import type { LoadStatus, Look, ViewPose } from './white-scene.ts'
+import type { LoadStatus, Look, SceneHandlers, ViewPose } from './white-scene.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
@@ -32,11 +32,17 @@ interface Viewer3DProps {
   /** White model (default) or the material look of the renders. */
   look?: Look | undefined
   siStyle?: SiStyle | undefined
+  /** The project's market: LOGO models with a version per market show that one. */
+  market?: Market | undefined
   onSelect: (itemId: string | null) => void
   /** Leave out for a read-only view: props can be selected but not dragged. */
   onMove?:
     | ((itemId: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) => void)
     | undefined
+  /** A LOGO dragged by a corner of its front; leave out where LOGOs cannot be resized. */
+  onResize?: SceneHandlers['onResize'] | undefined
+  /** Turns the selected prop by its ring; leave out for no ring. */
+  onRotate?: SceneHandlers['onRotate'] | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   /** Where the camera starts instead of the default front view (e.g. the view last used). */
@@ -60,8 +66,11 @@ export function Viewer3D({
   flaggedIds,
   look = 'white',
   siStyle = 'SI1.0',
+  market = 'domestic',
   onSelect,
   onMove,
+  onResize,
+  onRotate,
   onReady,
   initialView,
   onViewChange,
@@ -109,8 +118,8 @@ export function Viewer3D({
 
   // Latest callbacks without re-creating the scene.
   useEffect(() => {
-    sceneRef.current?.setHandlers({ onSelect, onMove })
-  }, [onSelect, onMove])
+    sceneRef.current?.setHandlers({ onSelect, onMove, onResize, onRotate })
+  }, [onSelect, onMove, onResize, onRotate])
 
   useEffect(() => {
     // The view resets only when a different space is shown, not after every edit; the first
@@ -122,8 +131,12 @@ export function Viewer3D({
   }, [space, shopType])
 
   useEffect(() => {
-    sceneRef.current?.setItems(layout.items, assets)
-  }, [layout, assets])
+    sceneRef.current?.setItems(layout.items, assets, market)
+  }, [layout, assets, market])
+
+  useEffect(() => {
+    sceneRef.current?.setFixtures(layout.fixtures ?? [], layout.items)
+  }, [layout.fixtures, layout.items])
 
   useEffect(() => {
     sceneRef.current?.setLook(look, siStyle)

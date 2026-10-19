@@ -4,6 +4,7 @@ import type { Database } from '@store/database'
 import { EDITED_NOTE, applyDisplayEdits, safeFileName, storeTitle, unitPhoto } from '@store/shared'
 import type {
   DisplayExport,
+  DisplayPptOptions,
   DisplayRules,
   DisplayRulesView,
   DisplayTable,
@@ -48,7 +49,7 @@ export async function rulesView(db: Database): Promise<DisplayRulesView> {
 
 export const applyEdits = applyDisplayEdits
 
-/** Tray photos of every slot content in the deck, for the style's SI version. */
+/** Tray pictures (the guide's renders) of every slot content in the deck, for the SI version. */
 export async function loadPhotos(
   roots: StorageRoots,
   rules: DisplayRules,
@@ -101,6 +102,28 @@ export async function buildDisplayFiles(
   ])
   const title = safeFileName(storeTitle(input.name))
   return { pptx, xlsx, names: { pptx: `${title}展陈方案.pptx`, xlsx: `${title}展陈清单.xlsx` } }
+}
+
+/** The browser's 3D views of the tables, keyed by table label for the deck. */
+export async function tableShots(
+  tables: DisplayTable[],
+  shots: NonNullable<DisplayPptOptions['tables3d']>,
+): Promise<DisplayDeckInput['tables3d']> {
+  const labelOf = new Map(tables.map((t) => [t.sourceId, t.label]))
+  const out: DisplayDeckInput['tables3d'] = {}
+  for (const shot of shots) {
+    const label = labelOf.get(shot.table)
+    if (!label) continue
+    try {
+      out[label] = {
+        image: await deckImage(Buffer.from(shot.image, 'base64'), 2000),
+        names: shot.names,
+      }
+    } catch {
+      // An unreadable picture: the table falls back to its slot diagram.
+    }
+  }
+  return out
 }
 
 /** Writes both files under STORAGE_ROOT and returns the export record with download links. */

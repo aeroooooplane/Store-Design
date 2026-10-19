@@ -24,6 +24,8 @@ pnpm library:apply-table    # 回读用户改过的 资源库/模型选用表.xl
 pnpm catalog:white          # 生成白模轻量版（已是最新的会跳过；网页模型更新后重跑）
 pnpm catalog:finish         # 生成材质轻量版（三维材质视图与渲染用，不入库，每台机器/服务器各生成一次；之后再跑 pnpm catalog:import 挂接）
 pnpm catalog:import         # 从资源库导入模型目录（需先 git lfs pull 网页模型）
+pnpm display:import          # 导入展陈规则（资源库/10_产品与陈列/展陈规则.xlsx 更新后重跑）
+pnpm display:bodies          # 模型库里中岛桌、带托盘边柜更新后，重新生成展陈三维用的真实桌体（结果提交进资源库）
 # 本地识别回归（apps/web 下）：node src/scripts/local-regression.ts <图纸 PDF 目录> --limit 15 --pages 6
 pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（127.0.0.1:5173）
 ```

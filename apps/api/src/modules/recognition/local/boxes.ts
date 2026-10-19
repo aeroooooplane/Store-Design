@@ -118,6 +118,82 @@ export function boxFromLines(
   )
 }
 
+/** A drawn box is the model's when each side is within this share of the model's (or 4 px). */
+const SIZE_SLACK = 0.12
+
+/** The box is about `w` × `d` px, either way round. */
+export function fitsSize(box: Box, w: number, d: number): boolean {
+  const near = (a: number, b: number) => Math.abs(a - b) <= Math.max(b * SIZE_SLACK, 4)
+  return (near(box.w, w) && near(box.h, d)) || (near(box.w, d) && near(box.h, w))
+}
+
+/**
+ * The closed box of the model's size (`w` × `d` px, either way round) nearest the label, within
+ * `reach` px of it: for a name written beside its prop rather than in it ("1.8米X系列中岛桌"
+ * under the table), where the box around the text is the gap between props.
+ */
+export function boxOfSize(
+  text: Text,
+  lines: Line[],
+  index: LineIndex,
+  w: number,
+  d: number,
+  reach: number,
+  taken: (box: Box) => boolean,
+): Box | null {
+  const [cx, cy] = centre(text)
+  const near = (x: number, y: number) => Math.abs(x - cx) <= reach && Math.abs(y - cy) <= reach
+  const xs: number[] = []
+  const ys: number[] = []
+  for (const l of lines) {
+    if (!near(l.x1, l.y1) && !near(l.x2, l.y2)) continue
+    if (Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX) {
+      ys.push((l.y1 + l.y2) / 2)
+      xs.push(l.x1, l.x2)
+    } else if (Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX) {
+      xs.push((l.x1 + l.x2) / 2)
+      ys.push(l.y1, l.y2)
+    }
+  }
+  const lefts = cluster(xs)
+  const tops = cluster(ys)
+  // Each side with the one position nearest the model's length past it: a dense drawing has
+  // lines every few pixels, and every pair of them would be millions of boxes.
+  const pairs = (values: number[], length: number) => {
+    const out: [number, number][] = []
+    const slack = Math.max(length * SIZE_SLACK, 4)
+    for (const a of values) {
+      let best: number | null = null
+      for (const b of values) {
+        const off = Math.abs(b - a - length)
+        if (b > a && off <= slack && (best === null || off < Math.abs(best - a - length))) best = b
+      }
+      if (best !== null) out.push([a, best])
+    }
+    return out
+  }
+  const candidates: { box: Box; dist: number }[] = []
+  for (const [bw, bh] of w === d
+    ? [[w, d]]
+    : [
+        [w, d],
+        [d, w],
+      ]) {
+    const across = pairs(lefts, bw ?? 0)
+    const down = pairs(tops, bh ?? 0)
+    for (const [x1, x2] of across) {
+      for (const [y1, y2] of down) {
+        const box: Box = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
+        const [bx, by] = centre(box)
+        const dist = Math.hypot(bx - cx, by - cy)
+        if (dist <= reach) candidates.push({ box, dist })
+      }
+    }
+  }
+  candidates.sort((p, q) => p.dist - q.dist)
+  return candidates.find(({ box }) => !taken(box) && closed(index, box))?.box ?? null
+}
+
 export const boxKey = (b: Box) =>
   `${Math.round(b.x)},${Math.round(b.y)},${Math.round(b.w)},${Math.round(b.h)}`
 export const sameBox = (a: Box, b: Box) => boxKey(a) === boxKey(b)

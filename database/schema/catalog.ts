@@ -37,6 +37,11 @@ export const assets = pgTable(
     width: metres('width').notNull(),
     depth: metres('depth').notNull(),
     height: metres('height').notNull(),
+    /**
+     * The whole model around a smaller body (a 开箱桌 with its stools), relative to the body
+     * centre: { w, d, cx, cz } in metres; null when the model is the body (body-footprint.json).
+     */
+    extent: jsonb('extent').$type<{ w: number; d: number; cx: number; cz: number }>(),
     footprintSource: text('footprint_source').notNull(),
     front: text('front'),
     staffSide: text('staff_side'),
@@ -50,6 +55,10 @@ export const assets = pgTable(
     whiteGlbFileId: uuid('white_glb_file_id').references(() => storedFiles.id),
     /** Light textured copy for the material look (see apps/api assets/finish-models.ts). */
     finishGlbFileId: uuid('finish_glb_file_id').references(() => storedFiles.id),
+    /** The market glb_file_id shows, for models with a version per market (LOGO); else null. */
+    market: text('market'),
+    /** The other market's version of the model (conversion.json variants). */
+    otherMarketGlbFileId: uuid('other_market_glb_file_id').references(() => storedFiles.id),
     previewFileId: uuid('preview_file_id').references(() => storedFiles.id),
     productImageFileId: uuid('product_image_file_id').references(() => storedFiles.id),
     productImageMatch: text('product_image_match'),
@@ -62,9 +71,13 @@ export const assets = pgTable(
     check('assets_id_format', sql`${t.id} ~ '^asset-[0-9]+$'`),
     check(
       'assets_installation_known',
-      sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall')`,
+      sql`${t.installation} IS NULL OR ${t.installation} IN ('floor', 'wall', 'ceiling', 'embedded')`,
     ),
     check('assets_footprint_source_known', sql`${t.footprintSource} IN ('glb', 'source')`),
+    check(
+      'assets_market_known',
+      sql`${t.market} IS NULL OR ${t.market} IN ('domestic', 'overseas')`,
+    ),
     check(
       'assets_category_known',
       sql`${t.category} IN ('软装道具', '信息化物料', '品牌标识', '非标陈列', '环境设施')`,

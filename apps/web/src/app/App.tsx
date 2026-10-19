@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, createBrowserRouter, RouterProvider } from 'react-router'
+import { AppLayout } from '../components/AppNav.tsx'
 import { DisplayTaskPage } from '../features/display/DisplayTaskPage.tsx'
 import { DisplayTasksPage } from '../features/display/DisplayTasksPage.tsx'
 import { ProjectListPage } from '../features/projects/ProjectListPage.tsx'
@@ -18,12 +19,17 @@ function NotFoundPage() {
 }
 
 const router = createBrowserRouter([
-  { path: '/', element: <ProjectListPage /> },
-  { path: '/projects/:projectId', element: <ProjectPage /> },
-  { path: '/settings', element: <SettingsPage /> },
-  { path: '/display', element: <DisplayTasksPage /> },
-  { path: '/display/:taskId', element: <DisplayTaskPage /> },
-  { path: '*', element: <NotFoundPage /> },
+  {
+    element: <AppLayout />,
+    children: [
+      { path: '/', element: <ProjectListPage /> },
+      { path: '/projects/:projectId', element: <ProjectPage /> },
+      { path: '/settings', element: <SettingsPage /> },
+      { path: '/display', element: <DisplayTasksPage /> },
+      { path: '/display/:taskId', element: <DisplayTaskPage /> },
+      { path: '*', element: <NotFoundPage /> },
+    ],
+  },
 ])
 
 export function App() {

@@ -1,5 +1,5 @@
 import { useDeferredValue, useRef, useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { TrashIcon } from '../../components/icons.tsx'
@@ -28,6 +28,7 @@ export function ProjectListPage() {
   const setDeleted = useSetProjectDeleted()
   const importProject = useImportProject()
   const fileInput = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
   const imported = importProject.data
 
   const total = list.data?.total ?? 0
@@ -36,12 +37,12 @@ export function ProjectListPage() {
   return (
     <main className="page">
       <header className="page-header">
-        <h1>门店空间设计工作台</h1>
-        <span className="page-header-end">
-          <p>SI1.0 / SI2.0 · 平面 · 白模 · 效果</p>
-          <Link to="/display">展陈方案</Link>
-          <Link to="/settings">设置</Link>
-        </span>
+        <h1>项目</h1>
+        <p>
+          {list.data
+            ? `共 ${total} 个${status === 'active' ? '项目' : '已删除项目'}`
+            : 'SI1.0 / SI2.0 · 平面 · 白模 · 效果'}
+        </p>
       </header>
 
       <CreateProjectForm />
@@ -133,16 +134,29 @@ export function ProjectListPage() {
           </thead>
           <tbody>
             {list.data.items.map((project) => (
-              <tr key={project.id}>
-                <td>{project.name}</td>
+              <tr
+                key={project.id}
+                className={project.deletedAt === null ? 'open-row' : undefined}
+                onClick={(event) => {
+                  // Buttons and links in the row keep their own action; only the blank cells open it.
+                  if (project.deletedAt !== null) return
+                  if ((event.target as HTMLElement).closest('a, button, input, select')) return
+                  void navigate(`/projects/${project.id}`)
+                }}
+              >
+                <td className="project-name">{project.name}</td>
                 <td>{SHOP_TYPE_LABELS[project.shopType]}</td>
                 <td>{MARKET_LABELS[project.market]}</td>
-                <td>{project.siStyle}</td>
+                <td>
+                  <span className={project.siStyle === 'SI2.0' ? 'tag si-2' : 'tag'}>
+                    {project.siStyle}
+                  </span>
+                </td>
                 <td>{formatDateTime(project.updatedAt)}</td>
                 <td className="actions">
                   {project.deletedAt === null ? (
                     <>
-                      <Link className="button primary" to={`/projects/${project.id}`}>
+                      <Link className="button" to={`/projects/${project.id}`}>
                         打开
                       </Link>
                       <a

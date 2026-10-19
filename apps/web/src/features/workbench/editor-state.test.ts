@@ -242,3 +242,310 @@ describe('magnetic snapping while moving', () => {
     expect(editorReducer(start, near).layout.items[0]).toMatchObject({ cx: 3.15, cz: 3.05 })
   })
 })
+
+describe('wall pieces', () => {
+  // 6 m × 4 m, 3 m high: back wall at z = 0, left wall at x = 0.
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.453 },
+    front: '+Z',
+    placeable: false,
+  })
+  const cabinet = item({
+    id: 'accessory_cabinet-1',
+    function: 'accessory_cabinet',
+    cx: 3,
+    cz: 0.275,
+    w: 2.4,
+    d: 0.55,
+    h: 2.4,
+  })
+
+  it('goes onto the nearest wall above the cabinet there when added', () => {
+    const added = editorReducer(state([cabinet]), {
+      type: 'add',
+      asset: logo,
+      cx: 3,
+      cz: 1,
+      space,
+    })
+    expect(added.layout.items[1]).toMatchObject({
+      mount: 'wall',
+      cx: 3,
+      cz: 0.025,
+      rotation: 0,
+      elevation: 2.5,
+      placeholder: true,
+    })
+  })
+
+  it('turns onto a side wall when dragged there and follows the props below', () => {
+    const start = editorReducer(state([cabinet]), {
+      type: 'add',
+      asset: logo,
+      cx: 3,
+      cz: 1,
+      space,
+    })
+    const moved = editorReducer(start, {
+      type: 'move',
+      id: 'signage-1',
+      cx: 0.2,
+      cz: 2,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(moved.layout.items[1]).toMatchObject({
+      cx: 0.025,
+      cz: 2,
+      rotation: 270,
+      w: 0.05,
+      d: 3.453,
+      elevation: 1.8,
+    })
+  })
+
+  it('follows the props below through every step of a drag across the room', () => {
+    let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    for (const [cx, cz] of [
+      [2.8, 0.3],
+      [1.5, 1.5],
+      [0.5, 2],
+      [0.2, 2],
+    ] as const) {
+      s = editorReducer(s, {
+        type: 'move',
+        id: 'signage-1',
+        cx,
+        cz,
+        group: 'drag',
+        snapTo: space,
+        front: '+Z',
+      })
+    }
+    expect(s.layout.items[1]).toMatchObject({ cx: 0.025, rotation: 270, elevation: 1.8 })
+  })
+
+  it('keeps a height typed in by hand when moved along the wall', () => {
+    let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    s = editorReducer(s, { type: 'elevate', id: 'signage-1', elevation: 2.6 })
+    s = editorReducer(s, {
+      type: 'move',
+      id: 'signage-1',
+      cx: 2.5,
+      cz: 0.1,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(s.layout.items[1]).toMatchObject({ cx: 2.5, cz: 0.025, elevation: 2.6 })
+  })
+
+  it('never gives a floor prop a height', () => {
+    const s = editorReducer(state([cabinet]), {
+      type: 'elevate',
+      id: 'accessory_cabinet-1',
+      elevation: 1,
+    })
+    expect(s.layout.items[0]?.elevation).toBeUndefined()
+  })
+})
+
+describe('空心隔板', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const cabinet = item({
+    id: 'accessory_cabinet-1',
+    function: 'accessory_cabinet',
+    cx: 3,
+    cz: 0.275,
+    w: 2.4,
+    d: 0.55,
+    h: 2.4,
+  })
+  const drawn = { minX: 1.25, maxX: 4.75, minZ: 0.06, maxZ: 0.62 }
+
+  it('adds a drawn partition stuck to the wall and cabinet, as tall as the cabinet', () => {
+    const s = editorReducer(state([cabinet]), {
+      type: 'addFixture',
+      rect: drawn,
+      space,
+      snap: true,
+    })
+    expect(s.layout.fixtures).toEqual([
+      { id: 'partition-1', kind: 'hollow_partition', cx: 3, cz: 0.275, w: 3.5, d: 0.55, h: 2.4 },
+    ])
+    expect(s.selectedId).toBe('partition-1')
+    expect(s.dirty).toBe(true)
+  })
+
+  it('ignores a click without a drag, and draws freely with Alt', () => {
+    const click = { minX: 2, maxX: 2.01, minZ: 1, maxZ: 1.01 }
+    expect(
+      editorReducer(state([]), { type: 'addFixture', rect: click, space, snap: true }).layout,
+    ).toEqual(state([]).layout)
+    const free = editorReducer(state([cabinet]), {
+      type: 'addFixture',
+      rect: drawn,
+      space,
+      snap: false,
+    })
+    expect(free.layout.fixtures?.[0]).toMatchObject({ cz: 0.34, d: 0.56 })
+  })
+
+  it('moves onto a cabinet edge, takes typed sizes, and is removed and undone', () => {
+    let s = editorReducer(state([cabinet]), { type: 'addFixture', rect: drawn, space, snap: true })
+    s = editorReducer(s, {
+      type: 'moveFixture',
+      id: 'partition-1',
+      cx: 2.93,
+      cz: 0.3,
+      snapTo: space,
+    })
+    // The left edge (1.18) is within 100 mm of nothing; the top edge sticks to the wall.
+    expect(s.layout.fixtures?.[0]).toMatchObject({ cx: 2.93, cz: 0.275 })
+    s = editorReducer(s, { type: 'updateFixture', id: 'partition-1', patch: { h: 3, w: 0.01 } })
+    expect(s.layout.fixtures?.[0]).toMatchObject({ h: 3, w: 0.05 })
+    s = editorReducer(s, { type: 'remove', id: 'partition-1' })
+    expect(s.layout.fixtures).toBeUndefined()
+    expect(s.layout.items).toHaveLength(1)
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.fixtures).toHaveLength(1)
+  })
+})
+
+describe('内嵌', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const screen = makeAsset({
+    id: 'asset-11479197',
+    name: '75寸横屏广告机',
+    materialCategory: '信息化物料',
+    function: 'screen',
+    installation: 'embedded',
+    footprint: { w: 1.69, d: 0.05, h: 0.958 },
+    front: '+Z',
+    placeable: false,
+  })
+
+  it('goes into the nearest wall with its front flush, the picture centred at 1.5 m', () => {
+    const s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
+    expect(s.layout.items[0]).toMatchObject({
+      mount: 'embedded',
+      cx: 3,
+      cz: -0.025,
+      rotation: 0,
+      elevation: 1.021,
+    })
+  })
+
+  it('switches between 贴墙 and 内嵌 in place', () => {
+    let s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'setMount', id, mount: 'wall', space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.8 })
+    s = editorReducer(s, { type: 'setMount', id, mount: 'embedded', space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.021 })
+  })
+})
+
+describe('LOGO 等比缩放', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.471 },
+    front: '+Z',
+  })
+  const added = () => editorReducer(state([]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+
+  it('takes a typed width, keeps the back on the wall, and turns with its scale', () => {
+    let s = added()
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 2 / 3.453, space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ scale: 0.579, w: 1.999, d: 0.029, h: 0.273 })
+    // Thinner, so the centre moves to keep the back on the back wall (z = 0).
+    expect(s.layout.items[0]?.cz).toBe(0.015)
+    s = editorReducer(s, { type: 'rotate', id, asset: logo })
+    expect(s.layout.items[0]).toMatchObject({ rotation: 90, scale: 0.579, w: 0.029, d: 1.999 })
+  })
+
+  it('goes back to the original size without a scale', () => {
+    let s = added()
+    const id = s.layout.items[0]?.id ?? ''
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 1.5, space, front: '+Z' })
+    s = editorReducer(s, { type: 'scale', id, asset: logo, scale: 1, space, front: '+Z' })
+    expect(s.layout.items[0]?.scale).toBeUndefined()
+    expect(s.layout.items[0]).toMatchObject({ w: 3.453, d: 0.05, cz: 0.025 })
+  })
+})
+
+describe('LOGO 拖动改大小', () => {
+  const space = rectangleSpace(6, 4, 3)
+  const logo = makeAsset({
+    id: 'asset-20533337',
+    name: '影石墙面LOGO',
+    function: 'signage',
+    installation: 'wall',
+    footprint: { w: 3.453, d: 0.05, h: 0.471 },
+    front: '+Z',
+  })
+
+  it('moves to where the drag put it and keeps the back on the wall, one undo step', () => {
+    let s = editorReducer(state([]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
+    const id = s.layout.items[0]?.id ?? ''
+    const drag = (scale: number, cx: number) =>
+      editorReducer(s, {
+        type: 'scale',
+        id,
+        asset: logo,
+        scale,
+        at: { cx, cz: 0.025, elevation: 2 },
+        space,
+        front: '+Z',
+        group: 'resize:1',
+      })
+    s = drag(0.8, 2.655)
+    s = drag(0.579, 2.273)
+    expect(s.layout.items[0]).toMatchObject({ scale: 0.579, cx: 2.273, cz: 0.015, elevation: 2 })
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.items[0]?.scale).toBeUndefined()
+  })
+})
+
+describe('转到任意角度', () => {
+  const id = 'island_table-1'
+
+  it('turns to any angle, swapping width and depth only when the nearest quarter turn changes', () => {
+    const tilted = editorReducer(state([item()]), { type: 'turn', id, rotation: 30 })
+    expect(tilted.layout.items[0]).toMatchObject({ rotation: 30, w: 1.8, d: 0.9 })
+    const past = editorReducer(tilted, { type: 'turn', id, rotation: 100 })
+    expect(past.layout.items[0]).toMatchObject({ rotation: 100, w: 0.9, d: 1.8 })
+    // A quarter turn from there keeps the tilt.
+    const quarter = editorReducer(past, { type: 'rotate', id })
+    expect(quarter.layout.items[0]).toMatchObject({ rotation: 190, w: 1.8, d: 0.9 })
+  })
+
+  it('keeps a LOGO at its scale and leaves locked props alone', () => {
+    const logo = item({ function: 'signage', w: 2, d: 0.1, h: 1, scale: 2 })
+    const turned = editorReducer(state([logo]), { type: 'turn', id, rotation: 45 })
+    expect(turned.layout.items[0]).toMatchObject({ rotation: 45, w: 0.1, d: 2, scale: 2 })
+    const locked = state([item({ locked: true })])
+    expect(editorReducer(locked, { type: 'turn', id, rotation: 30 })).toBe(locked)
+    expect(
+      editorReducer(state([item()]), { type: 'turn', id, rotation: Number.NaN }).layout,
+    ).toEqual(state([item()]).layout)
+  })
+
+  it('makes one undo step of one drag of the handle', () => {
+    let s = state([item()])
+    for (const rotation of [5, 12, 20, 33]) {
+      s = editorReducer(s, { type: 'turn', id, rotation, group: 'turn:a' })
+    }
+    expect(s.layout.items[0]?.rotation).toBe(33)
+    expect(editorReducer(s, { type: 'undo' }).layout.items[0]?.rotation).toBe(0)
+  })
+})

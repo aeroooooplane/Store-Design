@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
+import { DEFAULT_SIDE_CABINET_RULES, rectangleSpace } from '@store/shared'
 import type { Asset, LayoutCandidates } from '@store/shared'
 import { plannerCatalog } from '../src/modules/layouts/selection.ts'
 import { seedAsset } from './fixtures.ts'
@@ -183,6 +183,7 @@ describe('plannerCatalog', () => {
     installation: 'floor',
     footprint: { w: 1, d: 1.8, h: 1 },
     footprintSource: 'glb',
+    extent: null,
     front: 'any',
     staffSide: null,
     facingConfidence: 'high',
@@ -192,6 +193,8 @@ describe('plannerCatalog', () => {
     glb: null,
     whiteGlb: null,
     finishGlb: null,
+    market: null,
+    otherMarketGlb: null,
     category: '软装道具',
     productImage: null,
     productImageMatch: null,
@@ -228,5 +231,46 @@ describe('plannerCatalog', () => {
       'SI2.0',
     )
     expect(catalog.island.map((a) => a.id)).toEqual(['asset-21'])
+  })
+
+  it('hands island shops the 配件边柜 of the SI family: 1.2–1.4 m high first, then the shallowest', () => {
+    const side = (id: string, si: string, w: number, d: number, h: number): Asset => ({
+      ...asset(id, `配件边柜 ${id}`, si, 'side_cabinet'),
+      footprint: { w, d, h },
+    })
+    const assets = [
+      side('asset-28192911', 'SI2.0', 1.8, 0.721, 1.3),
+      side('asset-33660153', 'SI2.0', 1.8, 0.531, 1.214),
+      side('asset-34320268', 'SI1.0', 0.5, 1.8, 1.214),
+      // Shallower but outside the 1.2–1.4 m band: after the band.
+      side('asset-40', 'SI2.0', 1.2, 0.4, 0.9),
+      side('asset-41', '通用', 1.8, 0.4, 1.3),
+      { ...side('asset-42', 'SI2.0', 1.8, 0.3, 1.3), retired: true },
+      asset('asset-50', '1200mm配件柜', 'SI2.0', 'accessory_cabinet'),
+    ]
+    const si2 = plannerCatalog(assets, 'SI2.0')
+    expect(si2.sideCabinet?.map((a) => a.id)).toEqual([
+      'asset-33660153',
+      'asset-28192911',
+      'asset-40',
+    ])
+    expect(si2.cabinet.map((a) => a.id)).toEqual(['asset-50'])
+    expect(plannerCatalog(assets, 'SI1.0').sideCabinet?.map((a) => a.id)).toEqual([
+      'asset-34320268',
+    ])
+    // No side cabinet of the family: the next family, 通用 first.
+    const noSi2 = assets.filter((a) => a.siFamily !== 'SI2.0')
+    expect(plannerCatalog(noSi2, 'SI2.0').sideCabinet?.map((a) => a.id)).toEqual(['asset-41'])
+    // The preferred models and the height band come from the rules, which store data can replace.
+    const rules = {
+      ...DEFAULT_SIDE_CABINET_RULES,
+      preferHeight: { min: 0.8, max: 1 },
+      preferredAssets: { 'SI2.0': ['asset-28192911'] },
+    }
+    expect(plannerCatalog(assets, 'SI2.0', rules).sideCabinet?.map((a) => a.id)).toEqual([
+      'asset-28192911',
+      'asset-40',
+      'asset-33660153',
+    ])
   })
 })

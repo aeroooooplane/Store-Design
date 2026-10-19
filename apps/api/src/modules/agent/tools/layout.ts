@@ -2,9 +2,12 @@ import { z } from 'zod'
 import {
   PLAN_STRATEGY_LABELS,
   RotationSchema,
+  defaultElevation,
+  defaultEmbeddedElevation,
+  facingAfter,
   freshName,
-  rotatedFootprint,
   roundM,
+  turnItem,
 } from '@store/shared'
 import type { LayoutItem } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
@@ -68,12 +71,12 @@ export const generatePlansTool = tool({
 export const placeItemTool = tool({
   name: 'place_item',
   description:
-    '把一个模型放进当前布局：靠后墙 back、前边 front、左墙 left、右墙 right 或中央 center，position 为沿墙 0–1 的位置（0.5 居中）。程序按这面墙的真实边（见空间 edges）计算坐标，并让道具正面朝向店内；异形店的一面墙可能分成几段，position 按各段总长分布；斜墙上道具取最接近的直角朝向；center 为店内最空旷处，position 沿横向移动。放不下（超出店铺或压住柱子）时报错且不保存，请换位置或换墙。结果保存为新节点。',
+    '把一个模型放进当前布局：靠后墙 back、前边 front、左墙 left、右墙 right 或中央 center，position 为沿墙 0–1 的位置（0.5 居中）。程序按这面墙的真实边（见空间 edges）计算坐标，并让道具正面朝向店内；异形店的一面墙可能分成几段，position 按各段总长分布；斜墙上道具与墙平行、正面朝店内；center 为店内最空旷处，position 沿横向移动。放不下（超出店铺或压住柱子）时报错且不保存，请换位置或换墙。结果保存为新节点。',
   schema: z.object({
     modelId: z.string().describe('list_models 返回的模型编号'),
     along: z.enum(ALONG),
     position: z.number().min(0).max(1).optional(),
-    rotation: RotationSchema.optional().describe('覆盖默认朝向'),
+    rotation: RotationSchema.optional().describe('覆盖默认朝向：0–360 度的任意角度'),
   }),
   run: async (tools, input) => {
     const space = requireSpace(tools)
@@ -81,12 +84,15 @@ export const placeItemTool = tool({
     if (!asset || asset.retired)
       throw new AppError('VALIDATION_FAILED', `没有模型 ${input.modelId}`)
     const base = tools.node?.layout ?? EMPTY_LAYOUT
+    // A wall piece (墙面 LOGO, 画面) hangs right on the wall; a ceiling piece hangs from above.
+    const mount =
+      asset.installation === 'floor' || asset.installation === null ? null : asset.installation
     const placed = placeAlong(
       space,
       asset,
       input.along,
       input.position ?? 0.5,
-      wallGap(tools.project.shopType),
+      mount === 'wall' || mount === 'embedded' ? 0 : wallGap(tools.project.shopType),
       input.rotation,
     )
     const item: LayoutItem = {
@@ -98,6 +104,21 @@ export const placeItemTool = tool({
       h: asset.footprint.h,
       placeholder: !asset.placeable,
       locked: false,
+    }
+    if (mount === 'embedded') {
+      // Placed with its back on the wall, then sunk in by its depth: the front is on the wall face.
+      const [fx, fz] = facingAfter(
+        asset.front && asset.front !== 'any' ? asset.front : '+Z',
+        item.rotation,
+      )
+      const depth = fx !== 0 ? item.w : item.d
+      item.cx = roundM(item.cx - fx * depth)
+      item.cz = roundM(item.cz - fz * depth)
+      item.mount = mount
+      item.elevation = defaultEmbeddedElevation(item, space)
+    } else if (mount) {
+      item.mount = mount
+      item.elevation = defaultElevation(item, base.items, space)
     }
     const outcome = await saveLayout(
       tools,
@@ -153,14 +174,15 @@ export const moveItemTool = tool({
 
 export const rotateItemTool = tool({
   name: 'rotate_item',
-  description: '把一件道具转到指定角度（0、90、180、270）。结果保存为新节点。',
+  description:
+    '把一件道具转到指定角度：0–360 度的任意角度（0 为模型原始朝向，按俯视顺时针增加）；要与斜墙平行时，按 get_state 返回的空间 edges 的方向换算。结果保存为新节点。',
   schema: z.object({ itemId: z.string(), rotation: RotationSchema }),
   run: async (tools, input) => {
     const base = tools.node?.layout ?? EMPTY_LAYOUT
     const item = base.items.find((i) => i.id === input.itemId)
     if (!item) throw new AppError('VALIDATION_FAILED', `布局中没有道具 ${input.itemId}`)
-    const size = rotatedFootprint({ footprint: unrotated(item) }, input.rotation)
-    const next: LayoutItem = { ...item, rotation: input.rotation, w: size.w, d: size.d }
+    // Width and depth follow the nearest quarter turn; a scaled LOGO keeps its scale.
+    const next: LayoutItem = turnItem(item, input.rotation)
     const outcome = await saveLayout(
       tools,
       { ...base, items: base.items.map((i) => (i.id === item.id ? next : i)) },

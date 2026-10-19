@@ -5,6 +5,7 @@ import type {
   NodeCreated,
   NodeTree,
   PlanUpload,
+  RecognitionDraft,
   RecognitionRun,
   RecognizeResponse,
   VectorContent,
@@ -39,6 +40,7 @@ const asset = (id: string, name: string, fn: Asset['function'], w: number, d: nu
   installation: 'floor',
   footprint: { w, d, h: 0.9 },
   footprintSource: 'glb',
+  extent: null,
   front: '+Z',
   staffSide: null,
   facingConfidence: 'high',
@@ -48,6 +50,8 @@ const asset = (id: string, name: string, fn: Asset['function'], w: number, d: nu
   glb: null,
   whiteGlb: null,
   finishGlb: null,
+  market: null,
+  otherMarketGlb: null,
   preview: null,
   productImage: null,
   productImageMatch: null,
@@ -143,6 +147,65 @@ describe('label reading', () => {
       asset: { id: 'asset-5' },
     })
   })
+
+  it('tells models of one size apart by the words of the name', () => {
+    const catalog = [
+      asset('asset-20', '1.8米开箱储物柜', 'unboxing_table', 1.8, 0.5),
+      asset('asset-21', '1.8米普通开箱桌', 'unboxing_table', 1.8, 1),
+      asset('asset-22', '1.8米边桌收银柜', 'cashier', 1.8, 0.5),
+      asset('asset-23', '1.8米收银台', 'cashier', 1.8, 0.6),
+      { ...asset('asset-24', '1.8米收银桌(左)', 'cashier', 1.8, 0.6), siFamily: 'SI2.0' },
+    ]
+    expect(matchCatalog('1.8米开箱桌', catalog, undefined, 'SI1.0').asset?.id).toBe('asset-21')
+    expect(matchCatalog('1.8米收银台+开箱', catalog, undefined, 'SI1.0').asset?.id).toBe('asset-23')
+    // The plain model for a bare word.
+    expect(matchCatalog('收银', catalog, undefined, 'SI1.0').asset?.id).toBe('asset-23')
+    // An SI1.0 name in an SI2.0 shop means the SI2.0 counterpart.
+    expect(matchCatalog('1.8米收银台', catalog, undefined, 'SI2.0').asset?.id).toBe('asset-24')
+    expect(matchCatalog('1.8米收银台', catalog, undefined, 'SI1.0')).toMatchObject({
+      asset: { id: 'asset-23' },
+      confidence: 0.95,
+    })
+  })
+
+  it('takes screens by inches and way round, without a web model as placeholders', () => {
+    const screen = (id: string, name: string, w: number, placeable = false) => ({
+      ...asset(id, name, 'screen', w, 0.05),
+      siFamily: '通用',
+      placeable,
+    })
+    const catalog = [
+      screen('asset-30', '75寸横屏广告机', 1.69),
+      screen('asset-31', '75寸竖屏广告机', 0.96),
+      screen('asset-32', '55寸竖屏广告机', 0.72),
+      { ...screen('asset-33', '86寸横屏广告机', 1.93), retired: true },
+      screen('asset-34', '43寸电子水牌', 0.55),
+    ]
+    const landscape = matchCatalog('75寸广告机(横向)', catalog)
+    expect(landscape.asset?.id).toBe('asset-30')
+    expect(landscape.note).toContain('按占位显示')
+    expect(matchCatalog('75寸广告机', catalog).asset?.id).toBe('asset-30')
+    expect(matchCatalog('55寸广告机(竖向)', catalog).asset?.id).toBe('asset-32')
+    // A logo on top does not make it a sign.
+    expect(matchCatalog('75寸广告机(横向)上加logo', catalog).asset?.id).toBe('asset-30')
+    expect(matchCatalog('电子水牌', catalog).asset?.id).toBe('asset-34')
+    // Retired models are never taken.
+    expect(matchCatalog('86寸广告机', catalog).asset).toBeNull()
+  })
+
+  it('gives a light box no logo model, and signs without a web model no placeholder', () => {
+    const sign = (id: string, name: string, w: number, placeable: boolean) => ({
+      ...asset(id, name, 'signage', w, 0.1),
+      placeable,
+    })
+    const catalog = [
+      sign('asset-40', '影石徕卡联名墙面LOGO', 1.7, true),
+      sign('asset-41', 'GO3S竖版灯箱', 1.7, false),
+    ]
+    const box = matchCatalog('灯箱(1700*980mm)', catalog)
+    expect(box).toMatchObject({ asset: null, function: 'signage' })
+    expect(matchCatalog('1.7米LOGO', catalog).asset?.id).toBe('asset-40')
+  })
 })
 
 describe('recognizeVector', () => {
@@ -169,6 +232,65 @@ describe('recognizeVector', () => {
     const side = draft.items.find((i) => i.label === '边桌配件柜')
     expect(side).toMatchObject({ source: 'outside', assetId: 'asset-4' })
     expect(draft.confidence).toBeGreaterThanOrEqual(0.6)
+  })
+
+  it('finds a prop by its size when its name is written beside it', () => {
+    // A 1.8 × 1 m table drawn in lines (180 × 100 px), its name under it.
+    const table = [
+      { x1: 400, y1: 300, x2: 580, y2: 300 },
+      { x1: 580, y1: 300, x2: 580, y2: 400 },
+      { x1: 580, y1: 400, x2: 400, y2: 400 },
+      { x1: 400, y1: 400, x2: 400, y2: 300 },
+    ]
+    const content: VectorContent = {
+      ...SKETCH,
+      lines: [...SKETCH.lines, ...table],
+      texts: [...SKETCH.texts, { text: '1.8米中岛桌', x: 445, y: 410, w: 90, h: 16 }],
+    }
+    const draft = recognizeVector(content, {}, CATALOG)
+    const island = draft.items.find((i) => i.label === '1.8米中岛桌')
+    // At the table's centre (490, 350 px), not at its name.
+    const [ox, oy] = draft.scale?.originPx ?? [0, 0]
+    expect(island).toMatchObject({ assetId: 'asset-1', source: 'existing' })
+    expect(island?.cx).toBeCloseTo((490 - ox) / 100, 2)
+    expect(island?.cz).toBeCloseTo((350 - oy) / 100, 2)
+  })
+
+  it('keeps props on the wall face in the shop, only farther ones outside', () => {
+    const item = (label: string, cz: number) => ({
+      ref: label,
+      label,
+      assetId: null,
+      function: 'screen' as const,
+      source: 'existing' as const,
+      cx: 2,
+      cz,
+      w: 1.69,
+      d: 0.05,
+      rotation: 0,
+      confidence: 0.8,
+      note: null,
+    })
+    const input: RecognitionDraft = {
+      space: {
+        boundary: [
+          [0, 0],
+          [6, 0],
+          [6, 4.5],
+          [0, 4.5],
+        ],
+        height: null,
+        entrances: [],
+        obstacles: [],
+      },
+      scale: { method: 'manual', reference: '', mmPerPixel: 10, originPx: [0, 0], verified: true },
+      items: [item('墙上', -0.1), item('店外', -0.5)],
+      pending: [],
+      confidence: 0.9,
+      notes: [],
+    }
+    const draft = checkDraft(input)
+    expect(draft.items.map((i) => i.source)).toEqual(['existing', 'outside'])
   })
 
   it('gives up on the scale without dimensions and takes the user calibration instead', () => {
@@ -785,7 +907,40 @@ describe('recognition API with a fallback model', () => {
     vi.unstubAllGlobals()
   })
 
+  const allowCloud = (on: boolean) =>
+    t.app.inject({
+      method: 'PATCH',
+      url: '/api/v1/ai/settings',
+      payload: { recognitionCloud: on },
+    })
+
+  it('keeps plans on this machine while cloud recognition is off', async () => {
+    await allowCloud(false)
+    const { id } = await newProject(t)
+    const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
+    const fetch = vi.fn()
+    vi.stubGlobal('fetch', fetch)
+    const local = await t.app.inject({
+      method: 'POST',
+      url: `/api/v1/uploads/${uploaded.id}/recognize`,
+      payload: {},
+    })
+    expect(local.statusCode).toBe(200)
+    const result = local.json<RecognizeResponse>()
+    expect(result.run).toMatchObject({ method: 'local', status: 'failed' })
+    expect(result.attempted).toBeNull()
+    const remote = await t.app.inject({
+      method: 'POST',
+      url: `/api/v1/uploads/${uploaded.id}/recognize`,
+      payload: { method: 'llm' },
+    })
+    expect(remote.statusCode).toBe(400)
+    expect(remote.json().error.message).toContain('云端识别未开启')
+    expect(fetch).not.toHaveBeenCalled()
+  })
+
   it('hands a picture without vector content to the model, books the call and keeps both runs', async () => {
+    await allowCloud(true)
     const { id } = await newProject(t)
     const uploaded = (await upload(t, id, png(400, 300))).json<PlanUpload>()
     const sent: { model: string; images: number }[] = []

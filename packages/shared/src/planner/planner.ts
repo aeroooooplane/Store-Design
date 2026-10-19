@@ -16,13 +16,32 @@ import {
   segmentIntersectsRectInterior,
   toClockwise,
 } from '../geometry/index.ts'
+import {
+  obbBounds,
+  obbCorners,
+  obbGap,
+  obbInsidePolygon,
+  obbsOverlap,
+  polygonOverlapsObb,
+  quarterTilt,
+  segmentIntersectsObbInterior,
+  turnPoint,
+} from '../geometry/obb.ts'
+import type { Obb } from '../geometry/obb.ts'
 import type { Point, Polygon, Rect } from '../geometry/index.ts'
 import type { FrontAxis } from '../schemas/asset.ts'
-import { LayoutSchema, rotatedFootprint, validateLayout } from '../schemas/layout.ts'
+import {
+  LayoutSchema,
+  normalizeRotation,
+  rotatedFootprint,
+  validateLayout,
+} from '../schemas/layout.ts'
 import type { Layout, LayoutIssue, LayoutItem, Rotation } from '../schemas/layout.ts'
 import type { Space } from '../schemas/space.ts'
-import { roundM } from '../units.ts'
+import { EPSILON_M, roundM } from '../units.ts'
 import { rotationFacing } from './orientation.ts'
+import { DEFAULT_SIDE_CABINET_RULES, sideCabinetsForArea } from './side-cabinet-rules.ts'
+import type { SideCabinetRules } from './side-cabinet-rules.ts'
 
 export interface PlannerAsset {
   id: string
@@ -37,6 +56,11 @@ export interface PlannerCatalog {
   island: PlannerAsset[]
   cashier: PlannerAsset[]
   cabinet: PlannerAsset[]
+  /**
+   * Low 配件边柜 (about 1.3 m) an island shop stands along its edge, a few at most (see
+   * SideCabinetRules). Other shop types leave them out.
+   */
+  sideCabinet?: PlannerAsset[]
 }
 
 /** Guide values, not hard requirements: they are relaxed step by step when the space is tight. */
@@ -116,6 +140,8 @@ export interface PlannerInput {
   strategy: GeneratedStrategy
   catalog: PlannerCatalog
   rules?: Partial<PlannerRules>
+  /** The island shop's side cabinets; DEFAULT_SIDE_CABINET_RULES unless store data replaces it. */
+  sideCabinetRules?: SideCabinetRules
 }
 
 export interface PlannerResult {
@@ -167,7 +193,58 @@ interface EntranceInfo {
 
 interface Placed {
   item: LayoutItem
+  /** Axis-aligned footprint; the bounds of `box` for a prop turned to a slanted wall. */
   rect: Rect
+  /** The true box of a prop standing at a slanted wall's angle; absent at quarter turns. */
+  box?: Obb
+}
+
+/**
+ * A boundary edge more than NEAR_AXIS_DEG off both axes (a slanted or arc wall). Props stand at
+ * its own angle against it (confirmed by the user, 2026-10-15), and island tables near it turn
+ * parallel to it.
+ */
+interface SlantWall {
+  /** Start of the edge on the boundary. */
+  a: Point
+  b: Point
+  /** Unit direction a → b, and the inward normal. */
+  u: Vec
+  n: Vec
+  /** Direction of `u` as a layout rotation: a prop at this rotation runs along the edge. */
+  angle: number
+  length: number
+  /** Usable stretches along the edge, in metres from `a` (entrances and open edges removed). */
+  intervals: [number, number][]
+}
+
+const FRONT_VECTORS: Record<Exclude<FrontAxis, 'any'>, Vec> = {
+  '+Z': [0, 1],
+  '-Z': [0, -1],
+  '+X': [1, 0],
+  '-X': [-1, 0],
+}
+const degreesOf = (v: Vec) => (Math.atan2(v[1], v[0]) * 180) / Math.PI
+const angleGap = (a: number, b: number) => {
+  const d = (((a - b) % 360) + 360) % 360
+  return Math.min(d, 360 - d)
+}
+const rectBox = (rect: Rect): Obb => ({
+  cx: (rect.minX + rect.maxX) / 2,
+  cz: (rect.minZ + rect.maxZ) / 2,
+  w: rect.maxX - rect.minX,
+  d: rect.maxZ - rect.minZ,
+  angle: 0,
+})
+
+/** Length along the unit direction `v` of a model turned to `rotation` (any angle). */
+function extentAlong(v: Vec, footprint: { w: number; d: number }, rotation: number): number {
+  const ux = turnPoint(1, 0, rotation)
+  const uz = turnPoint(0, 1, rotation)
+  return (
+    Math.abs(v[0] * ux[0] + v[1] * ux[1]) * footprint.w +
+    Math.abs(v[0] * uz[0] + v[1] * uz[1]) * footprint.d
+  )
 }
 
 const ALONG_STEP = 0.05
@@ -223,6 +300,8 @@ class Planner {
   readonly notes: string[] = []
   readonly placed: Placed[] = []
   readonly walls: Wall[]
+  /** Slanted and arc walls, which the quarter-turn walls above leave out. */
+  readonly slantWalls: SlantWall[]
   readonly entrances: (EntranceInfo | null)[]
   readonly mainEntrance: { mid: Point; n: Vec } | null
   readonly space: Space
@@ -341,6 +420,29 @@ class Planner {
     walls.sort((p, q) => q.distance - p.distance)
     const back = this.backWall(walls)
     this.walls = back ? [back, ...walls.filter((w) => w !== back)] : walls
+
+    this.slantWalls = ring.flatMap(([a, b], index): SlantWall[] => {
+      const dx = b[0] - a[0]
+      const dz = b[1] - a[1]
+      const length = Math.hypot(dx, dz)
+      const alongX = Math.abs(dz) <= Math.abs(dx) * NEAR_AXIS_TAN
+      const alongZ = Math.abs(dx) <= Math.abs(dz) * NEAR_AXIS_TAN
+      if (length < 0.3 || alongX || alongZ) return []
+      const u: Vec = [dx / length, dz / length]
+      const t = (p: Point) => (p[0] - a[0]) * u[0] + (p[1] - a[1]) * u[1]
+      let intervals: [number, number][] = [[0, length]]
+      for (const piece of entrancePieces) {
+        if (piece.edge !== index) continue
+        const [ta, tb] = [t(piece.a), t(piece.b)]
+        intervals = subtract(intervals, [Math.min(ta, tb) - 0.1, Math.max(ta, tb) + 0.1])
+      }
+      for (const piece of openPieces) {
+        if (piece.edge !== index) continue
+        const [ta, tb] = [t(piece.a), t(piece.b)]
+        intervals = subtract(intervals, [Math.min(ta, tb), Math.max(ta, tb)])
+      }
+      return [{ a, b, u, n: inward(u), angle: normalizeRotation(degreesOf(u)), length, intervals }]
+    })
   }
 
   /**
@@ -424,13 +526,219 @@ class Planner {
       return false
     if (options.zones.some((zone) => polygonOverlapsRect(zone, rect))) return false
     const others = [
-      ...this.placed.map((p) => ({ rect: p.rect, island: p.item.function === 'island_table' })),
-      ...(options.extra ?? []).map((r) => ({ rect: r, island: true })),
+      ...this.placed.map((p) => ({
+        rect: p.rect,
+        box: p.box,
+        island: p.item.function === 'island_table',
+      })),
+      ...(options.extra ?? []).map((r) => ({ rect: r, box: undefined, island: true })),
     ]
-    return others.every(({ rect: other, island }) => {
+    return others.every(({ rect: other, box, island }) => {
       const gap = options.spacing > 0 ? options.spacing : island ? (options.islandSpacing ?? 0) : 0
+      if (box) {
+        const mine = rectBox(rect)
+        return gap > 0 ? obbGap(mine, box) >= gap - 1e-9 : !obbsOverlap(mine, box)
+      }
       return gap > 0 ? rectGap(rect, other) >= gap - 1e-9 : !rectsOverlap(rect, other)
     })
+  }
+
+  /** fits() for a turned box (a prop at a slanted wall's angle); `skip` is the prop it replaces. */
+  fitsBox(
+    box: Obb,
+    options: {
+      zones: Polygon[]
+      spacing: number
+      wallClearance: number
+      islandSpacing?: number
+      skip?: Placed
+    },
+  ): boolean {
+    if (!obbInsidePolygon(box, this.boundary)) return false
+    const c = options.wallClearance
+    const padded = c > 0 ? { ...box, w: box.w + 2 * c, d: box.d + 2 * c } : box
+    if (c > 0 && !obbInsidePolygon(padded, this.boundary)) return false
+    if (this.space.obstacles.some((o) => polygonOverlapsObb(o.polygon, padded))) return false
+    if (
+      this.entrances.some((e) => e?.pieces.some((p) => segmentIntersectsObbInterior(p.a, p.b, box)))
+    )
+      return false
+    if (options.zones.some((zone) => polygonOverlapsObb(zone, box))) return false
+    return this.placed.every((p) => {
+      if (p === options.skip) return true
+      const other = p.box ?? rectBox(p.rect)
+      const island = p.item.function === 'island_table'
+      const gap = options.spacing > 0 ? options.spacing : island ? (options.islandSpacing ?? 0) : 0
+      return gap > 0 ? obbGap(box, other) >= gap - 1e-9 : !obbsOverlap(box, other)
+    })
+  }
+
+  /** The turned box of `asset` at `rotation` centred at `at` (rounded to the millimetre). */
+  boxAt(asset: PlannerAsset, rotation: number, at: Point): Obb {
+    const size = rotatedFootprint(asset, rotation)
+    return {
+      cx: roundM(at[0]),
+      cz: roundM(at[1]),
+      w: size.w,
+      d: size.d,
+      angle: quarterTilt(rotation),
+    }
+  }
+
+  /** Adds a prop standing at a slanted wall's angle. */
+  addBox(asset: PlannerAsset, rotation: number, box: Obb): void {
+    const fn = asset.function
+    const index = (this.counter.get(fn) ?? 0) + 1
+    this.counter.set(fn, index)
+    const size = rotatedFootprint(asset, rotation)
+    this.placed.push({
+      rect: obbBounds(box),
+      box,
+      item: {
+        id: `${fn}-${index}`,
+        assetId: asset.id,
+        function: fn,
+        name: asset.name.slice(0, 100),
+        cx: box.cx,
+        cz: box.cz,
+        rotation,
+        w: roundM(size.w),
+        d: roundM(size.d),
+        h: roundM(size.h),
+        placeholder: false,
+        locked: false,
+      },
+    })
+  }
+
+  /** Rotation against a slanted wall: the front into the shop, or the long side along it. */
+  slantRotation(asset: PlannerAsset, wall: SlantWall): number {
+    if (asset.front && asset.front !== 'any')
+      return normalizeRotation(degreesOf(wall.n) - degreesOf(FRONT_VECTORS[asset.front]))
+    return normalizeRotation(wall.angle + (asset.footprint.w >= asset.footprint.d ? 0 : 90))
+  }
+
+  /**
+   * Cabinets along the slanted walls at the walls' own angle, `wallGap` off them (as fillWalls
+   * does for the straight ones).
+   */
+  fillSlantWalls(cabinets: PlannerAsset[], limit: number, rules: PlannerRules): number {
+    const zones = this.zones(rules, false)
+    let count = 0
+    for (const wall of this.slantWalls) {
+      for (const [t0, t1] of wall.intervals) {
+        let s = t0
+        while (count < limit && s < t1) {
+          let advanced = false
+          for (const asset of cabinets) {
+            const rotation = this.slantRotation(asset, wall)
+            const along = extentAlong(wall.u, asset.footprint, rotation)
+            const across = extentAlong(wall.n, asset.footprint, rotation)
+            if (s + along > t1 + 1e-9) continue
+            const t = s + along / 2
+            const off = rules.wallGap + across / 2
+            const box = this.boxAt(asset, rotation, [
+              wall.a[0] + wall.u[0] * t + wall.n[0] * off,
+              wall.a[1] + wall.u[1] * t + wall.n[1] * off,
+            ])
+            if (
+              this.fitsBox(box, {
+                zones,
+                spacing: 0,
+                wallClearance: 0,
+                islandSpacing: rules.clearance,
+              })
+            ) {
+              this.addBox(asset, rotation, box)
+              s += along
+              count++
+              advanced = true
+              break
+            }
+          }
+          if (!advanced) s += 0.1
+        }
+      }
+    }
+    return count
+  }
+
+  /**
+   * Island tables near a slanted wall turn parallel to it (confirmed by the user, 2026-10-15):
+   * a table no other table could stand behind (within `clearance` plus a table's width of the
+   * wall) moves to `clearance` off the wall at the wall's angle, long side along it, when it fits
+   * there. With `fillRow` (尽量多放) more tables then go along each slanted wall where they fit.
+   * Returns how many turned and how many were added.
+   */
+  alignTablesToSlants(
+    island: PlannerAsset,
+    rules: PlannerRules,
+    fillRow: boolean,
+  ): { turned: number; added: number } {
+    let turned = 0
+    let added = 0
+    const zones = this.zones(rules, true)
+    const fp = island.footprint
+    const reach = rules.clearance + Math.min(fp.w, fp.d)
+    for (const wall of this.slantWalls) {
+      const along0 = normalizeRotation(wall.angle + (fp.w >= fp.d ? 0 : 90))
+      const across = extentAlong(wall.n, fp, along0)
+      const along = extentAlong(wall.u, fp, along0)
+      const off = rules.clearance + across / 2
+      const at = (t: number): Point => [
+        wall.a[0] + wall.u[0] * t + wall.n[0] * off,
+        wall.a[1] + wall.u[1] * t + wall.n[1] * off,
+      ]
+      for (const p of this.placed) {
+        if (p.item.function !== 'island_table' || p.box) continue
+        const corners = obbCorners(rectBox(p.rect))
+        const gap = Math.min(
+          ...corners.map((c) => (c[0] - wall.a[0]) * wall.n[0] + (c[1] - wall.a[1]) * wall.n[1]),
+        )
+        const t = (p.item.cx - wall.a[0]) * wall.u[0] + (p.item.cz - wall.a[1]) * wall.u[1]
+        if (gap > reach + 1e-9 || t < 0 || t > wall.length) continue
+        // Of the two ways along the wall, the one nearer the table's own turn.
+        const rotation =
+          angleGap(p.item.rotation, along0) <= 90 ? along0 : normalizeRotation(along0 + 180)
+        const box = this.boxAt(island, rotation, at(t))
+        if (
+          !this.fitsBox(box, {
+            zones,
+            spacing: rules.clearance,
+            wallClearance: rules.clearance,
+            skip: p,
+          })
+        )
+          continue
+        const size = rotatedFootprint(island, rotation)
+        p.box = box
+        p.rect = obbBounds(box)
+        p.item = {
+          ...p.item,
+          cx: box.cx,
+          cz: box.cz,
+          rotation,
+          w: roundM(size.w),
+          d: roundM(size.d),
+        }
+        turned++
+      }
+      if (!fillRow) continue
+      for (const [t0, t1] of wall.intervals) {
+        let t = t0 + along / 2
+        while (t <= t1 - along / 2 + 1e-9) {
+          const box = this.boxAt(island, along0, at(t))
+          if (
+            this.fitsBox(box, { zones, spacing: rules.clearance, wallClearance: rules.clearance })
+          ) {
+            this.addBox(island, along0, box)
+            added++
+            t += along + rules.clearance
+          } else t += 0.1
+        }
+      }
+    }
+    return { turned, added }
   }
 
   add(asset: PlannerAsset, rotation: Rotation, rect: Rect): void {
@@ -455,6 +763,16 @@ class Planner {
         locked: false,
       },
     })
+  }
+
+  /** Undoes, when called (as often as needed), everything placed after this call. */
+  snapshot(): () => void {
+    const count = this.placed.length
+    const counter = [...this.counter]
+    return () => {
+      this.placed.length = count
+      this.counter = new Map(counter)
+    }
   }
 
   /** Rotation that turns the front into the room, or lays the long side along the wall. */
@@ -536,6 +854,117 @@ class Planner {
       }
     }
     return count
+  }
+
+  /**
+   * At least `gap` (less the millimetre positions round to) from every boundary edge and obstacle,
+   * measured as the true distance: a rounded or cut corner next to the prop counts by how near it
+   * actually comes, not by a padded box.
+   */
+  clearOfEdge(rect: Rect, gap: number): boolean {
+    const toRect = (p: Point) =>
+      Math.hypot(
+        Math.max(rect.minX - p[0], 0, p[0] - rect.maxX),
+        Math.max(rect.minZ - p[1], 0, p[1] - rect.maxZ),
+      )
+    const corners = rectCorners(rect)
+    const clear = (a: Point, b: Point) =>
+      toRect(a) >= gap - EPSILON_M &&
+      toRect(b) >= gap - EPSILON_M &&
+      corners.every((c) => distanceToSegment(c, a, b) >= gap - EPSILON_M)
+    return (
+      edges(this.boundary).every(([a, b]) => clear(a, b)) &&
+      this.space.obstacles.every((o) => edges(o.polygon).every(([a, b]) => clear(a, b)))
+    )
+  }
+
+  /** The back wall when it faces the main entrance: the side an island shop's cabinets favour. */
+  sideCabinetBack(): Wall | null {
+    const main = this.mainEntrance
+    const back = this.walls[0]
+    return main && back && back.n[0] * main.n[0] + back.n[1] * main.n[1] < -0.5 ? back : null
+  }
+
+  /**
+   * Island shop: stands up to `count` low cabinets along the edge the tables and the cashier left
+   * free. The side facing the main entrance (the back wall) comes first, then the two sides beyond
+   * `sideFromDepth` of the shop's depth. Judged per wall piece: an open side still takes one
+   * against a piece of wall long enough for it. Never against an entrance or open edge, in the
+   * main aisle or an entrance buffer; `wallGap` from the whole
+   * boundary and `clearance` from island tables. Each cabinet takes the slot farthest from the
+   * props already along the edge, so a few cabinets spread out; the first model in `assets` that
+   * fits anywhere is used. Returns how many stand, and how many of them on the back wall.
+   */
+  placeSideCabinets(
+    assets: PlannerAsset[],
+    count: number,
+    rules: PlannerRules,
+    sideFromDepth: number,
+  ): { placed: number; onBack: number } {
+    const main = this.mainEntrance
+    if (!main || !count) return { placed: 0, onBack: 0 }
+    const depthOf = (p: Point) =>
+      (p[0] - main.mid[0]) * main.n[0] + (p[1] - main.mid[1]) * main.n[1]
+    const depths = this.boundary.map(depthOf)
+    const from = Math.min(...depths) + (Math.max(...depths) - Math.min(...depths)) * sideFromDepth
+    const back = this.sideCabinetBack()
+    const tiers: { wall: Wall; tier: number }[] = back ? [{ wall: back, tier: 0 }] : []
+    for (const wall of this.walls)
+      if (Math.abs(wall.n[0] * main.n[0] + wall.n[1] * main.n[1]) < 0.5)
+        tiers.push({ wall, tier: 1 })
+    const zones = this.zones(rules, true)
+    const centre = (r: Rect): Point => [(r.minX + r.maxX) / 2, (r.minZ + r.maxZ) / 2]
+    const edgeProps = () =>
+      this.placed.filter((p) => p.item.function !== 'island_table').map((p) => centre(p.rect))
+    let placed = 0
+    let onBack = 0
+    while (placed < count) {
+      const others = edgeProps()
+      let best = null as {
+        asset: PlannerAsset
+        rotation: Rotation
+        rect: Rect
+        tier: number
+        spread: number
+      } | null
+      for (const asset of assets) {
+        for (const { wall, tier } of tiers) {
+          if (best && best.tier < tier) break
+          const rotation = this.wallRotation(asset, wall)
+          const size = rotatedFootprint(asset, rotation)
+          const along = wall.axis === 'x' ? size.w : size.d
+          const depth = wall.axis === 'x' ? size.d : size.w
+          for (const [t0, t1] of wall.intervals) {
+            const steps = Math.floor((t1 - t0 - along) / ALONG_STEP + 1e-9)
+            for (let k = 0; k <= steps; k++) {
+              const rect = this.wallRect(wall, t0 + k * ALONG_STEP, along, depth, rules.wallGap)
+              if (tier > 0 && Math.min(...rectCorners(rect).map(depthOf)) < from - 1e-9) continue
+              const spread = Math.min(Infinity, ...others.map((c) => distance(c, centre(rect))))
+              if (best && (best.tier < tier || (best.tier === tier && best.spread >= spread)))
+                continue
+              if (
+                !this.fits(rect, {
+                  zones,
+                  spacing: 0,
+                  wallClearance: 0,
+                  islandSpacing: rules.clearance,
+                }) ||
+                !this.clearOfEdge(rect, rules.wallGap)
+              )
+                continue
+              best = { asset, rotation, rect, tier, spread }
+            }
+          }
+        }
+        // The preferred model wherever it fits; the next one only where it does not.
+        if (best) break
+      }
+      if (!best) break
+      this.add(best.asset, best.rotation, best.rect)
+      placed++
+      if (best.tier === 0) onBack++
+    }
+    return { placed, onBack }
   }
 
   /** All island-table slots of one orientation, packed row by row with the given spacing. */
@@ -691,10 +1120,48 @@ export function tablesForArea(area: number): number {
 }
 
 /**
+ * How many side cabinets an island shop asks for (see SideCabinetRules); or, when it stands none,
+ * the note saying why.
+ */
+function islandSideTarget(
+  planner: Planner,
+  strategy: GeneratedStrategy,
+  area: number,
+  rule: SideCabinetRules,
+): number | string {
+  if (area < rule.minArea)
+    return `中岛店面积 ${Math.floor(area)} ㎡，不足 ${rule.minArea} ㎡，不放配件边柜`
+  if (!planner.mainEntrance) return '空间没有入口，分不出店的前后，未放配件边柜'
+  return sideCabinetsForArea(area, strategy, rule)
+}
+
+/** The note on the side cabinets of an island shop: how many, and on what basis. */
+function sideCabinetNote(
+  strategy: GeneratedStrategy,
+  area: number,
+  target: number,
+  placed: number,
+  rule: SideCabinetRules,
+): string {
+  // Rounded down, as the count is: 49.6 ㎡ reads 49 ㎡ and asks for one cabinet.
+  const shown = Math.floor(area)
+  const basis = [
+    `每 ${rule.areaPerCabinet} ㎡ 1 个，最多 ${rule.maxCount} 个`,
+    ...(target < sideCabinetsForArea(area, 'max', rule)
+      ? [`${PLAN_STRATEGY_LABELS[strategy]}最多 ${rule.strategyMax[strategy]} 个`]
+      : []),
+  ].join('；')
+  return placed === target
+    ? `中岛店按面积 ${shown} ㎡ 放 ${placed} 个配件边柜（${basis}）`
+    : `中岛店按面积 ${shown} ㎡ 应放 ${target} 个配件边柜（${basis}），中岛桌优先，边缘空间只放下 ${placed} 个`
+}
+
+/**
  * Generates one layout for a polygon space. Cashier against the back wall, island tables in the
- * open floor away from entrances and the main aisle, cabinets along the remaining walls. Guide
- * values are relaxed one step at a time when the requested tables do not fit, and every
- * relaxation is recorded in `planning.relaxations`.
+ * open floor away from entrances and the main aisle, cabinets along the remaining walls (an island
+ * shop: a few low side cabinets, see SideCabinetRules). Guide values are relaxed one step at a
+ * time when the requested tables do not fit, and every relaxation is recorded in
+ * `planning.relaxations`.
  */
 export function planLayout(input: PlannerInput): PlannerResult {
   const base: PlannerRules = { ...DEFAULT_RULES[input.shopType], ...input.rules }
@@ -713,9 +1180,22 @@ export function planLayout(input: PlannerInput): PlannerResult {
   const cabinets = allCabinets
     .filter((asset) => asset.footprint.h <= base.cabinetMaxHeight + 1e-9)
     .sort((a, b) => Math.max(b.footprint.w, b.footprint.d) - Math.max(a.footprint.w, a.footprint.d))
+  // An island shop stands only a few low cabinets along its edge, after the tables (step 3): the
+  // catalogue's 配件边柜 first, then any cabinet low enough.
+  const islandShop = input.shopType === 'island'
+  const sideCabinets = islandShop
+    ? [
+        ...(input.catalog.sideCabinet?.length
+          ? pick(input.catalog.sideCabinet, '配件边柜').filter(
+              (asset) => asset.footprint.h <= base.cabinetMaxHeight + 1e-9,
+            )
+          : []),
+        ...cabinets,
+      ].filter((asset, i, list) => list.findIndex((a) => a.id === asset.id) === i)
+    : []
   if (cabinets.length < allCabinets.length)
     planner.notes.push(
-      `${SHOP_TYPE_LABELS[input.shopType]}不沿边界放高于 ${base.cabinetMaxHeight} m 的柜子${cabinets.length ? '' : '，未摆放配件柜'}`,
+      `${SHOP_TYPE_LABELS[input.shopType]}不沿边界放高于 ${base.cabinetMaxHeight} m 的柜子${cabinets.length || sideCabinets.length ? '' : '，未摆放配件柜'}`,
     )
 
   // 1. Cashier at the end of the back wall (or the next wall that has room).
@@ -735,56 +1215,130 @@ export function planLayout(input: PlannerInput): PlannerResult {
   const cabinetDepth = cabinets.length
     ? Math.min(...cabinets.map((c) => Math.min(c.footprint.w, c.footprint.d)))
     : 0
+  // An island shop keeps no band: its side cabinets take only the edge the tables leave free.
   const reserved = (rules: PlannerRules): Rect[] =>
-    back && cabinets.length
+    back && cabinets.length && !islandShop
       ? planner.wallBand(back, rules.wallGap + cabinetDepth + rules.clearance)
       : []
 
-  let requested = 0
-  let rules = base
-  const relaxed = new Map<string, { target: number; actual: number }>()
   const island = islands[0]
-  let chosen: { rotation: Rotation; slots: Rect[] } = { rotation: 0, slots: [] }
-  if (island) {
-    // 尽量多放 relaxes towards the same target as 按面积推荐, then keeps every slot, so it never
-    // shows fewer tables; 尽量少放 asks for one.
-    // Floor narrower than a table plus the tightest walkway on both sides cannot take one even
-    // after every relaxation, so it does not count towards the table target.
-    const tightest = Math.min(
-      base.clearance,
-      ...RELAXATION_STEPS.filter((s) => s.rule === 'clearance').map((s) => s.value),
-    )
-    const tableWidth = Math.min(island.footprint.w, island.footprint.d) + 2 * tightest
-    if (input.strategy === 'min') requested = 1
-    else {
-      const area = usableArea(input.space, tableWidth)
-      const whole = usableArea(input.space)
-      requested = tablesForArea(area)
-      if (requested < tablesForArea(whole))
-        planner.notes.push(`桌数按面积推荐时未计入约 ${Math.round(whole - area)} ㎡ 狭窄区域`)
+  /** Where the tables go with the given keep-outs; nothing is placed yet. */
+  const planTables = (keepOut: (rules: PlannerRules) => Rect[]) => {
+    const notes: string[] = []
+    let requested = 0
+    let rules = base
+    const relaxed = new Map<string, { target: number; actual: number }>()
+    let chosen: { rotation: Rotation; slots: Rect[] } = { rotation: 0, slots: [] }
+    if (island) {
+      // 尽量多放 relaxes towards the same target as 按面积推荐, then keeps every slot, so it never
+      // shows fewer tables; 尽量少放 asks for one.
+      // Floor narrower than a table plus the tightest walkway on both sides cannot take one even
+      // after every relaxation, so it does not count towards the table target.
+      const tightest = Math.min(
+        base.clearance,
+        ...RELAXATION_STEPS.filter((s) => s.rule === 'clearance').map((s) => s.value),
+      )
+      const tableWidth = Math.min(island.footprint.w, island.footprint.d) + 2 * tightest
+      if (input.strategy === 'min') requested = 1
+      else {
+        const area = usableArea(input.space, tableWidth)
+        const whole = usableArea(input.space)
+        requested = tablesForArea(area)
+        if (requested < tablesForArea(whole))
+          notes.push(`桌数按面积推荐时未计入约 ${Math.round(whole - area)} ㎡ 狭窄区域`)
+      }
+      let best = planner.bestPacking(island, rules, keepOut(rules))
+      for (const step of RELAXATION_STEPS) {
+        if (best.slots.length >= requested) break
+        if (rules[step.rule] <= step.value) continue
+        relaxed.set(step.rule, { target: base[step.rule], actual: step.value })
+        rules = { ...rules, [step.rule]: step.value }
+        best = planner.bestPacking(island, rules, keepOut(rules))
+      }
+      const slots = input.strategy === 'max' ? best.slots : spread(best.slots, requested)
+      if (input.strategy === 'max') requested = Math.max(requested, best.slots.length)
+      chosen = { rotation: best.rotation, slots }
+      if (slots.length < requested && (input.strategy !== 'max' || !slots.length)) {
+        notes.push(`空间有限，只放下 ${slots.length} / ${requested} 张中岛桌`)
+      }
     }
-    let best = planner.bestPacking(island, rules, reserved(rules))
-    for (const step of RELAXATION_STEPS) {
-      if (best.slots.length >= requested) break
-      if (rules[step.rule] <= step.value) continue
-      relaxed.set(step.rule, { target: base[step.rule], actual: step.value })
-      rules = { ...rules, [step.rule]: step.value }
-      best = planner.bestPacking(island, rules, reserved(rules))
-    }
-    const slots = input.strategy === 'max' ? best.slots : spread(best.slots, requested)
-    if (input.strategy === 'max') requested = Math.max(requested, best.slots.length)
-    chosen = { rotation: best.rotation, slots }
-    for (const rect of slots) planner.add(island, chosen.rotation, rect)
-    if (slots.length < requested && (input.strategy !== 'max' || !slots.length)) {
-      planner.notes.push(`空间有限，只放下 ${slots.length} / ${requested} 张中岛桌`)
-    }
+    return { notes, requested, rules, relaxed, chosen }
   }
+  const plain = planTables(reserved)
+  let tables = plain
+  const undoTables = planner.snapshot()
+  // Tables near a slanted wall turn parallel to it; 尽量多放 adds more along it.
+  let slant = { turned: 0, added: 0 }
+  const addTables = (t: typeof plain) => {
+    if (!island) return
+    for (const rect of t.chosen.slots) planner.add(island, t.chosen.rotation, rect)
+    slant = planner.alignTablesToSlants(island, t.rules, input.strategy === 'max')
+  }
+  addTables(plain)
 
-  // 3. Cabinets along the walls, keeping the walkway to the tables.
-  if (cabinets.length) {
+  // 3. Cabinets along the walls, keeping the walkway to the tables. An island shop stands a few
+  //    side cabinets in the edge the tables leave free.
+  let sideNote: string | null = null
+  if (islandShop) {
+    const area = usableArea(input.space)
+    const rule = input.sideCabinetRules ?? DEFAULT_SIDE_CABINET_RULES
+    const target = sideCabinets.length
+      ? islandSideTarget(planner, input.strategy, area, rule)
+      : null
+    if (typeof target === 'string') sideNote = target
+    else if (target !== null) {
+      const place = () => planner.placeSideCabinets(sideCabinets, target, base, rule.sideFromDepth)
+      let result = place()
+      // Short of the target, or some only found room on a side: try the tables clear of a band
+      // along the back wall (the cabinets' first choice). That plan is kept only if it costs no
+      // table and no further relaxation, and stands more cabinets, or as many with more on the
+      // back wall.
+      const back = planner.sideCabinetBack()
+      if ((result.placed < target || result.onBack < result.placed) && island && back) {
+        const depth = Math.min(...sideCabinets.map((c) => Math.min(c.footprint.w, c.footprint.d)))
+        const band = planner.wallBand(back, base.wallGap + depth + base.clearance)
+        // The tables are packed against what stands so far: the cashier, not the first try.
+        undoTables()
+        const banded = planTables(() => band)
+        const relaxedKey = (t: typeof plain) => JSON.stringify([...t.relaxed])
+        let other: typeof result | null = null
+        if (
+          banded.chosen.slots.length >= plain.chosen.slots.length &&
+          relaxedKey(banded) === relaxedKey(plain)
+        ) {
+          addTables(banded)
+          other = place()
+        }
+        if (
+          other &&
+          (other.placed > result.placed ||
+            (other.placed === result.placed && other.onBack > result.onBack))
+        )
+          [tables, result] = [banded, other]
+        else {
+          undoTables()
+          addTables(plain)
+          place()
+        }
+      }
+      const { placed } = result
+      sideNote = sideCabinetNote(input.strategy, area, target, placed, rule)
+    }
+  } else if (cabinets.length) {
     const walls = input.strategy === 'max' ? planner.walls : planner.walls.slice(0, 1)
-    planner.fillWalls(cabinets, walls, input.strategy === 'min' ? 1 : Infinity, rules)
+    planner.fillWalls(cabinets, walls, input.strategy === 'min' ? 1 : Infinity, plain.rules)
+    // 尽量多放 lines the slanted walls too, at their own angle.
+    if (input.strategy === 'max') planner.fillSlantWalls(cabinets, Infinity, plain.rules)
   }
+  const { rules, relaxed, chosen } = tables
+  const placedTables = chosen.slots.length + slant.added
+  const requested =
+    input.strategy === 'max' ? Math.max(tables.requested, placedTables) : tables.requested
+  const slantNote =
+    slant.turned + slant.added
+      ? [`靠近斜墙的 ${slant.turned + slant.added} 张中岛桌与斜墙平行摆放`]
+      : []
+  planner.notes.push(...tables.notes, ...slantNote, ...(sideNote ? [sideNote] : []))
 
   const items = planner.placed.map((p) => p.item)
   const relaxations = [...relaxed.entries()].map(([rule, v]) => ({
@@ -801,7 +1355,7 @@ export function planLayout(input: PlannerInput): PlannerResult {
     planning: {
       strategy: input.strategy,
       requested,
-      placed: chosen.slots.length,
+      placed: placedTables,
       relaxations,
       note: `${PLAN_STRATEGY_LABELS[input.strategy]}：主通道 ${rules.aisle} m、道具间距 ${rules.clearance} m 为设计指导值，非消防验收${relaxNote}`.slice(
         0,

@@ -1,6 +1,11 @@
 import { useMemo, useRef, useState } from 'react'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
-import { ITEM_SOURCE_LABELS, RECOGNITION_MIN_CONFIDENCE } from '@store/shared'
+import {
+  ITEM_SOURCE_LABELS,
+  RECOGNITION_MIN_CONFIDENCE,
+  rotatedFootprint,
+  settleNearQuarter,
+} from '@store/shared'
 import type {
   Asset,
   DraftItem,
@@ -15,18 +20,15 @@ import type {
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { SpaceEditor } from '../workbench/SpaceEditor.tsx'
-import { PlanImage } from './PlanImage.tsx'
-import type { ImageTool } from './PlanImage.tsx'
+import { EMPTY_TRACE, PlanImage } from './PlanImage.tsx'
+import type { ImageTool, Trace } from './PlanImage.tsx'
+import { scaleFromPoints, toPicturePoints, toTracedSpace } from './trace.ts'
+import type { EdgeKind, Px, TracedSpace } from './trace.ts'
 import type { PdfPage } from './pdf-extract.ts'
+import { useAiOverview } from '../settings/queries.ts'
 import { useConfirmRun, useRecognize, useUploadPlan } from './queries.ts'
 
 const DEFAULT_HEIGHT_MM = 3200
-
-/** Layout rotations are quarter turns; a recognised angle snaps to the nearest. */
-function quarterTurn(degrees: number): 0 | 90 | 180 | 270 {
-  const turns = Math.round((((degrees % 360) + 360) % 360) / 90) % 4
-  return ([0, 90, 180, 270] as const)[turns] ?? 0
-}
 
 interface PdfSource {
   doc: PDFDocumentProxy
@@ -53,7 +55,9 @@ function toLayout(
     .map((item) => {
       const assetId = choices.has(item.ref) ? (choices.get(item.ref) ?? null) : item.assetId
       const asset = assetId ? assets.get(assetId) : undefined
-      const turned = item.rotation % 180 !== 0
+      // Within 3° of a quarter turn a recognised angle is that turn; others are kept.
+      const rotation = settleNearQuarter(item.rotation)
+      const size = asset ? rotatedFootprint(asset, rotation) : null
       return {
         id: item.ref,
         assetId: asset?.id ?? null,
@@ -61,9 +65,9 @@ function toLayout(
         name: asset?.name ?? item.label,
         cx: item.cx,
         cz: item.cz,
-        rotation: quarterTurn(item.rotation),
-        w: asset ? (turned ? asset.footprint.d : asset.footprint.w) : item.w,
-        d: asset ? (turned ? asset.footprint.w : asset.footprint.d) : item.d,
+        rotation,
+        w: size?.w ?? item.w,
+        d: size?.d ?? item.d,
         h: asset?.footprint.h ?? 1,
         placeholder: !asset?.placeable,
         locked: false,
@@ -72,13 +76,39 @@ function toLayout(
   return { schemaVersion: 3, items: layoutItems, planning: null }
 }
 
-function toSpace(draft: RecognitionDraft, heightMm: number): Space | undefined {
-  if (!draft.space) return undefined
+/**
+ * The space to check and confirm: the outline traced by hand when there is one (columns kept
+ * from the recognised space), otherwise what was recognised.
+ */
+function toSpace(
+  draft: RecognitionDraft | null,
+  traced: TracedSpace | null,
+  heightMm: number,
+): Space | undefined {
+  const height = draft?.space?.height ?? heightMm / 1000
+  if (traced) {
+    return {
+      schemaVersion: 1,
+      boundary: traced.boundary,
+      height,
+      entrances: traced.entrances,
+      openEdges: traced.openEdges,
+      obstacles: draft?.space?.obstacles ?? [],
+      calibration: draft?.scale
+        ? {
+            method: draft.scale.method,
+            reference: draft.scale.reference,
+            verified: draft.scale.verified,
+          }
+        : { method: 'manual', reference: '原图描点，两点指定已知长度', verified: false },
+    }
+  }
+  if (!draft?.space) return undefined
   const method = draft.scale?.method ?? 'manual'
   return {
     schemaVersion: 1,
     boundary: draft.space.boundary,
-    height: draft.space.height ?? heightMm / 1000,
+    height,
     entrances: draft.space.entrances,
     openEdges: [],
     obstacles: draft.space.obstacles,
@@ -86,6 +116,33 @@ function toSpace(draft: RecognitionDraft, heightMm: number): Space | undefined {
       ? { method, reference: draft.scale.reference, verified: draft.scale.verified }
       : null,
   }
+}
+
+/**
+ * A recognised boundary as a closed trace to edit, its entrances marked on the edges they lie
+ * along (within a few pixels).
+ */
+function traceFromDraft(draft: RecognitionDraft | null): Trace | null {
+  const scale = draft?.scale
+  const space = draft?.space
+  if (!scale || !space || space.boundary.length < 3) return null
+  const points = toPicturePoints(space.boundary, scale.mmPerPixel, scale.originPx)
+  const entrances = space.entrances.map((e) =>
+    toPicturePoints([e.a, e.b], scale.mmPerPixel, scale.originPx),
+  )
+  const near = (p: Px, a: Px, b: Px) => {
+    const dx = b[0] - a[0]
+    const dy = b[1] - a[1]
+    const len = dx * dx + dy * dy || 1
+    const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len))
+    return Math.hypot(p[0] - (a[0] + dx * t), p[1] - (a[1] + dy * t)) <= 3
+  }
+  const kinds = points.map((a, i): EdgeKind => {
+    const b = points[(i + 1) % points.length] as Px
+    const mid: Px = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+    return entrances.some(([ea, eb]) => ea && eb && near(mid, ea, eb)) ? 'entrance' : 'wall'
+  })
+  return { points, closed: true, kinds, arc: false }
 }
 
 /**
@@ -113,7 +170,13 @@ export function RecognitionPanel({
   const [heightMm, setHeightMm] = useState(DEFAULT_HEIGHT_MM)
   const [choices, setChoices] = useState<Map<string, string | null>>(new Map())
   const [localError, setLocalError] = useState<unknown>(null)
+  /** The boundary traced on the picture, and what it became once applied (in metres). */
+  const [trace, setTrace] = useState<Trace>(EMPTY_TRACE)
+  const [traced, setTraced] = useState<TracedSpace | null>(null)
+  const [editorKey, setEditorKey] = useState(0)
 
+  // A remote model may read the plan only while the user has allowed it in the settings.
+  const cloud = useAiOverview().data?.settings.recognitionCloud ?? false
   const uploadPlan = useUploadPlan(projectId)
   const recognize = useRecognize(upload?.id ?? '')
   const confirm = useConfirmRun(projectId, upload?.id ?? '')
@@ -128,6 +191,8 @@ export function RecognitionPanel({
     setCrop(null)
     setPoints(null)
     setPdf(null)
+    setTrace(EMPTY_TRACE)
+    setTraced(null)
     try {
       if (file.type === 'application/pdf' || /\.pdf$/i.test(file.name)) {
         setPreparing('正在打开 PDF…')
@@ -165,6 +230,8 @@ export function RecognitionPanel({
     setRun(null)
     setCrop(null)
     setPoints(null)
+    setTrace(EMPTY_TRACE)
+    setTraced(null)
     try {
       setPreparing(`正在转换第 ${pageNumber} 页…`)
       const pdfjs = await import('./pdf-extract.ts')
@@ -188,12 +255,39 @@ export function RecognitionPanel({
     }
   }
 
+  /** Millimetres per picture pixel: the recognised scale, else the two picked points. */
+  const mmPerPixel = draft?.scale?.mmPerPixel ?? scaleFromPoints(points, knownMm)
+
+  function toggleTrace() {
+    if (tool === 'trace') {
+      setTool('none')
+      return
+    }
+    // Start from the recognised boundary when there is one, so it can be corrected.
+    if (!trace.points.length) setTrace(traceFromDraft(draft) ?? EMPTY_TRACE)
+    setTool('trace')
+  }
+
+  /** The traced outline into the space below (recognising first when nothing was run yet). */
+  function applyTrace() {
+    if (!trace.closed || !mmPerPixel) return
+    const origin: Px = draft?.scale?.originPx ?? [
+      Math.min(...trace.points.map((p) => p[0])),
+      Math.min(...trace.points.map((p) => p[1])),
+    ]
+    setTraced(toTracedSpace(trace.points, trace.kinds, mmPerPixel, origin))
+    setEditorKey((k) => k + 1)
+    setTool('none')
+    // Confirming needs a recognition run; a picture's local run records it, even if it fails.
+    if (!run) void start()
+  }
+
   async function start() {
     if (!upload) return
     setLocalError(null)
     const request: RecognizeRequest = {
-      ...(vector && !useModel ? { vector } : {}),
-      ...(useModel ? { method: 'llm' as const } : {}),
+      ...(vector && !(cloud && useModel) ? { vector } : {}),
+      ...(cloud && useModel ? { method: 'llm' as const } : {}),
       ...(crop ? { crop } : {}),
       ...(points && knownMm > 0 ? { calibration: { a: points.a, b: points.b, mm: knownMm } } : {}),
     }
@@ -209,9 +303,9 @@ export function RecognitionPanel({
   }
 
   function submit(space: Space, name: string) {
-    if (!run || !draft) return
+    if (!run) return
     confirm.mutate(
-      { runId: run.id, name, space, layout: toLayout(draft.items, choices, assetMap) },
+      { runId: run.id, name, space, layout: toLayout(draft?.items ?? [], choices, assetMap) },
       { onSuccess: (created) => onCreated(created.node.id) },
     )
   }
@@ -222,7 +316,7 @@ export function RecognitionPanel({
         !a.retired &&
         a.function === (item.assetId ? assetMap.get(item.assetId)?.function : item.function),
     )
-  const initialSpace = draft ? toSpace(draft, heightMm) : undefined
+  const initialSpace = toSpace(draft, traced, heightMm)
   const busy = preparing !== null || uploadPlan.isPending || recognize.isPending
 
   return (
@@ -317,14 +411,56 @@ export function RecognitionPanel({
                   mm
                 </label>
               )}
-              <label className="hint">
-                <input
-                  type="checkbox"
-                  checked={useModel}
-                  onChange={(e) => setUseModel(e.target.checked)}
-                />{' '}
-                直接用模型识别
-              </label>
+              <button type="button" aria-pressed={tool === 'trace'} onClick={toggleTrace}>
+                描边界
+              </button>
+              {tool === 'trace' && (
+                <>
+                  <button
+                    type="button"
+                    aria-pressed={trace.arc}
+                    disabled={trace.closed || !trace.points.length}
+                    onClick={() => setTrace({ ...trace, arc: !trace.arc })}
+                  >
+                    圆弧
+                  </button>
+                  <button
+                    type="button"
+                    disabled={!trace.points.length}
+                    onClick={() => {
+                      setTrace(EMPTY_TRACE)
+                      setTraced(null)
+                      setEditorKey((k) => k + 1)
+                    }}
+                  >
+                    清空边界
+                  </button>
+                  <button
+                    type="button"
+                    className="primary"
+                    disabled={!trace.closed || !mmPerPixel || busy}
+                    title={
+                      mmPerPixel ? undefined : '先用“指定已知长度”在图上量一段已知长度，定出比例'
+                    }
+                    onClick={applyTrace}
+                  >
+                    应用到空间
+                  </button>
+                  {!mmPerPixel && (
+                    <span className="hint">还没有比例：先用“指定已知长度”量一段已知长度。</span>
+                  )}
+                </>
+              )}
+              {cloud && (
+                <label className="hint">
+                  <input
+                    type="checkbox"
+                    checked={useModel}
+                    onChange={(e) => setUseModel(e.target.checked)}
+                  />{' '}
+                  直接用模型识别（图纸会发到外部）
+                </label>
+              )}
               <button
                 type="button"
                 className="primary"
@@ -344,6 +480,9 @@ export function RecognitionPanel({
               calibration={points}
               onCalibrate={setPoints}
               draft={draft}
+              trace={trace}
+              onTrace={setTrace}
+              vector={vector}
             />
           </div>
 
@@ -363,13 +502,16 @@ export function RecognitionPanel({
                 <p className="error">
                   {run.error}
                   {draft && draft.confidence < RECOGNITION_MIN_CONFIDENCE
-                    ? '。可以指定一段已知长度后重新识别，或勾选“直接用模型识别”。'
+                    ? cloud
+                      ? '。可以指定一段已知长度后重新识别，或勾选“直接用模型识别”。'
+                      : '。可以指定一段已知长度后重新识别。'
                     : ''}
+                  {!traced ? ' 也可以点“描边界”，在原图上描出店铺边界。' : ''}
                 </p>
               )}
-              {draft && (
+              {(draft || traced) && (
                 <>
-                  {draft.pending.length > 0 && (
+                  {draft && draft.pending.length > 0 && (
                     <div className="recognition-pending">
                       <h4>待确认（{draft.pending.length}）</h4>
                       <ul>
@@ -379,7 +521,7 @@ export function RecognitionPanel({
                       </ul>
                     </div>
                   )}
-                  {draft.items.length > 0 && (
+                  {draft && draft.items.length > 0 && (
                     <table className="recognition-items" aria-label="识别到的道具">
                       <thead>
                         <tr>
@@ -433,22 +575,28 @@ export function RecognitionPanel({
                       </tbody>
                     </table>
                   )}
-                  <details className="recognition-notes">
-                    <summary>识别依据</summary>
-                    <ul>
-                      {draft.notes.map((n) => (
-                        <li key={n}>{n}</li>
-                      ))}
-                    </ul>
-                  </details>
+                  {draft && (
+                    <details className="recognition-notes">
+                      <summary>识别依据</summary>
+                      <ul>
+                        {draft.notes.map((n) => (
+                          <li key={n}>{n}</li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
 
                   <h3>校对并确认空间</h3>
-                  {!draft.space && (
-                    <p className="hint">
-                      未识别到边界，请在下面录入；识别到的道具会一并放入，之后在平面上调整位置。
-                    </p>
+                  {traced ? (
+                    <p className="hint">已用原图上描出的边界；可在下面继续核对尺寸。</p>
+                  ) : (
+                    !draft?.space && (
+                      <p className="hint">
+                        未识别到边界：点“描边界”在原图上描出，或在下面录入；识别到的道具会一并放入，之后在平面上调整位置。
+                      </p>
+                    )
                   )}
-                  {draft.space && draft.space.height === null && (
+                  {(traced || draft?.space) && !draft?.space?.height && (
                     <label className="field">
                       层高（毫米）
                       <input
@@ -461,7 +609,7 @@ export function RecognitionPanel({
                     </label>
                   )}
                   <SpaceEditor
-                    key={`${run.id}-${heightMm}`}
+                    key={`${run.id}-${heightMm}-${editorKey}`}
                     initial={initialSpace}
                     initialName="空间（识别）"
                     submitting={confirm.isPending}

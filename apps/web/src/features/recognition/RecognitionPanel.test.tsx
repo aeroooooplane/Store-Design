@@ -1,6 +1,12 @@
 import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { Asset, PlanUpload, RecognitionRun, RecognizeResponse } from '@store/shared'
+import type {
+  AiOverview,
+  Asset,
+  PlanUpload,
+  RecognitionRun,
+  RecognizeResponse,
+} from '@store/shared'
 import { makeAsset, makeNode } from '../../test-utils/factories.ts'
 import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
 import type { FakeRequest } from '../../test-utils/fake-api.ts'
@@ -60,7 +66,8 @@ const run: RecognitionRun = {
         cz: 2,
         w: 1.8,
         d: 1,
-        rotation: 90,
+        // Read 2° off a quarter turn: counts as 90°.
+        rotation: 92,
         confidence: 0.5,
         note: '「中岛桌」有多种尺寸，请选择型号',
       },
@@ -74,7 +81,8 @@ const run: RecognitionRun = {
         cz: 0.3,
         w: 1.2,
         d: 0.45,
-        rotation: 0,
+        // A slanted cabinet keeps its angle.
+        rotation: 30,
         confidence: 0.9,
         note: null,
       },
@@ -117,8 +125,21 @@ async function readBody(request: Request): Promise<unknown> {
   return type.startsWith('application/json') ? JSON.parse(await request.text()) : type
 }
 
-function fakeApi() {
+/** The site settings: whether plans may go to a remote model. */
+const overview = (cloud: boolean): AiOverview => ({
+  models: [],
+  settings: {
+    agentModel: null,
+    recognitionModel: 'local',
+    recognitionFallback: 'qwen3-vl-flash',
+    recognitionCloud: cloud,
+  },
+  budget: { day: '2026-10-16', limitCny: 50, spentCny: 0, remainingCny: 50, exceeded: false },
+})
+
+function fakeApi(cloud = true) {
   const handle = ({ request, path: pathname }: FakeRequest) => {
+    if (request.method === 'GET' && pathname === '/api/v1/ai') return json(200, overview(cloud))
     if (request.method === 'POST' && pathname.endsWith('/uploads')) return json(201, upload)
     if (request.method === 'POST' && pathname.endsWith('/recognize')) {
       const response: RecognizeResponse = { run, attempted: null }
@@ -148,6 +169,22 @@ afterEach(() => {
 })
 
 describe('RecognitionPanel', () => {
+  it('offers a remote model only while cloud recognition is on', async () => {
+    fakeApi(false)
+    renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+    const file = new File([new Uint8Array([137, 80, 78, 71])], '简图.png', { type: 'image/png' })
+    fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
+    await screen.findByText(/简图.png/)
+    expect(screen.queryByLabelText(/直接用模型识别/)).toBeNull()
+    cleanup()
+    vi.unstubAllGlobals()
+
+    fakeApi(true)
+    renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+    fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
+    expect(await screen.findByLabelText(/直接用模型识别（图纸会发到外部）/)).toBeTruthy()
+  })
+
   it('uploads a picture, shows the result, lets the model be chosen, and confirms the space', async () => {
     const server = fakeApi()
     const onCreated = vi.fn()
@@ -156,7 +193,7 @@ describe('RecognitionPanel', () => {
     const file = new File([new Uint8Array([137, 80, 78, 71])], '简图.png', { type: 'image/png' })
     fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
     await screen.findByText(/简图\.png/)
-    expect(server.calls[0]).toMatchObject({
+    expect(server.calls.find((c) => c.method === 'POST')).toMatchObject({
       method: 'POST',
       path: `/api/v1/projects/${PROJECT}/uploads`,
       body: 'image/png',
@@ -208,6 +245,7 @@ describe('RecognitionPanel', () => {
       rotation: 90,
       w: 1.8,
     })
+    expect(confirm.layout.items[1]).toMatchObject({ assetId: 'asset-2', rotation: 30, w: 1.2 })
   })
 
   it('explains a failed run and refuses files it cannot read', async () => {
