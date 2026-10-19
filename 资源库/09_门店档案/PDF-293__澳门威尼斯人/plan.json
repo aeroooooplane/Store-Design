@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -424,7 +424,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱 HV Boxes（在配电箱高墙内下部，上方为 43 寸广告机）"
+    "label": "配电箱 HV Boxes（在配电箱高墙内下部，上方为 43 寸广告机）",
+    "addedLater": false
    }
   ],
   "calibration": {

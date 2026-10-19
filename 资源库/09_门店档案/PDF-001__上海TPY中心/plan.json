@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -242,7 +242,8 @@
      ]
     ],
     "height": null,
-    "label": "左上后场暗房（灯箱墙后，经乙级防火暗门进出）"
+    "label": "左上后场暗房（灯箱墙后，经乙级防火暗门进出）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -265,7 +266,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱（嵌在后墙包墙内，乙级防火暗门朝店内）"
+    "label": "配电箱（嵌在后墙包墙内，乙级防火暗门朝店内）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -288,7 +290,8 @@
      ]
     ],
     "height": null,
-    "label": "管井（管井暗门朝店内）"
+    "label": "管井（管井暗门朝店内）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -311,7 +314,8 @@
      ]
     ],
     "height": null,
-    "label": "左下圆柱 Ø约 900"
+    "label": "左下圆柱 Ø约 900",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -334,7 +338,8 @@
      ]
     ],
     "height": null,
-    "label": "右下圆柱 Ø约 900"
+    "label": "右下圆柱 Ø约 900",
+    "addedLater": false
    }
   ],
   "calibration": {

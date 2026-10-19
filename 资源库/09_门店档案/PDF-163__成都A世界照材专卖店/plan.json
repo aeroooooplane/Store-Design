@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -212,7 +212,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑柱 1200×1200（深色填充，被新做墙体包住）"
+    "label": "原建筑柱 1200×1200（深色填充，被新做墙体包住）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -235,7 +236,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱 120×120（门楣支撑，左上）"
+    "label": "不锈钢立柱 120×120（门楣支撑，左上）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -258,7 +260,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱 120×120（门楣支撑，右上）"
+    "label": "不锈钢立柱 120×120（门楣支撑，右上）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -281,7 +284,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱 120×120（门楣支撑，右下，门楣下沿处）"
+    "label": "不锈钢立柱 120×120（门楣支撑，右下，门楣下沿处）",
+    "addedLater": false
    }
   ],
   "calibration": {

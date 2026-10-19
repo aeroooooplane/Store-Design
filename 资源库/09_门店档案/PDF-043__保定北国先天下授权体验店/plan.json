@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T12:33:28+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -612,7 +612,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "橱窗造景地台 H150（橱窗，上面放单车与人模造景；左下角让出电子水牌位置）"
+    "label": "橱窗造景地台 H150（橱窗，上面放单车与人模造景；左下角让出电子水牌位置）",
+    "addedLater": true
    },
    {
     "kind": "fixed",
@@ -651,7 +652,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 4.2m²（墙面刷乳胶漆，不做踢脚线；乙级防火暗门(装闭门器)开在上侧租赁线上）"
+    "label": "员工休息室 4.2m²（墙面刷乳胶漆，不做踢脚线；乙级防火暗门(装闭门器)开在上侧租赁线上）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -674,7 +676,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑柱（深色填充，800×800）"
+    "label": "原建筑柱（深色填充，800×800）",
+    "addedLater": false
    }
   ],
   "calibration": {

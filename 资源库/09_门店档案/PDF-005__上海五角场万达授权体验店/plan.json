@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T12:33:28+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -138,7 +138,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 3.9㎡"
+    "label": "员工休息室 3.9㎡",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -161,7 +162,8 @@
      ]
     ],
     "height": null,
-    "label": "柱"
+    "label": "柱",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -184,7 +186,8 @@
      ]
     ],
     "height": null,
-    "label": "柱"
+    "label": "柱",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -207,7 +210,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "橱窗展示地台 H150（橱窗，上面放模型道具：X5 模型、小狗模型、绿植）"
+    "label": "橱窗展示地台 H150（橱窗，上面放模型道具：X5 模型、小狗模型、绿植）",
+    "addedLater": true
    },
    {
     "kind": "fixed",
@@ -230,7 +234,8 @@
      ]
     ],
     "height": null,
-    "label": "橱窗内嵌竖向灯箱 1200×2300"
+    "label": "橱窗内嵌竖向灯箱 1200×2300",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -253,7 +258,8 @@
      ]
     ],
     "height": null,
-    "label": "强弱电箱（在包墙内）"
+    "label": "强弱电箱（在包墙内）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -511,7 +517,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g09",
@@ -536,7 +542,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g10",
@@ -561,7 +567,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g11",

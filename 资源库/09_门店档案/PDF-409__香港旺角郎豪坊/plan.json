@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T12:35:07+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -203,7 +203,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 2.3㎡（两扇 M723 暗门，消防喉在仓里，内有强弱电箱、原有新风管）"
+    "label": "员工休息室 2.3㎡（两扇 M723 暗门，消防喉在仓里，内有强弱电箱、原有新风管）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -226,7 +227,8 @@
      ]
     ],
     "height": null,
-    "label": "右下暗门后小间（通右橱窗，暗门宽约 370）"
+    "label": "右下暗门后小间（通右橱窗，暗门宽约 370）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -249,7 +251,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "左橱窗地台 H150（橱窗，电子水牌放在上面；用户 10-19 规则）"
+    "label": "左橱窗地台 H150（橱窗，电子水牌放在上面；用户 10-19 规则）",
+    "addedLater": true
    },
    {
     "kind": "fixed",
@@ -272,7 +275,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "右橱窗地台 H150（橱窗，LED 屏放在上面；用户 10-19 规则）"
+    "label": "右橱窗地台 H150（橱窗，LED 屏放在上面；用户 10-19 规则）",
+    "addedLater": true
    }
   ],
   "calibration": {

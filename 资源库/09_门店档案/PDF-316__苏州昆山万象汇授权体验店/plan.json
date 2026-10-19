@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -240,7 +240,8 @@
      ]
     ],
     "height": null,
-    "label": "圆柱（左上角，大半在原墙内）；按圆形记（每 15° 一段，用户 10-16 指出原先标成了方柱）"
+    "label": "圆柱（左上角，大半在原墙内）；按圆形记（每 15° 一段，用户 10-16 指出原先标成了方柱）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -343,7 +344,8 @@
      ]
     ],
     "height": null,
-    "label": "圆柱（左下，靠斜门头）；按圆形记（每 15° 一段，用户 10-16 指出原先标成了方柱）"
+    "label": "圆柱（左下，靠斜门头）；按圆形记（每 15° 一段，用户 10-16 指出原先标成了方柱）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -366,7 +368,8 @@
      ]
     ],
     "height": null,
-    "label": "方柱（顶部，凸出原墙面 200mm，包在包墙内）"
+    "label": "方柱（顶部，凸出原墙面 200mm，包在包墙内）",
+    "addedLater": false
    }
   ],
   "calibration": {

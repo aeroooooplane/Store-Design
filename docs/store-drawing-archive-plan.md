@@ -496,3 +496,38 @@
 - 全量续跑：`90/数据清洗-20261009/全量续跑-02/`、`90/数据清洗-20261009/_cache/全量续跑-02/`（都被 Git 忽略）。
 - SI 区分依据：`docs/si-standards-review-20261001.md`、`05_店铺形象设计标准/`；铺型定义：SI1 手册 part2 第 5 页。
 - 下游：`packages/shared/src/{enums.ts, schemas/space.ts, schemas/layout.ts, schemas/recognition.ts}`、`apps/api/src/modules/recognition/`、`apps/web/src/scripts/local-regression.ts`、`docs/data-model.md`（门店与资料）、`docs/requirements.md` §3 / §4.2 / §5。
+
+## 阶段 3a 交接说明（2026-10-19）
+
+**完成状态**：45/45 家金标准完成，PR #130 已合并（main 63af7dcd）。每批 5 家经用户审核；第 8、9 批的修正见下。
+
+**数据结构要点**
+- `plan.json`：`space.boundary`（米，x 右 z 下，不闭合）、`entrances`、`openEdges`、`obstacles`（kind/polygon/height/label/addedLater）、`hardscape`（kind/polygon/label）、`layout.items`（ref/label/assetId/function/cx/cz/w/d/h/rotation/facing/mount/elevation/location/render_as/note）。
+- `addedLater`：后加构件（橱窗地台等）为 true。用户 10-19 口径：柱、管井扣面积；橱窗地台、空心包板等后加构件计入可用面积、只作避让。工作台会按此字段调整 usableArea，金标准保持 obstacles 写法不变。
+- 橱窗规则：`obstacles` 里 kind=fixed、height=0.15、label“橱窗地台 H150”，共 12 处（含第 8、9 批新增的杭州、乐天蚕室）。
+- 后场：员工休息室、仓库等按 `obstacles` fixed + 标签记录，不单独建门；高度取吊顶高，读不出按 3 m（三维用 `obstacle.height ?? space.height`）。
+
+**坐凳（S1–S3）**
+- 已完成的 7 家有坐凳门店全部按图拆成单件，不配组合款型号（组合款只在 label 明确写“组合/一组/4件”时才自动匹配）。
+- 待办 S2：模型库补一个单凳模型（约 450×450，H350 或 H450）。源模型 asset-569180（12 m² 的 4 件组合白模，meshopt 压缩的单一网格）和 asset-15903874；可用 gltf-transform 解压后按实例/连通体拆出单只，登记为新的 asset 并 `catalog:import`。数据侧已按单件记录，模型入库后重新 build_gold 即可自动对应（需在 label 或资产名中能匹配）。
+
+**第 8、9 批修正（用户 10-19 指出，已全部改完并重建）**
+1. 兰州 PDF-046：右墙包墙延到红色租赁线 x=1629；柜面按图上 x=1539.5 对齐，包墙不再移动。
+2. 长沙 PDF-388：补左侧空心包墙（x 823–860，y 653–1010）。
+3. 华强北 PDF-074：三张桌子按矢量外框重定（右侧岛桌原左偏约 150 mm）；右侧门头 LOGO 改为图上虚线框（约 920 mm）。
+4. 乐天蚕室 PDF-401：摩托车展示台改记 15 cm 橱窗地台（addedLater），顶面 LOGO 按台面 14.1° 标注；右下边桌与 DIGITAL POP 按图重定（原偏右约 1.3 m / 0.8 m）。
+5. 杭州 PDF-216：储物柜处灯箱移到 x=1083 并补包墙；右下灯箱补包墙。
+6. 赣州 PDF-234：左上灯箱改为朝店外（facade），按图上 y 665–745。
+7. 南宁 PDF-083：右墙包墙保持图上 x=1396，柜背贴红线 x=1454.3；不再整体左移 118 mm。
+
+**偏移共因分析**
+1. **包墙/包板没取矢量线**（4/7 处）：文字被转成曲线的页，墙线仍是矢量；子代理多用放大裁切图估读，导致漏画（长沙、杭州右下）、长度不足（兰州）或位置偏移。建议：所有 hardscape、家具框先用 `page.get_drawings()` 取线，再用网格图核对。
+2. **自动“柜面齐平”移动了整段包墙**（2/7 处）：build_gold 原先把包墙和墙上内嵌画面一起平移到型号柜面，用户要求包墙按红线/图面。已改为 `align_px`（`front_to_px` / `back_to_px`）：包墙不动，柜子按柜背或柜面对齐。
+3. **道具框按文字/示意估读**（2/7 处）：华强北右桌、乐天蚕室边桌与 POP 是按示意或文字中心读的。建议家具框取矢量外框；取不到时按放大图逐边读，并在备注记依据。
+4. **比例与页面旋转不是本次偏移主因**：45 家比例误差都在 1% 内；赣州 270°、保定 270° 已用旋转矩阵，未出现坐标错位。
+5. **人工读图误差**：10–50 px 网格约 ±2–3 px（20–40 mm），小于本次 100 mm 级偏移，但建议对包墙和家具框统一做矢量吸附。
+
+**未完成 / 交给下一窗口**
+- S2 单凳模型入库（模型库侧）。
+- 识别模块的 `addedLater` 输出（由架构窗口 text-demo-81 在识别/导入侧处理；金标准已带字段）。
+- 后场三维空心房间：用户先只要求平面和避让，未做。

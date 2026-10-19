@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T13:09:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -157,7 +157,8 @@
      ]
     ],
     "height": null,
-    "label": "强弱电箱（650，嵌在左墙包墙内，门朝店内）"
+    "label": "强弱电箱（650，嵌在左墙包墙内，门朝店内）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -175,26 +176,26 @@
     "function": "cashier",
     "category": "软装道具",
     "source": "new",
-    "cx": 3.075,
-    "cz": 1.149,
+    "cx": 3.054,
+    "cz": 1.231,
     "w": 1.786,
     "d": 0.602,
     "h": 1.205,
     "rotation": 0,
     "facing": 0,
     "drawn_size_m": [
-     1.844,
-     0.525
+     1.785,
+     0.595
     ],
     "size_deviation_m": [
-     0.058,
-     -0.077
+     -0.001,
+     -0.007
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "图上标注 H:900mm；左半开箱、右半收银，正面朝店内"
+    "note": "按矢量外框 981.3–1232.9 × 514.6–598.5 修正（用户 10-19：桌子偏移）"
    },
    {
     "ref": "g02",
@@ -228,26 +229,26 @@
     "function": "island_table",
     "category": "软装道具",
     "source": "new",
-    "cx": 2.117,
-    "cz": 3.178,
+    "cx": 2.107,
+    "cz": 3.213,
     "w": 1.0,
     "d": 1.8,
     "h": 1.327,
     "rotation": 0,
     "facing": null,
     "drawn_size_m": [
-     0.993,
-     1.759
+     0.991,
+     1.785
     ],
     "size_deviation_m": [
-     -0.007,
-     -0.041
+     -0.009,
+     -0.015
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "展示区左侧；型号按 1.8 米普通中岛桌自动匹配，模型库无 X4 专属陈列款"
+    "note": "展示区左侧；按矢量外框修正（用户 10-19：桌子偏移）"
    },
    {
     "ref": "g04",
@@ -256,26 +257,26 @@
     "function": "island_table",
     "category": "软装道具",
     "source": "new",
-    "cx": 3.89,
-    "cz": 3.189,
+    "cx": 4.04,
+    "cz": 3.213,
     "w": 1.0,
     "d": 1.8,
     "h": 1.327,
     "rotation": 0,
     "facing": null,
     "drawn_size_m": [
-     0.993,
-     1.738
+     0.992,
+     1.785
     ],
     "size_deviation_m": [
-     -0.007,
-     -0.062
+     -0.008,
+     -0.015
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "展示区右侧；型号按 1.8 米普通中岛桌自动匹配，模型库无 GO3S 专属陈列款"
+    "note": "展示区右侧；按矢量外框修正（原框整体左偏约 150 mm，用户 10-19）"
    },
    {
     "ref": "g05",
@@ -477,32 +478,32 @@
     "category": "品牌标识",
     "source": "new",
     "cx": 5.359,
-    "cz": 3.086,
-    "w": 3.504,
+    "cz": 3.1,
+    "w": 0.922,
     "d": 0.05,
     "h": 0.3,
     "rotation": 270.0,
     "facing": 270.0,
     "drawn_size_m": [
-     3.504,
+     0.922,
      null
     ],
     "size_deviation_m": null,
     "wall_segment_m": [
      [
       5.334,
-      1.334
+      2.639
      ],
      [
       5.334,
-      4.838
+      3.561
      ]
     ],
     "mount": "wall",
     "elevation": null,
     "location": "facade",
     "render_as": "wall_image",
-    "note": "右侧店外门楣（管井以下段居中），朝右侧通道"
+    "note": "右墙上的实际 LOGO 标记为 y 755–885 的虚线框（约 920 mm），原先按 3505 mm 门楣记错（用户 10-19）"
    },
    {
     "ref": "g12",
@@ -630,6 +631,7 @@
    "左下角 250×250 墙垛按图画出（边界在卷帘门外向下折到 y=1143）；卷帘门左端 x=693.4（图上 693/703 处的端头）",
    "门头 LOGO 图上只有示意符号与尺寸标注，未见精确起止线：顶部 4090 按净宽居中、底部 3505 按门楣符号位置靠右、右侧 3505 按管井以下段居中，需现场确认",
    "吊装超薄灯箱、灯箱(900*2180) 模型库无同规格型号，未套用相似型号",
+   "用户 10-19：三张桌子按矢量外框修正；右侧门头 LOGO 改为图上虚线框（约 920 mm）",
    "配件柜背靠墙按型号进深摆放，2 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
   ]
  }

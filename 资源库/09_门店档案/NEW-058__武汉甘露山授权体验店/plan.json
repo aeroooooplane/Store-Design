@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -157,7 +157,8 @@
      ]
     ],
     "height": null,
-    "label": "柱（右下角，实心黑块，四周包墙）"
+    "label": "柱（右下角，实心黑块，四周包墙）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -180,7 +181,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱（嵌在底部包墙内，700 宽）"
+    "label": "配电箱（嵌在底部包墙内，700 宽）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -203,7 +205,8 @@
      ]
     ],
     "height": null,
-    "label": "消防栓（嵌在底部包墙内，700 宽）"
+    "label": "消防栓（嵌在底部包墙内，700 宽）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -226,7 +229,8 @@
      ]
     ],
     "height": null,
-    "label": "储物柜（嵌在底部包墙内，1800 宽，柜门朝店内）"
+    "label": "储物柜（嵌在底部包墙内，1800 宽，柜门朝店内）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -456,7 +460,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "图注“培训区”，400×400 方凳 3×3；模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": "图注“培训区”，400×400 方凳 3×3"
    },
    {
     "ref": "g08",
@@ -481,7 +485,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g09",
@@ -506,7 +510,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g10",
@@ -531,7 +535,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g11",
@@ -556,7 +560,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g12",
@@ -581,7 +585,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g13",
@@ -606,7 +610,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g14",
@@ -631,7 +635,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g15",
@@ -656,7 +660,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "模型库只有组合款 asset-569180（4件组合_白色空心款_H350变体），按单件记"
+    "note": null
    },
    {
     "ref": "g16",

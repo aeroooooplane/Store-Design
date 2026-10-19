@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T13:09:03+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -224,7 +224,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱（左上，120×120）"
+    "label": "不锈钢立柱（左上，120×120）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -247,7 +248,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱（右上，120×120）"
+    "label": "不锈钢立柱（右上，120×120）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -270,7 +272,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱（左下，120×120）"
+    "label": "不锈钢立柱（左下，120×120）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -293,7 +296,8 @@
      ]
     ],
     "height": null,
-    "label": "不锈钢立柱（右下，120×120）"
+    "label": "不锈钢立柱（右下，120×120）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -316,7 +320,8 @@
      ]
     ],
     "height": null,
-    "label": "强电箱、弱电箱（配件+储物柜内墙面）"
+    "label": "强电箱、弱电箱（配件+储物柜内墙面）",
+    "addedLater": false
    }
   ],
   "calibration": {

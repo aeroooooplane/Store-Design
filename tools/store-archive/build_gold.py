@@ -81,6 +81,9 @@ def match_asset(label: str, si: str, assets: list[dict]) -> dict | None:
             continue
         if a.get("si_family") not in (si, "通用", None):
             continue
+        # 用户 2026-10-19：坐凳按图拆成单件，组合款（4 件一组）只留给图上明确画成一组的场合
+        if "组合" in (a.get("variant") or "") and not any(k in label for k in ("组合", "一组", "4件", "4 件")):
+            continue
         if size and size.group(1) + "米" not in name and size.group(1) + "m" not in name and str(int(float(size.group(1)) * 1000)) not in name:
             continue
         if inch and inch.group(1) + "寸" not in name:
@@ -133,7 +136,8 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
         facing = None if facing is None else round((facing + tilt) % 360, 1)
     cx = ((x0 + x1) / 2 - ox) * mmpp / 1000
     cz = ((y0 + y1) / 2 - oz) * mmpp / 1000
-    if asset and not body and func in WALL_CABINETS and facing is not None:
+    align = it.get("align_px")  # 例：{"back_to_px": 1454.3} 或 {"front_to_px": 1539.5}，轴对齐柜子专用
+    if asset and not body and func in WALL_CABINETS and facing is not None and not align:
         # 用户 2026-10-16：柜子背靠墙，柜面以型号为准；两侧包墙在 flush_cladding 里改到与柜面齐平（斜墙同样适用）
         f = math.radians(facing)
         nx, nz = -math.sin(f), math.cos(f)  # 柜面朝外的单位法向
@@ -146,6 +150,20 @@ def box_item(it, asset, func, mmpp, ox, oz, fronts):
         mid_t = cx * nz - cz * nx
         cx, cz = cx + nx * shift, cz + nz * shift
         out["front_line"] = {"n": (nx, nz), "old": old_front, "new": old_front + shift * 2, "span": (mid_t - drawn_width / 2, mid_t + drawn_width / 2)}
+    if asset and not body and align is not None and facing is not None and facing in (0, 90, 180, 270):
+        fx, fz = round(-math.sin(math.radians(facing))), round(math.cos(math.radians(facing)))
+        a = math.radians(rotation)
+        model_depth = abs(fx * math.cos(a) + fz * math.sin(a)) * fw + abs(-fx * math.sin(a) + fz * math.cos(a)) * fd
+        if "front_to_px" in align:
+            if fz != 0:  # 进深沿 z：px 是 y
+                cz = (align["front_to_px"] - oz) * mmpp / 1000 + (-fz) * model_depth / 2
+            else:
+                cx = (align["front_to_px"] - ox) * mmpp / 1000 + (-fx) * model_depth / 2
+        elif "back_to_px" in align:
+            if fz != 0:
+                cz = (align["back_to_px"] - oz) * mmpp / 1000 - (-fz) * model_depth / 2
+            else:
+                cx = (align["back_to_px"] - ox) * mmpp / 1000 - (-fx) * model_depth / 2
     if body:
         w, d, h = bw, bd, round(fh, 3)
         out["body_only"] = True
@@ -285,7 +303,8 @@ def main() -> None:
             "openEdges": [{"a": m(e["a"]), "b": m(e["b"])} for e in edits.get("open_edges_px", [])],
             "obstacles": [
                 {"kind": o["kind"], "polygon": box_poly(o["box"]) if "box" in o else [m(p) for p in o["polygon"]],
-                 "height": o.get("height_m"), "label": o.get("label")}  # 高度（米）：橱窗地台 0.15，其余平面图读不出为 null
+                 "height": o.get("height_m"), "label": o.get("label"),
+                 "addedLater": bool(o.get("added_later", False))}  # 后加构件（橱窗地台、包板）计入可用面积，只避让
                 for o in edits.get("obstacles_px", [])
             ],
             "calibration": {

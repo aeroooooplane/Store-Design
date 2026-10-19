@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T12:33:28+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -467,7 +467,8 @@
      ]
     ],
     "height": null,
-    "label": "侧拉水晶折叠门收纳位（门扇收拢处）"
+    "label": "侧拉水晶折叠门收纳位（门扇收拢处）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -490,7 +491,8 @@
      ]
     ],
     "height": null,
-    "label": "强弱电箱（嵌在左墙包墙内，暗门朝店内）"
+    "label": "强弱电箱（嵌在左墙包墙内，暗门朝店内）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -521,7 +523,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 5.1㎡（含新做隔墙与乙级防火暗门，门向店内开）"
+    "label": "员工休息室 5.1㎡（含新做隔墙与乙级防火暗门，门向店内开）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -544,7 +547,8 @@
      ]
     ],
     "height": null,
-    "label": "右上角场景地台 H100（贴海报画，约 2850×1270，45° 斜放，两块灯箱为背景）"
+    "label": "右上角场景地台 H100（贴海报画，约 2850×1270，45° 斜放，两块灯箱为背景）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -567,7 +571,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "AVBU 大橱窗地台 H150（3.1㎡，上面放无人机模型、假山场景；后墙和右墙贴大海报）"
+    "label": "AVBU 大橱窗地台 H150（3.1㎡，上面放无人机模型、假山场景；后墙和右墙贴大海报）",
+    "addedLater": true
    }
   ],
   "calibration": {
@@ -758,7 +763,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g07",
@@ -783,7 +788,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g08",
@@ -808,7 +813,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g09",
@@ -833,7 +838,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g10",
@@ -858,7 +863,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g11",
@@ -883,7 +888,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g12",
@@ -908,7 +913,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g13",
@@ -933,7 +938,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g14",
@@ -958,7 +963,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop 区（可活动），3×3 共 9 只；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop 区（可活动），3×3 共 9 只"
    },
    {
     "ref": "g15",
