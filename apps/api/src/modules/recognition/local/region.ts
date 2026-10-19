@@ -440,6 +440,28 @@ function regionWithGrowth(
     holes.push({ id, cells })
   }
   const centres = anchors.map((b): PxPoint => [b.x + b.w / 2, b.y + b.h / 2])
+  /**
+   * A cell of a hole that holds a prop. A prop drawn as a closed box (a table symbol) has its
+   * own blank inside, so the box's centre is in another hole; the floor round the box tells
+   * instead.
+   */
+  const cellsAround = (b: Box): number[] => {
+    const cells = [cellOf(b.x + b.w / 2, b.y + b.h / 2)]
+    const step = CELL_PX * 2
+    for (let x = b.x; x <= b.x + b.w; x += step) {
+      cells.push(cellOf(x, b.y - CELL_PX), cellOf(x, b.y + b.h + CELL_PX))
+    }
+    for (let y = b.y; y <= b.y + b.h; y += step) {
+      cells.push(cellOf(b.x - CELL_PX, y), cellOf(b.x + b.w + CELL_PX, y))
+    }
+    return cells
+  }
+  const heldCell = (id: number, b: Box): number | null => {
+    const cells = cellsAround(b)
+    const hits = cells.filter((cell) => hole[cell] === id)
+    return hits.length >= cells.length * 0.3 ? (hits[0] ?? null) : null
+  }
+  const holds = (id: number, b: Box) => heldCell(id, b) !== null
   const needed = Math.max(2, Math.ceil(anchors.length * 0.6))
   const avoid = (hints.avoid ?? []).map(([x, y]) => cellOf(x, y))
   const expected = hints.expectedArea ?? null
@@ -451,9 +473,7 @@ function regionWithGrowth(
     (cells * CELL_PX * CELL_PX <= expected * 1.5 && cells * CELL_PX * CELL_PX * 1.5 >= expected)
   for (const candidate of holes) {
     if (candidate.cells.length >= pageCells * MAX_PAGE_SHARE) continue
-    const heldBoxes = anchors.filter(
-      (b) => hole[cellOf(b.x + b.w / 2, b.y + b.h / 2)] === candidate.id,
-    )
+    const heldBoxes = anchors.filter((b) => holds(candidate.id, b))
     const held = heldBoxes.length
     if (held < needed) continue
     // The props it holds fit in it: a region smaller than their boxes together is one of them
@@ -486,26 +506,22 @@ function regionWithGrowth(
   if (!best) return null
   const inside = new Uint8Array(pageCells)
   for (const cell of best.cells) inside[cell] = 1
+  // Cells of the region beside the props: a prop's box centre may lie in its own symbol.
+  const propCells = anchors
+    .map((b) => heldCell(best.id, b))
+    .filter((cell): cell is number => cell !== null)
   // Thin strips on the edge of the shop (dimension chains, a storefront band): blank regions
   // touching the background whose mean thickness is below a wall's worth are left out.
-  peelThinStrips(
-    grid,
-    labels,
-    components,
-    inside,
-    outside,
-    thinCells,
-    centres.map((p) => cellOf(p[0], p[1])),
-    grow,
-  )
-  keepPiece(
-    grid,
-    inside,
-    centres.map((p) => cellOf(p[0], p[1])),
-  )
+  peelThinStrips(grid, labels, components, inside, outside, thinCells, propCells, grow)
+  // Of the prop cells, those that survived the peeling (a peeled strip may have held the sample).
+  const keptPropCells = anchors
+    .map((b) => cellsAround(b).find((cell) => inside[cell]))
+    .filter((cell): cell is number => cell !== undefined)
+  keepPiece(grid, inside, keptPropCells.length ? keptPropCells : propCells)
   // The lines were grown by `grow`: shrink the region back so its edge is on them again,
   // and smooth off the stubs of dimension and extension lines.
-  const shape = dilate(grid, erode(grid, erode(grid, inside, grow), OPEN_CELLS), OPEN_CELLS)
+  const eroded = erode(grid, inside, grow)
+  const shape = dilate(grid, erode(grid, eroded, OPEN_CELLS), OPEN_CELLS)
   const ring = traceOutline(grid, shape)
   const round = (p: PxPoint): PxPoint => [Math.round(p[0] * 10) / 10, Math.round(p[1] * 10) / 10]
   for (const tolerance of SIMPLIFY_CELLS) {

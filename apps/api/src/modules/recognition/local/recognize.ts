@@ -159,6 +159,15 @@ export function recognizeVector(
       })
   // Prop labels sitting in a box anchor the boundary; boxes are looked up again once it is known.
   const unbounded = label(null)
+  for (const l of unbounded.filter((l) => l.text.text.length >= 2))
+    console.log(
+      'lab',
+      JSON.stringify(l.text.text),
+      !!l.box,
+      l.box && [Math.round(l.box.x), Math.round(l.box.y), Math.round(l.box.w), Math.round(l.box.h)],
+      matchCatalog(l.text.text, catalog, undefined, siStyle).function,
+    )
+
   const anchors = unbounded.flatMap((l) =>
     l.box && matchCatalog(l.text.text, catalog, undefined, siStyle).function !== 'other'
       ? [l.box]
@@ -195,12 +204,21 @@ export function recognizeVector(
       ),
     )
     .map((t): PxPoint => centre(t))
-  const region = findRegion(content.width, content.height, drawn, anchors, {
+  // The lease line (租赁线, drawn in red) is the shop's true edge, opening and all; walls are
+  // followed only when there is none.
+  const leaseLines = drawn.filter((l) => isRed(l.color))
+  const outlineLines = leaseLines.length >= 20 ? leaseLines : drawn
+  const hints = {
     expectedArea,
     thinPx: pxPerM ? pxPerM * 0.25 : null,
     pxPerM,
     avoid: titleBlockPoints,
-  })
+  }
+  const region =
+    findRegion(content.width, content.height, outlineLines, anchors, hints) ??
+    (outlineLines === drawn
+      ? null
+      : findRegion(content.width, content.height, drawn, anchors, hints))
   const rectangle = region
     ? null
     : findBoundary(content, wallLines, anchors, { pageEdges: !request.crop, expectedArea })

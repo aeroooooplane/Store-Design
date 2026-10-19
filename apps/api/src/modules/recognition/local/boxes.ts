@@ -93,16 +93,24 @@ export function boxFromLines(
     pageArea * MAX_PROP_FRACTION,
     within ? within.w * within.h * 0.6 : Infinity,
   )
+  // A prop is a few times its label's size: longer boxes are the sheet frame or a room.
+  const maxLong = Math.max(text.w, text.h) * 8
   const candidates = new Map<string, Box>()
-  for (const step of [0, 2.5, -2.5, 5, -5]) {
-    const sides = nearestSides(lines, cx, cy + text.h * step)
+  const probe = (px: number, py: number) => {
+    const sides = nearestSides(lines, px, py)
     for (const x1 of sides.lefts) {
       for (const x2 of sides.rights) {
         for (const y1 of sides.tops) {
           for (const y2 of sides.bottoms) {
             const box: Box = { x: x1, y: y1, w: x2 - x1, h: y2 - y1 }
             const area = box.w * box.h
-            if (Math.max(box.w, box.h) < minLong || area < minArea || area > maxArea) continue
+            if (
+              Math.max(box.w, box.h) < minLong ||
+              Math.max(box.w, box.h) > maxLong ||
+              area < minArea ||
+              area > maxArea
+            )
+              continue
             if (within && sameBox(box, within)) continue
             candidates.set(boxKey(box), box)
           }
@@ -111,11 +119,112 @@ export function boxFromLines(
     }
   }
   // Smallest first: the prop's own box closes before anything around it does.
-  return (
+  const smallestClosed = () =>
     [...candidates.values()]
       .sort((a, b) => a.w * a.h - b.w * b.h)
       .find((box) => closed(index, box)) ?? null
-  )
+  for (const step of [0, 2.5, -2.5, 5, -5]) probe(cx, cy + text.h * step)
+  const near = smallestClosed()
+  if (near) return near
+  // A name written beside its box ("1.8米中岛桌" above the table): the box's edge along the label
+  // is a long side spanning it; the other three sides lie beyond.
+  const across = (horizontal: boolean) =>
+    lines
+      .filter((l) => {
+        const flat = horizontal
+          ? Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX
+          : Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX
+        if (!flat) return false
+        const [s, e] = horizontal ? [l.x1, l.x2] : [l.y1, l.y2]
+        const lo = Math.min(s, e)
+        const hi = Math.max(s, e)
+        const pos = horizontal ? (l.y1 + l.y2) / 2 : (l.x1 + l.x2) / 2
+        const along = horizontal ? cx : cy
+        return (
+          hi - lo >= minLong &&
+          hi - lo <= maxLong &&
+          lo <= along + text.h &&
+          hi >= along - text.h &&
+          Math.abs(pos - (horizontal ? cy : cx)) <= text.h * 6
+        )
+      })
+      .sort(
+        (p, q) =>
+          Math.abs((horizontal ? p.y1 : p.x1) - (horizontal ? cy : cx)) -
+          Math.abs((horizontal ? q.y1 : q.x1) - (horizontal ? cy : cx)),
+      )
+  // The nearest vertical (or horizontal) stroke within SNAP px that covers the side's stretch.
+  const SNAP = 14
+  const snap = (at: number, vertical: boolean, a: number, b: number): [number] => {
+    let best: number | null = null
+    for (const l of lines) {
+      const flat = vertical
+        ? Math.abs(l.x1 - l.x2) <= AXIS_TOLERANCE_PX
+        : Math.abs(l.y1 - l.y2) <= AXIS_TOLERANCE_PX
+      if (!flat) continue
+      const pos = vertical ? (l.x1 + l.x2) / 2 : (l.y1 + l.y2) / 2
+      if (Math.abs(pos - at) > SNAP) continue
+      const [s0, e0] = vertical ? [l.y1, l.y2] : [l.x1, l.x2]
+      const lo = Math.max(a, Math.min(s0, e0))
+      const hi = Math.min(b, Math.max(s0, e0))
+      if (hi - lo < (b - a) * 0.8) continue
+      if (best === null || Math.abs(pos - at) < Math.abs(best - at)) best = pos
+    }
+    return [best ?? at]
+  }
+  const boxesBeside: Box[] = []
+  for (const horizontal of [true, false]) {
+    for (const edge of across(horizontal)) {
+      const [s, e] = horizontal ? [edge.x1, edge.x2] : [edge.y1, edge.y2]
+      const lo = Math.min(s, e)
+      const hi = Math.max(s, e)
+      const pos = horizontal ? (edge.y1 + edge.y2) / 2 : (edge.x1 + edge.x2) / 2
+      // The other side lies beyond, too far for the near search: flat lines with the same span.
+      for (const far of lines) {
+        const flat = horizontal
+          ? Math.abs(far.y1 - far.y2) <= AXIS_TOLERANCE_PX
+          : Math.abs(far.x1 - far.x2) <= AXIS_TOLERANCE_PX
+        if (!flat) continue
+        const farPos = horizontal ? (far.y1 + far.y2) / 2 : (far.x1 + far.x2) / 2
+        const [fs, fe] = horizontal ? [far.x1, far.x2] : [far.y1, far.y2]
+        if (Math.abs(Math.min(fs, fe) - lo) > CLUSTER_PX * 2) continue
+        if (Math.abs(Math.max(fs, fe) - hi) > CLUSTER_PX * 2) continue
+        const depth = Math.abs(farPos - pos)
+        if (depth < text.h * 2 || depth > maxLong) continue
+        const near1 = Math.min(pos, farPos)
+        const box: Box = horizontal
+          ? { x: lo, y: near1, w: hi - lo, h: depth }
+          : { x: near1, y: lo, w: depth, h: hi - lo }
+        // Sides drawn a few pixels apart (the symbol's corner joints): snapped out to the
+        // nearest stroke that spans the whole side.
+        const x1 = snap(box.x, true, box.y, box.y + box.h)
+        const x2 = snap(box.x + box.w, true, box.y, box.y + box.h)
+        const y1 = snap(box.y, false, box.x, box.x + box.w)
+        const y2 = snap(box.y + box.h, false, box.x, box.x + box.w)
+        const snapped: Box = { x: x1[0], y: y1[0], w: x2[0] - x1[0], h: y2[0] - y1[0] }
+        if (snapped.w <= 0 || snapped.h <= 0) continue
+        if (within && sameBox(snapped, within)) continue
+        if (snapped.w * snapped.h > maxArea) continue
+        boxesBeside.push(snapped)
+      }
+    }
+  }
+  const beside = boxesBeside.sort((a, b) => a.w * a.h - b.w * b.h).find((box) => closed(index, box))
+  if (beside) return beside
+  // Then look further out, a text height at a time, above and below first, then to the sides.
+  for (const k of [1, 2, 3, 4]) {
+    for (const [dx, dy] of [
+      [0, -k],
+      [0, k],
+      [-k, 0],
+      [k, 0],
+    ] as const) {
+      probe(cx + dx * text.h, cy + dy * text.h)
+    }
+    const found = smallestClosed()
+    if (found) return found
+  }
+  return null
 }
 
 /** A drawn box is the model's when each side is within this share of the model's (or 4 px). */

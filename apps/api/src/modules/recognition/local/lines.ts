@@ -174,3 +174,69 @@ export function cluster(values: number[]): number[] {
   }
   return out
 }
+
+/** A gap in a wall or arc up to this long (m) is an opening or a doorway, not the shop's end. */
+export const MAX_BRIDGE_M = 1.2
+/** The two strokes must head into the gap within this angle of each other's line. */
+const BRIDGE_ANGLE = Math.PI / 7.2
+
+/**
+ * The lines with their openings closed: two stroke ends that face each other along their own
+ * direction, within `maxGap` px, are joined by a straight stroke. A shop drawn with an open front
+ * or a doorway is otherwise one blank area with the paper round it: no closed region to find.
+ */
+export function bridgeGaps(lines: readonly Line[], maxGap: number): Line[] {
+  const ends: { x: number; y: number; dx: number; dy: number; i: number }[] = []
+  lines.forEach((l, i) => {
+    const len = Math.hypot(l.x2 - l.x1, l.y2 - l.y1)
+    if (len < 3) return
+    const ux = (l.x2 - l.x1) / len
+    const uy = (l.y2 - l.y1) / len
+    ends.push({ x: l.x1, y: l.y1, dx: -ux, dy: -uy, i })
+    ends.push({ x: l.x2, y: l.y2, dx: ux, dy: uy, i })
+  })
+  // Endpoints bucketed by position: only neighbours within the gap are looked at.
+  const cells = new Map<string, number[]>()
+  const key = (x: number, y: number) => `${Math.floor(x / maxGap)},${Math.floor(y / maxGap)}`
+  ends.forEach((e, n) => {
+    const k = key(e.x, e.y)
+    const list = cells.get(k) ?? []
+    list.push(n)
+    cells.set(k, list)
+  })
+  const cos = Math.cos(BRIDGE_ANGLE)
+  const bridges: Line[] = []
+  // Each open end joins its nearest facing one only: dense arcs would otherwise give one bridge
+  // per pair of strokes along the whole opening.
+  const used = new Set<number>()
+  for (const [n, a] of ends.entries()) {
+    if (used.has(n)) continue
+    const bx = Math.floor(a.x / maxGap)
+    const by = Math.floor(a.y / maxGap)
+    let best: { m: number; dist: number } | null = null
+    for (let gx = bx - 1; gx <= bx + 1; gx++) {
+      for (let gy = by - 1; gy <= by + 1; gy++) {
+        for (const m of cells.get(`${gx},${gy}`) ?? []) {
+          if (m === n || used.has(m)) continue
+          const b = ends[m]
+          if (!b || b.i === a.i) continue
+          const dist = Math.hypot(b.x - a.x, b.y - a.y)
+          if (dist < 1 || dist > maxGap) continue
+          if (best && dist >= best.dist) continue
+          const wx = (b.x - a.x) / dist
+          const wy = (b.y - a.y) / dist
+          // Both strokes head into the gap, each along its own direction.
+          if (a.dx * wx + a.dy * wy < cos) continue
+          if (b.dx * -wx + b.dy * -wy < cos) continue
+          best = { m, dist }
+        }
+      }
+    }
+    if (!best) continue
+    const b = ends[best.m] as (typeof ends)[number]
+    used.add(n)
+    used.add(best.m)
+    bridges.push({ x1: a.x, y1: a.y, x2: b.x, y2: b.y })
+  }
+  return [...lines, ...bridges]
+}
