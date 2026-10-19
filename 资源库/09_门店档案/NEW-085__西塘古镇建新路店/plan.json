@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -160,7 +160,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -183,7 +184,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -206,7 +208,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -229,7 +232,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -252,7 +256,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -275,7 +280,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -298,7 +304,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -321,7 +328,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）"
+    "label": "原建筑立柱（下部星空灰铝复合板包柱，圆头）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -344,7 +352,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱（在右侧包墙内，检修门朝店内）"
+    "label": "配电箱（在右侧包墙内，检修门朝店内）",
+    "addedLater": false
    }
   ],
   "calibration": {

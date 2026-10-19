@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T13:09:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -258,7 +258,8 @@
      ]
     ],
     "height": null,
-    "label": "员工仓库 STORAGE 8.40㎡（顶部三角实墙，前墙留 700 宽门洞并设排烟卷帘 제연셔터）"
+    "label": "员工仓库 STORAGE 8.40㎡（顶部三角实墙，前墙留 700 宽门洞并设排烟卷帘 제연셔터）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -281,7 +282,8 @@
      ]
     ],
     "height": null,
-    "label": "消防竖井/消火栓（含斜线包板，跨底部租赁线；南面挂 65\"TV 竖版，北面贴照明板，东侧挂联动控制器）"
+    "label": "消防竖井/消火栓（含斜线包板，跨底部租赁线；南面挂 65\"TV 竖版，北面贴照明板，东侧挂联动控制器）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -304,7 +306,8 @@
      ]
     ],
     "height": null,
-    "label": "管道井（穿 STORAGE 前墙中部）"
+    "label": "管道井（穿 STORAGE 前墙中部）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -327,7 +330,8 @@
      ]
     ],
     "height": null,
-    "label": "연동제어기（联动控制器，挂消防竖井东侧）"
+    "label": "연동제어기（联动控制器，挂消防竖井东侧）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -349,8 +353,9 @@
       9.08
      ]
     ],
-    "height": null,
-    "label": "摩托车展示台 2200×850（沿底部左弧斜放，顶面红虚线范围为照明型 LOGO）"
+    "height": 0.15,
+    "label": "橱窗地台 H150（摩托车展示台，沿底部左弧斜放约 14°；按用户 10-19 橱窗规则）",
+    "addedLater": true
    }
   ],
   "calibration": {
@@ -552,26 +557,26 @@
     "function": "other",
     "category": "软装道具",
     "source": "new",
-    "cx": 9.424,
-    "cz": 8.686,
+    "cx": 8.081,
+    "cz": 8.744,
     "w": 0.5,
     "d": 1.8,
     "h": 1.214,
-    "rotation": 245.6,
-    "facing": 155.6,
+    "rotation": 250.6,
+    "facing": 160.6,
     "drawn_size_m": [
-     1.806,
-     0.502
+     0.504,
+     1.796
     ],
     "size_deviation_m": [
-     1.306,
-     -1.298
+     0.004,
+     -0.004
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "底部右弧沿墙边桌，顾客面朝店内（左上）；手动指定 1.8 米边桌+储物柜"
+    "note": "底部右弧沿墙边桌，按图上轮廓 x≈1073–1287、tilt -19.4°（用户 10-19：原位置偏右约 1.3 m）"
    },
    {
     "ref": "g09",
@@ -580,26 +585,26 @@
     "function": "other",
     "category": "信息化物料",
     "source": "new",
-    "cx": 9.902,
-    "cz": 8.602,
+    "cx": 8.962,
+    "cz": 8.543,
     "w": 0.55,
     "d": 0.35,
     "h": 1.65,
-    "rotation": 155.6,
-    "facing": 155.6,
+    "rotation": 160.6,
+    "facing": 160.6,
     "drawn_size_m": [
-     0.551,
-     0.351
+     0.545,
+     0.352
     ],
     "size_deviation_m": [
-     0.001,
-     0.001
+     -0.005,
+     0.002
     ],
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "边桌右端外侧的落地数码 POP，即电子水牌 43 寸（550×350）；斜放"
+    "note": "边桌右端的落地数码 POP，按图上轮廓 x≈1252–1318、tilt -19.4°（用户 10-19：原位置偏右）"
    },
    {
     "ref": "g10",
@@ -821,23 +826,23 @@
     "function": "signage",
     "category": "品牌标识",
     "source": "new",
-    "cx": 2.824,
-    "cz": 8.941,
-    "w": 2.241,
-    "d": 1.267,
+    "cx": 2.82,
+    "cz": 8.904,
+    "w": 2.199,
+    "d": 0.856,
     "h": null,
-    "rotation": 0,
-    "facing": 0,
+    "rotation": 14.1,
+    "facing": 14.1,
     "drawn_size_m": [
-     2.241,
-     1.267
+     2.199,
+     0.856
     ],
     "size_deviation_m": null,
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "摩托车展示台顶面的照明型 LOGO（图上红虚线框，随台斜放）"
+    "note": "橱窗（摩托车展示台）顶面的照明型 LOGO，按台面角度 14.1° 标注（用户 10-19）"
    },
    {
     "ref": "g17",
@@ -909,7 +914,8 @@
    "底部中央为商场消防竖井/消火栓，跨在租赁线上（南面 65 寸竖版 TV 朝主通道，北面照明板朝店内）；竖井外圈斜线为包板",
    "STORAGE 前墙净门洞图上约 626 mm（标注 700，应为含门垛/卷帘盒的结构宽）；前墙中部另有管道井穿过",
    "左、右斜边各两组 ACC CABINET 1800X500X900 沿 H1600 边界墙内侧斜放；模型库无 1.8 米配件柜（只有 1.2/1.6 米配件柜；另有 1.8 米边桌+配件柜为带背面画面的边桌款），按规则 11 未套用相似型号",
-   "中岛店四面开放（左右斜边及底部弧均临通道，记 open_edges）；顶部 STORAGE 为实墙不开放"
+   "中岛店四面开放（左右斜边及底部弧均临通道，记 open_edges）；顶部 STORAGE 为实墙不开放",
+   "用户 10-19：右下边桌与电子水牌位置按图重定；摩托车展示台改记 15 cm 橱窗地台，顶面 LOGO 按台面角度标注"
   ]
  }
 }

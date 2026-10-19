@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -225,7 +225,8 @@
      ]
     ],
     "height": null,
-    "label": "柱（店内中部，四周包板，南面嵌灯箱）"
+    "label": "柱（店内中部，四周包板，南面嵌灯箱）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -248,7 +249,8 @@
      ]
     ],
     "height": null,
-    "label": "柱（店内右部，四周包板，南面嵌灯箱）"
+    "label": "柱（店内右部，四周包板，南面嵌灯箱）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -271,7 +273,8 @@
      ]
     ],
     "height": null,
-    "label": "门头柱（随租赁线略斜）"
+    "label": "门头柱（随租赁线略斜）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -294,7 +297,8 @@
      ]
     ],
     "height": null,
-    "label": "门头小柱"
+    "label": "门头小柱",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -317,7 +321,8 @@
      ]
     ],
     "height": null,
-    "label": "强弱电箱（暗门，嵌在顶墙包墙内）"
+    "label": "强弱电箱（暗门，嵌在顶墙包墙内）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -340,7 +345,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 7㎡（含新做隔墙与甲级防火暗门）"
+    "label": "员工休息室 7㎡（含新做隔墙与甲级防火暗门）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -363,7 +369,8 @@
      ]
     ],
     "height": null,
-    "label": "左下：闭店卷帘收纳位 + 消火栓箱/灭火器（原有）；右缘与左墙包墙面（随 1.2 米配件柜按型号进深）齐平"
+    "label": "左下：闭店卷帘收纳位 + 消火栓箱/灭火器（原有）；右缘与左墙包墙面（随 1.2 米配件柜按型号进深）齐平",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -386,7 +393,8 @@
      ]
     ],
     "height": null,
-    "label": "右下：消火栓箱/灭火器（原有）"
+    "label": "右下：消火栓箱/灭火器（原有）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -888,7 +896,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g17",
@@ -913,7 +921,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g18",
@@ -938,7 +946,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g19",
@@ -963,7 +971,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g20",
@@ -988,7 +996,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g21",
@@ -1013,7 +1021,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g22",
@@ -1038,7 +1046,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g23",
@@ -1063,7 +1071,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g24",
@@ -1088,7 +1096,7 @@
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）；模型库只有组合款 asset-15903874（4件组合），按单件记"
+    "note": "workshop区（可活动），共 9 个子母凳（BOM：si2.0子母凳 W450*D450*H450 ×9）"
    },
    {
     "ref": "g25",

@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -205,7 +205,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 3.53㎡（含左侧 120 墙与甲级防火暗门）"
+    "label": "员工休息室 3.53㎡（含左侧 120 墙与甲级防火暗门）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -228,7 +229,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱（嵌在左侧包墙内，门朝店内）"
+    "label": "配电箱（嵌在左侧包墙内，门朝店内）",
+    "addedLater": false
    }
   ],
   "calibration": {

@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T12:33:28+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -232,7 +232,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 14.5㎡（含左侧通道、四周墙体、顶部深色结构墙；店内经防火暗门进入，底部另有后门通向店外）"
+    "label": "员工休息室 14.5㎡（含左侧通道、四周墙体、顶部深色结构墙；店内经防火暗门进入，底部另有后门通向店外）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -255,7 +256,8 @@
      ]
     ],
     "height": null,
-    "label": "原结构墙（深色实心，右上）"
+    "label": "原结构墙（深色实心，右上）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -278,7 +280,8 @@
      ]
     ],
     "height": null,
-    "label": "结构柱（深色实心，斜放约 16.7°，约 0.45 m 见方）"
+    "label": "结构柱（深色实心，斜放约 16.7°，约 0.45 m 见方）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -301,7 +304,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱（在包柱内，门朝右开）"
+    "label": "配电箱（在包柱内，门朝右开）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -332,7 +336,8 @@
      ]
     ],
     "height": 0.15,
-    "label": "模特橱窗地台 H150（点状填充台面 + 斜向玻璃，上面放模特道具）"
+    "label": "模特橱窗地台 H150（点状填充台面 + 斜向玻璃，上面放模特道具）",
+    "addedLater": true
    }
   ],
   "calibration": {

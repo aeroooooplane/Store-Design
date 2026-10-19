@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -325,7 +325,8 @@
      ]
     ],
     "height": null,
-    "label": "原商场隔墙（约 100 mm 厚、长 4404，骑在租赁线上；此处只记租赁线以内一半）"
+    "label": "原商场隔墙（约 100 mm 厚、长 4404，骑在租赁线上；此处只记租赁线以内一半）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -348,7 +349,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱 HV Boxes（约 300×120 mm，贴商场隔墙，落在边桌+储物柜背部范围内）"
+    "label": "配电箱 HV Boxes（约 300×120 mm，贴商场隔墙，落在边桌+储物柜背部范围内）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -446,33 +448,105 @@
    {
     "ref": "g04",
     "label": "培训坐凳（复用）",
-    "assetId": "asset-569180",
+    "assetId": null,
     "function": "seating",
-    "category": "软装道具",
+    "category": null,
     "source": "new",
-    "cx": 3.63,
-    "cz": 5.02,
-    "w": 1.25,
-    "d": 1.261,
-    "h": 0.35,
+    "cx": 3.33,
+    "cz": 4.72,
+    "w": 0.449,
+    "d": 0.45,
+    "h": null,
     "rotation": 23.3,
-    "facing": null,
+    "facing": 23.3,
     "drawn_size_m": [
-     1.201,
-     1.2
+     0.449,
+     0.45
     ],
-    "size_deviation_m": [
-     -0.049,
-     -0.061
-    ],
+    "size_deviation_m": null,
     "mount": "floor",
     "elevation": null,
     "location": "interior",
     "render_as": "model",
-    "note": "图上 4 只 450×450 方凳 2×2 排布，外包约 1.2×1.2 m，按 4 件组合记一个；物料清单数量 4"
+    "note": "图上 4 只 450×450 方凳 2×2；按单件记（用户 10-19 S1），组合款默认不用"
    },
    {
     "ref": "g05",
+    "label": "培训坐凳（复用）",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 3.33,
+    "cz": 5.32,
+    "w": 0.449,
+    "d": 0.45,
+    "h": null,
+    "rotation": 23.3,
+    "facing": 23.3,
+    "drawn_size_m": [
+     0.449,
+     0.45
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上 4 只 450×450 方凳 2×2；按单件记（用户 10-19 S1），组合款默认不用"
+   },
+   {
+    "ref": "g06",
+    "label": "培训坐凳（复用）",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 3.93,
+    "cz": 4.72,
+    "w": 0.449,
+    "d": 0.45,
+    "h": null,
+    "rotation": 23.3,
+    "facing": 23.3,
+    "drawn_size_m": [
+     0.449,
+     0.45
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上 4 只 450×450 方凳 2×2；按单件记（用户 10-19 S1），组合款默认不用"
+   },
+   {
+    "ref": "g07",
+    "label": "培训坐凳（复用）",
+    "assetId": null,
+    "function": "seating",
+    "category": null,
+    "source": "new",
+    "cx": 3.93,
+    "cz": 5.32,
+    "w": 0.449,
+    "d": 0.45,
+    "h": null,
+    "rotation": 23.3,
+    "facing": 23.3,
+    "drawn_size_m": [
+     0.449,
+     0.45
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上 4 只 450×450 方凳 2×2；按单件记（用户 10-19 S1），组合款默认不用"
+   },
+   {
+    "ref": "g08",
     "label": "1.8米收银台（复用） H:900mm",
     "assetId": "asset-24488377",
     "function": "cashier",
@@ -500,7 +574,7 @@
     "note": "与右侧隔墙平行（约 11.1°）；与右侧柜子之间约 800 mm 为店员通道，顾客面按朝店内（左）记，待确认"
    },
    {
-    "ref": "g06",
+    "ref": "g09",
     "label": "1.8米配件柜+开箱桌（复用） H:900mm",
     "assetId": "asset-666964",
     "function": "unboxing_table",
@@ -532,7 +606,7 @@
     "note": "背靠原商场隔墙，正面朝店内；图上 0.5×1.8 m 柜体，未画凳子；型号尺寸含凳子；碰撞与尺寸标注按桌体"
    },
    {
-    "ref": "g07",
+    "ref": "g10",
     "label": "1.8米边桌+储物柜（复用） H:900mm",
     "assetId": "asset-752992",
     "function": "storage",
@@ -560,7 +634,7 @@
     "note": "背靠原商场隔墙，正面朝店内"
    },
    {
-    "ref": "g08",
+    "ref": "g11",
     "label": "电子水牌（复用）",
     "assetId": "asset-2587726",
     "function": "screen",
@@ -588,7 +662,7 @@
     "note": "柜列上端，屏幕朝上侧通道（物料清单：43寸电子水牌）"
    },
    {
-    "ref": "g09",
+    "ref": "g12",
     "label": "电子水牌（复用）",
     "assetId": "asset-2587726",
     "function": "screen",
@@ -616,7 +690,7 @@
     "note": "柜列下端，屏幕朝下侧通道（物料清单：43寸电子水牌）"
    },
    {
-    "ref": "g10",
+    "ref": "g13",
     "label": "门楣装悬挂式发光logo（LOGO）",
     "assetId": null,
     "function": "signage",
@@ -663,7 +737,7 @@
   "height_source": "图注店铺天花高度、公区天花高度、门楣高度均为“/”（未给）；LOGO 高度 300mm",
   "counts_by_function": {
    "island_table": 3,
-   "seating": 1,
+   "seating": 4,
    "cashier": 1,
    "unboxing_table": 1,
    "storage": 1,
@@ -671,11 +745,12 @@
    "signage": 1
   },
   "counts_by_category": {
-   "软装道具": 7,
+   "软装道具": 6,
+   "未映射": 4,
    "信息化物料": 2,
    "品牌标识": 1
   },
-  "matched_assets": 9
+  "matched_assets": 8
  },
  "review": {
   "status": "待用户确认",

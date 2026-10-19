@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -243,7 +243,8 @@
      ]
     ],
     "height": null,
-    "label": "禁用区 Restricted Area（租赁线内 450 mm 宽斜线区，不可使用）"
+    "label": "禁用区 Restricted Area（租赁线内 450 mm 宽斜线区，不可使用）",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -274,7 +275,8 @@
      ]
     ],
     "height": null,
-    "label": "原包柱层板（原有包柱，柱体本身在租赁线外的缺角内）"
+    "label": "原包柱层板（原有包柱，柱体本身在租赁线外的缺角内）",
+    "addedLater": false
    }
   ],
   "calibration": {

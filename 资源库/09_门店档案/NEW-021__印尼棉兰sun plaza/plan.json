@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:03+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -160,7 +160,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 Employee lounge 2.1m²（含防火暗门 Fireproof secret door）"
+    "label": "员工休息室 Employee lounge 2.1m²（含防火暗门 Fireproof secret door）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -183,7 +184,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱 HV&LV Boxes"
+    "label": "配电箱 HV&LV Boxes",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -286,7 +288,8 @@
      ]
     ],
     "height": null,
-    "label": "圆柱（右下角，外包方形包柱）"
+    "label": "圆柱（右下角，外包方形包柱）",
+    "addedLater": false
    }
   ],
   "calibration": {

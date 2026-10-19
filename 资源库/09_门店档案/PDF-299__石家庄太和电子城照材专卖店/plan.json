@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -180,7 +180,8 @@
      ]
     ],
     "height": null,
-    "label": "立柱 900×850（不可改造；左侧约 260 mm 伸出矮墙线外，此处只记店内部分）"
+    "label": "立柱 900×850（不可改造；左侧约 260 mm 伸出矮墙线外，此处只记店内部分）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -203,7 +204,8 @@
      ]
     ],
     "height": null,
-    "label": "强电箱、弱电箱（贴左墙、柱上方，与储物柜+开箱桌占地重叠，应为墙上安装）"
+    "label": "强电箱、弱电箱（贴左墙、柱上方，与储物柜+开箱桌占地重叠，应为墙上安装）",
+    "addedLater": false
    }
   ],
   "calibration": {

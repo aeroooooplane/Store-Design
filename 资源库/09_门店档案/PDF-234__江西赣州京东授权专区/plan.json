@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-19T13:42:32+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -176,7 +176,8 @@
      ]
     ],
     "height": null,
-    "label": "强弱电箱（嵌在顶部包墙内，门朝店内）"
+    "label": "强弱电箱（嵌在顶部包墙内，门朝店内）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -199,7 +200,8 @@
      ]
     ],
     "height": null,
-    "label": "仓库 3㎡（西墙开门，北侧吊柜）"
+    "label": "仓库 3㎡（西墙开门，北侧吊柜）",
+    "addedLater": false
    }
   ],
   "calibration": {
@@ -217,33 +219,33 @@
     "function": "signage",
     "category": "信息化物料",
     "source": "new",
-    "cx": 0.225,
-    "cz": 0.45,
-    "w": 0.899,
-    "d": 0.05,
+    "cx": 0.08,
+    "cz": 0.443,
+    "w": 0.714,
+    "d": 0.16,
     "h": null,
-    "rotation": 270.0,
-    "facing": 270.0,
+    "rotation": 90.0,
+    "facing": 90.0,
     "drawn_size_m": [
-     0.899,
+     0.714,
      null
     ],
     "size_deviation_m": null,
     "wall_segment_m": [
      [
-      0.25,
-      0.0
+      0.0,
+      0.086
      ],
      [
-      0.25,
-      0.899
+      0.0,
+      0.8
      ]
     ],
     "mount": "embedded",
     "elevation": null,
-    "location": "interior",
+    "location": "facade",
     "render_as": "wall_image",
-    "note": "嵌在西侧包墙内，正面朝店内；图注 800*1600，凹位宽 900；模型库无此灯箱型号"
+    "note": "嵌在西侧墙角包板内，画面朝店外（左侧公共区）；原先按朝店内记错（用户 10-19）"
    },
    {
     "ref": "g02",
@@ -687,6 +689,7 @@
    "1.8米收银台按 SI1.0 型号 asset-24488377（约 1942 宽变体）配，图上框约 1797 宽。",
    "1.8米go3s/X4 中岛桌按惯例配 SI1.0 普通中岛桌型号（与 NEW-059、PDF-186 相同处理）。",
    "门楣装发光 logo 图注 4675*400mm，按 4675 宽居中于入口布置（中心 x≈1051 与入口中心一致）；图上虚线框 x≈995~1108 仅为 LOGO 字样定位框。",
+   "用户 10-19：左上角灯箱改为朝店外，位置按图上白色矩形 665–745",
    "配件柜背靠墙按型号进深摆放，1 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
   ]
  }

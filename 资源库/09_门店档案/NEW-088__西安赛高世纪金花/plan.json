@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -409,7 +409,8 @@
      ]
     ],
     "height": null,
-    "label": "原建筑结构（深色填充，柱/结构墙）"
+    "label": "原建筑结构（深色填充，柱/结构墙）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -440,7 +441,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 1.74㎡（门朝左侧店内）"
+    "label": "员工休息室 1.74㎡（门朝左侧店内）",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -463,7 +465,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱间（门朝右侧通道）"
+    "label": "配电箱间（门朝右侧通道）",
+    "addedLater": false
    }
   ],
   "calibration": {

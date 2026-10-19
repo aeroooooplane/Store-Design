@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generatedAt": "2026-10-19T14:52:25+08:00",
  "generator": {
   "script": "tools/store-archive/build_gold.py",
   "version": "0.1.0"
@@ -162,7 +162,8 @@
      ]
     ],
     "height": null,
-    "label": "员工休息室 1.85㎡"
+    "label": "员工休息室 1.85㎡",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -185,7 +186,8 @@
      ]
     ],
     "height": null,
-    "label": "配电箱间"
+    "label": "配电箱间",
+    "addedLater": false
    },
    {
     "kind": "fixed",
@@ -208,7 +210,8 @@
      ]
     ],
     "height": null,
-    "label": "折叠门收纳区"
+    "label": "折叠门收纳区",
+    "addedLater": false
    },
    {
     "kind": "column",
@@ -231,7 +234,8 @@
      ]
     ],
     "height": null,
-    "label": "柱"
+    "label": "柱",
+    "addedLater": false
    }
   ],
   "calibration": {
