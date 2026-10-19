@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Crosshair, Trash2 } from 'lucide-react'
 import type { RefObject } from 'react'
 import type { Camera, Layout } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
@@ -74,7 +75,7 @@ export function CameraPanel({ nodeId, viewer, viewerReady, layout, onShow }: Cam
       <ErrorMessage error={cameras.error ?? action.error} />
       <ol className="camera-grid">
         {active.map((c) => (
-          <li key={c.id}>
+          <li key={c.id} className="camera-tile">
             <button
               type="button"
               className="camera-thumb"
@@ -87,32 +88,33 @@ export function CameraPanel({ nodeId, viewer, viewerReady, layout, onShow }: Cam
                 <span className="camera-thumb-empty">生成预览…</span>
               )}
             </button>
-            <div className="camera-meta">
-              <span>
-                {c.camera.name}
-                {c.camera.source === 'user' ? <span className="hint"> · 自定义</span> : null}
-              </span>
-              <span className="camera-actions">
-                <button
-                  type="button"
-                  disabled={action.isPending}
-                  title="把这个视角改为三维中当前看到的角度"
-                  onClick={() => {
-                    const view = viewer.current?.currentView()
-                    if (view) action.mutate({ type: 'update', cameraId: c.id, patch: view })
-                  }}
-                >
-                  设为当前
-                </button>
-                <button
-                  type="button"
-                  disabled={action.isPending}
-                  onClick={() => action.mutate({ type: 'remove', cameraId: c.id })}
-                >
-                  删除
-                </button>
-              </span>
-            </div>
+            <span className="camera-name">
+              {c.camera.name}
+              {c.camera.source === 'user' ? <span className="hint"> · 自定义</span> : null}
+            </span>
+            <span className="camera-actions">
+              <button
+                type="button"
+                aria-label="设为当前"
+                disabled={action.isPending}
+                title="设为当前：用三维中正在看的角度替换这个视角"
+                onClick={() => {
+                  const view = viewer.current?.currentView()
+                  if (view) action.mutate({ type: 'update', cameraId: c.id, patch: view })
+                }}
+              >
+                <Crosshair size={14} aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="删除"
+                disabled={action.isPending}
+                title="删除这个视角（可在下方恢复）"
+                onClick={() => action.mutate({ type: 'remove', cameraId: c.id })}
+              >
+                <Trash2 size={14} aria-hidden="true" />
+              </button>
+            </span>
           </li>
         ))}
       </ol>

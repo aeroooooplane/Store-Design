@@ -326,6 +326,7 @@ describe('Workbench', () => {
       await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
 
       // The bug: clicking back on A showed it in SI2.0.
+      fireEvent.click(screen.getByRole('tab', { name: '历史' }))
       fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
       await screen.findByRole('heading', { name: '方案 A' })
       await waitFor(() => expect(pressed()).toEqual(['SI1.0']))
@@ -387,6 +388,7 @@ describe('Workbench', () => {
     await screen.findByRole('heading', { name: '方案 A' })
     const views = screen.getByRole('group', { name: '视图' })
     fireEvent.click(within(views).getByRole('button', { name: '三维' }))
+    fireEvent.click(screen.getByRole('tab', { name: '历史' }))
     fireEvent.keyDown(screen.getByRole('button', { name: '方案 B' }), { key: 'Enter' })
 
     await screen.findByRole('heading', { name: '方案 B' })
@@ -394,6 +396,24 @@ describe('Workbench', () => {
     expect(within(next).getByRole('button', { name: '三维' }).getAttribute('aria-pressed')).toBe(
       'true',
     )
+  })
+
+  it('puts history, models and space info in left tabs, opening the models in the plan stage', async () => {
+    server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
+    renderWorkbench(`?node=${P1}`)
+
+    await screen.findByRole('heading', { name: '方案 A' })
+    const tab = (name: string) => screen.getByRole('tab', { name })
+    expect(tab('添加模型').getAttribute('aria-selected')).toBe('true')
+    // The white stage starts on the history tab instead.
+    expect(screen.getByRole('tab', { name: '历史' })).toBeTruthy()
+    // The history tab is hidden, not unmounted.
+    expect(screen.queryByRole('button', { name: '方案 A' })).toBeNull()
+    fireEvent.click(tab('历史'))
+    expect(screen.getByRole('button', { name: '方案 A' })).toBeTruthy()
+    fireEvent.click(tab('空间信息'))
+    expect(screen.getByText('创建时间')).toBeTruthy()
+    expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
   })
 
   it('autosaves edits to the draft, then saves a version and clears the draft', async () => {

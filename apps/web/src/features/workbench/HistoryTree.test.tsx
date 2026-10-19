@@ -101,4 +101,18 @@ describe('HistoryTree', () => {
     fireEvent.click(screen.getByRole('button', { name: '收起树图' }))
     expect(screen.queryByRole('group', { name: '历史树图' })).toBeNull()
   })
+
+  it('hides the selected step with the eye button and shows the hidden ones with the switch', async () => {
+    renderTree()
+    // Two rows at most: the icon row and the row with the current step and the switch.
+    expect(screen.getByRole('toolbar', { name: '历史操作' })).toBeTruthy()
+    expect(screen.getByText(/当前：方案 · 按面积推荐/)).toBeTruthy()
+    fireEvent.click(screen.getByRole('button', { name: '隐藏' }))
+    await waitFor(() =>
+      expect(calls.find((c) => c.method === 'POST')).toMatchObject({
+        path: `/api/v1/nodes/${P1}/hide`,
+      }),
+    )
+    expect(screen.getByRole('switch', { name: '显示已隐藏' })).toBeTruthy()
+  })
 })
