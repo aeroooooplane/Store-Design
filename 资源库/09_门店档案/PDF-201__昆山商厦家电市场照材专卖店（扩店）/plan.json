@@ -1,0 +1,855 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-16T18:12:04+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-201",
+ "name": "昆山商厦家电市场照材专卖店（扩店）",
+ "si": "SI1.0",
+ "shop_type": "中岛店",
+ "source": {
+  "page": 10,
+  "image_px": [
+   2400,
+   1697.3871733966746
+  ],
+  "pdf_scale": 1.4251781472684086
+ },
+ "calibration_px": {
+  "mmPerPixel": 7.0008,
+  "originPx": [
+   580.4,
+   624.6
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     580.4,
+     1637.7
+    ],
+    "mm": 7400,
+    "what": "顶部总宽 7400（外框）",
+    "mm_per_px": 6.999,
+    "error_pct": -0.03
+   },
+   {
+    "axis": "x",
+    "px": [
+     591.9,
+     1123.3
+    ],
+    "mm": 3720,
+    "what": "底部 3720（内线左段）",
+    "mm_per_px": 7.0004,
+    "error_pct": -0.01
+   },
+   {
+    "axis": "x",
+    "px": [
+     1123.3,
+     1626.2
+    ],
+    "mm": 3520,
+    "what": "底部 3520（内线右段）",
+    "mm_per_px": 6.9994,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "x",
+    "px": [
+     887.6,
+     1096.9
+    ],
+    "mm": 1465,
+    "what": "顶部 1465（中间包柱墙体宽）",
+    "mm_per_px": 6.9995,
+    "error_pct": -0.02
+   },
+   {
+    "axis": "x",
+    "px": [
+     659.1,
+     887.6
+    ],
+    "mm": 1600,
+    "what": "顶部 1600（广告机外框宽）",
+    "mm_per_px": 7.0022,
+    "error_pct": 0.02
+   },
+   {
+    "axis": "z",
+    "px": [
+     624.6,
+     1196.0
+    ],
+    "mm": 4000,
+    "what": "右侧总深 4000",
+    "mm_per_px": 7.0004,
+    "error_pct": -0.01
+   },
+   {
+    "axis": "z",
+    "px": [
+     638.9,
+     1184.5
+    ],
+    "mm": 3820,
+    "what": "右侧 3820（顶部 100 墙内侧到底部 80 内线）",
+    "mm_per_px": 7.0015,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "z",
+    "px": [
+     703.1,
+     1184.5
+    ],
+    "mm": 3370,
+    "what": "左侧 3370（广告机框底面到底部内线）",
+    "mm_per_px": 7.0004,
+    "error_pct": -0.01
+   },
+   {
+    "axis": "z",
+    "px": [
+     636.0,
+     703.1
+    ],
+    "mm": 470,
+    "what": "左侧 470（广告机框进深段）",
+    "mm_per_px": 7.0045,
+    "error_pct": 0.05
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    7.402,
+    0.0
+   ],
+   [
+    7.402,
+    4.0
+   ],
+   [
+    0.0,
+    4.0
+   ]
+  ],
+  "height": 3.5,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     0.0,
+     4.0
+    ],
+    "b": [
+     7.402,
+     4.0
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     0.0,
+     4.0
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     7.402,
+     0.0
+    ],
+    "b": [
+     7.402,
+     4.0
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     0.0,
+     4.0
+    ],
+    "b": [
+     7.402,
+     4.0
+    ]
+   },
+   {
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     0.0,
+     4.0
+    ]
+   },
+   {
+    "a": [
+     7.402,
+     0.0
+    ],
+    "b": [
+     7.402,
+     4.0
+    ]
+   },
+   {
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     7.402,
+     0.0
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      2.351,
+      0.149
+     ],
+     [
+      3.302,
+      0.149
+     ],
+     [
+      3.302,
+      1.14
+     ],
+     [
+      2.351,
+      1.14
+     ]
+    ],
+    "height": null,
+    "label": "原建筑方柱（灰色填充，约 950×990）"
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 7400 mm = 1057.3000000000002 px；x 向 3720 mm = 531.4 px；x 向 3520 mm = 502.9000000000001 px；x 向 1465 mm = 209.30000000000007 px；x 向 1600 mm = 228.5 px；z 向 4000 mm = 571.4 px；z 向 3820 mm = 545.6 px；z 向 3370 mm = 481.4 px；z 向 470 mm = 67.10000000000002 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "电子水牌-原有移位",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.255,
+    "cz": 0.355,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 90,
+    "facing": 90,
+    "drawn_size_m": [
+     0.55,
+     0.349
+    ],
+    "size_deviation_m": [
+     -0.0,
+     -0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "左上角，图上 350×550；屏幕朝向图上看不出，暂按朝左侧开放边（店外）"
+   },
+   {
+    "ref": "g02",
+    "label": "65寸广告机(横向)-原有",
+    "assetId": "asset-3021147",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 1.35,
+    "cz": 0.492,
+    "w": 1.465,
+    "d": 0.116,
+    "h": 0.846,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.5,
+     null
+    ],
+    "size_deviation_m": [
+     0.035,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      0.6,
+      0.55
+     ],
+     [
+      2.1,
+      0.55
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "装在广告机 U 形外框内，机身进深约 200，正面朝收银台和店内"
+   },
+   {
+    "ref": "g03",
+    "label": "1.5米收银台 收银台-原有",
+    "assetId": null,
+    "function": "cashier",
+    "category": null,
+    "source": "new",
+    "cx": 1.401,
+    "cz": 1.45,
+    "w": 1.5,
+    "d": 0.6,
+    "h": null,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.5,
+     0.6
+    ],
+    "size_deviation_m": null,
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上 1500×600，右端顶住包柱墙；员工站在收银台与广告机之间（约 600），顾客面朝下；模型库缺此款（1.5 米白色圆角收银台），不配型号"
+   },
+   {
+    "ref": "g04",
+    "label": "LOGO-原有",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 2.126,
+    "cz": 1.15,
+    "w": 0.974,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     0.974,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.151,
+      0.663
+     ],
+     [
+      2.151,
+      1.637
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "包柱墙左面，覆在灯箱-原有前面，朝收银台"
+   },
+   {
+    "ref": "g05",
+    "label": "灯箱-原有",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 2.176,
+    "cz": 1.15,
+    "w": 0.9,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     0.9,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.151,
+      0.7
+     ],
+     [
+      2.151,
+      1.6
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在包柱墙左面，宽约 900、进深 150"
+   },
+   {
+    "ref": "g06",
+    "label": "灯箱 W1000*H1500mm",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 3.591,
+    "cz": 0.74,
+    "w": 1.0,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     1.0,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      3.616,
+      0.239
+     ],
+     [
+      3.616,
+      1.24
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在包柱墙右面，进深 150"
+   },
+   {
+    "ref": "g07",
+    "label": "LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 3.641,
+    "cz": 0.74,
+    "w": 0.974,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     0.974,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      3.616,
+      0.253
+     ],
+     [
+      3.616,
+      1.227
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "包柱墙右面，覆在 W1000 灯箱前面"
+   },
+   {
+    "ref": "g08",
+    "label": "1.2米配件柜-原有 H:2400mm",
+    "assetId": "asset-2595882",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.936,
+    "cz": 1.515,
+    "w": 1.2,
+    "d": 0.45,
+    "h": 2.4,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.2,
+     0.461
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.011
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "嵌在包柱墙底面凹位，柜面与墙底面齐平"
+   },
+   {
+    "ref": "g09",
+    "label": "LOGO-原有",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 2.935,
+    "cz": 1.775,
+    "w": 0.973,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     0.973,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.449,
+      1.75
+     ],
+     [
+      3.422,
+      1.75
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "配件柜正面（包柱墙底面）上的 LOGO，宽约 970"
+   },
+   {
+    "ref": "g10",
+    "label": "1.8米边桌储物柜 H:900mm",
+    "assetId": "asset-752992",
+    "function": "storage",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 4.621,
+    "cz": 0.35,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 1.214,
+    "rotation": 90,
+    "facing": 0,
+    "drawn_size_m": [
+     0.5,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "背靠顶边 100 厚新做墙；物料清单“1.8m si1.0 边桌储物柜 W1800*D500*H900”×1；台面画 3 个产品托盘（go3s/X4/ace pro），自动匹配误配成开箱储物柜，手动指定带托盘边桌储物柜"
+   },
+   {
+    "ref": "g11",
+    "label": "1.8米储物柜+开箱桌 H:900mm",
+    "assetId": "asset-666964",
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "model_origin_m": [
+     6.421,
+     0.634
+    ],
+    "cx": 6.421,
+    "cz": 0.35,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 0.902,
+    "rotation": 90,
+    "facing": 0,
+    "drawn_size_m": [
+     0.5,
+     1.801
+    ],
+    "size_deviation_m": [
+     -0.0,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "桌体 1800×500，前方两张凳不计入；物料清单“1.8m si1.0 边桌储物+开箱柜 W1800*D500*H900”×1；型号尺寸含凳子；碰撞与尺寸标注按桌体"
+   },
+   {
+    "ref": "g12",
+    "label": "1.8米中岛桌-原有移位 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 0.98,
+    "cz": 2.95,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.001,
+     1.801
+    ],
+    "size_deviation_m": [
+     0.001,
+     0.001
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g13",
+    "label": "1.8米GO系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.701,
+    "cz": 2.95,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.001,
+     1.803
+    ],
+    "size_deviation_m": [
+     0.001,
+     0.003
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g14",
+    "label": "1.8米X系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 6.421,
+    "cz": 2.95,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.001,
+     1.803
+    ],
+    "size_deviation_m": [
+     0.001,
+     0.003
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g15",
+    "label": "原有吊挂LOGO移位，H=200mm",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 3.701,
+    "cz": 3.997,
+    "w": 2.338,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     2.338,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.531,
+      3.972
+     ],
+     [
+      4.87,
+      3.972
+     ]
+    ],
+    "mount": "ceiling",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "model",
+    "note": "底边主人流通道上方吊挂，长约 2340、高 200，图上文字“影石Insta360 全景相机”朝通道读"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     2.151,
+     0.0
+    ],
+    [
+     3.616,
+     0.0
+    ],
+    [
+     3.616,
+     1.74
+    ],
+    [
+     3.536,
+     1.74
+    ],
+    [
+     3.536,
+     1.29
+    ],
+    [
+     2.336,
+     1.29
+    ],
+    [
+     2.336,
+     1.74
+    ],
+    [
+     2.151,
+     1.74
+    ]
+   ],
+   "label": "中间包柱墙体 1465×1786（网格斜线）：左嵌灯箱-原有，右嵌 W1000 灯箱，下凹位放 1.2 米配件柜，柜面与墙底面齐平"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.616,
+     0.0
+    ],
+    [
+     7.402,
+     0.0
+    ],
+    [
+     7.402,
+     0.1
+    ],
+    [
+     3.616,
+     0.1
+    ]
+   ],
+   "label": "顶边 100 厚新做墙（网格斜线），边桌储物柜和储物开箱柜靠此墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.551,
+     0.0
+    ],
+    [
+     2.151,
+     0.0
+    ],
+    [
+     2.151,
+     0.55
+    ],
+    [
+     0.551,
+     0.55
+    ]
+   ],
+   "label": "65 寸广告机外框 1600×550（50 厚 U 形框，正面开口朝下）"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 29.61,
+  "stated_area_m2": 28.68,
+  "outer_size_m": [
+   7.4,
+   4.0
+  ],
+  "height_source": "图注“店铺现有吊顶高度：无；公区天花高度：3.50m”",
+  "counts_by_function": {
+   "screen": 2,
+   "cashier": 1,
+   "signage": 6,
+   "accessory_cabinet": 1,
+   "storage": 1,
+   "unboxing_table": 1,
+   "island_table": 3
+  },
+  "counts_by_category": {
+   "信息化物料": 4,
+   "未映射": 1,
+   "品牌标识": 4,
+   "软装道具": 6
+  },
+  "matched_assets": 8
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "SI1.0 中岛店（扩店），矩形 7400×4000，四面开放；底边临主人流通道，顶边临扶梯",
+   "边界取外框 7400×4000（29.6 ㎡）；内侧 80/100 灰线为地台/收边线，不作边界；图注实测 28.68 ㎡，介于外框与内线 7240×3820（27.66 ㎡）之间",
+   "顶边：左段 470 宽空位放电子水牌，1600 宽广告机外框，1465 宽包柱墙（内含原建筑方柱），右段 100 厚新做墙，墙前两只 1.8 米边桌柜",
+   "物料清单（第 5 页）：1.8m si1.0 中岛桌 ×2、边桌储物柜 ×1、边桌储物+开箱柜 ×1、D8P-C 摄像头 ×4，与平面新增物料一致；其余为原有利旧",
+   "门楣高度、LOGO 指定高度图注均为“无”",
+   "配件柜背靠墙按型号进深摆放，2 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
+  ]
+ }
+}

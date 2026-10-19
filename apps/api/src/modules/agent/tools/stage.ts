@@ -60,6 +60,8 @@ export const setStyleTool = tool({
         layout: swap.layout,
         siStyle: input.siStyle,
         sourceNodeId: node.id,
+        // The user's rule: swapping styles ignores collisions and only reports them.
+        allowLayoutErrors: true,
       },
       { origin: 'agent' },
     )

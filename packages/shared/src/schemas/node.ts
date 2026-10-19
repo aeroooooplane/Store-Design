@@ -59,6 +59,11 @@ export const NodeCreateSchema = z
     siStyle: SiStyleSchema.optional(),
     /** The node this one copies (新建副本); its views carry over to a white model or render. */
     sourceNodeId: z.uuid().optional(),
+    /**
+     * Take the layout even when it overlaps or leaves the space (the SI switch swaps sizes
+     * without regard to collisions and only reports them). White models only.
+     */
+    allowLayoutErrors: z.boolean().optional(),
   })
   .superRefine((node, ctx) => {
     const issue = (message: string, path: string) =>
