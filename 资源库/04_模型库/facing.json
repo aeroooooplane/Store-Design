@@ -66,7 +66,7 @@
     "asset-2587203": { "front": "+Z", "confidence": "medium", "installation": "embedded", "note": "内嵌在墙里：正面与墙面齐平，机身在墙内；三维只在墙面贴预览图（用户 10-15 N1）" },
     "asset-11478950": { "front": "+Z", "confidence": "medium", "installation": "embedded", "note": "内嵌在墙里：正面与墙面齐平，机身在墙内；三维只在墙面贴预览图（用户 10-15 N1）" },
     "asset-11525436": { "front": "+Z", "confidence": "medium", "installation": "embedded", "note": "内嵌在墙里：正面与墙面齐平，机身在墙内；三维只在墙面贴预览图（用户 10-15 N1）" },
-    "asset-2587726": { "front": "+Z", "confidence": "medium", "installation": "floor", "note": "电子水牌带底座，落地摆放（用户 10-15 N1）" },
+    "asset-2587726": { "front": "+Z", "confidence": "high", "installation": "floor", "note": "电子水牌带底座，落地摆放（用户 10-15 N1）；2026-10-21：独立 SKP 转换 GLB，经 meshopt 压缩及五向渲染复核，屏幕朝 +Z，Y 向上，底部中心原点，尺寸 550×350×1650 mm。" },
     "asset-2463847": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "LED 门头屏贴墙（用户 10-15 N1）；正面暂定 +Z" },
     "asset-11525629": { "front": "+Z", "confidence": "medium", "installation": "wall", "note": "LED 门头屏贴墙（用户 10-15 N1）；正面暂定 +Z" },
     "asset-11511980": { "front": "+X", "confidence": "low", "installation": "wall", "note": "曲面 LED 屏贴墙（用户 10-15 N1）；长条弯折款，包围盒最长边在 Y，正面暂定 +X，待复核" },
