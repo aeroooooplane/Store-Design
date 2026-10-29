@@ -1141,7 +1141,7 @@ ul.issues li.warning {
   border: 1px solid var(--line-soft);
   border-radius: var(--radius);
   overflow: hidden;
-  background: #e8eaed;
+  background: var(--surface);
   aspect-ratio: 3 / 2;
 }
 .render-image,
@@ -1165,35 +1165,127 @@ ul.issues li.warning {
   width: 100%;
   height: 100%;
 }
-.render-stale {
+.render-image-actions {
   position: absolute;
   left: 12px;
   top: 12px;
-  background: var(--paper);
+  right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1);
+}
+.render-image-actions .render-open {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  box-shadow: var(--shadow);
+  font-size: var(--fs-sm);
+}
+.render-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-half);
+  background: var(--accent-soft);
+  color: var(--ink);
+}
+.render-status.warning {
+  background: var(--warn-soft);
+  color: var(--warn);
+}
+.render-status.complete {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+.render-empty {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  text-align: center;
+  color: var(--muted);
+  font-size: var(--fs-sm);
+}
+.render-empty strong {
+  color: var(--ink);
+  font-size: var(--fs-md);
+}
+.render-strip-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+.render-strip-heading h3 {
+  margin: 0;
 }
 .render-strip {
   list-style: none;
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(auto-fill, minmax(min(132px, 100%), 1fr));
+  gap: var(--space-2);
+}
+.render-strip li {
+  min-width: 0;
 }
 .render-strip .camera-thumb {
   border-radius: var(--radius);
   overflow: hidden;
+  background: var(--surface);
+}
+.render-strip .camera-thumb img {
+  object-fit: contain;
 }
 .render-strip .camera-thumb[aria-pressed='true'] {
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px var(--accent);
+  box-shadow: 0 0 0 2px var(--brand);
+}
+.render-strip .camera-thumb[aria-pressed='true'] + .render-strip-name {
+  color: var(--ink);
+  font-weight: 600;
 }
 .render-strip-name {
   display: flex;
+  flex-wrap: wrap;
   gap: 4px;
   align-items: center;
   margin-top: 4px;
   font-size: 12px;
   color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.render-controls .stage-head {
+  flex-wrap: wrap;
+}
+.render-progress {
+  margin-top: var(--space-2);
+  padding: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius);
+}
+.render-progress progress {
+  display: block;
+  width: 100%;
+  height: 8px;
+  accent-color: var(--accent);
+  border: 0;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.render-progress progress::-webkit-progress-bar {
+  background: var(--fill-strong);
+}
+.render-progress progress::-webkit-progress-value {
+  background: var(--accent);
+}
+.render-progress progress::-moz-progress-bar {
+  background: var(--accent);
 }
 
 /* Delivery: the numbered plan is drawn off screen (it needs a real size to be exported). */

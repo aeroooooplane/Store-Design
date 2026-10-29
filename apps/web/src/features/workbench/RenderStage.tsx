@@ -1,6 +1,7 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import { AlertTriangle, ExternalLink, ImageIcon } from 'lucide-react'
 import { RENDERED_MODES, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
   Asset,
@@ -294,12 +295,32 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                       width={mainImage.width}
                       height={mainImage.height}
                     />
-                    {mainImage.stale && (
-                      <span className="tag render-stale">已过期，重新渲染后更新</span>
-                    )}
+                    <div className="render-image-actions">
+                      {mainImage.stale && (
+                        <span className="tag render-status warning">
+                          <AlertTriangle size={14} aria-hidden="true" />
+                          已过期，重新渲染后更新
+                        </span>
+                      )}
+                      <a
+                        className="button render-open"
+                        href={mainImage.url}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <ExternalLink size={14} aria-hidden="true" />
+                        查看大图
+                      </a>
+                    </div>
                   </>
                 ) : (
-                  <p className="notice">{busy ? '正在渲染…' : '尚未渲染'}</p>
+                  <div className="render-empty" role="status">
+                    <ImageIcon size={28} aria-hidden="true" />
+                    <strong>{busy ? '正在渲染当前视角' : '尚未渲染'}</strong>
+                    <span>
+                      {busy ? '完成后将在这里显示材质图' : '请使用右侧“重新渲染”生成材质图'}
+                    </span>
+                  </div>
                 )}
               </div>
             )}
@@ -325,6 +346,15 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             </div>
           </div>
 
+          <div className="render-strip-heading">
+            <h3>
+              视角 <span className="hint">（{views.length}）</span>
+            </h3>
+            <span className="hint">选择缩略图切换视角</span>
+          </div>
+          {views.length === 0 && (
+            <p className="hint">暂无视角，请回到白模添加视角后重新开始渲染。</p>
+          )}
           <ol className="render-strip" aria-label="视角">
             {views.map((camera) => {
               const image = imageOf(camera.id, 'material')
@@ -345,7 +375,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   </button>
                   <span className="render-strip-name">
                     {camera.camera.name}
-                    {image?.stale ? <span className="tag">过期</span> : null}
+                    {image?.stale ? <span className="tag render-status warning">过期</span> : null}
                   </span>
                 </li>
               )
@@ -355,16 +385,18 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
       }
       right={
         <>
-          <div className="wb-card">
+          <div className="wb-card render-controls">
             <StagePanel
               title="渲染阶段"
               status={
                 busy ? (
-                  <span className="tag" role="status">
+                  <span className="tag render-status" role="status">
                     正在渲染 {progress.done}/{progress.total}
                   </span>
                 ) : stale.length ? (
-                  <span className="tag">{stale.length} 张过期</span>
+                  <span className="tag render-status warning">{stale.length} 张过期</span>
+                ) : deliverable ? (
+                  <span className="tag render-status complete">已就绪</span>
                 ) : null
               }
               first={[
@@ -373,6 +405,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   title: '按当前模型与视角重新渲染全部材质图',
                   onClick: () => void render(all),
                   disabled: busy || !viewerReady || !all.length,
+                  primary: !deliverable,
                 },
                 {
                   label: '下载图片',
@@ -398,6 +431,12 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 </>
               }
             />
+            {progress && (
+              <div className="render-progress">
+                <progress aria-label="渲染进度" value={progress.done} max={progress.total} />
+                <p className="hint">正在生成材质图，请保持页面打开。</p>
+              </div>
+            )}
             {hasDisplay && (
               <label className="check-field">
                 <input

@@ -196,4 +196,23 @@ describe('RenderStage', () => {
     expect(looks).toEqual([])
     expect(screen.getByRole('button', { name: '生成交付文件' })).toHaveProperty('disabled', true)
   })
+
+  it('opens the full image for the selected view, including stale images', async () => {
+    const front = camera(0, '正面鸟瞰')
+    const entry = camera(1, '入口方向')
+    const frontImage = image(front.id, 'material')
+    const entryImage = image(entry.id, 'material', true)
+    fakeApi([front, entry], [frontImage, entryImage])
+    show()
+
+    await screen.findByText('1 张过期')
+    expect(screen.queryByRole('link', { name: '查看大图' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: '渲染图' }))
+    expect(screen.getByRole('link', { name: '查看大图' }).getAttribute('href')).toBe(frontImage.url)
+    fireEvent.click(screen.getByRole('button', { name: '查看视角 入口方向' }))
+    const open = screen.getByRole('link', { name: '查看大图' })
+    expect(open.getAttribute('href')).toBe(entryImage.url)
+    expect(open.getAttribute('target')).toBe('_blank')
+    expect(screen.getByText('已过期，重新渲染后更新')).toBeTruthy()
+  })
 })
