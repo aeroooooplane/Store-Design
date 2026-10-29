@@ -12,7 +12,8 @@ import { WALL_REACH_M, countInLabel, matchCatalog, sizeInLabel } from '../check.
 import { findBoundary } from './boundary.ts'
 import { chainLineTest, chainScale } from './dimension-chain.ts'
 import type { ChainReading } from './dimension-chain.ts'
-import { findRegion, inRing, ringArea } from './region.ts'
+import { inRing, ringArea } from './region.ts'
+import { findOutline } from './outline.ts'
 import type { PxPoint } from './region.ts'
 import {
   ADDED_LATER_WORDS,
@@ -160,15 +161,6 @@ export function recognizeVector(
       })
   // Prop labels sitting in a box anchor the boundary; boxes are looked up again once it is known.
   const unbounded = label(null)
-  for (const l of unbounded.filter((l) => l.text.text.length >= 2))
-    console.log(
-      'lab',
-      JSON.stringify(l.text.text),
-      !!l.box,
-      l.box && [Math.round(l.box.x), Math.round(l.box.y), Math.round(l.box.w), Math.round(l.box.h)],
-      matchCatalog(l.text.text, catalog, undefined, siStyle).function,
-    )
-
   const anchors = unbounded.flatMap((l) =>
     l.box && matchCatalog(l.text.text, catalog, undefined, siStyle).function !== 'other'
       ? [l.box]
@@ -205,21 +197,14 @@ export function recognizeVector(
       ),
     )
     .map((t): PxPoint => centre(t))
-  // The lease line (租赁线, drawn in red) is the shop's true edge, opening and all; walls are
-  // followed only when there is none.
-  const leaseLines = drawn.filter((l) => isRed(l.color))
-  const outlineLines = leaseLines.length >= 20 ? leaseLines : drawn
   const hints = {
     expectedArea,
     thinPx: pxPerM ? pxPerM * 0.25 : null,
     pxPerM,
     avoid: titleBlockPoints,
   }
-  const region =
-    findRegion(content.width, content.height, outlineLines, anchors, hints) ??
-    (outlineLines === drawn
-      ? null
-      : findRegion(content.width, content.height, drawn, anchors, hints))
+  const selected = findOutline(content.width, content.height, drawn, anchors, hints)
+  const region = selected?.points ?? null
   const rectangle = region
     ? null
     : findBoundary(content, wallLines, anchors, { pageEdges: !request.crop, expectedArea })
@@ -246,7 +231,7 @@ export function recognizeVector(
   const insideOutline = (p: PxPoint) => (outline ? inRing(p, outline) : false)
   if (region) {
     notes.push(
-      `边界取包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
+      `边界取${selected?.source === 'lease' ? '红色租赁线候选' : '图中线段'}中包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
     )
   } else if (rectangle) {
     notes.push(

@@ -439,7 +439,6 @@ function regionWithGrowth(
     }
     holes.push({ id, cells })
   }
-  const centres = anchors.map((b): PxPoint => [b.x + b.w / 2, b.y + b.h / 2])
   /**
    * A cell of a hole that holds a prop. A prop drawn as a closed box (a table symbol) has its
    * own blank inside, so the box's centre is in another hole; the floor round the box tells
