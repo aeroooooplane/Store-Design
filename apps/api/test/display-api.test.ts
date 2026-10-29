@@ -16,7 +16,7 @@ import { api, renderChain } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
-const RESOURCE = path.resolve(import.meta.dirname, '../../../资源库')
+const RESOURCE = path.resolve(import.meta.dirname, 'fixtures')
 let t: TestApp
 let dir: string
 

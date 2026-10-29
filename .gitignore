@@ -41,6 +41,8 @@ tools/training/runtime/
 
 # Machine-specific external source location and disposable PDF previews
 /resources.local.json
+/资源库/
+/.resource-before-link/
 
 # OS / editor files
 .DS_Store

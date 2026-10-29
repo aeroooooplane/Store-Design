@@ -7,6 +7,7 @@
 - [文档导航与阅读地图](docs/README.md)：先读哪些、哪些不用读。
 - [架构](docs/architecture.md)、[需求与决策记录](docs/requirements.md)、[数据模型](docs/data-model.md)、[API 说明](docs/api.md)、[界面规范](docs/design-system.md)。
 - [多电脑同步与协作](docs/sync-and-collaboration.md)：分支、LFS 与资源提交。
+- [OneDrive 资源库接入](docs/onedrive-resources.md)：从 GitHub 获取代码后，在每台电脑连接本机同步的资源库。
 - [资源使用说明](资源库/00_资源索引/资源使用说明.md)、[模型库指引](资源库/04_模型库/README.md)。
 
 代码是 pnpm Monorepo：`apps/web`（React + Vite + Three.js）、`apps/api`（Fastify）、`packages/shared`（共享校验、规划器与几何）、`database`（Drizzle schema 与 SQL 迁移）。第一代静态网页 `demo/` 已于 2026-10-13 归档（见 [docs/archive/INDEX.md](docs/archive/INDEX.md)），其中的 SketchUp → GLB 转换工具移到了 [tools/su-convert](tools/su-convert/README.md)。
@@ -23,7 +24,7 @@ pnpm library:refresh        # 模型库补充效果图或平面图后刷新清�
 pnpm library:apply-table    # 回读用户改过的 资源库/模型选用表.xlsx（改名、停用、意见），再 pnpm library:table 重新生成
 pnpm catalog:white          # 生成白模轻量版（已是最新的会跳过；网页模型更新后重跑）
 pnpm catalog:finish         # 生成材质轻量版（三维材质视图与渲染用，不入库，每台机器/服务器各生成一次；之后再跑 pnpm catalog:import 挂接）
-pnpm catalog:import         # 从资源库导入模型目录（需先 git lfs pull 网页模型）
+pnpm catalog:import         # 从资源库导入模型目录（先按 docs/onedrive-resources.md 接入 OneDrive）
 pnpm display:import          # 导入展陈规则（资源库/10_产品与陈列/展陈规则.xlsx 更新后重跑）
 pnpm display:bodies          # 模型库里中岛桌、带托盘边柜更新后，重新生成展陈三维用的真实桌体（结果提交进资源库）
 # 本地识别回归（apps/web 下）：node src/scripts/local-regression.ts <图纸 PDF 目录> --limit 15 --pages 6
@@ -78,4 +79,4 @@ pnpm dev                    # 同时启动 API（127.0.0.1:3001）和网页（12
 └─99_历史归档/
 ```
 
-正式 PDF、PPTX、SKP、GLB 等通过 Git LFS 跟踪，需提交实际文件后才能跨电脑同步。
+原始 PDF、PPTX、SKP、GLB 等资源通过 OneDrive 同步；Git 保存代码和少量测试样本。每台电脑先按 [OneDrive 资源库接入](docs/onedrive-resources.md) 建立本机连接，再运行模型入库。

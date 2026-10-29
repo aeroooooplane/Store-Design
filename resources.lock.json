@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "oneDriveFolder": "门店生成工作台/资源库",
+  "requiredFiles": {
+    "04_模型库/manifest.json": "1493C7A70242C99CB85CD473FB094F5AAD40F34FCDF55EBF5F9F8BB10AA8AA7D",
+    "10_产品与陈列/展陈规则.xlsx": "FF90D437DC8B49D01BCA75395CED6D91E0B558EFDCBB40C411BD333E50AEE29C"
+  },
+  "sourcePdfCount": 513
+}

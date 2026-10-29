@@ -10,13 +10,10 @@
 git fetch origin
 git switch main
 git pull --ff-only origin main
-git lfs pull origin main
 git status
 ```
 
-本轮已把旧 `素材库/` 迁入 `资源库/`。90个命名SKP及271张图片放在 `资源库/04_模型库/`，不要再向旧目录添加新资源。`snapshot/20261008` 保留为历史分支，后续从更新后的main新建工作分支。
-
-原始门店PDF已恢复到 `资源库/01_各门店原图纸/`，提交推送后另一台电脑通过Git LFS同步。工具无配置时默认读取该目录；若已有 `resources.local.json`，将 `sourcePdfRoot` 改为 `资源库/01_各门店原图纸`，相对路径以仓库根目录为基准。该本机配置不提交。浏览器项目另行导出/导入JSON备份，不随Git自动同步。
+接着按 [OneDrive 资源库接入](onedrive-resources.md) 同步资源并运行连接脚本。代码由 Git 同步，资源由 OneDrive 同步；浏览器项目另行导出/导入 JSON 备份。
 
 如果 `pull --ff-only` 提示分叉，先检查本地独有提交，另开分支合并处理；不要强推覆盖远端main。
 
@@ -30,11 +27,11 @@ git switch -c work/model-review-20261009
 
 完成后审查 `git diff`、新增文件及相关验证结果，将本任务文件提交并推送该分支，通过Pull Request合入main。多人不要同时在同一个snapshot分支提交。
 
-PDF、PPTX、SKP等二进制文件由一人负责同一文件的一轮编辑，避免两台电脑同时修改同一个文件。文档中明确负责人、版本及用途；提交后等Git和LFS上传正常完成，再通知其他电脑拉取。GitHub上能看到文件名或LFS指针不等于实体已经上传成功。
+PDF、PPTX、SKP 等二进制资源由一人负责同一文件的一轮编辑，避免两台电脑同时修改同一个文件。相关代码 PR 记录资源版本及校验值，资源同步完成后再合并。另一台电脑拉取代码后先运行接入脚本核对 `resources.lock.json`。
 
 ## 资源提交检查
 
-- 新文件放入正式资源目录，核对 `.gitattributes` 的LFS规则和 `.gitignore`，防止只提交清单而遗漏模型/图片。
-- LFS文件迁移目录后仍使用同一个内容哈希，无需复制一份到旧目录。
+- 新文件放入 OneDrive 的正式资源目录，核对同步状态、文件数量及校验值。
+- 资源变更与代码 PR 一起更新 `resources.lock.json`；不要将绝对路径提交进 Git。
 - 换电脑下载后校验模型哈希、预览显示、PDF页数及相关工作台功能。
-- 网页模型放在 `资源库/04_模型库/<大类>/…/<模型目录>/网页模型/model.glb`（2026-10-13 共 38 个，均已入库）；白模轻量版 `white.glb` 入库，材质轻量版 `finish.glb` 不入库，由 `pnpm catalog:finish` 在每台机器生成。
+- 网页模型放在 OneDrive 的 `资源库/04_模型库/<大类>/…/<模型目录>/网页模型/model.glb`；`white.glb` 随资源同步，材质轻量版 `finish.glb` 可由 `pnpm catalog:finish` 在每台机器生成。
