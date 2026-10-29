@@ -1,11 +1,10 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { AlertTriangle, ExternalLink, ImageIcon } from 'lucide-react'
+import { AlertTriangle, Check, ExternalLink, FileArchive, ImageIcon } from 'lucide-react'
 import { RENDERED_MODES, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
   Asset,
-  Delivery,
   DesignNode,
   Layout,
   NodeCamera,
@@ -35,6 +34,7 @@ import {
 } from './api.ts'
 import { exportPlan } from './plan-export.ts'
 import { PlanView } from './PlanView.tsx'
+import { DeliveryList } from './DeliveryList.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 
@@ -93,6 +93,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const deliveries = useDeliveries(node.id)
   const createDelivery = useCreateDelivery(node.id)
   const [exporting, setExporting] = useState(false)
+  const [deliveryError, setDeliveryError] = useState<unknown>(null)
 
   const siStyle = node.siStyle ?? project.siStyle
   const views = useMemo(
@@ -194,6 +195,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   async function deliver() {
     const svg = planRef.current
     if (!svg || exporting) return
+    setDeliveryError(null)
     setExporting(true)
     try {
       const plan = await exportPlan(svg)
@@ -203,7 +205,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
         ...(hasDisplay && withDisplay ? { display: await displayExport() } : {}),
       })
     } catch (caught) {
-      if (!createDelivery.isError) setError(caught)
+      setDeliveryError(caught)
     } finally {
       setExporting(false)
     }
@@ -414,15 +416,6 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   disabled: current <= 0,
                 },
               ]}
-              second={{
-                label: delivering ? '正在生成交付文件…' : '生成交付文件',
-                onClick: () => void deliver(),
-                disabled: busy || delivering || !deliverable,
-                primary: true,
-                title: deliverable
-                  ? '生成完整版与展示版 PDF 和交付目录 ZIP，并写入服务器归档目录'
-                  : '请先渲染全部视角（缺失或过期的图需重新渲染）',
-              }}
               hint={
                 <>
                   已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张材质图（
@@ -437,74 +430,80 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 <p className="hint">正在生成材质图，请保持页面打开。</p>
               </div>
             )}
-            {hasDisplay && (
-              <label className="check-field">
+            <ErrorMessage error={error ?? cameras.error ?? renders.error} />
+          </div>
+          <section className="wb-card delivery-options" aria-label="生成交付">
+            <h3>
+              <FileArchive size={16} aria-hidden="true" />
+              生成交付
+            </h3>
+            <p className="hint">每次生成均包含以下文件，并保存到服务器归档目录。</p>
+            <ul className="delivery-included" aria-label="必含文件">
+              <li>
+                <Check size={14} aria-hidden="true" />
+                完整版 PDF<span>完整方案与物料明细</span>
+              </li>
+              <li>
+                <Check size={14} aria-hidden="true" />
+                展示版 PDF<span>用于方案展示</span>
+              </li>
+              <li>
+                <Check size={14} aria-hidden="true" />
+                交付目录 ZIP<span>一次下载整套文件</span>
+              </li>
+            </ul>
+            {hasDisplay ? (
+              <label className="delivery-ppt-option">
                 <input
                   type="checkbox"
                   checked={withDisplay}
+                  disabled={delivering}
                   onChange={(event) => setWithDisplay(event.target.checked)}
                 />
-                同时生成展陈方案 PPT（{display.data?.tables.length} 张桌，见“展陈”页签）
+                <span>
+                  同时生成展陈方案 PPT
+                  <small>{display.data?.tables.length} 张桌 · 页型沿用“展陈”中的设置</small>
+                </span>
               </label>
+            ) : (
+              <p className="hint">如需展陈方案 PPT，请先在“展陈”页签配置桌面。</p>
             )}
-            <ErrorMessage error={error ?? createDelivery.error ?? cameras.error ?? renders.error} />
-          </div>
+            <button
+              type="button"
+              className="primary delivery-generate"
+              onClick={() => void deliver()}
+              disabled={busy || delivering || !deliverable}
+              aria-describedby="delivery-availability"
+            >
+              {delivering ? '正在生成交付文件…' : '生成交付文件'}
+            </button>
+            <p className="hint" id="delivery-availability">
+              {delivering
+                ? '文件生成中，请等待完成后下载。'
+                : deliverable
+                  ? '已就绪，可生成双 PDF 与交付目录 ZIP。'
+                  : '请先渲染全部视角，缺失或过期的图需重新渲染。'}
+            </p>
+            {delivering && (
+              <div className="delivery-progress" role="status">
+                <span
+                  className="delivery-progress-track"
+                  role="progressbar"
+                  aria-label="交付文件生成进度"
+                  aria-valuetext="正在整理交付文件"
+                />
+                <strong>正在整理交付文件</strong>
+                <span>
+                  生成 PDF{hasDisplay && withDisplay ? '、展陈 PPT' : ''} 与
+                  ZIP，完成后可在下方下载。请保持页面打开。
+                </span>
+              </div>
+            )}
+            <ErrorMessage error={deliveryError ?? createDelivery.error} />
+          </section>
           <DeliveryList deliveries={deliveries.data ?? []} error={deliveries.error} />
         </>
       }
     />
-  )
-}
-
-interface DeliveryListProps {
-  deliveries: Delivery[]
-  error: unknown
-}
-
-const sizeText = (bytes: number) =>
-  bytes > 1024 * 1024 ? `${(bytes / 1024 / 1024).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`
-
-/** Earlier deliveries of this render node; each keeps its two PDFs and the folder ZIP. */
-function DeliveryList({ deliveries, error }: DeliveryListProps) {
-  return (
-    <section className="wb-card delivery-list" aria-label="交付文件">
-      <h3>交付文件（{deliveries.length}）</h3>
-      <ErrorMessage error={error} />
-      {deliveries.length === 0 ? (
-        <p className="hint">
-          生成后这里列出每次交付：完整版 PDF、展示版 PDF 和交付目录 ZIP（同时写入服务器归档目录）。
-        </p>
-      ) : (
-        <ol>
-          {deliveries.map((d) => (
-            <li key={d.id}>
-              <span className="delivery-name" title={d.archivePath ?? '未写入归档目录'}>
-                {d.folderName}
-              </span>
-              <span className="hint">
-                {new Date(d.createdAt).toLocaleString('zh-CN', { hour12: false })} · {d.views}{' '}
-                个视角
-              </span>
-              <span className="delivery-links">
-                <a href={d.fullPdf.url} target="_blank" rel="noreferrer">
-                  完整版 PDF（{d.pages.full} 页）
-                </a>
-                <a href={d.showPdf.url} target="_blank" rel="noreferrer">
-                  展示版 PDF（{d.pages.show} 页）
-                </a>
-                {d.displayPpt && (
-                  <a href={d.displayPpt.url} download={d.displayPpt.name}>
-                    展陈方案 PPT
-                  </a>
-                )}
-                <a href={d.zip.url} download={d.zip.name}>
-                  ZIP（{sizeText(d.zip.bytes)}）
-                </a>
-              </span>
-            </li>
-          ))}
-        </ol>
-      )}
-    </section>
   )
 }
