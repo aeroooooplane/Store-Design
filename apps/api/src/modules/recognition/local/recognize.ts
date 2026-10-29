@@ -231,7 +231,7 @@ export function recognizeVector(
   const insideOutline = (p: PxPoint) => (outline ? inRing(p, outline) : false)
   if (region) {
     notes.push(
-      `边界取${selected?.source === 'lease' ? '红色租赁线候选' : '图中线段'}中包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
+      `边界取${selected?.source === 'lease' ? '红色租赁线候选' : selected?.source === 'stroke' ? '独立线条轮廓' : '图中线段'}中包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
     )
   } else if (rectangle) {
     notes.push(

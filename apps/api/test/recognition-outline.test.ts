@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { findOutline } from '../src/modules/recognition/local/outline.ts'
-import { inRing, ringArea } from '../src/modules/recognition/local/region.ts'
+import { findRegion, inRing, ringArea } from '../src/modules/recognition/local/region.ts'
 import type { Line } from '../src/modules/recognition/local/lines.ts'
 import type { PxPoint } from '../src/modules/recognition/local/region.ts'
 
@@ -108,5 +108,67 @@ describe('租赁线候选与全图边界', () => {
     )
     expect(result?.source).toBe('drawing')
     expect(ringArea(result!.points) / 120000).toBeCloseTo(1, 1)
+  })
+
+  const structural = (points: PxPoint[]) => ring(points).map((l) => ({ ...l, w: 2 }))
+  const furniture = () =>
+    [200, 350].flatMap((x) => rectangle(x, 380, 35, 20, '#999999').map((l) => ({ ...l, w: 0.5 })))
+  const shop: PxPoint[] = [
+    [100, 100],
+    [500, 100],
+    [500, 400],
+    [100, 400],
+  ]
+
+  it('以独立闭合的线条补回家具造成的假凹口，不用凸包补边', () => {
+    const lines = [...structural(shop), ...furniture()]
+    const baseline = findRegion(800, 600, lines, anchors, hints)
+    expect(ringArea(baseline!)).toBeLessThan(120000)
+    const result = findOutline(800, 600, lines, anchors, { ...hints, expectedArea: 120000 })
+    expect(result?.source).toBe('stroke')
+    expect(result!.points).toHaveLength(4)
+    expect(ringArea(result!.points)).toBeCloseTo(120000, -1)
+  })
+
+  it('保留同一结构轮廓中真实的柱位凹角', () => {
+    const notch: PxPoint[] = [
+      [100, 100],
+      [260, 100],
+      [260, 160],
+      [320, 160],
+      [320, 100],
+      [500, 100],
+      [500, 400],
+      [100, 400],
+    ]
+    const lines = [...structural(notch), ...furniture()]
+    const result = findOutline(800, 600, lines, anchors, { ...hints, expectedArea: 116400 })
+    expect(result?.source).toBe('stroke')
+    expect(inRing([290, 120], result!.points)).toBe(false)
+    expect(inRing([220, 390], result!.points)).toBe(true)
+    expect(ringArea(result!.points)).toBeCloseTo(116400, -1)
+  })
+
+  it('缺少独立面积依据时不按线宽猜测外边界', () => {
+    const lines = [...structural(shop), ...furniture()]
+    const result = findOutline(800, 600, lines, anchors, hints)
+    expect(result?.source).toBe('drawing')
+  })
+
+  it('面积不符时不把粗线图框标为独立结构轮廓', () => {
+    const lines = [
+      ...structural([
+        [70, 70],
+        [550, 70],
+        [550, 450],
+        [70, 450],
+      ]),
+      ...rectangle(100, 100, 400, 300, '#404040'),
+    ]
+    const result = findOutline(800, 600, lines, anchors, { ...hints, expectedArea: 120000 })
+    expect(result?.source).toBe('drawing')
+    expect(result!.points).toEqual(
+      findRegion(800, 600, lines, anchors, { ...hints, expectedArea: 120000 }),
+    )
   })
 })
