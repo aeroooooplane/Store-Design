@@ -15,7 +15,12 @@ export const OBSTACLE_WORDS: [RegExp, Obstacle['kind']][] = [
   [/楼梯|台阶|扶梯/, 'stair'],
   [/配电|消防|管井|井道/, 'shaft'],
   [/服务台|层板|底柜|结构/, 'fixed'],
+  // Added on site, not part of the shell: counts as area (see Obstacle.addedLater).
+  [/橱窗|包板/, 'fixed'],
 ]
+
+/** Fixtures added after the shell: props are kept off them, but they do not shrink the shop. */
+export const ADDED_LATER_WORDS = /橱窗|包板/
 
 /** Smallest drawn box holding the point, that is not the boundary and not tiny. */
 export function boxAround(

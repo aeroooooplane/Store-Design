@@ -1,0 +1,848 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-19T14:52:25+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "PDF-163",
+ "name": "成都A世界照材专卖店",
+ "si": "SI1.0",
+ "shop_type": "中岛店",
+ "source": {
+  "page": 9,
+  "image_px": [
+   2400,
+   1696.7254408060453
+  ],
+  "pdf_scale": 2.0151133501259446
+ },
+ "calibration_px": {
+  "mmPerPixel": 5.2503,
+  "originPx": [
+   632.8,
+   410.5
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     632.8,
+     1546.9
+    ],
+    "mm": 4800,
+    "what": "上/下侧总宽 4800（左右租赁线）",
+    "mm_per_px": 5.2511,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "x",
+    "px": [
+     632.8,
+     1013.7
+    ],
+    "mm": 2000,
+    "what": "下侧 2000（左租赁线到新做墙体右面）",
+    "mm_per_px": 5.2507,
+    "error_pct": 0.01
+   },
+   {
+    "axis": "z",
+    "px": [
+     410.5,
+     1232.9
+    ],
+    "mm": 4320,
+    "what": "左右侧总长 4320（上下租赁线）",
+    "mm_per_px": 5.2529,
+    "error_pct": 0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     410.5,
+     600.8
+    ],
+    "mm": 1000,
+    "what": "左侧 120+80+800（上租赁线到中岛桌下沿）",
+    "mm_per_px": 5.2549,
+    "error_pct": 0.09
+   },
+   {
+    "axis": "z",
+    "px": [
+     600.8,
+     839.0
+    ],
+    "mm": 1250,
+    "what": "左侧 1250（中岛桌下沿到收银柜上沿）",
+    "mm_per_px": 5.2477,
+    "error_pct": -0.05
+   },
+   {
+    "axis": "z",
+    "px": [
+     934.0,
+     1077.0
+    ],
+    "mm": 750,
+    "what": "左侧 750（新做墙体上面到卷帘门轨道/门楣下沿）",
+    "mm_per_px": 5.2448,
+    "error_pct": -0.11
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    4.799,
+    0.0
+   ],
+   [
+    4.799,
+    4.318
+   ],
+   [
+    0.0,
+    4.318
+   ]
+  ],
+  "height": 2.85,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     0.0,
+     2.749
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     4.799,
+     0.0
+    ]
+   },
+   {
+    "kind": "side",
+    "a": [
+     4.799,
+     0.0
+    ],
+    "b": [
+     4.799,
+     4.318
+    ]
+   }
+  ],
+  "openEdges": [
+   {
+    "a": [
+     0.0,
+     0.0
+    ],
+    "b": [
+     4.799,
+     0.0
+    ]
+   },
+   {
+    "a": [
+     4.799,
+     0.0
+    ],
+    "b": [
+     4.799,
+     4.318
+    ]
+   },
+   {
+    "a": [
+     4.799,
+     4.318
+    ],
+    "b": [
+     2.0,
+     4.318
+    ]
+   },
+   {
+    "a": [
+     0.0,
+     2.749
+    ],
+    "b": [
+     0.0,
+     0.0
+    ]
+   }
+  ],
+  "obstacles": [
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      0.721,
+      2.987
+     ],
+     [
+      1.921,
+      2.987
+     ],
+     [
+      1.921,
+      4.187
+     ],
+     [
+      0.721,
+      4.187
+     ]
+    ],
+    "height": null,
+    "label": "原建筑柱 1200×1200（深色填充，被新做墙体包住）",
+    "addedLater": false
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      0.08,
+      0.08
+     ],
+     [
+      0.2,
+      0.08
+     ],
+     [
+      0.2,
+      0.2
+     ],
+     [
+      0.08,
+      0.2
+     ]
+    ],
+    "height": null,
+    "label": "不锈钢立柱 120×120（门楣支撑，左上）",
+    "addedLater": false
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      4.599,
+      0.08
+     ],
+     [
+      4.72,
+      0.08
+     ],
+     [
+      4.72,
+      0.2
+     ],
+     [
+      4.599,
+      0.2
+     ]
+    ],
+    "height": null,
+    "label": "不锈钢立柱 120×120（门楣支撑，右上）",
+    "addedLater": false
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      4.599,
+      3.299
+     ],
+     [
+      4.72,
+      3.299
+     ],
+     [
+      4.72,
+      3.42
+     ],
+     [
+      4.599,
+      3.42
+     ]
+    ],
+    "height": null,
+    "label": "不锈钢立柱 120×120（门楣支撑，右下，门楣下沿处）",
+    "addedLater": false
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 4800 mm = 914.1000000000001 px；x 向 2000 mm = 380.9000000000001 px；z 向 4320 mm = 822.4000000000001 px；z 向 1000 mm = 190.29999999999995 px；z 向 1250 mm = 238.20000000000005 px；z 向 750 mm = 143.0 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "1.8米X系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.1,
+    "cz": 0.5,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     0.999,
+     1.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "左上；桌上沿贴上租赁线"
+   },
+   {
+    "ref": "g02",
+    "label": "1.8米go系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.699,
+    "cz": 0.5,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     0.999,
+     1.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "右上；桌上沿贴上租赁线"
+   },
+   {
+    "ref": "g03",
+    "label": "1.8米X系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 3.699,
+    "cz": 2.299,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     1.0,
+     1.8
+    ],
+    "size_deviation_m": [
+     0.0,
+     -0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "右中"
+   },
+   {
+    "ref": "g04",
+    "label": "1.8m边桌储物柜+收银 H:900mm",
+    "assetId": "asset-2360478",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 1.0,
+    "cz": 2.499,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 1.237,
+    "rotation": 270,
+    "facing": 180,
+    "drawn_size_m": [
+     0.499,
+     1.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     -0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "背靠新做墙体上面，正面朝展示区；图上强电箱/弱电箱画在柜内；自动匹配误配成开箱储物柜，手动指定 1.8米边桌收银柜"
+   },
+   {
+    "ref": "g05",
+    "label": "75寸广告机(横向)",
+    "assetId": "asset-11479197",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 1.0,
+    "cz": 2.774,
+    "w": 1.69,
+    "d": 0.05,
+    "h": 0.958,
+    "rotation": 180.0,
+    "facing": 180.0,
+    "drawn_size_m": [
+     1.69,
+     null
+    ],
+    "size_deviation_m": [
+     0.0,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      0.155,
+      2.749
+     ],
+     [
+      1.845,
+      2.749
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": 1.425,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "嵌在新做墙体上面，收银柜上方（立面 E-03：155+1690+155，离地约 1425 mm）"
+   },
+   {
+    "ref": "g06",
+    "label": "灯箱(600*2300mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.025,
+    "cz": 3.121,
+    "w": 0.599,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     0.599,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      2.822
+     ],
+     [
+      0.0,
+      3.421
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "新做墙体左面（左租赁线上），朝主人流通道"
+   },
+   {
+    "ref": "g07",
+    "label": "灯箱(500*2300mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 0.025,
+    "cz": 3.988,
+    "w": 0.504,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     0.504,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      3.736
+     ],
+     [
+      0.0,
+      4.24
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "新做墙体左面、卷帘门轨道以南，朝主人流通道"
+   },
+   {
+    "ref": "g08",
+    "label": "灯箱(1700*980mm)",
+    "assetId": null,
+    "function": "signage",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 1.0,
+    "cz": 4.293,
+    "w": 1.7,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.7,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.15,
+      4.318
+     ],
+     [
+      1.85,
+      4.318
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": 1.45,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "新做墙体下面（下租赁线上），立面 A：150+1700+150，离地 1450 mm"
+   },
+   {
+    "ref": "g09",
+    "label": "1.8米边桌配件柜+开箱 H:900mm",
+    "assetId": "asset-34320268",
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.9,
+    "cz": 3.919,
+    "w": 0.5,
+    "d": 1.8,
+    "h": 1.214,
+    "rotation": 270,
+    "facing": 180,
+    "drawn_size_m": [
+     0.499,
+     1.8
+    ],
+    "size_deviation_m": [
+     -0.001,
+     0.0
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "背靠新建矮墙，正面朝店内；图上 1800×500"
+   },
+   {
+    "ref": "g10",
+    "label": "电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 3.994,
+    "cz": 4.038,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 270,
+    "facing": 270,
+    "drawn_size_m": [
+     0.551,
+     0.341
+    ],
+    "size_deviation_m": [
+     0.001,
+     -0.009
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "配件柜右侧；立面 B 侧面宽约 560、高 1100，屏幕朝向待确认（推荐朝右侧次人流通道）"
+   },
+   {
+    "ref": "g11",
+    "label": "门楣装发光LOGO（影石Insta360 全景相机，W2920 H250）",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 2.4,
+    "cz": -0.025,
+    "w": 2.92,
+    "d": 0.05,
+    "h": null,
+    "rotation": 180.0,
+    "facing": 180.0,
+    "drawn_size_m": [
+     2.92,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.94,
+      0.0
+     ],
+     [
+      3.86,
+      0.0
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "上侧门楣，立面 C：940+2920+940"
+   },
+   {
+    "ref": "g12",
+    "label": "门楣装发光LOGO（影石Insta360，W1770 H250）",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": -0.025,
+    "cz": 1.375,
+    "w": 1.77,
+    "d": 0.05,
+    "h": null,
+    "rotation": 90.0,
+    "facing": 90.0,
+    "drawn_size_m": [
+     1.77,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      0.49
+     ],
+     [
+      0.0,
+      2.26
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "左侧门楣，立面 D：490+1770+490（平面符号位置偏南，按立面）"
+   },
+   {
+    "ref": "g13",
+    "label": "门楣装发光LOGO（影石Insta360 全景相机，W2920 H250）",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 4.824,
+    "cz": 1.75,
+    "w": 2.92,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     2.92,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.799,
+      0.29
+     ],
+     [
+      4.799,
+      3.21
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "右侧门楣，立面 B：290+2920+290"
+   },
+   {
+    "ref": "g14",
+    "label": "门楣装发光LOGO（影石Insta360，W1770 H250）",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 3.4,
+    "cz": 3.524,
+    "w": 1.77,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.77,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      2.515,
+      3.499
+     ],
+     [
+      4.285,
+      3.499
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "下侧门楣在卷帘门轨道处（不在租赁线上，门楣以南 820 mm 仍属店内），立面 A：515+1770+515，朝下侧"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     2.749
+    ],
+    [
+     2.0,
+     2.749
+    ],
+    [
+     2.0,
+     4.318
+    ],
+    [
+     0.0,
+     4.318
+    ],
+    [
+     0.0,
+     3.669
+    ],
+    [
+     0.721,
+     3.669
+    ],
+    [
+     0.721,
+     3.499
+    ],
+    [
+     0.0,
+     3.499
+    ]
+   ],
+   "label": "左下新做墙体 2000×1600（网格斜线，包住原建筑柱）；上嵌 75 寸广告机，左嵌 600×2300、500×2300 两个灯箱，下嵌 1700×980 灯箱；左侧 170 mm 缺口为现有卷帘门轨道"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     2.0,
+     4.168
+    ],
+    [
+     3.82,
+     4.168
+    ],
+    [
+     3.82,
+     4.318
+    ],
+    [
+     2.0,
+     4.318
+    ]
+   ],
+   "label": "新建矮墙 H1100（1820×150，配件柜背后，下租赁线上）"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 20.72,
+  "stated_area_m2": 20.7,
+  "outer_size_m": [
+   4.8,
+   4.32
+  ],
+  "height_source": "图注“店铺吊顶高度：2850mm；公区天花高度：2970mm；门楣高度 400mm”，立面 2.850",
+  "counts_by_function": {
+   "island_table": 3,
+   "cashier": 1,
+   "screen": 2,
+   "signage": 7,
+   "unboxing_table": 1
+  },
+  "counts_by_category": {
+   "软装道具": 5,
+   "信息化物料": 5,
+   "品牌标识": 4
+  },
+  "matched_assets": 7
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "中岛店（矩形）：租赁线 4800×4320 = 20.74 ㎡，与图注 20.7 ㎡ 一致；上、左、右三面临通道，下侧中岛店默认开放",
+   "粗虚线为“现场现有卷帘门轨道”（立面 B/D 标注），横穿店铺，距下租赁线 820 mm；门楣框（400 高，吊顶 2850）只围到轨道处，轨道以南的配件柜、电子水牌在门楣外",
+   "门楣四角/下沿有 120×120 不锈钢立柱；左下角立柱被新做墙体包住",
+   "轨道北侧 80 mm 斜线条为“地面贴警示标识”，不建模",
+   "LOGO 宽度按立面图（平面上 LOGO 符号只是示意，位置和长度与立面不一致）",
+   "草稿比例 11.55 mm/px 错得厉害（实为约 5.25 mm/px），边界被放大成 11.7×11.1 m"
+  ]
+ }
+}

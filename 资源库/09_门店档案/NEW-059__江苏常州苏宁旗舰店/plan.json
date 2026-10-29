@@ -1,0 +1,777 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-10-19T14:52:25+08:00",
+ "generator": {
+  "script": "tools/store-archive/build_gold.py",
+  "version": "0.1.0"
+ },
+ "store_id": "NEW-059",
+ "name": "江苏常州苏宁旗舰店",
+ "si": "SI1.0",
+ "shop_type": "边厅店",
+ "source": {
+  "page": 2,
+  "image_px": [
+   2400,
+   1696.7254408060453
+  ],
+  "pdf_scale": 2.0151133501259446
+ },
+ "calibration_px": {
+  "mmPerPixel": 7.8659,
+  "originPx": [
+   500,
+   537
+  ],
+  "checks": [
+   {
+    "axis": "x",
+    "px": [
+     500,
+     1873
+    ],
+    "mm": 10814,
+    "what": "顶部总长 10814",
+    "mm_per_px": 7.8762,
+    "error_pct": 0.13
+   },
+   {
+    "axis": "x",
+    "px": [
+     530,
+     1759
+    ],
+    "mm": 9679,
+    "what": "底部 9679",
+    "mm_per_px": 7.8755,
+    "error_pct": 0.12
+   },
+   {
+    "axis": "z",
+    "px": [
+     535,
+     1090
+    ],
+    "mm": 4350,
+    "what": "左侧总深 4350",
+    "mm_per_px": 7.8378,
+    "error_pct": -0.36
+   },
+   {
+    "axis": "z",
+    "px": [
+     708,
+     1089
+    ],
+    "mm": 3000,
+    "what": "右侧 3000",
+    "mm_per_px": 7.874,
+    "error_pct": 0.1
+   }
+  ]
+ },
+ "space": {
+  "schemaVersion": 1,
+  "boundary": [
+   [
+    0.0,
+    0.0
+   ],
+   [
+    10.745,
+    0.0
+   ],
+   [
+    10.745,
+    4.35
+   ],
+   [
+    0.0,
+    4.35
+   ]
+  ],
+  "height": 3.0,
+  "entrances": [
+   {
+    "kind": "main",
+    "a": [
+     6.843,
+     4.35
+    ],
+    "b": [
+     8.637,
+     4.35
+    ]
+   }
+  ],
+  "openEdges": [],
+  "obstacles": [
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      2.375,
+      0.0
+     ],
+     [
+      3.076,
+      0.0
+     ],
+     [
+      3.076,
+      1.542
+     ],
+     [
+      2.375,
+      1.542
+     ]
+    ],
+    "height": null,
+    "label": "柱",
+    "addedLater": false
+   },
+   {
+    "kind": "column",
+    "polygon": [
+     [
+      10.005,
+      0.0
+     ],
+     [
+      10.713,
+      0.0
+     ],
+     [
+      10.713,
+      1.251
+     ],
+     [
+      10.005,
+      1.251
+     ]
+    ],
+    "height": null,
+    "label": "柱",
+    "addedLater": false
+   },
+   {
+    "kind": "fixed",
+    "polygon": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      2.375,
+      0.0
+     ],
+     [
+      2.375,
+      1.479
+     ],
+     [
+      0.0,
+      1.479
+     ]
+    ],
+    "height": null,
+    "label": "员工休息室 3.3㎡（含配电箱）",
+    "addedLater": false
+   }
+  ],
+  "calibration": {
+   "method": "dimension",
+   "reference": "x 向 10814 mm = 1373 px；x 向 9679 mm = 1229 px；z 向 4350 mm = 555 px；z 向 3000 mm = 381 px",
+   "verified": true
+  }
+ },
+ "layout": {
+  "items": [
+   {
+    "ref": "g01",
+    "label": "1.2米配件柜 H:2400mm",
+    "assetId": "asset-2595882",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 4.075,
+    "cz": 0.264,
+    "w": 1.2,
+    "d": 0.45,
+    "h": 2.4,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.196,
+     0.488
+    ],
+    "size_deviation_m": [
+     -0.004,
+     0.038
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g02",
+    "label": "1.2米配件柜 H:2400mm",
+    "assetId": "asset-2595882",
+    "function": "accessory_cabinet",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 5.27,
+    "cz": 0.264,
+    "w": 1.2,
+    "d": 0.45,
+    "h": 2.4,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.196,
+     0.488
+    ],
+    "size_deviation_m": [
+     -0.004,
+     0.038
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g03",
+    "label": "75寸广告机(横向)+LOGO",
+    "assetId": "asset-11479197",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 8.212,
+    "cz": 0.227,
+    "w": 1.69,
+    "d": 0.05,
+    "h": 0.958,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.668,
+     null
+    ],
+    "size_deviation_m": [
+     -0.022,
+     null
+    ],
+    "wall_segment_m": [
+     [
+      7.378,
+      0.252
+     ],
+     [
+      9.046,
+      0.252
+     ]
+    ],
+    "mount": "embedded",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": null
+   },
+   {
+    "ref": "g04",
+    "label": "1.8米收银台+开箱",
+    "assetId": "asset-24488377",
+    "function": "cashier",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 8.22,
+    "cz": 1.298,
+    "w": 1.786,
+    "d": 0.602,
+    "h": 1.205,
+    "rotation": 0,
+    "facing": 0,
+    "drawn_size_m": [
+     1.809,
+     0.582
+    ],
+    "size_deviation_m": [
+     0.023,
+     -0.02
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g05",
+    "label": "1.8米开箱桌 H:900mm",
+    "assetId": "asset-1788391",
+    "function": "unboxing_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 2.222,
+    "cz": 2.95,
+    "w": 1.8,
+    "d": 1.0,
+    "h": 0.907,
+    "rotation": 0,
+    "facing": null,
+    "drawn_size_m": [
+     1.801,
+     0.991
+    ],
+    "size_deviation_m": [
+     0.001,
+     -0.009
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": "图上两侧各 2 只高脚凳，模型“含 4 把白色高脚凳”已包含，凳子不另列；型号尺寸含凳子；碰撞与尺寸标注按桌体"
+   },
+   {
+    "ref": "g06",
+    "label": "1.8米GO系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 5.223,
+    "cz": 2.95,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     0.991,
+     1.793
+    ],
+    "size_deviation_m": [
+     -0.009,
+     -0.007
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g07",
+    "label": "1.8米X系列中岛桌 H:900mm",
+    "assetId": "asset-408124",
+    "function": "island_table",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 8.212,
+    "cz": 2.95,
+    "w": 1.0,
+    "d": 1.8,
+    "h": 1.327,
+    "rotation": 90,
+    "facing": null,
+    "drawn_size_m": [
+     0.991,
+     1.793
+    ],
+    "size_deviation_m": [
+     -0.009,
+     -0.007
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g08",
+    "label": "电子水牌",
+    "assetId": "asset-2587726",
+    "function": "screen",
+    "category": "信息化物料",
+    "source": "new",
+    "cx": 10.426,
+    "cz": 4.019,
+    "w": 0.55,
+    "d": 0.35,
+    "h": 1.65,
+    "rotation": 90,
+    "facing": 90,
+    "drawn_size_m": [
+     0.551,
+     0.354
+    ],
+    "size_deviation_m": [
+     0.001,
+     0.004
+    ],
+    "mount": "floor",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "model",
+    "note": null
+   },
+   {
+    "ref": "g09",
+    "label": "徕卡墙 W1200 H1200",
+    "assetId": null,
+    "function": "signage",
+    "category": "软装道具",
+    "source": "new",
+    "cx": 0.025,
+    "cz": 2.958,
+    "w": 1.196,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     1.196,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      0.0,
+      2.36
+     ],
+     [
+      0.0,
+      3.555
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "interior",
+    "render_as": "wall_image",
+    "note": "模型库只有 1.99 米徕卡墙"
+   },
+   {
+    "ref": "g10",
+    "label": "门头LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 5.073,
+    "cz": 4.375,
+    "w": 1.463,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.463,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      4.342,
+      4.35
+     ],
+     [
+      5.805,
+      4.35
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
+   },
+   {
+    "ref": "g11",
+    "label": "门头LOGO小字",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 9.183,
+    "cz": 4.375,
+    "w": 1.062,
+    "d": 0.05,
+    "h": null,
+    "rotation": 0.0,
+    "facing": 0.0,
+    "drawn_size_m": [
+     1.062,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      8.652,
+      4.35
+     ],
+     [
+      9.714,
+      4.35
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外门楣"
+   },
+   {
+    "ref": "g12",
+    "label": "侧面LOGO",
+    "assetId": null,
+    "function": "signage",
+    "category": "品牌标识",
+    "source": "new",
+    "cx": 10.77,
+    "cz": 2.851,
+    "w": 1.455,
+    "d": 0.05,
+    "h": null,
+    "rotation": 270.0,
+    "facing": 270.0,
+    "drawn_size_m": [
+     1.455,
+     null
+    ],
+    "size_deviation_m": null,
+    "wall_segment_m": [
+     [
+      10.745,
+      2.124
+     ],
+     [
+      10.745,
+      3.579
+     ]
+    ],
+    "mount": "wall",
+    "elevation": null,
+    "location": "facade",
+    "render_as": "wall_image",
+    "note": "店外右侧门楣（用户 10-15 指出：在店外门楣上，不在店内）"
+   }
+  ]
+ },
+ "hardscape": [
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.076,
+     0.0
+    ],
+    [
+     3.477,
+     0.0
+    ],
+    [
+     3.477,
+     0.489
+    ],
+    [
+     3.076,
+     0.489
+    ]
+   ],
+   "label": "包墙（新做）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.477,
+     0.0
+    ],
+    [
+     5.868,
+     0.0
+    ],
+    [
+     5.868,
+     0.039
+    ],
+    [
+     3.477,
+     0.039
+    ]
+   ],
+   "label": "配件柜背板包墙"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     5.868,
+     0.0
+    ],
+    [
+     6.214,
+     0.0
+    ],
+    [
+     6.214,
+     0.489
+    ],
+    [
+     5.868,
+     0.489
+    ]
+   ],
+   "label": "包墙（新做）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     6.214,
+     0.0
+    ],
+    [
+     10.005,
+     0.0
+    ],
+    [
+     10.005,
+     0.252
+    ],
+    [
+     6.214,
+     0.252
+    ]
+   ],
+   "label": "广告机包墙（新做）"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     0.0,
+     1.479
+    ],
+    [
+     3.123,
+     1.479
+    ],
+    [
+     3.123,
+     1.597
+    ],
+    [
+     0.0,
+     1.597
+    ]
+   ],
+   "label": "休息室前墙（新做隔墙，含乙级防火门），与左柱包板底面齐平"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     3.076,
+     0.511
+    ],
+    [
+     3.123,
+     0.511
+    ],
+    [
+     3.123,
+     1.597
+    ],
+    [
+     3.076,
+     1.597
+    ]
+   ],
+   "label": "左柱右侧包板"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     9.95,
+     0.252
+    ],
+    [
+     10.005,
+     0.252
+    ],
+    [
+     10.005,
+     1.345
+    ],
+    [
+     9.95,
+     1.345
+    ]
+   ],
+   "label": "右柱左侧包板"
+  },
+  {
+   "kind": "cladding",
+   "polygon": [
+    [
+     9.95,
+     1.251
+    ],
+    [
+     10.745,
+     1.251
+    ],
+    [
+     10.745,
+     1.345
+    ],
+    [
+     9.95,
+     1.345
+    ]
+   ],
+   "label": "右柱底面包板"
+  }
+ ],
+ "summary": {
+  "boundary_area_m2": 46.74,
+  "stated_area_m2": 47.5,
+  "outer_size_m": [
+   10.74,
+   4.35
+  ],
+  "height_source": "图注“店铺天花高度：3000mm”",
+  "counts_by_function": {
+   "accessory_cabinet": 2,
+   "screen": 2,
+   "cashier": 1,
+   "unboxing_table": 1,
+   "island_table": 2,
+   "signage": 4
+  },
+  "counts_by_category": {
+   "软装道具": 7,
+   "信息化物料": 2,
+   "品牌标识": 3
+  },
+  "matched_assets": 8
+ },
+ "review": {
+  "status": "待用户确认",
+  "checked_by": "Claude（看原图逐项修正）",
+  "notes": [
+   "转角铺：底部和右侧都临主人流通道；右侧为玻璃面，没有门",
+   "开箱桌两侧各两只凳子（图上无型号）",
+   "用户 10-15：包墙要连续齐平；休息室前墙与左柱包板底面齐平（y≈740），右上柱四周有包板",
+   "配件柜背靠墙按型号进深摆放，2 段包墙正面已改到与柜面齐平（用户 10-16 规则）"
+  ]
+ }
+}

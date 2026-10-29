@@ -241,6 +241,7 @@ export function PlanEditor({
     assetMap,
     siStyle,
     projectSi,
+    draftOnThisStep: draft?.baseNodeId === baseNode.id,
     create,
     setPaused,
     finishDraft,
@@ -302,15 +303,14 @@ export function PlanEditor({
   const planMain = view === 'plan'
   return (
     <WorkbenchLayout
-      left={
-        <>
-          {left}
-          {/* No props are added while the walls are being edited. */}
-          {!editWalls.editing && (
-            <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
-          )}
-        </>
+      left={left}
+      models={
+        // No props are added while the walls are being edited.
+        editWalls.editing ? undefined : (
+          <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
+        )
       }
+      defaultTab={isWhite ? 'history' : 'models'}
       center={
         editWalls.editing ? (
           <div className="wb-card">

@@ -28,12 +28,13 @@ import { HistoryTree } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
-import { ProjectCard } from './ProjectCard.tsx'
+import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
-import { WorkbenchLayout } from './WorkbenchLayout.tsx'
+import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
+import type { LeftTab } from './WorkbenchLayout.tsx'
 import { useUpdateProject } from '../projects/queries.ts'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 import { ViewMemoryContext } from './view-memory.ts'
@@ -74,6 +75,8 @@ export function Workbench({ project }: { project: Project }) {
   // The 3D view and plan/3D choice of each space, kept while moving between its steps.
   const viewMemory = useRef(new Map<string, ViewState>())
   const [siNotice, setSiNotice] = useState<string | null>(null)
+  // The left tab, kept while moving between steps; null means the stage decides.
+  const [leftTab, setLeftTab] = useState<LeftTab | null>(null)
   const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
     siSwitch.current = swap
   }, [])
@@ -120,12 +123,19 @@ export function Workbench({ project }: { project: Project }) {
   async function switchSi(style: SiStyle) {
     setSiBusy(true)
     try {
-      const notice = (await siSwitch.current?.(style)) ?? null
+      const result = (await siSwitch.current?.(style)) ?? { ok: true, message: null }
+      // Nothing was created: say why, and leave the project's default style as it was.
+      if (!result.ok) {
+        setSiNotice(result.message)
+        return
+      }
       // New generations and models added later follow the latest choice.
       if (project.siStyle !== style) {
         await updateProject.mutateAsync({ project, patch: { siStyle: style } })
       }
-      setSiNotice(notice ?? `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`)
+      setSiNotice(
+        result.message ?? `已切换为 ${style}：之后自动排布与添加模型使用 ${style} 的软装道具。`,
+      )
     } catch {
       setSiNotice(null)
     } finally {
@@ -140,29 +150,18 @@ export function Workbench({ project }: { project: Project }) {
   }
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
+  const cardSpaceData = cardSpace.data?.space ?? null
   const left = (
-    <>
-      <ProjectCard
-        project={project}
-        space={cardSpace.data?.space ?? null}
-        siStyle={shownSi}
-        siLocked={siLocked}
-        siBusy={siBusy}
-        onSiSwitch={(style) => void switchSi(style)}
-        notice={siNotice}
-        error={updateProject.error}
-      />
-      <HistoryTree
-        projectId={project.id}
-        projectName={project.name}
-        nodes={nodes}
-        selectedId={selectedId}
-        draftBaseId={draft.data?.baseNodeId ?? null}
-        onSelect={select}
-        onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
-        newSpaceDisabled={creatingSpace}
-      />
-    </>
+    <HistoryTree
+      projectId={project.id}
+      projectName={project.name}
+      nodes={nodes}
+      selectedId={selectedId}
+      draftBaseId={draft.data?.baseNodeId ?? null}
+      onSelect={select}
+      onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
+      newSpaceDisabled={creatingSpace}
+    />
   )
 
   const content = creatingSpace ? (
@@ -197,7 +196,25 @@ export function Workbench({ project }: { project: Project }) {
   ) : null
   return (
     <AgentSelectionProvider>
-      <ViewMemoryContext.Provider value={viewMemory.current}>{content}</ViewMemoryContext.Provider>
+      <ProjectCard
+        project={project}
+        space={cardSpaceData}
+        siStyle={shownSi}
+        siLocked={siLocked}
+        siBusy={siBusy}
+        onSiSwitch={(style) => void switchSi(style)}
+        notice={siNotice}
+        error={updateProject.error}
+      />
+      <WorkbenchInfoContext.Provider
+        value={<ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />}
+      >
+        <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
+          <ViewMemoryContext.Provider value={viewMemory.current}>
+            {content}
+          </ViewMemoryContext.Provider>
+        </LeftTabContext.Provider>
+      </WorkbenchInfoContext.Provider>
       <AgentDock
         projectId={project.id}
         nodeId={creatingSpace ? null : selectedId}

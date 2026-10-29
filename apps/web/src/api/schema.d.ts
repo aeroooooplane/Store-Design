@@ -799,6 +799,7 @@ export interface paths {
                                         height: number | null;
                                         /** @default null */
                                         label: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     /** @default null */
                                     calibration: {
@@ -1143,6 +1144,7 @@ export interface paths {
                                 height?: number | null;
                                 /** @default null */
                                 label?: string | null;
+                                addedLater?: boolean;
                             }[];
                             /** @default null */
                             calibration?: {
@@ -1208,6 +1210,7 @@ export interface paths {
                         siStyle?: "SI1.0" | "SI2.0";
                         /** Format: uuid */
                         sourceNodeId?: string;
+                        allowLayoutErrors?: boolean;
                     };
                 };
             };
@@ -1280,6 +1283,7 @@ export interface paths {
                                         height: number | null;
                                         /** @default null */
                                         label: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     /** @default null */
                                     calibration: {
@@ -1493,6 +1497,7 @@ export interface paths {
                                     height: number | null;
                                     /** @default null */
                                     label: string | null;
+                                    addedLater?: boolean;
                                 }[];
                                 /** @default null */
                                 calibration: {
@@ -1695,6 +1700,7 @@ export interface paths {
                                     height: number | null;
                                     /** @default null */
                                     label: string | null;
+                                    addedLater?: boolean;
                                 }[];
                                 /** @default null */
                                 calibration: {
@@ -1897,6 +1903,7 @@ export interface paths {
                                     height: number | null;
                                     /** @default null */
                                     label: string | null;
+                                    addedLater?: boolean;
                                 }[];
                                 /** @default null */
                                 calibration: {
@@ -2103,6 +2110,7 @@ export interface paths {
                                     height: number | null;
                                     /** @default null */
                                     label: string | null;
+                                    addedLater?: boolean;
                                 }[];
                                 /** @default null */
                                 calibration: {
@@ -3891,6 +3899,7 @@ export interface paths {
                                 height?: number | null;
                                 /** @default null */
                                 label?: string | null;
+                                addedLater?: boolean;
                             }[];
                             /** @default null */
                             calibration?: {
@@ -3970,6 +3979,7 @@ export interface paths {
                                     height: number | null;
                                     /** @default null */
                                     label: string | null;
+                                    addedLater?: boolean;
                                 }[];
                                 /** @default null */
                                 calibration: {
@@ -4133,6 +4143,7 @@ export interface paths {
                                 height?: number | null;
                                 /** @default null */
                                 label?: string | null;
+                                addedLater?: boolean;
                             }[];
                             /** @default null */
                             calibration?: {
@@ -5133,6 +5144,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -5216,6 +5228,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -5415,6 +5428,7 @@ export interface paths {
                                         height: number | null;
                                         /** @default null */
                                         label: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     height: number | null;
                                 } | null;
@@ -5583,6 +5597,7 @@ export interface paths {
                                         height: number | null;
                                         /** @default null */
                                         label: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     height: number | null;
                                 } | null;
@@ -5751,6 +5766,7 @@ export interface paths {
                                 height?: number | null;
                                 /** @default null */
                                 label?: string | null;
+                                addedLater?: boolean;
                             }[];
                             /** @default null */
                             calibration?: {
@@ -5882,6 +5898,7 @@ export interface paths {
                                         height: number | null;
                                         /** @default null */
                                         label: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     /** @default null */
                                     calibration: {
@@ -7159,6 +7176,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -7410,6 +7428,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -7701,6 +7720,7 @@ export interface paths {
                                         height?: number | null;
                                         /** @default null */
                                         label?: string | null;
+                                        addedLater?: boolean;
                                     }[];
                                     height: number | null;
                                 } | null;
@@ -7859,6 +7879,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -8119,6 +8140,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;
@@ -8427,6 +8449,7 @@ export interface paths {
                                             height: number | null;
                                             /** @default null */
                                             label: string | null;
+                                            addedLater?: boolean;
                                         }[];
                                         height: number | null;
                                     } | null;

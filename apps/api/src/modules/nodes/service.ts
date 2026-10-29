@@ -82,12 +82,18 @@ export async function checkLayout(
   space: Space,
   layout: Layout,
   kind: NodeKind | 'draft',
+  /** A white model may take the layout despite overlaps (the SI switch only reports them). */
+  allowErrors = false,
 ): Promise<Issue[]> {
   const catalog = await catalogAssets(db)
   const fit = checkAssetFit(layout, catalog)
   if (fit.length) throw new AppError('VALIDATION_FAILED', '布局中的模型引用无效', asIssues(fit))
   const issues = asIssues(validateLayout(space, layout, catalog))
-  if ((kind === 'white' || kind === 'render') && issues.some((i) => i.severity === 'error')) {
+  if (
+    (kind === 'white' || kind === 'render') &&
+    !(allowErrors && kind === 'white') &&
+    issues.some((i) => i.severity === 'error')
+  ) {
     throw new AppError('VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题', issues)
   }
   return issues
@@ -191,7 +197,10 @@ export async function createNode(
   if (input.layout) {
     layoutSpace = space ?? (input.parentId ? await resolveSpace(db, input.parentId) : null)
     if (!layoutSpace) throw new AppError('VALIDATION_FAILED', '布局缺少所属空间')
-    issues = [...issues, ...(await checkLayout(db, layoutSpace, input.layout, input.kind))]
+    issues = [
+      ...issues,
+      ...(await checkLayout(db, layoutSpace, input.layout, input.kind, input.allowLayoutErrors)),
+    ]
   }
 
   const cameras =

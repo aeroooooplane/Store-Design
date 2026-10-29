@@ -32,5 +32,10 @@ PYTHONUTF8=1 "$PY" build_sources.py
 | 2 | `ocr_title_blocks.py` | `_cache/OCR文字.json` | 文字被转成曲线的图纸页做图签 OCR，只识别右侧、底部图签和顶部标题；优先复用 10-09 的旧 OCR（新做约 1 小时） |
 | 2 | `classify_pages.py` | `页面分类.jsonl`、`_cache/页面摘要.json` | 按“目录 → 大标题 → 图签图名 → 图片特征 → 按块补齐”分类，选主平面页 |
 | 2 | `read_bom.py` | 各店 `bom.json`、`物料清单汇总.csv` | 按表头坐标还原物料清单表格，映射到模型库五大类 |
+| 3a | `draft_gold.ts` | `_cache/gold/<id>/draft.json` | 用工作台本地识别（与网页同一套代码）给金标准门店的主平面页出草稿；可带店号只跑部分门店 |
+| 3a | `gold_overlay.py`、`gold_crop.py` | `_cache/gold/<id>/overlay*.png`、`crop-*.png` | 把草稿或 plan 画回原图；按原像素裁切加网格，用来读坐标 |
+| 3a | `build_gold.py` | 各店 `plan.json` | 把看图修正记录 `edits.json` 换算成金标准平面（比例核对、型号匹配、按 facing.json 换算朝向、开箱桌按桌体） |
+| 3a | `gold_review.py` | `_cache/审核/金标准审核-<批次>.html` | 每批 5 家的审核页：原图叠加、示意平面图、道具清单 |
+| 3a | `score_drafts.py` | `_cache/识别打分.json` | 用金标准给本地识别草稿打分（比例、边界 IoU、道具位置与型号），识别改进前后对比用 |
 
 脚本可以重复运行；结果只取决于输入文件，`generatedAt` 除外。

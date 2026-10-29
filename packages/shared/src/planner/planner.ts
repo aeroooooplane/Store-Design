@@ -1103,14 +1103,16 @@ function narrowArea(space: Space, width: number): number {
 }
 
 /**
- * Usable floor area, the basis of the 按面积推荐 table count: the boundary minus obstacles and,
- * with `minWidth`, minus the floor too narrow for a `minWidth` square (see narrowArea), so arms
- * and slivers no table can stand in do not raise the count.
+ * Usable floor area, the basis of the 按面积推荐 table count: the boundary minus the shell's
+ * obstacles and, with `minWidth`, minus the floor too narrow for a `minWidth` square (see
+ * narrowArea), so arms and slivers no table can stand in do not raise the count. Fixtures added
+ * after the shell (a showcase platform, hollow cladding) count as floor: props are kept off them
+ * but they do not make the shop smaller.
  */
 export function usableArea(space: Space, minWidth = 0): number {
   const free =
     polygonArea(space.boundary) -
-    space.obstacles.reduce((sum, o) => sum + polygonArea(o.polygon), 0)
+    space.obstacles.reduce((sum, o) => sum + (o.addedLater ? 0 : polygonArea(o.polygon)), 0)
   return minWidth > 0 ? Math.max(0, free - narrowArea(space, minWidth)) : free
 }
 
