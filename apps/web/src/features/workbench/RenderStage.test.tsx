@@ -74,13 +74,14 @@ function image(cameraId: string, mode: 'white' | 'material', stale = false): Ren
   }
 }
 
-function fakeApi(cameras: NodeCamera[], images: RenderImage[]) {
+function fakeApi(cameras: NodeCamera[], images: RenderImage[], deliveryFails = false) {
   const uploads: { path: string; type: string | null }[] = []
   const deliveries: Delivery[] = []
   const posted: unknown[] = []
   const handle = async ({ request, path: pathname }: FakeRequest) => {
     if (pathname.endsWith('/deliveries')) {
       if (request.method === 'POST') {
+        if (deliveryFails) return notFound('交付生成失败', 'delivery')
         posted.push(await request.json())
         const file = (name: string) => ({ url: `/api/v1/files/${name}`, name, bytes: 2048 })
         const delivery: Delivery = {
@@ -214,5 +215,24 @@ describe('RenderStage', () => {
     expect(open.getAttribute('href')).toBe(entryImage.url)
     expect(open.getAttribute('target')).toBe('_blank')
     expect(screen.getByText('已过期，重新渲染后更新')).toBeTruthy()
+  })
+
+  it('keeps a failed delivery in its panel and allows retry without adding files', async () => {
+    const front = camera(0, '正面鸟瞰')
+    const images = [image(front.id, 'material')]
+    fakeApi([front], images, true)
+    show()
+    const generate = await screen.findByRole('button', { name: '生成交付文件' })
+    await waitFor(() => expect(generate).toHaveProperty('disabled', false))
+    fireEvent.click(generate)
+    const error = await screen.findByText('交付生成失败')
+    expect(screen.getByRole('region', { name: '生成交付' }).contains(error)).toBe(true)
+    expect(screen.queryByRole('link', { name: '完整版 PDF（5 页）' })).toBeNull()
+    await waitFor(() => expect(generate).toHaveProperty('disabled', false))
+
+    fakeApi([front], images)
+    fireEvent.click(generate)
+    expect(await screen.findByRole('link', { name: '完整版 PDF（5 页）' })).toBeTruthy()
+    expect(screen.queryByText('交付生成失败')).toBeNull()
   })
 })
