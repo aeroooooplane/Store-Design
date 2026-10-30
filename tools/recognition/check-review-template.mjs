@@ -86,6 +86,16 @@ vm.runInContext(
 )
 assert.equal(context.changed.status, 'pending')
 assert.equal(context.changed.reviewedAt, undefined)
-console.log(
-  '审核页校验通过：有效标注、比例、空白、自交、跨边入口、非有限比例、无效坐标、导入文本、修改撤回审核',
+assert.equal(
+  safeRecord({ ...valid, origin: 'recognizer', status: 'reviewed' }, sample).status,
+  'pending',
 )
+assert.equal(
+  safeRecord({ ...valid, origin: 'visual-correction', agentStatus: 'checked' }, sample).status,
+  'pending',
+)
+assert.equal(
+  safeRecord({ ...valid, origin: 'unknown', agentStatus: 'approved' }, sample).origin,
+  'manual',
+)
+console.log('审核页校验通过：几何、量尺、入口、导入、修改撤回及机器草稿不冒充审核（12 项）')

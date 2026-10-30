@@ -273,6 +273,10 @@
       <div id="stage"><img id="page" alt="门店原始主平面图" /><svg id="ink"></svg></div>
     </div>
     <aside>
+      <details open>
+        <summary>草稿与对图依据</summary>
+        <small id="evidence" style="white-space: pre-wrap"></small>
+      </details>
       <div class="modes">
         <button data-mode="boundary" aria-pressed="true">描边界</button
         ><button data-mode="calibration" aria-pressed="false">量尺两点</button
@@ -317,7 +321,10 @@
     'use strict'
     const dataset = /*DATASET*/ null
     const $ = (s) => document.querySelector(s),
-      key = 'recognition-review:' + dataset.id
+      key =
+        'recognition-review:' +
+        dataset.id +
+        (dataset.reviewVersion ? ':' + dataset.reviewVersion : '')
     const byId = new Map(dataset.samples.map((s) => [s.id, s]))
     let records = {},
       current = null,
@@ -334,7 +341,12 @@
       reviewer: '',
       notes: '',
       status: 'pending',
+      origin: 'manual',
+      agentStatus: 'unreviewed',
+      evidence: [],
     })
+    for (const s of dataset.samples)
+      if (s.annotationDraft) records[s.id] = safeRecord(s.annotationDraft, s)
     try {
       const saved = JSON.parse(localStorage.getItem(key) || '{}')
       if (saved.datasetId === dataset.id && saved.fingerprint === dataset.fingerprint)
@@ -366,7 +378,10 @@
       for (const s of dataset.samples) if (records[s.id]?.status === 'reviewed') reviewed++
       $('#summary').textContent =
         `固定版本 ${dataset.id} · ${dataset.samples.length} 家 · 验收集重叠 0 · 当前仅可审核边界相关标注`
-      $('#progress').textContent = `边界审核通过 ${reviewed}/${dataset.samples.length}`
+      const checked = dataset.samples.filter((s) => records[s.id]?.agentStatus === 'checked').length
+      const decisions = dataset.samples.filter((s) => records[s.id]?.status === 'ambiguous').length
+      $('#progress').textContent =
+        `人工审核通过 ${reviewed}/${dataset.samples.length} · 已对图待抽审 ${checked} · 待裁决 ${decisions}`
       $('#cards').innerHTML = dataset.samples
         .filter((s) => {
           const status = records[s.id]?.status || 'pending'
@@ -383,7 +398,11 @@
                 ? '边界审核通过'
                 : status === 'ambiguous'
                   ? '需要讨论'
-                  : '待审核'
+                  : records[s.id]?.agentStatus === 'checked'
+                    ? '已对图，待抽审'
+                    : records[s.id]?.origin === 'recognizer'
+                      ? '自动草稿，待校正'
+                      : '待审核'
           return `<article class="card"><img loading="lazy" src="images/${esc(s.id)}-thumb.webp" alt="${esc(s.name)}"><div class="info"><h2>${esc(s.id)} · ${esc(s.name)}</h2><div>第 ${s.page} 页 · ${esc(s.si)} · ${esc(s.shopType)}</div><span class="tag">${esc(s.preliminaryType)}</span><span class="tag status ${status === 'reviewed' ? 'done' : ''}">${label}</span><br><button data-open="${esc(s.id)}" ${s.renderError ? 'disabled' : ''}>打开原图并标注</button>${s.renderError ? '<small class="error">原图未能渲染，需先解决来源问题</small>' : ''}</div></article>`
         })
         .join('')
@@ -405,6 +424,7 @@
       $('#page-type').value = r.pageType
       $('#reviewer').value = r.reviewer
       $('#notes').value = r.notes
+      $('#evidence').textContent = r.evidence.join('\n')
       $('#open-edge').checked = r.openEdge
       $('#error').textContent = ''
       setMode('boundary')
@@ -474,11 +494,26 @@
       r.openEdge = a.openEdge === true
       r.status = ['pending', 'ambiguous', 'reviewed'].includes(a.status) ? a.status : 'pending'
       if (typeof a.reviewedAt === 'string') r.reviewedAt = a.reviewedAt
+      r.origin = ['manual', 'recognizer', 'visual-correction'].includes(a.origin)
+        ? a.origin
+        : 'manual'
+      r.agentStatus = ['unreviewed', 'checked', 'needs_decision'].includes(a.agentStatus)
+        ? a.agentStatus
+        : 'unreviewed'
+      if (
+        a.evidence !== undefined &&
+        (!Array.isArray(a.evidence) || a.evidence.some((v) => typeof v !== 'string'))
+      )
+        throw new Error('证据字段无效')
+      r.evidence = a.evidence ?? []
+      // 机器草稿不能凭一个状态字段升级成人工审核通过。
+      if (r.origin === 'recognizer' && r.status === 'reviewed') r.status = 'pending'
       return r
     }
     function mutate() {
       const r = records[current]
       r.status = 'pending'
+      r.agentStatus = 'unreviewed'
       delete r.reviewedAt
       save()
       draw()
@@ -591,6 +626,7 @@
       $('#error').textContent = errors.join('\n')
       if (errors.length) return
       r.status = 'reviewed'
+      r.origin = 'manual'
       r.reviewedAt = new Date().toISOString()
       save()
       draw()
@@ -650,6 +686,7 @@
               schemaVersion: 1,
               datasetId: dataset.id,
               fingerprint: dataset.fingerprint,
+              reviewVersion: dataset.reviewVersion ?? null,
               acceptanceListSha256: dataset.acceptanceListSha256,
               annotationScope: dataset.annotationScope,
               fullStoreQualificationAvailable: false,
@@ -675,6 +712,7 @@
         if (
           data.datasetId !== dataset.id ||
           data.fingerprint !== dataset.fingerprint ||
+          (data.reviewVersion ?? null) !== (dataset.reviewVersion ?? null) ||
           data.acceptanceListSha256 !== dataset.acceptanceListSha256
         )
           throw new Error('数据集版本或验收集指纹不匹配')
@@ -699,5 +737,9 @@
       }
     }
     render()
+    if (typeof location !== 'undefined') {
+      const requested = new URLSearchParams(location.search).get('store')
+      if (requested && dataset.samples.some((s) => s.id === requested)) open(requested)
+    }
   </script>
 </html>

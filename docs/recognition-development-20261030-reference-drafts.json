@@ -1,0 +1,3579 @@
+{
+  "schemaVersion": 1,
+  "datasetFingerprint": "d8330d3e4484939238255f59006a0cd8754a0c6910c88b1dfd4e80b30f5e4c3f",
+  "referenceKind": "agent_visual_draft",
+  "humanReviewed": false,
+  "method": "逐店独立对图描点，宽 1200 预览坐标换算回冻结原图像素；尺度直接读原图尺寸；非金标准。",
+  "samples": [
+    {
+      "id": "NEW-015",
+      "sourceSha256": "8ffc162206186a6a7adafa06669fe7aef4424635aa13ec346159957907a36628",
+      "imageSha256": "ea26e5c4325874e8b063ae09365a30f93a2672b90922f99ef46e29736bbaa794",
+      "boundary": [
+        [
+          862,
+          304
+        ],
+        [
+          1424,
+          304
+        ],
+        [
+          1424,
+          1238
+        ],
+        [
+          1394,
+          1238
+        ],
+        [
+          1394,
+          1342
+        ],
+        [
+          808,
+          1342
+        ],
+        [
+          808,
+          1310
+        ],
+        [
+          862,
+          1310
+        ]
+      ],
+      "calibration": [
+        [
+          748,
+          304
+        ],
+        [
+          748,
+          1342
+        ]
+      ],
+      "lengthMm": 10900,
+      "entrance": [
+        [
+          1394,
+          1342
+        ],
+        [
+          808,
+          1342
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按红色租赁线，后场包含在外轮廓内；左侧柱位单列障碍，不沿家具柜体收缩。横向 5900 与纵向 10900 尺寸相互支持。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按红色租赁线，后场包含在外轮廓内；左侧柱位单列障碍，不沿家具柜体收缩。横向 5900 与纵向 10900 尺寸相互支持。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        4
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-019",
+      "sourceSha256": "a7c4926a9f45891ebe99a2195c918036b99f098e6a9b8bfa04b97eadffc61d86",
+      "imageSha256": "4088374eb52a7cb39a737a94af36114041082b8d9f7fb9d0ab1f2cd9f5ab40cc",
+      "boundary": [
+        [
+          618,
+          362
+        ],
+        [
+          1646,
+          362
+        ],
+        [
+          1646,
+          876
+        ],
+        [
+          618,
+          876
+        ]
+      ],
+      "calibration": [
+        [
+          618,
+          296
+        ],
+        [
+          1646,
+          296
+        ]
+      ],
+      "lengthMm": 8000,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "raster",
+      "agentStatus": "needs_decision",
+      "notes": "扫描页按 8000×4000 外轮廓补齐；四边均有开放缺口，未标主通道。 待确认：主入口采用下侧开放边、左侧 850 缺口，还是其他边？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "扫描页按 8000×4000 外轮廓补齐；四边均有开放缺口，未标主通道。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "主入口采用下侧开放边、左侧 850 缺口，还是其他边？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-020",
+      "sourceSha256": "5625e4a3183552113fec6223319a803331fbeaa03b7107bb95d4cb1cf6626bea",
+      "imageSha256": "7e264ec6dba2ced6fe38327578e4aa5034dcf5a9461a63d47c970e01488636c6",
+      "boundary": [
+        [
+          628.35,
+          419.85
+        ],
+        [
+          1771.15,
+          419.85
+        ],
+        [
+          1771.15,
+          1276.95
+        ],
+        [
+          628.35,
+          1276.95
+        ]
+      ],
+      "calibration": [
+        [
+          628.35,
+          271.1875
+        ],
+        [
+          1771.15,
+          271.1875
+        ]
+      ],
+      "lengthMm": 4000,
+      "entrance": [
+        [
+          1771.15,
+          1276.95
+        ],
+        [
+          628.35,
+          1276.95
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "租赁线 4000×3000，包含后加包墙；下侧有主通道箭头。入口只标所在边，不声称是门净宽。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "租赁线 4000×3000，包含后加包墙；下侧有主通道箭头。入口只标所在边，不声称是门净宽。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-023",
+      "sourceSha256": "f506e7d6ab6fae5efbcf1208ea943ae65ac0adb1f9fe8a1952c0ec89db31e03a",
+      "imageSha256": "36fd622e1c74bb0380f04400cb81678ae3a12ecfea50c41bbe30cfed2ea6ec60",
+      "boundary": [
+        [
+          814,
+          218
+        ],
+        [
+          1384,
+          218
+        ],
+        [
+          1384,
+          1430
+        ],
+        [
+          630,
+          1430
+        ],
+        [
+          630,
+          1310
+        ],
+        [
+          814,
+          1310
+        ]
+      ],
+      "calibration": [
+        [
+          508,
+          218
+        ],
+        [
+          508,
+          1430
+        ]
+      ],
+      "lengthMm": 6600,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "量尺可按 6600；左侧配件柜、灰块及门之间的原有墙界不明确，保留阶梯形提案。 待确认：左侧配件墙和灰块哪些是原有墙/柱？左上门是否主入口？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "量尺可按 6600；左侧配件柜、灰块及门之间的原有墙界不明确，保留阶梯形提案。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "左侧配件墙和灰块哪些是原有墙/柱？左上门是否主入口？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-024",
+      "sourceSha256": "8d7adb4ddb79900db2aebcce44c5809786458581d2b5e7ed4759880d7e1c66f0",
+      "imageSha256": "ac78f05ae2bd0949899c4790f3f1c38ee5a29f1d5618ec40b6988e797ab87f56",
+      "boundary": [
+        [
+          1204,
+          336
+        ],
+        [
+          1366,
+          336
+        ],
+        [
+          1366,
+          1368
+        ],
+        [
+          794,
+          1368
+        ],
+        [
+          794,
+          548
+        ],
+        [
+          1204,
+          548
+        ]
+      ],
+      "calibration": [
+        [
+          686,
+          336
+        ],
+        [
+          686,
+          1368
+        ]
+      ],
+      "lengthMm": 5600,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "按图例灰色原有墙内侧描 L 形，斜线新建隔墙不扣边界。OCR 的 1130 应为图上 1150；改用完整 5600 尺寸量尺。 待确认：右侧与下侧均开放，主入口按哪一侧？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按图例灰色原有墙内侧描 L 形，斜线新建隔墙不扣边界。OCR 的 1130 应为图上 1150；改用完整 5600 尺寸量尺。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "右侧与下侧均开放，主入口按哪一侧？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-026",
+      "sourceSha256": "7946fdaeeb4b4bc82c1a32c7e758175e98f8809ad5ceb097b20954a607b45a86",
+      "imageSha256": "6dc51a742d708b6ae11f4b5f91daf3bb769c5a9a4ea5283a1947066bd1758a24",
+      "boundary": [
+        [
+          828,
+          314
+        ],
+        [
+          1442,
+          314
+        ],
+        [
+          1442,
+          1250
+        ],
+        [
+          692,
+          1250
+        ],
+        [
+          692,
+          490
+        ],
+        [
+          828,
+          490
+        ]
+      ],
+      "calibration": [
+        [
+          612,
+          314
+        ],
+        [
+          612,
+          1250
+        ]
+      ],
+      "lengthMm": 6715,
+      "entrance": [
+        [
+          1442,
+          1250
+        ],
+        [
+          692,
+          1250
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "下侧主通道明确；原图左上有外开门，暂按门后阶梯边界画提案。 待确认：左上外开门前的凹口是否属于租赁范围？需确认外边界是阶梯形还是完整矩形。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "下侧主通道明确；原图左上有外开门，暂按门后阶梯边界画提案。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": "左上外开门前的凹口是否属于租赁范围？需确认外边界是阶梯形还是完整矩形。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-049",
+      "sourceSha256": "7e80ae6e237f930ca4210d5aef2622a9c9b52225fbc6d48ee2f14493ecc56165",
+      "imageSha256": "7c3145fb8e54b03f07e0ca74880f90f985038b2d5103be4190ea04404686bf14",
+      "boundary": [
+        [
+          716,
+          438
+        ],
+        [
+          1390,
+          438
+        ],
+        [
+          1390,
+          700
+        ],
+        [
+          1644,
+          700
+        ],
+        [
+          1644,
+          1260
+        ],
+        [
+          562,
+          1260
+        ],
+        [
+          574,
+          630
+        ],
+        [
+          716,
+          630
+        ]
+      ],
+      "calibration": [
+        [
+          716,
+          332
+        ],
+        [
+          1644,
+          332
+        ]
+      ],
+      "lengthMm": 6500,
+      "entrance": [
+        [
+          562,
+          1260
+        ],
+        [
+          574,
+          630
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "沿红色租赁线补齐左侧开口；后场包含，中央柱不变成边界凹口。左侧主通道。原 OCR 局部 19651 异常，不采用。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "沿红色租赁线补齐左侧开口；后场包含，中央柱不变成边界凹口。左侧主通道。原 OCR 局部 19651 异常，不采用。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        5
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-064",
+      "sourceSha256": "a8aae8da4b6c64e06ce333186de156540c09f89e3eaecde25766a2c7ee5e1033",
+      "imageSha256": "69384e125d36a99e38d38998c6ec1acc2c052e4ea28f8fab785d9d348d6efa35",
+      "boundary": [
+        [
+          628,
+          362
+        ],
+        [
+          1600,
+          362
+        ],
+        [
+          1600,
+          1240
+        ],
+        [
+          628,
+          1240
+        ]
+      ],
+      "calibration": [
+        [
+          628,
+          256
+        ],
+        [
+          1600,
+          256
+        ]
+      ],
+      "lengthMm": 6800,
+      "entrance": [
+        [
+          1600,
+          1240
+        ],
+        [
+          628,
+          1240
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "红色租赁线完整矩形，6800×6150；后场和后加墙柜保持在范围内，水晶卷帘门位于下边。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "红色租赁线完整矩形，6800×6150；后场和后加墙柜保持在范围内，水晶卷帘门位于下边。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-065",
+      "sourceSha256": "86dcfa3329fe89924ea85ac40c63e4bb3d6147685222dfeb0072d3b0beef8a0a",
+      "imageSha256": "37424634918b9d00a242afb1ffda64290693b0b179e75bc0b6707c3f47652a34",
+      "boundary": [
+        [
+          242,
+          398
+        ],
+        [
+          1712,
+          398
+        ],
+        [
+          1712,
+          1358
+        ],
+        [
+          704,
+          1358
+        ]
+      ],
+      "calibration": [
+        [
+          242,
+          306
+        ],
+        [
+          1712,
+          306
+        ]
+      ],
+      "lengthMm": 7715,
+      "entrance": [
+        [
+          242,
+          398
+        ],
+        [
+          1712,
+          398
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "外轮廓为梯形，左侧真实斜边保留；上侧和右侧均明确标主通道，两侧均可作为入口所在边。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "外轮廓为梯形，左侧真实斜边保留；上侧和右侧均明确标主通道，两侧均可作为入口所在边。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0,
+        1
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-084",
+      "sourceSha256": "49686fb2ac7a5de1ec4f2f2713e1a1b4ec71ece317e4124566227496a9386354",
+      "imageSha256": "94f7b335824d5b460e38a1887bd60699cce089ef21be26dd51e3f18dd0db3842",
+      "boundary": [
+        [
+          918,
+          166
+        ],
+        [
+          1500,
+          166
+        ],
+        [
+          1500,
+          1508
+        ],
+        [
+          918,
+          1508
+        ]
+      ],
+      "calibration": [
+        [
+          814,
+          176
+        ],
+        [
+          814,
+          1518
+        ]
+      ],
+      "lengthMm": 11730,
+      "entrance": [
+        [
+          1500,
+          1508
+        ],
+        [
+          918,
+          1508
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按红色租赁外轮廓；后场计入，左下柱另作障碍。量尺采用外侧 11730 尺寸链，入口位于下侧。租赁线与墙内缘有小幅偏移，保留原线。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按红色租赁外轮廓；后场计入，左下柱另作障碍。量尺采用外侧 11730 尺寸链，入口位于下侧。租赁线与墙内缘有小幅偏移，保留原线。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-096",
+      "sourceSha256": "134b4b2c7e939ec9f9db5bfc5e576561843a68b1a43a95aad4fe122a0ce440a3",
+      "imageSha256": "48956bc2cd8bd1fce9216913f2d4da1f1c4e03a05a1a3feb73d12f9f9e44793e",
+      "boundary": [
+        [
+          542,
+          408
+        ],
+        [
+          1636,
+          408
+        ],
+        [
+          1636,
+          950
+        ],
+        [
+          542,
+          950
+        ]
+      ],
+      "calibration": [
+        [
+          542,
+          332
+        ],
+        [
+          1636,
+          332
+        ]
+      ],
+      "lengthMm": 10100,
+      "entrance": [
+        [
+          1636,
+          408
+        ],
+        [
+          1636,
+          950
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "raster",
+      "agentStatus": "checked",
+      "notes": "扫描页补齐矩形边界；10100 横向与 4988 纵向比例相符。顶部灰色构件另作障碍，右侧双开门作为入口边。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "扫描页补齐矩形边界；10100 横向与 4988 纵向比例相符。顶部灰色构件另作障碍，右侧双开门作为入口边。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-098",
+      "sourceSha256": "3a9454a9007d76d46798bf1c00df0aea4b50b224ff08a7db78a6de5b929f2a4c",
+      "imageSha256": "dafa7d3207b9026867f2de24eb5bad12a5f6ca0ca68ccb4d05f734030681a942",
+      "boundary": [
+        [
+          778,
+          426
+        ],
+        [
+          1556,
+          426
+        ],
+        [
+          1556,
+          1304
+        ],
+        [
+          778,
+          1304
+        ]
+      ],
+      "calibration": [
+        [
+          772,
+          242
+        ],
+        [
+          1562,
+          242
+        ]
+      ],
+      "lengthMm": 8400,
+      "entrance": [
+        [
+          1556,
+          1304
+        ],
+        [
+          778,
+          1304
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "上方 MR/AHU 不属于店内平面，左侧员工休息室包含；下侧红色租赁线与主通道明确。8400 横纵轴尺寸可交叉核对。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "上方 MR/AHU 不属于店内平面，左侧员工休息室包含；下侧红色租赁线与主通道明确。8400 横纵轴尺寸可交叉核对。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "NEW-099",
+      "sourceSha256": "b309c61706d38d906289bcdc7bed4f6950536d5d58c3e688276f89f8624cdfea",
+      "imageSha256": "3831c3f019e2ca647dc08119e7b2c27ed74bf3ef5673ff05a20a7671001619fa",
+      "boundary": [
+        [
+          532,
+          330
+        ],
+        [
+          1666,
+          330
+        ],
+        [
+          1666,
+          1134
+        ],
+        [
+          532,
+          1134
+        ]
+      ],
+      "calibration": [
+        [
+          532,
+          220
+        ],
+        [
+          1666,
+          220
+        ]
+      ],
+      "lengthMm": 5950,
+      "entrance": [
+        [
+          1666,
+          330
+        ],
+        [
+          1666,
+          1134
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按红色租赁边界补全矩形，右侧柱独立扣除；右侧和下侧均标主通道，接受这两条入口边。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按红色租赁边界补全矩形，右侧柱独立扣除；右侧和下侧均标主通道，接受这两条入口边。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1,
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-003",
+      "sourceSha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+      "imageSha256": "ddf0de40381137272e6ad9828cce7f39a6d590ceed1f7f562b9ad37f4ddaec29",
+      "boundary": [
+        [
+          858,
+          358
+        ],
+        [
+          1528,
+          358
+        ],
+        [
+          1528,
+          1446
+        ],
+        [
+          858,
+          1428
+        ]
+      ],
+      "calibration": [
+        [
+          858,
+          238
+        ],
+        [
+          1528,
+          238
+        ]
+      ],
+      "lengthMm": 5300,
+      "entrance": [
+        [
+          1528,
+          1446
+        ],
+        [
+          858,
+          1428
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按黑色原墙内缘和底部略斜的外框闭合；后场包含，柱独立处理，入口在底部。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按黑色原墙内缘和底部略斜的外框闭合；后场包含，柱独立处理，入口在底部。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-050",
+      "sourceSha256": "84f1c75f1f393e297700ee49b55d29ebdc985577084567a8a2066784c31d9cb9",
+      "imageSha256": "05d7eaed2e180ed5adcfb9beb608760a4051515d796f75e2efe3549efd57435e",
+      "boundary": [
+        [
+          802,
+          278
+        ],
+        [
+          1510,
+          278
+        ],
+        [
+          1510,
+          1232
+        ],
+        [
+          1232,
+          1232
+        ],
+        [
+          1042,
+          1422
+        ],
+        [
+          1042,
+          746
+        ],
+        [
+          802,
+          746
+        ]
+      ],
+      "calibration": [
+        [
+          802,
+          224
+        ],
+        [
+          1510,
+          224
+        ]
+      ],
+      "lengthMm": 8800,
+      "entrance": [
+        [
+          1510,
+          1232
+        ],
+        [
+          1232,
+          1232
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "needs_decision",
+      "notes": "补齐左侧 L 形原墙与下方三角展示区提案；下侧 ENTER 明确。 待确认：下方三角展示区是否属于租赁范围？红色水平线是门头投影还是租赁分界？这决定是否纳入三角区。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "补齐左侧 L 形原墙与下方三角展示区提案；下侧 ENTER 明确。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": "下方三角展示区是否属于租赁范围？红色水平线是门头投影还是租赁分界？这决定是否纳入三角区。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-051",
+      "sourceSha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+      "imageSha256": "82e663784b24eef1b5933dd284998add2a9d268ccbbc662faf988c53f493d44f",
+      "boundary": [
+        [
+          354,
+          592
+        ],
+        [
+          1878,
+          592
+        ],
+        [
+          1878,
+          1138
+        ],
+        [
+          354,
+          1138
+        ]
+      ],
+      "calibration": [
+        [
+          354,
+          494
+        ],
+        [
+          1878,
+          494
+        ]
+      ],
+      "lengthMm": 6700,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "按 6700×2400 外轮廓；后侧矮墙和灯箱为新增构件，边界不沿柜内侧收缩。 待确认：前侧与左右侧均开放，主入口是否按下侧长边？图上未标主通道。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按 6700×2400 外轮廓；后侧矮墙和灯箱为新增构件，边界不沿柜内侧收缩。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "前侧与左右侧均开放，主入口是否按下侧长边？图上未标主通道。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-073",
+      "sourceSha256": "7de29d9944a3db1b22a9eead0b841fa3b70b0c3236853958a912558e99d067f3",
+      "imageSha256": "4910711d0059edac483aedbe9445b1ee57504c4a28c4c1e4a57b685a2674bc6f",
+      "boundary": [
+        [
+          756,
+          228
+        ],
+        [
+          1720,
+          228
+        ],
+        [
+          1720,
+          1032
+        ],
+        [
+          756,
+          1032
+        ]
+      ],
+      "calibration": [
+        [
+          756,
+          138
+        ],
+        [
+          1720,
+          138
+        ]
+      ],
+      "lengthMm": 6000,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "raster",
+      "agentStatus": "needs_decision",
+      "notes": "扫描页红色租赁线为 6000×5000 矩形；左侧为商场栏杆，尺寸与 30㎡标注相符。 待确认：上、右、下三个开放方向中，主通道在哪一侧？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "扫描页红色租赁线为 6000×5000 矩形；左侧为商场栏杆，尺寸与 30㎡标注相符。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "上、右、下三个开放方向中，主通道在哪一侧？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-079",
+      "sourceSha256": "bc28fef737dbf163ad8d01cadd241bfb5f20aa46c3db39dd3fb38b2be0644af3",
+      "imageSha256": "2b2b5bf8659c208d8447588b7d7a0451a4b9d0fcf8b1d4737cae4c4a757eac12",
+      "boundary": [
+        [
+          974,
+          8
+        ],
+        [
+          1472,
+          8
+        ],
+        [
+          1472,
+          1340
+        ],
+        [
+          1312,
+          1340
+        ],
+        [
+          1312,
+          1190
+        ],
+        [
+          974,
+          1190
+        ]
+      ],
+      "calibration": [
+        [
+          974,
+          1240
+        ],
+        [
+          1312,
+          1240
+        ]
+      ],
+      "lengthMm": 5150,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "needs_decision",
+      "notes": "黑底页手动补齐下部凹凸轮廓，按底部 5150 尺寸量尺；上边贴近页面裁边，主入口不清楚。 待确认：请确认该页顶部边界是否完整，以及主入口所在边；当前顶部紧贴裁边，下方可见的门通向内部分区。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "黑底页手动补齐下部凹凸轮廓，按底部 5150 尺寸量尺；上边贴近页面裁边，主入口不清楚。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "请确认该页顶部边界是否完整，以及主入口所在边；当前顶部紧贴裁边，下方可见的门通向内部分区。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-090",
+      "sourceSha256": "5cbff81c4037d6f8eb9b384a1d8ae42e989287cbe1644b7d9658dbf0eb0499d7",
+      "imageSha256": "c3f3db9cbd3039a616ad6a0d47188673e55568ec7c68ad90cf4e41ace17d86df",
+      "boundary": [
+        [
+          368,
+          554
+        ],
+        [
+          1904,
+          554
+        ],
+        [
+          1904,
+          1090
+        ],
+        [
+          368,
+          1090
+        ]
+      ],
+      "calibration": [
+        [
+          368,
+          474
+        ],
+        [
+          1904,
+          474
+        ]
+      ],
+      "lengthMm": 7600,
+      "entrance": [
+        [
+          1904,
+          1090
+        ],
+        [
+          368,
+          1090
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "7600×2650 外轮廓与图上 20.1㎡一致；后加矮墙、灯箱计入范围，底部 150mm 不锈钢外收边不扩大主体轮廓。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "7600×2650 外轮廓与图上 20.1㎡一致；后加矮墙、灯箱计入范围，底部 150mm 不锈钢外收边不扩大主体轮廓。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-095",
+      "sourceSha256": "cda69cbae05ef1452e4beffc2928209b2a2eb8ae41bb2b86b4b6784806bdabc1",
+      "imageSha256": "5d18ad8ce7f0f70de6cd5f087c6624672313ce0036a2fce3228fb072d1d9267e",
+      "boundary": [
+        [
+          802,
+          362
+        ],
+        [
+          1446,
+          362
+        ],
+        [
+          1446,
+          1128
+        ],
+        [
+          802,
+          1128
+        ]
+      ],
+      "calibration": [
+        [
+          720,
+          362
+        ],
+        [
+          720,
+          1128
+        ]
+      ],
+      "lengthMm": 6845,
+      "entrance": [
+        [
+          1446,
+          362
+        ],
+        [
+          1446,
+          1128
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "5770×6845 矩形与 39.5㎡一致。右下圆角虚线标的是门楣投影，不能误当弧形墙；右侧与下侧均主通道。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "5770×6845 矩形与 39.5㎡一致。右下圆角虚线标的是门楣投影，不能误当弧形墙；右侧与下侧均主通道。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1,
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-096",
+      "sourceSha256": "4d0f4c03daec1d15f6985629adddf1b68d710643e89d7dbd9f1ef2700e22dd19",
+      "imageSha256": "631f9d6431e34da7ab77af28b1fe5ff7be87a3d6a5599a95b8a41dbb46ca5382",
+      "boundary": [
+        [
+          1192,
+          520
+        ],
+        [
+          1534,
+          520
+        ],
+        [
+          1534,
+          1094
+        ],
+        [
+          760,
+          1094
+        ],
+        [
+          760,
+          828
+        ],
+        [
+          898,
+          828
+        ],
+        [
+          948,
+          778
+        ],
+        [
+          948,
+          578
+        ],
+        [
+          1140,
+          578
+        ]
+      ],
+      "calibration": [
+        [
+          760,
+          1138
+        ],
+        [
+          1534,
+          1138
+        ]
+      ],
+      "lengthMm": 5550,
+      "entrance": [
+        [
+          1534,
+          520
+        ],
+        [
+          1534,
+          1094
+        ]
+      ],
+      "geometry": "多种形态",
+      "openEdge": true,
+      "pageType": "vector-outline",
+      "agentStatus": "needs_decision",
+      "notes": "按外围尺寸补齐 L 形提案，商场斜线空域排除；柱周界线在租赁线和新增包板之间仍有歧义。 待确认：中央柱周围包板区域是否全部属于租赁范围？请确认斜线商场空域与柱周区域的分界。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按外围尺寸补齐 L 形提案，商场斜线空域排除；柱周界线在租赁线和新增包板之间仍有歧义。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1,
+        2,
+        3
+      ],
+      "question": "中央柱周围包板区域是否全部属于租赁范围？请确认斜线商场空域与柱周区域的分界。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-097",
+      "sourceSha256": "02a8704e29744ba05d3e6290134a8f8aafa7cd07a292753be7a99a8cf7a179d9",
+      "imageSha256": "8a19e3509511110da2a3dabe8984ad219c88893d7c31b3bf270d1ca22a823020",
+      "boundary": [
+        [
+          402,
+          480
+        ],
+        [
+          526,
+          480
+        ],
+        [
+          526,
+          508
+        ],
+        [
+          1694,
+          508
+        ],
+        [
+          1694,
+          434
+        ],
+        [
+          1792,
+          434
+        ],
+        [
+          1792,
+          938
+        ],
+        [
+          402,
+          938
+        ]
+      ],
+      "calibration": [
+        [
+          402,
+          348
+        ],
+        [
+          1822,
+          348
+        ]
+      ],
+      "lengthMm": 14230,
+      "entrance": [
+        [
+          1792,
+          434
+        ],
+        [
+          1792,
+          938
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "量尺按顶部 14230；右侧客流 60%，左侧 40%，暂标右边入口。上侧排烟送风与消防疏散区域归属待确认。 待确认：上侧排烟送风设备区、左右消防疏散区域哪些属于本店租赁范围？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "量尺按顶部 14230；右侧客流 60%，左侧 40%，暂标右边入口。上侧排烟送风与消防疏散区域归属待确认。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        5
+      ],
+      "question": "上侧排烟送风设备区、左右消防疏散区域哪些属于本店租赁范围？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-098",
+      "sourceSha256": "7bffbff41edf785f85fba20be00ed931b92cf0ef2f947991695368703e92a133",
+      "imageSha256": "8c7c99d8fccb27c8e63771f1b6806d85a17de4ca3eed4b741f7fff0259f9a6d4",
+      "boundary": [
+        [
+          340,
+          638
+        ],
+        [
+          1808,
+          638
+        ],
+        [
+          1808,
+          1074
+        ],
+        [
+          340,
+          1074
+        ]
+      ],
+      "calibration": [
+        [
+          340,
+          590
+        ],
+        [
+          1808,
+          590
+        ]
+      ],
+      "lengthMm": 13040,
+      "entrance": [
+        [
+          1808,
+          1074
+        ],
+        [
+          340,
+          1074
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "红色租赁线矩形，左右商场柱另作扣除；底部主通道，两侧为次通道，不能混同主入口。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "红色租赁线矩形，左右商场柱另作扣除；底部主通道，两侧为次通道，不能混同主入口。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-099",
+      "sourceSha256": "0b1b61e4c962bfdd2b512b0640bdc19f7557f9927d70ae3bfad20f69e8b749a5",
+      "imageSha256": "40fef453babd1e5a4cb2306d31d218373a0bf034bc927c8ea01c4fb1b2476a9e",
+      "boundary": [
+        [
+          494,
+          594
+        ],
+        [
+          1610,
+          594
+        ],
+        [
+          1610,
+          1010
+        ],
+        [
+          974,
+          1010
+        ],
+        [
+          494,
+          680
+        ]
+      ],
+      "calibration": [
+        [
+          494,
+          390
+        ],
+        [
+          1610,
+          390
+        ]
+      ],
+      "lengthMm": 14960,
+      "entrance": [
+        [
+          1610,
+          594
+        ],
+        [
+          1610,
+          1010
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "上部斜线楼梯及走道标注不属于店铺，排除；左侧扶梯形成真实斜边，右、下侧为主通道；柱独立处理。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "上部斜线楼梯及走道标注不属于店铺，排除；左侧扶梯形成真实斜边，右、下侧为主通道；柱独立处理。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1,
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-101",
+      "sourceSha256": "42bb31e5dcc4e6c110503c64a64112d05e2930f516f052bf6ab0416eae61e5d5",
+      "imageSha256": "63dd671bf5f0897a1f9694ae28cc7faa29810bf6bd45b528b17835fb198f9216",
+      "boundary": [
+        [
+          890,
+          458
+        ],
+        [
+          1404,
+          458
+        ],
+        [
+          1404,
+          1196
+        ],
+        [
+          890,
+          1196
+        ]
+      ],
+      "calibration": [
+        [
+          890,
+          318
+        ],
+        [
+          1404,
+          318
+        ]
+      ],
+      "lengthMm": 3000,
+      "entrance": [
+        [
+          890,
+          458
+        ],
+        [
+          1404,
+          458
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按租赁线外矩形，中央柱及包柱独立处理；四边都明确标主通道，评测允许四边，不强指定唯一门。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按租赁线外矩形，中央柱及包柱独立处理；四边都明确标主通道，评测允许四边，不强指定唯一门。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-140",
+      "sourceSha256": "d8a20c258bf87143b08ee4932f5324b7860f3463d9bae6c745a302f335d4a8d7",
+      "imageSha256": "db44d8812cadd43106ed3ff96436f580e9ef54e5d612395dd0a1e70b14e869ae",
+      "boundary": [
+        [
+          790,
+          512
+        ],
+        [
+          1280,
+          512
+        ],
+        [
+          1302,
+          354
+        ],
+        [
+          1600,
+          374
+        ],
+        [
+          1544,
+          1040
+        ],
+        [
+          1536,
+          1078
+        ],
+        [
+          1518,
+          1108
+        ],
+        [
+          1490,
+          1132
+        ],
+        [
+          1458,
+          1146
+        ],
+        [
+          1420,
+          1152
+        ],
+        [
+          1196,
+          1168
+        ],
+        [
+          1042,
+          1162
+        ],
+        [
+          654,
+          1180
+        ],
+        [
+          654,
+          710
+        ],
+        [
+          790,
+          700
+        ]
+      ],
+      "calibration": [
+        [
+          636,
+          182
+        ],
+        [
+          1632,
+          182
+        ]
+      ],
+      "lengthMm": 8722,
+      "entrance": [],
+      "geometry": "多种形态",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "手动保留右下弧形及左侧凹口提案，量尺按总宽 8722；不以家具边闭合。 待确认：上侧大片斜线区域是否属于商场设备区？右下多条曲线中，实际租赁边界对应哪条（门轨还是门头投影）？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "手动保留右下弧形及左侧凹口提案，量尺按总宽 8722；不以家具边闭合。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "上侧大片斜线区域是否属于商场设备区？右下多条曲线中，实际租赁边界对应哪条（门轨还是门头投影）？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-189",
+      "sourceSha256": "25733a6c2633c2ddef2bf83a648d72f0ebdf9616614dea4498fe2cb4d96c7297",
+      "imageSha256": "4b957e43ed74e3184d0604dc9aafee232f745488a85f137c339d114fe5c0fc44",
+      "boundary": [
+        [
+          846,
+          248
+        ],
+        [
+          1640,
+          248
+        ],
+        [
+          1640,
+          1398
+        ],
+        [
+          682,
+          1398
+        ],
+        [
+          682,
+          740
+        ]
+      ],
+      "calibration": [
+        [
+          480,
+          248
+        ],
+        [
+          480,
+          1398
+        ]
+      ],
+      "lengthMm": 6060,
+      "entrance": [
+        [
+          1640,
+          1398
+        ],
+        [
+          682,
+          1398
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "左侧黑色斜墙才是原墙，排除更左方矩形空域；后加柜体和包板不再收缩轮廓，底部入口。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "左侧黑色斜墙才是原墙，排除更左方矩形空域；后加柜体和包板不再收缩轮廓，底部入口。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-202",
+      "sourceSha256": "c075a140cba3688f66ea2eb67d8988e55f387543b9a6508bdb0301f43aacfa80",
+      "imageSha256": "97495ddebf67b94259e45158c5c38d42beb2a2f52a06c27d0ff258125127c1ba",
+      "boundary": [
+        [
+          742,
+          256
+        ],
+        [
+          1314,
+          256
+        ],
+        [
+          1314,
+          330
+        ],
+        [
+          1542,
+          330
+        ],
+        [
+          1542,
+          1316
+        ],
+        [
+          742,
+          1316
+        ]
+      ],
+      "calibration": [
+        [
+          552,
+          256
+        ],
+        [
+          552,
+          1316
+        ]
+      ],
+      "lengthMm": 11130,
+      "entrance": [
+        [
+          1542,
+          1316
+        ],
+        [
+          742,
+          1316
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "包含上侧及右侧员工休息区，按原墙范围闭合；四角柱及小型外伸构件独立处理，本次不评价障碍面积。下侧主通道明确。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "包含上侧及右侧员工休息区，按原墙范围闭合；四角柱及小型外伸构件独立处理，本次不评价障碍面积。下侧主通道明确。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        4
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-217",
+      "sourceSha256": "33ea1fff43c619cff65cb48fb59ed4ce0214f5e2ac0687de2f942ca4d5bf1613",
+      "imageSha256": "e3c47b33fe6e2b0b9eec7a57496ee055bea4a12432740e7458943e2e831aafde",
+      "boundary": [
+        [
+          798,
+          362
+        ],
+        [
+          928,
+          362
+        ],
+        [
+          928,
+          310
+        ],
+        [
+          1144,
+          310
+        ],
+        [
+          1144,
+          176
+        ],
+        [
+          1252,
+          176
+        ],
+        [
+          1252,
+          234
+        ],
+        [
+          1396,
+          234
+        ],
+        [
+          1396,
+          1352
+        ],
+        [
+          798,
+          1422
+        ]
+      ],
+      "calibration": [
+        [
+          784,
+          78
+        ],
+        [
+          1410,
+          78
+        ]
+      ],
+      "lengthMm": 8645,
+      "entrance": [
+        [
+          1396,
+          1352
+        ],
+        [
+          798,
+          1422
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "needs_decision",
+      "notes": "补齐上侧阶梯原墙，两个后场包含；前沿保留外侧斜线提案。 待确认：前沿租赁线、门楣投影及卷帘线有三条斜线，实际空间边界应取哪条？当前提案采用标注指向的外侧线。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "补齐上侧阶梯原墙，两个后场包含；前沿保留外侧斜线提案。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        8
+      ],
+      "question": "前沿租赁线、门楣投影及卷帘线有三条斜线，实际空间边界应取哪条？当前提案采用标注指向的外侧线。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-245",
+      "sourceSha256": "012184a35ba09f71c4e068a0c4d40825b2dfc8aa19158bd829c27ffce377ffe9",
+      "imageSha256": "8e4d58c107aa7a64a00c81bdb2bd644abbe84c7ca66f83fce2176110ee7a684f",
+      "boundary": [
+        [
+          440,
+          664
+        ],
+        [
+          1810,
+          664
+        ],
+        [
+          1820,
+          668
+        ],
+        [
+          1824,
+          678
+        ],
+        [
+          1824,
+          788
+        ],
+        [
+          1820,
+          798
+        ],
+        [
+          1810,
+          802
+        ],
+        [
+          440,
+          802
+        ],
+        [
+          430,
+          798
+        ],
+        [
+          426,
+          788
+        ],
+        [
+          426,
+          678
+        ],
+        [
+          430,
+          668
+        ]
+      ],
+      "calibration": [
+        [
+          426,
+          896
+        ],
+        [
+          1824,
+          896
+        ]
+      ],
+      "lengthMm": 10000,
+      "entrance": [
+        [
+          1810,
+          802
+        ],
+        [
+          440,
+          802
+        ]
+      ],
+      "geometry": "弧形",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "仅 10000×1000 狭长柜台租赁范围，不能把外围虚线框或商场中空区当店铺；小圆角按折线近似，下侧主通道。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "仅 10000×1000 狭长柜台租赁范围，不能把外围虚线框或商场中空区当店铺；小圆角按折线近似，下侧主通道。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        6
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-259",
+      "sourceSha256": "84ae588d3c71cec5acd75d60920f3992337e95bd2591c56ab9de22d0dc7afd22",
+      "imageSha256": "2ba1d02a3ce944ebfb060c586498d64d4a841fe61c8c0e4c58d2c8882099a2a9",
+      "boundary": [
+        [
+          646,
+          434
+        ],
+        [
+          838,
+          434
+        ],
+        [
+          838,
+          556
+        ],
+        [
+          1312,
+          556
+        ],
+        [
+          1312,
+          434
+        ],
+        [
+          1540,
+          434
+        ],
+        [
+          1540,
+          1264
+        ],
+        [
+          646,
+          1264
+        ]
+      ],
+      "calibration": [
+        [
+          646,
+          130
+        ],
+        [
+          1540,
+          130
+        ]
+      ],
+      "lengthMm": 8850,
+      "entrance": [
+        [
+          1540,
+          1264
+        ],
+        [
+          646,
+          1264
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "上方电井排除，左右连接空间及右侧员工休息区保留；轮廓按原墙，后加柜体不扣范围，底部开放入口。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "上方电井排除，左右连接空间及右侧员工休息区保留；轮廓按原墙，后加柜体不扣范围，底部开放入口。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        6
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-261",
+      "sourceSha256": "d6c3c356c158b0c9be2e811a1664852f3ad630989162a736e4e3ed0c6dab5fcb",
+      "imageSha256": "b6e5705357109ec23cd16015cb35401dc451267497385e071bcd46695157a01c",
+      "boundary": [
+        [
+          542,
+          474
+        ],
+        [
+          1564,
+          474
+        ],
+        [
+          1564,
+          1438
+        ],
+        [
+          592,
+          1438
+        ],
+        [
+          592,
+          754
+        ],
+        [
+          542,
+          754
+        ]
+      ],
+      "calibration": [
+        [
+          592,
+          1532
+        ],
+        [
+          1916,
+          1532
+        ]
+      ],
+      "lengthMm": 6560,
+      "entrance": [
+        [
+          542,
+          474
+        ],
+        [
+          1564,
+          474
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "暂按红色租赁线限制右界；该线穿过右侧道具，与全宽和面积文字不一致。 待确认：右侧 1750mm 区域是否已正式扩入租赁范围？红色租赁线与 31.49㎡面积、道具摆放范围冲突。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "暂按红色租赁线限制右界；该线穿过右侧道具，与全宽和面积文字不一致。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0,
+        3
+      ],
+      "question": "右侧 1750mm 区域是否已正式扩入租赁范围？红色租赁线与 31.49㎡面积、道具摆放范围冲突。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-296",
+      "sourceSha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c",
+      "imageSha256": "28f220b49c80933600ea33140b851f22949e6c13cbf26ac0b28c7bbe5a4e773f",
+      "boundary": [
+        [
+          524,
+          466
+        ],
+        [
+          1646,
+          466
+        ],
+        [
+          1656,
+          476
+        ],
+        [
+          1656,
+          1218
+        ],
+        [
+          1646,
+          1228
+        ],
+        [
+          524,
+          1228
+        ],
+        [
+          514,
+          1218
+        ],
+        [
+          514,
+          476
+        ]
+      ],
+      "calibration": [
+        [
+          514,
+          376
+        ],
+        [
+          1656,
+          376
+        ]
+      ],
+      "lengthMm": 6000,
+      "entrance": [
+        [
+          1646,
+          1228
+        ],
+        [
+          524,
+          1228
+        ]
+      ],
+      "geometry": "弧形",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按 6000×4000 外轮廓，小圆角作折线近似；后加矮墙计入面积，底部主通道 60%。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按 6000×4000 外轮廓，小圆角作折线近似；后加矮墙计入面积，底部主通道 60%。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        4
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-302",
+      "sourceSha256": "db3111ec9355498eb11ddf63664118da87142f961bf60a820d538006ad25a498",
+      "imageSha256": "fbbdf90ca80eb91c029a07855124861765ac0e5b0a52f4cd907fd2a4f9f93d70",
+      "boundary": [
+        [
+          454,
+          414
+        ],
+        [
+          958,
+          300
+        ],
+        [
+          1212,
+          626
+        ],
+        [
+          1836,
+          626
+        ],
+        [
+          1836,
+          1136
+        ],
+        [
+          454,
+          1136
+        ],
+        [
+          454,
+          1032
+        ],
+        [
+          374,
+          1032
+        ],
+        [
+          374,
+          648
+        ],
+        [
+          454,
+          648
+        ]
+      ],
+      "calibration": [
+        [
+          454,
+          1264
+        ],
+        [
+          1836,
+          1264
+        ]
+      ],
+      "lengthMm": 12260,
+      "entrance": [
+        [
+          1836,
+          1136
+        ],
+        [
+          454,
+          1136
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "底部租赁线与更外侧红色门头线已区分；上侧斜墙、工具间和休息室保留。左侧玻璃及柱旁凹口先给提案。 待确认：左侧新玻璃及左下柱旁凹口的租赁边界如何回折？是否包含延伸到 7200 总深尺寸端点的区域？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "底部租赁线与更外侧红色门头线已区分；上侧斜墙、工具间和休息室保留。左侧玻璃及柱旁凹口先给提案。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        4
+      ],
+      "question": "左侧新玻璃及左下柱旁凹口的租赁边界如何回折？是否包含延伸到 7200 总深尺寸端点的区域？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-321",
+      "sourceSha256": "9dce34bf320d214b2f92fc2a871f4206a5f428186b41778c6b2abc058af696b0",
+      "imageSha256": "f56cc72fcc2475b2a25e5a1f9892b175b8c82cd7921533d246b6102172fb3911",
+      "boundary": [
+        [
+          626,
+          488
+        ],
+        [
+          1590,
+          488
+        ],
+        [
+          1590,
+          1160
+        ],
+        [
+          1298,
+          1160
+        ],
+        [
+          1298,
+          1112
+        ],
+        [
+          868,
+          1112
+        ],
+        [
+          868,
+          1052
+        ],
+        [
+          856,
+          972
+        ],
+        [
+          834,
+          882
+        ],
+        [
+          802,
+          792
+        ],
+        [
+          764,
+          700
+        ],
+        [
+          718,
+          612
+        ],
+        [
+          666,
+          530
+        ]
+      ],
+      "calibration": [
+        [
+          608,
+          338
+        ],
+        [
+          1620,
+          338
+        ]
+      ],
+      "lengthMm": 7885,
+      "entrance": [
+        [
+          868,
+          1052
+        ],
+        [
+          856,
+          972
+        ]
+      ],
+      "geometry": "多种形态",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "手工分段保留左侧弧形店面，不能用直斜线替代；右下员工休息区包含，柱独立处理。入口位于左侧弧边，入口净宽未标注。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "手工分段保留左侧弧形店面，不能用直斜线替代；右下员工休息区包含，柱独立处理。入口位于左侧弧边，入口净宽未标注。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-325",
+      "sourceSha256": "f1f832f6b30f009c49798de5066d5cf189be50e39c0c1a2afa37ceea57786667",
+      "imageSha256": "3295a3a59594c076b4c50a751a792b3abe122af07c023cc5e0ba871f7601e9cb",
+      "boundary": [
+        [
+          246,
+          608
+        ],
+        [
+          1944,
+          608
+        ],
+        [
+          1838,
+          1032
+        ],
+        [
+          246,
+          1032
+        ]
+      ],
+      "calibration": [
+        [
+          246,
+          468
+        ],
+        [
+          1950,
+          468
+        ]
+      ],
+      "lengthMm": 15250,
+      "entrance": [
+        [
+          1944,
+          608
+        ],
+        [
+          1838,
+          1032
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "排除上下相邻店铺斜线区；保留右侧实际斜边，门楣虚线不扩成矩形。右侧卷帘入口明确。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "排除上下相邻店铺斜线区；保留右侧实际斜边，门楣虚线不扩成矩形。右侧卷帘入口明确。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-330",
+      "sourceSha256": "4d3c863dc039842cb4f221301deb6d51273f1354a460dd486f4c730582c98836",
+      "imageSha256": "2cf14e9334cee3f42fa5b59bc49f6ab98f50623b1fbe8bf8f0c4411e8463674f",
+      "boundary": [
+        [
+          814,
+          248
+        ],
+        [
+          1542,
+          248
+        ],
+        [
+          1542,
+          1202
+        ],
+        [
+          814,
+          1244
+        ]
+      ],
+      "calibration": [
+        [
+          814,
+          148
+        ],
+        [
+          1542,
+          148
+        ]
+      ],
+      "lengthMm": 5100,
+      "entrance": [
+        [
+          1542,
+          1202
+        ],
+        [
+          814,
+          1244
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "后场包含，前沿保留斜边；大柱独立处理，量尺读取原图总宽 5100，入口在前沿斜边。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "后场包含，前沿保留斜边；大柱独立处理，量尺读取原图总宽 5100，入口在前沿斜边。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-342",
+      "sourceSha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+      "imageSha256": "1b6576a71dd2e2368e8b35ff2df08ffb624494f36f546b30b81e882e25249bac",
+      "boundary": [
+        [
+          794,
+          350
+        ],
+        [
+          958,
+          176
+        ],
+        [
+          1458,
+          700
+        ],
+        [
+          1458,
+          1468
+        ],
+        [
+          794,
+          1468
+        ]
+      ],
+      "calibration": [
+        [
+          660,
+          350
+        ],
+        [
+          660,
+          1468
+        ]
+      ],
+      "lengthMm": 9780,
+      "entrance": [
+        [
+          1458,
+          1468
+        ],
+        [
+          794,
+          1468
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "保留三角形后场和上侧斜墙，柱及后加包板独立处理；主入口在下侧。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "保留三角形后场和上侧斜墙，柱及后加包板独立处理；主入口在下侧。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        3
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-351",
+      "sourceSha256": "743e1b9b678a3d2d1f86361413d68f2f02e6123122b04ab4dc3996276ba2d8fe",
+      "imageSha256": "a3177ebc7d9f7674ed4c0ff7d3cfaa5d62524081bc69ffd002545d7598da99be",
+      "boundary": [
+        [
+          480,
+          444
+        ],
+        [
+          1900,
+          444
+        ],
+        [
+          1900,
+          1202
+        ],
+        [
+          480,
+          1202
+        ]
+      ],
+      "calibration": [
+        [
+          480,
+          352
+        ],
+        [
+          1900,
+          352
+        ]
+      ],
+      "lengthMm": 7500,
+      "entrance": [
+        [
+          480,
+          444
+        ],
+        [
+          1900,
+          444
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "7500×4000 矩形，上下均明确主通道；右侧新增矮墙和柜体不收缩空间。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "7500×4000 矩形，上下均明确主通道；右侧新增矮墙和柜体不收缩空间。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0,
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-353",
+      "sourceSha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+      "imageSha256": "fd468e29b0473206b74d330d5aae6abc4df72c4cb177c84f8839c2ee2f72a61c",
+      "boundary": [
+        [
+          382,
+          520
+        ],
+        [
+          1982,
+          520
+        ],
+        [
+          1982,
+          1216
+        ],
+        [
+          382,
+          1216
+        ]
+      ],
+      "calibration": [
+        [
+          382,
+          366
+        ],
+        [
+          1982,
+          366
+        ]
+      ],
+      "lengthMm": 8845,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "按总宽 8845 与总深 3835 给矩形提案；OCR 将分段 2600 读成 2800，改用总宽。 待确认：左右虚线是租赁边界还是展示区分界？左侧折断线是否表示平面未画全？主入口位于哪侧？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按总宽 8845 与总深 3835 给矩形提案；OCR 将分段 2600 读成 2800，改用总宽。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "左右虚线是租赁边界还是展示区分界？左侧折断线是否表示平面未画全？主入口位于哪侧？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-363",
+      "sourceSha256": "f0046db1ec9cf9c580fdfa35bd479b7e31bfe62024de4a8aab91e890fdf1f053",
+      "imageSha256": "0e69d6e9606d593dc14034d7031ce9adf2ff367f4c089823e7df1b1344039295",
+      "boundary": [
+        [
+          402,
+          446
+        ],
+        [
+          1892,
+          446
+        ],
+        [
+          1892,
+          1016
+        ],
+        [
+          402,
+          944
+        ]
+      ],
+      "calibration": [
+        [
+          402,
+          340
+        ],
+        [
+          1892,
+          340
+        ]
+      ],
+      "lengthMm": 7835,
+      "entrance": [
+        [
+          1892,
+          1016
+        ],
+        [
+          402,
+          944
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "上宽 7835，左深 2610，前沿略斜；尺寸对应的轮廓面积约 22㎡，外围更大框不作边界。前沿双开门为主入口。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "上宽 7835，左深 2610，前沿略斜；尺寸对应的轮廓面积约 22㎡，外围更大框不作边界。前沿双开门为主入口。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        2
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-393",
+      "sourceSha256": "f605a001d9e06be1e9b395bc22d0841e54852228ee4cb4db7afadee9e55f4e62",
+      "imageSha256": "2d1be86c77782e1415ac59e797191f7e56f4998bea4a3a6662346cfe8f8e9a09",
+      "boundary": [
+        [
+          346,
+          498
+        ],
+        [
+          1694,
+          486
+        ],
+        [
+          1820,
+          1116
+        ],
+        [
+          350,
+          1100
+        ]
+      ],
+      "calibration": [
+        [
+          350,
+          1262
+        ],
+        [
+          1820,
+          1262
+        ]
+      ],
+      "lengthMm": 12850,
+      "entrance": [
+        [
+          1694,
+          486
+        ],
+        [
+          1820,
+          1116
+        ]
+      ],
+      "geometry": "斜墙",
+      "openEdge": false,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按红色租赁线，保留右侧真实斜边；左侧仓库包含，底部柱独立扣除，主入口为右侧玻璃门。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按红色租赁线，保留右侧真实斜边；左侧仓库包含，底部柱独立扣除，主入口为右侧玻璃门。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        1
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-398",
+      "sourceSha256": "0f21a116f78ec298528962b49a9e46c2d99e5bd818bf1328555a4bfee8d4a2ff",
+      "imageSha256": "926c4ff915762e47914dd42d72e331c57cffdf018f74b45b9022aec1860b4d90",
+      "boundary": [
+        [
+          846,
+          514
+        ],
+        [
+          1426,
+          514
+        ],
+        [
+          1460,
+          520
+        ],
+        [
+          1490,
+          542
+        ],
+        [
+          1510,
+          572
+        ],
+        [
+          1516,
+          604
+        ],
+        [
+          1516,
+          1094
+        ],
+        [
+          1510,
+          1128
+        ],
+        [
+          1490,
+          1158
+        ],
+        [
+          1460,
+          1178
+        ],
+        [
+          1426,
+          1184
+        ],
+        [
+          846,
+          1184
+        ],
+        [
+          812,
+          1178
+        ],
+        [
+          782,
+          1158
+        ],
+        [
+          762,
+          1128
+        ],
+        [
+          756,
+          1094
+        ],
+        [
+          756,
+          604
+        ],
+        [
+          762,
+          570
+        ],
+        [
+          782,
+          540
+        ],
+        [
+          812,
+          520
+        ]
+      ],
+      "calibration": [
+        [
+          1572,
+          514
+        ],
+        [
+          1572,
+          1184
+        ]
+      ],
+      "lengthMm": 6000,
+      "entrance": [
+        [
+          1426,
+          1184
+        ],
+        [
+          846,
+          1184
+        ]
+      ],
+      "geometry": "弧形",
+      "openEdge": true,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "6800×6000、四角 R800 的租赁线分段描绘；大圆虚线为商场天花投影，不能当边界。下侧及左侧主通道，柱与包柱另处理。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "6800×6000、四角 R800 的租赁线分段描绘；大圆虚线为商场天花投影，不能当边界。下侧及左侧主通道，柱与包柱另处理。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        10,
+        15
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-405",
+      "sourceSha256": "50e916a0439a05ccdcf57f2a18eea1afddbf656da5e0134c75d9c3e780ad2046",
+      "imageSha256": "e77c588f6bb052e3d77b7dd69746b99e90d70cbdf78ab8f38cc6a70ab104eed1",
+      "boundary": [
+        [
+          578,
+          546
+        ],
+        [
+          1354,
+          546
+        ],
+        [
+          1354,
+          1190
+        ],
+        [
+          776,
+          1190
+        ],
+        [
+          734,
+          1184
+        ],
+        [
+          700,
+          1170
+        ],
+        [
+          672,
+          1144
+        ],
+        [
+          652,
+          1114
+        ],
+        [
+          456,
+          766
+        ],
+        [
+          440,
+          730
+        ],
+        [
+          436,
+          692
+        ],
+        [
+          442,
+          654
+        ],
+        [
+          454,
+          624
+        ],
+        [
+          476,
+          594
+        ],
+        [
+          506,
+          568
+        ],
+        [
+          540,
+          552
+        ]
+      ],
+      "calibration": [
+        [
+          1732,
+          546
+        ],
+        [
+          1732,
+          1190
+        ]
+      ],
+      "lengthMm": 5750,
+      "entrance": [
+        [
+          578,
+          546
+        ],
+        [
+          1354,
+          546
+        ]
+      ],
+      "geometry": "多种形态",
+      "openEdge": true,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "沿商铺租赁线保留左侧斜边和圆弧，排除右侧商场非设计区域；顶部主通道，左/下为次通道。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "沿商铺租赁线保留左侧斜边和圆弧，排除右侧商场非设计区域；顶部主通道，左/下为次通道。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-407",
+      "sourceSha256": "91867586d61743fac76a23f80c7a805e9440f580791910585ee1ad0701c276be",
+      "imageSha256": "2f8421c9c145f772f59a4576c6d08a4f688d279193e7cf09c5e1ce827f4c2294",
+      "boundary": [
+        [
+          354,
+          384
+        ],
+        [
+          1142,
+          384
+        ],
+        [
+          1142,
+          904
+        ],
+        [
+          1874,
+          904
+        ],
+        [
+          1874,
+          1144
+        ],
+        [
+          340,
+          1144
+        ],
+        [
+          340,
+          932
+        ],
+        [
+          354,
+          932
+        ]
+      ],
+      "calibration": [
+        [
+          340,
+          1280
+        ],
+        [
+          1874,
+          1280
+        ]
+      ],
+      "lengthMm": 10740,
+      "entrance": [
+        [
+          354,
+          384
+        ],
+        [
+          1142,
+          384
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "checked",
+      "notes": "按 L 形租赁轮廓保留右上空域，不用大矩形包住商场空间；上、左、下均标主通道，两个大柱另处理。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按 L 形租赁轮廓保留右上空域，不用大矩形包住商场空间；上、左、下均标主通道，两个大柱另处理。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        0,
+        4,
+        7
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-411",
+      "sourceSha256": "733efc657ff88155110bc87b57496d9a617498cff1c626db067f1adfd365415d",
+      "imageSha256": "fd3e64b80b782432fd81f14ebf400afbc3905b9598766cef0dfd9415e8a312c4",
+      "boundary": [
+        [
+          836,
+          438
+        ],
+        [
+          1432,
+          438
+        ],
+        [
+          1432,
+          646
+        ],
+        [
+          1452,
+          646
+        ],
+        [
+          1452,
+          832
+        ],
+        [
+          1288,
+          832
+        ],
+        [
+          1288,
+          1348
+        ],
+        [
+          840,
+          1348
+        ],
+        [
+          840,
+          926
+        ],
+        [
+          1038,
+          926
+        ],
+        [
+          1038,
+          634
+        ],
+        [
+          836,
+          634
+        ]
+      ],
+      "calibration": [
+        [
+          576,
+          438
+        ],
+        [
+          576,
+          1348
+        ]
+      ],
+      "lengthMm": 12335,
+      "entrance": [
+        [
+          1288,
+          1348
+        ],
+        [
+          840,
+          1348
+        ]
+      ],
+      "geometry": "直墙",
+      "openEdge": false,
+      "pageType": "vector-outline",
+      "agentStatus": "checked",
+      "notes": "按灰色原墙内缘描出两处真实凹口；商场斜线空域排除，上侧休息区包含。下侧双开门为入口。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "按灰色原墙内缘描出两处真实凹口；商场斜线空域排除，上侧休息区包含。下侧双开门为入口。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "acceptedEntranceEdges": [
+        6
+      ],
+      "question": null,
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-412",
+      "sourceSha256": "b551e2a036ab50b920ee45175a16230a8230b927f7e49f910eefb4a415acd1b4",
+      "imageSha256": "602a55c101e1733eb5bf7c30d3f0f6c5e373100aa90345240543df6c5c830663",
+      "boundary": [
+        [
+          540,
+          562
+        ],
+        [
+          1786,
+          562
+        ],
+        [
+          1786,
+          1094
+        ],
+        [
+          540,
+          1094
+        ]
+      ],
+      "calibration": [
+        [
+          540,
+          1176
+        ],
+        [
+          1786,
+          1176
+        ]
+      ],
+      "lengthMm": 6550,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "vector-text",
+      "agentStatus": "needs_decision",
+      "notes": "总宽原图为 6550，OCR 误读成 16550，已手工纠正；与总深 2790 交叉核对。上方商场圆弧构造不属于店铺边界。 待确认：下侧长边与右侧开放边，哪一侧作为主入口？图上无主通道标示。",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "总宽原图为 6550，OCR 误读成 16550，已手工纠正；与总深 2790 交叉核对。上方商场圆弧构造不属于店铺边界。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "下侧长边与右侧开放边，哪一侧作为主入口？图上无主通道标示。",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    },
+    {
+      "id": "PDF-417",
+      "sourceSha256": "0343fa5337f20a30f70e64a4f2e6f4f0f6551a42ffe7c5ee6c3eaddc38b5601f",
+      "imageSha256": "8d84b10b15ec3b30fcabe09c804122d6a602119dd6e5f93dacaaec8724c50aa2",
+      "boundary": [
+        [
+          680,
+          318
+        ],
+        [
+          1648,
+          318
+        ],
+        [
+          1648,
+          934
+        ],
+        [
+          680,
+          934
+        ]
+      ],
+      "calibration": [
+        [
+          680,
+          210
+        ],
+        [
+          1648,
+          210
+        ]
+      ],
+      "lengthMm": 6030,
+      "entrance": [],
+      "geometry": "直墙",
+      "openEdge": true,
+      "pageType": "raster",
+      "agentStatus": "needs_decision",
+      "notes": "扫描页手工补齐 6030×3835 矩形，横纵比例一致；矮墙和内嵌灯箱不收缩边界。 待确认：左、右、下三个开放方向，主通道位于哪侧？",
+      "evidence": [
+        "Codex 逐店查看固定原图网格，按图上的租赁线/原墙及尺寸描点；未取识别结果作为标注。",
+        "扫描页手工补齐 6030×3835 矩形，横纵比例一致；矮墙和内嵌灯箱不收缩边界。",
+        "入口仅核对所在边；柱、管井、后加构件和道具不在本轮准确率范围内。"
+      ],
+      "componentReview": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "acceptedEntranceEdges": [],
+      "question": "左、右、下三个开放方向，主通道位于哪侧？",
+      "referenceKind": "agent_visual_draft",
+      "humanReviewed": false,
+      "coordinateTolerancePx": 6
+    }
+  ]
+}

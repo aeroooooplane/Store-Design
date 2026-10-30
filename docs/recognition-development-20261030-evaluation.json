@@ -1,0 +1,1644 @@
+{
+  "scope": "代理独立对图参照复评（待用户抽审），非45家验收、非整店合格率",
+  "humanReviewed": 0,
+  "datasetFingerprint": "d8330d3e4484939238255f59006a0cd8754a0c6910c88b1dfd4e80b30f5e4c3f",
+  "referenceSha256": "fd739f790e1be0cde3794acdb8782583b9158ba994808620494bb7fa27020809",
+  "inputsIndexSha256": "9b83680adb17e679dca09b86d0e395d04685bc124d3f90ce0987d767e57b781a",
+  "baselineRevision": "e15812eb75d483fbe8ae7f61a48a0b0c4cb7ab99",
+  "candidateRevision": "49f5aa641bcf962e39b002ef4035aba9dce8d8fe",
+  "samples": 48,
+  "questions": 17,
+  "criteria": {
+    "boundaryIoU": 0.9,
+    "relativeScaleError": 0.02,
+    "entrance": "主入口中心最近的原图边属于允许主通道边，距离不超过外接框对角线3%且至少12px；仅边侧、不评价门宽",
+    "nearThreshold": "IoU 0.88–0.92 或比例误差 1%–3% 标为抽审优先；预览描点位置约 ±6 原图像素",
+    "missingResult": "在可判定样本内按失败计入；有歧义的项目按项目列为不可判定，不从48家总数移除"
+  },
+  "versions": {
+    "baseline": {
+      "closed": 40,
+      "boundary": {
+        "eligible": 37,
+        "passed": 9
+      },
+      "scale": {
+        "eligible": 48,
+        "passed": 43
+      },
+      "entrance": {
+        "eligible": 31,
+        "passed": 20
+      },
+      "allThree": {
+        "eligible": 31,
+        "passed": 9
+      }
+    },
+    "candidate": {
+      "closed": 40,
+      "boundary": {
+        "eligible": 37,
+        "passed": 14
+      },
+      "scale": {
+        "eligible": 48,
+        "passed": 43
+      },
+      "entrance": {
+        "eligible": 31,
+        "passed": 21
+      },
+      "allThree": {
+        "eligible": 31,
+        "passed": 13
+      }
+    }
+  },
+  "rows": [
+    {
+      "id": "NEW-015",
+      "name": "南京悠湖湾",
+      "page": 16,
+      "referenceMmPerPixel": 10.500963391136802,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按红色租赁线，后场包含在外轮廓内；左侧柱位单列障碍，不沿家具柜体收缩。横向 5900 与纵向 10900 尺寸相互支持。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.7009232563486515,
+        "scaleError": 0.00007697649426308129,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9892809150425902,
+        "scaleError": 0.00007697649426308129,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-019",
+      "name": "印尼巴厘岛 Galaria mall",
+      "page": 4,
+      "referenceMmPerPixel": 7.782101167315175,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "主入口采用下侧开放边、左侧 850 缺口，还是其他边？",
+      "referenceNotes": "扫描页按 8000×4000 外轮廓补齐；四边均有开放缺口，未标主通道。 待确认：主入口采用下侧开放边、左侧 850 缺口，还是其他边？",
+      "baseline": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-020",
+      "name": "印尼巴厘岛 Kuta Beach walk",
+      "page": 2,
+      "referenceMmPerPixel": 3.500175008750437,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "租赁线 4000×3000，包含后加包墙；下侧有主通道箭头。入口只标所在边，不声称是门净宽。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9418968744341172,
+        "scaleError": 0.00001939802494410614,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9418968744341172,
+        "scaleError": 0.00001939802494410614,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-023",
+      "name": "台湾nova店中店",
+      "page": 1,
+      "referenceMmPerPixel": 5.445544554455446,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "左侧配件墙和灰块哪些是原有墙/柱？左上门是否主入口？",
+      "referenceNotes": "量尺可按 6600；左侧配件柜、灰块及门之间的原有墙界不明确，保留阶梯形提案。 待确认：左侧配件墙和灰块哪些是原有墙/柱？左上门是否主入口？",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0010979003491613515,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0010979003491613515,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-024",
+      "name": "台湾台北Sogo大巨蛋",
+      "page": 9,
+      "referenceMmPerPixel": 5.426356589147287,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "右侧与下侧均开放，主入口按哪一侧？",
+      "referenceNotes": "按图例灰色原有墙内侧描 L 形，斜线新建隔墙不扣边界。OCR 的 1130 应为图上 1150；改用完整 5600 尺寸量尺。 待确认：右侧与下侧均开放，主入口按哪一侧？",
+      "baseline": {
+        "closed": true,
+        "iou": 0.06713260954511693,
+        "scaleError": 0.00405962625916223,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.10845965015411874,
+        "scaleError": 0.00405962625916223,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-026",
+      "name": "台湾高雄LALAport",
+      "page": 13,
+      "referenceMmPerPixel": 7.174145299145299,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "左上外开门前的凹口是否属于租赁范围？需确认外边界是阶梯形还是完整矩形。",
+      "referenceNotes": "下侧主通道明确；原图左上有外开门，暂按门后阶梯边界画提案。 待确认：左上外开门前的凹口是否属于租赁范围？需确认外边界是阶梯形还是完整矩形。",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.00018536173650596233,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.00018536173650596233,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-049",
+      "name": "新加坡 Vivo City",
+      "page": 15,
+      "referenceMmPerPixel": 7.004310344827586,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "沿红色租赁线补齐左侧开口；后场包含，中央柱不变成边界凹口。左侧主通道。原 OCR 局部 19651 异常，不采用。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8758609485510265,
+        "scaleError": 0.0005090184352538607,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9956594796786976,
+        "scaleError": 0.0005090184352538607,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-064",
+      "name": "泰国Market Village Huahin店",
+      "page": 15,
+      "referenceMmPerPixel": 6.995884773662551,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "红色租赁线完整矩形，6800×6150；后场和后加墙柜保持在范围内，水晶卷帘门位于下边。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8783691757146264,
+        "scaleError": 0.0006948966002979784,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9976913662797903,
+        "scaleError": 0.0006948966002979784,
+        "entrance": false,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-065",
+      "name": "泰国合艾 Central Hatyai",
+      "page": 13,
+      "referenceMmPerPixel": 5.2482993197278915,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "外轮廓为梯形，左侧真实斜边保留；上侧和右侧均明确标主通道，两侧均可作为入口所在边。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.998839969245061,
+        "scaleError": 0.00041494956291132645,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.998839969245061,
+        "scaleError": 0.00041494956291132645,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-084",
+      "name": "菲律宾SM Nuvali",
+      "page": 17,
+      "referenceMmPerPixel": 8.740685543964233,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按红色租赁外轮廓；后场计入，左下柱另作障碍。量尺采用外侧 11730 尺寸链，入口位于下侧。租赁线与墙内缘有小幅偏移，保留原线。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9729208819069305,
+        "scaleError": 0.0009077619071637955,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9918861123328436,
+        "scaleError": 0.0009077619071637955,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-096",
+      "name": "颐高数码广场",
+      "page": 3,
+      "referenceMmPerPixel": 9.23217550274223,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "扫描页补齐矩形边界；10100 横向与 4988 纵向比例相符。顶部灰色构件另作障碍，右侧双开门作为入口边。",
+      "baseline": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-098",
+      "name": "马来西亚midvalley KL",
+      "page": 13,
+      "referenceMmPerPixel": 10.632911392405063,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "上方 MR/AHU 不属于店内平面，左侧员工休息室包含；下侧红色租赁线与主通道明确。8400 横纵轴尺寸可交叉核对。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8662183393201375,
+        "scaleError": 0.002009345301507093,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8562926372912414,
+        "scaleError": 0.002009345301507093,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "NEW-099",
+      "name": "马来西亚Sunway Carnival Penang",
+      "page": 12,
+      "referenceMmPerPixel": 5.246913580246914,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按红色租赁边界补全矩形，右侧柱独立扣除；右侧和下侧均标主通道，接受这两条入口边。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8732394389512852,
+        "scaleError": 0.00048202383524742487,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8821684672105768,
+        "scaleError": 0.00048202383524742487,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": true
+      }
+    },
+    {
+      "id": "PDF-003",
+      "name": "上海万象城授权体验店（边厅）",
+      "page": 6,
+      "referenceMmPerPixel": 7.91044776119403,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按黑色原墙内缘和底部略斜的外框闭合；后场包含，柱独立处理，入口在底部。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.3068598428929822,
+        "scaleError": 0.00020653776626655684,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.3068598428929822,
+        "scaleError": 0.00020653776626655684,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-050",
+      "name": "北京万柳华联授权体验店",
+      "page": 10,
+      "referenceMmPerPixel": 12.429378531073446,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "下方三角展示区是否属于租赁范围？红色水平线是门头投影还是租赁分界？这决定是否纳入三角区。",
+      "referenceNotes": "补齐左侧 L 形原墙与下方三角展示区提案；下侧 ENTER 明确。 待确认：下方三角展示区是否属于租赁范围？红色水平线是门头投影还是租赁分界？这决定是否纳入三角区。",
+      "baseline": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0004996867181534803,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0004996867181534803,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-051",
+      "name": "北京三里屯太古里授权体验店",
+      "page": 1,
+      "referenceMmPerPixel": 4.396325459317585,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "前侧与左右侧均开放，主入口是否按下侧长边？图上未标主通道。",
+      "referenceNotes": "按 6700×2400 外轮廓；后侧矮墙和灯箱为新增构件，边界不沿柜内侧收缩。 待确认：前侧与左右侧均开放，主入口是否按下侧长边？图上未标主通道。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.7756667155649704,
+        "scaleError": 0.00016842760349888852,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7756667155649704,
+        "scaleError": 0.00016842760349888852,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-073",
+      "name": "北京龙湖丽泽天街授权体验店",
+      "page": 4,
+      "referenceMmPerPixel": 6.224066390041494,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "上、右、下三个开放方向中，主通道在哪一侧？",
+      "referenceNotes": "扫描页红色租赁线为 6000×5000 矩形；左侧为商场栏杆，尺寸与 30㎡标注相符。 待确认：上、右、下三个开放方向中，主通道在哪一侧？",
+      "baseline": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": 0.6036888888888889,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": 0.6036888888888889,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-079",
+      "name": "南京德基广场直营店",
+      "page": 2,
+      "referenceMmPerPixel": 15.236686390532544,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "请确认该页顶部边界是否完整，以及主入口所在边；当前顶部紧贴裁边，下方可见的门通向内部分区。",
+      "referenceNotes": "黑底页手动补齐下部凹凸轮廓，按底部 5150 尺寸量尺；上边贴近页面裁边，主入口不清楚。 待确认：请确认该页顶部边界是否完整，以及主入口所在边；当前顶部紧贴裁边，下方可见的门通向内部分区。",
+      "baseline": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.8632686084142395,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.8632686084142395,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-090",
+      "name": "印尼Ratu plaza",
+      "page": 1,
+      "referenceMmPerPixel": 4.947916666666667,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "7600×2650 外轮廓与图上 20.1㎡一致；后加矮墙、灯箱计入范围，底部 150mm 不锈钢外收边不扩大主体轮廓。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8407025240915612,
+        "scaleError": 0.0005502020027352561,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7799576362845466,
+        "scaleError": 0.0005502020027352561,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-095",
+      "name": "台湾三创生活（换址）",
+      "page": 10,
+      "referenceMmPerPixel": 8.93603133159269,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "5770×6845 矩形与 39.5㎡一致。右下圆角虚线标的是门楣投影，不能误当弧形墙；右侧与下侧均主通道。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.5899565414003748,
+        "scaleError": 0.0007991607797661615,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8199833325200997,
+        "scaleError": 0.0007991607797661615,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-096",
+      "name": "台湾台中汉神洲际中岛",
+      "page": 10,
+      "referenceMmPerPixel": 7.170542635658915,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "中央柱周围包板区域是否全部属于租赁范围？请确认斜线商场空域与柱周区域的分界。",
+      "referenceNotes": "按外围尺寸补齐 L 形提案，商场斜线空域排除；柱周界线在租赁线和新增包板之间仍有歧义。 待确认：中央柱周围包板区域是否全部属于租赁范围？请确认斜线商场空域与柱周区域的分界。",
+      "baseline": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0024553888914338184,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0024553888914338184,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-097",
+      "name": "台湾台南市南纺购物中心",
+      "page": 10,
+      "referenceMmPerPixel": 10.02112676056338,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "上侧排烟送风设备区、左右消防疏散区域哪些属于本店租赁范围？",
+      "referenceNotes": "量尺按顶部 14230；右侧客流 60%，左侧 40%，暂标右边入口。上侧排烟送风与消防疏散区域归属待确认。 待确认：上侧排烟送风设备区、左右消防疏散区域哪些属于本店租赁范围？",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.009923735316443083,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.01051362199153505,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": true
+      }
+    },
+    {
+      "id": "PDF-098",
+      "name": "台湾新北板桥大远百",
+      "page": 12,
+      "referenceMmPerPixel": 8.88283378746594,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "红色租赁线矩形，左右商场柱另作扣除；底部主通道，两侧为次通道，不能混同主入口。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8728260740019846,
+        "scaleError": 0.0006226693519748583,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.44248135223937207,
+        "scaleError": 0.0006226693519748583,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-099",
+      "name": "台湾新北裕隆城",
+      "page": 11,
+      "referenceMmPerPixel": 13.405017921146953,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "上部斜线楼梯及走道标注不属于店铺，排除；左侧扶梯形成真实斜边，右、下侧为主通道；柱独立处理。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.7654503223155964,
+        "scaleError": 0.00042044768014748435,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7654503223155964,
+        "scaleError": 0.00042044768014748435,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-101",
+      "name": "台湾远东新竹Big City中岛",
+      "page": 5,
+      "referenceMmPerPixel": 5.836575875486381,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按租赁线外矩形，中央柱及包柱独立处理；四边都明确标主通道，评测允许四边，不强指定唯一门。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.4504290687691187,
+        "scaleError": 0.0001566704838869004,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.4504290687691187,
+        "scaleError": 0.0001566704838869004,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-140",
+      "name": "宜昌国贸授权体验店",
+      "page": 13,
+      "referenceMmPerPixel": 8.757028112449799,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "上侧大片斜线区域是否属于商场设备区？右下多条曲线中，实际租赁边界对应哪条（门轨还是门头投影）？",
+      "referenceNotes": "手动保留右下弧形及左侧凹口提案，量尺按总宽 8722；不以家具边闭合。 待确认：上侧大片斜线区域是否属于商场设备区？右下多条曲线中，实际租赁边界对应哪条（门轨还是门头投影）？",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0007142647909835764,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0007142647909835764,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-189",
+      "name": "新加坡suntec city",
+      "page": 6,
+      "referenceMmPerPixel": 5.269565217391304,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "左侧黑色斜墙才是原墙，排除更左方矩形空域；后加柜体和包板不再收缩轮廓，底部入口。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8176968706352118,
+        "scaleError": 0.0009660515457141639,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8176968706352118,
+        "scaleError": 0.0009660515457141639,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-202",
+      "name": "昆明万象城授权体验店",
+      "page": 13,
+      "referenceMmPerPixel": 10.5,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "包含上侧及右侧员工休息区，按原墙范围闭合；四角柱及小型外伸构件独立处理，本次不评价障碍面积。下侧主通道明确。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9006421164264016,
+        "scaleError": 0.00012814981328745922,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": true
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9533623190784498,
+        "scaleError": 0.00012814981328745922,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-217",
+      "name": "杭州奥体印象城授权体验店",
+      "page": 12,
+      "referenceMmPerPixel": 13.809904153354633,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "前沿租赁线、门楣投影及卷帘线有三条斜线，实际空间边界应取哪条？当前提案采用标注指向的外侧线。",
+      "referenceNotes": "补齐上侧阶梯原墙，两个后场包含；前沿保留外侧斜线提案。 待确认：前沿租赁线、门楣投影及卷帘线有三条斜线，实际空间边界应取哪条？当前提案采用标注指向的外侧线。",
+      "baseline": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0011971315557018913,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": null,
+        "scaleError": 0.0011971315557018913,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-245",
+      "name": "泰国Mega Bangna",
+      "page": 11,
+      "referenceMmPerPixel": 7.15307582260372,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "仅 10000×1000 狭长柜台租赁范围，不能把外围虚线框或商场中空区当店铺；小圆角按折线近似，下侧主通道。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.12817362090143516,
+        "scaleError": 0.0003621247720289045,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.12817362090143516,
+        "scaleError": 0.0003621247720289045,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-259",
+      "name": "海口远大购物中心授权体验店",
+      "page": 8,
+      "referenceMmPerPixel": 9.899328859060402,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "上方电井排除，左右连接空间及右侧员工休息区保留；轮廓按原墙，后加柜体不扣范围，底部开放入口。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.0005132223106721404,
+        "scaleError": 0.00017710774288159925,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.0005132223106721404,
+        "scaleError": 0.00017710774288159925,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-261",
+      "name": "淄博百脑汇照材专卖店",
+      "page": 6,
+      "referenceMmPerPixel": 4.954682779456193,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "右侧 1750mm 区域是否已正式扩入租赁范围？红色租赁线与 31.49㎡面积、道具摆放范围冲突。",
+      "referenceNotes": "暂按红色租赁线限制右界；该线穿过右侧道具，与全宽和面积文字不一致。 待确认：右侧 1750mm 区域是否已正式扩入租赁范围？红色租赁线与 31.49㎡面积、道具摆放范围冲突。",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0008788780790353057,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0008788780790353057,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-296",
+      "name": "珠海华发商都授权体验店",
+      "page": 14,
+      "referenceMmPerPixel": 5.253940455341506,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按 6000×4000 外轮廓，小圆角作折线近似；后加矮墙计入面积，底部主通道 60%。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9977469416199183,
+        "scaleError": 0.0006899901288381916,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9977486840938083,
+        "scaleError": 0.0006899901288381916,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-302",
+      "name": "福州东二泰禾（换铺）",
+      "page": 13,
+      "referenceMmPerPixel": 8.871201157742401,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "左侧新玻璃及左下柱旁凹口的租赁边界如何回折？是否包含延伸到 7200 总深尺寸端点的区域？",
+      "referenceNotes": "底部租赁线与更外侧红色门头线已区分；上侧斜墙、工具间和休息室保留。左侧玻璃及柱旁凹口先给提案。 待确认：左侧新玻璃及左下柱旁凹口的租赁边界如何回折？是否包含延伸到 7200 总深尺寸端点的区域？",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0008468819393510074,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.0008468819393510074,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-321",
+      "name": "菲律宾 SM City Grand Central",
+      "page": 10,
+      "referenceMmPerPixel": 7.791501976284585,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "手工分段保留左侧弧形店面，不能用直斜线替代；右下员工休息区包含，柱独立处理。入口位于左侧弧边，入口净宽未标注。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9148338890067348,
+        "scaleError": 0.001231758941485639,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": true
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9148338890067348,
+        "scaleError": 0.001231758941485639,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": true
+      }
+    },
+    {
+      "id": "PDF-325",
+      "name": "菲律宾Robinsons Place Manila",
+      "page": 9,
+      "referenceMmPerPixel": 8.949530516431924,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "排除上下相邻店铺斜线区；保留右侧实际斜边，门楣虚线不扩成矩形。右侧卷帘入口明确。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9262234350145657,
+        "scaleError": 0.00062699458248483,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9262234350145657,
+        "scaleError": 0.00062699458248483,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-330",
+      "name": "菲律宾SM City La Union",
+      "page": 9,
+      "referenceMmPerPixel": 7.0054945054945055,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "后场包含，前沿保留斜边；大柱独立处理，量尺读取原图总宽 5100，入口在前沿斜边。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8399331909597431,
+        "scaleError": 0.0009634935013711488,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8399331909597431,
+        "scaleError": 0.0009634935013711488,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-342",
+      "name": "西安开元商场",
+      "page": 11,
+      "referenceMmPerPixel": 8.747763864042934,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "保留三角形后场和上侧斜墙，柱及后加包板独立处理；主入口在下侧。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.7500036508860187,
+        "scaleError": 0.00025907051399221004,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7500036508860187,
+        "scaleError": 0.00025907051399221004,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-351",
+      "name": "贵阳万象城授权体验店",
+      "page": 1,
+      "referenceMmPerPixel": 5.28169014084507,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "7500×4000 矩形，上下均明确主通道；右侧新增矮墙和柜体不收缩空间。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.94140517270406,
+        "scaleError": 0.0011811587930176115,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.94140517270406,
+        "scaleError": 0.0011811587930176115,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-353",
+      "name": "贵阳新大陆数码广场照材专卖店",
+      "page": 6,
+      "referenceMmPerPixel": 5.528125,
+      "eligibility": {
+        "boundary": false,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "左右虚线是租赁边界还是展示区分界？左侧折断线是否表示平面未画全？主入口位于哪侧？",
+      "referenceNotes": "按总宽 8845 与总深 3835 给矩形提案；OCR 将分段 2600 读成 2800，改用总宽。 待确认：左右虚线是租赁边界还是展示区分界？左侧折断线是否表示平面未画全？主入口位于哪侧？",
+      "baseline": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.000633576455188356,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": null,
+        "scaleError": 0.000633576455188356,
+        "entrance": null,
+        "boundaryPass": null,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-363",
+      "name": "郑州赛博数码港照材专卖店",
+      "page": 9,
+      "referenceMmPerPixel": 5.258389261744966,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "上宽 7835，左深 2610，前沿略斜；尺寸对应的轮廓面积约 22㎡，外围更大框不作边界。前沿双开门为主入口。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.751044147850375,
+        "scaleError": 0.0009929889448558882,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7819735934997298,
+        "scaleError": 0.0009929889448558882,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-393",
+      "name": "青岛万象城",
+      "page": 15,
+      "referenceMmPerPixel": 8.741496598639456,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按红色租赁线，保留右侧真实斜边；左侧仓库包含，底部柱独立扣除，主入口为右侧玻璃门。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8088287422702831,
+        "scaleError": 0.0010488483496402523,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9757721621680022,
+        "scaleError": 0.0010488483496402523,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-398",
+      "name": "青岛海信广场授权体验店",
+      "page": 6,
+      "referenceMmPerPixel": 8.955223880597014,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "6800×6000、四角 R800 的租赁线分段描绘；大圆虚线为商场天花投影，不能当边界。下侧及左侧主通道，柱与包柱另处理。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.9440165201841044,
+        "scaleError": 0.0014335367513974573,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9440165201841044,
+        "scaleError": 0.0014335367513974573,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-405",
+      "name": "韩国现代百货板桥店-현대판교점",
+      "page": 8,
+      "referenceMmPerPixel": 8.928571428571429,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "沿商铺租赁线保留左侧斜边和圆弧，排除右侧商场非设计区域；顶部主通道，左/下为次通道。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.7909430325534694,
+        "scaleError": 0.001541912499293252,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.7909430325534694,
+        "scaleError": 0.001541912499293252,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-407",
+      "name": "韩国釜山乐天百货-롯데 부산본점",
+      "page": 13,
+      "referenceMmPerPixel": 7.001303780964798,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按 L 形租赁轮廓保留右上空域，不用大矩形包住商场空间；上、左、下均标主通道，两个大柱另处理。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.5256588878956557,
+        "scaleError": 0.0000955303918095396,
+        "entrance": true,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.9534840451583616,
+        "scaleError": 0.0000955303918095396,
+        "entrance": true,
+        "boundaryPass": true,
+        "scalePass": true,
+        "allThree": true,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-411",
+      "name": "香港铜锣湾百德新街",
+      "page": 13,
+      "referenceMmPerPixel": 13.554945054945055,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": true
+      },
+      "question": null,
+      "referenceNotes": "按灰色原墙内缘描出两处真实凹口；商场斜线空域排除，上侧休息区包含。下侧双开门为入口。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.3411935844893949,
+        "scaleError": 0.0004146416847354839,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.3411935844893949,
+        "scaleError": 0.0004146416847354839,
+        "entrance": false,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": false,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-412",
+      "name": "马来西亚1Utama Shopping Center",
+      "page": 9,
+      "referenceMmPerPixel": 5.256821829855538,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "下侧长边与右侧开放边，哪一侧作为主入口？图上无主通道标示。",
+      "referenceNotes": "总宽原图为 6550，OCR 误读成 16550，已手工纠正；与总深 2790 交叉核对。上方商场圆弧构造不属于店铺边界。 待确认：下侧长边与右侧开放边，哪一侧作为主入口？图上无主通道标示。",
+      "baseline": {
+        "closed": true,
+        "iou": 0.8186165634323126,
+        "scaleError": 0.0011314845148100439,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": true,
+        "iou": 0.8471816733305726,
+        "scaleError": 0.0011314845148100439,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": true,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    },
+    {
+      "id": "PDF-417",
+      "name": "马来西亚Pavilion Damansara Heights",
+      "page": 3,
+      "referenceMmPerPixel": 6.229338842975206,
+      "eligibility": {
+        "boundary": true,
+        "scale": true,
+        "entrance": false
+      },
+      "question": "左、右、下三个开放方向，主通道位于哪侧？",
+      "referenceNotes": "扫描页手工补齐 6030×3835 矩形，横纵比例一致；矮墙和内嵌灯箱不收缩边界。 待确认：左、右、下三个开放方向，主通道位于哪侧？",
+      "baseline": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      },
+      "candidate": {
+        "closed": false,
+        "iou": 0,
+        "scaleError": null,
+        "entrance": null,
+        "boundaryPass": false,
+        "scalePass": false,
+        "allThree": null,
+        "nearThreshold": false
+      }
+    }
+  ]
+}
