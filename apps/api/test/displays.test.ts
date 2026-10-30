@@ -9,8 +9,8 @@ import { DISPLAY_WORKBOOK, parseDisplayWorkbook } from '../src/modules/displays/
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
-// The real workbook in 资源库 (regular Git, so CI has it): a transcription error fails here.
-const RESOURCE = path.resolve(import.meta.dirname, '../../../资源库')
+// Versioned test copy keeps CI independent from each developer's OneDrive directory.
+const RESOURCE = path.resolve(import.meta.dirname, 'fixtures')
 let rules: DisplayRules
 
 beforeAll(async () => {

@@ -11,7 +11,7 @@ import type { DeckImage } from '../src/modules/displays/deck.ts'
 import { DISPLAY_WORKBOOK, parseDisplayWorkbook } from '../src/modules/displays/workbook.ts'
 import { png } from './helpers.ts'
 
-const RESOURCE = path.resolve(import.meta.dirname, '../../../资源库')
+const RESOURCE = path.resolve(import.meta.dirname, 'fixtures')
 let rules: DisplayRules
 let tables: DisplayTable[]
 let picture: DeckImage
