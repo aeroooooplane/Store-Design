@@ -1,0 +1,257 @@
+[
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/model.glb",
+    "sha256": "947dba5fa5faf1fa4ce4b278abf897ad208f8c9cb31633ef40ddd4b78637be0d",
+    "bytes": 151232,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/conversion.json",
+    "sha256": "70225e12c09d878f919f3f36b3a7805a4db6a93f68671c98bf9405eb8740cecf",
+    "bytes": 4082,
+    "role": "runtime",
+    "candidateSha256": "b16764209871930fa547dd215f3e2d7716ff28a33141da27ae463b0640dda8ae",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/white.glb",
+    "sha256": "4222f8b002d163ada8aa8f04f86075a04d8d54b4c7b2236f52e90f07bcd57e6f",
+    "bytes": 8672,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/white.json",
+    "sha256": "2ed49367646348e6ba483d505926008177087d8e801462b106fd3a87f0e7ac2f",
+    "bytes": 336,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/finish.glb",
+    "sha256": "ae9f67dd4776667ae2677b51b9ca7ea419c4a1c73a1a74075bb3659b86db16f8",
+    "bytes": 38892,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/finish.json",
+    "sha256": "0a712b3a5d032c1b89e46d44275ac11d68865d314a1214a82104411ed83c13d1",
+    "bytes": 423,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1691382",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1691382.png",
+    "sha256": "2e64c90a9e430aed92a892943a5fdc3d33089c7eb2888beb9ef06751d4f44840",
+    "bytes": 306728,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/model.glb",
+    "sha256": "8b4a34b7fbfa553926dc9d10be24f68927d35049c643fcd63ac1aef1b0fc4008",
+    "bytes": 1450904,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/conversion.json",
+    "sha256": "0252aa65b42f5515b7172cda1572aea2835ca4dbc73b8608d8c0b411187c6f62",
+    "bytes": 4103,
+    "role": "runtime",
+    "candidateSha256": "e476bba648dbecd1e7661de6c7deac6d2a0d14fef7735bcf3098c52e84cd4970",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/white.glb",
+    "sha256": "4c6cbd786d386e7a2bb8cff27f30891b2ae451ed3d4bad84dd95df1b32b8d17e",
+    "bytes": 133436,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/white.json",
+    "sha256": "b7aa2f7070c123f38da1faa428bb0f717940de19bae078a4b81aef4d4c368f90",
+    "bytes": 346,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/finish.glb",
+    "sha256": "2a7cc681bda3c69e33f345f905a028cd99f4ca732a22a40dd87dc18d5b3f2bcc",
+    "bytes": 1064396,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/finish.json",
+    "sha256": "66cc2b29aa069d3a42bd172545e5a1cfc7b341b3be840c277cc36ac71e863d62",
+    "bytes": 433,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40888228",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-40888228.png",
+    "sha256": "926c5da599eb05f84bc9f35e8e9db37f5997b5bbf540eaf483fa3b03f7d6bcd3",
+    "bytes": 223815,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/model.glb",
+    "sha256": "72851288f13a05a60fd73e58420cd23658e360dbd48231bf742a052e16d404e4",
+    "bytes": 7224736,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/conversion.json",
+    "sha256": "99dc73c05b6509fbebeacba7dad0b9bf391dda4ffdfe987695449af341d94530",
+    "bytes": 5349,
+    "role": "runtime",
+    "candidateSha256": "354516729e08be900f3ae2ed19505a595d6dafef37dd25a890d33782fcaab5aa",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/white.glb",
+    "sha256": "2fd8fbad286234755017ddac45fa85d5ceb91d2f7333db19f6ae936739054fa4",
+    "bytes": 156956,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/white.json",
+    "sha256": "2006022c6eb429c306185d5c5b108753593634ced8f088fef71a1c3a13242047",
+    "bytes": 347,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/finish.glb",
+    "sha256": "7806dd3aee4f995935e6cce5b6c9d381898b464276de95b17842866c3c541638",
+    "bytes": 1317432,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/finish.json",
+    "sha256": "6f53ed9ae91cabe179e6009ff4e2f617374c7e518a50b59f0637dd414b516fb0",
+    "bytes": 437,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1567211",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1567211.png",
+    "sha256": "b1aec41d010aeb72b291785b85069f9718a907aace0654c6a6b5e0e08b36d6ec",
+    "bytes": 407235,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/model.glb",
+    "sha256": "0819514b7f83e508fed7dac76dd3309386348127b3308cf8e58d9d818acd4dd2",
+    "bytes": 874084,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/conversion.json",
+    "sha256": "67189b847720afcc88cca0b349b76303d8c139e7f69491896aa22176cb606248",
+    "bytes": 7054,
+    "role": "runtime",
+    "candidateSha256": "db742e7d1227246ffa5548877f3346d775694149cf7606894f1d390156aecfad",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/white.glb",
+    "sha256": "15faad44bfce26e15ff09380875a3f716b5f593f00a740081426e50ca926bcc2",
+    "bytes": 134296,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/white.json",
+    "sha256": "7fa082aa129d997c57f1689ec5a05221ecf0dda6bfb2563f43e37eb0e9398e7c",
+    "bytes": 340,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/finish.glb",
+    "sha256": "4afd1e22a3513406cbf59a853522a16c03e9cb39b2d0c310e77de2828a5ac76c",
+    "bytes": 257128,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/finish.json",
+    "sha256": "b486f84490f8e2eb350f650ea8fcadf1f7ee1c9e578b9c9aa5ee4da9688c0a82",
+    "bytes": 429,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-1688589",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1688589.png",
+    "sha256": "66c58e79f60bdea36ec6d8e708a3ef01983d4a7416849dbbb5c5029903b2a845",
+    "bytes": 222353,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/model.glb",
+    "sha256": "36369a890f998768fba0b5597ce93910eddcb0fb227bc13ee58c90bc9b2401bf",
+    "bytes": 13821320,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/conversion.json",
+    "sha256": "a0ecbf77ae7792a7e71eda5cb2ccb0ebc0d877df4dd5c95bc20403ee0bbe8d2a",
+    "bytes": 18548,
+    "role": "runtime",
+    "candidateSha256": "bcf11c044f5c9cf2f3f0715ffc5283d277881dc1692896704144c2c5a8233aa1",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/white.glb",
+    "sha256": "0224e0b6d76ba2c8aa25788e2c3c39df49dba365ac4af87c05eeea39f256f9b0",
+    "bytes": 173972,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/white.json",
+    "sha256": "d5558df0973705566ed5ca79f4b9aefb243d1665efdb5beaa7c16d0dbe697e13",
+    "bytes": 348,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/finish.glb",
+    "sha256": "bb016d14c859e17a444342cacb569a49057eaea61e3487fc16c8277d7d5cfbcd",
+    "bytes": 3898448,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/finish.json",
+    "sha256": "03dd5c64cce5417ae5ec2eb045bdcab02859cdc969288a11eb2cac2283cd684e",
+    "bytes": 439,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-40808068",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-40808068.png",
+    "sha256": "aa127ddabc0eb9faf26c864c8c3184b9df001e5abccd58a7bc6af2c3d7e81d0e",
+    "bytes": 415945,
+    "role": "audit"
+  }
+]
