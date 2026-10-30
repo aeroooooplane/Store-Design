@@ -2,7 +2,7 @@ import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/re
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, DesignNode, Draft, Layout, LayoutItem, Project } from '@store/shared'
-import { makeAsset, makeNode, makeProject } from '../../test-utils/factories.ts'
+import { makeAsset, makeCamera, makeNode, makeProject } from '../../test-utils/factories.ts'
 import { json, stubFetch } from '../../test-utils/fake-api.ts'
 import { renderWithClient } from '../../test-utils/render.tsx'
 import { Workbench } from './Workbench.tsx'
@@ -124,6 +124,10 @@ function fakeApi(
         revision: state.project.revision + 1,
       }
       return json(200, state.project)
+    }
+    if (request.method === 'GET' && url.pathname.endsWith('/cameras')) {
+      const nodeId = url.pathname.split('/')[4] ?? P2
+      return json(200, { nodeId, cameras: [makeCamera(0, nodeId, '正面鸟瞰')] })
     }
     if (request.method === 'GET' && url.pathname.startsWith('/api/v1/nodes/')) {
       const found = state.nodes.find((n) => url.pathname.endsWith(n.id))
@@ -499,6 +503,42 @@ describe('Workbench', () => {
     fireEvent.click(tab('空间信息'))
     expect(screen.getByText('创建时间')).toBeTruthy()
     expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
+  })
+
+  it('keeps white-stage views hidden beside space info until selected, without duplicating or remounting them', async () => {
+    server = fakeApi(
+      [
+        designNode(S1, null),
+        designNode(P1, S1, { name: '方案 A' }),
+        designNode(P2, P1, { kind: 'white', name: '三维效果' }),
+      ],
+      null,
+    )
+    const { container } = renderWorkbench(`?node=${P2}`)
+    await screen.findByRole('heading', { name: '三维效果' })
+    expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
+      '历史',
+      '添加模型',
+      '空间信息',
+      '视角',
+    ])
+    expect(screen.getByRole('tab', { name: '历史' }).getAttribute('aria-selected')).toBe('true')
+    expect(screen.queryByRole('region', { name: '视角' })).toBeNull()
+    expect(container.querySelectorAll('.camera-panel')).toHaveLength(1)
+    expect(container.querySelector('.wb-right .camera-panel')).toBeNull()
+
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
+    const panel = screen.getByRole('region', { name: '视角' })
+    await within(panel).findByRole('button', { name: '查看视角 正面鸟瞰' })
+    fireEvent.click(screen.getByRole('tab', { name: '空间信息' }))
+    expect(screen.queryByRole('region', { name: '视角' })).toBeNull()
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
+    expect(screen.getByRole('region', { name: '视角' })).toBe(panel)
+
+    fireEvent.click(screen.getByRole('tab', { name: '历史' }))
+    fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
+    await screen.findByRole('heading', { name: '方案 A' })
+    expect(screen.queryByRole('tab', { name: '视角' })).toBeNull()
   })
 
   it('autosaves edits to the draft, then saves a version and clears the draft', async () => {

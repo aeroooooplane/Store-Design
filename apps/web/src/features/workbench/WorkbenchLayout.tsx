@@ -6,9 +6,11 @@ interface WorkbenchLayoutProps {
   left: ReactNode
   /** The model list: only where props can be added (plan stage); it becomes the default tab. */
   models?: ReactNode
+  /** Saved views, available in the white-model stage. */
+  cameras?: ReactNode
   /** The plan / 3D canvas (or the page's main content). */
   center: ReactNode
-  /** Stage actions, selected prop, checks, views. Without it the centre takes the room. */
+  /** Stage actions, selected prop and checks. Without it the centre takes the room. */
   right?: ReactNode
   /** Which tab opens first: the model list in the plan stage, history elsewhere. */
   defaultTab?: LeftTab
@@ -23,12 +25,13 @@ export const LeftTabContext = createContext<{
   setTab: (tab: LeftTab) => void
 }>({ tab: null, setTab: () => {} })
 
-export type LeftTab = 'history' | 'models' | 'info'
+export type LeftTab = 'history' | 'models' | 'info' | 'cameras'
 
 const TAB_LABELS: Record<LeftTab, string> = {
   history: '历史',
   models: '添加模型',
   info: '空间信息',
+  cameras: '视角',
 }
 
 /**
@@ -38,21 +41,32 @@ const TAB_LABELS: Record<LeftTab, string> = {
 function LeftTabs({
   history,
   models,
+  cameras,
   defaultTab = 'history',
 }: {
   history: ReactNode
   models?: ReactNode
+  cameras?: ReactNode
   defaultTab?: LeftTab
 }) {
   const info = useContext(WorkbenchInfoContext)
-  const tabs: LeftTab[] = ['history', ...(models ? (['models'] as const) : []), 'info']
+  const tabs: LeftTab[] = [
+    'history',
+    ...(models ? (['models'] as const) : []),
+    'info',
+    ...(cameras ? (['cameras'] as const) : []),
+  ]
   const { tab, setTab } = useContext(LeftTabContext)
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const current = tab && tabs.includes(tab) ? tab : fallback
-  const panels: Record<LeftTab, ReactNode> = { history, models, info }
+  const panels: Record<LeftTab, ReactNode> = { history, models, info, cameras }
   return (
     <section className="wb-tabs-card">
-      <div className="wb-tabs" role="tablist" aria-label="左栏">
+      <div
+        className={cameras ? 'wb-tabs wb-tabs-with-cameras' : 'wb-tabs'}
+        role="tablist"
+        aria-label="左栏"
+      >
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -84,11 +98,18 @@ function LeftTabs({
 }
 
 /** The workbench in three columns, as in the user's layout sketch (2026-10-10). */
-export function WorkbenchLayout({ left, models, center, right, defaultTab }: WorkbenchLayoutProps) {
+export function WorkbenchLayout({
+  left,
+  models,
+  cameras,
+  center,
+  right,
+  defaultTab,
+}: WorkbenchLayoutProps) {
   return (
     <div className={right ? 'wb-layout' : 'wb-layout no-right'}>
       <aside className="wb-left">
-        <LeftTabs history={left} models={models} defaultTab={defaultTab} />
+        <LeftTabs history={left} models={models} cameras={cameras} defaultTab={defaultTab} />
       </aside>
       <div className="wb-center">{center}</div>
       {right ? <aside className="wb-right">{right}</aside> : null}

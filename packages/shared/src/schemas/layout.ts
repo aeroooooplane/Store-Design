@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { isWallArt, wallArtSize, WALL_ART_DEPTH, WALL_ART_ID } from '../catalog/wall-art.ts'
 import { ItemFunctionSchema, PlanStrategySchema } from '../enums.ts'
 import {
   nearestQuarter,
@@ -181,6 +182,7 @@ export interface LayoutIssue {
 
 /** What the asset contract needs to know about a catalogue model. */
 export interface AssetFit {
+  id?: string
   footprint: { w: number; d: number; h: number }
   placeable: boolean
   /** The whole model around a smaller body (a 开箱桌 with its stools), see AssetExtentSchema. */
@@ -237,12 +239,20 @@ export type AssetFitProblem = 'unknown' | 'not_placeable' | 'size'
  */
 export function assetFitProblem(
   item: Pick<LayoutItem, 'placeholder' | 'rotation' | 'w' | 'd' | 'h'> &
-    Partial<Pick<LayoutItem, 'function' | 'scale'>>,
+    Partial<Pick<LayoutItem, 'function' | 'scale' | 'assetId' | 'mount'>>,
   asset: AssetFit | undefined,
 ): AssetFitProblem | null {
   if (!asset) return 'unknown'
   if (!asset.placeable && !item.placeholder) return 'not_placeable'
   const scale = item.scale ?? 1
+  if (asset.id === WALL_ART_ID && isWallArt(item)) {
+    return item.mount === 'wall' &&
+      item.function === 'signage' &&
+      scale === 1 &&
+      Math.abs(wallArtSize(item).d - WALL_ART_DEPTH) < 0.000001
+      ? null
+      : 'size'
+  }
   if (scale !== 1 && item.function !== 'signage') return 'size'
   const expected = scaledSize(rotatedFootprint(asset, item.rotation), scale)
   const differs = (size: { w: number; d: number; h: number }) =>

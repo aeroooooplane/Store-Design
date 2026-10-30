@@ -1,5 +1,8 @@
 import {
   MIN_FIXTURE_M,
+  isWallArt,
+  resizeWallArt,
+  wallArtSize,
   defaultElevation,
   defaultEmbeddedElevation,
   embeddedSnap,
@@ -115,6 +118,15 @@ export type EditorAction =
       group?: string | undefined
     }
   | { type: 'undo' }
+  | {
+      type: 'resizeWallArt'
+      id: string
+      width: number
+      height: number
+      space: Space
+      at?: { cx: number; cz: number; elevation?: number } | undefined
+      group?: string | undefined
+    }
   | { type: 'redo' }
   /** The layout that reached the server; later edits keep the state dirty. */
   | { type: 'saved'; layout: Layout }
@@ -309,9 +321,11 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         (item) => {
           if (item.locked) return item
           const rotation = (((item.rotation + (action.by ?? 90)) % 360) + 360) % 360
-          const size = action.asset
-            ? rotatedFootprint(action.asset, rotation)
-            : { w: item.d, d: item.w, h: item.h }
+          const size = isWallArt(item)
+            ? rotatedFootprint({ footprint: wallArtSize(item) }, rotation)
+            : action.asset
+              ? rotatedFootprint(action.asset, rotation)
+              : { w: item.d, d: item.w, h: item.h }
           const turned = {
             ...item,
             rotation,
@@ -338,10 +352,36 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         state,
         action.id,
         (item) =>
-          item.locked || itemMount(item) === action.mount
+          item.locked ||
+          itemMount(item) === action.mount ||
+          (isWallArt(item) && action.mount !== 'wall')
             ? item
             : mountAs(item, action.mount, action.front, state.layout.items, action.space),
         null,
+      )
+    case 'resizeWallArt':
+      return changeItem(
+        state,
+        action.id,
+        (item) => {
+          if (item.locked || !isWallArt(item)) return item
+          const resized = resizeWallArt(item, action.width, action.height)
+          const at = action.at
+          const next = at
+            ? {
+                ...resized,
+                cx: roundM(at.cx),
+                cz: roundM(at.cz),
+                ...(at.elevation !== undefined
+                  ? { elevation: roundM(Math.max(0, at.elevation)) }
+                  : {}),
+              }
+            : resized
+          if (!mountedWall(item, action.space)) return next
+          const placed = wallMountSnap(next, next.cx, next.cz, action.space, '+Z')
+          return placed ? { ...next, cx: placed.cx, cz: placed.cz } : next
+        },
+        action.group ?? null,
       )
     case 'scale':
       return changeItem(

@@ -1,6 +1,12 @@
 import { useRef, useState } from 'react'
 import type { Dispatch, PointerEvent as ReactPointerEvent } from 'react'
-import { rotationTowards, scaleFromEnd, snapRotation } from '@store/shared'
+import {
+  isWallArt,
+  wallArtFromEnd,
+  rotationTowards,
+  scaleFromEnd,
+  snapRotation,
+} from '@store/shared'
 import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
@@ -146,6 +152,19 @@ export function usePlanDrag(
     }
     if (resize.current) {
       const { start, end, asset, group } = resize.current
+      if (isWallArt(start)) {
+        const placed = wallArtFromEnd(start, end, world)
+        dispatch({
+          type: 'resizeWallArt',
+          id: start.id,
+          width: placed.w,
+          height: placed.h,
+          at: placed,
+          space,
+          group,
+        })
+        return
+      }
       const placed = scaleFromEnd(start, asset.footprint, end, world)
       dispatch({
         type: 'scale',

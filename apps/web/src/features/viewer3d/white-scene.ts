@@ -3,6 +3,9 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import {
   defaultCameras,
+  isWallArt,
+  wallArtSize,
+  wallArtFromCorner,
   fixtureSolids,
   frontCorners,
   itemElevation,
@@ -32,6 +35,8 @@ import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
+import { wallArt } from './wall-art.ts'
+import { boundaryWallMaterial } from './boundary-wall.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
@@ -66,7 +71,13 @@ export interface SceneHandlers {
    */
   onResize?: (
     itemId: string,
-    placement: { scale: number; cx: number; cz: number; elevation: number },
+    placement: {
+      scale: number
+      cx: number
+      cz: number
+      elevation: number
+      size?: { w: number; h: number }
+    },
     gesture: { group: string },
   ) => void
   /**
@@ -156,6 +167,7 @@ export class WhiteScene {
   private shopType: ShopType = 'side_hall'
   private space: Space | null = null
   private readonly roomWhite = surface()
+  private readonly boundaryMaterial = boundaryWallMaterial()
   /** Material-look room materials of the current room, per SI style (the floor follows the room). */
   private readonly roomLooks = new Map<SiStyle, Record<RoomSurface, THREE.MeshStandardMaterial>>()
   /** Textured models with adjusted finishes; per scene because metals use its environment. */
@@ -273,7 +285,11 @@ export class WhiteScene {
     for (const mesh of [...this.room.children, ...this.fixtures.children]) {
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
-        mesh.material = materials ? materials[surfaceName] : this.roomWhite
+        mesh.material = mesh.userData['boundaryWall']
+          ? this.boundaryMaterial
+          : materials
+            ? materials[surfaceName]
+            : this.roomWhite
       }
     }
   }
@@ -295,12 +311,13 @@ export class WhiteScene {
     for (const item of items) {
       seen.add(item.id)
       const catalogued = item.assetId ? assets.get(item.assetId) : undefined
+      const art = isWallArt(item)
       // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
       const picture =
         itemMount(item) === 'embedded'
           ? { url: catalogued?.preview?.url ?? null, front: catalogued?.front ?? null }
           : null
-      const asset = !picture && item.assetId && !item.placeholder ? catalogued : undefined
+      const asset = !art && !picture && item.assetId && !item.placeholder ? catalogued : undefined
       // A LOGO in the other market's version (影石Insta360 ⇄ Insta360): one file for both looks.
       const marketUrl =
         asset?.market && asset.market !== market ? (asset.otherMarketGlb?.url ?? null) : null
@@ -308,11 +325,13 @@ export class WhiteScene {
       const url = marketUrl ?? asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       // The light material copy when there is one (see pnpm catalog:finish).
       const finishUrl = marketUrl ?? asset?.finishGlb?.url ?? asset?.glb?.url ?? null
-      const signature = picture
-        ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
-        : url
-          ? `${url}|${finishUrl}`
-          : `box:${item.w}:${item.d}:${item.h}`
+      const signature = art
+        ? `art:${catalogued?.productImage?.url}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+        : picture
+          ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+          : url
+            ? `${url}|${finishUrl}`
+            : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
@@ -334,7 +353,11 @@ export class WhiteScene {
         placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
-        if (picture)
+        if (art)
+          placed.white.add(
+            wallArt(item, catalogued?.productImage?.url ?? null, () => this.requestRender()),
+          )
+        else if (picture)
           placed.white.add(
             wallPicture(item, picture.front, picture.url, () => this.requestRender()),
           )
@@ -345,7 +368,11 @@ export class WhiteScene {
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item
-      placed.model = item.function === 'signage' && catalogued ? catalogued.footprint : null
+      placed.model = art
+        ? wallArtSize(item)
+        : item.function === 'signage' && catalogued
+          ? catalogued.footprint
+          : null
       const group = placed.group
       // Wall and ceiling pieces hang at their height above the floor.
       const elevation = itemElevation(item)
@@ -355,7 +382,7 @@ export class WhiteScene {
       group.position.set(model.cx, elevation, model.cz)
       // A box already has the footprint at its nearest quarter turn and turns only by the tilt
       // beyond it; a model turns by the whole rotation (legacy: +Z front → −X at 90°).
-      group.rotation.y = ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
+      group.rotation.y = art ? 0 : ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
       // A LOGO resized in the properties panel (scale) shows at that size, like its plan symbol;
       // a placeholder box is drawn at the item's size already.
       group.scale.setScalar(url ? (item.scale ?? 1) : 1)
@@ -547,6 +574,7 @@ export class WhiteScene {
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
     this.roomWhite.dispose()
+    this.boundaryMaterial.dispose()
     this.roomLooks.forEach(disposeRoomMaterials)
     // Finished materials are clones; their textures belong to the shared model cache.
     this.finishedMaterials.forEach((material) => material.dispose())
@@ -798,10 +826,20 @@ export class WhiteScene {
       const { start, model, corner, plane, group } = this.cornerDrag
       const point = this.ray(event).ray.intersectPlane(plane, new THREE.Vector3())
       if (point) {
-        const placement = scaleFromCorner(start, model, corner, {
-          plan: [point.x, point.z],
-          y: point.y,
-        })
+        const pointer = { plan: [point.x, point.z] as [number, number], y: point.y }
+        const resized = isWallArt(start) ? wallArtFromCorner(start, corner, pointer) : null
+        const placement = resized
+          ? {
+              scale: 1,
+              cx: resized.cx,
+              cz: resized.cz,
+              elevation: resized.elevation,
+              size: { w: resized.w, h: resized.h },
+            }
+          : scaleFromCorner(start, model, corner, {
+              plan: [point.x, point.z],
+              y: point.y,
+            })
         this.handlers?.onResize?.(start.id, placement, { group })
       }
       return
