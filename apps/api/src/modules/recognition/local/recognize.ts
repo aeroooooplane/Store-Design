@@ -12,7 +12,8 @@ import { WALL_REACH_M, countInLabel, matchCatalog, sizeInLabel } from '../check.
 import { findBoundary } from './boundary.ts'
 import { chainLineTest, chainScale } from './dimension-chain.ts'
 import type { ChainReading } from './dimension-chain.ts'
-import { findRegion, inRing, ringArea } from './region.ts'
+import { inRing, ringArea } from './region.ts'
+import { findOutline } from './outline.ts'
 import type { PxPoint } from './region.ts'
 import {
   ADDED_LATER_WORDS,
@@ -196,12 +197,14 @@ export function recognizeVector(
       ),
     )
     .map((t): PxPoint => centre(t))
-  const region = findRegion(content.width, content.height, drawn, anchors, {
+  const hints = {
     expectedArea,
     thinPx: pxPerM ? pxPerM * 0.25 : null,
     pxPerM,
     avoid: titleBlockPoints,
-  })
+  }
+  const selected = findOutline(content.width, content.height, drawn, anchors, hints)
+  const region = selected?.points ?? null
   const rectangle = region
     ? null
     : findBoundary(content, wallLines, anchors, { pageEdges: !request.crop, expectedArea })
@@ -228,7 +231,7 @@ export function recognizeVector(
   const insideOutline = (p: PxPoint) => (outline ? inRing(p, outline) : false)
   if (region) {
     notes.push(
-      `边界取包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
+      `边界取${selected?.source === 'lease' ? '红色租赁线候选' : selected?.source === 'stroke' ? '独立线条轮廓' : '图中线段'}中包含道具的闭合区域（${region.length} 个顶点）；请在原图上核对，需要时用“描边界”修正`,
     )
   } else if (rectangle) {
     notes.push(
