@@ -2,6 +2,7 @@ import { aliasedTable, and, asc, eq, ilike, or } from 'drizzle-orm'
 import type { SQL } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
+import { isCatalogAssetRetired } from '@store/shared'
 import type { Asset, AssetList, AssetListQuery, FileRef, FrontAxis } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
@@ -62,7 +63,7 @@ function toAsset(
     staffSide: row.staffSide as FrontAxis | null,
     facingConfidence: row.facingConfidence as Asset['facingConfidence'],
     placeable: row.placeable,
-    retired: row.retired,
+    retired: isCatalogAssetRetired(row),
     judgment: row.judgment,
     glb: fileRef(glb),
     whiteGlb: fileRef(white),
