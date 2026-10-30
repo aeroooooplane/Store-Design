@@ -58,6 +58,21 @@ const catalog = [
 afterEach(cleanup)
 
 describe('pickableGroups', () => {
+  it('按精确编号隐藏LED和审核停用款，保留在用水牌及其他名称含LED的物料', () => {
+    const reviewed = [
+      ...['asset-11525629', 'asset-11511980', 'asset-2463847'].map((id) =>
+        asset(id, 'LED屏', '信息化物料', { retired: false }),
+      ),
+      asset('asset-958185', '电子水牌', '信息化物料'),
+      asset('asset-2587726', '电子水牌', '信息化物料'),
+      asset('asset-990001', 'LED摄影补光展示道具', '非标陈列'),
+    ]
+    const ids = pickableGroups(reviewed, 'SI1.0').flatMap((g) => g.assets.map((a) => a.id))
+    expect(ids).toEqual(['asset-2587726', 'asset-990001'])
+    expect(reviewed).toHaveLength(6)
+    expect(reviewed[0]?.retired).toBe(false)
+  })
+
   it('offers furniture of the project SI and every style-free category, never 环境设施', () => {
     const si1 = pickableGroups(catalog, 'SI1.0')
     expect(si1.map((g) => [g.title, g.assets.map((a) => a.id)])).toEqual([
