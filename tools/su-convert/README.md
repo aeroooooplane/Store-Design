@@ -29,3 +29,10 @@ npm run review -- <输出目录> asset-2595882
 | `server/model-library-paths.mjs` | 按 `manifest.json` 找到模型库目录 |
 
 验证记录（2026-10-13）：用 asset-2595882 的 DAE 分别以原 `demo/scripts` 与本目录各运行两次“转换 + 压缩”，四次结果都与入库的 `model.glb`（sha256 `18b202df…`）逐字节相同。转换后、压缩前的中间文件每次运行会有几个字节的差异：贴图异步编码的完成顺序决定了二进制段里的排列，旧脚本本来如此，压缩后一致。复核渲染的输出两边逐字节相同。
+
+
+## S2完整实例提取
+
+`asset-90000002`从`asset-569180`四件组合保留一只完整白色空心H350实例，450×450×350mm。脚本`node scripts/extract-training-stool.mjs`校验源SHA、四实例、三网格/504三角面、底部中心和回读尺寸，不缩放；不生成独立SKP。它要求RESOURCE_ROOT中的manifest已登记目标条目，并会重建目标文件，仅由资源协调窗口在备份后执行。随后走既有compress/review、catalog:white、catalog:finish、catalog:import流程。
+
+本机发布版为`models-20261030-12`，资源及哈希见[发布记录](../../docs/model-publication/20261030/s2/README.md)。新增OneDrive同步及跨机使用未验证。

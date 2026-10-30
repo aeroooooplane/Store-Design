@@ -1,0 +1,9 @@
+{
+  "firstApplyPassed": true,
+  "repeatIdempotentPassed": true,
+  "metadataConflictAbortsBeforeWrites": true,
+  "assetCollisionAbortsWithoutOverwrite": true,
+  "publicationStatusPatchSandboxPassed": true,
+  "sharedWritesByThisWindow": 0,
+  "modelsReconverted": 0
+}
