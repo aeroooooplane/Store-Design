@@ -1813,3 +1813,22 @@ ul.issues li.warning {
     min-width: 0;
   }
 }
+
+/* Saved views share the left tabs and scroll within the existing panel. */
+.wb-tabs-with-cameras {
+  gap: 0;
+  padding-inline: 4px;
+}
+.wb-tabs-with-cameras button {
+  padding-inline: 6px;
+  white-space: nowrap;
+}
+.wb-tab-panel > .camera-panel {
+  margin: 0;
+  padding: 12px;
+  border: 0;
+}
+.wb-tab-panel .camera-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
