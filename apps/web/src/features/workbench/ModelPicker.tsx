@@ -1,5 +1,5 @@
 import { useDeferredValue, useMemo, useState } from 'react'
-import { ITEM_FUNCTIONS, mToMm } from '@store/shared'
+import { canSelectCatalogAsset, ITEM_FUNCTIONS, mToMm } from '@store/shared'
 import type { Asset, AssetCategory, SiStyle } from '@store/shared'
 
 /** Picker groups in order; 环境设施 (fire boxes, spotlights) are not placed by hand. */
@@ -22,7 +22,9 @@ export function pickableGroups(assets: readonly Asset[], si: SiStyle) {
     assets: assets
       .filter(
         (a) =>
-          !a.retired && a.category === category && (category !== '软装道具' || a.siFamily === si),
+          canSelectCatalogAsset(a) &&
+          a.category === category &&
+          (category !== '软装道具' || a.siFamily === si),
       )
       .sort(
         (a, b) =>

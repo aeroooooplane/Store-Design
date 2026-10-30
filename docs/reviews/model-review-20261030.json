@@ -1,0 +1,224 @@
+{
+  "source": "模型去留审核_91件_20261029.xlsx",
+  "savedAt": "2026-10-30T10:19:24+08:00",
+  "sha256": "da65a6bf91547d3b217954873b06492deecb0fe3bb4b37a01b092c724509ffd0",
+  "rows": 36,
+  "decisions": [
+    {
+      "id": "asset-11525629",
+      "name": "4.614米LED门头屏",
+      "note": "停用，但保留模型文件",
+      "action": "hide-led"
+    },
+    {
+      "id": "asset-958185",
+      "name": "43寸电子水牌",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2597250",
+      "name": "55寸竖屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-3021147",
+      "name": "65寸横屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-11479197",
+      "name": "75寸横屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-11479198",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2245165",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-28115483",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-316267",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-37758059",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-957634",
+      "name": "75寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2595839",
+      "name": "75寸竖屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-11525433",
+      "name": "86寸横屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-2932497",
+      "name": "86寸横屏广告机",
+      "note": "已重复，停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2500908",
+      "name": "98寸横屏广告机",
+      "note": "需转换",
+      "action": "convert"
+    },
+    {
+      "id": "asset-28104668",
+      "name": "非标横屏广告机",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-11511980",
+      "name": "曲面LED屏",
+      "note": "停用，但保留模型文件",
+      "action": "hide-led"
+    },
+    {
+      "id": "asset-11478950",
+      "name": "水下KV灯箱",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-11525436",
+      "name": "水下KV灯箱",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2463847",
+      "name": "约7米LED门头屏",
+      "note": "停用，但保留模型文件",
+      "action": "hide-led"
+    },
+    {
+      "id": "asset-754006",
+      "name": "AcePro2横版画面",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-569211",
+      "name": "AcePro2竖版画面",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2587203",
+      "name": "GO3S横版灯箱",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-1156409",
+      "name": "GO3S竖版灯箱",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-33937175",
+      "name": "影石吊挂LOGO（长吊杆）",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-40896298",
+      "name": "影石墙面LOGO",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-6952129",
+      "name": "影石始于敢想墙面LOGO",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-568756",
+      "name": "影石双面侧招",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-1688590",
+      "name": "X5立体字",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-3356988",
+      "name": "0.9米L形挡板",
+      "note": "停用并删除",
+      "action": "retire"
+    },
+    {
+      "id": "asset-754909",
+      "name": "轨道射灯",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2908609",
+      "name": "轨道射灯组合",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-2932358",
+      "name": "轨道射灯组合",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-33908345",
+      "name": "轨道射灯组合",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-775543",
+      "name": "轨道射灯组合",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    },
+    {
+      "id": "asset-24488049",
+      "name": "消防栓箱",
+      "note": "停用，但保留模型文件",
+      "action": "retire"
+    }
+  ]
+}

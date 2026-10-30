@@ -1,4 +1,5 @@
 import { ITEM_FUNCTIONS, SHOP_TYPE_LABELS } from '../enums.ts'
+import { isWallArt, wallArtSize } from '../catalog/wall-art.ts'
 import type { ShopType } from '../enums.ts'
 import type { Asset } from '../schemas/asset.ts'
 import type { LayoutItem } from '../schemas/layout.ts'
@@ -65,8 +66,9 @@ export function deliveryLegend(
   const groups = new Map<string, { entry: Omit<LegendEntry, 'no'>; fn: number; ids: string[] }>()
   for (const item of items) {
     const asset = item.assetId ? assets.get(item.assetId) : undefined
+    const artSize = isWallArt(item) ? wallArtSize(item) : null
     const key = asset
-      ? `asset:${item.assetId}:${item.placeholder ? 'box' : 'model'}`
+      ? `asset:${item.assetId}:${item.placeholder ? 'box' : 'model'}${artSize ? `:${mm(artSize.w)}x${mm(artSize.h)}` : ''}`
       : // A box without a model, long side first: turned a quarter it is still the same box.
         `box:${item.name}:${mm(Math.max(item.w, item.d))}x${mm(Math.min(item.w, item.d))}x${mm(item.h)}`
     let group = groups.get(key)
@@ -75,9 +77,11 @@ export function deliveryLegend(
         entry: {
           assetId: asset ? (item.assetId ?? null) : null,
           name: (asset?.name ?? item.name).trim(),
-          size: asset
-            ? { ...asset.footprint }
-            : { w: Math.max(item.w, item.d), d: Math.min(item.w, item.d), h: item.h },
+          size:
+            artSize ??
+            (asset
+              ? { ...asset.footprint }
+              : { w: Math.max(item.w, item.d), d: Math.min(item.w, item.d), h: item.h }),
           count: 0,
           placeholder: item.placeholder,
         },

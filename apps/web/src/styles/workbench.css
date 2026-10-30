@@ -1673,3 +1673,162 @@ ul.issues li.warning {
   justify-content: space-between;
   gap: 8px;
 }
+/* Viewport-aware workbench shell. Drawing/export rules above stay unchanged. */
+.page.page-workbench {
+  min-height: calc(100dvh - var(--nav-height));
+  padding: 12px 16px;
+}
+.wb-layout,
+.wb-left,
+.wb-right {
+  gap: 12px;
+}
+.wb-card,
+.project-details {
+  padding: 12px;
+}
+.project-bar {
+  padding: 8px 12px;
+}
+.wb-center .toolbar {
+  gap: 8px;
+  align-items: center;
+}
+.stage-row button {
+  min-height: 36px;
+}
+@media (min-width: 1181px) and (min-height: 600px) {
+  .page.page-workbench {
+    height: calc(100dvh - var(--nav-height));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .page-workbench > .workbench-bar,
+  .page-workbench > .project-bar {
+    flex: none;
+    margin: 0;
+  }
+  .page-workbench > .wb-layout {
+    flex: 1;
+    min-height: 0;
+    grid-template-columns: clamp(240px, 19vw, 300px) minmax(0, 1fr) clamp(280px, 22vw, 340px);
+    grid-template-rows: minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .page-workbench > .wb-layout.no-right {
+    grid-template-columns: clamp(240px, 19vw, 300px) minmax(0, 1fr);
+  }
+  .wb-layout > .wb-left,
+  .wb-layout > .wb-right,
+  .wb-layout > .wb-center {
+    position: relative;
+    top: auto;
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
+  }
+  .wb-layout > .wb-right,
+  .wb-layout > .wb-center {
+    overflow: auto;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+  }
+  .wb-layout > .wb-right {
+    align-content: start;
+  }
+  .wb-center > .plan-editor,
+  .wb-center > .render-stage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: auto;
+  }
+  .wb-center .node-heading,
+  .wb-center .toolbar,
+  .render-strip-heading {
+    flex: none;
+  }
+  .plan-editor .plan-canvas {
+    flex: 1;
+    min-height: 160px;
+    container-type: size;
+  }
+  .plan-canvas > .view-main {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+  }
+  .plan-canvas > .view-main > svg {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
+  .plan-canvas > .view-main > .viewer3d {
+    width: min(100cqw, 150cqh);
+  }
+  .render-stage .render-main {
+    flex: 1;
+    min-height: 180px;
+    aspect-ratio: auto;
+    container-type: size;
+  }
+  .render-live > .viewer3d {
+    width: min(100cqw, 150cqh);
+    height: auto;
+  }
+  .render-live canvas {
+    height: auto;
+  }
+  .render-stage .render-main-display {
+    overflow: auto;
+  }
+  .render-stage .render-strip {
+    flex: none;
+    max-height: 148px;
+    overflow: auto;
+    padding: 4px;
+    scrollbar-width: thin;
+    grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  }
+}
+@media (max-width: 1180px), (max-height: 599px) {
+  .wb-layout,
+  .wb-layout.no-right {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .wb-layout > .wb-left,
+  .wb-layout > .wb-right {
+    position: static;
+    height: auto;
+    max-height: none;
+  }
+  .wb-left .wb-tabs-card {
+    height: clamp(180px, 30dvh, 300px);
+  }
+  .project-bar h2 {
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+}
+
+/* Saved views share the left tabs and scroll within the existing panel. */
+.wb-tabs-with-cameras {
+  gap: 0;
+  padding-inline: 4px;
+}
+.wb-tabs-with-cameras button {
+  padding-inline: 6px;
+  white-space: nowrap;
+}
+.wb-tab-panel > .camera-panel {
+  margin: 0;
+  padding: 12px;
+  border: 0;
+}
+.wb-tab-panel .camera-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}

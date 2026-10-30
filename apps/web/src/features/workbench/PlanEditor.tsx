@@ -11,6 +11,7 @@ import {
 import type { ReactNode } from 'react'
 import {
   checkAssetFit,
+  WALL_ART_ID,
   fitBodyFootprints,
   snapRotation,
   spaceAncestor,
@@ -184,12 +185,30 @@ export function PlanEditor({
   const resize = useCallback(
     (
       id: string,
-      placement: { scale: number; cx: number; cz: number; elevation: number },
+      placement: {
+        scale: number
+        cx: number
+        cz: number
+        elevation: number
+        size?: { w: number; h: number }
+      },
       gesture: { group: string },
     ) => {
       const assetId = itemsRef.current.find((i) => i.id === id)?.assetId
       const asset = assetId ? assetMap.get(assetId) : undefined
       if (!asset) return
+      if (asset.id === WALL_ART_ID && placement.size) {
+        dispatch({
+          type: 'resizeWallArt',
+          id,
+          width: placement.size.w,
+          height: placement.size.h,
+          at: placement,
+          space,
+          group: gesture.group,
+        })
+        return
+      }
       dispatch({
         type: 'scale',
         id,
@@ -311,6 +330,17 @@ export function PlanEditor({
         )
       }
       defaultTab={isWhite ? 'history' : 'models'}
+      cameras={
+        isWhite ? (
+          <CameraPanel
+            nodeId={baseNode.id}
+            viewer={viewerRef}
+            viewerReady={viewerReady}
+            layout={state.layout}
+            onShow={showCamera}
+          />
+        ) : undefined
+      }
       center={
         editWalls.editing ? (
           <div className="wb-card">
@@ -513,18 +543,6 @@ export function PlanEditor({
           />
 
           <IssuesPanel issues={issues} errorCount={errors.length} />
-
-          {isWhite && (
-            <div className="wb-card">
-              <CameraPanel
-                nodeId={baseNode.id}
-                viewer={viewerRef}
-                viewerReady={viewerReady}
-                layout={state.layout}
-                onShow={showCamera}
-              />
-            </div>
-          )}
         </>
       }
     />

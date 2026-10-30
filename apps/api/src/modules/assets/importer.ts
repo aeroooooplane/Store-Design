@@ -11,6 +11,7 @@ import {
   InstallationSchema,
   MarketSchema,
   functionFor,
+  isCatalogAssetRetired,
   roundM,
 } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
@@ -346,7 +347,7 @@ export async function importCatalog(
         staffSide: face?.staffSide ?? null,
         facingConfidence: face?.confidence ?? null,
         placeable,
-        retired: Boolean(entry.retired),
+        retired: isCatalogAssetRetired({ id, retired: Boolean(entry.retired) }),
         judgment: entry.judgment ?? null,
         glbFileId,
         whiteGlbFileId,

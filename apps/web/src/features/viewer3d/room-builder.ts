@@ -25,18 +25,21 @@ export function buildRoom(
 
   for (const wall of wallSegments(space, shopType)) {
     const length = Math.hypot(wall.b[0] - wall.a[0], wall.b[1] - wall.a[1])
-    const geometry = new THREE.BoxGeometry(length, wall.height, WALL_THICKNESS_M)
+    const geometry = new THREE.BoxGeometry(length, space.height, WALL_THICKNESS_M)
     const mesh = new THREE.Mesh(geometry, material)
     mesh.userData['surface'] = 'wall'
+    mesh.userData['boundaryWall'] = true
+    mesh.renderOrder = 1
     const half = WALL_THICKNESS_M / 2
     mesh.position.set(
       (wall.a[0] + wall.b[0]) / 2 + wall.outward[0] * half,
-      wall.height / 2,
+      space.height / 2,
       (wall.a[1] + wall.b[1]) / 2 + wall.outward[1] * half,
     )
     mesh.rotation.y = -Math.atan2(wall.b[1] - wall.a[1], wall.b[0] - wall.a[0])
-    mesh.castShadow = true
-    mesh.receiveShadow = true
+    // 透明墙只提供空间轮廓，不投射原先实心墙的全黑遮挡。
+    mesh.castShadow = false
+    mesh.receiveShadow = false
     room.add(mesh)
   }
 
