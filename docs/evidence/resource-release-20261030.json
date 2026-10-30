@@ -1,0 +1,1190 @@
+{
+  "schemaVersion": 1,
+  "releaseVersions": {
+    "models": "models-20261030-12",
+    "display": "display-20261030-rev4095"
+  },
+  "modelAssets": [
+    {
+      "feature": "nonstandard",
+      "assetIds": [
+        "asset-1691382",
+        "asset-40888228",
+        "asset-1567211",
+        "asset-1688589",
+        "asset-40808068"
+      ]
+    },
+    {
+      "feature": "advertising",
+      "assetIds": [
+        "asset-2597250",
+        "asset-3021147",
+        "asset-11479197",
+        "asset-2595839",
+        "asset-11525433",
+        "asset-2500908"
+      ]
+    },
+    {
+      "feature": "s2",
+      "assetIds": [
+        "asset-90000002"
+      ]
+    }
+  ],
+  "modelAssetCount": 12,
+  "sourceEvidenceCount": 13,
+  "sourceChecks": [
+    {
+      "assetId": "asset-1691382",
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/非标_产品放大模型_X3相机__asset-1691382.skp",
+      "sha256": "173e23cdfbf38d2d2887b1801e5c000ef3f7522b2b02aa53be6b921faa47ac4c"
+    },
+    {
+      "assetId": "asset-40888228",
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/SI2.0_橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228.skp",
+      "sha256": "186f38fa40713df21b01735641620ec837d708f38908223823709f1e16ee1d71"
+    },
+    {
+      "assetId": "asset-1567211",
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/非标_橱窗场景道具_柯基犬_带运动相机__asset-1567211.skp",
+      "sha256": "b6884396ec5066cd51d721230bb441e9b2f36f65510c529563459263df1165de"
+    },
+    {
+      "assetId": "asset-1688589",
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/非标_橱窗模特_头盔赛车服人台__asset-1688589.skp",
+      "sha256": "d906169950fc47753bba42bcf463b6a240c45e77c1dd991a332bb7b53aef0ebd"
+    },
+    {
+      "assetId": "asset-40808068",
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/SI2.0_橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068.skp",
+      "sha256": "d5d8a1c1e8bd1948613aeeab8cc97ed5826d97496dd45f5cbe3e951e4116bbf4"
+    },
+    {
+      "assetId": "asset-2597250",
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/通用_广告机_55寸竖屏__asset-2597250.skp",
+      "sha256": "256afae31edba113719e59e6df4574a57dcc33baec830ac4137c9d04e8c6c5ac"
+    },
+    {
+      "assetId": "asset-3021147",
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
+      "sha256": "376e2bdead3246dd7bb4b7d6845494d730d7b5a47b829f5922b5fe46ed77820e"
+    },
+    {
+      "assetId": "asset-11479197",
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
+      "sha256": "ae87eae2bc7252f89b583497f6de93f06c9af6ae17e9a9f4f394a94d946c2eff"
+    },
+    {
+      "assetId": "asset-2595839",
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
+      "sha256": "b996eaf4e8c25fd47f3efa10f1a47fa0c38c8ea8ac5d7c53e3236d741c2e950c"
+    },
+    {
+      "assetId": "asset-11525433",
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
+      "sha256": "159697c3dea58abc0d0c94683444e90e299669cbc3fa0cf7b0e30980e755e98b"
+    },
+    {
+      "assetId": "asset-2500908",
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
+      "sha256": "dbc1b434bd9d5c6d1cfa459aa02ee1739dc0d01a9f926dab92fc63c32c16b0b7"
+    },
+    {
+      "assetId": "asset-90000002",
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
+      "sha256": "c616944738e2daf4d967fccb0542efeca2d9d83224c72ccb6d412d7eaa0915ee"
+    },
+    {
+      "assetId": "asset-90000002",
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/网页模型/model.glb",
+      "sha256": "c1d40fb4ad7bf81548e477048447132939539670ce39559eac84050a9d2e7e94"
+    }
+  ],
+  "displaySourceRevision": 4095,
+  "singleComputerAcceptance": true,
+  "crossComputerAcceptance": "deferred by user",
+  "backupVerified": {
+    "files": 23633,
+    "failed": 0
+  },
+  "files": [
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/model.glb",
+      "sha256": "947dba5fa5faf1fa4ce4b278abf897ad208f8c9cb31633ef40ddd4b78637be0d",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/conversion.json",
+      "sha256": "70225e12c09d878f919f3f36b3a7805a4db6a93f68671c98bf9405eb8740cecf",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard",
+      "previousSha256": "b16764209871930fa547dd215f3e2d7716ff28a33141da27ae463b0640dda8ae"
+    },
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/white.glb",
+      "sha256": "4222f8b002d163ada8aa8f04f86075a04d8d54b4c7b2236f52e90f07bcd57e6f",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/white.json",
+      "sha256": "2ed49367646348e6ba483d505926008177087d8e801462b106fd3a87f0e7ac2f",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/finish.glb",
+      "sha256": "ae9f67dd4776667ae2677b51b9ca7ea419c4a1c73a1a74075bb3659b86db16f8",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/finish.json",
+      "sha256": "0a712b3a5d032c1b89e46d44275ac11d68865d314a1214a82104411ed83c13d1",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1691382.png",
+      "sha256": "2e64c90a9e430aed92a892943a5fdc3d33089c7eb2888beb9ef06751d4f44840",
+      "assetId": "asset-1691382",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/model.glb",
+      "sha256": "8b4a34b7fbfa553926dc9d10be24f68927d35049c643fcd63ac1aef1b0fc4008",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/conversion.json",
+      "sha256": "0252aa65b42f5515b7172cda1572aea2835ca4dbc73b8608d8c0b411187c6f62",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard",
+      "previousSha256": "e476bba648dbecd1e7661de6c7deac6d2a0d14fef7735bcf3098c52e84cd4970"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/white.glb",
+      "sha256": "4c6cbd786d386e7a2bb8cff27f30891b2ae451ed3d4bad84dd95df1b32b8d17e",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/white.json",
+      "sha256": "b7aa2f7070c123f38da1faa428bb0f717940de19bae078a4b81aef4d4c368f90",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/finish.glb",
+      "sha256": "2a7cc681bda3c69e33f345f905a028cd99f4ca732a22a40dd87dc18d5b3f2bcc",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_橙色岩石_双组_非标组合__asset-40888228/网页模型/finish.json",
+      "sha256": "66cc2b29aa069d3a42bd172545e5a1cfc7b341b3be840c277cc36ac71e863d62",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-40888228.png",
+      "sha256": "926c5da599eb05f84bc9f35e8e9db37f5997b5bbf540eaf483fa3b03f7d6bcd3",
+      "assetId": "asset-40888228",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/model.glb",
+      "sha256": "72851288f13a05a60fd73e58420cd23658e360dbd48231bf742a052e16d404e4",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/conversion.json",
+      "sha256": "99dc73c05b6509fbebeacba7dad0b9bf391dda4ffdfe987695449af341d94530",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard",
+      "previousSha256": "354516729e08be900f3ae2ed19505a595d6dafef37dd25a890d33782fcaab5aa"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/white.glb",
+      "sha256": "2fd8fbad286234755017ddac45fa85d5ceb91d2f7333db19f6ae936739054fa4",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/white.json",
+      "sha256": "2006022c6eb429c306185d5c5b108753593634ced8f088fef71a1c3a13242047",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/finish.glb",
+      "sha256": "7806dd3aee4f995935e6cce5b6c9d381898b464276de95b17842866c3c541638",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_柯基犬_带运动相机__asset-1567211/网页模型/finish.json",
+      "sha256": "6f53ed9ae91cabe179e6009ff4e2f617374c7e518a50b59f0637dd414b516fb0",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1567211.png",
+      "sha256": "b1aec41d010aeb72b291785b85069f9718a907aace0654c6a6b5e0e08b36d6ec",
+      "assetId": "asset-1567211",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/model.glb",
+      "sha256": "0819514b7f83e508fed7dac76dd3309386348127b3308cf8e58d9d818acd4dd2",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/conversion.json",
+      "sha256": "67189b847720afcc88cca0b349b76303d8c139e7f69491896aa22176cb606248",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard",
+      "previousSha256": "db742e7d1227246ffa5548877f3346d775694149cf7606894f1d390156aecfad"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/white.glb",
+      "sha256": "15faad44bfce26e15ff09380875a3f716b5f593f00a740081426e50ca926bcc2",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/white.json",
+      "sha256": "7fa082aa129d997c57f1689ec5a05221ecf0dda6bfb2563f43e37eb0e9398e7c",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/finish.glb",
+      "sha256": "4afd1e22a3513406cbf59a853522a16c03e9cb39b2d0c310e77de2828a5ac76c",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗模特_头盔赛车服人台__asset-1688589/网页模型/finish.json",
+      "sha256": "b486f84490f8e2eb350f650ea8fcadf1f7ee1c9e578b9c9aa5ee4da9688c0a82",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-1688589.png",
+      "sha256": "66c58e79f60bdea36ec6d8e708a3ef01983d4a7416849dbbb5c5029903b2a845",
+      "assetId": "asset-1688589",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/model.glb",
+      "sha256": "36369a890f998768fba0b5597ce93910eddcb0fb227bc13ee58c90bc9b2401bf",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/conversion.json",
+      "sha256": "a0ecbf77ae7792a7e71eda5cb2ccb0ebc0d877df4dd5c95bc20403ee0bbe8d2a",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard",
+      "previousSha256": "bcf11c044f5c9cf2f3f0715ffc5283d277881dc1692896704144c2c5a8233aa1"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/white.glb",
+      "sha256": "0224e0b6d76ba2c8aa25788e2c3c39df49dba365ac4af87c05eeea39f256f9b0",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/white.json",
+      "sha256": "d5558df0973705566ed5ca79f4b9aefb243d1665efdb5beaa7c16d0dbe697e13",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/finish.glb",
+      "sha256": "bb016d14c859e17a444342cacb569a49057eaea61e3487fc16c8277d7d5cfbcd",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/非标陈列/橱窗场景道具_骑行模特及自行车_非标组合__asset-40808068/网页模型/finish.json",
+      "sha256": "03dd5c64cce5417ae5ec2eb045bdcab02859cdc969288a11eb2cac2283cd684e",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/nonstandard/五向/asset-40808068.png",
+      "sha256": "aa127ddabc0eb9faf26c864c8c3184b9df001e5abccd58a7bc6af2c3d7e81d0e",
+      "assetId": "asset-40808068",
+      "feature": "nonstandard"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/model.glb",
+      "sha256": "a95112e45ecbe5888d26139a825669b5a9bb2c64a51757241252e0a78ea2ee65",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/conversion.json",
+      "sha256": "f3fe5625ab7dbf60c29c3424b6f94d3c8149fdf90319d7b30ff68d18163d447d",
+      "assetId": "asset-2597250",
+      "feature": "advertising",
+      "previousSha256": "96fa00b1d2e2bc6caf4797ef44df48225f9254314dbd6fff6a35d26439e17901"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/white.glb",
+      "sha256": "84110b29b43cc23785ee54fc514744cce42c8e2058fcd5cab3ef191b434908a4",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/white.json",
+      "sha256": "59d2d78f570e3b1ea69fa771306e96a4bffd45960c3a0bcabc4b4b9ee206cc7a",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/finish.glb",
+      "sha256": "c5ffbfcf848ac8943dc36432c39e637e3187c260bda5149b4fb6c925d3bca18d",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/finish.json",
+      "sha256": "ba1f6e27b5d60f863a26e29b6b8cad032e09189df3ba6a287485a4f7e7097a47",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2597250.png",
+      "sha256": "a9b336d2b59d1d56f7f7d24a9999df67660d9365371c691f810fef5f727f4003",
+      "assetId": "asset-2597250",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/model.glb",
+      "sha256": "32ad0a2bd066e5fb1873a795c9512bfccdf17cc04021a0e2645d287e807032cd",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/conversion.json",
+      "sha256": "a59a225e6bbb310586723f3813b826b0761541a413c2b59df8b705708247f7e2",
+      "assetId": "asset-3021147",
+      "feature": "advertising",
+      "previousSha256": "a1f587ba2bcd10a6698b8c0f6aae861f0ce72983f45f83d20344f89c16674c14"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/white.glb",
+      "sha256": "f8bc9e5cd65865aa62f5530d1ec861a0c30cdd3d466fa804ae8698adbe64ea15",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/white.json",
+      "sha256": "4578fcb049a35aa89e377eac3810db79bf227141088c81c74b8f04abab034977",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/finish.glb",
+      "sha256": "767791c7b1a7faedd792b9f5857934b5cf910ad8f5b256c6c816dde9beb26328",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/finish.json",
+      "sha256": "fd50e64378b0560cee6f05e3473ddf94913985dafbb5a6ddd99c397315fae833",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-3021147.png",
+      "sha256": "be04f09e24e0eb15da5d41ff6927ff3b8a6c6311a67fcb872f6c28021e25e8a8",
+      "assetId": "asset-3021147",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/model.glb",
+      "sha256": "85c26fe8f9d5bd156e70aa8ca58787fd3a4e986d02e061bc959b29f31b43caa9",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/conversion.json",
+      "sha256": "ec0d770aa17f9c45ad346612166c12ae452e50dd322b792d208270cecee7031a",
+      "assetId": "asset-11479197",
+      "feature": "advertising",
+      "previousSha256": "0fde8fab9229032d10a99617397529df3c3da2673309acac332128320d766f6b"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/white.glb",
+      "sha256": "70c666f77eb342077eb092ee3aab1a66565cbe97950789571f8263e349570d8c",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/white.json",
+      "sha256": "1bbf87e4deb525314130a278ed8a87b42525f7e90dfa3e3a435276af6348ba5f",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/finish.glb",
+      "sha256": "1bcf7488cc3e2a526c622637b94eafae444911f8cceba5f127467afe6cc38ba0",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/finish.json",
+      "sha256": "d97be6bc081ead6b554d1d71a86b89040c7ea64b354c05c71b0202eb436d2a0b",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-11479197.png",
+      "sha256": "7c31f71fe6228a866f727ce82f04cbd1faaa1ea8fbc7023c476c683246e28018",
+      "assetId": "asset-11479197",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/model.glb",
+      "sha256": "37557923105b6beb74c88faf6de90292ea9374218bf58017e642672132ebe7cd",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/conversion.json",
+      "sha256": "261c091b1d68f1fdc0f6092f769e39ec3d5fa9d593bd4dbdfe5663db2798ebf5",
+      "assetId": "asset-2595839",
+      "feature": "advertising",
+      "previousSha256": "d515897271502119b87bbd5cd29895720b4db8eef857c2f83255fc16df6bb5f1"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/white.glb",
+      "sha256": "b9d1daa25d4b2b98605aacb346bdc88b6b6832c9a2c23c6b5c5a63ee75b11c30",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/white.json",
+      "sha256": "3c3a87c71052f52b74930e31f97b2ce526ff61fe734dbd816d858f505562d522",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/finish.glb",
+      "sha256": "1530d8ef52bb58a736a691173918ff51c8672369e9030a62bb0fa3213aaa06a8",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/finish.json",
+      "sha256": "d5b416204d889489b77ba536c99c26e05c884cf245b23467c0dd458f6067a0bc",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2595839.png",
+      "sha256": "05c13c7b74a0a9a1b172de468159cb83589c2016d63ef6a2898f96ed3f4ea390",
+      "assetId": "asset-2595839",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/model.glb",
+      "sha256": "d348d452423aa6dbaa268688c9519e1c89c9538e14708732bcaf05ae572ed22a",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/conversion.json",
+      "sha256": "34abf28fa2522bad030f766c16032bfb87c4eb17388a7cfcbf56ce19acdb7cab",
+      "assetId": "asset-11525433",
+      "feature": "advertising",
+      "previousSha256": "2e29567966c1f473199fa0c1ff28f31f1af814c85e781f515e2140800520fb6e"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/white.glb",
+      "sha256": "de5aab8335668759ac12e1bc8775470d0260d942cf99698fc41a4d75d975008b",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/white.json",
+      "sha256": "4a50895b235d5359f8800426204835fc052643a4e09f00bf001bd6975a0f5517",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/finish.glb",
+      "sha256": "9fb8ffe2348d8ed6e74a215ba2ae037ff19a2b4c9ff8f15e5ed5fa9bacf54948",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/finish.json",
+      "sha256": "6edbbdf7730b43f88b2228e6399554e3b3b1bd28ebca18cfb4c20ae0bfc92779",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-11525433.png",
+      "sha256": "64116c67fe0b4bdf3896a188518b408d49bde29e71573234b365c09bfb55179f",
+      "assetId": "asset-11525433",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/model.glb",
+      "sha256": "81bcf416bb38d0e3683704beec057f3fbf76df0a41ca0a93bb2baf147ca32431",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/conversion.json",
+      "sha256": "2fe4107b9517532ab1878e1599472c52eaa5a33f4f2a13834a4f0dc0777cccf7",
+      "assetId": "asset-2500908",
+      "feature": "advertising",
+      "previousSha256": "3170144716356c14bb31d2e3e28f75c5b0b24410b9d4ebd4cb3589c620c56106"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/white.glb",
+      "sha256": "b3861d95cb279bbf9951a32b4f71e2aaaddf4a40e09176084ddf852ddae71929",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/white.json",
+      "sha256": "c559955fcd28b9ddddfbed8ae9a2de52f4f260e550fa2d5520b31aff342ab240",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/finish.glb",
+      "sha256": "395ef9bb977ef940788798ca170205448de19b37e7c054df62778df1b6e4fac8",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/finish.json",
+      "sha256": "1b14b8284e9264ac526824ce0639cd5f527c2856a3acc04cd8422d990c555dc6",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2500908.png",
+      "sha256": "4ba4b1bea3a1458f262e1b993f1e35f6b497f00a786a74ebe8ce4addc56c2e0b",
+      "assetId": "asset-2500908",
+      "feature": "advertising"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.png",
+      "sha256": "89035895ca1b829fab9b05e8bc5573214ea6fe3547451d34f836105a59d3cb72",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.svg",
+      "sha256": "21a94a9d6fc52aa813148a9a2dbfb430b8f596098a531db5610e7ecd72d9d02f",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/效果图.png",
+      "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/conversion.json",
+      "sha256": "f09bb1dbc05b2cf36bc1cddcc6d36e52c5f83161c9138377c3a6470948378415",
+      "assetId": "asset-90000002",
+      "feature": "s2",
+      "previousSha256": "4db49f5f31e551e5baa3feb3f38bed8976381d77e9823de744b3081bbd292c5e"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/finish.glb",
+      "sha256": "a65e233c3fb136c85a58cfe7d25ab6cf723123854eba5e3c68d4fada134db7b9",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/finish.json",
+      "sha256": "a8d89d1017350dff4698f067c007a08bc45fd78cad62587b0c4e4eb87f5794d3",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/model.glb",
+      "sha256": "c982e0ff020fe963766a0f3b2a07767bfb92f8b73e43486403ef21d02a3960e6",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/white.glb",
+      "sha256": "ce1424bacd86996dbfff2adf21dbb81da6c4e78fb35f2796aefe827b41eb4834",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/white.json",
+      "sha256": "60ef7762bd2b19914ceb1c6415081289f7a829f35b7a2c5f0b7eae3fa737bff9",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/预览.png",
+      "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/品类图库/01_道具图片PNG/asset-90000002.png",
+      "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/品类图库/03_平面图SVG/asset-90000002.svg",
+      "sha256": "21a94a9d6fc52aa813148a9a2dbfb430b8f596098a531db5610e7ecd72d9d02f",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI1.0/品类图库/02_平面图PNG/asset-90000002.png",
+      "sha256": "89035895ca1b829fab9b05e8bc5573214ea6fe3547451d34f836105a59d3cb72",
+      "assetId": "asset-90000002",
+      "feature": "s2"
+    },
+    {
+      "path": "04_模型库/manifest.json",
+      "sha256": "415493950a2820effd4c5e717dc8ddcdac0d5158fd93ddd13f47e18f81d8fc33"
+    },
+    {
+      "path": "04_模型库/facing.json",
+      "sha256": "e675d9610fc9e90d38641f8c440e6a8989b8234d662f85604b6834cfe5bd751c"
+    },
+    {
+      "path": "04_模型库/模型清单.csv",
+      "sha256": "5b3d48a81066efc7c12ebdccfdbd8e146c258835134c439fb26c02dace90171b"
+    },
+    {
+      "path": "04_模型库/品类对照.csv",
+      "sha256": "b9013bf98c9bb039296ed6281ad5550f515f94811a99c57b32b6914cbbe6e31c"
+    },
+    {
+      "path": "04_模型库/模型目录.html",
+      "sha256": "a8df14f810d776809c627c97d3aea762d141db3943a9b24f6a42c55926ff3eac"
+    },
+    {
+      "path": "04_模型库/README.md",
+      "sha256": "29998cad76e052364288f45d5ce5446a657443501ba997fc8d9e42dc366d8be9"
+    },
+    {
+      "path": "10_产品与陈列/展陈规则.xlsx",
+      "sha256": "71d8abbea43d9d4c9c2ffe490bbd64203d478905f671adc4ad8e67fdac282f55",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-2-render.png",
+      "sha256": "43436c38f8350c3fc593dfb3651c109204f70d624d11b97fa329894a949bde08",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-2-photo.png",
+      "sha256": "1261e159df422d737a31beca0784d4691c738d44c029ed0c2959056091af11de",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-3-render.png",
+      "sha256": "835436c517f80ec4fe5e827852f65902ca9496690dbaed0f1205b2fb5e9a1048",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-3-photo.png",
+      "sha256": "29233cb3d6d296be5def9b0e7804e3edfd50f041ea2348bdc21fe8b865b19fd1",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-4-render.png",
+      "sha256": "3e3e9021389052f1787d4d9a64f18e2ecb4c6365fe449fe2d643e2c56ff3c495",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-4-photo.png",
+      "sha256": "e56be194390ee8b66fb64c2e8b963a32404f3a5645c34cfe1a841762a9fd07b3",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-5-render.png",
+      "sha256": "84f0df352d1fc7aebf96ec12fbfad058d63654c48a391fcea8ca3e59cc1b8a67",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-5-photo.png",
+      "sha256": "66b433b931f3ac09c1f8144814b0a20e079de744ee8f26d3eab62c75b918180d",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-6-render.png",
+      "sha256": "bd00096345b58a05925d5f6a497609da990c1e93273dfcf3a0f42c41269dbccd",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-6-photo.png",
+      "sha256": "4b10fe82baf3758e4bf3c0bbbc747651bf3d22f9d1abfd73ac877d9f36cddafb",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-7-render.png",
+      "sha256": "417a26c6dedb23fbc61ab1b1d554ba05cbb7566a2048b233b33b7734e5c1b694",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-7-photo.png",
+      "sha256": "71257455bbcfe50737e88749cf6e26a1ef398df0ed12d65c2da4baa4f6209b4c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-8-render.png",
+      "sha256": "9c097e6ad49458bf2e2fd0f7449f1ad37c7b2b0da005bdcd844f2882e45b7565",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-8-photo.png",
+      "sha256": "4a64491208f2b54e9f471d50a060db72530b13ddd702f8cc06c7703d90e4713c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-9-render.png",
+      "sha256": "48cb8780643f6c5a83f0f8eb7dca6b3c59cceeecf11418c1d8e63e1588c52e9a",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-9-photo.png",
+      "sha256": "8e615db52d84d547a15afe4a17db41fc23ad9de4a3e89062d05e2dfccbd01bb8",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-10-render.png",
+      "sha256": "6b5b96020a73290443580ceb0fce1b8eee67bfd0264083391895c19a3fa638db",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-10-photo.png",
+      "sha256": "091df2d0ae8d39bdafbc81bd6927f2daa52496502337e36142bb023030f123fc",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-11-render.png",
+      "sha256": "7e1a6f0c312daf76f37aa023f3a3e84b6a9ce55d5a92fe1c42a7fc3d484eca6a",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-11-photo.png",
+      "sha256": "c547993507e3005967da002d13de7d8052ce98f766fc324150d6a822d6265a6d",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-12-photo.png",
+      "sha256": "76267f8f5195b2417002dacfa14f9afdc753f91c9716111ed29190c5bbb14b66",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-13-photo.png",
+      "sha256": "c66f8c97744e966723112ada9524288b7bea9ce7dd223c7ee2ece797abc1bc7f",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-14-render.png",
+      "sha256": "db1abb1a865aee5daebf4c75ae5b8a2ea1c4877a98b21e94b4e3a00f14f90db9",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-14-photo.png",
+      "sha256": "ea470d8e34ba8906903402bce7f3663f0d181d7c107ee105c6a381620a904b65",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-15-render.png",
+      "sha256": "0d8558b4ea9316ebe44e71275d3ed3a3ee18ebd15a42b7f05bb877e2db83cb98",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-15-photo.png",
+      "sha256": "1bf4c65e2c83faa1537ce658606f24e14457723f866d18152b3fe2e5ea4c19c2",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-16-render.png",
+      "sha256": "b2d2cadffbc29bb3020c56ea5d10c8ebacf7be59f013f5a57f4221bfedf10028",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-16-photo.png",
+      "sha256": "4b0154fde826db237d72d765bb1bbc1a56a37626c651a218b55fa68f8da09e26",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-17-render.png",
+      "sha256": "d237021f819f486d20bd9719a65beedbd020d3e65cd3c3ac2ec80567088efd1f",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-17-photo.png",
+      "sha256": "194bb46246b508f61ed57aaf30937fb267f759f1d10205047586055570e8ef28",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-18-render.png",
+      "sha256": "338f6df047ffc3e642bd9e90ae08646565e183e725c16918967bc73aca019086",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-18-photo.png",
+      "sha256": "58c7e283345b80a106467a3aabf1d68b8a74ddb9304f9676469a5cbf35fdeb4e",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-19-render.png",
+      "sha256": "113327c78518fa6df6fadc5c3ce5283d53fb34c2fc3a6f3605f42519b64986d7",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-19-photo.png",
+      "sha256": "ae12aa8d580da2927f2e8a980732cdd31169411821e7d7ad2c9f0dc7f683b33e",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-20-render.png",
+      "sha256": "161e98bb7beb9f02aafc16b8add7e1a43c72b140f9070fadb21c0cb14131b707",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-20-photo.png",
+      "sha256": "e421d8ff1e528f1c3423dd8975c679236c0915275efaddc6bb14df4dcb7b0ba7",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-21-render.png",
+      "sha256": "03835baed556f61671ad4bce9725bcd961685c04e430bd257d090208e7db7fe5",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-21-photo.png",
+      "sha256": "e421d8ff1e528f1c3423dd8975c679236c0915275efaddc6bb14df4dcb7b0ba7",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-22-render.png",
+      "sha256": "e50180f70361b03dd3c900f56655072f54d3367ecb5cb386ad56e975a1162782",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-22-photo.png",
+      "sha256": "f48b45781da83e6685cc4859cce0e0bf9a713cdbb435dc754e21a6cc6fb80b82",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-23-render.png",
+      "sha256": "9e6943c4f351398f1927a87c9a775af9cb2274ce2f47d6c3c5a1a1cecac62770",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-23-photo.png",
+      "sha256": "08c664c79f31167934a01cbd2e525660a096d2c760c125bca07eff942c56da2a",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-24-render.png",
+      "sha256": "e1ffaee05bd5cab45e5acc9c81f23d29d55ea8b7c19dc9c4ecb453377a05a441",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-24-photo.png",
+      "sha256": "aa71294d4760d5e5d7f466162d2bd12fa634946adcd312774a007147152f1670",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-25-render.png",
+      "sha256": "82b2c47836c2761b3ae149eba259760d88cb5fb9d2b87e57090d5937c93a9947",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-25-photo.png",
+      "sha256": "d1a2a5f37a8cacd7705802c97f393cb691759c421d511cedf9e049efbbcb30ad",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-26-render.png",
+      "sha256": "78152797d03aefde5c7674361fdd71ac8b8851b90dfe888f6a0b11d9da5548c2",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-26-photo.png",
+      "sha256": "8ad8d08b1fe76d512099ee3851775e1a5ece642cfb8ee26d4080439bdf20b5dc",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-27-render.png",
+      "sha256": "33e78416bd5075ade6fb8b37026baa04050f81a201586a5eceeb7ea412edbf23",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-27-photo.png",
+      "sha256": "9ae622725d892304861c059ae0dc97e9b625d4e24eed54efebcb8d51b0751705",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-28-render.png",
+      "sha256": "6a27450ba976cf3d546036b5c196918eeac9bf11e1282b47b15468827b055a63",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-28-photo.png",
+      "sha256": "3bbb295a55c72d1b05f65e804e4cd1190122a2761dc943ce18d1422c26f9d915",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-29-render.png",
+      "sha256": "6584920ed4d234e4b624e2a16e917a78731fe5db7acccfab1e4f208570640bf2",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-29-photo.png",
+      "sha256": "845a2d797dec4f690f9e469287f1b6c2386ca5c469d16e3e11041a61bdc56ebb",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-30-photo.png",
+      "sha256": "0cd5e2faf69fdfbb9db73f9b1135c7cd5b8c35d822dca74a7b3d11023f69f97c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-2-render.png",
+      "sha256": "43436c38f8350c3fc593dfb3651c109204f70d624d11b97fa329894a949bde08",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-2-photo.png",
+      "sha256": "a88fac67c83c86cd1025058e7077e83e143742b410b2fe06c8beb5a842925a15",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-3-render.png",
+      "sha256": "0871516f86ca7749fc542e15cb6929f991d8ed8858ab5658bf1b6c6ae3010fda",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-3-photo.png",
+      "sha256": "9ded5316c14016e5976fbe64729407dd306c4b4206c31f9a01f5b7fa7df003cb",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-4-render.png",
+      "sha256": "e55869beb9f60731c726ebd4f203d4e6453f1012e4fc650e0c3bc39f4a985bd7",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-4-photo.png",
+      "sha256": "f01195e8365e413afbca28444f356b64e28de5c51c4574050cd24b8993ee15e2",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-5-render.png",
+      "sha256": "624fcecb55c33f8c6a387da38bdb99a4835fc7064e41d021490eecd940a8ab2e",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-5-photo.png",
+      "sha256": "83ee3969115738231f00d8ff2623a06c1625bcee6bd63ff1c275945a368e9299",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-6-render.png",
+      "sha256": "ae3df4d2a2b8b958da70d1abbe306b5b543c521453e73336f8ee7609f6afdca9",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-6-photo.png",
+      "sha256": "52b1e6d965a002f0579fefa2856dc6b966e7a411a57ba334262d02cb19cec42e",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-7-photo.png",
+      "sha256": "9341b46defd92c28070a75a511958cc2717c95dad1063232f1ac368a91246579",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-8-render.png",
+      "sha256": "8907f93c1bc05142a98304c7376c46797c51a5a0667f6a1a063356b3c7a040fe",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-8-photo.png",
+      "sha256": "ed8fea4a77cf70a9c203d050295143d4507f6f0544ef1051e46d02856274fb50",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-9-render.png",
+      "sha256": "7c0e589d460b950d89d235f5ede03272bdb74cf5917b834296eab07a0d46877a",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-9-photo.png",
+      "sha256": "1c1b788d0404021cd9c61f28d8938f00bc48f31b5ae1132571af5f2cfffc9a24",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-10-render.png",
+      "sha256": "6674db3157a65c4b8bca51e311395698834990e6b0325ebc17209952b800a927",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-10-photo.png",
+      "sha256": "e91114c2d298b471ec4a49e3ce3c7e68a95a2bc43f22663e49e2bd29ae845362",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-11-render.png",
+      "sha256": "8cd9de785707725755525122061e6624b4847ba8f6087b7f6f72a6a83357ba86",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-11-photo.png",
+      "sha256": "afed11c4a4a1c5144bee0b4bf2b297372ac8d4d398615f18586c9d277a76cbfb",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-12-render.png",
+      "sha256": "e8b73ef635f7dac5d8102976d8eb1c0e57fea7b699ab37cef665874086016ede",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-12-photo.png",
+      "sha256": "3a4c6f5f60ac89cb9d5ff167af9f8887fe5ca7803a247cd2242ad1c72e6bad33",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-13-render.png",
+      "sha256": "e49258b5f9c0b907fe092a9d1020560706deeae437fa3f975728c06ad735138c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-13-photo.png",
+      "sha256": "cad69e9eb63f440ba39625f63c6584b72e4515eb518bcf1304ad9cf1096c8889",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-14-render.png",
+      "sha256": "d09296c6fecbb597d09a7ba07431a79df9b6f7e82a365003356de7cf9447ea67",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-14-photo.png",
+      "sha256": "7e4b998e32076ba035a53aaba90caf11ba96127589028279e7242abab6942d83",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-15-render.png",
+      "sha256": "1a9ae1b33a176bbafaef6ac0c1eeaf069eeaf307b187a6efb7d7ea279ee3bfac",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-15-photo.png",
+      "sha256": "3be862f48a0751044ab56fec25ab3c6da31a7743df07d1081f3dd3f141f48ca5",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-16-render.png",
+      "sha256": "6e8d551607d1d2799f3839dcf542ed595ecfccac59f0af1aeeeddd84d3423113",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-16-photo.png",
+      "sha256": "99c9044b0aa0952d5773fc60348adcd93f591f645b7b2619e6322d31ad6c7755",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-17-render.png",
+      "sha256": "1af517970f387327c82a67513c88dcec6916ec754a33ea2791b94b4aa7a88c77",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-17-photo.png",
+      "sha256": "3bdc7a7ea02eb4bac5c697d538c8094c364da090665940bce6f2a13301556c5e",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-18-render.png",
+      "sha256": "e4ff21a205f071658f883cfaff716314f3f99833d9090d929c87458abc402ecd",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-18-photo.png",
+      "sha256": "bf552827f66721d4b62d5b748aa217534137c6a9c9fa204480fde9fc0d9ed0b8",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-19-render.png",
+      "sha256": "9e6f3b5be2a941a7da413ceb77efb6746f80f541b1e0ad65c14a2cfbbfc651fc",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-19-photo.png",
+      "sha256": "bb020c4bbbcf49cbfc044eaa4d1a6dd5afb8543d68fe3b0e8fb257f529a78693",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-20-render.png",
+      "sha256": "86432a31b1e64ee2cf6b8416e0acc2aafa48f19b27202c1fdbdecaa38ec806e8",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-20-photo.png",
+      "sha256": "34a4dcfb679335c588d0070a0bbe6b64cc6dc586d1cae1323bc7a7860bf9ac39",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-21-render.png",
+      "sha256": "b1458387e0a5e710ecaee4b03a7c767954f60fee82a029c1fae0ebe62d2050c8",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-21-photo.png",
+      "sha256": "5a5b91e8f448cdb574893a1d36af2dc19367d0baa869e1b51ada4adcb6ec20b6",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-22-render.png",
+      "sha256": "1b7fa2a81f0ec6dfa958a33ca1ddd1bddfe3c935534a93e08d16cf37ea0251ad",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-22-photo.png",
+      "sha256": "7d411748afb6fdb6ec4197e05f8c2b83ff98451a0163ad2592c584befe2cc11c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-23-render.png",
+      "sha256": "70a78cf204d86b350c147f72e55ecd5288d2d2b0866ea9c3e6a9fd432659e560",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-23-photo.png",
+      "sha256": "c5c6d8f9b9876374251ae592043cd143652486589210be6e8c0c093e6b822f5c",
+      "feature": "display"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-24-photo.png",
+      "sha256": "ce06b374844b44fd23e78ee7b3483473d8545d487b0eae2083e3f351cf39ba9b",
+      "feature": "display"
+    }
+  ]
+}
