@@ -1,0 +1,308 @@
+[
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/model.glb",
+    "sha256": "a95112e45ecbe5888d26139a825669b5a9bb2c64a51757241252e0a78ea2ee65",
+    "bytes": 477444,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/conversion.json",
+    "sha256": "f3fe5625ab7dbf60c29c3424b6f94d3c8149fdf90319d7b30ff68d18163d447d",
+    "bytes": 3562,
+    "role": "runtime",
+    "candidateSha256": "96fa00b1d2e2bc6caf4797ef44df48225f9254314dbd6fff6a35d26439e17901",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/white.glb",
+    "sha256": "84110b29b43cc23785ee54fc514744cce42c8e2058fcd5cab3ef191b434908a4",
+    "bytes": 2328,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/white.json",
+    "sha256": "59d2d78f570e3b1ea69fa771306e96a4bffd45960c3a0bcabc4b4b9ee206cc7a",
+    "bytes": 332,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/finish.glb",
+    "sha256": "c5ffbfcf848ac8943dc36432c39e637e3187c260bda5149b4fb6c925d3bca18d",
+    "bytes": 161008,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/网页模型/finish.json",
+    "sha256": "ba1f6e27b5d60f863a26e29b6b8cad032e09189df3ba6a287485a4f7e7097a47",
+    "bytes": 420,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2597250.png",
+    "sha256": "a9b336d2b59d1d56f7f7d24a9999df67660d9365371c691f810fef5f727f4003",
+    "bytes": 234152,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/model.glb",
+    "sha256": "32ad0a2bd066e5fb1873a795c9512bfccdf17cc04021a0e2645d287e807032cd",
+    "bytes": 477440,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/conversion.json",
+    "sha256": "a59a225e6bbb310586723f3813b826b0761541a413c2b59df8b705708247f7e2",
+    "bytes": 3885,
+    "role": "runtime",
+    "candidateSha256": "a1f587ba2bcd10a6698b8c0f6aae861f0ce72983f45f83d20344f89c16674c14",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/white.glb",
+    "sha256": "f8bc9e5cd65865aa62f5530d1ec861a0c30cdd3d466fa804ae8698adbe64ea15",
+    "bytes": 2364,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/white.json",
+    "sha256": "4578fcb049a35aa89e377eac3810db79bf227141088c81c74b8f04abab034977",
+    "bytes": 337,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/finish.glb",
+    "sha256": "767791c7b1a7faedd792b9f5857934b5cf910ad8f5b256c6c816dde9beb26328",
+    "bytes": 161036,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/网页模型/finish.json",
+    "sha256": "fd50e64378b0560cee6f05e3473ddf94913985dafbb5a6ddd99c397315fae833",
+    "bytes": 425,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-3021147.png",
+    "sha256": "be04f09e24e0eb15da5d41ff6927ff3b8a6c6311a67fcb872f6c28021e25e8a8",
+    "bytes": 219672,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/model.glb",
+    "sha256": "85c26fe8f9d5bd156e70aa8ca58787fd3a4e986d02e061bc959b29f31b43caa9",
+    "bytes": 353620,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/conversion.json",
+    "sha256": "ec0d770aa17f9c45ad346612166c12ae452e50dd322b792d208270cecee7031a",
+    "bytes": 3782,
+    "role": "runtime",
+    "candidateSha256": "0fde8fab9229032d10a99617397529df3c3da2673309acac332128320d766f6b",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/white.glb",
+    "sha256": "70c666f77eb342077eb092ee3aab1a66565cbe97950789571f8263e349570d8c",
+    "bytes": 2544,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/white.json",
+    "sha256": "1bbf87e4deb525314130a278ed8a87b42525f7e90dfa3e3a435276af6348ba5f",
+    "bytes": 337,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/finish.glb",
+    "sha256": "1bcf7488cc3e2a526c622637b94eafae444911f8cceba5f127467afe6cc38ba0",
+    "bytes": 152920,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/网页模型/finish.json",
+    "sha256": "d97be6bc081ead6b554d1d71a86b89040c7ea64b354c05c71b0202eb436d2a0b",
+    "bytes": 425,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-11479197.png",
+    "sha256": "7c31f71fe6228a866f727ce82f04cbd1faaa1ea8fbc7023c476c683246e28018",
+    "bytes": 303699,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/model.glb",
+    "sha256": "37557923105b6beb74c88faf6de90292ea9374218bf58017e642672132ebe7cd",
+    "bytes": 478684,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/conversion.json",
+    "sha256": "261c091b1d68f1fdc0f6092f769e39ec3d5fa9d593bd4dbdfe5663db2798ebf5",
+    "bytes": 3886,
+    "role": "runtime",
+    "candidateSha256": "d515897271502119b87bbd5cd29895720b4db8eef857c2f83255fc16df6bb5f1",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/white.glb",
+    "sha256": "b9d1daa25d4b2b98605aacb346bdc88b6b6832c9a2c23c6b5c5a63ee75b11c30",
+    "bytes": 2656,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/white.json",
+    "sha256": "3c3a87c71052f52b74930e31f97b2ce526ff61fe734dbd816d858f505562d522",
+    "bytes": 337,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/finish.glb",
+    "sha256": "1530d8ef52bb58a736a691173918ff51c8672369e9030a62bb0fa3213aaa06a8",
+    "bytes": 161336,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/网页模型/finish.json",
+    "sha256": "d5b416204d889489b77ba536c99c26e05c884cf245b23467c0dd458f6067a0bc",
+    "bytes": 425,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2595839.png",
+    "sha256": "05c13c7b74a0a9a1b172de468159cb83589c2016d63ef6a2898f96ed3f4ea390",
+    "bytes": 229602,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/model.glb",
+    "sha256": "d348d452423aa6dbaa268688c9519e1c89c9538e14708732bcaf05ae572ed22a",
+    "bytes": 916080,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/conversion.json",
+    "sha256": "34abf28fa2522bad030f766c16032bfb87c4eb17388a7cfcbf56ce19acdb7cab",
+    "bytes": 4005,
+    "role": "runtime",
+    "candidateSha256": "2e29567966c1f473199fa0c1ff28f31f1af814c85e781f515e2140800520fb6e",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/white.glb",
+    "sha256": "de5aab8335668759ac12e1bc8775470d0260d942cf99698fc41a4d75d975008b",
+    "bytes": 2352,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/white.json",
+    "sha256": "4a50895b235d5359f8800426204835fc052643a4e09f00bf001bd6975a0f5517",
+    "bytes": 332,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/finish.glb",
+    "sha256": "9fb8ffe2348d8ed6e74a215ba2ae037ff19a2b4c9ff8f15e5ed5fa9bacf54948",
+    "bytes": 204492,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/网页模型/finish.json",
+    "sha256": "6edbbdf7730b43f88b2228e6399554e3b3b1bd28ebca18cfb4c20ae0bfc92779",
+    "bytes": 420,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-11525433.png",
+    "sha256": "64116c67fe0b4bdf3896a188518b408d49bde29e71573234b365c09bfb55179f",
+    "bytes": 227181,
+    "role": "audit"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/model.glb",
+    "sha256": "81bcf416bb38d0e3683704beec057f3fbf76df0a41ca0a93bb2baf147ca32431",
+    "bytes": 477440,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/conversion.json",
+    "sha256": "2fe4107b9517532ab1878e1599472c52eaa5a33f4f2a13834a4f0dc0777cccf7",
+    "bytes": 3610,
+    "role": "runtime",
+    "candidateSha256": "3170144716356c14bb31d2e3e28f75c5b0b24410b9d4ebd4cb3589c620c56106",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/white.glb",
+    "sha256": "b3861d95cb279bbf9951a32b4f71e2aaaddf4a40e09176084ddf852ddae71929",
+    "bytes": 2332,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/white.json",
+    "sha256": "c559955fcd28b9ddddfbed8ae9a2de52f4f260e550fa2d5520b31aff342ab240",
+    "bytes": 332,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/finish.glb",
+    "sha256": "395ef9bb977ef940788798ca170205448de19b37e7c054df62778df1b6e4fac8",
+    "bytes": 160992,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/网页模型/finish.json",
+    "sha256": "1b14b8284e9264ac526824ce0639cd5f527c2856a3acc04cd8422d990c555dc6",
+    "bytes": 420,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "90_处理过程与审核/模型发布/20261030/advertising/五向/asset-2500908.png",
+    "sha256": "4ba4b1bea3a1458f262e1b993f1e35f6b497f00a786a74ebe8ce4addc56c2e0b",
+    "bytes": 224840,
+    "role": "audit"
+  }
+]

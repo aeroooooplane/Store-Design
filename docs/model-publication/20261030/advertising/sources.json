@@ -1,0 +1,38 @@
+[
+  {
+    "assetId": "asset-2597250",
+    "relativePath": "04_模型库/信息化物料/广告机_55寸竖屏__asset-2597250/通用_广告机_55寸竖屏__asset-2597250.skp",
+    "sha256": "256afae31edba113719e59e6df4574a57dcc33baec830ac4137c9d04e8c6c5ac",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-3021147",
+    "relativePath": "04_模型库/信息化物料/广告机_65寸横屏_滑雪画面__asset-3021147/通用_广告机_65寸横屏_滑雪画面__asset-3021147.skp",
+    "sha256": "376e2bdead3246dd7bb4b7d6845494d730d7b5a47b829f5922b5fe46ed77820e",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-11479197",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸横屏_无人机画面__asset-11479197/通用_广告机_75寸横屏_无人机画面__asset-11479197.skp",
+    "sha256": "ae87eae2bc7252f89b583497f6de93f06c9af6ae17e9a9f4f394a94d946c2eff",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-2595839",
+    "relativePath": "04_模型库/信息化物料/广告机_75寸竖屏_滑雪画面__asset-2595839/通用_广告机_75寸竖屏_滑雪画面__asset-2595839.skp",
+    "sha256": "b996eaf4e8c25fd47f3efa10f1a47fa0c38c8ea8ac5d7c53e3236d741c2e950c",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-11525433",
+    "relativePath": "04_模型库/信息化物料/广告机_86寸横屏_单板滑雪画面__asset-11525433/通用_广告机_86寸横屏_单板滑雪画面__asset-11525433.skp",
+    "sha256": "159697c3dea58abc0d0c94683444e90e299669cbc3fa0cf7b0e30980e755e98b",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-2500908",
+    "relativePath": "04_模型库/信息化物料/广告机_98寸横屏_滑雪画面__asset-2500908/通用_广告机_98寸横屏_滑雪画面__asset-2500908.skp",
+    "sha256": "dbc1b434bd9d5c6d1cfa459aa02ee1739dc0d01a9f926dab92fc63c32c16b0b7",
+    "kind": "original-skp-readonly"
+  }
+]
