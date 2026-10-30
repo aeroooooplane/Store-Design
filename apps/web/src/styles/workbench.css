@@ -1773,6 +1773,14 @@ ul.issues li.warning {
     flex: 1;
     min-height: 180px;
     aspect-ratio: auto;
+    container-type: size;
+  }
+  .render-live > .viewer3d {
+    width: min(100cqw, 150cqh);
+    height: auto;
+  }
+  .render-live canvas {
+    height: auto;
   }
   .render-stage .render-main-display {
     overflow: auto;
