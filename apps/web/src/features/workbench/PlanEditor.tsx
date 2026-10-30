@@ -311,6 +311,17 @@ export function PlanEditor({
         )
       }
       defaultTab={isWhite ? 'history' : 'models'}
+      cameras={
+        isWhite ? (
+          <CameraPanel
+            nodeId={baseNode.id}
+            viewer={viewerRef}
+            viewerReady={viewerReady}
+            layout={state.layout}
+            onShow={showCamera}
+          />
+        ) : undefined
+      }
       center={
         editWalls.editing ? (
           <div className="wb-card">
@@ -513,18 +524,6 @@ export function PlanEditor({
           />
 
           <IssuesPanel issues={issues} errorCount={errors.length} />
-
-          {isWhite && (
-            <div className="wb-card">
-              <CameraPanel
-                nodeId={baseNode.id}
-                viewer={viewerRef}
-                viewerReady={viewerReady}
-                layout={state.layout}
-                onShow={showCamera}
-              />
-            </div>
-          )}
         </>
       }
     />
