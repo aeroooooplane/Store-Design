@@ -1,0 +1,16 @@
+[
+  {
+    "assetId": "asset-90000002",
+    "sourceAssetId": "asset-569180",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/SI1.0_培训坐凳_4件组合_白色空心款_H350变体__asset-569180.skp",
+    "sha256": "c616944738e2daf4d967fccb0542efeca2d9d83224c72ccb6d412d7eaa0915ee",
+    "kind": "original-skp-readonly"
+  },
+  {
+    "assetId": "asset-90000002",
+    "sourceAssetId": "asset-569180",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_4件组合_白色空心款_H350变体__asset-569180/网页模型/model.glb",
+    "sha256": "c1d40fb4ad7bf81548e477048447132939539670ce39559eac84050a9d2e7e94",
+    "kind": "source-combination-glb-readonly"
+  }
+]

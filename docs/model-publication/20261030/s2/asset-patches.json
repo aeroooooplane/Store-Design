@@ -1,0 +1,66 @@
+[
+  {
+    "feature": "s2",
+    "assetId": "asset-90000002",
+    "manifest": {
+      "before": null,
+      "after": {
+        "n": 92,
+        "asset_id": "asset-90000002",
+        "si_family": "SI1.0",
+        "standard_name": "培训坐凳",
+        "variant": "单凳_白色空心款_H350变体",
+        "display_name": "培训坐凳（单凳·H350）",
+        "match": "变体",
+        "confidence": "高（既有组合实例拆分）",
+        "reference_pages": "SI1-part4:25",
+        "judgment": "从 asset-569180 的四件组合中拆出一只完整白色U形空心壳体；实测450×450×350mm，缺少标准灰色软垫，保留H350变体说明。",
+        "named_skp": null,
+        "source_skp": null,
+        "named_sha256": null,
+        "additional_views": [],
+        "tight_face_bounds_xyz_mm": [
+          450,
+          450,
+          350
+        ],
+        "material_category": "软装物料",
+        "material_si": "SI1.0",
+        "material_sort": 10,
+        "plan_legend": null,
+        "plan_legend_missing_reason": null,
+        "type_name": "培训坐凳",
+        "product_image": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/效果图.png",
+        "product_image_match": "exact",
+        "plan_symbol": {
+          "svg": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.svg",
+          "png": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.png"
+        },
+        "category": "软装道具",
+        "category_si": "SI1.0",
+        "folder": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002",
+        "web_model": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型",
+        "preview": "软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/预览.png",
+        "derived_from": {
+          "asset_id": "asset-569180",
+          "method": "完整单实例提取，保留原材质与尺寸",
+          "source_skp_sha256": "c616944738e2daf4d967fccb0542efeca2d9d83224c72ccb6d412d7eaa0915ee",
+          "native_skp_note": "由已验证GLB拆分；本机无SketchUp，未生成新的SKP。原组合SKP保持不变。"
+        },
+        "product_image_source": "软装道具/SI1.0/品类图库/01_道具图片PNG/asset-90000002.png",
+        "plan_symbol_source": {
+          "svg": "软装道具/SI1.0/品类图库/03_平面图SVG/asset-90000002.svg",
+          "png": "软装道具/SI1.0/品类图库/02_平面图PNG/asset-90000002.png"
+        }
+      }
+    },
+    "facing": {
+      "before": null,
+      "after": {
+        "front": "any",
+        "confidence": "high",
+        "note": "450×450单凳，无固定使用正面；保留源实例方向，壳体开口朝+Z。"
+      }
+    }
+  }
+]

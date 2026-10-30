@@ -1,0 +1,21 @@
+{
+  "version": "models-20261030-12",
+  "localPublication": "协调窗口确认12件96文件首次发布与12份状态补丁均完成；196文件最终锁已生成并通过正式接入脚本校验",
+  "newOneDriveCloudSyncVerified": false,
+  "crossMachineVerified": false,
+  "assetIds": [
+    "asset-90000002"
+  ],
+  "fiveDirectionsReviewed": true,
+  "standardCompressionAndWhiteFinishImport": true,
+  "thumbnailAnd3dAndDimensionsAndPose": true,
+  "saveReloadExport": true,
+  "sourceUnchanged": true,
+  "pageErrors": 0,
+  "browserConsole": "已定位空draft/favicon非模型404；其余console/HTTP错误0",
+  "codeChanges": "单凳提取工具及README，运行时应用代码无变化",
+  "newLfsUploads": 0,
+  "runtimeResourcesCommittedToGit": false,
+  "pendingGate": "仅等待本PR最终CI全部通过，协调窗口已授权正常合并",
+  "lockCommitReference": "882d369e（协调窗口锁分支，不由本窗口改写）"
+}

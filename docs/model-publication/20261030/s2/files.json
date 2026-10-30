@@ -1,0 +1,95 @@
+[
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.png",
+    "sha256": "89035895ca1b829fab9b05e8bc5573214ea6fe3547451d34f836105a59d3cb72",
+    "bytes": 2456,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/平面图.svg",
+    "sha256": "21a94a9d6fc52aa813148a9a2dbfb430b8f596098a531db5610e7ecd72d9d02f",
+    "bytes": 367,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/效果图.png",
+    "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+    "bytes": 8244,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/conversion.json",
+    "sha256": "f09bb1dbc05b2cf36bc1cddcc6d36e52c5f83161c9138377c3a6470948378415",
+    "bytes": 5103,
+    "role": "runtime",
+    "candidateSha256": "4db49f5f31e551e5baa3feb3f38bed8976381d77e9823de744b3081bbd292c5e",
+    "note": "发布状态补丁后的最终SHA；原候选SHA仅作首次发布证据"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/finish.glb",
+    "sha256": "a65e233c3fb136c85a58cfe7d25ab6cf723123854eba5e3c68d4fada134db7b9",
+    "bytes": 4288,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/finish.json",
+    "sha256": "a8d89d1017350dff4698f067c007a08bc45fd78cad62587b0c4e4eb87f5794d3",
+    "bytes": 420,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/model.glb",
+    "sha256": "c982e0ff020fe963766a0f3b2a07767bfb92f8b73e43486403ef21d02a3960e6",
+    "bytes": 9536,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/white.glb",
+    "sha256": "ce1424bacd86996dbfff2adf21dbb81da6c4e78fb35f2796aefe827b41eb4834",
+    "bytes": 2892,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/网页模型/white.json",
+    "sha256": "60ef7762bd2b19914ceb1c6415081289f7a829f35b7a2c5f0b7eae3fa737bff9",
+    "bytes": 332,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/培训坐凳_单凳_白色空心款_H350变体__asset-90000002/预览.png",
+    "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+    "bytes": 8244,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/品类图库/01_道具图片PNG/asset-90000002.png",
+    "sha256": "fb4a0183a7335333efa370f489364bb16f13776b5f8ce0a054f4340ad9500f73",
+    "bytes": 8244,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/品类图库/03_平面图SVG/asset-90000002.svg",
+    "sha256": "21a94a9d6fc52aa813148a9a2dbfb430b8f596098a531db5610e7ecd72d9d02f",
+    "bytes": 367,
+    "role": "runtime"
+  },
+  {
+    "assetId": "asset-90000002",
+    "relativePath": "04_模型库/软装道具/SI1.0/品类图库/02_平面图PNG/asset-90000002.png",
+    "sha256": "89035895ca1b829fab9b05e8bc5573214ea6fe3547451d34f836105a59d3cb72",
+    "bytes": 2456,
+    "role": "runtime"
+  }
+]
