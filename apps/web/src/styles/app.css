@@ -306,3 +306,78 @@ table.projects tbody tr.open-row {
   margin: 6px 0 0;
   font-size: var(--fs-sm);
 }
+/* Navigation remains reachable on narrow screens and at browser zoom. */
+@media (max-width: 600px) {
+  .app-nav {
+    height: auto;
+    min-height: var(--nav-height);
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 12px;
+  }
+  .app-brand {
+    font-size: var(--fs-md);
+  }
+  .app-nav-link {
+    padding: 6px 8px;
+  }
+  .toolbar .tabs {
+    flex-wrap: wrap;
+  }
+}
+@media (min-width: 1000px) and (min-height: 600px) {
+  .page-projects {
+    height: calc(100dvh - var(--nav-height));
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .page-projects > * {
+    flex-shrink: 0;
+  }
+  .page-projects .page-header,
+  .page-projects .create-form,
+  .page-projects > .toolbar,
+  .page-projects .pager {
+    margin: 0;
+  }
+  .page-projects .project-table-scroll {
+    flex: 1;
+    min-height: 120px;
+    overflow: auto;
+    scrollbar-gutter: stable;
+  }
+  .project-table-scroll th {
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 1;
+  }
+}
+.project-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 900px) {
+  .page-projects .create-form {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .page-projects .create-form label:first-child,
+  .page-projects .create-form button[type='submit'] {
+    grid-column: 1 / -1;
+  }
+  .page-projects .create-form label,
+  .page-projects .create-form input,
+  .page-projects .create-form select {
+    min-width: 0;
+    width: 100%;
+  }
+  .page-projects .page-header,
+  .page-projects .pager {
+    flex-wrap: wrap;
+  }
+}

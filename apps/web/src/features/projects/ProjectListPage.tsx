@@ -35,7 +35,7 @@ export function ProjectListPage() {
   const pages = Math.max(1, Math.ceil(total / PAGE_SIZE))
 
   return (
-    <main className="page">
+    <main className="page page-projects">
       <header className="page-header">
         <h1>项目</h1>
         <p>
@@ -121,85 +121,87 @@ export function ProjectListPage() {
           {status === 'active' ? '还没有项目，先在上方新建一个。' : '回收站是空的。'}
         </p>
       ) : list.data ? (
-        <table className="projects">
-          <thead>
-            <tr>
-              <th>项目名称</th>
-              <th>铺位形态</th>
-              <th>市场</th>
-              <th>SI 风格</th>
-              <th>更新时间</th>
-              <th aria-label="操作" />
-            </tr>
-          </thead>
-          <tbody>
-            {list.data.items.map((project) => (
-              <tr
-                key={project.id}
-                className={project.deletedAt === null ? 'open-row' : undefined}
-                onClick={(event) => {
-                  // Buttons and links in the row keep their own action; only the blank cells open it.
-                  if (project.deletedAt !== null) return
-                  if ((event.target as HTMLElement).closest('a, button, input, select')) return
-                  void navigate(`/projects/${project.id}`)
-                }}
-              >
-                <td className="project-name">{project.name}</td>
-                <td>{SHOP_TYPE_LABELS[project.shopType]}</td>
-                <td>{MARKET_LABELS[project.market]}</td>
-                <td>
-                  <span className={project.siStyle === 'SI2.0' ? 'tag si-2' : 'tag'}>
-                    {project.siStyle}
-                  </span>
-                </td>
-                <td>{formatDateTime(project.updatedAt)}</td>
-                <td className="actions">
-                  {project.deletedAt === null ? (
-                    <>
-                      <Link className="button" to={`/projects/${project.id}`}>
-                        打开
-                      </Link>
-                      <a
-                        className="button"
-                        href={projectExportUrl(project.id)}
-                        download
-                        title="导出为项目文件（含全部节点与草稿），可备份或在其他电脑导入"
-                      >
-                        导出
-                      </a>
+        <div className="project-table-scroll" role="region" aria-label="项目列表" tabIndex={0}>
+          <table className="projects">
+            <thead>
+              <tr>
+                <th>项目名称</th>
+                <th>铺位形态</th>
+                <th>市场</th>
+                <th>SI 风格</th>
+                <th>更新时间</th>
+                <th aria-label="操作" />
+              </tr>
+            </thead>
+            <tbody>
+              {list.data.items.map((project) => (
+                <tr
+                  key={project.id}
+                  className={project.deletedAt === null ? 'open-row' : undefined}
+                  onClick={(event) => {
+                    // Buttons and links in the row keep their own action; only the blank cells open it.
+                    if (project.deletedAt !== null) return
+                    if ((event.target as HTMLElement).closest('a, button, input, select')) return
+                    void navigate(`/projects/${project.id}`)
+                  }}
+                >
+                  <td className="project-name">{project.name}</td>
+                  <td>{SHOP_TYPE_LABELS[project.shopType]}</td>
+                  <td>{MARKET_LABELS[project.market]}</td>
+                  <td>
+                    <span className={project.siStyle === 'SI2.0' ? 'tag si-2' : 'tag'}>
+                      {project.siStyle}
+                    </span>
+                  </td>
+                  <td>{formatDateTime(project.updatedAt)}</td>
+                  <td className="actions">
+                    {project.deletedAt === null ? (
+                      <>
+                        <Link className="button" to={`/projects/${project.id}`}>
+                          打开
+                        </Link>
+                        <a
+                          className="button"
+                          href={projectExportUrl(project.id)}
+                          download
+                          title="导出为项目文件（含全部节点与草稿），可备份或在其他电脑导入"
+                        >
+                          导出
+                        </a>
+                        <button
+                          type="button"
+                          className="icon-button"
+                          aria-label="移入回收站"
+                          title="移入回收站"
+                          disabled={setDeleted.isPending}
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                `确定把「${project.name}」移入回收站吗？之后可在“回收站”中恢复。`,
+                              )
+                            ) {
+                              setDeleted.mutate({ project, deleted: true })
+                            }
+                          }}
+                        >
+                          <TrashIcon />
+                        </button>
+                      </>
+                    ) : (
                       <button
                         type="button"
-                        className="icon-button"
-                        aria-label="移入回收站"
-                        title="移入回收站"
                         disabled={setDeleted.isPending}
-                        onClick={() => {
-                          if (
-                            window.confirm(
-                              `确定把「${project.name}」移入回收站吗？之后可在“回收站”中恢复。`,
-                            )
-                          ) {
-                            setDeleted.mutate({ project, deleted: true })
-                          }
-                        }}
+                        onClick={() => setDeleted.mutate({ project, deleted: false })}
                       >
-                        <TrashIcon />
+                        恢复
                       </button>
-                    </>
-                  ) : (
-                    <button
-                      type="button"
-                      disabled={setDeleted.isPending}
-                      onClick={() => setDeleted.mutate({ project, deleted: false })}
-                    >
-                      恢复
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : null}
 
       {pages > 1 ? (
