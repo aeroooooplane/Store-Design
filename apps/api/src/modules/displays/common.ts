@@ -76,12 +76,19 @@ export async function loadPhotos(
 }
 
 /** Open points of a plan for the last slide. */
-export function pendingOf(tables: DisplayTable[]): string[] {
+export function pendingOf(tables: DisplayTable[], rules?: DisplayRules, si?: SiStyle): string[] {
   const out = new Set<string>()
   for (const t of tables) {
     for (const note of t.notes) if (note !== EDITED_NOTE) out.add(`${t.label}桌：${note}`)
     const empty = t.slots.filter((s) => s.unit === null).map((s) => s.slot)
     if (empty.length) out.add(`${t.label}桌空位：${empty.join('、')}`)
+    for (const slot of t.slots) {
+      if (!slot.unit) continue
+      const source = rules?.catalog?.find((c) => c.si === si && c.units.includes(slot.unit!))
+      if (source?.status) out.add(`${t.label}桌 ${slot.slot}：${source.status}`)
+      if (rules?.catalog?.length && !source)
+        out.add(`${t.label}桌 ${slot.slot}：已保存选项不在当前 ${si} 托盘规格表，请核对`)
+    }
   }
   return [...out]
 }
@@ -98,7 +105,12 @@ export async function buildDisplayFiles(
 ): Promise<DisplayFiles> {
   const [pptx, xlsx] = await Promise.all([
     buildDisplayDeck(input),
-    buildDisplayChecklist({ title: input.title, rules: input.rules, tables: input.tables }),
+    buildDisplayChecklist({
+      title: input.title,
+      rules: input.rules,
+      tables: input.tables,
+      pending: input.pending,
+    }),
   ])
   const title = safeFileName(storeTitle(input.name))
   return { pptx, xlsx, names: { pptx: `${title}展陈方案.pptx`, xlsx: `${title}展陈清单.xlsx` } }

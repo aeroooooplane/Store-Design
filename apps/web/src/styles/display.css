@@ -592,3 +592,24 @@
   font-size: 12px;
   color: var(--muted);
 }
+
+.unit-picker-count {
+  margin: 8px 12px;
+}
+.unit-picker-spec {
+  font-size: 11px;
+  color: var(--muted);
+}
+.unit-picker-status {
+  font-size: 11px;
+  color: #805600;
+}
+.display-module-summary {
+  margin: 8px 0 16px;
+  padding: 12px;
+  background: var(--line-soft);
+  border-radius: 8px;
+}
+.display-module-summary p {
+  margin: 8px 0 0;
+}

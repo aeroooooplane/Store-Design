@@ -72,13 +72,32 @@ export const DisplayRulesSchema = z.object({
       slots: z.array(z.object({ slot: Id, unit: Id, hero: z.boolean() })),
     }),
   ),
-  modules: z.array(z.object({ id: Id, series: Name, size: Name })),
+  /** Optional in older workbooks; each source row is one tray specification, not one product. */
+  catalog: z
+    .array(
+      z.object({
+        si: SiStyleSchema,
+        source: z.string().min(1).max(500),
+        row: z.int().positive(),
+        name: Name,
+        group: z.enum(['scene', 'hero', 'standard']),
+        status: z.string().max(200),
+        units: z.array(Id).min(1),
+      }),
+    )
+    .optional(),
+  modules: z.array(
+    z.object({ id: Id, series: Name, size: Name, note: z.string().max(500).optional() }),
+  ),
   /** Accessory modules in the middle of each island table (guide section 三). */
   seatModules: z.array(
     z.object({
       tables: z.union([z.literal(2), z.literal(3), z.literal(4)]),
       seat: Name,
       modules: z.array(Id),
+      si: SiStyleSchema.optional(),
+      scheme: z.enum(['standard', 'draft-2026']).optional(),
+      note: z.string().max(500).optional(),
     }),
   ),
   photos: z.array(
@@ -277,7 +296,48 @@ export function checkRules(rules: DisplayRules): string[] {
       if (!modules.has(m)) problems.push(`桌号模块 ${sm.seat}：模块 ${m} 不存在`)
   for (const photo of rules.photos)
     if (!units.has(photo.unit)) problems.push(`照片 ${photo.file}：陈列组合 ${photo.unit} 不存在`)
+  dupes(
+    '托盘来源行',
+    (rules.catalog ?? []).map((c) => `${c.si}|${c.source}|${c.row}`),
+  )
+  dupes(
+    '托盘选项',
+    (rules.catalog ?? []).flatMap((c) => c.units.map((id) => `${c.si}|${id}`)),
+  )
+  for (const c of rules.catalog ?? []) {
+    for (const id of c.units)
+      if (!units.has(id)) problems.push(`托盘方案 ${c.name}：陈列组合 ${id} 不存在`)
+  }
+  dupes(
+    '桌号模块',
+    rules.seatModules.map(
+      (m) => `${m.si ?? '通用'}|${m.scheme ?? 'standard'}|${m.tables}|${m.seat}`,
+    ),
+  )
   return problems
+}
+
+/** Choices follow all source specifications, including those without a picture. Old rules retain their choices. */
+export function displayChoices(rules: DisplayRules, si: 'SI1.0' | 'SI2.0') {
+  const catalog = rules.catalog?.filter((c) => c.si === si)
+  if (!catalog?.length)
+    return rules.units.map((u) => ({ ...u, specification: '', status: '', source: '' }))
+  const byId = new Map(rules.units.map((u) => [u.id, u]))
+  return catalog.flatMap((c) =>
+    c.units.flatMap((id) => {
+      const unit = byId.get(id)
+      return unit
+        ? [
+            {
+              ...unit,
+              specification: c.name,
+              status: c.status,
+              source: `${c.source}（第${c.row}行）`,
+            },
+          ]
+        : []
+    }),
+  )
 }
 
 /** Human-readable changes between two rule sets, for the import report. */
@@ -326,9 +386,16 @@ export function diffRules(before: DisplayRules, after: DisplayRules): string[] {
   }
   for (const [key, value] of a) if (!b.has(key)) out.push(`删除位 ${key}（原为 ${value}）`)
   const modules = (rules: DisplayRules) =>
-    new Map(rules.seatModules.map((s) => [s.seat, s.modules.join('、')]))
+    new Map(
+      rules.seatModules.map((s) => [
+        `${s.si ?? '通用'}/${s.scheme ?? 'standard'}/${s.seat}`,
+        s.modules.join('、'),
+      ]),
+    )
   const ma = modules(before)
   for (const [seat, list] of modules(after))
     if (ma.get(seat) !== list) out.push(`${seat} 配件模块：${ma.get(seat) ?? '无'} → ${list}`)
+  if (JSON.stringify(before.catalog ?? []) !== JSON.stringify(after.catalog ?? []))
+    out.push(`托盘来源规格：${before.catalog?.length ?? 0} → ${after.catalog?.length ?? 0} 行`)
   return out
 }

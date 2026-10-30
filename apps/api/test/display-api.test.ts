@@ -1,4 +1,4 @@
-import { mkdtemp, rm } from 'node:fs/promises'
+import { copyFile, mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { unzipSync } from 'fflate'
@@ -146,7 +146,7 @@ describe('display tasks (uploaded plan and render)', () => {
       /^ppt\/slides\/slide\d+\.xml$/.test(n),
     )
     // Cover, overview, three islands, one side table, counts.
-    expect(slides).toHaveLength(7)
+    expect(slides).toHaveLength(8)
     await download(files.xlsx)
 
     const again = (await inject('GET', `/display-tasks/${task.id}`)).json<DisplayTask>()
@@ -241,5 +241,77 @@ describe('display of a render node', () => {
     expect(entries).toContain(`${root}影石展陈交付店展陈方案.pptx`)
     expect(entries).toContain(`${root}04_展陈方案/影石展陈交付店展陈清单.xlsx`)
     expect(entries).toContain(`${root}04_展陈方案/展陈平面.png`)
+  })
+})
+
+describe('新版SI托盘配置的保存与重载', () => {
+  it('保存讨论稿选择后重新读取并导出，规则版本、SI和模块保持一致', async () => {
+    const root = path.join(dir, 'catalog-resource')
+    await mkdir(path.join(root, '10_产品与陈列'), { recursive: true })
+    await copyFile(
+      new URL('./fixtures/display/展陈规则.xlsx', import.meta.url),
+      path.join(root, '10_产品与陈列/展陈规则.xlsx'),
+    )
+    const report = await importDisplayRules(t.database.db, {
+      storage: path.join(dir, 'files'),
+      resource: root,
+    })
+    expect(report.status).toBe('imported')
+    expect(report.missingPhotos.length).toBeGreaterThan(0)
+    const view = (await inject('GET', '/display-rules/current')).json<DisplayRulesView>()
+    expect(view.rules.catalog).toHaveLength(52)
+    let task = (
+      await inject('POST', '/display-tasks', {
+        name: '内嵌新版核对店',
+        market: 'domestic',
+        siStyle: 'SI2.0',
+      })
+    ).json<DisplayTask>()
+    const uploaded = await t.app.inject({
+      method: 'PUT',
+      url: `/api/v1/display-tasks/${task.id}/plan`,
+      headers: { 'content-type': 'image/png', ...ifMatch(task.revision) },
+      payload: png(500, 300),
+    })
+    task = uploaded.json<DisplayTask>()
+    const response = await t.app.inject({
+      method: 'PATCH',
+      url: `/api/v1/display-tasks/${task.id}`,
+      headers: ifMatch(task.revision),
+      payload: {
+        state: {
+          ...task.state,
+          tables: Array.from({ length: 3 }, (_, i) => ({
+            id: `t${i}`,
+            kind: 'island',
+            x: (i + 1) / 4,
+            y: 0.5,
+            w: 0.05,
+            h: 0.15,
+            render: null,
+            label: null,
+          })),
+          edits: { ...task.state.edits, moduleScheme: 'draft-2026' },
+        },
+      },
+    })
+    expect(response.statusCode).toBe(200)
+    const reloaded = (await inject('GET', `/display-tasks/${task.id}`)).json<DisplayTask>()
+    expect(reloaded.siStyle).toBe('SI2.0')
+    expect(reloaded.state.edits.moduleScheme).toBe('draft-2026')
+    const exported = await inject('POST', `/display-tasks/${task.id}/export`, {
+      views: 'plan',
+      tables3d: [],
+    })
+    expect(exported.statusCode).toBe(201)
+    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-10-30')
+    const ppt = await download(exported.json<DisplayExport>().pptx)
+    const entries = unzipSync(new Uint8Array(ppt.rawPayload))
+    const text = Object.entries(entries)
+      .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
+      .map(([, b]) => new TextDecoder().decode(b))
+      .join('')
+    expect(text).toContain('内盘合计：10 个；外框：3 个；含外框合计：13 个')
+    expect(text).toContain('未确认实物可放性')
   })
 })

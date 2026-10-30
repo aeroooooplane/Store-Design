@@ -1,5 +1,9 @@
 import ExcelJS from 'exceljs'
-import { DISPLAY_ORIENTATION_LABELS, summarizeDisplay } from '@store/shared'
+import {
+  DISPLAY_ORIENTATION_LABELS,
+  summarizeDisplay,
+  summarizeDisplayModules,
+} from '@store/shared'
 import type { DisplayRules, DisplayTable } from '@store/shared'
 
 /**
@@ -10,6 +14,7 @@ export async function buildDisplayChecklist(input: {
   title: string
   rules: DisplayRules
   tables: DisplayTable[]
+  pending?: string[]
 }): Promise<Buffer> {
   const { rules, tables } = input
   const units = new Map(rules.units.map((u) => [u.id, u]))
@@ -68,5 +73,26 @@ export async function buildDisplayChecklist(input: {
     [8, 8, 30],
   )
   workbook.title = `${input.title}展陈清单`
+  const inner = summarizeDisplayModules(rules, tables)
+  sheet(
+    '内嵌托盘数量',
+    ['种类', '数量'],
+    [
+      ...[...inner.counts].map(([size, n]): (string | number)[] => [`${size} 模块`, n]),
+      ['内盘合计', inner.innerTotal],
+      ['外框', inner.frameTotal],
+      ['含外框合计', inner.total],
+    ],
+    [30, 12],
+  )
+  sheet(
+    '方案说明',
+    ['桌', '说明'],
+    [
+      ...tables.flatMap((t) => t.notes.map((note) => [`${t.label}桌`, note])),
+      ...(input.pending ?? []).map((note) => ['待确认', note]),
+    ],
+    [8, 100],
+  )
   return Buffer.from(await workbook.xlsx.writeBuffer())
 }

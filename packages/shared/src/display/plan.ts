@@ -1,4 +1,4 @@
-import type { Market } from '../enums.ts'
+import type { Market, SiStyle } from '../enums.ts'
 import type { DisplayEdits, DisplayTaskState } from './api.ts'
 import { planDisplay, sideEntrance } from './engine.ts'
 import type { DisplayTable } from './engine.ts'
@@ -32,6 +32,7 @@ export function planTaskTables(
   rules: DisplayRules,
   task: {
     market: Market
+    siStyle?: SiStyle
     plan: { width: number; height: number } | null
     state: Pick<DisplayTaskState, 'entrance' | 'tables' | 'edits'>
   },
@@ -51,6 +52,8 @@ export function planTaskTables(
     tables: inputs,
     entrance: sideEntrance(task.state.entrance, inputs),
     market: task.market,
+    siStyle: task.siStyle,
+    moduleScheme: task.state.edits.moduleScheme,
     landscapeEnd: task.state.edits.landscapeEnd,
     orientation: task.state.edits.orientation,
   })

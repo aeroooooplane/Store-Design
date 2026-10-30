@@ -1,6 +1,11 @@
 import pptxgenjs from 'pptxgenjs'
 import sharp from 'sharp'
-import { DISPLAY_ORIENTATION_LABELS, HERO_SLOT, summarizeDisplay } from '@store/shared'
+import {
+  DISPLAY_ORIENTATION_LABELS,
+  HERO_SLOT,
+  summarizeDisplay,
+  summarizeDisplayModules,
+} from '@store/shared'
 import type {
   DisplayPptViews,
   DisplayRules,
@@ -738,5 +743,22 @@ export async function buildDisplayDeck(input: DisplayDeckInput): Promise<Buffer>
     if (input.views !== '3d' || !shot) tableSlide(pptx, input, t)
   }
   quantitySlide(pptx, input)
+  const inner = summarizeDisplayModules(input.rules, input.tables)
+  if (inner.frameTotal) {
+    const slide = pptx.addSlide()
+    text(slide, '内嵌托盘数量明细', { x: 0.5, y: 0.3, w: 10, h: 0.6 }, 24, INK, true)
+    const lines = [
+      ...[...inner.counts].map(([size, n]) => `${size} 模块：${n} 个`),
+      `内盘合计：${inner.innerTotal} 个；外框：${inner.frameTotal} 个；含外框合计：${inner.total} 个`,
+      ...input.tables
+        .filter((t) => t.kind === 'island')
+        .map(
+          (t) =>
+            `${t.label}桌（${t.seat ?? '加桌'}）：${t.modules.join('、')}（${t.modules.length} 个）`,
+        ),
+      ...new Set(input.tables.flatMap((t) => t.notes)),
+    ]
+    text(slide, lines.join('\n'), { x: 0.5, y: 1.2, w: 12, h: 5.8 }, 16, INK)
+  }
   return (await pptx.write({ outputType: 'nodebuffer' })) as Buffer
 }

@@ -6720,15 +6720,32 @@ export interface paths {
                                         hero: boolean;
                                     }[];
                                 }[];
+                                catalog?: {
+                                    /** @enum {string} */
+                                    si: "SI1.0" | "SI2.0";
+                                    source: string;
+                                    row: number;
+                                    name: string;
+                                    /** @enum {string} */
+                                    group: "scene" | "hero" | "standard";
+                                    status: string;
+                                    units: string[];
+                                }[];
                                 modules: {
                                     id: string;
                                     series: string;
                                     size: string;
+                                    note?: string;
                                 }[];
                                 seatModules: {
                                     tables: 2 | 3 | 4;
                                     seat: string;
                                     modules: string[];
+                                    /** @enum {string} */
+                                    si?: "SI1.0" | "SI2.0";
+                                    /** @enum {string} */
+                                    scheme?: "standard" | "draft-2026";
+                                    note?: string;
                                 }[];
                                 photos: {
                                     unit: string;
@@ -7125,6 +7142,8 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     landscapeEnd: "left" | "right";
+                                    /** @enum {string} */
+                                    moduleScheme?: "standard" | "draft-2026";
                                     /** @default {} */
                                     slots: {
                                         [key: string]: {
@@ -7377,6 +7396,8 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     landscapeEnd: "left" | "right";
+                                    /** @enum {string} */
+                                    moduleScheme?: "standard" | "draft-2026";
                                     /** @default {} */
                                     slots: {
                                         [key: string]: {
@@ -7669,6 +7690,8 @@ export interface paths {
                                  * @enum {string}
                                  */
                                 landscapeEnd?: "left" | "right";
+                                /** @enum {string} */
+                                moduleScheme?: "standard" | "draft-2026";
                                 /** @default {} */
                                 slots?: {
                                     [key: string]: {
@@ -7828,6 +7851,8 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     landscapeEnd: "left" | "right";
+                                    /** @enum {string} */
+                                    moduleScheme?: "standard" | "draft-2026";
                                     /** @default {} */
                                     slots: {
                                         [key: string]: {
@@ -8089,6 +8114,8 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     landscapeEnd: "left" | "right";
+                                    /** @enum {string} */
+                                    moduleScheme?: "standard" | "draft-2026";
                                     /** @default {} */
                                     slots: {
                                         [key: string]: {
@@ -8398,6 +8425,8 @@ export interface paths {
                                      * @enum {string}
                                      */
                                     landscapeEnd: "left" | "right";
+                                    /** @enum {string} */
+                                    moduleScheme?: "standard" | "draft-2026";
                                     /** @default {} */
                                     slots: {
                                         [key: string]: {
@@ -8774,6 +8803,8 @@ export interface paths {
                                  * @enum {string}
                                  */
                                 landscapeEnd: "left" | "right";
+                                /** @enum {string} */
+                                moduleScheme?: "standard" | "draft-2026";
                                 /** @default {} */
                                 slots: {
                                     [key: string]: {
@@ -8924,6 +8955,8 @@ export interface paths {
                              * @enum {string}
                              */
                             landscapeEnd?: "left" | "right";
+                            /** @enum {string} */
+                            moduleScheme?: "standard" | "draft-2026";
                             /** @default {} */
                             slots?: {
                                 [key: string]: {
@@ -8957,6 +8990,8 @@ export interface paths {
                                  * @enum {string}
                                  */
                                 landscapeEnd: "left" | "right";
+                                /** @enum {string} */
+                                moduleScheme?: "standard" | "draft-2026";
                                 /** @default {} */
                                 slots: {
                                     [key: string]: {
