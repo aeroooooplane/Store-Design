@@ -8,6 +8,7 @@ import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import {
   MARKET_LABELS,
+  isWallArt,
   SHOP_TYPE_LABELS,
   deliveryFileNames,
   deliveryFolderName,
@@ -87,7 +88,11 @@ function notesFor(space: Space, layout: Layout, placeholderNames: string[]): str
   for (const message of warnings) notes.push(`检查提示：${message}`)
   for (const name of placeholderNames) notes.push(`占位：${name} 暂无三维模型，按真实尺寸方框表示`)
   notes.push('效果图为浏览器实时渲染（Three.js）；正式渲染上线后可按同一视角替换。')
-  notes.push('灯箱画面与品牌 Logo 尚未放入渲染；平面尺寸单位为毫米。')
+  notes.push(
+    layout.items.some(isWallArt)
+      ? '标准灯箱墙贴按实际宽高呈现；图库画面尚未接入，当前为素色。平面尺寸单位为毫米。'
+      : '灯箱画面与品牌 Logo 尚未放入渲染；平面尺寸单位为毫米。',
+  )
   return notes
 }
 

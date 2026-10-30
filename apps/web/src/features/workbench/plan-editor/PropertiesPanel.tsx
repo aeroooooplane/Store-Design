@@ -2,6 +2,8 @@ import type { Dispatch } from 'react'
 import {
   MAX_ITEM_SCALE,
   MIN_ITEM_SCALE,
+  isWallArt,
+  wallArtSize,
   itemElevation,
   itemMount,
   mmToM,
@@ -79,6 +81,57 @@ function FixtureFields({
   )
 }
 
+function WallArtFields({
+  item,
+  space,
+  dispatch,
+}: {
+  item: LayoutItem
+  space: Space
+  dispatch: Dispatch<EditorAction>
+}) {
+  const size = wallArtSize(item)
+  return (
+    <>
+      {(['w', 'h'] as const).map((key) => (
+        <label className="field-row" key={`${item.id}:${key}:${size[key]}`}>
+          {key === 'w' ? '画面宽度（mm）' : '画面高度（mm）'}
+          <input
+            type="number"
+            min={1}
+            max={50000}
+            step={1}
+            defaultValue={mToMm(size[key])}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') e.currentTarget.blur()
+            }}
+            onBlur={(e) => {
+              const value = Number(e.currentTarget.value)
+              if (
+                e.currentTarget.value === '' ||
+                !Number.isFinite(value) ||
+                value < 1 ||
+                value > 50000
+              ) {
+                e.currentTarget.value = String(mToMm(size[key]))
+                return
+              }
+              dispatch({
+                type: 'resizeWallArt',
+                id: item.id,
+                width: key === 'w' ? mmToM(value) : size.w,
+                height: key === 'h' ? mmToM(value) : size.h,
+                space,
+              })
+            }}
+          />
+        </label>
+      ))}
+      <p className="hint">宽高可分别调整；平面拖动两端改宽，三维拖动角点改宽高。</p>
+    </>
+  )
+}
+
 /** The selected prop: size, position and rotation, or how to edit when nothing is selected. */
 export function PropertiesPanel({
   selected,
@@ -92,6 +145,7 @@ export function PropertiesPanel({
   // Screens and light boxes (信息化物料) may hang on the wall or be built into it (N1, 10-15);
   // LOGOs only hang on it.
   const switchable =
+    !isWallArt(selected ?? {}) &&
     asset?.category === '信息化物料' &&
     (asset.installation === 'wall' || asset.installation === 'embedded')
   // LOGO may be resized uniformly (10-15): the width is typed, depth and height follow.
@@ -125,7 +179,10 @@ export function PropertiesPanel({
               {selected.placeholder ? '（占位）' : ''}
             </output>
           </div>
-          {resizable && asset && (
+          {resizable && isWallArt(selected) && (
+            <WallArtFields item={selected} space={space} dispatch={dispatch} />
+          )}
+          {resizable && !isWallArt(selected) && asset && (
             <>
               <label className="field-row">
                 宽度（等比缩放）
