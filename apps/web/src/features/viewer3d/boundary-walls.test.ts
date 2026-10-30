@@ -13,8 +13,8 @@ it('所有实际边界段按层高展示，保留入口、开边及平面范围�
     openEdges: [{ a: [8, 1] as [number, number], b: [8, 2] as [number, number] }],
     obstacles: [
       {
-        id: 'column-1',
-        name: '矮柱',
+        kind: 'column' as const,
+        label: '矮柱',
         polygon: [
           [1, 1],
           [1.5, 1],
