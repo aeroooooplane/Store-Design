@@ -36,6 +36,7 @@ import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { wallArt } from './wall-art.ts'
+import { boundaryWallMaterial } from './boundary-wall.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
@@ -166,6 +167,7 @@ export class WhiteScene {
   private shopType: ShopType = 'side_hall'
   private space: Space | null = null
   private readonly roomWhite = surface()
+  private readonly boundaryMaterial = boundaryWallMaterial()
   /** Material-look room materials of the current room, per SI style (the floor follows the room). */
   private readonly roomLooks = new Map<SiStyle, Record<RoomSurface, THREE.MeshStandardMaterial>>()
   /** Textured models with adjusted finishes; per scene because metals use its environment. */
@@ -283,7 +285,11 @@ export class WhiteScene {
     for (const mesh of [...this.room.children, ...this.fixtures.children]) {
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
-        mesh.material = materials ? materials[surfaceName] : this.roomWhite
+        mesh.material = mesh.userData['boundaryWall']
+          ? this.boundaryMaterial
+          : materials
+            ? materials[surfaceName]
+            : this.roomWhite
       }
     }
   }
@@ -568,6 +574,7 @@ export class WhiteScene {
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
     this.roomWhite.dispose()
+    this.boundaryMaterial.dispose()
     this.roomLooks.forEach(disposeRoomMaterials)
     // Finished materials are clones; their textures belong to the shared model cache.
     this.finishedMaterials.forEach((material) => material.dispose())
