@@ -1,0 +1,1011 @@
+{
+  "codeBase": "4ad12546",
+  "resourceRevision": "display-20261030-rev4095",
+  "files": [
+    {
+      "path": "10_产品与陈列/展陈规则.xlsx",
+      "beforeSha256": "ff90d437dc8b49d01bca75395ced6d91e0b558efdcbb40c411bd333e50aee29c",
+      "sha256": "71d8abbea43d9d4c9c2ffe490bbd64203d478905f671adc4ad8e67fdac282f55"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-2-render.png",
+      "bytes": 910890,
+      "sha256": "43436c38f8350c3fc593dfb3651c109204f70d624d11b97fa329894a949bde08",
+      "sourceToken": "Cj2bbyNDaoK0M5xnAwVcVUU5njb",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-2-photo.png",
+      "bytes": 982889,
+      "sha256": "1261e159df422d737a31beca0784d4691c738d44c029ed0c2959056091af11de",
+      "sourceToken": "JXVsbOxySoySAfxdJPYcvpinnvf",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-3-render.png",
+      "bytes": 1172351,
+      "sha256": "835436c517f80ec4fe5e827852f65902ca9496690dbaed0f1205b2fb5e9a1048",
+      "sourceToken": "K4MwbeFp0oZs5bxtj6RcXnjWnAe",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-3-photo.png",
+      "bytes": 1264682,
+      "sha256": "29233cb3d6d296be5def9b0e7804e3edfd50f041ea2348bdc21fe8b865b19fd1",
+      "sourceToken": "JgQVbLXYRodqA4x2tPtcEh6Xnte",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-4-render.png",
+      "bytes": 1093399,
+      "sha256": "3e3e9021389052f1787d4d9a64f18e2ecb4c6365fe449fe2d643e2c56ff3c495",
+      "sourceToken": "GLbBblqRaoNPu2xIk4McVpYWnqg",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-4-photo.png",
+      "bytes": 1219929,
+      "sha256": "e56be194390ee8b66fb64c2e8b963a32404f3a5645c34cfe1a841762a9fd07b3",
+      "sourceToken": "FNIfb9swTowkjmxmRMkcoQOOnIh",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-5-render.png",
+      "bytes": 1192642,
+      "sha256": "84f0df352d1fc7aebf96ec12fbfad058d63654c48a391fcea8ca3e59cc1b8a67",
+      "sourceToken": "HZFbbjtVIoSaRRxp8hncWzhenP0",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-5-photo.png",
+      "bytes": 1252177,
+      "sha256": "66b433b931f3ac09c1f8144814b0a20e079de744ee8f26d3eab62c75b918180d",
+      "sourceToken": "Bxo2b1xgEo6VmrxJYttctTQbnFf",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-6-render.png",
+      "bytes": 1040617,
+      "sha256": "bd00096345b58a05925d5f6a497609da990c1e93273dfcf3a0f42c41269dbccd",
+      "sourceToken": "JKu7b0YProGeZdxPF49cMoX0nCc",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-6-photo.png",
+      "bytes": 1140070,
+      "sha256": "4b10fe82baf3758e4bf3c0bbbc747651bf3d22f9d1abfd73ac877d9f36cddafb",
+      "sourceToken": "GzCBbGRBEo3k3pxXutacibeGnXc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-7-render.png",
+      "bytes": 1082934,
+      "sha256": "417a26c6dedb23fbc61ab1b1d554ba05cbb7566a2048b233b33b7734e5c1b694",
+      "sourceToken": "FeUcbYOItofmpSxOncJcO3lxn0g",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-7-photo.png",
+      "bytes": 1485735,
+      "sha256": "71257455bbcfe50737e88749cf6e26a1ef398df0ed12d65c2da4baa4f6209b4c",
+      "sourceToken": "PTeibqlBAoHTnqx2Y9OcU7kGnNc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-8-render.png",
+      "bytes": 1383325,
+      "sha256": "9c097e6ad49458bf2e2fd0f7449f1ad37c7b2b0da005bdcd844f2882e45b7565",
+      "sourceToken": "CMfbbLFlFoVD1kxDws0c8YAan9g",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-8-photo.png",
+      "bytes": 274393,
+      "sha256": "4a64491208f2b54e9f471d50a060db72530b13ddd702f8cc06c7703d90e4713c",
+      "sourceToken": "WlAXbu7qLosQHUx7omrcmAA2nwh",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-9-render.png",
+      "bytes": 1139136,
+      "sha256": "48cb8780643f6c5a83f0f8eb7dca6b3c59cceeecf11418c1d8e63e1588c52e9a",
+      "sourceToken": "VqUibQZihocAUKxifVEcmdcLn7G",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-9-photo.png",
+      "bytes": 1048548,
+      "sha256": "8e615db52d84d547a15afe4a17db41fc23ad9de4a3e89062d05e2dfccbd01bb8",
+      "sourceToken": "DAUwbOiYso3rOrxMgpVc9bWDnHd",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-10-render.png",
+      "bytes": 674210,
+      "sha256": "6b5b96020a73290443580ceb0fce1b8eee67bfd0264083391895c19a3fa638db",
+      "sourceToken": "Glyybr3lXozShvxrr4jcTRFXnWg",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-10-photo.png",
+      "bytes": 1004666,
+      "sha256": "091df2d0ae8d39bdafbc81bd6927f2daa52496502337e36142bb023030f123fc",
+      "sourceToken": "Os0hbqeujob5ljxuVPMcWJlInOh",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-11-render.png",
+      "bytes": 1375578,
+      "sha256": "7e1a6f0c312daf76f37aa023f3a3e84b6a9ce55d5a92fe1c42a7fc3d484eca6a",
+      "sourceToken": "TzVHbiBIyoByFax4FPmcuEslnSI",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-11-photo.png",
+      "bytes": 848135,
+      "sha256": "c547993507e3005967da002d13de7d8052ce98f766fc324150d6a822d6265a6d",
+      "sourceToken": "RBdWbXA0xomkSDxtzIVcvmqingc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-12-photo.png",
+      "bytes": 453323,
+      "sha256": "76267f8f5195b2417002dacfa14f9afdc753f91c9716111ed29190c5bbb14b66",
+      "sourceToken": "ODOkbODrWoWdLQx1WKUcrrxunTe",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-13-photo.png",
+      "bytes": 512110,
+      "sha256": "c66f8c97744e966723112ada9524288b7bea9ce7dd223c7ee2ece797abc1bc7f",
+      "sourceToken": "XGUvboYr9oUgpoxz520cFbLXncc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-14-render.png",
+      "bytes": 1202975,
+      "sha256": "db1abb1a865aee5daebf4c75ae5b8a2ea1c4877a98b21e94b4e3a00f14f90db9",
+      "sourceToken": "H9DQbjDjvoOGSexeJJ3ccURinFd",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-14-photo.png",
+      "bytes": 1011430,
+      "sha256": "ea470d8e34ba8906903402bce7f3663f0d181d7c107ee105c6a381620a904b65",
+      "sourceToken": "Qek5bL8dDoz6VNxLYpQcXpq2nRd",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-15-render.png",
+      "bytes": 1282043,
+      "sha256": "0d8558b4ea9316ebe44e71275d3ed3a3ee18ebd15a42b7f05bb877e2db83cb98",
+      "sourceToken": "FSvZbhGTRoLpmUxW7RecCXTvnJc",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-15-photo.png",
+      "bytes": 849433,
+      "sha256": "1bf4c65e2c83faa1537ce658606f24e14457723f866d18152b3fe2e5ea4c19c2",
+      "sourceToken": "BnNmbsLK7ommtjxC05Lcu27Xnfc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-16-render.png",
+      "bytes": 1163837,
+      "sha256": "b2d2cadffbc29bb3020c56ea5d10c8ebacf7be59f013f5a57f4221bfedf10028",
+      "sourceToken": "MIsUbLBzCoooEzxfGUmcfpp1nyh",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-16-photo.png",
+      "bytes": 1980616,
+      "sha256": "4b0154fde826db237d72d765bb1bbc1a56a37626c651a218b55fa68f8da09e26",
+      "sourceToken": "AB5KbEh7YokySNxsMBdcNx8Dn9c",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-17-render.png",
+      "bytes": 112034,
+      "sha256": "d237021f819f486d20bd9719a65beedbd020d3e65cd3c3ac2ec80567088efd1f",
+      "sourceToken": "Lo04bPSyioLaVoxaE4lcQSVmn8b",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-17-photo.png",
+      "bytes": 1486024,
+      "sha256": "194bb46246b508f61ed57aaf30937fb267f759f1d10205047586055570e8ef28",
+      "sourceToken": "HeWbb5fT9oYSKmxVhNicaPR9nIe",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-18-render.png",
+      "bytes": 1151806,
+      "sha256": "338f6df047ffc3e642bd9e90ae08646565e183e725c16918967bc73aca019086",
+      "sourceToken": "KDXabJRFmoEyM0xtk5zcvccLnpg",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-18-photo.png",
+      "bytes": 1603279,
+      "sha256": "58c7e283345b80a106467a3aabf1d68b8a74ddb9304f9676469a5cbf35fdeb4e",
+      "sourceToken": "Ovd4buLZAoxkOyxPO7Dc7FLEnwf",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-19-render.png",
+      "bytes": 1337565,
+      "sha256": "113327c78518fa6df6fadc5c3ce5283d53fb34c2fc3a6f3605f42519b64986d7",
+      "sourceToken": "AVfdbdefzouLGsxSqd5c02FJnif",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-19-photo.png",
+      "bytes": 1366572,
+      "sha256": "ae12aa8d580da2927f2e8a980732cdd31169411821e7d7ad2c9f0dc7f683b33e",
+      "sourceToken": "SbUmb8ne1oRX5Zxijfocauhunee",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-20-render.png",
+      "bytes": 1517378,
+      "sha256": "161e98bb7beb9f02aafc16b8add7e1a43c72b140f9070fadb21c0cb14131b707",
+      "sourceToken": "D3X2b3VeRoAGMdx6vAacKrIlnXe",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-20-photo.png",
+      "bytes": 1966749,
+      "sha256": "e421d8ff1e528f1c3423dd8975c679236c0915275efaddc6bb14df4dcb7b0ba7",
+      "sourceToken": "ZzkFbgK9WotB0SxHvRtchdJrnDc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-21-render.png",
+      "bytes": 1273355,
+      "sha256": "03835baed556f61671ad4bce9725bcd961685c04e430bd257d090208e7db7fe5",
+      "sourceToken": "ZkMgbByJBoB6NWx1LxLc6V65n1e",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-21-photo.png",
+      "bytes": 1966749,
+      "sha256": "e421d8ff1e528f1c3423dd8975c679236c0915275efaddc6bb14df4dcb7b0ba7",
+      "sourceToken": "TTyKbYyUZo6B9sxKRXkct7zynzd",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-22-render.png",
+      "bytes": 1113881,
+      "sha256": "e50180f70361b03dd3c900f56655072f54d3367ecb5cb386ad56e975a1162782",
+      "sourceToken": "HbecbjpdMoXNrfxReurcvExInLh",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-22-photo.png",
+      "bytes": 1790532,
+      "sha256": "f48b45781da83e6685cc4859cce0e0bf9a713cdbb435dc754e21a6cc6fb80b82",
+      "sourceToken": "Ixx3b3EZ8oIFhoxkT1mcpKj5nnh",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-23-render.png",
+      "bytes": 1533498,
+      "sha256": "9e6943c4f351398f1927a87c9a775af9cb2274ce2f47d6c3c5a1a1cecac62770",
+      "sourceToken": "JP9kbGhoNoa9ZCxCc5tceqYAnkd",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-23-photo.png",
+      "bytes": 911019,
+      "sha256": "08c664c79f31167934a01cbd2e525660a096d2c760c125bca07eff942c56da2a",
+      "sourceToken": "RrfhbeUSEowu6MxCZP2cIvRSnVc",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-24-render.png",
+      "bytes": 1060178,
+      "sha256": "e1ffaee05bd5cab45e5acc9c81f23d29d55ea8b7c19dc9c4ecb453377a05a441",
+      "sourceToken": "NJJvbtjvxoYJrCxcGhqcSYrsn7f",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-24-photo.png",
+      "bytes": 719130,
+      "sha256": "aa71294d4760d5e5d7f466162d2bd12fa634946adcd312774a007147152f1670",
+      "sourceToken": "Q9B8bUAeAoY2XrxfqZmck5ffnFb",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-25-render.png",
+      "bytes": 1839718,
+      "sha256": "82b2c47836c2761b3ae149eba259760d88cb5fb9d2b87e57090d5937c93a9947",
+      "sourceToken": "SYbqbhg14oGfkNxY6uRcy5h7nxe",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-25-photo.png",
+      "bytes": 1604597,
+      "sha256": "d1a2a5f37a8cacd7705802c97f393cb691759c421d511cedf9e049efbbcb30ad",
+      "sourceToken": "NwpIbOcqvojweDxJRJOcokcNnzb",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-26-render.png",
+      "bytes": 1243650,
+      "sha256": "78152797d03aefde5c7674361fdd71ac8b8851b90dfe888f6a0b11d9da5548c2",
+      "sourceToken": "SoJmbnnOToZ5x5x1QrScym95nOe",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-26-photo.png",
+      "bytes": 1808854,
+      "sha256": "8ad8d08b1fe76d512099ee3851775e1a5ece642cfb8ee26d4080439bdf20b5dc",
+      "sourceToken": "HulYbCPVIoxYoTxV8Q8cBjOGnWe",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-27-render.png",
+      "bytes": 1110471,
+      "sha256": "33e78416bd5075ade6fb8b37026baa04050f81a201586a5eceeb7ea412edbf23",
+      "sourceToken": "ZxNTbJpnvo0TkmxnYYJcRgUqnMo",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-27-photo.png",
+      "bytes": 518128,
+      "sha256": "9ae622725d892304861c059ae0dc97e9b625d4e24eed54efebcb8d51b0751705",
+      "sourceToken": "L9NBbWI2YoPcJIxlOnVcve83n4f",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-28-render.png",
+      "bytes": 1348570,
+      "sha256": "6a27450ba976cf3d546036b5c196918eeac9bf11e1282b47b15468827b055a63",
+      "sourceToken": "UMktbvzDpoRkCKxFA71cRVwlnuf",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-28-photo.png",
+      "bytes": 1433443,
+      "sha256": "3bbb295a55c72d1b05f65e804e4cd1190122a2761dc943ce18d1422c26f9d915",
+      "sourceToken": "M1MXbd8F4o8afZxum5HcUTg4ndb",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-29-render.png",
+      "bytes": 873300,
+      "sha256": "6584920ed4d234e4b624e2a16e917a78731fe5db7acccfab1e4f208570640bf2",
+      "sourceToken": "VlsMb5m71oNwdgxzrkLc2CiynMb",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-29-photo.png",
+      "bytes": 914751,
+      "sha256": "845a2d797dec4f690f9e469287f1b6c2386ca5c469d16e3e11041a61bdc56ebb",
+      "sourceToken": "Dv7rbvADxorRQhxEMP1c0LRPnGb",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI1.0-30-photo.png",
+      "bytes": 471029,
+      "sha256": "0cd5e2faf69fdfbb9db73f9b1135c7cd5b8c35d822dca74a7b3d11023f69f97c",
+      "sourceToken": "AZMAbhBbNoCJn4xbWxYcYPnQnub",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-2-render.png",
+      "bytes": 910890,
+      "sha256": "43436c38f8350c3fc593dfb3651c109204f70d624d11b97fa329894a949bde08",
+      "sourceToken": "UOtFba9KqoWhWzxe01IcjRZEnzg",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-2-photo.png",
+      "bytes": 2461092,
+      "sha256": "a88fac67c83c86cd1025058e7077e83e143742b410b2fe06c8beb5a842925a15",
+      "sourceToken": "Wh9gbaoQHoKZXHxmkB5c4PYqnQP",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-3-render.png",
+      "bytes": 1492345,
+      "sha256": "0871516f86ca7749fc542e15cb6929f991d8ed8858ab5658bf1b6c6ae3010fda",
+      "sourceToken": "IDfxbRWnuovbf4x6vqUcAmxwnSf",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-3-photo.png",
+      "bytes": 1312002,
+      "sha256": "9ded5316c14016e5976fbe64729407dd306c4b4206c31f9a01f5b7fa7df003cb",
+      "sourceToken": "OyUubRdJEoHGWIxjVStcqCnHnHf",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-4-render.png",
+      "bytes": 1347073,
+      "sha256": "e55869beb9f60731c726ebd4f203d4e6453f1012e4fc650e0c3bc39f4a985bd7",
+      "sourceToken": "MwXVb3RHvoHKKbxHz9KcbX7nndG",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-4-photo.png",
+      "bytes": 1839476,
+      "sha256": "f01195e8365e413afbca28444f356b64e28de5c51c4574050cd24b8993ee15e2",
+      "sourceToken": "TSEFbzX8joerg7xEcwacnMh3nvf",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-5-render.png",
+      "bytes": 328844,
+      "sha256": "624fcecb55c33f8c6a387da38bdb99a4835fc7064e41d021490eecd940a8ab2e",
+      "sourceToken": "TrIabT6PwoDIwKxdaRAcLRmjnZb",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-5-photo.png",
+      "bytes": 1719030,
+      "sha256": "83ee3969115738231f00d8ff2623a06c1625bcee6bd63ff1c275945a368e9299",
+      "sourceToken": "M9yobQhE8oLrWWx1t5scBe37nNe",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-6-render.png",
+      "bytes": 1237179,
+      "sha256": "ae3df4d2a2b8b958da70d1abbe306b5b543c521453e73336f8ee7609f6afdca9",
+      "sourceToken": "LPX4bUXJOon86HxG7NScgiAInOe",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-6-photo.png",
+      "bytes": 1851419,
+      "sha256": "52b1e6d965a002f0579fefa2856dc6b966e7a411a57ba334262d02cb19cec42e",
+      "sourceToken": "MPdlbVrZHoqac6xxpSacBOvznQc",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-7-photo.png",
+      "bytes": 567827,
+      "sha256": "9341b46defd92c28070a75a511958cc2717c95dad1063232f1ac368a91246579",
+      "sourceToken": "BsHZbq4gpoaNeXxQMNccXg3NnLg",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-8-render.png",
+      "bytes": 1096627,
+      "sha256": "8907f93c1bc05142a98304c7376c46797c51a5a0667f6a1a063356b3c7a040fe",
+      "sourceToken": "LatbbJy31oG4JtxaClIcHXOPn9g",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-8-photo.png",
+      "bytes": 485049,
+      "sha256": "ed8fea4a77cf70a9c203d050295143d4507f6f0544ef1051e46d02856274fb50",
+      "sourceToken": "EdvnbZBWOo1r9YxFKawclUc0nae",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-9-render.png",
+      "bytes": 800167,
+      "sha256": "7c0e589d460b950d89d235f5ede03272bdb74cf5917b834296eab07a0d46877a",
+      "sourceToken": "ACLHbg1lWobIBGxcRswcWLAonPb",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-9-photo.png",
+      "bytes": 1222090,
+      "sha256": "1c1b788d0404021cd9c61f28d8938f00bc48f31b5ae1132571af5f2cfffc9a24",
+      "sourceToken": "DRN7b5rXiozhHKxW9YTcURGhnqe",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-10-render.png",
+      "bytes": 809408,
+      "sha256": "6674db3157a65c4b8bca51e311395698834990e6b0325ebc17209952b800a927",
+      "sourceToken": "VDnKbC621oxxOEx4u4Qcci0znIg",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-10-photo.png",
+      "bytes": 1225046,
+      "sha256": "e91114c2d298b471ec4a49e3ce3c7e68a95a2bc43f22663e49e2bd29ae845362",
+      "sourceToken": "LWyqbZ1sAomGFIxStNGcInf8n3f",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-11-render.png",
+      "bytes": 767198,
+      "sha256": "8cd9de785707725755525122061e6624b4847ba8f6087b7f6f72a6a83357ba86",
+      "sourceToken": "MjJlbfcBiozBalxwfn7cJT1gnjc",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-11-photo.png",
+      "bytes": 1274015,
+      "sha256": "afed11c4a4a1c5144bee0b4bf2b297372ac8d4d398615f18586c9d277a76cbfb",
+      "sourceToken": "MSFBbez6oo38DOxewSccIiLLnxg",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-12-render.png",
+      "bytes": 111578,
+      "sha256": "e8b73ef635f7dac5d8102976d8eb1c0e57fea7b699ab37cef665874086016ede",
+      "sourceToken": "Re02bYBSvo2qwTxTztscUiHJnKd",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-12-photo.png",
+      "bytes": 891109,
+      "sha256": "3a4c6f5f60ac89cb9d5ff167af9f8887fe5ca7803a247cd2242ad1c72e6bad33",
+      "sourceToken": "Gng2bU4fOoOzYEx3rMJc8EwVnzb",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-13-render.png",
+      "bytes": 2092710,
+      "sha256": "e49258b5f9c0b907fe092a9d1020560706deeae437fa3f975728c06ad735138c",
+      "sourceToken": "P5bGbkb8PoYYALxkpvwclP6vnBc",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-13-photo.png",
+      "bytes": 1084002,
+      "sha256": "cad69e9eb63f440ba39625f63c6584b72e4515eb518bcf1304ad9cf1096c8889",
+      "sourceToken": "ArXebXPT1oRGA2xo4mHcqWgpnXe",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-14-render.png",
+      "bytes": 1993052,
+      "sha256": "d09296c6fecbb597d09a7ba07431a79df9b6f7e82a365003356de7cf9447ea67",
+      "sourceToken": "FJilbMFQzopz58xEDOmcAaWRnmd",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-14-photo.png",
+      "bytes": 474516,
+      "sha256": "7e4b998e32076ba035a53aaba90caf11ba96127589028279e7242abab6942d83",
+      "sourceToken": "I3MlbeJB2oPrElxvAgCchXAYnEb",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-15-render.png",
+      "bytes": 1161507,
+      "sha256": "1a9ae1b33a176bbafaef6ac0c1eeaf069eeaf307b187a6efb7d7ea279ee3bfac",
+      "sourceToken": "Ug1Ubb9dyowZn1xEpBAcfqeFnHg",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-15-photo.png",
+      "bytes": 1569266,
+      "sha256": "3be862f48a0751044ab56fec25ab3c6da31a7743df07d1081f3dd3f141f48ca5",
+      "sourceToken": "E4eCbRNm2ouMAWxxpsDcDVeDnQb",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-16-render.png",
+      "bytes": 1972455,
+      "sha256": "6e8d551607d1d2799f3839dcf542ed595ecfccac59f0af1aeeeddd84d3423113",
+      "sourceToken": "N8ZbbqwWZo2bj3xq751ceFRDnOe",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-16-photo.png",
+      "bytes": 1437796,
+      "sha256": "99c9044b0aa0952d5773fc60348adcd93f591f645b7b2619e6322d31ad6c7755",
+      "sourceToken": "ZNElbO2UloQhvSxbzMHcmn2Wn8c",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-17-render.png",
+      "bytes": 2161746,
+      "sha256": "1af517970f387327c82a67513c88dcec6916ec754a33ea2791b94b4aa7a88c77",
+      "sourceToken": "GKWJbNfPgokzt3xYJ8uco2JsnUf",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-17-photo.png",
+      "bytes": 1662847,
+      "sha256": "3bdc7a7ea02eb4bac5c697d538c8094c364da090665940bce6f2a13301556c5e",
+      "sourceToken": "LdETbyQaeoevqYxo5Qec4rm2nRf",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-18-render.png",
+      "bytes": 1701370,
+      "sha256": "e4ff21a205f071658f883cfaff716314f3f99833d9090d929c87458abc402ecd",
+      "sourceToken": "VzRJbWyWNoefCEx1xH0cOsownKc",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-18-photo.png",
+      "bytes": 2494399,
+      "sha256": "bf552827f66721d4b62d5b748aa217534137c6a9c9fa204480fde9fc0d9ed0b8",
+      "sourceToken": "SydNbm16OovzFCxrL4DcTcqMn5e",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-19-render.png",
+      "bytes": 1076471,
+      "sha256": "9e6f3b5be2a941a7da413ceb77efb6746f80f541b1e0ad65c14a2cfbbfc651fc",
+      "sourceToken": "KgfMbx5m7oBAUFxSJOBcsjhvn7e",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-19-photo.png",
+      "bytes": 1237180,
+      "sha256": "bb020c4bbbcf49cbfc044eaa4d1a6dd5afb8543d68fe3b0e8fb257f529a78693",
+      "sourceToken": "MpOwb0cDdoBQH8xfmZXcYMgRncg",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-20-render.png",
+      "bytes": 1360698,
+      "sha256": "86432a31b1e64ee2cf6b8416e0acc2aafa48f19b27202c1fdbdecaa38ec806e8",
+      "sourceToken": "QpFTbXazVoZqgtx1SZ6cTnjDn3f",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-20-photo.png",
+      "bytes": 401607,
+      "sha256": "34a4dcfb679335c588d0070a0bbe6b64cc6dc586d1cae1323bc7a7860bf9ac39",
+      "sourceToken": "OPjyb1JproAEBqxYjCpcO0MznVe",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-21-render.png",
+      "bytes": 2091824,
+      "sha256": "b1458387e0a5e710ecaee4b03a7c767954f60fee82a029c1fae0ebe62d2050c8",
+      "sourceToken": "NqvYbwKuHobkgVxbL7GcV9UYn6a",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-21-photo.png",
+      "bytes": 1034519,
+      "sha256": "5a5b91e8f448cdb574893a1d36af2dc19367d0baa869e1b51ada4adcb6ec20b6",
+      "sourceToken": "DfCMbnideodEbkxVtQkc55qCnEf",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-22-render.png",
+      "bytes": 1189865,
+      "sha256": "1b7fa2a81f0ec6dfa958a33ca1ddd1bddfe3c935534a93e08d16cf37ea0251ad",
+      "sourceToken": "GnTlbMwj0olK4SxHUdVca9swnMd",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-22-photo.png",
+      "bytes": 2060886,
+      "sha256": "7d411748afb6fdb6ec4197e05f8c2b83ff98451a0163ad2592c584befe2cc11c",
+      "sourceToken": "JTdBbxOZQoM6eGxxgzAcWfWDn0d",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-23-render.png",
+      "bytes": 1733948,
+      "sha256": "70a78cf204d86b350c147f72e55ecd5288d2d2b0866ea9c3e6a9fd432659e560",
+      "sourceToken": "LiFtbxT1nordO3x1dYacuGmsnDf",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-23-photo.png",
+      "bytes": 2935354,
+      "sha256": "c5c6d8f9b9876374251ae592043cd143652486589210be6e8c0c093e6b822f5c",
+      "sourceToken": "IhEgbNJY5oBGlexPemccqEi9nCh",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261030/SI2.0-24-photo.png",
+      "bytes": 549867,
+      "sha256": "ce06b374844b44fd23e78ee7b3483473d8545d487b0eae2083e3f351cf39ba9b",
+      "sourceToken": "Ks2BbcpOZodVn4xoJoKc4M9Rn48",
+      "si": "SI2.0",
+      "kind": "photo"
+    }
+  ],
+  "fixture": "apps/api/test/fixtures/display/展陈规则.xlsx",
+  "catalogRows": 52,
+  "moduleAudit": [
+    {
+      "si": "SI2.0",
+      "seat": "2-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 7,
+      "previous": [
+        "A2",
+        "D1",
+        "D8",
+        "A4"
+      ],
+      "modules": [
+        "A4",
+        "D13",
+        "D12",
+        "A2"
+      ],
+      "beforeCount": 4,
+      "expectedCount": 4,
+      "afterCount": 4,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "2-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 7,
+      "previous": [
+        "A1",
+        "A3",
+        "C1"
+      ],
+      "modules": [
+        "A7",
+        "C4",
+        "A8"
+      ],
+      "beforeCount": 3,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": [
+        "C3",
+        "D8"
+      ],
+      "modules": [
+        "D16",
+        "D13",
+        "D12"
+      ],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": [
+        "C2",
+        "D7"
+      ],
+      "modules": [
+        "A7",
+        "C4",
+        "A8"
+      ],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-3",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": [
+        "D1",
+        "D4",
+        "A3",
+        "A4"
+      ],
+      "modules": [
+        "A2",
+        "D4",
+        "D7",
+        "A4"
+      ],
+      "beforeCount": 4,
+      "expectedCount": 4,
+      "afterCount": 4,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": [
+        "C3",
+        "D8"
+      ],
+      "modules": [
+        "D9",
+        "D16",
+        "D13"
+      ],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": [
+        "C2",
+        "D1"
+      ],
+      "modules": [
+        "A7",
+        "C4",
+        "A8"
+      ],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-3",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": [
+        "D7",
+        "D6",
+        "A3",
+        "A4"
+      ],
+      "modules": [
+        "D11",
+        "D7",
+        "D12"
+      ],
+      "beforeCount": 4,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-4",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": [
+        "D2",
+        "D3",
+        "D4"
+      ],
+      "modules": [
+        "A3",
+        "C1",
+        "A2"
+      ],
+      "beforeCount": 3,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    }
+  ],
+  "sources": [
+    {
+      "file": "guide.json",
+      "sha256": "852e39a79fced8fc33e7c57f382398dad9c44062799142b73f2bace2850eaeec"
+    },
+    {
+      "file": "layout-slides.xml",
+      "sha256": "fd08bce490d76488c2618054158b66347bc67f9141c3f36d66b19148dd5c9635"
+    },
+    {
+      "file": "module-slides.xml",
+      "sha256": "2ece52b34c97cd42916146b339e8c9a7082171d096274da2f9891db089f13f3a"
+    }
+  ]
+}

@@ -178,6 +178,8 @@ export interface PlanDisplayInput {
   tables: readonly DisplayTableInput[]
   entrance: EntranceFrame | null
   market: Market
+  siStyle?: SiStyle
+  moduleScheme?: 'standard' | 'draft-2026'
   /** Side of the end slot on landscape tables, facing into the store; the guide draws it left. */
   landscapeEnd?: 'left' | 'right'
   /** Set by hand when the drawing is read wrongly; otherwise from the table nearest the entrance. */
@@ -227,6 +229,13 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
     const seat = i < ruleTables ? `${ruleTables}-${i + 1}` : null
     const layout = seat ? layouts.find((l) => l.seat === seat) : undefined
     const notes: string[] = []
+    const candidates = rules.seatModules.filter((m) => m.tables === ruleTables && m.seat === seat)
+    const moduleRule =
+      candidates.find(
+        (m) =>
+          m.si === input.siStyle && (m.scheme ?? 'standard') === (input.moduleScheme ?? 'standard'),
+      ) ?? candidates.find((m) => !m.si && !m.scheme)
+    if (moduleRule?.note) notes.push(moduleRule.note)
     if (nonStandard) notes.push(`店内有 ${n} 张中岛桌，指引只有 2–4 张的版式：单店单议`)
     if (!layout) notes.push('没有对应版式，请逐位填写')
     const slots = ISLAND_SLOTS[orientation].map((slot) => {
@@ -243,9 +252,7 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
       ruleTables,
       seat,
       slots,
-      modules: seat
-        ? (rules.seatModules.find((m) => m.tables === ruleTables && m.seat === seat)?.modules ?? [])
-        : [],
+      modules: seat ? (moduleRule?.modules ?? []) : [],
       endToward: [...endToward(t)],
       custom: nonStandard || !layout,
       notes,
@@ -284,6 +291,26 @@ export interface DisplaySummaryLine {
   name: string
   category?: string
   count: number
+}
+
+/** One inner tray per module, one outer frame per island. Never count the products inside again. */
+export function summarizeDisplayModules(
+  rules: DisplayRules,
+  tables: readonly Pick<DisplayTable, 'kind' | 'modules'>[],
+) {
+  const counts = new Map<string, number>()
+  const sizes = new Map(rules.modules.map((m) => [m.id, m.size]))
+  const unknown: string[] = []
+  for (const table of tables.filter((t) => t.kind === 'island'))
+    for (const id of table.modules) {
+      const size = sizes.get(id)
+      if (!size) unknown.push(id)
+      const key = size ?? '未识别'
+      counts.set(key, (counts.get(key) ?? 0) + 1)
+    }
+  const innerTotal = [...counts.values()].reduce((sum, n) => sum + n, 0)
+  const frameTotal = tables.filter((t) => t.kind === 'island').length
+  return { counts, innerTotal, frameTotal, total: innerTotal + frameTotal, unknown }
 }
 
 /** 产品数量明细（运营用）and 托盘数量明细（供应商用）of a planned store, in rule order. */

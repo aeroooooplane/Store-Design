@@ -125,6 +125,7 @@ export async function parseDisplayWorkbook(data: Buffer): Promise<ParsedWorkbook
     id: cell(r, 0),
     series: cell(r, 1),
     size: cell(r, 2),
+    ...(cell(r, 3) ? { note: cell(r, 3) } : {}),
   }))
   const seatModules = rows('桌号模块').flatMap((r) => {
     const t = tables(cell(r, 0), `桌号模块第 ${r.row} 行`)
@@ -133,8 +134,31 @@ export async function parseDisplayWorkbook(data: Buffer): Promise<ParsedWorkbook
       .split(/[,，、\s]+/)
       .map((m) => m.trim())
       .filter(Boolean)
-    return [{ tables: t, seat: cell(r, 1), modules: list }]
+    return [
+      {
+        tables: t,
+        seat: cell(r, 1),
+        modules: list,
+        ...(cell(r, 3) ? { si: cell(r, 3) } : {}),
+        ...(cell(r, 4) ? { scheme: cell(r, 4) } : {}),
+        ...(cell(r, 5) ? { note: cell(r, 5) } : {}),
+      },
+    ]
   })
+  const catalog = workbook.getWorksheet('托盘方案')
+    ? rows('托盘方案').map((r) => ({
+        si: cell(r, 0),
+        source: cell(r, 1),
+        row: Number(cell(r, 2)),
+        name: cell(r, 3),
+        group: cell(r, 4),
+        status: cell(r, 5),
+        units: cell(r, 6)
+          .split(';')
+          .map((s) => s.trim())
+          .filter(Boolean),
+      }))
+    : undefined
   const photos = rows('照片').flatMap((r) => {
     const where = `照片第 ${r.row} 行`
     const kind = pick(PHOTO_KINDS, cell(r, 2), where, '类型')
@@ -165,6 +189,7 @@ export async function parseDisplayWorkbook(data: Buffer): Promise<ParsedWorkbook
     seatModules,
     photos,
     expected,
+    ...(catalog ? { catalog } : {}),
   })
   if (!parsed.success) {
     for (const issue of parsed.error.issues.slice(0, 20))

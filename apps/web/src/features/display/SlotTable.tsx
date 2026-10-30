@@ -1,5 +1,9 @@
 import { useMemo, useState } from 'react'
-import { DISPLAY_ORIENTATION_LABELS } from '@store/shared'
+import {
+  DISPLAY_ORIENTATION_LABELS,
+  summarizeDisplay,
+  summarizeDisplayModules,
+} from '@store/shared'
 import { photoOf } from './photos.ts'
 import { UnitPicker } from './UnitPicker.tsx'
 import type { PickerTarget } from './UnitPicker.tsx'
@@ -45,6 +49,8 @@ export function SlotTable({
   disabled,
 }: SlotTableProps) {
   const labelOf = new Map(rules.units.map((u) => [u.id, u.label]))
+  const moduleCounts = summarizeDisplayModules(rules, tables)
+  const summary = summarizeDisplay(rules, tables)
   const [look, setLook] = useState<'3d' | 'plan'>('3d')
   const [picking, setPicking] = useState<(PickerTarget & { table: DisplayTable }) | null>(null)
   const pick = (t: DisplayTable, slot: string, at: { x: number; y: number }) => {
@@ -157,6 +163,41 @@ export function SlotTable({
 
   return (
     <>
+      <section className="display-module-summary" aria-label="托盘数量核对">
+        {si === 'SI2.0' &&
+          rules.seatModules.some((m) => m.si === si && m.scheme === 'draft-2026') && (
+            <label>
+              SI2.0 内嵌方案{' '}
+              <select
+                aria-label="SI2.0 内嵌方案"
+                value={edits.moduleScheme ?? 'standard'}
+                disabled={disabled}
+                onChange={(event) =>
+                  onChange({
+                    ...edits,
+                    moduleScheme: event.target.value as 'standard' | 'draft-2026',
+                    modules: {},
+                  })
+                }
+              >
+                <option value="standard">既有方案</option>
+                <option value="draft-2026">2026.10.26 讨论稿（试摆待实物确认）</option>
+              </select>
+            </label>
+          )}
+        <p>
+          主机托盘位 {summary.trayTotal} 个；内嵌托盘 {moduleCounts.innerTotal} 个（
+          {[...moduleCounts.counts].map(([size, count]) => `${size} 模块 ${count}`).join('、') ||
+            '暂无模块'}
+          ）；外框 {moduleCounts.frameTotal} 个；内嵌含外框合计 {moduleCounts.total} 个。
+        </p>
+        {edits.moduleScheme === 'draft-2026' && si === 'SI2.0' && (
+          <p className="notice">
+            当前为讨论稿：A7/A8、D13/D16 同盘试摆，D9
+            遮光罩为建议；数量按图核对，实物可放性尚未确认。
+          </p>
+        )}
+      </section>
       <div className="tabs slot-look" role="group" aria-label="陈列内容显示方式">
         {(
           [

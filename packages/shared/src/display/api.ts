@@ -23,6 +23,8 @@ export const DisplayEditsSchema = z.object({
   /** null: from the table nearest the entrance. */
   orientation: DisplayOrientationSchema.nullable().default(null),
   landscapeEnd: z.enum(['left', 'right']).default('left'),
+  /** The 2026 SI2.0 discussion scheme is opt-in; absent in old saved projects. */
+  moduleScheme: z.enum(['standard', 'draft-2026']).optional(),
   /** Table id → slot → unit id (null empties the slot). */
   slots: z.record(TableIdSchema, z.record(SlotIdSchema, z.string().max(60).nullable())).default({}),
   /** Table id → accessory modules replacing the guide's. */

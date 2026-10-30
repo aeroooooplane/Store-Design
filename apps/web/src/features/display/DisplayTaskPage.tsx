@@ -126,8 +126,14 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
   }, [revision, dirty, task.state])
 
   const tables = useMemo(
-    () => planTaskTables(rules, { market: task.market, plan: task.plan, state: draft }),
-    [rules, task.market, task.plan, draft],
+    () =>
+      planTaskTables(rules, {
+        market: task.market,
+        siStyle: task.siStyle,
+        plan: task.plan,
+        state: draft,
+      }),
+    [rules, task.market, task.siStyle, task.plan, draft],
   )
   const labelOf = useMemo(() => new Map(tables.map((t) => [t.sourceId, t.label])), [tables])
   const change = (next: DisplayTaskState) => {
@@ -325,7 +331,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
                 </select>
               </label>
               <label>
-                <span>SI 版本（决定托盘照片和桌体）</span>
+                <span>SI 版本（决定托盘照片、桌体和内嵌方案）</span>
                 <select
                   value={task.siStyle}
                   onChange={(event) =>

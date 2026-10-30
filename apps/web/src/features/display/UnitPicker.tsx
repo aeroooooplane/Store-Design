@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import type { DisplayRules, DisplayRulesView, SiStyle } from '@store/shared'
+import { displayChoices } from '@store/shared'
 import { photoOf } from './photos.ts'
 
 export interface PickerTarget {
@@ -56,10 +57,20 @@ export function UnitPicker({ target, rules, photos, si, onPick, onClose }: UnitP
   }, [onClose])
 
   const choices = [
-    { id: null, label: '待定', url: null as string | null },
-    ...rules.units.map((u) => ({
+    {
+      id: null,
+      label: '待定',
+      specification: '',
+      status: '',
+      source: '',
+      url: null as string | null,
+    },
+    ...displayChoices(rules, si).map((u) => ({
       id: u.id,
       label: u.label,
+      specification: u.specification,
+      status: u.status,
+      source: u.source,
       url: photoOf(photos, u.id, si)?.url ?? null,
     })),
   ]
@@ -78,12 +89,18 @@ export function UnitPicker({ target, rules, photos, si, onPick, onClose }: UnitP
           关闭
         </button>
       </header>
+      <p className="hint unit-picker-count">
+        {si} · {choices.length - 1} 个陈列选项 ·{' '}
+        {(rules.catalog ?? []).filter((c) => c.si === si).length || choices.length - 1}{' '}
+        个来源规格；每次选择占 1 个托盘位
+      </p>
       <div className="unit-picker-grid">
         {choices.map((c) => (
           <button
             key={c.id ?? ''}
             type="button"
             aria-pressed={c.id === target.current}
+            title={c.source}
             onClick={() => onPick(c.id)}
           >
             <span className="unit-picker-photo">
@@ -94,6 +111,8 @@ export function UnitPicker({ target, rules, photos, si, onPick, onClose }: UnitP
               )}
             </span>
             <span className="unit-picker-name">{c.label}</span>
+            {c.specification && <span className="unit-picker-spec">{c.specification}</span>}
+            {c.status && <span className="unit-picker-status">{c.status}</span>}
           </button>
         ))}
       </div>

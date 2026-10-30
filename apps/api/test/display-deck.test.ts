@@ -71,7 +71,7 @@ describe('展陈方案 PPT', () => {
   it('has a cover, the overview, one slide per table and the counts, all as editable text', async () => {
     const pptx = await buildDisplayDeck({ ...base(), views: 'plan', tables3d: {} })
     const slides = slideTexts(pptx)
-    expect(slides).toHaveLength(1 + 1 + 4 + 1)
+    expect(slides).toHaveLength(1 + 1 + 4 + 1 + 1)
     expect(slides[0]).toContain('影石测试店')
     expect(slides[0]).toContain('中岛桌展陈方案')
     expect(slides[1]).toContain('平面布局图总览')
@@ -94,13 +94,13 @@ describe('展陈方案 PPT', () => {
     const tables3d = { A: { image: picture, names } }
     const both = slideTexts(await buildDisplayDeck({ ...base(), views: 'both', tables3d }))
     // Table A gets two pages; B, C and D have no 3D view and keep their slot diagram.
-    expect(both).toHaveLength(1 + 1 + 5 + 1)
+    expect(both).toHaveLength(1 + 1 + 5 + 1 + 1)
     expect(both[2]).toContain('三维示意')
     expect(both[2]).toContain('Luna Ultra + 创作者')
     expect(both[2]).toContain('中间配件模块：C3、D8')
     expect(both[3]).toContain('平面布局图')
     const only3d = slideTexts(await buildDisplayDeck({ ...base(), views: '3d', tables3d }))
-    expect(only3d).toHaveLength(1 + 1 + 4 + 1)
+    expect(only3d).toHaveLength(1 + 1 + 4 + 1 + 1)
     expect(only3d[2]).toContain('三维示意')
     expect(only3d[3]).toContain('平面布局图')
   })

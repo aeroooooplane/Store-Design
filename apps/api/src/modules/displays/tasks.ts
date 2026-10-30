@@ -308,6 +308,7 @@ export async function exportTask(
   const rules = ruleSet.rules
   const tables = planTaskTables(rules, {
     market: row.market,
+    siStyle: row.siStyle,
     plan: row.planWidth && row.planHeight ? { width: row.planWidth, height: row.planHeight } : null,
     state,
   })
@@ -355,7 +356,7 @@ export async function exportTask(
     landscapeEnd: state.edits.landscapeEnd,
     views: options.views,
     tables3d: await tableShots(tables, options.tables3d),
-    pending: pendingOf(tables),
+    pending: pendingOf(tables, rules, row.siStyle),
   })
   const record = await storeDisplayFiles(
     db,

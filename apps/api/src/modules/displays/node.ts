@@ -113,6 +113,8 @@ async function compute(db: Database, nodeId: string): Promise<Computed> {
       tables: inputs,
       entrance: entranceFrame(space),
       market: project.market,
+      siStyle: context.siStyle,
+      moduleScheme: edits.moduleScheme,
       landscapeEnd: edits.landscapeEnd,
       orientation: edits.orientation,
     }),
@@ -293,7 +295,7 @@ export async function nodeDisplayFiles(
     landscapeEnd: display.edits.landscapeEnd,
     views: request.views,
     tables3d: await tableShots(display.tables, request.tables3d),
-    pending: pendingOf(display.tables),
+    pending: pendingOf(display.tables, ruleSet.rules, si),
   })
   return { files, tables: display.tables, ruleVersion: ruleSet.version }
 }

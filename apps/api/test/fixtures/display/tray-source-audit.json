@@ -1,0 +1,1812 @@
+{
+  "readAt": "2026-10-30",
+  "documentId": "HNS2dxrKPo1Sgex3LxTcD8IwnPf",
+  "revision": 4095,
+  "catalog": [
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 2,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#ZYpydm7LMoavbrxuGIjc33OxnNW",
+      "revision": 4095,
+      "name": "场景托盘（AG）",
+      "product": "AG",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-AG"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-2-render.png",
+          "blockId": "BUjyduegwovNisxyveNcR2BanTf",
+          "token": "Cj2bbyNDaoK0M5xnAwVcVUU5njb"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-2-photo.png",
+          "blockId": "XNeTdrOnXoa1MNxYZZVcEHVVnZd",
+          "token": "JXVsbOxySoySAfxdJPYcvpinnvf"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 3,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Q246dzv5HoDIXgxeNAPcdTIfnac",
+      "revision": 4095,
+      "name": "场景托盘（X5）",
+      "product": "X5",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-X5"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-3-render.png",
+          "blockId": "PdFFdZYPdolBldxydbpcGRbnnvd",
+          "token": "K4MwbeFp0oZs5bxtj6RcXnjWnAe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-3-photo.png",
+          "blockId": "K8Jad5CFAoSmXjxlsBWcQOFvnic",
+          "token": "JgQVbLXYRodqA4x2tPtcEh6Xnte"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 4,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#IzBSdZQ0aogzQhxiMpXcptLwnmc",
+      "revision": 4095,
+      "name": "场景托盘（Go Ultra）",
+      "product": "Go Ultra",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-GO Ultra"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-4-render.png",
+          "blockId": "VKJEdu6bIoE4d3xGMJEcIO4AnKf",
+          "token": "GLbBblqRaoNPu2xIk4McVpYWnqg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-4-photo.png",
+          "blockId": "FCSEdK4Q5oR9Fbxrp57cBvSanvb",
+          "token": "FNIfb9swTowkjmxmRMkcoQOOnIh"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 5,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#VEPxdo4OXowLI4xG7F0cdbnBnHh",
+      "revision": 4095,
+      "name": "场景托盘（Go Ultra & Hello Kitty）",
+      "product": "Go Ultra & Hello Kitty",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-GO Ultra HK"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-5-render.png",
+          "blockId": "QZasd50uRo6XO5xjQoZci4hWnpd",
+          "token": "HZFbbjtVIoSaRRxp8hncWzhenP0"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-5-photo.png",
+          "blockId": "UTQddvTj7oAakDxhHpRckXbInqf",
+          "token": "Bxo2b1xgEo6VmrxJYttctTQbnFf"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 6,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#HpRCdROjCo6p9ixxW52coYjMngd",
+      "revision": 4095,
+      "name": "场景托盘（Ace Pro2）",
+      "product": "Ace Pro2",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-AP2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-6-render.png",
+          "blockId": "EyGiduhvyowWa5xFp6tcuPtKnGb",
+          "token": "JKu7b0YProGeZdxPF49cMoX0nCc"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-6-photo.png",
+          "blockId": "B11jd66gJoSrJTxuvqgcwHrNnlg",
+          "token": "GzCBbGRBEo3k3pxXutacibeGnXc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 7,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#XLe0dd28QocP8HxacZNcHawTn2P",
+      "revision": 4095,
+      "name": "场景托盘（Luna Ultra）",
+      "product": "Luna Ultra",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-Luna Ultra"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-7-render.png",
+          "blockId": "AvUCdCkWqo1zCuxWNBFcempAndc",
+          "token": "FeUcbYOItofmpSxOncJcO3lxn0g"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-7-photo.png",
+          "blockId": "QwZtdJZEromIZVxZ2sic9LmCnwf",
+          "token": "PTeibqlBAoHTnqx2Y9OcU7kGnNc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 8,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#VpIBdILQ4oSdjjxmi99c9PJwnKf",
+      "revision": 4095,
+      "name": "SI1.0明星托盘（X）",
+      "product": "X5",
+      "group": "hero",
+      "status": "消耗即止，后续只出普通托盘",
+      "units": ["hero-X5"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-8-render.png",
+          "blockId": "GBradyDOPonLDZx6oB1cJLIZnSg",
+          "token": "CMfbbLFlFoVD1kxDws0c8YAan9g"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-8-photo.png",
+          "blockId": "OfwBdCYl4og1Rwxl6y3cmmn2noc",
+          "token": "WlAXbu7qLosQHUx7omrcmAA2nwh"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 9,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#RtyZdzZFRoUuJexPJwDcmOLCndc",
+      "revision": 4095,
+      "name": "SI1.0明星托盘（Go）",
+      "product": "Go 3s",
+      "group": "hero",
+      "status": "消耗即止，后续只出普通托盘",
+      "units": ["hero-GO3S"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-9-render.png",
+          "blockId": "CN2zd8gt5obixjxpOb6cjL75nDh",
+          "token": "VqUibQZihocAUKxifVEcmdcLn7G"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-9-photo.png",
+          "blockId": "HchCdlxfBo0DfvxpBsPc3KSTnib",
+          "token": "DAUwbOiYso3rOrxMgpVc9bWDnHd"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 10,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#ZH9edEQM4ozaB6xPlHrcklfQnQh",
+      "revision": 4095,
+      "name": "SI1.0明星托盘（Ace）",
+      "product": "Ace Pro2",
+      "group": "hero",
+      "status": "消耗即止，后续只出普通托盘",
+      "units": ["hero-AP2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-10-render.png",
+          "blockId": "DdrYdfTnbohv7wxEd3jcRpbEnRc",
+          "token": "Glyybr3lXozShvxrr4jcTRFXnWg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-10-photo.png",
+          "blockId": "BoA7daoFcoApqMxnLHDcMEegn5e",
+          "token": "Os0hbqeujob5ljxuVPMcWJlInOh"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 11,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#XjI3dMtYfowKJIx4f19c7cCNnwh",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（AG）",
+      "product": "AG",
+      "group": "standard",
+      "status": "",
+      "units": ["AG"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-11-render.png",
+          "blockId": "UarQd6RlcoB3TQxDTzbccjbmn5d",
+          "token": "TzVHbiBIyoByFax4FPmcuEslnSI"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-11-photo.png",
+          "blockId": "E6EWdpJrtojAxdxz1mMcXarbnid",
+          "token": "RBdWbXA0xomkSDxtzIVcvmqingc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 12,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NslMdHJnzoYE8txzaZMcswbfnEb",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（AG Pac neo）",
+      "product": "AG Pac neo",
+      "group": "standard",
+      "status": "",
+      "units": ["AG Pac Neo"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-12-photo.png",
+          "blockId": "QrBUdGSddojVgHxv3GIc4Pp1nbh",
+          "token": "ODOkbODrWoWdLQx1WKUcrrxunTe"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 13,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#EO6edxd10ohbsMxaaN3cn8g7nTz",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（AG Pac air）",
+      "product": "AG Pac air",
+      "group": "standard",
+      "status": "",
+      "units": ["AG Pac Air"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-13-photo.png",
+          "blockId": "BA1OdaUXSoVFa7x7wQDcyuvvnFh",
+          "token": "XGUvboYr9oUgpoxz520cFbLXncc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 14,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#SrPndETbHoAgTmx42SVc5ZsSnHh",
+      "revision": 4095,
+      "name": "SI1.0 普通托盘A(Luna )",
+      "product": "Luna黑+白",
+      "group": "standard",
+      "status": "原表写 Luna 黑+白；具体机型待确认，沿用已有 Luna A 构成",
+      "units": ["Luna A"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-14-render.png",
+          "blockId": "Y1CodG3hxoNOKUxfIX2cD8tXnXg",
+          "token": "H9DQbjDjvoOGSexeJJ3ccURinFd"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-14-photo.png",
+          "blockId": "TagadpKEjoe3LbxY4EqcYIImnlg",
+          "token": "Qek5bL8dDoz6VNxLYpQcXpq2nRd"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 15,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#HZx3dWlHBoKAM7xUptSc67s9nnf",
+      "revision": 4095,
+      "name": "SI1.0 普通托盘B(Luna )",
+      "product": "luna+创作者",
+      "group": "standard",
+      "status": "",
+      "units": ["Luna B"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-15-render.png",
+          "blockId": "Xq2bdMZrLotJFJxeQZJcQJ1VnHe",
+          "token": "FSvZbhGTRoLpmUxW7RecCXTvnJc"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-15-photo.png",
+          "blockId": "LCRCdKHwkonwFbxkK6ucQaainsU",
+          "token": "BnNmbsLK7ommtjxC05Lcu27Xnfc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 16,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Tn22dk9gfohFo7x2ICGcHCEinNd",
+      "revision": 4095,
+      "name": "SI1.0 普通托盘C(Luna )",
+      "product": "luna+mic pro",
+      "group": "standard",
+      "status": "",
+      "units": ["Luna C"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-16-render.png",
+          "blockId": "ZeRtd5l2woyax3x9fzFcSx1HnFb",
+          "token": "MIsUbLBzCoooEzxfGUmcfpp1nyh"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-16-photo.png",
+          "blockId": "U1KzdjXhWop0fDxLKJ2cuPO7nzg",
+          "token": "AB5KbEh7YokySNxsMBdcNx8Dn9c"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 17,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#T23zd4VUqotIOnxwqbScjLpsnKg",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（X&Ace）双机位托盘",
+      "product": "X系列（X6、X5、X4air）",
+      "group": "standard",
+      "status": "",
+      "units": ["X5+X4 Air"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-17-render.png",
+          "blockId": "QXJSdTq9RozFi9xnE44cbAYGnIh",
+          "token": "Lo04bPSyioLaVoxaE4lcQSVmn8b"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-17-photo.png",
+          "blockId": "VC1ydvK0Qog2cMxpyLdcnWhNnCf",
+          "token": "HeWbb5fT9oYSKmxVhNicaPR9nIe"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 18,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#UZTZdbZwCoUveGxLroCcimdgnBd",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（X&Ace）单机位托盘",
+      "product": "X系列（X6、X5、X4air）",
+      "group": "standard",
+      "status": "",
+      "units": ["X4 Air", "X5", "X6"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 3,
+      "expectedVariants": 3,
+      "afterVariants": 3,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-18-render.png",
+          "blockId": "Xx2bdHL8Uov980xQwLlcbhQZnRR",
+          "token": "KDXabJRFmoEyM0xtk5zcvccLnpg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-18-photo.png",
+          "blockId": "ObncdPpPMoRqagxcYlnc59EfnPf",
+          "token": "Ovd4buLZAoxkOyxPO7Dc7FLEnwf"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 19,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#UZTZdbZwCoUveGxLroCcimdgnBd",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（X&Ace）单机位托盘",
+      "product": "Ace系列(Ap2、Ap1)",
+      "group": "standard",
+      "status": "",
+      "units": ["AP2", "AP1"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 2,
+      "afterVariants": 2,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-19-render.png",
+          "blockId": "SF7Fdar0eoGiPsx3yj8cnOGCnwd",
+          "token": "AVfdbdefzouLGsxSqd5c02FJnif"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-19-photo.png",
+          "blockId": "PoUmdgk0Ho34P7xoNZPcZU49n4c",
+          "token": "SbUmb8ne1oRX5Zxijfocauhunee"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 20,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#QWKcdixahoQmKUxtBLBcdj1Nnic",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（link）",
+      "product": "Ace街拍",
+      "group": "standard",
+      "status": "原表托盘名为 link，与 Ace 产品不一致；分类沿用原有规则，待确认",
+      "units": ["AP2 街拍"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-20-render.png",
+          "blockId": "O3GFdFkLBoM0ErxBIwwcv3WpnQk",
+          "token": "D3X2b3VeRoAGMdx6vAacKrIlnXe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-20-photo.png",
+          "blockId": "TWeydHRGeoJln2x3FnxcfYoZnob",
+          "token": "ZzkFbgK9WotB0SxHvRtchdJrnDc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 21,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#QWKcdixahoQmKUxtBLBcdj1Nnic",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（link）",
+      "product": "Ace大师",
+      "group": "standard",
+      "status": "原表托盘名为 link，与 Ace 产品不一致；分类沿用原有规则，待确认",
+      "units": ["AP2 大师"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-21-render.png",
+          "blockId": "UaUUdrxnio1SNIxViIqcD3LlnTg",
+          "token": "ZkMgbByJBoB6NWx1LxLc6V65n1e"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-21-photo.png",
+          "blockId": "RIpJdxouooM661xD3siccFsWn1d",
+          "token": "TTyKbYyUZo6B9sxKRXkct7zynzd"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 22,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#QzWhdQ9oLoK7kkxfFE2cktSsnBb",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Go）",
+      "product": "Go3s",
+      "group": "standard",
+      "status": "",
+      "units": ["GO3S"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-22-render.png",
+          "blockId": "RNAad4XDko7bJLxkQoZcWIyXnDe",
+          "token": "HbecbjpdMoXNrfxReurcvExInLh"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-22-photo.png",
+          "blockId": "DhW3d5bSeoaMYlxtZRnczS8KnJc",
+          "token": "Ixx3b3EZ8oIFhoxkT1mcpKj5nnh"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 23,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#AsKcd99ewo6XdtxSLoKc4kGAnOd",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Go3s 复古）",
+      "product": "Go3s 复古套装",
+      "group": "standard",
+      "status": "图纸注明改用 X 系列自拍杆托盘；保留来源规格，实际物料待确认",
+      "units": ["GO 3S 复古"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-23-render.png",
+          "blockId": "VdEed1ga7oWsvYxgFA5cPsszn9b",
+          "token": "JP9kbGhoNoa9ZCxCc5tceqYAnkd"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-23-photo.png",
+          "blockId": "LTyGdRJm0o7YIJx9GSLcbZEUnJf",
+          "token": "RrfhbeUSEowu6MxCZP2cIvRSnVc"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 24,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#FM5OdmRtso9ReTxes61cfh8mnPb",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Go Ultra）升级前：TC4亚克力",
+      "product": "Go Ultra",
+      "group": "standard",
+      "status": "",
+      "units": ["GO Ultra-v1"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-24-render.png",
+          "blockId": "LETMdrhwko0l5SxoYTpchuZ9ned",
+          "token": "NJJvbtjvxoYJrCxcGhqcSYrsn7f"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-24-photo.png",
+          "blockId": "S63KdMPVmoVmTCxmbiucfAxGn2c",
+          "token": "Q9B8bUAeAoY2XrxfqZmck5ffnFb"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 25,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Zo2Nd78f5oNuUjx2OfPcDlxTnRe",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Go Ultra）升级后：亚克力背板",
+      "product": "Go Ultra",
+      "group": "standard",
+      "status": "",
+      "units": ["GO Ultra"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-25-render.png",
+          "blockId": "WJfrdl1DuoaKQ9x5O94ctutQnub",
+          "token": "SYbqbhg14oGfkNxY6uRcy5h7nxe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-25-photo.png",
+          "blockId": "SG0IdtfmNoscs2xU02QcHqTEnrn",
+          "token": "NwpIbOcqvojweDxJRJOcokcNnzb"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 26,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#UDtXdwqZ7oP4YaxlaRecd3iLnBc",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Go Ultra &Hello Kitty）仅在Go Ultra基础上增加立牌物料",
+      "product": "Go Ultra &Hello Kitty",
+      "group": "standard",
+      "status": "",
+      "units": ["GO Ultra HK"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-26-render.png",
+          "blockId": "LUC0dohUxo3ZWvxgxcuc35nqngh",
+          "token": "SoJmbnnOToZ5x5x1QrScym95nOe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-26-photo.png",
+          "blockId": "CVO8dXffCoUYmmxrWZPcTOiGn3c",
+          "token": "HulYbCPVIoxYoTxV8Q8cBjOGnWe"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 27,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#H5pxdQ09WoEWhoxK37Vcnfn4nNg",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Flow一拖二）",
+      "product": "Flow",
+      "group": "standard",
+      "status": "",
+      "units": ["Flow2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-27-render.png",
+          "blockId": "WuEPdijOvoF9P9xmErLcuN6tnVo",
+          "token": "ZxNTbJpnvo0TkmxnYYJcRgUqnMo"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-27-photo.png",
+          "blockId": "SbVcdW82loEGPLxWwnVcUpuRnlb",
+          "token": "L9NBbWI2YoPcJIxlOnVcve83n4f"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 28,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#N7hJdUulsoDVFbxobSqcQn7yniX",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Link）",
+      "product": "Link",
+      "group": "standard",
+      "status": "",
+      "units": ["Link2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-28-render.png",
+          "blockId": "Tbz5dZ3nBoHaoOxdhEIcxSkHnlh",
+          "token": "UMktbvzDpoRkCKxFA71cRVwlnuf"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-28-photo.png",
+          "blockId": "HPwtdRIDKonSiixqTLOcoanEnff",
+          "token": "M1MXbd8F4o8afZxum5HcUTg4ndb"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 29,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#PRvwdWNVio4Kw4xm0IzcFjg1n6b",
+      "revision": 4095,
+      "name": "SI1.0普通托盘（Mic Pro）",
+      "product": "Mic Pro",
+      "group": "standard",
+      "status": "",
+      "units": ["Mic Pro"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI1.0-29-render.png",
+          "blockId": "YVCHd5aNVo3Yiix65MHciS2jnKf",
+          "token": "VlsMb5m71oNwdgxzrkLc2CiynMb"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-29-photo.png",
+          "blockId": "CZ0qdXT32oZOEqxQG3IcFKRsnmf",
+          "token": "Dv7rbvADxorRQhxEMP1c0LRPnGb"
+        }
+      ]
+    },
+    {
+      "si": "SI1.0",
+      "tableId": "XSHEdpGHYo41PUxyELmcPbJ8nvf",
+      "row": 30,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#VED1dtZHXoV06LxbJt8c07MPnaf",
+      "revision": 4095,
+      "name": "Snap 支架",
+      "product": "Snap",
+      "group": "standard",
+      "status": "",
+      "units": ["Snap"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI1.0-30-photo.png",
+          "blockId": "NObId79wyoXo9xx6o0ScIxVMnDc",
+          "token": "AZMAbhBbNoCJn4xbWxYcYPnQnub"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 2,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Aiv7digh8oZwPGxe8XOcEHXinNb",
+      "revision": 4095,
+      "name": "场景托盘（AG）",
+      "product": "AG",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-AG"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-2-render.png",
+          "blockId": "J6YZdVolRoKaY5xVG1Oc3ZI0n0f",
+          "token": "UOtFba9KqoWhWzxe01IcjRZEnzg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-2-photo.png",
+          "blockId": "WgLUdPoXMoLZ4CxnbTOcPBJjnLh",
+          "token": "Wh9gbaoQHoKZXHxmkB5c4PYqnQP"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 3,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NyMsd6P5qo57NVxgHIfcMOYZnEb",
+      "revision": 4095,
+      "name": "场景托盘（Luna Ultra）",
+      "product": "Luna",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-Luna Ultra"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-3-render.png",
+          "blockId": "QYNkdtw6wohodnxOrNMcMdDunHg",
+          "token": "IDfxbRWnuovbf4x6vqUcAmxwnSf"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-3-photo.png",
+          "blockId": "PObFd68hWoi4vGxelNHcKbndnEb",
+          "token": "OyUubRdJEoHGWIxjVStcqCnHnHf"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 4,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#BaGPdQIpbo1pF9xQMeFcOBM8ntf",
+      "revision": 4095,
+      "name": "场景托盘（X6）",
+      "product": "X6",
+      "group": "scene",
+      "status": "",
+      "units": ["scene-X6"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-4-render.png",
+          "blockId": "YbDHd5N19oGImfxWvDvccHrHneg",
+          "token": "MwXVb3RHvoHKKbxHz9KcbX7nndG"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-4-photo.png",
+          "blockId": "As1Qd52Reo96VGxbET2c3azanH7",
+          "token": "TSEFbzX8joerg7xEcwacnMh3nvf"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 5,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Uv4IdqfmconKoexNR9tchZsWnIc",
+      "revision": 4095,
+      "name": "场景托盘（X6）优化版",
+      "product": "X6（壹方城打样）",
+      "group": "scene",
+      "status": "打样，未确认铺设至门店",
+      "units": ["scene-X6-opt"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-5-render.png",
+          "blockId": "J6bbdB4mvoqvicxwpjxc1dfcnzf",
+          "token": "TrIabT6PwoDIwKxdaRAcLRmjnZb"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-5-photo.png",
+          "blockId": "TqiMdoRwsoBbAsx9f91clFZrnJd",
+          "token": "M9yobQhE8oLrWWx1t5scBe37nNe"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 6,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#ViYVdBsNKoTJRXxJewbczvvxnMb",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（AG）",
+      "product": "AG",
+      "group": "standard",
+      "status": "",
+      "units": ["AG"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-6-render.png",
+          "blockId": "FRcEdiN5YowdNOx7EtTcVPaJnNg",
+          "token": "LPX4bUXJOon86HxG7NScgiAInOe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-6-photo.png",
+          "blockId": "M0RQdICLjorAUwx8JqFchJtnnde",
+          "token": "MPdlbVrZHoqac6xxpSacBOvznQc"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 7,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#EWIRdENumovGZvxVriKcFVlWnCj",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（AG Pac neo）",
+      "product": "AG Pac neo",
+      "group": "standard",
+      "status": "",
+      "units": ["AG Pac Neo"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-7-photo.png",
+          "blockId": "KrRTdGSn9obF0pxX1YacAC8Qnzg",
+          "token": "BsHZbq4gpoaNeXxQMNccXg3NnLg"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 8,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NWlSdq9tzozHQZxoCYec1WatnJg",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（AG Pac air）",
+      "product": "AG Pac air",
+      "group": "standard",
+      "status": "",
+      "units": ["AG Pac Air"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-8-render.png",
+          "blockId": "JnDjdH32bo8RRbxoyl8cephvnYb",
+          "token": "LatbbJy31oG4JtxaClIcHXOPn9g"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-8-photo.png",
+          "blockId": "AfmTd3rlUo9aVQxAaEHc13tNnCd",
+          "token": "EdvnbZBWOo1r9YxFKawclUc0nae"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 9,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#PWN1dddAko8V3txOgrJcahJCnbd",
+      "revision": 4095,
+      "name": "SI2.0 普通托盘A(Luna )双机位",
+      "product": "Luna",
+      "group": "standard",
+      "status": "",
+      "units": ["Luna A"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-9-render.png",
+          "blockId": "GyYLdjBlLoIKBVxx0JKcG6OjnWf",
+          "token": "ACLHbg1lWobIBGxcRswcWLAonPb"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-9-photo.png",
+          "blockId": "UciNdsAaZoR8WyxxgJJcoFjcnhh",
+          "token": "DRN7b5rXiozhHKxW9YTcURGhnqe"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 10,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#Z9FHdQJQfoVdRJxQHUmcU6uhnDg",
+      "revision": 4095,
+      "name": "SI2.0 普通托盘B(Luna )",
+      "product": "Luna",
+      "group": "standard",
+      "status": "",
+      "units": ["Luna B"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-10-render.png",
+          "blockId": "I9iYdrfnDoJsHWx4qZ9c3goQnfg",
+          "token": "VDnKbC621oxxOEx4u4Qcci0znIg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-10-photo.png",
+          "blockId": "Gydydb6X0oaK9ExkooYcmFmYn9b",
+          "token": "LWyqbZ1sAomGFIxStNGcInf8n3f"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 11,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#S5n4ddl07oS0uAxxBgBcxXtmnlc",
+      "revision": 4095,
+      "name": "SI2.0 普通托盘C(Luna )",
+      "product": "Luna",
+      "group": "standard",
+      "status": "",
+      "units": ["Luna C"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-11-render.png",
+          "blockId": "MsdsdFJipowlMFxUMOmcFmQ4nNe",
+          "token": "MjJlbfcBiozBalxwfn7cJT1gnjc"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-11-photo.png",
+          "blockId": "FCQUdFNQ4o83CnxpfNOcL6UenOe",
+          "token": "MSFBbez6oo38DOxewSccIiLLnxg"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 12,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#QKsjdwJDfoXYgBxuWRKc1tM2nbd",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（X&Ace）双机位托盘",
+      "product": "X系列（X6、X5、X4air）",
+      "group": "standard",
+      "status": "",
+      "units": ["X5+X4 Air"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-12-render.png",
+          "blockId": "JH7cd4OJhoKXKnxhOEucE0GtnNc",
+          "token": "Re02bYBSvo2qwTxTztscUiHJnKd"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-12-photo.png",
+          "blockId": "AYEFd2DZmoiansxBUebc0uh2nre",
+          "token": "Gng2bU4fOoOzYEx3rMJc8EwVnzb"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 13,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#LxeMd8URZoBjVhxuVOgc07cxnuf",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（X&Ace）单机位托盘",
+      "product": "X系列（X6、X5、X4air）",
+      "group": "standard",
+      "status": "",
+      "units": ["X4 Air", "X5", "X6"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 3,
+      "expectedVariants": 3,
+      "afterVariants": 3,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-13-render.png",
+          "blockId": "My1AdL6LeoklZmx8UANc7kMcnq5",
+          "token": "P5bGbkb8PoYYALxkpvwclP6vnBc"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-13-photo.png",
+          "blockId": "M0zfdQdVboyobrx9oXXcww6QngC",
+          "token": "ArXebXPT1oRGA2xo4mHcqWgpnXe"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 14,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#LxeMd8URZoBjVhxuVOgc07cxnuf",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（X&Ace）单机位托盘",
+      "product": "Ace系列(Ap2、Ap1)",
+      "group": "standard",
+      "status": "",
+      "units": ["AP2", "AP1"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 2,
+      "afterVariants": 2,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-14-render.png",
+          "blockId": "A9QudAUnioV9kdxalHccL6aanAe",
+          "token": "FJilbMFQzopz58xEDOmcAaWRnmd"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-14-photo.png",
+          "blockId": "WM0Ld2BbWobZCfxLP6ccab1BnZb",
+          "token": "I3MlbeJB2oPrElxvAgCchXAYnEb"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 15,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NfYrdbPxPo3oZjxd89DcpxWJnMg",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Ace大师/街拍）",
+      "product": "Ace街拍",
+      "group": "standard",
+      "status": "",
+      "units": ["AP2 街拍"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-15-render.png",
+          "blockId": "ZGrodAZ8Rol8W4xIBurc5tEynFf",
+          "token": "Ug1Ubb9dyowZn1xEpBAcfqeFnHg"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-15-photo.png",
+          "blockId": "Ua4CdP7RhoIqz3xP4yoczyZ4nwd",
+          "token": "E4eCbRNm2ouMAWxxpsDcDVeDnQb"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 16,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NfYrdbPxPo3oZjxd89DcpxWJnMg",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Ace大师/街拍）",
+      "product": "Ace大师（玩拍套装）",
+      "group": "standard",
+      "status": "",
+      "units": ["AP2 大师"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-16-render.png",
+          "blockId": "BoIddNmmVooKeTxxDvhcZb0xnKg",
+          "token": "N8ZbbqwWZo2bj3xq751ceFRDnOe"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-16-photo.png",
+          "blockId": "V5l6dHc2YoTSTaxorNxc2HgTnqe",
+          "token": "ZNElbO2UloQhvSxbzMHcmn2Wn8c"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 17,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#MGakdbz4doUJW6xTgbDciwXanrc",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Go 3s ）",
+      "product": "Go3s",
+      "group": "standard",
+      "status": "",
+      "units": ["GO3S"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-17-render.png",
+          "blockId": "EbVhdswMXovbSHxDxERcDDgVnGe",
+          "token": "GKWJbNfPgokzt3xYJ8uco2JsnUf"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-17-photo.png",
+          "blockId": "QmwUdsknSogT4Ixwxj6cSCqknqb",
+          "token": "LdETbyQaeoevqYxo5Qec4rm2nRf"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 18,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#CZ6WdHXyHoV37wxpebncW618nJf",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Go 3s 复古 ）",
+      "product": "Go3s复古套装",
+      "group": "standard",
+      "status": "",
+      "units": ["GO 3S 复古"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-18-render.png",
+          "blockId": "LOTDdzXW0oKRP2xkokccfmRwnRd",
+          "token": "VzRJbWyWNoefCEx1xH0cOsownKc"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-18-photo.png",
+          "blockId": "Rpedd3UMDo3jsJxzR4QcrmBYnVf",
+          "token": "SydNbm16OovzFCxrL4DcTcqMn5e"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 19,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#GMKTd1I6YopRNuxC19Wc3RubnCe",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Go Ultra）",
+      "product": "Go Ultra",
+      "group": "standard",
+      "status": "",
+      "units": ["GO Ultra"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-19-render.png",
+          "blockId": "QqIUdRakKosPxuxj7D7c2Kptn4c",
+          "token": "KgfMbx5m7oBAUFxSJOBcsjhvn7e"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-19-photo.png",
+          "blockId": "JF2HdfiuIo8xUYxEdp3cR5w9nFg",
+          "token": "MpOwb0cDdoBQH8xfmZXcYMgRncg"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 20,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#CBmtdClVYoqLQaxyzH2ck1g2nFh",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Go Ultra & Hello Kitty）",
+      "product": "Go Ultra & Hello Kitty",
+      "group": "standard",
+      "status": "",
+      "units": ["GO Ultra HK"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-20-render.png",
+          "blockId": "DTZTdVWDXootoBxG2izccnYgnod",
+          "token": "QpFTbXazVoZqgtx1SZ6cTnjDn3f"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-20-photo.png",
+          "blockId": "VdxDdyL26odC4ExW5rCcMxn8nwe",
+          "token": "OPjyb1JproAEBqxYjCpcO0MznVe"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 21,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#NSn9df3HFoNcJ9xg3rncE7TQnWb",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Flow&Link）",
+      "product": "Flow",
+      "group": "standard",
+      "status": "",
+      "units": ["Flow2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-21-render.png",
+          "blockId": "Lm8mdSD0Po94xwxJe1wcpndXn9d",
+          "token": "NqvYbwKuHobkgVxbL7GcV9UYn6a"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-21-photo.png",
+          "blockId": "JWGYdJW1boYqKAxOLTPcTBh7nTb",
+          "token": "DfCMbnideodEbkxVtQkc55qCnEf"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 22,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#EPrEdtznjobbrqxO8iwcMxTCnSd",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Flow&Link）",
+      "product": "Link",
+      "group": "standard",
+      "status": "",
+      "units": ["Link2"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-22-render.png",
+          "blockId": "HIgrd7jMBo0UXXxySm9cgUGYnOg",
+          "token": "GnTlbMwj0olK4SxHUdVca9swnMd"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-22-photo.png",
+          "blockId": "LMVtdnpvUoQ1PHx7xeocnPsDnOh",
+          "token": "JTdBbxOZQoM6eGxxgzAcWfWDn0d"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 23,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#QuuwdNepAocuysxjicfcJwHen9d",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Mic Pro）",
+      "product": "Mic Pro",
+      "group": "standard",
+      "status": "",
+      "units": ["Mic Pro"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 1,
+      "afterSpecifications": 1,
+      "beforeVariants": 1,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "render",
+          "file": "托盘照片/核对20261030/SI2.0-23-render.png",
+          "blockId": "Pf92dZiSIoq8yFxvEiAc0P4Jnsg",
+          "token": "LiFtbxT1nordO3x1dYacuGmsnDf"
+        },
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-23-photo.png",
+          "blockId": "HP8Idn6P3okpxwxy7FCctW0MnWg",
+          "token": "IhEgbNJY5oBGlexPemccqEi9nCh"
+        }
+      ]
+    },
+    {
+      "si": "SI2.0",
+      "tableId": "Sa4qdcqGko405Ix8dBPc1m3Lnte",
+      "row": 24,
+      "source": "https://arashivision.feishu.cn/docx/HNS2dxrKPo1Sgex3LxTcD8IwnPf#B4sLdgpaIoOhbVxBnJNcAE0vnTf",
+      "revision": 4095,
+      "name": "SI2.0普通托盘（Snap）",
+      "product": "Snap(打样，未铺设至门店)",
+      "group": "standard",
+      "status": "打样，未确认铺设至门店",
+      "units": ["Snap"],
+      "expectedSpecifications": 1,
+      "beforeSpecifications": 0,
+      "afterSpecifications": 1,
+      "beforeVariants": 0,
+      "expectedVariants": 1,
+      "afterVariants": 1,
+      "expectedTraySlotsPerChoice": 1,
+      "images": [
+        {
+          "kind": "photo",
+          "file": "托盘照片/核对20261030/SI2.0-24-photo.png",
+          "blockId": "Mvhlda575oh7vOxTiCDcowClnub",
+          "token": "Ks2BbcpOZodVn4xoJoKc4M9Rn48"
+        }
+      ]
+    }
+  ],
+  "moduleAudit": [
+    {
+      "si": "SI2.0",
+      "seat": "2-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 7,
+      "previous": ["A2", "D1", "D8", "A4"],
+      "modules": ["A4", "D13", "D12", "A2"],
+      "beforeCount": 4,
+      "expectedCount": 4,
+      "afterCount": 4,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "2-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 7,
+      "previous": ["A1", "A3", "C1"],
+      "modules": ["A7", "C4", "A8"],
+      "beforeCount": 3,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": ["C3", "D8"],
+      "modules": ["D16", "D13", "D12"],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": ["C2", "D7"],
+      "modules": ["A7", "C4", "A8"],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "3-3",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 8,
+      "previous": ["D1", "D4", "A3", "A4"],
+      "modules": ["A2", "D4", "D7", "A4"],
+      "beforeCount": 4,
+      "expectedCount": 4,
+      "afterCount": 4,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-1",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": ["C3", "D8"],
+      "modules": ["D9", "D16", "D13"],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-2",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": ["C2", "D1"],
+      "modules": ["A7", "C4", "A8"],
+      "beforeCount": 2,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-3",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": ["D7", "D6", "A3", "A4"],
+      "modules": ["D11", "D7", "D12"],
+      "beforeCount": 4,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    },
+    {
+      "si": "SI2.0",
+      "seat": "4-4",
+      "source": "https://arashivision.feishu.cn/slides/B3fssmdBzltcAvdhewPciYOJnUb",
+      "revision": 173,
+      "slide": 9,
+      "previous": ["D2", "D3", "D4"],
+      "modules": ["A3", "C1", "A2"],
+      "beforeCount": 3,
+      "expectedCount": 3,
+      "afterCount": 3,
+      "status": "discussion-opt-in"
+    }
+  ]
+}

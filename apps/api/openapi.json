@@ -21980,6 +21980,67 @@
                             "additionalProperties": false
                           }
                         },
+                        "catalog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "si": {
+                                "type": "string",
+                                "enum": [
+                                  "SI1.0",
+                                  "SI2.0"
+                                ]
+                              },
+                              "source": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 500
+                              },
+                              "row": {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 120
+                              },
+                              "group": {
+                                "type": "string",
+                                "enum": [
+                                  "scene",
+                                  "hero",
+                                  "standard"
+                                ]
+                              },
+                              "status": {
+                                "type": "string",
+                                "maxLength": 200
+                              },
+                              "units": {
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 60
+                                }
+                              }
+                            },
+                            "required": [
+                              "si",
+                              "source",
+                              "row",
+                              "name",
+                              "group",
+                              "status",
+                              "units"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
                         "modules": {
                           "type": "array",
                           "items": {
@@ -21999,6 +22060,10 @@
                                 "type": "string",
                                 "minLength": 1,
                                 "maxLength": 120
+                              },
+                              "note": {
+                                "type": "string",
+                                "maxLength": 500
                               }
                             },
                             "required": [
@@ -22048,6 +22113,24 @@
                                   "minLength": 1,
                                   "maxLength": 60
                                 }
+                              },
+                              "si": {
+                                "type": "string",
+                                "enum": [
+                                  "SI1.0",
+                                  "SI2.0"
+                                ]
+                              },
+                              "scheme": {
+                                "type": "string",
+                                "enum": [
+                                  "standard",
+                                  "draft-2026"
+                                ]
+                              },
+                              "note": {
+                                "type": "string",
+                                "maxLength": 500
                               }
                             },
                             "required": [
@@ -23205,6 +23288,13 @@
                                 "right"
                               ]
                             },
+                            "moduleScheme": {
+                              "type": "string",
+                              "enum": [
+                                "standard",
+                                "draft-2026"
+                              ]
+                            },
                             "slots": {
                               "default": {},
                               "type": "object",
@@ -24203,6 +24293,13 @@
                                 "right"
                               ]
                             },
+                            "moduleScheme": {
+                              "type": "string",
+                              "enum": [
+                                "standard",
+                                "draft-2026"
+                              ]
+                            },
                             "slots": {
                               "default": {},
                               "type": "object",
@@ -25072,6 +25169,13 @@
                               "right"
                             ]
                           },
+                          "moduleScheme": {
+                            "type": "string",
+                            "enum": [
+                              "standard",
+                              "draft-2026"
+                            ]
+                          },
                           "slots": {
                             "default": {},
                             "type": "object",
@@ -25841,6 +25945,13 @@
                               "enum": [
                                 "left",
                                 "right"
+                              ]
+                            },
+                            "moduleScheme": {
+                              "type": "string",
+                              "enum": [
+                                "standard",
+                                "draft-2026"
                               ]
                             },
                             "slots": {
@@ -27024,6 +27135,13 @@
                               "enum": [
                                 "left",
                                 "right"
+                              ]
+                            },
+                            "moduleScheme": {
+                              "type": "string",
+                              "enum": [
+                                "standard",
+                                "draft-2026"
                               ]
                             },
                             "slots": {
@@ -28239,6 +28357,13 @@
                                 "right"
                               ]
                             },
+                            "moduleScheme": {
+                              "type": "string",
+                              "enum": [
+                                "standard",
+                                "draft-2026"
+                              ]
+                            },
                             "slots": {
                               "default": {},
                               "type": "object",
@@ -29416,6 +29541,13 @@
                             "right"
                           ]
                         },
+                        "moduleScheme": {
+                          "type": "string",
+                          "enum": [
+                            "standard",
+                            "draft-2026"
+                          ]
+                        },
                         "slots": {
                           "default": {},
                           "type": "object",
@@ -29967,6 +30099,13 @@
                           "right"
                         ]
                       },
+                      "moduleScheme": {
+                        "type": "string",
+                        "enum": [
+                          "standard",
+                          "draft-2026"
+                        ]
+                      },
                       "slots": {
                         "default": {},
                         "type": "object",
@@ -30086,6 +30225,13 @@
                           "enum": [
                             "left",
                             "right"
+                          ]
+                        },
+                        "moduleScheme": {
+                          "type": "string",
+                          "enum": [
+                            "standard",
+                            "draft-2026"
                           ]
                         },
                         "slots": {
