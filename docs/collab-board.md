@@ -36,6 +36,7 @@
 
 | 日期 | 谁 | 分支 / PR | 目的 | 触及的共用文件 | 占用迁移号 | 状态 |
 |---|---|---|---|---|---|---|
+| 2026-11-02 | Codex | `codex/collab-board-20261102` | 接入并行协作规则，核对认领和收工记录 | 仅 `docs/collab-board.md`；不占用第 4 节业务热点 | 无 | 登记后进行看板维护 |
 | 2026-11-02 | Codex | `feat/recognition-openings` / #156 | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评 | 无（限 recognition、tools/recognition、docs/recognition-*） | 无 | 草稿评审中 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
