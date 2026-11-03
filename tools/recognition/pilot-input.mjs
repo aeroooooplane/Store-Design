@@ -225,8 +225,13 @@ export async function inspectInput({ bundle, resources, sample: s, manifest }) {
   let pageDiff, previewDiff
   try {
     need(src.numPages === s.source.pageCount && extracted.numPages === 1, '原PDF页数或提页页数不符')
-    const original = await renderPdf(src, s.source.page),
-      selected = await renderPdf(extracted, 1)
+    // 与交付预览使用同一页像素密度；低分辨率渲染后放大会改变细线/字体栅格，
+    // 不能把这种采样差异误报成源页内容变化。旋转前宽度由矩阵尺度确定。
+    const renderWidth = Math.ceil(
+      h.render.pageSizePt[0] * Math.hypot(h.render.pageToPreview[0], h.render.pageToPreview[1]),
+    )
+    const original = await renderPdf(src, s.source.page, renderWidth),
+      selected = await renderPdf(extracted, 1, renderWidth)
     need(
       Math.abs(original.widthPt - h.render.pageSizePt[0]) < 0.1 &&
         Math.abs(original.heightPt - h.render.pageSizePt[1]) < 0.1,
@@ -249,14 +254,15 @@ export async function inspectInput({ bundle, resources, sample: s, manifest }) {
     }
     crop.width = Math.min(crop.width, original.widthPx - crop.left)
     crop.height = Math.min(crop.height, original.heightPx - crop.top)
-    const expected = await sharp(original.png)
-      .extract(crop)
+    // 分成两个管线，避免sharp将旋转提前，导致纵向原页按横向尺寸裁切越界。
+    const cropped = await sharp(original.png).extract(crop).png().toBuffer()
+    const expected = await sharp(cropped)
       .rotate(h.render.rotationCW)
       .resize(h.render.widthPx, h.render.heightPx)
       .png()
       .toBuffer()
     previewDiff = await imageDifference(expected, files.get('source/preview.png'))
-    need(previewDiff <= 0.03, '预览与声明裁切/旋转不一致，需人工核对')
+    need(previewDiff <= 0.03, '预览与声明裁切/旋转不一致，需人工核对；均差=' + previewDiff)
   } finally {
     await src.destroy()
     await extracted.destroy()

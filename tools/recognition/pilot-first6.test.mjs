@@ -10,6 +10,7 @@ import { quality } from './pilot-quality.mjs'
 import { scene } from './pilot-render.mjs'
 import { sha256 } from './pilot-contract.mjs'
 import { catalogReader } from './pilot-assets.mjs'
+import sharp from 'sharp'
 
 describe('首6输入、校正质检与出图（纯合成）', () => {
   let root, args, m, s, input, plan, bom, report
@@ -79,6 +80,40 @@ describe('首6输入、校正质检与出图（纯合成）', () => {
       const h = structuredClone(input.h)
       edit(h)
       assert.throws(() => validateHandoff(h, s, m))
+    }
+  })
+  it('90和270度真实旋转预览按原页先裁后转，不发生裁切越界', async () => {
+    const dir = path.join(args.bundle, s.store_id),
+      hp = path.join(dir, 'handoff.json'),
+      pp = path.join(dir, 'source/preview.png')
+    const hb = await readFile(hp),
+      pb = await readFile(pp)
+    try {
+      for (const angle of [90, 270]) {
+        const bytes = await sharp(pb).rotate(angle).png().toBuffer(),
+          h = JSON.parse(hb)
+        h.render = {
+          ...h.render,
+          rotationCW: angle,
+          widthPx: 800,
+          heightPx: 1200,
+          pageToPreview: angle === 90 ? [0, 2, -2, 0, 800, 0] : [0, -2, 2, 0, 0, 1200],
+        }
+        h.dimensions = []
+        h.files.find((f) => f.path === 'source/preview.png').sha256 = sha256(bytes)
+        await writeFile(pp, bytes)
+        await writeFile(hp, JSON.stringify(h))
+        const r = await inspectInput({
+          bundle: args.bundle,
+          resources: args.resources,
+          sample: s,
+          manifest: m,
+        })
+        assert.ok(r.checks.previewDifference < 0.03)
+      }
+    } finally {
+      await writeFile(pp, pb)
+      await writeFile(hp, hb)
     }
   })
   it('独立量尺必须不同且误差不超过1%', () => {
