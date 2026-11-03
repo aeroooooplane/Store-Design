@@ -2,7 +2,7 @@
 
 本工具承接 [交接契约 v1](recognition-pilot-contract-v1.md) 的 B/C 步骤。2026-11-03 用户已将本试点全部交给 Codex：资料执行者制作 A/B，校正执行者独立复核来源并制作 C，用户处理集中歧义和抽审。旧契约中的 Claude 角色名称不再表示必须等 Claude 交付；数据字段与 45/48 隔离要求继续有效。
 
-当前实现是可运行的离线审核工具，不是自动识别引擎，也不是编辑器完整验收。它接收已制作的 `plan.json` / `bom.json`，检查输入与几何/计数，生成原图、生成平面和叠图。真实资料未接收前，只运行合成演示，不能报告真实6家完成。
+当前实现是可运行的离线审核工具，不是自动识别引擎，也不是编辑器完整验收。它接收已制作的 `plan.json` / `bom.json`，检查输入与几何/计数，生成原图、生成平面和叠图。已接收24家冻结名单及首6真实资料，生成审核草稿；实际状态见同目录进度记录，不能把出图报告为完整验收。
 
 ## 运行
 
@@ -40,6 +40,10 @@ node tools/recognition/pilot-first6.mjs --manifest <输入>/pilot-manifest.json 
 
 量尺至少需要一条 `calibration` 和一条不同端点的 `independent-check`；两者必须来自不同的原图尺寸标注。独立尺寸误差超过1%或缺证据时阻塞，不能用同一尺寸反复命名充数。代码能拒绝相同/反向端点，不能判断文字证据是否被人为重复利用，需交叉核对。
 
+### 追加量尺证据
+
+原B包只读，通过 `node tools/recognition/pilot-enrich-input.mjs --bundle <原B包> --dimensions <六家尺寸索引.json> --out <全新B包>` 创建增强副本。保留原handoff、尺寸证据和补充工具原字节；核对身份/源SHA/原页及文件哈希。不能覆写原B或把缺失BOM改成已确认，量尺记录保持 `humanReviewed:false`。
+
 ## C校正包
 
 每店在 `<C校正根>/<store_id>/` 放 `plan.json` 和 `bom.json`。不能直接把旧档案中的 layout 复制为工作台格式；未知字段须显式映射。原JSON完整保留；若工作台schema会剥离字段，质检报 `unmapped_field`，不宣称无损转换。
@@ -63,6 +67,16 @@ node tools/recognition/pilot-first6.mjs --manifest <输入>/pilot-manifest.json 
 `bom.json` 使用 `{store_id,rows:[...]}`；每行字段为 `id/assetId/label/unit/quantity/itemIds/sourceRefs`。单位只接收“件/组”，组须给正整数 `componentsPerUnit`。实例恰好计数一次，型号一致；每行有原图/BOM证据ID。未识别型号可保留 null 及原文，但不能自动通过；不能为了匹配目录强配型号。
 
 完整可运行样例由 `pilot-first6-fixture.mjs` 生成，包含B/C包和各自指纹。示例名字、身份索引、图纸与尺寸全为合成，不可复制为真实门店证据。
+
+### 原图辅助注记
+
+`sourceAnnotations.items` 按实例ID记录原图 `bodyHeightMm`、`sourceRefs` 与 `includedComponents:[{kind,label,count}]`；`sourceSymbols` 记录组合内凳子的 `id/ownerItemId/kind/label/polygon/sourceRefs`。BOM行须给相同 `includedComponents`。这些轮廓是原图辅助证据，不新增模型实例，不把组合凳子重复计件；数量不一致即阻塞。源桌柜体高与GLB含陈列总高分别显示，不能互相覆盖。
+
+未知安装标高留空，不填写推测的1m。内置 `asset-90000003` 灯箱墙贴直接使用共享资产定义，允许其既定可调尺寸，不要求GLB。墙面安装、真实模型正面和全部硬装/标识仍需原图核对。
+
+`unresolved` 可用 `resolutionOwner:'agent'|'user'` 标明责任；未指定按代理查证处理。资产缺失、原立面尚未核对属于Codex制作待办。只把源证据仍冲突的业务选择列给用户。
+
+可选 `annotation-source.json`、`dimension-source.json`、`cross-review.json` 原字节复制到逐店 `correction-evidence/`；可选 `build-drafts.mjs` 复制到provenance，均列入输出哈希，不执行随包脚本。
 
 ## 质检与产物
 
@@ -106,6 +120,6 @@ pnpm check
 pnpm format:check
 ```
 
-现有CI的契约入口引入首6测试，不修改CI配置。33项测试包括20项A契约和13项B/C回归：完整合成6家、未知型号、坐标变换、独立量尺、BOM/真实尺寸、旧字段丢失、转换记录、曲折入口、篡改原图、中文PDF、审核链接/逐文件哈希、缺校正保留分母及禁止覆盖。合成结果预期：生成6、自动检查通过5、未知型号阻塞1、真实完成0。真实校正另按同一流程运行和对图，不用这组计数代替。
+现有CI的契约入口引入首6测试，不修改CI配置。38项测试包括20项A契约和18项B/C回归：完整合成6家、未知型号、坐标变换、独立量尺、BOM/真实尺寸、旧字段丢失、转换记录、曲折入口、篡改原图、中文PDF、审核链接/逐文件哈希、缺校正保留分母及禁止覆盖。合成结果预期：生成6、自动检查通过5、未知型号阻塞1、真实完成0。真实校正另按同一流程运行和对图，不用这组计数代替。
 
-2026-11-03 本地结果：33项工具测试、`pnpm check`（761项：shared 255、database 7、web 302、api 197）及 `pnpm format:check` 通过。合成PDF最新渲染已检查中文、尺寸避让及图例；全部审核页文件链接和输出哈希通过自动校验。浏览器安全策略拒绝 `file://` 导航，本轮没有浏览器交互冒烟结果，不把文件完整性测试说成浏览器验收。真实B/C尚未接收或执行，不能据这些测试报告首6完成。
+2026-11-03 本地结果：38项工具测试、`pnpm check`（761项：shared 255、database 7、web 302、api 197）及 `pnpm format:check` 通过。合成PDF最新渲染已检查中文、尺寸避让及图例；全部审核页文件链接和输出哈希通过自动校验。浏览器安全策略拒绝 `file://` 导航，本轮没有浏览器交互冒烟结果，不把文件完整性测试说成浏览器验收。真实B/C已执行并生成6家审核草稿，全部仍blocked；通过测试不代表这些图纸已完整验收，见 [逐店进度](recognition-pilot-first6-progress-20261103.md)。
