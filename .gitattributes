@@ -12,6 +12,8 @@ database/** text=auto eol=lf
 /.prettierignore text eol=lf
 /.env.example text eol=lf
 
+# These types go to Git LFS wherever they appear. The GitHub LFS quota is used up (2026-11-03), so pushing new files
+# of these types fails: keep samples and assets in the OneDrive 资源库 (docs/collab-board.md section 7).
 *.pdf filter=lfs diff=lfs merge=lfs -text
 *.skp filter=lfs diff=lfs merge=lfs -text
 *.pptx filter=lfs diff=lfs merge=lfs -text
@@ -21,6 +23,9 @@ database/** text=auto eol=lf
 *.obj filter=lfs diff=lfs merge=lfs -text
 *.blend filter=lfs diff=lfs merge=lfs -text
 *.ai filter=lfs diff=lfs merge=lfs -text
+
+# 资源库 has left Git (a junction to OneDrive, ignored as a whole), so its rules below match no tracked file. They stay
+# because `git checkout <old tag> -- <path>` applies the current attributes when restoring a single file from history.
 
 # Preserve byte-level checksums in packaged assets and audit receipts.
 资源库/07_平面简图/** -text

@@ -36,7 +36,7 @@ git ls-tree -r --name-only archive/pre-cleanup-20261013 -- docs         # 列出
 
 已删除且不需要恢复：`资源库/00_资源索引/历史目录/` 下的两张飞书授权二维码（已过期，用户 2026-10-13 确认）。
 
-原地保留：`tools/training/`（被 `tools/store-archive/register_legacy.py` 统计文件数）、`tools/data-cleaning/`、`output/图纸*-20261008/`（门店图纸整理在用）。
+原地保留：`tools/training/`（被 `tools/store-archive/register_legacy.py` 统计文件数）、`tools/data-cleaning/`、`output/图纸*-20261008/`（门店图纸整理在用；2026-11-03 起只保留其中被引用的 `GitHub实体可用图纸-358份.txt`，见文末）。
 
 ## 第一代网页 demo/（批次 4）
 
@@ -45,3 +45,25 @@ git ls-tree -r --name-only archive/pre-cleanup-20261013 -- docs         # 列出
 - 仍在使用的 SketchUp → GLB 转换、压缩、复核脚本已原样移到 `tools/su-convert/`。
 - 旧版项目 JSON v2 的导入由 `apps/api/src/modules/exchange/legacy.ts` 的 zod 结构定义，不依赖 demo。原格式实现在标签中的 `demo/src/project-import.js`。
 - 随之失效、未单独处理的历史脚本：`tools/training/` 里依赖 `demo/node_modules/@playwright/test` 或写入 `demo/src/generated` 的脚本（实验已结束，目录因门店档案登记而原地保留）。
+
+## 2026-11-03 代码瘦身（阶段 2）
+
+代码瘦身盘点见 [prune-review-20261102](../prune-review-20261102.md)，盘点后从 main 删除了下列不再使用的文件。删除前的完整版本保存在附注标签 `archive/pre-prune-20261102`（指向合并 PR #172 的 68246663）：
+
+```powershell
+git fetch origin tag archive/pre-prune-20261102
+git show "archive/pre-prune-20261102:output/图纸核对记录索引-20261008.txt"      # 只查看
+git checkout archive/pre-prune-20261102 -- "output/图纸补传核对-20261008"        # 恢复到工作区
+git ls-tree -r --name-only archive/pre-prune-20261102 -- output                  # 列出当时的文件
+```
+
+| 路径（`output/` 下） | 内容 | 删除依据 |
+|---|---|---|
+| `图纸上传核对-20261008/` 中除 `GitHub实体可用图纸-358份.txt` 外的 5 个 | 10-08 图纸上传核对报告、已收录与未收录清单、待补齐 60 份清单、完整核对数据 | 没有代码、脚本或文档引用。`register_legacy.py:66` 和 `store-drawing-archive-plan.md` 只引用 358 份清单，它原地保留 |
+| `图纸补传核对-20261008/`（5 个） | 10-08 补传 60 份 PDF 的核对与上传结果 | 同上；补传的 PDF 已进入 main 历史（d1cc7c5） |
+| `图纸补传完成复核-20261008/`（5 个） | 10-08 补传完成后的复核 | 同上 |
+| `图纸核对记录索引-20261008.txt` | 以上三组记录的索引 | 同上 |
+
+`docs/design/pr1`–`pr7` 的 UI 改版截图是否归档，等 Codex 在看板 Q7 答复后再定。
+
+GitHub 的 LFS 额度已用完（见看板第 7 节），从这个标签恢复上表这些普通文件不受影响；但要恢复旧标签里由 LFS 管理的 PDF、模型等，需要先下载 LFS 对象，额度恢复前可能下载不了。
