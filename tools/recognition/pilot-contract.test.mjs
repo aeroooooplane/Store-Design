@@ -1,4 +1,5 @@
 import test from 'node:test'
+import './pilot-first6.test.mjs'
 import assert from 'node:assert/strict'
 import { mkdtemp, mkdir, writeFile, readFile, symlink, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
