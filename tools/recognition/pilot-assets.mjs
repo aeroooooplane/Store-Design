@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { safePath, need } from './pilot-input.mjs'
 import { sha256 } from './pilot-contract.mjs'
+import { WALL_ART_ID, wallArtAsset } from '../../packages/shared/src/catalog/wall-art.ts'
 import { roundM } from '../../packages/shared/src/units.ts'
 
 // 与工作台一致优先取网页转换尺寸，不能用源SU外框替代实际GLB尺寸。
@@ -14,6 +15,10 @@ export function catalogReader({ resources, model, bodies, lock }) {
     for (const id of new Set((layout?.items ?? []).map((i) => i.assetId).filter(Boolean))) {
       if (cache.has(id)) {
         assets.set(id, cache.get(id))
+        continue
+      }
+      if (id === WALL_ART_ID) {
+        assets.set(id, wallArtAsset())
         continue
       }
       const a = model.assets.find((a) => a.asset_id === id)

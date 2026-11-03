@@ -205,6 +205,56 @@ describe('首6输入、校正质检与出图（纯合成）', () => {
       catalogReader({ resources: args.resources, model, bodies: {}, lock }).forLayout(plan.layout),
     )
   })
+  it('原图组合符号与BOM一致，源桌体高不覆盖模型总高', () => {
+    const p = structuredClone(plan),
+      b = structuredClone(bom),
+      id = p.layout.items[0].id
+    const refs = p.evidence.items[id]
+    p.sourceSymbols = [
+      {
+        id: 'chair-1',
+        ownerItemId: id,
+        kind: 'stool',
+        label: '原图凳',
+        polygon: [
+          [1, 1],
+          [1.3, 1],
+          [1.3, 1.3],
+          [1, 1.3],
+        ],
+        sourceRefs: refs,
+      },
+    ]
+    p.sourceAnnotations = {
+      items: {
+        [id]: {
+          bodyHeightMm: 900,
+          includedComponents: [{ kind: 'stool', label: '高脚凳', count: 1 }],
+          sourceRefs: refs,
+        },
+      },
+    }
+    b.rows[0].includedComponents = [{ kind: 'stool', count: 1 }]
+    assert.equal(evaluate(p, b).status, 'needs_cross_check')
+    assert.equal(p.layout.items[0].h, plan.layout.items[0].h)
+    assert.equal(scene(p).shapes.filter((s) => s.stroke === '#5893ad').length, 1)
+    b.rows[0].includedComponents[0].count = 2
+    assert.ok(evaluate(p, b).issues.some((i) => i.code === 'component_count'))
+    p.sourceSymbols[0].ownerItemId = 'missing'
+    assert.ok(evaluate(p, b).issues.some((i) => i.code === 'source_annotations'))
+  })
+  it('系统灯箱墙贴不要求GLB，仍遵守共享可调尺寸契约', async () => {
+    const reader = catalogReader({
+      resources: args.resources,
+      model: { assets: [] },
+      bodies: {},
+      lock: { requiredFiles: {} },
+    })
+    const result = await reader.forLayout({ items: [{ assetId: 'asset-90000003' }] })
+    assert.equal(result.get('asset-90000003').placeable, true)
+    assert.equal(result.get('asset-90000003').footprint.d, 0.001)
+    assert.equal(reader.snapshots.size, 0)
+  })
   it('沿折线入口渲染实际边界片段而非跨角弦线', () => {
     const p = evaluate()
     p.space.entrances = [{ a: [4, 0], b: [5, 1], kind: 'main' }]

@@ -114,6 +114,15 @@ export async function runFirstSix(args) {
       const correctionRoot = await safePath(args.corrections, s.store_id),
         plan = await readJson(correctionRoot, 'plan.json'),
         bom = await readJson(correctionRoot, 'bom.json')
+      // 保留逐点描绘/量尺配套证据的原字节；只允许约定的JSON，不能混入任意输出路径。
+      for (const name of ['annotation-source.json', 'dimension-source.json', 'cross-review.json']) {
+        if ((await readdir(correctionRoot)).includes(name)) {
+          const bytes = await readFile(await safePath(correctionRoot, name))
+          JSON.parse(bytes.toString().replace(/^\uFEFF/, ''))
+          await mkdir(path.join(dest, 'correction-evidence'), { recursive: true })
+          await writeFile(path.join(dest, 'correction-evidence', name), bytes, { flag: 'wx' })
+        }
+      }
       const assets = await catalog.forLayout(plan.layout)
       const qa = quality(plan, bom, input, s, manifest, assets),
         { space, layout, ...record } = qa
@@ -167,7 +176,9 @@ export async function runFirstSix(args) {
         space &&
         layout &&
         !qa.issues.some((i) =>
-          ['boundary_not_simple', 'space_schema', 'layout_schema'].includes(i.code),
+          ['boundary_not_simple', 'space_schema', 'layout_schema', 'source_annotations'].includes(
+            i.code,
+          ),
         )
       ) {
         const rendered = await renderPlan(
@@ -240,12 +251,12 @@ export async function runFirstSix(args) {
   const qs = conflicts
     .map(
       (q) =>
-        `<article><h3>${escape(q.store_id + ' · ' + q.question)}</h3>${q.crop ? `<img class="crop" src="../${q.crop}" alt="歧义原图局部"/>` : '<p>缺有效局部证据，不可据此裁决。</p>'}<p>选项：${escape((q.options ?? []).join('；'))}</p><p>推荐：${escape(q.recommendation ?? '未提供')}</p></article>`,
+        `<article><h3>${escape(q.store_id + ' · ' + q.question)}</h3>${q.crop ? `<img class="crop" src="../${q.crop}" alt="歧义原图局部"/>` : '<p>缺有效局部证据，不可据此裁决。</p>'}<p>处理责任：${q.resolutionOwner === 'user' ? '需要用户裁决' : 'Codex继续查证/制作'}</p><p>选项：${escape((q.options ?? []).join('；'))}</p><p>推荐：${escape(q.recommendation ?? '未提供')}</p></article>`,
     )
     .join('')
   await writeFile(
     path.join(out, 'review/index.html'),
-    `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>首批6家原图与平面对照</title><style>body{font:16px/1.6 system-ui;background:#f5f6f7;color:#222;margin:24px auto;max-width:1500px;padding:0 20px}article{background:white;padding:24px;margin:24px 0;border-radius:12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0}img{max-width:100%;height:auto}figcaption{font-weight:700}.state{color:#9b5c00}.crop{max-height:420px}a{color:#235fa8}@media(max-width:850px){.pair{grid-template-columns:1fr}}</style><h1>${manifest.synthetic ? '合成演示 · 非真实6家' : '首批6家'}：原图与生成平面对照</h1><p>生成 ${report.generated}/6；自动检查通过 ${report.automaticChecksPassed}/6；完整验收 0/6。自动通过不等于交叉检查、用户抽审或训练准入。</p><p><a href="../quality-report.json">质量总表</a> · <a href="#conflicts">集中歧义 ${conflicts.length} 项</a> · <a href="../conflicts.json">歧义JSON</a></p>${cards}<h2 id="conflicts">集中歧义</h2>${qs || '<p>当前没有已提交的歧义条目，不代表真实图纸没有歧义。</p>'}</html>`,
+    `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>首批6家原图与平面对照</title><style>body{font:16px/1.6 system-ui;background:#f5f6f7;color:#222;margin:24px auto;max-width:1500px;padding:0 20px}article{background:white;padding:24px;margin:24px 0;border-radius:12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0}img{max-width:100%;height:auto}figcaption{font-weight:700}.state{color:#9b5c00}.crop{max-height:420px}a{color:#235fa8}@media(max-width:850px){.pair{grid-template-columns:1fr}}</style><h1>${manifest.synthetic ? '合成演示 · 非真实6家' : '首批6家'}：原图与生成平面对照</h1><p>生成 ${report.generated}/6；自动检查通过 ${report.automaticChecksPassed}/6；完整验收 0/6。自动通过不等于交叉检查、用户抽审或训练准入。</p><p><a href="../quality-report.json">质量总表</a> · <a href="#conflicts">查证与歧义 ${conflicts.length} 项</a> · <a href="../conflicts.json">歧义JSON</a></p>${cards}<h2 id="conflicts">待办与歧义（按处理责任区分）</h2>${qs || '<p>当前没有已提交的歧义条目，不代表真实图纸没有歧义。</p>'}</html>`,
   )
   const names = [
       'pilot-contract.mjs',
@@ -271,6 +282,11 @@ export async function runFirstSix(args) {
     ).trim(),
   )
   await mkdir(path.join(out, 'provenance'))
+  if ((await readdir(args.corrections)).includes('build-drafts.mjs'))
+    await copyFile(
+      await safePath(args.corrections, 'build-drafts.mjs'),
+      path.join(out, 'provenance/build-drafts.mjs'),
+    )
   for (const name of names)
     await copyFile(path.join(toolRoot, name), path.join(out, 'provenance', name))
   await writeFile(path.join(out, 'provenance/model-manifest.json'), modelBytes)

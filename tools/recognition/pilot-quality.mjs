@@ -92,6 +92,55 @@ export function quality(plan, bom, input, sample, manifest, assets) {
   const observations = new Set(input.evidence.observations.map((e) => e.id))
   const backed = (refs) =>
     Array.isArray(refs) && refs.length > 0 && refs.every((r) => observations.has(r))
+  const symbols = plan.sourceSymbols ?? []
+  const annotations = plan.sourceAnnotations?.items ?? {}
+  const symbolIds = new Set()
+  if (!Array.isArray(symbols)) add('source_annotations', '原图辅助符号须为数组')
+  else
+    for (const symbol of symbols) {
+      if (
+        !symbol.id ||
+        symbolIds.has(symbol.id) ||
+        !ly.success ||
+        !ly.data.items.some((i) => i.id === symbol.ownerItemId) ||
+        !symbol.kind ||
+        !symbol.label ||
+        !backed(symbol.sourceRefs) ||
+        !Array.isArray(symbol.polygon) ||
+        symbol.polygon.length < 3 ||
+        !symbol.polygon.every((p) => Array.isArray(p) && p.length === 2 && p.every(Number.isFinite))
+      )
+        add('source_annotations', '原图组合符号缺合法所属实例/几何/证据')
+      if (!annotations[symbol.ownerItemId]?.includedComponents?.some((c) => c.kind === symbol.kind))
+        add('component_count', '原图组合符号缺对应的组合数量注记')
+      symbolIds.add(symbol.id)
+    }
+  for (const [id, a] of Object.entries(annotations)) {
+    if (
+      !ly.success ||
+      !ly.data.items.some((i) => i.id === id) ||
+      !backed(a.sourceRefs) ||
+      (a.bodyHeightMm != null && (!Number.isFinite(a.bodyHeightMm) || a.bodyHeightMm <= 0))
+    )
+      add('source_annotations', '源图高度注记缺合法实例/证据：' + id)
+    for (const c of a.includedComponents ?? []) {
+      const count = Array.isArray(symbols)
+        ? symbols.filter((s) => s.ownerItemId === id && s.kind === c.kind).length
+        : 0
+      if (
+        !c.label ||
+        !Number.isInteger(c.count) ||
+        c.count < 1 ||
+        c.count !== count ||
+        !bom.rows?.some(
+          (r) =>
+            r.itemIds?.includes(id) &&
+            r.includedComponents?.some((b) => b.kind === c.kind && b.count === c.count),
+        )
+      )
+        add('component_count', '组合内构件数量与符号/BOM不一致：' + id)
+    }
+  }
   if (!backed(plan.evidence?.boundary)) add('boundary_evidence', '缺边界原图依据')
   if (sp.success) {
     if (!sp.data.entrances.some((e) => e.kind === 'main')) add('main_entrance', '主入口未确定')

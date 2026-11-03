@@ -49,6 +49,8 @@ export function scene(plan) {
       false,
     )
   })
+  // 原图辅助符号只表达组合内构件，不增加模型实例或重复计入BOM。
+  for (const symbol of plan.sourceSymbols ?? []) poly(symbol.polygon, '#5893ad', 'none', 0.018)
   const points = shapes.flatMap((s) => s.points),
     xs = points.map((p) => p[0]),
     ys = points.map((p) => p[1]),
@@ -64,7 +66,7 @@ export function scene(plan) {
   space.boundary.forEach((p, i) => {
     const q = space.boundary[(i + 1) % space.boundary.length],
       len = Math.hypot(p[0] - q[0], p[1] - q[1])
-    if (len > fontSize * 3)
+    if (len > fontSize * 6)
       texts.push({
         at: [
           (p[0] + q[0]) / 2 + ((orientation * (q[1] - p[1])) / len) * fontSize * 2.5,
@@ -165,7 +167,7 @@ export async function renderPlan(plan, bom, title) {
     .fontSize(10)
     .fillColor('#333')
     .text(
-      '绿色：入口  紫色：开放边  灰色：原障碍  橙色：后加构件  蓝短线：模型+Z方向（非正面判定）',
+      '绿色：入口  紫色：开放边  灰色：原障碍  橙色：后加构件  蓝短线：模型+Z方向；浅蓝框：组合内构件原图轮廓（不另计资产）',
       30,
       800,
       { lineBreak: false },
@@ -175,7 +177,17 @@ export async function renderPlan(plan, bom, title) {
   doc.fontSize(12).fillColor('#222').text('道具实例与物料', x, y, { width: 300 })
   y += 25
   for (const [i, it] of plan.layout.items.entries()) {
-    const line = `${i + 1}. ${it.name} / ${it.assetId ?? '型号未知'}\n${Math.round(it.w * 1000)} × ${Math.round(it.d * 1000)} × ${Math.round(it.h * 1000)}  角度 ${it.rotation}°`
+    const line =
+      `${i + 1}. ${it.name} / ${it.assetId ?? '型号未知'}\n${Math.round(it.w * 1000)} × ${Math.round(it.d * 1000)} × ${Math.round(it.h * 1000)}  角度 ${it.rotation}°` +
+      (() => {
+        const a = plan.sourceAnnotations?.items?.[it.id]
+        return (
+          (a?.bodyHeightMm ? `\n源图桌/柜体高 ${a.bodyHeightMm}；上述H为模型总高` : '') +
+          (a?.includedComponents ?? [])
+            .map((c) => `\n组合内含${c.count}个${c.label}，不另计资产`)
+            .join('')
+        )
+      })()
     doc.fontSize(9)
     const h = doc.heightOfString(line, { width: 295 }) + 12
     if (y + h > 760) {
