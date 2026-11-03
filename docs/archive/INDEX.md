@@ -67,3 +67,5 @@ git ls-tree -r --name-only archive/pre-prune-20261102 -- output                 
 `docs/design/pr1`–`pr7` 的 UI 改版截图是否归档，等 Codex 在看板 Q7 答复后再定。
 
 GitHub 的 LFS 额度已用完（见看板第 7 节），从这个标签恢复上表这些普通文件不受影响；但要恢复旧标签里由 LFS 管理的 PDF、模型等，需要先下载 LFS 对象，额度恢复前可能下载不了。
+
+阶段 3（#176）没有删除文件，只删了 3 处无人使用的转发导出：`apps/api/src/modules/files/routes.ts` 的 `versionedFileUrl`、`agent/tools.ts` 的 `spaceNodeOf`、`displays/common.ts` 的 `storeTitle`。需要时 `git revert` 对应的合并提交即可。本次清理的完整执行记录、前后对比和本机隔离区说明见瘦身报告第 10、11 节。
