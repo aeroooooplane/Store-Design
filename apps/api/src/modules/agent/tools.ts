@@ -13,7 +13,7 @@ import { confirmWhiteTool, setStyleTool, startRenderTool } from './tools/stage.t
 import { editSpaceTool } from './tools/space.ts'
 import { addViewTool, listViewsTool, removeViewTool } from './tools/views.ts'
 
-export { buildToolContext, refreshNode, spaceNodeOf } from './tools/context.ts'
+export { buildToolContext, refreshNode } from './tools/context.ts'
 export type { AgentTool, ToolContext, ToolOutcome } from './tools/context.ts'
 export { stateSummary } from './tools/describe.ts'
 

@@ -38,7 +38,7 @@
 | 日期 | 谁 | 分支 / PR | 目的 | 触及的共用文件 | 占用迁移号 | 状态 |
 |---|---|---|---|---|---|---|
 | 2026-11-02 | Codex | `feat/recognition-openings` / #156 | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评 | 无（限 recognition、tools/recognition、docs/recognition-*） | 无 | 草稿；17 项歧义待用户确认，未占用编辑器热点 |
-| 2026-11-02 | Claude | `claude/prune-*`（阶段 0：#170、#171；阶段 1：#172；阶段 2：`claude/prune-archive`、`claude/prune-config`、`claude/prune-docs`） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 阶段 2 改 `output/`、`.gitignore`、`.ignore`、`.gitattributes`、`eslint.config.js`、根 `README.md` 和 docs 入口文档（含 Codex 改过的 `sync-and-collaboration.md`），都不在第 4 节热点清单；后续要改 `package.json`、`pnpm-lock.yaml` 等热点时另行登记。不碰 Codex 的分支、worktree 和 #156，资源库只读 | 无 | 阶段 1 已完成（报告第 10 节）；隔离区 `D:\prune-quarantine-20261103`（LFS 孤儿 4.51 GB 等）2026-12-03 到期，删除前再问用户。**阶段 2 进行中**（11-03 用户确认）：已打标签 `archive/pre-prune-20261102`；#173 归档 `output/` 16 个无引用文件、#174 清理根配置已合并，入口文档订正（`claude/prune-docs`）待合并；截图等 Codex 在 Q7 答复。之后阶段 3：删 3 处无人使用的转发导出 |
+| 2026-11-02 | Claude | `claude/prune-*`（阶段 0：#170、#171；阶段 1：#172；阶段 2：#173–#175；阶段 3：`claude/prune-exports`） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 阶段 3 改 `apps/api/src/modules/files/routes.ts`、`agent/tools.ts`、`displays/common.ts`（展陈共同区），各删转发导出里一个无人使用的名字，都不在第 4 节热点清单；不碰 Codex 的分支、worktree 和 #156，资源库只读 | 无 | 阶段 1、2 已完成（报告第 10 节；#172–#175）；隔离区 `D:\prune-quarantine-20261103`（LFS 孤儿 4.51 GB 等）2026-12-03 到期，删除前再问用户。**阶段 3 进行中**（11-03 用户确认）：删 3 处无人使用的转发导出；之后阶段 4 收尾（前后对比、浏览器烟雾测试）。截图等 Codex 在 Q7 答复 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
 
