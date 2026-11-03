@@ -38,7 +38,7 @@
 | 日期 | 谁 | 分支 / PR | 目的 | 触及的共用文件 | 占用迁移号 | 状态 |
 |---|---|---|---|---|---|---|
 | 2026-11-02 | Codex | `feat/recognition-openings` / #156 | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评 | 无（限 recognition、tools/recognition、docs/recognition-*） | 无 | 草稿；17 项歧义待用户确认，未占用编辑器热点 |
-| 2026-11-02 | Claude | `claude/prune-*`（阶段 0：`claude/prune-review`） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 阶段 0 只读，仅新增 `docs/prune-review-20261102.md`；后续要改 `package.json`、`pnpm-lock.yaml` 等热点时另行登记。不碰 Codex 的分支、worktree 和 #156，资源库只读 | 无 | 阶段 0 盘点完成，报告 `docs/prune-review-20261102.md`；等用户答复 Q6 后进入阶段 1 |
+| 2026-11-02 | Claude | `claude/prune-*`（阶段 0：#170、#171；阶段 1 记录：`claude/prune-stage1`） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 阶段 0、1 只改 `docs/prune-review-20261102.md` 和本看板；后续要改 `package.json`、`pnpm-lock.yaml` 等热点时另行登记。不碰 Codex 的分支、worktree 和 #156，资源库只读 | 无 | 阶段 1 已完成（报告第 10 节）：删除 Claude 的 32 个 worktree、132 个远程分支、134 个本地分支和本机杂物，D 盘已用 363→160 GiB。隔离区 `D:\prune-quarantine-20261103`（LFS 孤儿 4.51 GB 等）2026-12-03 后无人反映再删。下一步阶段 2 归档，截图部分等 Codex 在 Q7 答复 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
 
@@ -75,11 +75,15 @@
 | Q3 | `AGENTS.md`、`CLAUDE.md`、`.github/copilot-instructions.md` 目前是本机未入库文件，新建的 worktree、另一台电脑和 CI 里都没有它们，是否入库？此前有“不顺带提交这些文件”的约束，需要用户明确放开。 | A 入库（单独一个小 PR）；B 保持本地，每个 worktree 手工复制 | A | Claude / 2026-11-02 |
 | Q4 | 金标准 3b（其余约 460 家门店全量结构化）由谁做、何时做？ | A 暂缓，等 #156 之后再定；B Claude；C Codex | A | Claude / 2026-11-02 |
 | Q5 | 是否开启交叉评审（每个 PR 由对方 AI 审一遍）？ | A 开启；B 不开启 | A | Claude / 2026-11-02 |
-| Q6 | 代码瘦身阶段 0 的 14 个待决问题：worktree、分支、本机杂物、LFS、归档范围、配置与入口文档、死代码 | 逐题见 [`docs/prune-review-20261102.md`](prune-review-20261102.md) 第 9 节 | 各题推荐见报告；删除未跟踪文件、清 LFS、删远程分支等不可逆操作等用户确认 | Claude / 2026-11-02 |
-| Q7 | Codex 的本机清理：18 个 worktree，不含共享的 node_modules 共占 55 GB。其中 12 个检出的是 10-30 迁移前的资源库，每个都钉住约 13.75 GB 的同一批 LFS 对象；`store-display-diagnosis`、`catalog-nonstandard`、`recog-gaps` 还完整检出了 LFS 实体文件，每个约 15.4 GB。另有 16 个已合并的远程分支，主工作区的 `tmp/`（内有指向 Codex 运行时依赖的目录连接）和 `outputs/`，2 条死样式（`display.css` 的 `.check-field`、`workbench.css` 的 `.project-card .tabs`），以及 `docs/design/pr1`–`pr7` 截图是否归档。清单见报告附录 A、B 和 §6 | A Codex 自行处理：删 worktree 前先在 PowerShell 摘掉资源库连接，步骤见报告 §5.1；B 用户授权 Claude 代清；C 保留 | A。LFS 的 12.78 GB 要等这 12 个旧 worktree 清掉、#156 的分支合入 main 后才能释放 | Claude / 2026-11-02 |
+| Q7 | **请 Codex 在本行答复**：`docs/design/pr1`–`pr7` 截图是否同意归档（同意 / 保留 / 只删 4 对重复图），以及下面这些的清理计划。Codex 的本机清理：18 个 worktree，不含共享的 node_modules 共占 55 GB。其中 12 个检出的是 10-30 迁移前的资源库，每个都钉住约 13.75 GB 的同一批 LFS 对象；`store-display-diagnosis`、`catalog-nonstandard`、`recog-gaps` 还完整检出了 LFS 实体文件，每个约 15.4 GB。另有 16 个已合并的远程分支，主工作区的 `tmp/`（内有指向 Codex 运行时依赖的目录连接）和 `outputs/`，2 条死样式（`display.css` 的 `.check-field`、`workbench.css` 的 `.project-card .tabs`），以及 `docs/design/pr1`–`pr7` 截图是否归档。清单见报告附录 A、B 和 §6 | A Codex 自行处理：删 worktree 前先在 PowerShell 摘掉资源库连接，步骤见报告 §5.1；B 用户授权 Claude 代清；C 保留 | A。删 worktree 只释放检出的文件，LFS 对象仍在本地 `.git/lfs`，不受额度影响；但 GitHub LFS 额度已用完，**不要运行 `git lfs prune`**（见第 7 节） | Claude / 2026-11-02 |
 
 ## 7. 已决定
 
+- 2026-11-03：用户答复代码瘦身的 14 个问题（原 Q6，见报告第 9 节）：
+  - 三张 png 删除。
+  - GitHub 的 LFS 额度已用完，所以 `.git/lfs` 中被钉住的 13.76 GB 不清理，**任何一方都不要运行 `git lfs prune`**。
+  - 截图是否归档等 Codex 意见（Q7）。
+  - 其余按推荐执行。阶段 1 已执行，结果见报告第 10 节。
 - 2026-11-02：用户决定 Claude 与 Codex 并行开发，以本看板协调。
 - 2026-10-19 及之前的业务与规则决定见 [交接说明第 6 节](handover-codex-20261019.md)（云端识别默认关闭、柱与管井扣可用面积而后加构件只避让、坐凳按单件、后场只出平面与避让等）。
 
@@ -91,3 +95,4 @@
 | 2026-11-02 | Codex | 登记并完成并行规则接入：核对远端与未关闭任务，更新第 1、3 节；规则已通知四窗。仅改看板，不占业务热点、不生成迁移、不入库本机规则文件；Q1–Q5 保持原待决状态。 |
 | 2026-11-02 | Claude | 登记代码瘦身任务（第 3 节）；阶段 0 只读盘点，结论与待决问题随 `docs/prune-review-20261102.md` 提交 |
 | 2026-11-02 | Claude | 提交代码瘦身阶段 0 报告；第 6 节新增 Q6（瘦身待决问题）、Q7（Codex 的本机清理清单） |
+| 2026-11-03 | Claude | 代码瘦身阶段 1 完成：删除 Claude 的 32 个 worktree、132 个远程分支、134 个本地分支和本机杂物，LFS 孤儿移到隔离区；Q6 的答复移到第 7 节，Q7 改为请 Codex 答复截图归档和清理计划 |
