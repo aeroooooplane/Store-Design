@@ -20,6 +20,13 @@ def norm(s):
 def write(p, d):
     p = Path(p); p.parent.mkdir(parents=True, exist_ok=True)
     p.write_text(json.dumps(d, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+def coordinates(value):
+    if isinstance(value, (str, int, float, bool)) or value is None:
+        return value
+    if hasattr(value, 'x') and hasattr(value, 'y'):
+        return [float(value.x), float(value.y)]
+    return [coordinates(part) for part in value]
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 def guarded(root, rel):
@@ -161,7 +168,7 @@ def bundle(a):
             for drawing in page.get_drawings():
                 items = []
                 for item in drawing['items']:
-                    items.append([item[0]] + [[float(x) for x in value] if hasattr(value,'__iter__') and not isinstance(value,str) else value for value in item[1:]])
+                    items.append([item[0]] + [coordinates(value) for value in item[1:]])
                 drawings.append({'items':items,'rect':list(drawing['rect']),'color':drawing.get('color'),'fill':drawing.get('fill'),'width':drawing.get('width'),'closePath':drawing.get('closePath')})
             write(dest / 'evidence/page-vectors.json', {'store_id':sid,'coordinates':'PyMuPDF unrotated page top-left points','drawings':drawings})
             bom_source = folder / 'bom.json'
