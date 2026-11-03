@@ -19,13 +19,10 @@ git status
 
 ## 日常开发
 
-每次开工先同步main，再为当前任务建立独立分支，例如：
+分支、worktree、提交与合并的规则以 [协作看板](collab-board.md) 第 5 节为准，开工前先读看板并登记：
 
-```powershell
-git switch -c work/model-review-20261009
-```
-
-完成后审查 `git diff`、新增文件及相关验证结果，将本任务文件提交并推送该分支，通过Pull Request合入main。多人不要同时在同一个snapshot分支提交。
+- 每个任务一个 worktree 和带 `claude/` 或 `codex/` 前缀的分支，建好后在该 worktree 运行接入脚本；不在主工作区 `D:\text demo` 切分支或提交。
+- 完成后审查 `git diff`、新增文件及相关验证结果，只提交本任务的文件，推送该分支，通过 Pull Request 合入 main。
 
 PDF、PPTX、SKP 等二进制资源由一人负责同一文件的一轮编辑，避免两台电脑同时修改同一个文件。相关代码 PR 记录资源版本及校验值，资源同步完成后再合并。另一台电脑拉取代码后先运行接入脚本核对 `resources.lock.json`。
 
@@ -33,5 +30,6 @@ PDF、PPTX、SKP 等二进制资源由一人负责同一文件的一轮编辑，
 
 - 新文件放入 OneDrive 的正式资源目录，核对同步状态、文件数量及校验值。
 - 资源变更与代码 PR 一起更新 `resources.lock.json`；不要将绝对路径提交进 Git。
+- GitHub 的 LFS 额度已用完（2026-11-03）：不要把 PDF、PPTX、SKP、GLB 等 LFS 类型的文件提交进 Git，推送会失败；资源一律走 OneDrive（见看板第 7 节）。
 - 换电脑下载后校验模型哈希、预览显示、PDF页数及相关工作台功能。
 - 网页模型放在 OneDrive 的 `资源库/04_模型库/<大类>/…/<模型目录>/网页模型/model.glb`；`white.glb` 随资源同步，材质轻量版 `finish.glb` 可由 `pnpm catalog:finish` 在每台机器生成。

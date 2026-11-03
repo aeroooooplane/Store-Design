@@ -16,7 +16,9 @@ cd tools/store-archive
 PYTHONUTF8=1 "$PY" build_sources.py
 ```
 
-原图纸和被 Git 忽略的旧成果只在主仓库 `D:	ext demo` 里。所以脚本默认从这里读取（`--repo` 或环境变量 `STORE_ARCHIVE_REPO` 可以改），输出到脚本所在仓库的 `资源库/09_门店档案/`（`--out` 可以改）。在独立工作区里运行也能读到原图纸。
+原图纸和被 Git 忽略的旧成果只在主仓库 `D:\text demo` 里。所以脚本默认从这里读取（`--repo` 或环境变量 `STORE_ARCHIVE_REPO` 可以改），输出到脚本所在仓库的 `资源库/09_门店档案/`（`--out` 可以改）。在独立工作区里运行也能读到原图纸。
+
+资源库现在是指向 OneDrive 的共享目录，任何窗口写入都会影响所有人。按 [OneDrive 资源库接入](../../docs/onedrive-resources.md) 的“共享目录与隔离输出”一节：运行时显式指定 `--repo` 和 worktree 之外的 `--out`，不要把输出写进共享资源库。
 
 ## 脚本
 

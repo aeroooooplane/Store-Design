@@ -1,8 +1,10 @@
 # 文档导航与阅读地图
 
-更新：2026-10-13。本页是人和 AI 协作者的共同入口：先读什么、按任务读什么、哪些不用读。
+更新：2026-11-03。本页是人和 AI 协作者的共同入口：先读什么、按任务读什么、哪些不用读。
 
-## 1. 改代码前先读（约 2.5 万 token）
+## 1. 改代码前先读（约 3.5 万 token，含看板与交接说明）
+
+开工前先读 [collab-board.md](collab-board.md)：Claude 与 Codex 的分工、进行中的工作、热点文件、待决问题和已决定事项；收工前更新。环境与坑见 [handover-codex-20261019.md](handover-codex-20261019.md) 第 7 节。
 
 1. [architecture.md](architecture.md)：模块职责、数据流、各阶段的实际行为与实测数据。
 2. [requirements.md](requirements.md)：需求与 §14 决策记录（最新决定以此为准）。
@@ -10,19 +12,21 @@
 4. [api.md](api.md)：接口约定（字段细节以代码中的 zod schema 为准）。
 5. [design-system.md](design-system.md)：界面样式入口（改界面时）。
 
-规则：提交说明与 PR 用简体中文（见主工作区的 AGENTS.md）；改了路由或 shared schema 要跑 `pnpm api:openapi`；提交前跑 `pnpm check` 和 `pnpm format:check`。
+规则：提交说明与 PR 用简体中文（见主工作区的 AGENTS.md）；改了路由或 shared schema 要跑 `pnpm api:openapi`；提交前跑 `pnpm check` 和 `pnpm format:check`。任务清单以 GitHub Issues 为准。
 
 ## 2. 按任务找代码
 
 | 任务 | 从这里开始 |
 |---|---|
 | 接口、校验、错误格式 | `apps/api/src/app.ts`、`apps/api/src/plugins/`、`packages/shared/src/schemas/` |
-| 历史节点与阶段（空间 → 方案 → 三维效果 → 渲染） | `apps/api/src/modules/nodes/`、`apps/web/src/features/workbench/tree.ts` |
+| 历史节点与阶段（空间 → 方案 → 三维效果 → 渲染） | `apps/api/src/modules/nodes/`、`packages/shared/src/history/`（前后端共用的命名与阶段规则）、`apps/web/src/features/workbench/tree.ts` |
 | 自动排布 | `packages/shared/src/planner/` |
 | 平面编辑、草稿、撤销、吸附 | `apps/web/src/features/workbench/`（`PlanEditor.tsx`、`editor-state.ts`、`snap.ts`） |
+| 墙面与吊顶构件、任意角度旋转、空心隔板、LOGO 尺寸 | `packages/shared/src/`（`mounting/`、`rotation/`、`fixtures/`、`scaling/`） |
 | 三维与渲染外观 | `apps/web/src/features/viewer3d/`（`white-scene.ts`、`render-look.ts`） |
 | 模型目录、白模与材质轻量版 | `apps/api/src/modules/assets/`、`资源库/04_模型库/manifest.json`、`tools/library/` |
 | 简图识别 | `apps/api/src/modules/recognition/`、`apps/web/src/features/recognition/` |
+| 展陈方案 | `packages/shared/src/display/`、`apps/api/src/modules/displays/`、`apps/web/src/features/display/` |
 | 设计助理 | `apps/api/src/modules/agent/`、`apps/api/src/ai/`、`apps/web/src/features/agent/` |
 | 交付 PDF | `apps/api/src/modules/deliveries/`、`packages/shared/src/delivery/` |
 | 数据表与迁移 | `database/schema/`、`database/migrations/*.sql` |
@@ -33,19 +37,25 @@
 
 | 内容 | 原因 | 需要信息时改看 |
 |---|---|---|
-| `apps/api/openapi.json`、`apps/web/src/api/schema.d.ts` | 生成物（约 2.7 万行） | `packages/shared/src/schemas/`、各模块 `routes.ts` |
+| `apps/api/openapi.json`、`apps/web/src/api/schema.d.ts`、`pnpm-lock.yaml` | 生成物 | `packages/shared/src/schemas/`、各模块 `routes.ts`、各 `package.json` |
 | `database/migrations/meta/` | drizzle 快照（每份约 2000 行） | `database/schema/` |
-| `资源库/90_处理过程与审核/`、`资源库/00_资源索引/历史目录/`、`资源库/01_各门店原图纸/`、`资源库/09_门店档案/`、`资源库/99_历史归档/`、`tools/data-cleaning/` | 数据与过程记录，文本合计约 4000 万 token，代码不引用 | [store-drawing-archive-plan.md](store-drawing-archive-plan.md)、[资源使用说明](../资源库/00_资源索引/资源使用说明.md) |
-| `tmp/`、`output/`、`docs/archive/` | 历史中间件与归档 | — |
+| `tools/data-cleaning/`、`docs/evidence/`、`docs/model-publication/`、`docs/reviews/` | 门店图纸清洗记录与资源发布核对记录，代码不引用 | [store-drawing-archive-plan.md](store-drawing-archive-plan.md)、[resource-release-20261030.md](resource-release-20261030.md) |
+| `tmp/`、`output/`、`docs/archive/`、`demo/` | 历史中间件与归档 | [archive/INDEX.md](archive/INDEX.md) |
+
+`资源库/` 是指向 OneDrive 的目录连接，被 `.gitignore` 整体排除，全仓搜索不会进去。显式指定 `资源库` 时能搜到全部约 2.4 万个文件（其中 `90_处理过程与审核/` 约 2 万个），搜内容还会让 OneDrive 把“仅在线”的文件下载到本机，所以请缩小到具体子目录，例如 `资源库/04_模型库/`。
 
 ## 4. 专项文档
 
 | 主题 | 文档 |
 |---|---|
-| 多电脑同步、分支与 LFS | [sync-and-collaboration.md](sync-and-collaboration.md) |
-| 展陈方案（中岛桌与边桌陈列） | [display-plan-requirements.md](display-plan-requirements.md) |
-| 门店图纸整理（另一窗口负责） | [store-drawing-archive-plan.md](store-drawing-archive-plan.md) |
-| 架构评审与清理计划 | [architecture-review-20261013.md](architecture-review-20261013.md) |
+| AI 协作（Claude 与 Codex） | [collab-board.md](collab-board.md)、[handover-codex-20261019.md](handover-codex-20261019.md) |
+| 多电脑同步、分支与资源提交 | [sync-and-collaboration.md](sync-and-collaboration.md)、[onedrive-resources.md](onedrive-resources.md) |
+| 资源发布与模型审核（2026-10-30） | [resource-release-20261030.md](resource-release-20261030.md)、[model-review-20261030.md](model-review-20261030.md) |
+| 展陈方案（中岛桌与边桌陈列） | [display-plan-requirements.md](display-plan-requirements.md)、[display-tray-reconciliation-20261030.md](display-tray-reconciliation-20261030.md) |
+| 三维边界墙、灯箱墙贴 | [boundary-walls.md](boundary-walls.md)、[lightbox-wall-art.md](lightbox-wall-art.md) |
+| 异形店与识别 | [irregular-shop-plan.md](irregular-shop-plan.md)、[irregular-shop-phase2-plan.md](irregular-shop-phase2-plan.md)、[irregular-shop-phase3-plan.md](irregular-shop-phase3-plan.md) |
+| 门店图纸整理与金标准 | [store-drawing-archive-plan.md](store-drawing-archive-plan.md) |
+| 架构评审与代码瘦身 | [architecture-review-20261013.md](architecture-review-20261013.md)、[prune-review-20261102.md](prune-review-20261102.md) |
 | SI 标准阅读与命名依据 | [si-standards-review-20261001.md](si-standards-review-20261001.md)、[模型库指引](../资源库/04_模型库/README.md) |
 | PDF 清洗与来源 | [pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md) |
 | 待收集资料 | [input-materials.md](input-materials.md) |
@@ -54,10 +64,10 @@
 
 用户要求先记录、暂不修改的问题（原记在 roadmap.md，2026-10-13 随历史文档归档时迁到这里）：
 
-- 2026-10-12：平面识别速度慢（视觉模型每次约 20 秒）；识别界面不好看。
+- 2026-10-12：平面识别速度慢（视觉模型每次约 20 秒）；识别界面不好看。界面部分已转为 Issue #144；速度问题还没有单独的 Issue。
 
 ## 6. 历史记录
 
-2026-09 至 10-04 的旧版（`demo/`）开发记录、训练实验和资料盘点已从 main 归档，清单与恢复命令见 [archive/INDEX.md](archive/INDEX.md)。仍原地保留的历史文档：[pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md)、[si-standards-review-20261001.md](si-standards-review-20261001.md)（有脚本引用）。
+2026-09 至 10-04 的旧版（`demo/`）开发记录、训练实验和资料盘点已从 main 归档；2026-11-03 代码瘦身又归档了 `output/` 中 16 个无引用的核对记录。清单与恢复命令见 [archive/INDEX.md](archive/INDEX.md)。仍原地保留的历史文档：[pdf-cleaning.md](pdf-cleaning.md)、[si-source-recovery.md](si-source-recovery.md)、[data-preparation-next-steps.md](data-preparation-next-steps.md)、[si-standards-review-20261001.md](si-standards-review-20261001.md)（有脚本引用）。
 
 文件保留看实际引用、唯一性和可恢复性，不按目录名称或最后修改时间判断。

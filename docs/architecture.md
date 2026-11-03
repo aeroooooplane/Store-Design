@@ -1,6 +1,6 @@
 # 架构说明
 
-更新：2026-10-13（目录、模块表与技术决定按代码订正）。第一、二、三期已实现（识别见 4.5，设计助理见 4.6）。第一期：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表（含导入导出）、设置页（AI 模型与额度）与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构已归档（见 [archive/INDEX.md](archive/INDEX.md)）。
+更新：2026-11-03（目录与模块表按代码补充展陈、shared 新增模块和 OneDrive 资源库；此前 2026-10-13 按代码订正目录、模块表与技术决定）。第一、二、三期已实现（识别见 4.5，设计助理见 4.6），展陈方案见 4.7。第一期：shared、database；api 的项目、模型目录与文件、历史节点、共享草稿、视角、渲染图、项目导入导出、排布生成与校验；web 的项目列表（含导入导出）、设置页（AI 模型与额度）与项目工作台（历史树、多边形空间录入、三种方案生成与选用、平面编辑与草稿自动保存、三维白模与三维拖拽、白模视角、浏览器渲染、双 PDF 交付）。需求见 [requirements.md](requirements.md)，数据表见 [data-model.md](data-model.md)。重构前的实际架构已归档（见 [archive/INDEX.md](archive/INDEX.md)）。
 
 ## 1. 总体结构
 
@@ -8,7 +8,7 @@
 浏览器 apps/web ──REST/JSON──▶ apps/api ──▶ PostgreSQL（开发与测试用 PGlite）
   React + Three.js              Fastify          （database/ 管理 schema 与迁移）
   只通过 API 访问数据            │
-                                ├──▶ 文件存储（STORAGE_ROOT，默认 data/files/）与只读资源库（RESOURCE_ROOT，默认 资源库/）
+                                ├──▶ 文件存储（STORAGE_ROOT，默认 data/files/）与只读资源库（RESOURCE_ROOT，默认 资源库/，指向 OneDrive 的目录连接）
                                 ├──▶ 交付归档目录（ARCHIVE_ROOT，默认 data/archive/）
                                 └──▶ 外部大模型（DeepSeek / 通义千问 / 可选境外），密钥仅在后端
 ```
@@ -23,10 +23,10 @@ apps/
     src/app/          路由、布局壳、Provider
     src/api/          由 OpenAPI 生成的类型和请求客户端（唯一的数据通道）
     src/features/     projects / workbench（历史树、空间录入、方案、平面编辑、阶段面板、渲染阶段、视角）/
-                      viewer3d / recognition / agent / settings
+                      viewer3d / recognition / agent / settings / display（展陈方案）
     src/components/   通用 UI
-    src/styles/       tokens.css（主题变量）、app.css、workbench.css
-    src/scripts/      本地识别回归脚本
+    src/styles/       tokens.css（主题变量）、app.css、workbench.css、display.css
+    src/scripts/      本地识别回归、LOGO 网页模型生成
   api/                Fastify 后端
     src/config/       环境变量（zod 校验，启动时失败即退出）
     src/context/      请求上下文与授权扩展点（见第 9 节）
@@ -34,7 +34,7 @@ apps/
     src/lib/          存储、版本号、AppError
     src/modules/<领域>/  routes.ts / service.ts（部分模块另有 repository.ts 等）
     src/ai/           模型清单、价格、预算账本、统一调用
-    src/scripts/      导出 OpenAPI、导入目录、生成白模 / 材质轻量版
+    src/scripts/      导出 OpenAPI、导入目录、生成白模 / 材质轻量版、导入展陈规则、生成展陈桌体、展陈发布核验
     test/             API 集成测试（内存数据库）
 packages/
   shared/             前后端共享：zod 校验规则、类型、纯函数领域逻辑
@@ -44,9 +44,15 @@ packages/
     src/scene/        墙段与默认视角
     src/catalog/      道具功能识别、SI 切换映射
     src/delivery/     交付命名与图例编号
+    src/history/      历史节点的命名、阶段与祖先规则（工作台与设计助理共用）
+    src/mounting/     墙面与吊顶构件（墙面 LOGO、画面、吊挂 LOGO）的安装方式与离地高度
+    src/fixtures/     空心隔板（配件柜嵌墙时补空用，边缘吸附墙和配件柜）
+    src/rotation/     手动任意角度旋转（靠墙时吸附平行或垂直，其余 15° 步进）
+    src/scaling/      拖动改 LOGO 尺寸
+    src/display/      展陈规则、引擎、方案与投影，以及展陈接口的 schema
 database/             Drizzle schema、SQL 迁移与迁移命令
-docs/                 本文档、需求、数据模型、API 说明
-tools/  资源库/        离线工具（模型库刷新 tools/library、SU → GLB 转换 tools/su-convert 等）与资料；资源库 由 API 通过白名单只读访问
+docs/                 本文档、需求、数据模型、API 说明、协作看板
+tools/  资源库/        离线工具（模型库刷新 tools/library、SU → GLB 转换 tools/su-convert、门店档案 tools/store-archive 等）与资料；资源库 是指向 OneDrive 的目录连接（见 onedrive-resources.md），由 API 通过白名单只读访问
 ```
 
 **依赖方向**：`web → shared`，`api → shared + database`，`database → shared`（仅类型）。`shared` 不依赖任何运行环境（无 DOM、无 Node API），保证前端即时校验与后端权威校验使用同一份代码。
@@ -68,10 +74,11 @@ tools/  资源库/        离线工具（模型库刷新 tools/library、SU → 
 | agent | 对话会话、工具调用、撤销（第三期） |
 | ai | 模型列表、全站设置、预算查询 |
 | assets | 模型目录（只读，命令行导入）、白模与材质轻量版构建 |
+| displays | 展陈规则导入、按节点或独立任务生成展陈方案、桌子识别、可编辑 PPT、展陈桌体（见 4.7） |
 | files | 按 ID 流式读取已登记文件 |
 | audit | 写操作审计记录 |
 
-灯箱画面、门店与 SI 标准目录、任务队列查询在需求中规划过，尚未实现。
+门店与 SI 标准目录、任务队列查询在需求中规划过，尚未实现。灯箱画面已按“灯箱墙贴”实现（见 [lightbox-wall-art.md](lightbox-wall-art.md)）。
 
 统一错误格式：`{ "error": { "code", "message", "details"?, "requestId" } }`。所有写接口要求 `If-Match: <revision>`，冲突返回 409 并附当前版本信息。
 
@@ -125,6 +132,9 @@ tools/  资源库/        离线工具（模型库刷新 tools/library、SU → 
 后端已实现（2026-10-12，`apps/api/src/modules/agent/`）。前端发送消息（可附当前节点、选中道具与平面截图）→ api 把项目状态摘要（空间尺寸、入口、障碍物、当前节点、道具表、检查问题，单位毫米）放进系统提示并调用模型 → 模型请求工具 → api 执行工具 → 工具结果回传模型，最多 8 轮，模型给出文字回答后一次性返回（未做流式）。工具（`tools.ts`）复用各模块的 service，与人工操作走同一校验：查看状态、列模型（按项目 SI 风格）、生成三方案、放置/移动/旋转/删除道具、检查、切换风格与市场、修改空间（层高、矩形宽深、入口、加柱子，生成新的空间节点）、确认白模、创建渲染节点、视角的查看/添加/删除、导出。放置用"靠哪面墙 + 沿墙 0–1 位置"描述，坐标、朝向（规划器的 `rotationFacing`：正面朝店内，无正面则长边沿墙）和占地由程序算；每次修改在当前节点的同一阶段生成 `origin = agent` 的新节点（空间下建方案；方案或白模旁另存"… · Agent"），后续工具在新节点上继续。模型调用层 `ai/chat.ts` 统一支持工具调用（OpenAI 兼容格式的 tools/tool_calls 与 Claude 的 tool_use/tool_result）。对话、每轮模型消息、工具结果与动作（`agent_sessions` / `agent_messages` / `agent_actions`）按项目长期保存；撤销一次动作即隐藏它生成的节点（生成三方案时隐藏三个）或删除/恢复它改过的视角，只读工具和改项目设置的动作不可撤销。回放历史时只带用户与助理的文字，不带工具往返，避免跨厂商的格式差异。没有配置任何可用模型时发消息返回 400；模型失败（502）或超额（402）时用户消息仍保留。
 
 前端（`apps/web/src/features/agent/`）：工作台右下角的"设计助理"按钮展开为对话面板（`AgentDock`），所有阶段都可用；发送时带当前节点、平面上选中的道具（`PlanEditor` 通过 `AgentSelectionContext` 上报）和当前平面 SVG 导出的 PNG 截图（可取消勾选）；回复下列出每次工具动作（成功/失败、"查看"切到生成的节点、"撤销"），收到 `currentNodeId` 后自动切换到助理生成的节点并刷新历史树。第一句话才创建对话，标题取自第一句；头部可切换项目的历史对话或开新对话。没有可用模型时面板提示去设置页配置密钥并禁用输入。
+
+### 4.7 展陈方案
+已实现，需求与规则见 [display-plan-requirements.md](display-plan-requirements.md)。规则来自飞书《影石专卖店中岛桌&边桌&配件柜展陈指引》，整理在 `资源库/10_产品与陈列/展陈规则.xlsx`，用 `pnpm display:import` 导入（`displays/importer.ts`、`workbook.ts`；同一份表格重复导入不会产生新版本）；规则引擎、方案与投影在 `packages/shared/src/display/`。两个入口：工作台渲染阶段的“展陈”页签按节点布局为中岛桌和带托盘的边柜生成陈列（`displays/node.ts`）；首页的“展陈方案”可单独上传门店平面图或 PDF，先识别桌子再生成（`displays/tasks.ts`、`detect.ts`，图片识别用设置里的识别模型及其后备模型）。结果导出为可编辑的 PPT（`deck.ts`）。三维视图里的桌子是从模型库切出的真实桌体，由 `pnpm display:bodies` 生成到 `资源库/10_产品与陈列/展陈桌体`（`displays/bodies.ts`；写资源库，属于资源发布）。前端在 `apps/web/src/features/display/`（`DisplayPanel`、`DisplayTaskPage`、`table3d/`）。
 
 ## 5. AI 适配层
 
@@ -186,4 +196,4 @@ tools/  资源库/        离线工具（模型库刷新 tools/library、SU → 
 
 ## 10. 本地开发
 
-见根目录 [README](../README.md) 的“重构版开发”一节。CI（`.github/workflows/ci.yml`）依次执行 lint、格式检查、类型检查、测试、OpenAPI 一致性检查与前端构建。
+见根目录 [README](../README.md) 的“本机开发”一节；分支、worktree 与提交规则见 [协作看板](collab-board.md) 第 5 节。CI（`.github/workflows/ci.yml`）依次执行 lint、格式检查、类型检查、测试、OpenAPI 一致性检查与前端构建。
