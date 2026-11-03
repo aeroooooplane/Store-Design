@@ -41,6 +41,9 @@ tools/training/runtime/
 
 # Machine-specific external source location and disposable PDF previews
 /resources.local.json
+# 资源库 is a junction to the shared OneDrive folder (docs/onedrive-resources.md) and stays out of Git as a whole,
+# including what each machine derives inside it: finish.glb / finish.json (pnpm catalog:finish) and the store-archive
+# PDFs, images and caches (tools/store-archive). Its per-folder rules were removed on 2026-11-03 as redundant.
 /资源库/
 /.resource-before-link/
 
@@ -51,43 +54,9 @@ Thumbs.db
 .vscode/
 *.swp
 
-# Local SI review payloads left from 10-04 (the tracked records were archived).
-/output/maintenance/before-swiss/
-/output/maintenance/*.png
-
-# Expanded copy of the DAE delivery; the verified ZIP is tracked with LFS.
-/资源库/90_处理过程与审核/模型拆分/dae-20261009/split-20260925-v2/
-/资源库/90_处理过程与审核/模型拆分/dae-20261009/*.zip
-
 # Local secrets and environment files
 .env
 .env.*
 !.env.example
 *.pem
 *.key
-
-# Store-drawing cleaning: caches and the paused full run stay on the machine that produced them;
-# another machine recomputes in its own rebuild namespace (tools/data-cleaning/light-handoff-20261009-01/START_HERE.md).
-# Pilot caches committed before 2026-10-09 remain tracked.
-/资源库/90_处理过程与审核/数据清洗-20261009/_cache/
-/资源库/90_处理过程与审核/数据清洗-20261009/全量续跑-02/
-/资源库/90_处理过程与审核/数据清洗-20261009/迁移交接-20261009-1503/
-
-# Light material models are derived from model.glb (pnpm catalog:finish, about 5 minutes) and
-# rebuilt on each machine to keep ~46 MB out of Git LFS; without them the viewer loads model.glb.
-/资源库/04_模型库/**/finish.glb
-/资源库/04_模型库/**/finish.json
-
-# Store archive (docs/store-drawing-archive-plan.md): only JSON / CSV / MD metadata is committed. PDFs, images and
-# drawings are derived from the source drawings by tools/store-archive and rebuilt on each machine (LFS quota is full).
-/资源库/09_门店档案/**/*.pdf
-/资源库/09_门店档案/**/*.png
-/资源库/09_门店档案/**/*.jpg
-/资源库/09_门店档案/**/*.jpeg
-/资源库/09_门店档案/**/*.webp
-/资源库/09_门店档案/**/*.tif
-/资源库/09_门店档案/**/*.tiff
-/资源库/09_门店档案/**/*.svg
-/资源库/09_门店档案/**/renders/
-/资源库/09_门店档案/**/evidence/
-/资源库/09_门店档案/**/_cache/
