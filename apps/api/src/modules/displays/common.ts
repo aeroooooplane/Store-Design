@@ -172,4 +172,4 @@ export async function storeDisplayFiles(
 export const keepExports = (list: DisplayExport[], added: DisplayExport) =>
   [added, ...list].slice(0, KEEP_EXPORTS)
 
-export { deckImage, storeTitle }
+export { deckImage }

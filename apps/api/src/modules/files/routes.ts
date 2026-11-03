@@ -11,8 +11,8 @@ import { isLfsPointer, resolveStoredFile } from '../../lib/storage.ts'
 import { THUMBNAIL_WIDTHS, canThumbnail, thumbnail } from '../../lib/thumbnails.ts'
 import type { StorageRoots, StorageRootName } from '../../lib/storage.ts'
 
-// Kept for modules that still import the addresses from here (deliveries).
-export { fileUrl, versionedFileUrl } from '../../lib/file-url.ts'
+// Kept for modules that still import the address from here (deliveries).
+export { fileUrl } from '../../lib/file-url.ts'
 
 /** Streams a registered file by id; there is no path-based access. */
 export const fileRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageRoots }> = async (
