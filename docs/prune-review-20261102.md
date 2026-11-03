@@ -1,6 +1,6 @@
 # 代码瘦身盘点（2026-11-02，阶段 0）
 
-> **只读盘点。** 没有删除或改动任何代码、依赖、数据库、资源库、worktree、分支和 LFS 对象。写入只有三处：扫描工具和实验仓库放在仓库外的临时目录；看板登记（PR #170）；本报告。
+> **第 0–9 节是阶段 0 的只读盘点**：盘点时没有删除或改动任何代码、依赖、数据库、资源库、worktree、分支和 LFS 对象；写入只有三处：扫描工具和实验仓库放在仓库外的临时目录、看板登记（PR #170）、本报告。**第 10 节是阶段 1 的执行记录**（2026-11-03，用户确认后执行）。
 >
 > - 基线：`origin/main` `5b9f6385`（PR #170）。代码扫描时为 `3936b018`（PR #169），两者代码相同，#170 只改看板。
 > - 体积口径：1 GB = 10⁹ 字节，按文件字节合计（`du` 按磁盘块统计会略大）。token 估算：中文 1 字约 1 token，其余按 UTF-8 每 4 字节约 1 token。
@@ -13,7 +13,7 @@
    - 未使用的 npm 依赖 0 个，运行时循环依赖 0 处，package.json 脚本断链 0 处，`tsc --noUnusedLocals --noUnusedParameters` 0 条。
    - 真正没人用的只有 3 处转发导出、2 条死样式（在 Codex 的样式区）、eslint 忽略列表里 2 个不存在的目录。
    - 字面重复 0.57%，与 10-13 的 0.58% 持平。“同一规则写了多份”仍有 6 类，属于重构，不建议在瘦身里做。
-2. **体积大头在本机，不在仓库；最大的一块是 worktree。** D 盘共 574 GB，已用 363 GB。
+2. **体积大头在本机，不在仓库；最大的一块是 worktree。** D 盘共 574 GiB，已用 363 GiB（`df -h` 的口径，与资源管理器显示一致）。
    - **51 个 worktree 合计 297 GB。** 其中 16 个完整检出了迁移前资源库的 LFS 实体文件，每个约 15.4 GB，合计 247 GB。这些是各自独立的副本（硬链接数为 1），删 worktree 就能释放。其余多数只检出了 LFS 指针，资源库约 0.4 GB。
    - 其中 node_modules 统计为 27 GB，但它们是 pnpm 全局仓库的硬链接（全局仓库实际只有 823 MB），删除不释放，可释放量不算这部分。
    - 已跟踪文件只有 1016 个、31.4 MB。
@@ -438,6 +438,43 @@ Codex 的 12 个旧 worktree 分两处：
 | Q12 | 删除 3 处无人使用的转发导出？ | A 删除；B 不删 | A |
 | Q13 | 60 个“只在本文件使用”的导出和 6 类重复实现是否纳入瘦身？ | A 不纳入，只记录；B 只做 Claude 区域非热点文件的 22 个导出；C 全做 | A |
 | Q14 | 交给 Codex 的事项：Codex 的 18 个 worktree、16 个已合并远程分支、`tmp/`、`outputs/`、2 条死样式、截图是否归档 | A 写进看板第 6 节，由 Codex 自行处理；B 你授权 Claude 代清 | A |
+
+## 10. 阶段 1 执行记录（2026-11-03）
+
+**用户 11-03 的答复**：
+- 三张 png 删除。
+- GitHub 的 LFS 额度已用完，所以 Q8 改为不清理。
+- Q9 中截图是否归档，等 Codex 的意见（看板 Q7）。
+- 其余按推荐执行。
+
+| 项 | 做了什么 | 结果 |
+|---|---|---|
+| Q1、Q2 worktree | 按 §5.1 的步骤逐个删除 32 个：Q1 的 27 个；Q2 的 `recog-eval`（先把 `_cache` 移到隔离区）、`architecture-review`、`system-tester`、`ui-design`、`pdf-upload-20261008`。`drawing-archive-plan` 保留 | 32 个全部完成，没有一项检查不通过。带依赖的 worktree 每个留下约 1600 个 pnpm 连接骨架，已用 `rmdir /s /q` 清掉，没有普通文件残留 |
+| Q3 非 worktree 目录 | 删除 `pdf-upload-clean-20261008`（先摘掉指向主工作区 `demo\node_modules` 的连接）、`merge-qa-artifacts`、`merge-vite-cache`、`node_modules`、`resource-qa-results`；保留 `展陈方案样例` | 约 2.1 GB；主工作区的 `demo\node_modules` 未受影响 |
+| Q4 主工作区 | 删除 18 项：`demo/`、三张 png、`tools/pdf-review`、`tools/training` 的 `.venv`/`runtime`/`uv.zip`、`tools/data-cleaning/.venv`、`data/model-conversion`、`素材库/`、`output/web-qa`、`apps/web/dist`、5 处 `__pycache__`。每项删前确认不含已跟踪文件、没有指向外部的连接。`tmp/`、`outputs/`、`data/archive` 保留 | 约 2.92 GB；用户的 dev 服务（5173、3001）始终在运行 |
+| Q5 远程分支 | 删除 132 个：附录 B.1 的 130 个，加上 `claude/prune-register`、`claude/prune-review`。删前逐个核对提交号与附录 B 一致、已合并、无开放 PR | 全部成功，远程剩 21 个 |
+| Q6 本地分支 | `git branch -d` 删除 133 个（只删已合并的，全部通过）；`-D` 删除 `upload/pdfs-20261008`（`a04d4d8f`） | 本地剩 25 个：main、`claude/prune-stage1`、`archive/stage3a-gold`（`drawing-archive-plan` 检出），以及 Codex 的 22 个 |
+| Q7 LFS 孤儿 | 隔离前复核：1155 个仍无任何提交或暂存区引用。移到 `D:\prune-quarantine-20261103\lfs-orphans`，附清单和说明 | 4,507,754,870 字节；2026-12-03 到期。GitHub 上没有这些对象，额度用完也补传不了，删除前再向用户确认 |
+| Q8 | GitHub LFS 额度已用完，被钉住的对象一旦清掉就下载不了，改为不清理 | `.git/lfs` 保留 1139 个、13.76 GB；`git lfs fsck --objects origin/feat/recognition-openings` 通过 |
+
+前后对比：
+
+| 项目 | 阶段 1 前 | 阶段 1 后 |
+|---|---|---|
+| D 盘已用（`df -h`） | 363 GiB | 160 GiB |
+| worktree（含主工作区） | 53 | 21 |
+| 本地分支 | 158 | 25 |
+| 远程分支（含 main） | 153 | 21 |
+| `.git/lfs` | 2294 个、18.27 GB | 1139 个、13.76 GB（另有 1155 个、4.51 GB 在隔离区，同盘移动，到期删除后才释放） |
+| 资源库 | 23,822 个文件、25,083,147,326 字节 | 相同；lock 哈希校验通过 |
+
+每删一个 worktree 都复测了资源库文件数，始终是 23,822。
+
+隔离区 `D:\prune-quarantine-20261103` 的内容：
+- `lfs-orphans\`：孤儿对象及 `manifest.tsv`；
+- `recog-eval-cache\`：识别打分缓存；
+- `deleted-branches.tsv`：本次删除的 132 个远程分支、134 个本地分支及其提交号；
+- `README.txt`：说明与放回方法。
 
 ## 附录 A worktree 逐项
 
