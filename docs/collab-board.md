@@ -39,6 +39,8 @@
 
 | 日期 | 谁 | 分支 / PR | 目的 | 触及的共用文件 | 占用迁移号 | 状态 |
 |---|---|---|---|---|---|---|
+| 2026-11-03 | Codex | `codex/pilot-inputs-20261103` | 用户改为Codex独立负责图纸；冻结24名单、制作首6真实资料包 | `docs/collab-board.md`、新增 `tools/store-archive/pilot_prepare.py`、输入说明；不改既有金标准 | 无 | A/B实际制作中，OneDrive只读、产物外置 |
+| 2026-11-03 | Codex | `codex/pilot-first6-workflow-20261103` | B输入复核、C校正/QA及原图-生成图对照 | `tools/recognition/pilot-first6*`、对应recognition文档；看板由输入窗口本轮统一更新 | 无 | 工具进行中；收到冻结输入后逐店处理 |
 | 2026-11-02 | Codex | `feat/recognition-openings` / #156 | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评 | 无（限 recognition、tools/recognition、docs/recognition-*） | 无 | 草稿；17 项歧义待用户确认，未占用编辑器热点 |
 | 2026-11-02 | Claude | `claude/prune-*`（#170–#176 与本次收尾 PR，均已合并，分支已删） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 已无占用的文件；截图归档时只动 `docs/design/` 和 `docs/archive/INDEX.md` | 无 | **阶段 0–4 已完成**（报告第 10、11 节：D 盘已用 363→160 GiB，浏览器冒烟测试通过）。截图归档已获用户同意（见第 7 节），待 Claude 本人登记归档分支后执行；不等待 Codex 意见。其他隔离区/本机清理事项仍按原权限 |
 
