@@ -195,7 +195,7 @@ export async function renderPlan(plan, bom, title) {
       doc
         .font('cjk')
         .fontSize(15)
-        .text(title + ' · 物料续页', 30, 25)
+        .text(title + ' · 物料续页（审核草稿）', 30, 25)
       x = 30
       y = 70
     }
@@ -208,9 +208,12 @@ export async function renderPlan(plan, bom, title) {
     const h = doc.heightOfString(line, { width: 295 }) + 8
     if (y + h > 760) {
       doc.addPage()
-      doc.font('cjk')
+      doc
+        .font('cjk')
+        .fontSize(15)
+        .text(title + ' · 物料续页（审核草稿）', 30, 25)
       x = 30
-      y = 45
+      y = 70
     }
     doc.text(line, x, y, { width: 295 })
     y += h

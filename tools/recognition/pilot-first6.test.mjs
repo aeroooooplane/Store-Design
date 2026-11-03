@@ -7,7 +7,7 @@ import { makeSynthetic } from './pilot-first6-fixture.mjs'
 import { runFirstSix } from './pilot-first6.mjs'
 import { inspectInput, validateRender, validateHandoff, openPdf } from './pilot-input.mjs'
 import { quality } from './pilot-quality.mjs'
-import { scene } from './pilot-render.mjs'
+import { scene, renderPlan } from './pilot-render.mjs'
 import { sha256 } from './pilot-contract.mjs'
 import { catalogReader } from './pilot-assets.mjs'
 import sharp from 'sharp'
@@ -286,6 +286,24 @@ describe('首6输入、校正质检与出图（纯合成）', () => {
       const text = (await page.getTextContent()).items.map((i) => i.str).join('')
       for (const word of ['合成', '校正审核图', '5000', 'asset-1'])
         assert.ok(text.includes(word), word)
+    } finally {
+      await doc.destroy()
+    }
+  })
+  it('物料续页保留门店标识与审核草稿状态', async () => {
+    const b = structuredClone(bom)
+    b.rows = Array.from({ length: 45 }, (_, i) => ({ ...b.rows[0], label: '合成物料' + i }))
+    const result = await renderPlan(evaluate(), b, '合成续页门店')
+    const doc = await openPdf(result.pdf)
+    try {
+      assert.ok(doc.numPages > 1)
+      for (let i = 1; i <= doc.numPages; i++) {
+        const text = (await (await doc.getPage(i)).getTextContent()).items
+          .map((t) => t.str)
+          .join('')
+        assert.ok(text.includes('合成续页门店'))
+        assert.ok(/审核图|审核草稿/.test(text))
+      }
     } finally {
       await doc.destroy()
     }
