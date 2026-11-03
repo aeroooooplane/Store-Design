@@ -29,6 +29,8 @@ jobs:
         run: pnpm typecheck
       - name: Test
         run: pnpm test
+      - name: 试点数据交接契约
+        run: node --test tools/recognition/pilot-contract.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
