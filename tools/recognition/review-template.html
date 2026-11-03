@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>独立开发集 · 标注审核</title>
+  <style>
+    :root {
+      font:
+        15px/1.5 system-ui,
+        'Microsoft YaHei',
+        sans-serif;
+      color: #222;
+      background: #f4f5f7;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+    }
+    body:has(#editor:not([hidden])) {
+      overflow: hidden;
+    }
+    header {
+      padding: 22px 30px;
+      background: #171717;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 0 0 8px;
+    }
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+    button {
+      border: 1px solid #ccc;
+      border-radius: 7px;
+      background: white;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+    button.primary {
+      background: #ffd200;
+      border-color: #ffd200;
+      font-weight: 650;
+    }
+    button:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+    header button {
+      margin: 6px 4px 0 0;
+    }
+    #summary {
+      color: #ddd;
+    }
+    main {
+      padding: 24px 30px;
+    }
+    .notice {
+      background: #fff4cf;
+      border-left: 4px solid #d69c00;
+      padding: 14px;
+      margin-bottom: 20px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .card {
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .card img {
+      width: 100%;
+      height: 210px;
+      object-fit: contain;
+      background: white;
+    }
+    .card .info {
+      padding: 12px;
+    }
+    .card h2 {
+      font-size: 16px;
+      margin: 0 0 7px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #e8edf3;
+      font-size: 12px;
+      margin: 3px;
+    }
+    .status {
+      background: #fff1c2;
+    }
+    .done {
+      background: #d8efdf;
+    }
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    #editor[hidden] {
+      display: none;
+    }
+    #editor {
+      position: fixed;
+      inset: 0;
+      background: #f4f5f7;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 330px;
+      grid-template-rows: 54px 1fr;
+    }
+    .editor-head {
+      grid-column: 1/-1;
+      background: #202020;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 18px;
+    }
+    .drawing {
+      overflow: auto;
+      padding: 12px;
+      background: #dce0e5;
+    }
+    #stage {
+      position: relative;
+      width: 1200px;
+      max-width: none;
+      background: white;
+      line-height: 0;
+    }
+    #page {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    #ink {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+    aside {
+      overflow: auto;
+      padding: 18px;
+      background: white;
+      border-left: 1px solid #ddd;
+    }
+    aside label {
+      display: block;
+      margin: 12px 0 4px;
+      font-weight: 600;
+    }
+    aside input,
+    aside select,
+    aside textarea {
+      width: 100%;
+      padding: 7px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    aside button {
+      margin: 5px 2px 2px 0;
+    }
+    small {
+      color: #666;
+      display: block;
+    }
+    .modes {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .modes button[aria-pressed='true'] {
+      background: #111;
+      color: white;
+    }
+    .error {
+      color: #a71e1e;
+      white-space: pre-wrap;
+    }
+    #preview {
+      white-space: pre-wrap;
+      background: #f4f5f7;
+      padding: 10px;
+      font-size: 13px;
+    }
+    .progress {
+      font-weight: 600;
+    }
+    .foot {
+      margin-top: 24px;
+      color: #666;
+    }
+    dialog {
+      max-width: 620px;
+      border: 0;
+      border-radius: 12px;
+      padding: 24px;
+    }
+    @media (max-width: 850px) {
+      #editor {
+        grid-template-columns: 1fr;
+        grid-template-rows: 54px 55vh 1fr;
+      }
+      aside {
+        border-left: 0;
+      }
+      main {
+        padding: 16px;
+      }
+    }
+  </style>
+  <header>
+    <h1>独立开发集 · 标注审核</h1>
+    <div id="summary"></div>
+    <button id="export-all" class="primary">导出审核包</button
+    ><button id="import-button">导入审核包</button
+    ><input id="import-file" type="file" accept="application/json" hidden /><span
+      id="save-state"
+    ></span>
+  </header>
+  <main>
+    <div class="notice">
+      <strong>这 48 家是待审核候选，不是标准答案。</strong
+      >已排除验收门店及其同店别名、相同文件。图纸类型为初筛，几何形态需逐页确认。本页仅收集边界、比例和主入口；道具、型号、柱体等尚未完整标注，不能据此声称整店识别达标。全部操作在本机完成。
+    </div>
+    <div class="toolbar">
+      <select id="filter">
+        <option value="all">全部候选</option>
+        <option value="pending">未完成审核</option>
+        <option value="reviewed">边界审核通过</option>
+        <option value="ambiguous">需要讨论</option></select
+      ><input id="search" placeholder="搜索编号或门店" /><span
+        id="progress"
+        class="progress"
+      ></span>
+    </div>
+    <div class="cards" id="cards"></div>
+    <p class="foot">
+      建议每批审核 8 家。审核记录暂存在本浏览器，请及时导出 JSON
+      备份；换电脑后用“导入审核包”继续。不会修改原图或验收集。
+    </p>
+  </main>
+  <section id="editor" hidden>
+    <div class="editor-head">
+      <span id="heading"></span>
+      <div>
+        <button id="zoom-out">缩小</button><button id="zoom-in">放大</button
+        ><button id="close">返回清单</button>
+      </div>
+    </div>
+    <div class="drawing">
+      <div id="stage"><img id="page" alt="门店原始主平面图" /><svg id="ink"></svg></div>
+    </div>
+    <aside>
+      <details open>
+        <summary>草稿与对图依据</summary>
+        <small id="evidence" style="white-space: pre-wrap"></small>
+      </details>
+      <div class="modes">
+        <button data-mode="boundary" aria-pressed="true">描边界</button
+        ><button data-mode="calibration" aria-pressed="false">量尺两点</button
+        ><button data-mode="entrance" aria-pressed="false">主入口两点</button>
+      </div>
+      <small id="mode-help"
+        >沿店铺真实边界依次点选，轮廓自动连回首点。不要沿家具、图框或尺寸线描边。</small
+      >
+      <button id="undo">撤销本工具末点</button><button id="clear">清空本工具</button>
+      <label for="length">量尺两点的已知长度（毫米）</label
+      ><input id="length" type="number" min="1" placeholder="按图中尺寸，如 4760" />
+      <label for="geometry">几何形态</label
+      ><select id="geometry">
+        <option value="">请选择</option>
+        <option>直墙</option>
+        <option>斜墙</option>
+        <option>弧形</option>
+        <option>多种形态</option>
+      </select>
+      <label><input id="open-edge" type="checkbox" style="width: auto" /> 有开放边／中岛边界</label>
+      <label for="page-type">核对图纸类型</label
+      ><select id="page-type">
+        <option value="">请选择</option>
+        <option value="vector-text">矢量，有文字层</option>
+        <option value="vector-outline">矢量，文字转曲／无有效文字层</option>
+        <option value="raster">图片／扫描件</option>
+        <option value="wrong-page">选页不正确</option>
+      </select>
+      <label for="reviewer">核对人</label><input id="reviewer" placeholder="姓名或审核标识" />
+      <label for="notes">疑问／依据</label
+      ><textarea id="notes" rows="3" placeholder="如柱位应扣除、入口不确定、尺寸需确认"></textarea>
+      <div id="preview"></div>
+      <div id="error" class="error" role="alert"></div>
+      <button id="approve" class="primary">确认本页边界标注</button
+      ><button id="ambiguous">标记需要讨论</button><button id="draft">保留草稿</button
+      ><small
+        >确认需要：简单边界、有效量尺、边界上的主入口、形态、图纸类型和核对人。任何修改会自动撤回“通过”状态。</small
+      >
+    </aside>
+  </section>
+  <script>
+    'use strict'
+    const dataset = /*DATASET*/ null
+    const $ = (s) => document.querySelector(s),
+      key =
+        'recognition-review:' +
+        dataset.id +
+        (dataset.reviewVersion ? ':' + dataset.reviewVersion : '')
+    const byId = new Map(dataset.samples.map((s) => [s.id, s]))
+    let records = {},
+      current = null,
+      mode = 'boundary',
+      zoom = 1200
+    const fresh = () => ({
+      boundary: [],
+      calibration: [],
+      entrance: [],
+      lengthMm: 0,
+      geometry: '',
+      openEdge: false,
+      pageType: '',
+      reviewer: '',
+      notes: '',
+      status: 'pending',
+      origin: 'manual',
+      agentStatus: 'unreviewed',
+      evidence: [],
+    })
+    for (const s of dataset.samples)
+      if (s.annotationDraft) records[s.id] = safeRecord(s.annotationDraft, s)
+    try {
+      const saved = JSON.parse(localStorage.getItem(key) || '{}')
+      if (saved.datasetId === dataset.id && saved.fingerprint === dataset.fingerprint)
+        for (const [id, r] of Object.entries(saved.records || {}))
+          records[id] = safeRecord(r, byId.get(id))
+    } catch {
+      $('#save-state').textContent = '本地记录无法读取，请导入备份'
+    }
+    function save() {
+      try {
+        localStorage.setItem(
+          key,
+          JSON.stringify({ datasetId: dataset.id, fingerprint: dataset.fingerprint, records }),
+        )
+        $('#save-state').textContent = '已保存在本浏览器'
+      } catch {
+        $('#save-state').textContent = '浏览器存储不可用，请立即导出备份'
+      }
+    }
+    const esc = (s) =>
+      String(s ?? '').replace(
+        /[&<>"']/g,
+        (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+      )
+    function render() {
+      const filter = $('#filter').value,
+        q = $('#search').value.toLowerCase()
+      let reviewed = 0
+      for (const s of dataset.samples) if (records[s.id]?.status === 'reviewed') reviewed++
+      $('#summary').textContent =
+        `固定版本 ${dataset.id} · ${dataset.samples.length} 家 · 验收集重叠 0 · 当前仅可审核边界相关标注`
+      const checked = dataset.samples.filter((s) => records[s.id]?.agentStatus === 'checked').length
+      const decisions = dataset.samples.filter((s) => records[s.id]?.status === 'ambiguous').length
+      $('#progress').textContent =
+        `人工审核通过 ${reviewed}/${dataset.samples.length} · 已对图待抽审 ${checked} · 待裁决 ${decisions}`
+      $('#cards').innerHTML = dataset.samples
+        .filter((s) => {
+          const status = records[s.id]?.status || 'pending'
+          return (
+            (filter === 'all' ||
+              (filter === 'pending' ? status !== 'reviewed' : status === filter)) &&
+            `${s.id} ${s.name}`.toLowerCase().includes(q)
+          )
+        })
+        .map((s) => {
+          const status = records[s.id]?.status || 'pending',
+            label =
+              status === 'reviewed'
+                ? '边界审核通过'
+                : status === 'ambiguous'
+                  ? '需要讨论'
+                  : records[s.id]?.agentStatus === 'checked'
+                    ? '已对图，待抽审'
+                    : records[s.id]?.origin === 'recognizer'
+                      ? '自动草稿，待校正'
+                      : '待审核'
+          return `<article class="card"><img loading="lazy" src="images/${esc(s.id)}-thumb.webp" alt="${esc(s.name)}"><div class="info"><h2>${esc(s.id)} · ${esc(s.name)}</h2><div>第 ${s.page} 页 · ${esc(s.si)} · ${esc(s.shopType)}</div><span class="tag">${esc(s.preliminaryType)}</span><span class="tag status ${status === 'reviewed' ? 'done' : ''}">${label}</span><br><button data-open="${esc(s.id)}" ${s.renderError ? 'disabled' : ''}>打开原图并标注</button>${s.renderError ? '<small class="error">原图未能渲染，需先解决来源问题</small>' : ''}</div></article>`
+        })
+        .join('')
+    }
+    function open(id) {
+      current = id
+      mode = 'boundary'
+      records[id] ??= fresh()
+      const s = byId.get(id),
+        r = records[id]
+      $('#heading').textContent = `${id} · ${s.name} · 第 ${s.page} 页`
+      $('#page').src = s.image.path
+      $('#ink').setAttribute('viewBox', `0 0 ${s.image.width} ${s.image.height}`)
+      $('#ink').setAttribute('preserveAspectRatio', 'none')
+      $('#editor').hidden = false
+      zoom = Math.min(1200, Math.max(300, $('.drawing').clientWidth - 24))
+      $('#length').value = r.lengthMm || ''
+      $('#geometry').value = r.geometry
+      $('#page-type').value = r.pageType
+      $('#reviewer').value = r.reviewer
+      $('#notes').value = r.notes
+      $('#evidence').textContent = r.evidence.join('\n')
+      $('#open-edge').checked = r.openEdge
+      $('#error').textContent = ''
+      setMode('boundary')
+      draw()
+    }
+    function setMode(m) {
+      mode = m
+      document
+        .querySelectorAll('[data-mode]')
+        .forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === m)))
+      $('#mode-help').textContent =
+        m === 'boundary'
+          ? '依次描出真实边界，自动连回首点；柱位凹角需要保留。'
+          : m === 'calibration'
+            ? '点击图中一段已标尺寸的两个端点，然后填入实际毫米数。'
+            : '点击主入口在边界上的两个端点。入口不明确时请标记“需要讨论”。'
+    }
+    function draw() {
+      const r = records[current]
+      $('#stage').style.width = zoom + 'px'
+      const colors = { boundary: '#007aff', calibration: '#bd3b11', entrance: '#128749' }
+      $('#ink').innerHTML = Object.keys(colors)
+        .map((k) => {
+          const pts = r[k]
+          return `${pts.length > 1 ? `<${k === 'boundary' && pts.length >= 3 ? 'polygon' : 'polyline'} points="${pts.map((p) => p.join(',')).join(' ')}" fill="${k === 'boundary' ? '#007aff18' : 'none'}" stroke="${colors[k]}" stroke-width="3"/>` : ''}${pts.map((p, i) => `<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="${colors[k]}"/><text x="${p[0] + 9}" y="${p[1] - 8}" font-size="18" fill="${colors[k]}">${i + 1}</text>`).join('')}`
+        })
+        .join('')
+      const scale = scaleOf(r)
+      $('#preview').textContent =
+        `边界 ${r.boundary.length} 点\n量尺 ${r.calibration.length}/2 点${scale ? ' · ' + scale.toFixed(4) + ' mm/px' : ''}\n主入口 ${r.entrance.length}/2 点\n状态：${r.status === 'reviewed' ? '边界审核通过' : r.status === 'ambiguous' ? '需要讨论' : '草稿'}`
+    }
+    const distance = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1])
+    function scaleOf(r) {
+      return r.calibration.length === 2 &&
+        distance(...r.calibration) > 5 &&
+        Number.isFinite(r.lengthMm) &&
+        r.lengthMm > 0
+        ? r.lengthMm / distance(...r.calibration)
+        : null
+    }
+    function safeRecord(a, s) {
+      if (!s?.image) throw new Error('门店图像无效')
+      const r = fresh()
+      for (const k of ['boundary', 'calibration', 'entrance']) {
+        if (
+          !Array.isArray(a[k]) ||
+          a[k].length > 2000 ||
+          a[k].some(
+            (p) =>
+              !Array.isArray(p) ||
+              p.length !== 2 ||
+              p.some((v) => !Number.isFinite(v)) ||
+              p[0] < 0 ||
+              p[1] < 0 ||
+              p[0] > s.image.width ||
+              p[1] > s.image.height,
+          )
+        )
+          throw new Error('坐标无效')
+        r[k] = a[k]
+      }
+      for (const k of ['geometry', 'pageType', 'reviewer', 'notes']) {
+        if (typeof a[k] !== 'string') throw new Error('文本字段无效')
+        r[k] = a[k]
+      }
+      r.lengthMm = Number.isFinite(a.lengthMm) ? a.lengthMm : 0
+      r.openEdge = a.openEdge === true
+      r.status = ['pending', 'ambiguous', 'reviewed'].includes(a.status) ? a.status : 'pending'
+      if (typeof a.reviewedAt === 'string') r.reviewedAt = a.reviewedAt
+      r.origin = ['manual', 'recognizer', 'visual-correction'].includes(a.origin)
+        ? a.origin
+        : 'manual'
+      r.agentStatus = ['unreviewed', 'checked', 'needs_decision'].includes(a.agentStatus)
+        ? a.agentStatus
+        : 'unreviewed'
+      if (
+        a.evidence !== undefined &&
+        (!Array.isArray(a.evidence) || a.evidence.some((v) => typeof v !== 'string'))
+      )
+        throw new Error('证据字段无效')
+      r.evidence = a.evidence ?? []
+      // 机器草稿不能凭一个状态字段升级成人工审核通过。
+      if (r.origin === 'recognizer' && r.status === 'reviewed') r.status = 'pending'
+      return r
+    }
+    function mutate() {
+      const r = records[current]
+      r.status = 'pending'
+      r.agentStatus = 'unreviewed'
+      delete r.reviewedAt
+      save()
+      draw()
+    }
+    $('#ink').addEventListener('click', (e) => {
+      if (!current) return
+      const box = e.currentTarget.getBoundingClientRect(),
+        s = byId.get(current),
+        r = records[current]
+      const p = [
+        Math.round(((e.clientX - box.left) / box.width) * s.image.width * 10) / 10,
+        Math.round(((e.clientY - box.top) / box.height) * s.image.height * 10) / 10,
+      ]
+      if (mode !== 'boundary' && r[mode].length === 2) r[mode] = []
+      r[mode].push(p)
+      mutate()
+    })
+    document
+      .querySelectorAll('[data-mode]')
+      .forEach((b) => (b.onclick = () => setMode(b.dataset.mode)))
+    $('#undo').onclick = () => {
+      records[current][mode].pop()
+      mutate()
+    }
+    $('#clear').onclick = () => {
+      records[current][mode] = []
+      mutate()
+    }
+    for (const [selector, field] of [
+      ['#length', 'lengthMm'],
+      ['#geometry', 'geometry'],
+      ['#page-type', 'pageType'],
+      ['#reviewer', 'reviewer'],
+      ['#notes', 'notes'],
+      ['#open-edge', 'openEdge'],
+    ])
+      $(selector).addEventListener('input', () => {
+        records[current][field] =
+          field === 'lengthMm'
+            ? Number($(selector).value)
+            : field === 'openEdge'
+              ? $(selector).checked
+              : $(selector).value
+        mutate()
+      })
+    const cross = (a, b, c) => (b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0])
+    function pointDistance(p, a, b) {
+      const len = (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2,
+        t = len
+          ? Math.max(
+              0,
+              Math.min(1, ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) / len),
+            )
+          : 0
+      return distance(p, [a[0] + t * (b[0] - a[0]), a[1] + t * (b[1] - a[1])])
+    }
+    function validate(r, s) {
+      if (!s.image) return ['原图未渲染，不可审核']
+      const errors = [],
+        p = r.boundary
+      if (p.length < 3) errors.push('边界至少需要 3 点')
+      let area = 0
+      for (let i = 0; i < p.length; i++) {
+        const a = p[i],
+          b = p[(i + 1) % p.length]
+        area += a[0] * b[1] - b[0] * a[1]
+        if (distance(a, b) < 1) errors.push('边界存在重复点')
+        for (let j = i + 2; j < p.length; j++) {
+          if (i === 0 && j === p.length - 1) continue
+          const c = p[j],
+            d = p[(j + 1) % p.length]
+          if (
+            (cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0) ||
+            pointDistance(c, a, b) < 0.1 ||
+            pointDistance(a, c, d) < 0.1
+          )
+            errors.push('边界自相交或重叠')
+        }
+      }
+      if (Math.abs(area) < 100) errors.push('边界面积过小')
+      if (!scaleOf(r)) errors.push('请完成两点量尺并填写有效毫米数')
+      if (r.entrance.length !== 2 || distance(...r.entrance) < 5) errors.push('请标明主入口两端')
+      else if (
+        !p.some((a, i) => r.entrance.every((e) => pointDistance(e, a, p[(i + 1) % p.length]) <= 12))
+      )
+        errors.push('主入口两端应落在同一段边界上；曲线入口或歧义请标记需要讨论')
+      if (!['直墙', '斜墙', '弧形', '多种形态'].includes(r.geometry)) errors.push('请选择几何形态')
+      if (!['vector-text', 'vector-outline', 'raster'].includes(r.pageType))
+        errors.push('请核对选页与图纸类型')
+      if (!r.reviewer.trim()) errors.push('请填写核对人')
+      for (const list of [r.boundary, r.calibration, r.entrance])
+        if (
+          list.some(
+            (p) =>
+              !Array.isArray(p) ||
+              p.length !== 2 ||
+              p.some((v) => !Number.isFinite(v)) ||
+              p[0] < 0 ||
+              p[1] < 0 ||
+              p[0] > s.image.width ||
+              p[1] > s.image.height,
+          )
+        )
+          errors.push('存在图像范围外或无效坐标')
+      return [...new Set(errors)]
+    }
+    $('#approve').onclick = () => {
+      const r = records[current],
+        errors = validate(r, byId.get(current))
+      $('#error').textContent = errors.join('\n')
+      if (errors.length) return
+      r.status = 'reviewed'
+      r.origin = 'manual'
+      r.reviewedAt = new Date().toISOString()
+      save()
+      draw()
+    }
+    $('#ambiguous').onclick = () => {
+      records[current].status = 'ambiguous'
+      save()
+      draw()
+    }
+    $('#draft').onclick = () => {
+      mutate()
+      $('#error').textContent = '已保留草稿，尚未纳入已审核标注'
+    }
+    $('#close').onclick = () => {
+      $('#editor').hidden = true
+      current = null
+      render()
+    }
+    $('#zoom-in').onclick = () => {
+      zoom = Math.min(3600, zoom + 300)
+      draw()
+    }
+    $('#zoom-out').onclick = () => {
+      zoom = Math.max(300, zoom - 300)
+      draw()
+    }
+    $('#cards').onclick = (e) => {
+      const b = e.target.closest('[data-open]')
+      if (b) open(b.dataset.open)
+    }
+    $('#filter').onchange = render
+    $('#search').oninput = render
+    $('#export-all').onclick = () => {
+      const annotations = dataset.samples.map((s) => {
+        const r = records[s.id] || fresh(),
+          errors = validate(r, s)
+        return {
+          store_id: s.id,
+          sourceSha256: s.sourceSha256,
+          image: s.image,
+          page: s.page,
+          ...r,
+          status:
+            r.status === 'reviewed' && !errors.length
+              ? 'reviewed'
+              : r.status === 'ambiguous'
+                ? 'ambiguous'
+                : 'pending',
+          mmPerPixel: scaleOf(r),
+          validationErrors: errors,
+        }
+      })
+      const blob = new Blob(
+        [
+          JSON.stringify(
+            {
+              schemaVersion: 1,
+              datasetId: dataset.id,
+              fingerprint: dataset.fingerprint,
+              reviewVersion: dataset.reviewVersion ?? null,
+              acceptanceListSha256: dataset.acceptanceListSha256,
+              annotationScope: dataset.annotationScope,
+              fullStoreQualificationAvailable: false,
+              annotations,
+            },
+            null,
+            2,
+          ),
+        ],
+        { type: 'application/json' },
+      )
+      const url = URL.createObjectURL(blob),
+        a = document.createElement('a')
+      a.href = url
+      a.download = dataset.id + '-审核.json'
+      a.click()
+      setTimeout(() => URL.revokeObjectURL(url), 1000)
+    }
+    $('#import-button').onclick = () => $('#import-file').click()
+    $('#import-file').onchange = async (e) => {
+      try {
+        const data = JSON.parse(await e.target.files[0].text())
+        if (
+          data.datasetId !== dataset.id ||
+          data.fingerprint !== dataset.fingerprint ||
+          (data.reviewVersion ?? null) !== (dataset.reviewVersion ?? null) ||
+          data.acceptanceListSha256 !== dataset.acceptanceListSha256
+        )
+          throw new Error('数据集版本或验收集指纹不匹配')
+        const incoming = {}
+        for (const a of data.annotations) {
+          const s = byId.get(a.store_id)
+          if (!s || a.sourceSha256 !== s.sourceSha256 || a.image?.sha256 !== s.image.sha256)
+            throw new Error('门店或原图指纹不匹配')
+          const r = safeRecord(a, s)
+          const errors = validate(r, s)
+          if (r.status === 'reviewed' && errors.length) r.status = 'pending'
+          incoming[s.id] = r
+        }
+        records = { ...records, ...incoming }
+        save()
+        render()
+        alert('审核包已导入')
+      } catch (error) {
+        alert('未导入：' + error.message)
+      } finally {
+        e.target.value = ''
+      }
+    }
+    render()
+    if (typeof location !== 'undefined') {
+      const requested = new URLSearchParams(location.search).get('store')
+      if (requested && dataset.samples.some((s) => s.id === requested)) open(requested)
+    }
+  </script>
+</html>

@@ -1,0 +1,847 @@
+{
+  "schemaVersion": 1,
+  "id": "recognition-development-20261029-v1",
+  "status": "候选已固定；标注未审核，不可作为标准答案",
+  "selection": "在查看识别结果前，按图纸初筛类型配额及 SI/铺型/地区分层，固定种子排序轮选",
+  "acceptanceListSha256": "789966ae1434a941f16b686a60865acc68de1460adf03feae6364006b345c3ac",
+  "featureSha256": "6363a189bc9e4cf69a90ac1f0cae2c1682392cb2940c922f3ac51e0b96ebf09f",
+  "acceptanceCount": 45,
+  "excludedStoreCount": 49,
+  "poolCount": 455,
+  "quotas": {
+    "vector-text": 32,
+    "vector-outline": 12,
+    "raster": 4
+  },
+  "overlap": {
+    "storeId": 0,
+    "sourceHash": 0,
+    "normalizedAlias": 0
+  },
+  "annotationScope": [
+    "边界",
+    "比例",
+    "主入口",
+    "形态标签"
+  ],
+  "fullStoreQualificationAvailable": false,
+  "fingerprint": "d8330d3e4484939238255f59006a0cd8754a0c6910c88b1dfd4e80b30f5e4c3f",
+  "samples": [
+    {
+      "id": "NEW-015",
+      "page": 16,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "8ffc162206186a6a7adafa06669fe7aef4424635aa13ec346159957907a36628",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-015.png",
+        "sha256": "ea26e5c4325874e8b063ae09365a30f93a2672b90922f99ef46e29736bbaa794"
+      }
+    },
+    {
+      "id": "NEW-019",
+      "page": 4,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "raster",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "a7c4926a9f45891ebe99a2195c918036b99f098e6a9b8bfa04b97eadffc61d86",
+      "image": {
+        "width": 2400,
+        "height": 1350,
+        "path": "images/NEW-019.png",
+        "sha256": "4088374eb52a7cb39a737a94af36114041082b8d9f7fb9d0ab1f2cd9f5ab40cc"
+      }
+    },
+    {
+      "id": "NEW-020",
+      "page": 2,
+      "si": "SI2.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "5625e4a3183552113fec6223319a803331fbeaa03b7107bb95d4cb1cf6626bea",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-020.png",
+        "sha256": "7e264ec6dba2ced6fe38327578e4aa5034dcf5a9461a63d47c970e01488636c6"
+      }
+    },
+    {
+      "id": "NEW-023",
+      "page": 1,
+      "si": "SI1.0",
+      "shopType": "专区",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "f506e7d6ab6fae5efbcf1208ea943ae65ac0adb1f9fe8a1952c0ec89db31e03a",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-023.png",
+        "sha256": "36fd622e1c74bb0380f04400cb81678ae3a12ecfea50c41bbe30cfed2ea6ec60"
+      }
+    },
+    {
+      "id": "NEW-024",
+      "page": 9,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "8d7adb4ddb79900db2aebcce44c5809786458581d2b5e7ed4759880d7e1c66f0",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/NEW-024.png",
+        "sha256": "ac78f05ae2bd0949899c4790f3f1c38ee5a29f1d5618ec40b6988e797ab87f56"
+      }
+    },
+    {
+      "id": "NEW-026",
+      "page": 13,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "7946fdaeeb4b4bc82c1a32c7e758175e98f8809ad5ceb097b20954a607b45a86",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/NEW-026.png",
+        "sha256": "6dc51a742d708b6ae11f4b5f91daf3bb769c5a9a4ea5283a1947066bd1758a24"
+      }
+    },
+    {
+      "id": "NEW-049",
+      "page": 15,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "7e80ae6e237f930ca4210d5aef2622a9c9b52225fbc6d48ee2f14493ecc56165",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-049.png",
+        "sha256": "7c3145fb8e54b03f07e0ca74880f90f985038b2d5103be4190ea04404686bf14"
+      }
+    },
+    {
+      "id": "NEW-064",
+      "page": 15,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "a8aae8da4b6c64e06ce333186de156540c09f89e3eaecde25766a2c7ee5e1033",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-064.png",
+        "sha256": "69384e125d36a99e38d38998c6ec1acc2c052e4ea28f8fab785d9d348d6efa35"
+      }
+    },
+    {
+      "id": "NEW-065",
+      "page": 13,
+      "si": "SI2.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "86dcfa3329fe89924ea85ac40c63e4bb3d6147685222dfeb0072d3b0beef8a0a",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/NEW-065.png",
+        "sha256": "37424634918b9d00a242afb1ffda64290693b0b179e75bc0b6707c3f47652a34"
+      }
+    },
+    {
+      "id": "NEW-084",
+      "page": 17,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "49686fb2ac7a5de1ec4f2f2713e1a1b4ec71ece317e4124566227496a9386354",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/NEW-084.png",
+        "sha256": "94f7b335824d5b460e38a1887bd60699cce089ef21be26dd51e3f18dd0db3842"
+      }
+    },
+    {
+      "id": "NEW-096",
+      "page": 3,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "raster",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "134b4b2c7e939ec9f9db5bfc5e576561843a68b1a43a95aad4fe122a0ce440a3",
+      "image": {
+        "width": 2400,
+        "height": 1350,
+        "path": "images/NEW-096.png",
+        "sha256": "48956bc2cd8bd1fce9216913f2d4da1f1c4e03a05a1a3feb73d12f9f9e44793e"
+      }
+    },
+    {
+      "id": "NEW-098",
+      "page": 13,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "3a9454a9007d76d46798bf1c00df0aea4b50b224ff08a7db78a6de5b929f2a4c",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/NEW-098.png",
+        "sha256": "dafa7d3207b9026867f2de24eb5bad12a5f6ca0ca68ccb4d05f734030681a942"
+      }
+    },
+    {
+      "id": "NEW-099",
+      "page": 12,
+      "si": "SI2.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "b309c61706d38d906289bcdc7bed4f6950536d5d58c3e688276f89f8624cdfea",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/NEW-099.png",
+        "sha256": "3831c3f019e2ca647dc08119e7b2c27ed74bf3ef5673ff05a20a7671001619fa"
+      }
+    },
+    {
+      "id": "PDF-003",
+      "page": 6,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "dfa9885d71e1792f16d1582af42815a0563641a128e059fe8b3fc68919161164",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-003.png",
+        "sha256": "ddf0de40381137272e6ad9828cce7f39a6d590ceed1f7f562b9ad37f4ddaec29"
+      }
+    },
+    {
+      "id": "PDF-050",
+      "page": 10,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "84f1c75f1f393e297700ee49b55d29ebdc985577084567a8a2066784c31d9cb9",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-050.png",
+        "sha256": "05d7eaed2e180ed5adcfb9beb608760a4051515d796f75e2efe3549efd57435e"
+      }
+    },
+    {
+      "id": "PDF-051",
+      "page": 1,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "7a71f09f7f1ccb5ea188c19e645fffb8350066ddd7ab0f225d6ac6eccdf9c9dc",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-051.png",
+        "sha256": "82e663784b24eef1b5933dd284998add2a9d268ccbbc662faf988c53f493d44f"
+      }
+    },
+    {
+      "id": "PDF-073",
+      "page": 4,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "raster",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "7de29d9944a3db1b22a9eead0b841fa3b70b0c3236853958a912558e99d067f3",
+      "image": {
+        "width": 2400,
+        "height": 1350,
+        "path": "images/PDF-073.png",
+        "sha256": "4910711d0059edac483aedbe9445b1ee57504c4a28c4c1e4a57b685a2674bc6f"
+      }
+    },
+    {
+      "id": "PDF-079",
+      "page": 2,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "bc28fef737dbf163ad8d01cadd241bfb5f20aa46c3db39dd3fb38b2be0644af3",
+      "image": {
+        "width": 2400,
+        "height": 1350,
+        "path": "images/PDF-079.png",
+        "sha256": "2b2b5bf8659c208d8447588b7d7a0451a4b9d0fcf8b1d4737cae4c4a757eac12"
+      }
+    },
+    {
+      "id": "PDF-090",
+      "page": 1,
+      "si": "SI1.0",
+      "shopType": "专区",
+      "region": "海外",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "5cbff81c4037d6f8eb9b384a1d8ae42e989287cbe1644b7d9658dbf0eb0499d7",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-090.png",
+        "sha256": "c3f3db9cbd3039a616ad6a0d47188673e55568ec7c68ad90cf4e41ace17d86df"
+      }
+    },
+    {
+      "id": "PDF-095",
+      "page": 10,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "cda69cbae05ef1452e4beffc2928209b2a2eb8ae41bb2b86b4b6784806bdabc1",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-095.png",
+        "sha256": "5d18ad8ce7f0f70de6cd5f087c6624672313ce0036a2fce3228fb072d1d9267e"
+      }
+    },
+    {
+      "id": "PDF-096",
+      "page": 10,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "港澳台",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "4d0f4c03daec1d15f6985629adddf1b68d710643e89d7dbd9f1ef2700e22dd19",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-096.png",
+        "sha256": "631f9d6431e34da7ab77af28b1fe5ff7be87a3d6a5599a95b8a41dbb46ca5382"
+      }
+    },
+    {
+      "id": "PDF-097",
+      "page": 10,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "02a8704e29744ba05d3e6290134a8f8aafa7cd07a292753be7a99a8cf7a179d9",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-097.png",
+        "sha256": "8a19e3509511110da2a3dabe8984ad219c88893d7c31b3bf270d1ca22a823020"
+      }
+    },
+    {
+      "id": "PDF-098",
+      "page": 12,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "7bffbff41edf785f85fba20be00ed931b92cf0ef2f947991695368703e92a133",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-098.png",
+        "sha256": "8c7c99d8fccb27c8e63771f1b6806d85a17de4ca3eed4b741f7fff0259f9a6d4"
+      }
+    },
+    {
+      "id": "PDF-099",
+      "page": 11,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "0b1b61e4c962bfdd2b512b0640bdc19f7557f9927d70ae3bfad20f69e8b749a5",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-099.png",
+        "sha256": "40fef453babd1e5a4cb2306d31d218373a0bf034bc927c8ea01c4fb1b2476a9e"
+      }
+    },
+    {
+      "id": "PDF-101",
+      "page": 5,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "港澳台",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "42bb31e5dcc4e6c110503c64a64112d05e2930f516f052bf6ab0416eae61e5d5",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-101.png",
+        "sha256": "63dd671bf5f0897a1f9694ae28cc7faa29810bf6bd45b528b17835fb198f9216"
+      }
+    },
+    {
+      "id": "PDF-140",
+      "page": 13,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "d8a20c258bf87143b08ee4932f5324b7860f3463d9bae6c745a302f335d4a8d7",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-140.png",
+        "sha256": "db44d8812cadd43106ed3ff96436f580e9ef54e5d612395dd0a1e70b14e869ae"
+      }
+    },
+    {
+      "id": "PDF-189",
+      "page": 6,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "25733a6c2633c2ddef2bf83a648d72f0ebdf9616614dea4498fe2cb4d96c7297",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-189.png",
+        "sha256": "4b957e43ed74e3184d0604dc9aafee232f745488a85f137c339d114fe5c0fc44"
+      }
+    },
+    {
+      "id": "PDF-202",
+      "page": 13,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "c075a140cba3688f66ea2eb67d8988e55f387543b9a6508bdb0301f43aacfa80",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-202.png",
+        "sha256": "97495ddebf67b94259e45158c5c38d42beb2a2f52a06c27d0ff258125127c1ba"
+      }
+    },
+    {
+      "id": "PDF-217",
+      "page": 12,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "33ea1fff43c619cff65cb48fb59ed4ce0214f5e2ac0687de2f942ca4d5bf1613",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-217.png",
+        "sha256": "e3c47b33fe6e2b0b9eec7a57496ee055bea4a12432740e7458943e2e831aafde"
+      }
+    },
+    {
+      "id": "PDF-245",
+      "page": 11,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "012184a35ba09f71c4e068a0c4d40825b2dfc8aa19158bd829c27ffce377ffe9",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-245.png",
+        "sha256": "8e4d58c107aa7a64a00c81bdb2bd644abbe84c7ca66f83fce2176110ee7a684f"
+      }
+    },
+    {
+      "id": "PDF-259",
+      "page": 8,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "84ae588d3c71cec5acd75d60920f3992337e95bd2591c56ab9de22d0dc7afd22",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-259.png",
+        "sha256": "2ba1d02a3ce944ebfb060c586498d64d4a841fe61c8c0e4c58d2c8882099a2a9"
+      }
+    },
+    {
+      "id": "PDF-261",
+      "page": 6,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "d6c3c356c158b0c9be2e811a1664852f3ad630989162a736e4e3ed0c6dab5fcb",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-261.png",
+        "sha256": "b6e5705357109ec23cd16015cb35401dc451267497385e071bcd46695157a01c"
+      }
+    },
+    {
+      "id": "PDF-296",
+      "page": 14,
+      "si": "SI2.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "ce0fbcbe1e32113c9552de2f6a5c3afad6461af35430f0b5ef6aa7c474a4600c",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-296.png",
+        "sha256": "28f220b49c80933600ea33140b851f22949e6c13cbf26ac0b28c7bbe5a4e773f"
+      }
+    },
+    {
+      "id": "PDF-302",
+      "page": 13,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "db3111ec9355498eb11ddf63664118da87142f961bf60a820d538006ad25a498",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-302.png",
+        "sha256": "fbbdf90ca80eb91c029a07855124861765ac0e5b0a52f4cd907fd2a4f9f93d70"
+      }
+    },
+    {
+      "id": "PDF-321",
+      "page": 10,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "9dce34bf320d214b2f92fc2a871f4206a5f428186b41778c6b2abc058af696b0",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-321.png",
+        "sha256": "f56cc72fcc2475b2a25e5a1f9892b175b8c82cd7921533d246b6102172fb3911"
+      }
+    },
+    {
+      "id": "PDF-325",
+      "page": 9,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "f1f832f6b30f009c49798de5066d5cf189be50e39c0c1a2afa37ceea57786667",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-325.png",
+        "sha256": "3295a3a59594c076b4c50a751a792b3abe122af07c023cc5e0ba871f7601e9cb"
+      }
+    },
+    {
+      "id": "PDF-330",
+      "page": 9,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "4d3c863dc039842cb4f221301deb6d51273f1354a460dd486f4c730582c98836",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-330.png",
+        "sha256": "2cf14e9334cee3f42fa5b59bc49f6ab98f50623b1fbe8bf8f0c4411e8463674f"
+      }
+    },
+    {
+      "id": "PDF-342",
+      "page": 11,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "aaf01f352a641d4b07407d33e475db6a611868b84c3644ecf9eca718746ea498",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-342.png",
+        "sha256": "1b6576a71dd2e2368e8b35ff2df08ffb624494f36f546b30b81e882e25249bac"
+      }
+    },
+    {
+      "id": "PDF-351",
+      "page": 1,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "743e1b9b678a3d2d1f86361413d68f2f02e6123122b04ab4dc3996276ba2d8fe",
+      "image": {
+        "width": 2400,
+        "height": 1696,
+        "path": "images/PDF-351.png",
+        "sha256": "a3177ebc7d9f7674ed4c0ff7d3cfaa5d62524081bc69ffd002545d7598da99be"
+      }
+    },
+    {
+      "id": "PDF-353",
+      "page": 6,
+      "si": "SI1.0",
+      "shopType": "专区",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "eed33f35acf0d26236269308795167590b542026fcd42b1dce36a810f262b727",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-353.png",
+        "sha256": "fd468e29b0473206b74d330d5aae6abc4df72c4cb177c84f8839c2ee2f72a61c"
+      }
+    },
+    {
+      "id": "PDF-363",
+      "page": 9,
+      "si": "SI1.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "f0046db1ec9cf9c580fdfa35bd479b7e31bfe62024de4a8aab91e890fdf1f053",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-363.png",
+        "sha256": "0e69d6e9606d593dc14034d7031ce9adf2ff367f4c089823e7df1b1344039295"
+      }
+    },
+    {
+      "id": "PDF-393",
+      "page": 15,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "f605a001d9e06be1e9b395bc22d0841e54852228ee4cb4db7afadee9e55f4e62",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-393.png",
+        "sha256": "2d1be86c77782e1415ac59e797191f7e56f4998bea4a3a6662346cfe8f8e9a09"
+      }
+    },
+    {
+      "id": "PDF-398",
+      "page": 6,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "中国大陆",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "0f21a116f78ec298528962b49a9e46c2d99e5bd818bf1328555a4bfee8d4a2ff",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-398.png",
+        "sha256": "926c4ff915762e47914dd42d72e331c57cffdf018f74b45b9022aec1860b4d90"
+      }
+    },
+    {
+      "id": "PDF-405",
+      "page": 8,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "50e916a0439a05ccdcf57f2a18eea1afddbf656da5e0134c75d9c3e780ad2046",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-405.png",
+        "sha256": "e77c588f6bb052e3d77b7dd69746b99e90d70cbdf78ab8f38cc6a70ab104eed1"
+      }
+    },
+    {
+      "id": "PDF-407",
+      "page": 13,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "91867586d61743fac76a23f80c7a805e9440f580791910585ee1ad0701c276be",
+      "image": {
+        "width": 2400,
+        "height": 1698,
+        "path": "images/PDF-407.png",
+        "sha256": "2f8421c9c145f772f59a4576c6d08a4f688d279193e7cf09c5e1ce827f4c2294"
+      }
+    },
+    {
+      "id": "PDF-411",
+      "page": 13,
+      "si": "SI2.0",
+      "shopType": "边厅店",
+      "region": "港澳台",
+      "preliminaryType": "vector-outline",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "733efc657ff88155110bc87b57496d9a617498cff1c626db067f1adfd365415d",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-411.png",
+        "sha256": "fd3e64b80b782432fd81f14ebf400afbc3905b9598766cef0dfd9415e8a312c4"
+      }
+    },
+    {
+      "id": "PDF-412",
+      "page": 9,
+      "si": "SI1.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "vector-text",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "b551e2a036ab50b920ee45175a16230a8230b927f7e49f910eefb4a415acd1b4",
+      "image": {
+        "width": 2400,
+        "height": 1697,
+        "path": "images/PDF-412.png",
+        "sha256": "602a55c101e1733eb5bf7c30d3f0f6c5e373100aa90345240543df6c5c830663"
+      }
+    },
+    {
+      "id": "PDF-417",
+      "page": 3,
+      "si": "SI2.0",
+      "shopType": "中岛店",
+      "region": "海外",
+      "preliminaryType": "raster",
+      "geometry": "待人工确认",
+      "reviewStatus": "待审核",
+      "sourceSha256": "0343fa5337f20a30f70e64a4f2e6f4f0f6551a42ffe7c5ee6c3eaddc38b5601f",
+      "image": {
+        "width": 2400,
+        "height": 1350,
+        "path": "images/PDF-417.png",
+        "sha256": "8d84b10b15ec3b30fcabe09c804122d6a602119dd6e5f93dacaaec8724c50aa2"
+      }
+    }
+  ]
+}
