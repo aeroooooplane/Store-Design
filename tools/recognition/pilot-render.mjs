@@ -215,7 +215,7 @@ export async function renderPlan(plan, bom, title) {
       x = 30
       y = 70
     }
-    doc.text(line, x, y, { width: 295 })
+    doc.fontSize(9).fillColor('#333').text(line, x, y, { width: 295 })
     y += h
   }
   doc.end()
