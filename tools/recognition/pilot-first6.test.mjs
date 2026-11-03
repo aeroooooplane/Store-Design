@@ -11,6 +11,7 @@ import { scene } from './pilot-render.mjs'
 import { sha256 } from './pilot-contract.mjs'
 import { catalogReader } from './pilot-assets.mjs'
 import sharp from 'sharp'
+import { enrichInput } from './pilot-enrich-input.mjs'
 
 describe('首6输入、校正质检与出图（纯合成）', () => {
   let root, args, m, s, input, plan, bom, report
@@ -54,6 +55,35 @@ describe('首6输入、校正质检与出图（纯合成）', () => {
     assert.equal(q.userSampled, false)
     assert.equal(q.trainingEligible, false)
     assert.equal(q.manualChecksPending.length, 4)
+  })
+  it('尺寸补充只写新包，保留原handoff及BOM状态且不覆盖源', async () => {
+    const rows = []
+    for (const sample of m.samples.slice(0, 6)) {
+      const h = await read(path.join(args.bundle, sample.store_id, 'handoff.json'))
+      rows.push({
+        store_id: sample.store_id,
+        sourceSha256: h.sourceSha256,
+        sourcePage: h.sourcePage,
+        humanReviewed: false,
+        dimensions: h.dimensions,
+      })
+    }
+    const dimensions = path.join(root, 'inputs/dimensions.json'),
+      out = path.join(root, 'enriched')
+    await writeFile(dimensions, JSON.stringify(rows))
+    await enrichInput({ bundle: args.bundle, dimensions, out })
+    const h = await read(path.join(out, s.store_id, 'handoff.json'))
+    assert.equal(
+      h.parentHandoffSha256,
+      sha256(await readFile(path.join(args.bundle, s.store_id, 'handoff.json'))),
+    )
+    assert.deepEqual(h.bom, input.h.bom)
+    assert.equal(
+      sha256(await readFile(path.join(out, s.store_id, 'evidence/original-handoff.json'))),
+      h.parentHandoffSha256,
+    )
+    await inspectInput({ bundle: out, resources: args.resources, sample: s, manifest: m })
+    await assert.rejects(enrichInput({ bundle: args.bundle, dimensions, out }))
   })
   it('拒绝镜像、拉伸及旋转矩阵不一致', () => {
     for (const change of [
