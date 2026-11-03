@@ -454,7 +454,7 @@ Codex 的 12 个旧 worktree 分两处：
 | Q4 主工作区 | 删除 18 项：`demo/`、三张 png、`tools/pdf-review`、`tools/training` 的 `.venv`/`runtime`/`uv.zip`、`tools/data-cleaning/.venv`、`data/model-conversion`、`素材库/`、`output/web-qa`、`apps/web/dist`、5 处 `__pycache__`。每项删前确认不含已跟踪文件、没有指向外部的连接。`tmp/`、`outputs/`、`data/archive` 保留 | 约 2.92 GB；用户的 dev 服务（5173、3001）始终在运行 |
 | Q5 远程分支 | 删除 132 个：附录 B.1 的 130 个，加上 `claude/prune-register`、`claude/prune-review`。删前逐个核对提交号与附录 B 一致、已合并、无开放 PR | 全部成功，远程剩 21 个 |
 | Q6 本地分支 | `git branch -d` 删除 133 个（只删已合并的，全部通过）；`-D` 删除 `upload/pdfs-20261008`（`a04d4d8f`） | 本地剩 25 个：main、`claude/prune-stage1`、`archive/stage3a-gold`（`drawing-archive-plan` 检出），以及 Codex 的 22 个 |
-| Q7 LFS 孤儿 | 隔离前复核：1155 个仍无任何提交或暂存区引用。移到 `D:\prune-quarantine-20261103\lfs-orphans`，附清单和说明 | 4,507,754,870 字节；2026-12-03 之后若无人反映缺失再删除 |
+| Q7 LFS 孤儿 | 隔离前复核：1155 个仍无任何提交或暂存区引用。移到 `D:\prune-quarantine-20261103\lfs-orphans`，附清单和说明 | 4,507,754,870 字节；2026-12-03 到期。GitHub 上没有这些对象，额度用完也补传不了，删除前再向用户确认 |
 | Q8 | GitHub LFS 额度已用完，被钉住的对象一旦清掉就下载不了，改为不清理 | `.git/lfs` 保留 1139 个、13.76 GB；`git lfs fsck --objects origin/feat/recognition-openings` 通过 |
 
 前后对比：
