@@ -35,6 +35,11 @@
   /* Red markers on drawings and renders (table labels, the main slot): must stay visible on any picture. */
   --mark: #e60012;
   --mark-hover: #c40010;
+  /* History stages: dots and their compact legend. */
+  --history-space: #d7aa48;
+  --history-plan: #51b6c9;
+  --history-white: #6c95d9;
+  --history-render: #a18ac7;
   /* Shape */
   --radius: 8px;
   --radius-lg: 14px;

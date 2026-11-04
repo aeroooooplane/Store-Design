@@ -24,7 +24,7 @@ import {
   workbenchKeys,
 } from './api.ts'
 import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
-import { HistoryTree } from './HistoryTree.tsx'
+import { HistoryTree, HistoryViewProvider } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
@@ -211,7 +211,7 @@ export function Workbench({ project }: { project: Project }) {
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
           <ViewMemoryContext.Provider value={viewMemory.current}>
-            {content}
+            <HistoryViewProvider key={project.id}>{content}</HistoryViewProvider>
           </ViewMemoryContext.Provider>
         </LeftTabContext.Provider>
       </WorkbenchInfoContext.Provider>

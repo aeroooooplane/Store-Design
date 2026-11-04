@@ -144,40 +144,150 @@ legend {
   min-width: 0;
 }
 .history-canvas {
-  overflow: auto;
-  max-height: 460px;
-  padding: var(--space-1) 0;
+  position: relative;
+  overflow: hidden;
+  height: 280px;
+  min-height: 220px;
+  background-color: var(--paper);
+  background-image: radial-gradient(circle, var(--line) 0.65px, transparent 0.8px);
+  background-size: 16px 16px;
 }
 .history-canvas svg {
   display: block;
-  margin: 0 auto;
+  width: 100%;
+  height: 100%;
 }
-.tree-item {
-  cursor: pointer;
+.history-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 8px;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+}
+.history-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.history-legend i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tree-color);
+}
+.tree-color-project {
+  --tree-color: var(--ink);
+}
+.tree-color-space {
+  --tree-color: var(--history-space);
+}
+.tree-color-plan {
+  --tree-color: var(--history-plan);
+}
+.tree-color-white {
+  --tree-color: var(--history-white);
+}
+.tree-color-render {
+  --tree-color: var(--history-render);
+}
+.tree-edge {
+  stroke: var(--line-strong);
+  stroke-width: 1;
+  opacity: 0.45;
+  transition:
+    opacity 240ms,
+    stroke 240ms;
+}
+.tree-edge.related {
+  stroke: var(--history-plan);
+  stroke-width: 1.5;
+  opacity: 0.9;
+}
+.tree-item,
+.tree-root {
   outline: none;
 }
-.tree-item .tree-node.current {
-  stroke: var(--ink);
-  stroke-width: 2px;
+.tree-hit {
+  fill: transparent;
 }
-.tree-item:hover .tree-node,
-.tree-item:focus-visible .tree-node {
-  stroke: var(--ink);
-  stroke-width: 1.5px;
+.tree-node {
+  fill: var(--tree-color);
+  stroke: var(--paper);
+  stroke-width: 1.5;
 }
-.tree-item.hidden-node {
-  opacity: 0.45;
+.tree-selection {
+  fill: none;
+  stroke: var(--tree-color);
+  stroke-width: 1.5;
+  opacity: 0;
+}
+.tree-item.current .tree-selection,
+.tree-item:hover .tree-selection,
+.tree-item:focus-visible .tree-selection,
+.tree-root:hover .tree-selection,
+.tree-root:focus-visible .tree-selection {
+  opacity: 1;
+}
+.tree-item .tree-node,
+.tree-selection {
+  transition: opacity 240ms;
+}
+.tree-item.unrelated .tree-node {
+  opacity: 0.55;
 }
 .tree-item.hidden-node .tree-node {
-  stroke: var(--ink);
-  stroke-dasharray: 4 3;
-}
-.tree-draft circle {
   fill: var(--paper);
-  stroke: var(--ink);
+  stroke: var(--tree-color);
+  stroke-dasharray: 2 2;
 }
-.tree-draft text {
+.tree-draft {
   fill: var(--ink);
+  stroke: var(--paper);
+  stroke-width: 1;
+}
+.history-caption {
+  padding: 8px 12px;
+  border-top: 1px solid var(--line-soft);
+  color: var(--muted);
+  font-size: var(--fs-xs);
+}
+.history-caption p {
+  margin: 0;
+  line-height: 1.7;
+}
+.history-path {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.history-tooltip {
+  position: fixed;
+  z-index: 100;
+  width: max-content;
+  max-width: 240px;
+  padding: 8px 12px;
+  display: grid;
+  gap: 4px;
+  pointer-events: none;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-pop);
+  font-size: var(--fs-xs);
+  overflow-wrap: anywhere;
+}
+.history-tooltip span {
+  color: var(--muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tree-edge,
+  .tree-item .tree-node,
+  .tree-selection {
+    transition: none;
+  }
 }
 
 /* Plan drawing (store-drawing style) */
@@ -903,7 +1013,7 @@ ul.issues li.warning {
 }
 .wb-tab-panel .history-canvas svg {
   max-width: 100%;
-  height: auto;
+  height: 100%;
 }
 .wb-tab-panel .model-list {
   max-height: none;
@@ -1807,6 +1917,13 @@ ul.issues li.warning {
   }
   .wb-left .wb-tabs-card {
     height: clamp(180px, 30dvh, 300px);
+  }
+  /* The graph fits as a whole on narrow screens; other tabs retain their bounded scroll area. */
+  .wb-left .wb-tabs-card:has(.wb-tab-panel:not([hidden]) > .history:not(.enlarged)) {
+    height: auto;
+  }
+  .history:not(.enlarged) .history-canvas {
+    height: 220px;
   }
   .project-bar h2 {
     overflow-wrap: anywhere;
