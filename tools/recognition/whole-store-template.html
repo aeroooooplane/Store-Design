@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width,initial-scale=1" /><meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'none'; img-src 'self' file: data: blob:; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'"
+  /><title>48家开发集 · 整店标注</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      background: #f3f5f7;
+      color: #202c3c;
+      font:
+        15px/1.5 system-ui,
+        'Microsoft YaHei',
+        sans-serif;
+    }
+    button,
+    input,
+    select,
+    textarea {
+      font: inherit;
+    }
+    button {
+      cursor: pointer;
+      padding: 8px 13px;
+      border: 1px solid #cdd5df;
+      background: white;
+      border-radius: 7px;
+      color: inherit;
+    }
+    button:hover {
+      border-color: #2778b3;
+      background: #edf5fd;
+    }
+    button.primary {
+      background: #186a9f;
+      color: white;
+      border-color: #186a9f;
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+    input,
+    select,
+    textarea {
+      max-width: 100%;
+      border: 1px solid #cdd5df;
+      border-radius: 5px;
+      padding: 7px;
+      background: white;
+    }
+    input[type='checkbox'] {
+      accent-color: #186a9f;
+    }
+    textarea {
+      width: 100%;
+      min-height: 65px;
+    }
+    header {
+      padding: 20px 28px;
+      background: white;
+      border-bottom: 1px solid #ddd;
+    }
+    h1 {
+      font-size: 23px;
+      margin: 0 0 5px;
+    }
+    h2 {
+      font-size: 18px;
+      margin: 0 0 12px;
+    }
+    p {
+      margin: 8px 0;
+    }
+    .muted {
+      color: #64758b;
+      font-size: 13px;
+    }
+    .toolbar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .badge {
+      border-radius: 6px;
+      background: #e4f3e9;
+      color: #287344;
+      padding: 3px 8px;
+      font-size: 12px;
+    }
+    .pending {
+      background: #fff0d4;
+      color: #926000;
+    }
+    main {
+      max-width: 1550px;
+      margin: auto;
+      padding: 22px;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #d8dfe7;
+      border-radius: 10px;
+      overflow: hidden;
+      text-align: left;
+      padding: 0;
+    }
+    .card img {
+      width: 100%;
+      height: 155px;
+      object-fit: contain;
+      background: #fff;
+    }
+    .card .body {
+      padding: 12px;
+    }
+    .card strong {
+      display: block;
+    }
+    .question-row {
+      display: grid;
+      grid-template-columns: 125px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      background: white;
+      border-bottom: 1px solid #e6ebef;
+      padding: 12px;
+    }
+    .question-row p {
+      margin: 2px 0;
+    }
+    .question-row small {
+      color: #64758b;
+    }
+    #notice {
+      position: fixed;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #25384c;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      z-index: 100;
+      max-width: 90vw;
+      white-space: pre-line;
+    }
+    #editor {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: #f5f6f8;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+    #editor[hidden] {
+      display: none;
+    }
+    .edit-head {
+      background: white;
+      padding: 12px 20px;
+      border-bottom: 1px solid #d8dfe7;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .edit-head h2 {
+      margin: 0;
+    }
+    .edit-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 355px;
+      min-height: 0;
+    }
+    .canvas-wrap {
+      overflow: auto;
+      padding: 12px;
+      position: relative;
+    }
+    #canvas {
+      width: 100%;
+      height: 100%;
+      min-height: 500px;
+      background: white;
+      touch-action: none;
+      border: 1px solid #d8dfe7;
+    }
+    aside {
+      background: white;
+      overflow-y: auto;
+      border-left: 1px solid #ddd;
+      padding: 15px;
+    }
+    aside label {
+      display: block;
+      margin: 7px 0;
+      font-size: 13px;
+    }
+    aside label input:not([type='checkbox']),
+    aside select {
+      width: 100%;
+    }
+    .row {
+      display: flex;
+      gap: 6px;
+    }
+    .row > * {
+      flex: 1;
+      min-width: 0;
+    }
+    .section {
+      padding: 13px 0;
+      border-bottom: 1px solid #e2e7ed;
+    }
+    .section:first-child {
+      padding-top: 0;
+    }
+    .section h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+    .items {
+      max-height: 160px;
+      overflow: auto;
+      border: 1px solid #e2e7ed;
+      border-radius: 5px;
+    }
+    .item {
+      display: block;
+      text-align: left;
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+      padding: 6px 9px;
+      font-size: 13px;
+    }
+    .item.selected {
+      background: #e4f2fc;
+      color: #075d92;
+    }
+    .small {
+      font-size: 12px;
+      padding: 5px 8px;
+    }
+    .footer {
+      background: white;
+      border-top: 1px solid #d5dde5;
+      padding: 10px 18px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer .spacer {
+      flex: 1;
+    }
+    #problems {
+      color: #ad3b19;
+      font-size: 13px;
+      white-space: pre-line;
+    }
+    .qbox {
+      border: 1px solid #e5d0a4;
+      background: #fffbf2;
+      border-radius: 7px;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    .qbox p {
+      font-size: 13px;
+    }
+    .qbox select {
+      width: 100%;
+      font-size: 13px;
+    }
+    details summary {
+      cursor: pointer;
+      font-size: 13px;
+    }
+    #sourceNotes {
+      font-size: 12px;
+      color: #64758b;
+    }
+    .legend {
+      font-size: 12px;
+      color: #607083;
+    }
+    .drawing {
+      color: #a74700;
+      font-weight: 600;
+    }
+    a {
+      color: #146b9e;
+    }
+    .empty {
+      padding: 30px;
+      text-align: center;
+      color: #768498;
+    }
+    @media (max-width: 950px) {
+      .edit-grid {
+        grid-template-columns: minmax(0, 1fr) 290px;
+      }
+      .edit-head {
+        padding: 8px;
+      }
+      .footer {
+        padding: 7px;
+      }
+      #canvas {
+        min-height: 420px;
+      }
+    }
+    [hidden] {
+      display: none !important;
+    }
+  </style>
+  <header>
+    <h1>整店标注审核</h1>
+    <div class="muted">原轮廓审核已保留 · 本轮补家具、柱位和多入口 · 所有操作保存在本机</div>
+    <div class="toolbar">
+      <button id="export" class="primary">导出整店审核包</button
+      ><button id="evalExport">导出复评入口参照</button><button id="import">导入审核包</button
+      ><input type="file" id="file" accept=".json" hidden /><span id="stats"></span>
+    </div>
+  </header>
+  <main id="home">
+    <div class="toolbar">
+      <button id="allTab">全部门店</button><button id="questionsTab">待确认问题</button
+      ><input id="search" placeholder="搜索编号或门店名" /><label
+        ><input id="onlyPending" type="checkbox" /> 只看本轮未确认</label
+      >
+    </div>
+    <p id="summary" class="muted"></p>
+    <div id="list" class="cards"></div>
+  </main>
+  <section id="editor" hidden>
+    <div class="edit-head">
+      <div>
+        <h2 id="storeTitle"></h2>
+        <span class="badge">原轮廓已确认</span> <span id="newState" class="badge pending"></span>
+      </div>
+      <div class="toolbar">
+        <label class="muted"><input type="checkbox" id="overlay" checked /> 显示标注</label
+        ><button id="fit">适合画面</button><button id="zoomIn">＋</button
+        ><button id="zoomOut">－</button><button id="close">返回列表</button>
+      </div>
+    </div>
+    <div class="edit-grid">
+      <div class="canvas-wrap">
+        <svg id="canvas" xmlns="http://www.w3.org/2000/svg" aria-label="原图与整店标注"></svg>
+      </div>
+      <aside>
+        <div class="section">
+          <div class="legend">蓝：设施　橙：柱　灰：原轮廓　绿：入口</div>
+          <p id="modeHint" class="muted">点选标注查看详情</p>
+          <div class="toolbar">
+            <button class="small" id="selectMode">选取</button
+            ><button class="small" id="drawObject">描新物体</button
+            ><button class="small" id="editPoints">调整点位</button
+            ><button class="small" id="finish">完成描点</button>
+          </div>
+          <select id="layer">
+            <option value="all">全部设施</option>
+            <option value="furniture">仅家具</option>
+            <option value="column">仅柱位</option>
+            <option value="entrance">仅入口</option>
+          </select>
+          <div id="objectList" class="items"></div>
+        </div>
+        <div class="section" id="objectFields">
+          <h3>物体属性</h3>
+          <label>名称<input id="label" /></label><label>类别<select id="category"></select></label>
+          <div class="row">
+            <label>长 mm<input id="length" type="number" min="1" /></label
+            ><label>深 mm<input id="depth" type="number" min="1" /></label
+            ><label>高 mm<input id="height" type="number" min="1" /></label>
+          </div>
+          <p class="muted">空白表示原图未明确；尺寸与平面投影分别保存。</p>
+          <label>备注<textarea id="objectNote"></textarea></label>
+          <p id="extraDimensions" class="muted"></p>
+          <div class="row">
+            <button id="saveObject" class="small">保存属性</button
+            ><button id="redrawObject" class="small">重描轮廓</button
+            ><button id="deleteObject" class="small">删除</button>
+          </div>
+        </div>
+        <div class="section">
+          <h3>顾客入口 / 开放侧</h3>
+          <p class="muted">旧入口原样保留。可补多段、折线或圆弧。</p>
+          <div id="entranceList" class="items"></div>
+          <div class="toolbar">
+            <button id="drawEntrance" class="small">描折线</button
+            ><button id="drawArc" class="small">描圆弧</button
+            ><button id="deleteEntrance" class="small">删选中入口</button>
+          </div>
+          <div id="proposalArea">
+            <button id="useProposal" class="small">采用原图核对方案</button>
+            <p class="muted">替换本轮入口草稿；原确认记录保留，可撤销。</p>
+          </div>
+          <label><input type="checkbox" id="entranceComplete" /> 我已检查所有顾客入口与开放侧</label
+          ><button id="approveEntrance">确认入口全集</button>
+          <p id="entranceState" class="muted"></p>
+        </div>
+        <div class="section">
+          <h3>待确认</h3>
+          <div id="questions"></div>
+        </div>
+        <div class="section">
+          <label>审核人<input id="reviewer" placeholder="填写一次，后续记住" /></label
+          ><label>本轮备注<textarea id="reviewNote"></textarea></label>
+          <div id="problems"></div>
+        </div>
+        <details>
+          <summary>原审核与原图依据</summary>
+          <p id="previous"></p>
+          <div id="sourceNotes"></div>
+          <p class="muted">描点为审核草稿，未绑定资产或核准安装高度，不等于整店验收。</p>
+        </details>
+      </aside>
+    </div>
+    <div class="footer">
+      <button id="undo">撤销 Ctrl+Z</button><button id="redo">重做 Ctrl+Y</button
+      ><button id="cancel">取消本次修改</button><span class="spacer"></span
+      ><button id="saveBack">保存草稿并返回</button
+      ><button id="approveObjects" class="primary">确认本轮标注并返回</button>
+    </div>
+  </section>
+  <div id="notice" hidden role="status"></div>
+  <script>
+    /*CORE*/
+    const data = /*DATA*/ null
+    const $ = (id) => document.getElementById(id),
+      esc = (s) =>
+        String(s ?? '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;'),
+      key = 'whole-store:' + data.fingerprint + ':' + data.annotationBatch
+    let records = clone(data.initialRecords),
+      store = null,
+      current = null,
+      opening = null,
+      selected = null,
+      selectedEntrance = -1,
+      mode = 'select',
+      draft = [],
+      redrawId = null,
+      tab = 'all',
+      view = null,
+      drag = null,
+      noticeTimer
+    const histories = new Map(),
+      futures = new Map()
+    function notice(t) {
+      $('notice').textContent = t
+      $('notice').hidden = false
+      clearTimeout(noticeTimer)
+      noticeTimer = setTimeout(() => ($('notice').hidden = true), 6500)
+    }
+    try {
+      const saved = localStorage.getItem(key)
+      if (saved) records = decodeWholePack(JSON.parse(saved), data)
+    } catch (e) {
+      notice('本机记录未载入：' + e.message + '。嵌入原稿仍在，可导入备份。')
+    }
+    function rememberReviewer() {
+      try {
+        localStorage.setItem('whole-store-reviewer', current.reviewer)
+      } catch {}
+    }
+    function persist() {
+      try {
+        localStorage.setItem(key, JSON.stringify(exportWholePack(data, records)))
+        return true
+      } catch (e) {
+        notice('保存失败：' + e.message + '。请先导出审核包备份。')
+        return false
+      }
+    }
+    function history() {
+      return histories.get(store.id) || []
+    }
+    function checkpoint() {
+      const h = history()
+      h.push(clone(current))
+      if (h.length > 100) h.shift()
+      histories.set(store.id, h)
+      futures.set(store.id, [])
+    }
+    function change(fn, scope = 'objects') {
+      checkpoint()
+      fn(current)
+      if (scope === 'objects') {
+        current.status = 'agent_corrected'
+        current.reviewedAt = null
+      } else if (scope === 'entrance') {
+        current.entranceStatus = 'partial'
+        current.entranceReviewedAt = null
+        current.entranceReviewer = null
+        $('entranceComplete').checked = false
+      }
+      records[store.id] = current
+      persist()
+      renderEditor()
+    }
+    function restore(redo = false) {
+      if (draft.length) {
+        draft.pop()
+        draw()
+        return
+      }
+      const from = redo ? futures.get(store.id) || [] : history(),
+        to = redo ? history() : futures.get(store.id) || []
+      if (!from.length) return
+      to.push(clone(current))
+      current = from.pop()
+      records[store.id] = current
+      histories.set(store.id, redo ? to : from)
+      futures.set(store.id, redo ? from : to)
+      mode = 'select'
+      selected = null
+      selectedEntrance = -1
+      persist()
+      renderEditor()
+    }
+    function renderHome() {
+      const reviewed = Object.values(records).filter((r) => r.status === 'reviewed').length,
+        complete = Object.values(records).filter((r) => r.entranceStatus === 'complete').length
+      const qs = data.stores.flatMap((s) =>
+        s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).map((q) => ({ s, q })),
+      )
+      $('stats').textContent =
+        `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
+      $('summary').textContent =
+        tab === 'questions'
+          ? `${qs.length} 个未答问题；可从这里逐个处理。`
+          : '所有家具和柱位均为本轮原图核对草稿；原审核不会被本轮修改覆盖。'
+      const search = $('search').value.trim().toLowerCase(),
+        matches = (s) =>
+          (s.id + ' ' + s.name).toLowerCase().includes(search) &&
+          (!$('onlyPending').checked || records[s.id].status !== 'reviewed')
+      $('list').className = tab === 'all' ? 'cards' : ''
+      if (tab === 'questions')
+        $('list').innerHTML =
+          qs
+            .filter(({ s }) => matches(s))
+            .map(
+              ({ s, q }) =>
+                `<div class="question-row"><strong>${s.id}</strong><div><p>${esc(q.question)}</p><small>建议：${esc(q.recommendation)}</small></div><button data-open="${s.id}">查看原图</button></div>`,
+            )
+            .join('') || '<div class="empty">没有未答问题</div>'
+      else
+        $('list').innerHTML = data.stores
+          .filter(matches)
+          .map(
+            (s) =>
+              `<button class="card" data-open="${s.id}"><img src="previews/${s.id}.jpg" loading="lazy" alt="${esc(s.id)} 原图"><div class="body"><strong>${s.id} · ${esc(s.name)}</strong><p class="muted">${records[s.id].objects.length} 个标注 · ${s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).length} 个待答问题</p><span class="badge ${records[s.id].status === 'reviewed' ? '' : 'pending'}">${records[s.id].status === 'reviewed' ? '本轮已确认' : '本轮待确认'}</span></div></button>`,
+          )
+          .join('')
+      $('list')
+        .querySelectorAll('[data-open]')
+        .forEach((b) => (b.onclick = () => openStore(b.dataset.open)))
+    }
+    function openStore(id) {
+      store = data.stores.find((s) => s.id === id)
+      current = records[id]
+      opening = clone(current)
+      selected = null
+      selectedEntrance = -1
+      mode = 'select'
+      draft = []
+      redrawId = null
+      view = { ...store.crop }
+      try {
+        if (current.status !== 'reviewed')
+          current.reviewer = localStorage.getItem('whole-store-reviewer') || current.reviewer
+      } catch {}
+      $('editor').hidden = false
+      $('storeTitle').textContent = store.id + ' · ' + store.name
+      $('entranceComplete').checked = current.entranceStatus === 'complete'
+      $('layer').value = 'all'
+      renderEditor()
+    }
+    function closeStore() {
+      if (draft.length) {
+        notice('请完成描点，或按 Esc 放弃当前描点。')
+        return
+      }
+      if (!persist()) return
+      $('editor').hidden = true
+      store = null
+      renderHome()
+    }
+    function renderEditor() {
+      $('newState').textContent = current.status === 'reviewed' ? '本轮已确认' : '本轮草稿'
+      $('newState').className = 'badge ' + (current.status === 'reviewed' ? '' : 'pending')
+      $('reviewer').value = current.reviewer || ''
+      $('reviewNote').value = current.notes || ''
+      $('undo').disabled = !history().length && !draft.length
+      $('redo').disabled = !(futures.get(store.id) || []).length
+      const layer = $('layer').value,
+        visible = (o) => layer === 'all' || o.category === layer
+      $('objectList').innerHTML = current.objects
+        .filter(visible)
+        .map(
+          (o) =>
+            `<button class="item ${selected === o.id ? 'selected' : ''}" data-id="${o.id}">${esc(o.label)} <span class="muted">${categories[o.category]}</span></button>`,
+        )
+        .join('')
+      $('objectList')
+        .querySelectorAll('button')
+        .forEach(
+          (b) =>
+            (b.onclick = () => {
+              selected = b.dataset.id
+              selectedEntrance = -1
+              mode = 'select'
+              renderEditor()
+            }),
+        )
+      const o = current.objects.find((o) => o.id === selected)
+      $('objectFields').hidden = !o
+      if (o) {
+        $('label').value = o.label
+        $('category').value = o.category
+        for (const k of ['length', 'depth', 'height']) $(k).value = o.sourceDimensions[k] ?? ''
+        $('objectNote').value = o.note || ''
+        $('extraDimensions').textContent = Object.entries(o.sourceDimensions)
+          .filter(([k]) => !['length', 'depth', 'height'].includes(k))
+          .map(
+            ([k, v]) =>
+              `${{ width: '宽 mm', attachedSeats: '附属座位', diagonalInches: '屏幕英寸', sourceLiteral: '原文', shape: '形状', sourceAreaM2: '原文面积 m²', geometryNote: '位置说明', screenAsComponent: '含屏幕组件' }[k] || k}：${v}`,
+          )
+          .join('；')
+      }
+      $('entranceList').innerHTML = current.entrances
+        .map(
+          (p, i) =>
+            `<button class="item ${selectedEntrance === i ? 'selected' : ''}" data-i="${i}">入口 ${i + 1} · ${p.kind === 'arc' ? '圆弧' : p.points.length > 2 ? '折线' : '直线'}</button>`,
+        )
+        .join('')
+      $('entranceList')
+        .querySelectorAll('button')
+        .forEach(
+          (b) =>
+            (b.onclick = () => {
+              selectedEntrance = +b.dataset.i
+              selected = null
+              mode = 'select'
+              renderEditor()
+            }),
+        )
+      $('proposalArea').hidden = !store.proposedEntrances.length
+      $('entranceState').textContent =
+        current.entranceStatus === 'complete'
+          ? `全集已确认 · ${current.entranceReviewer}`
+          : '部分参照：完整入口评分暂不计算'
+      $('questions').innerHTML =
+        store.questions
+          .map(
+            (q) =>
+              `<div class="qbox"><p>${esc(q.question)}</p><select data-q="${q.id}"><option value="">请选择或填备注</option>${q.options.map((v) => `<option value="${esc(v)}" ${current.answers[q.id] === v ? 'selected' : ''}>${esc(v)}</option>`).join('')}<option value="__custom">其他，请填写</option></select><input data-answer="${q.id}" value="${esc(current.answers[q.id] || '')}" placeholder="补充或直接写判断" style="width:100%;margin-top:6px"><p class="muted">建议：${esc(q.recommendation)}</p></div>`,
+          )
+          .join('') || '<p class="muted">没有需要单独裁决的问题。</p>'
+      $('questions')
+        .querySelectorAll('[data-q]')
+        .forEach(
+          (el) =>
+            (el.onchange = () => {
+              if (el.value === '__custom') {
+                $('questions').querySelector(`[data-answer="${el.dataset.q}"]`).focus()
+                return
+              }
+              answerQuestion(el.dataset.q, el.value)
+            }),
+        )
+      $('questions')
+        .querySelectorAll('[data-answer]')
+        .forEach((el) => (el.onchange = () => answerQuestion(el.dataset.answer, el.value)))
+      $('previous').textContent = `原审核：${store.previousReviewer} · ${store.previousReviewedAt}`
+      $('sourceNotes').innerHTML =
+        store.notes.map((n) => `<p>${esc(n)}</p>`).join('') +
+        `<p>原图第 ${store.page} 页 · SHA ${store.image.sha256.slice(0, 16)}…</p><a href="${store.image.path}" target="_blank" rel="noopener">打开原页</a>`
+      $('problems').textContent = entryErrors(current, store).join('\n')
+      $('modeHint').textContent =
+        mode === 'select'
+          ? '点选标注查看详情'
+          : mode === 'points'
+            ? '拖动圆点调整；Ctrl+Z 可撤销'
+            : mode === 'arc'
+              ? '依次点：起点、弧上中点、终点，再完成'
+              : '连续点选顶点，再点“完成描点”'
+      $('modeHint').className = mode === 'select' ? 'muted' : 'drawing'
+      draw()
+    }
+    function answerQuestion(id, value) {
+      change((e) => {
+        e.answers[id] = value
+        if (isEntranceQuestion(store.questions.find((q) => q.id === id))) {
+          e.entranceStatus = 'partial'
+          e.entranceReviewedAt = null
+          e.entranceReviewer = null
+          $('entranceComplete').checked = false
+        }
+      })
+    }
+    function draw() {
+      const svg = $('canvas'),
+        pstr = (p) => p.map((v) => v.join(',')).join(' ')
+      svg.setAttribute('viewBox', `${view.left} ${view.top} ${view.width} ${view.height}`)
+      let html = `<image href="${store.image.path}" x="0" y="0" width="${store.image.width}" height="${store.image.height}"/>`
+      if ($('overlay').checked) {
+        html += `<polygon points="${pstr(store.boundary)}" fill="none" stroke="#607080" stroke-width="1.6" stroke-dasharray="7 4"/>`
+        const layer = $('layer').value
+        for (const [i, o] of current.objects.entries()) {
+          if (layer !== 'all' && layer !== o.category) continue
+          const color =
+            o.category === 'column' ? '#d75b00' : o.category === 'rear-zone' ? '#8766a9' : '#0874a4'
+          html += `<polygon data-object="${o.id}" points="${pstr(o.polygon)}" fill="${color}" fill-opacity="${selected === o.id ? '.25' : '.10'}" stroke="${selected === o.id ? '#f33f50' : color}" stroke-width="${selected === o.id ? 3 : 1.4}"><title>${i + 1} ${esc(o.label)}</title></polygon>`
+        }
+        for (const [i, p] of current.entrances.entries())
+          html += `<polyline data-entrance="${i}" points="${pstr(entranceDrawPoints(p))}" fill="none" stroke="${selectedEntrance === i ? '#ef4050' : '#159846'}" stroke-width="4"/>`
+        if (mode === 'points') {
+          const points = selected
+            ? current.objects.find((o) => o.id === selected)?.polygon
+            : current.entrances[selectedEntrance]?.points
+          for (const [i, p] of (points || []).entries())
+            html += `<circle data-point="${i}" cx="${p[0]}" cy="${p[1]}" r="${view.width / 120}" fill="#fff" stroke="#e7354b" stroke-width="2"/>`
+        }
+      }
+      if (draft.length)
+        html +=
+          `<polyline points="${pstr(draft)}" fill="none" stroke="#ed3450" stroke-width="3"/>` +
+          draft.map((p) => `<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#ed3450"/>`).join('')
+      svg.innerHTML = html
+    }
+    function pixel(event) {
+      const p = $('canvas').createSVGPoint()
+      p.x = event.clientX
+      p.y = event.clientY
+      const q = p.matrixTransform($('canvas').getScreenCTM().inverse())
+      return [
+        Math.max(0, Math.min(store.image.width, +q.x.toFixed(3))),
+        Math.max(0, Math.min(store.image.height, +q.y.toFixed(3))),
+      ]
+    }
+    $('canvas').onpointerdown = (e) => {
+      if (mode === 'points' && e.target.dataset.point != null) {
+        checkpoint()
+        drag = { index: +e.target.dataset.point, before: clone(current) }
+        $('canvas').setPointerCapture(e.pointerId)
+        e.preventDefault()
+      }
+    }
+    $('canvas').onpointermove = (e) => {
+      if (!drag) return
+      const p = pixel(e)
+      if (selected) current.objects.find((o) => o.id === selected).polygon[drag.index] = p
+      else current.entrances[selectedEntrance].points[drag.index] = p
+      draw()
+    }
+    $('canvas').onpointerup = () => {
+      if (!drag) return
+      const errors = entryErrors(
+        { ...current, status: 'agent_corrected', entranceStatus: 'partial' },
+        store,
+      )
+      if (errors.length) {
+        Object.assign(current, drag.before)
+        history().pop()
+        notice(errors.join('；'))
+      } else if (selected) {
+        current.status = 'agent_corrected'
+        current.reviewedAt = null
+      } else {
+        current.entranceStatus = 'partial'
+        current.entranceReviewedAt = null
+        current.entranceReviewer = null
+        $('entranceComplete').checked = false
+      }
+      drag = null
+      persist()
+      renderEditor()
+    }
+    $('canvas').onclick = (e) => {
+      if (mode === 'object' || mode === 'entrance' || mode === 'arc') {
+        if (mode === 'arc' && draft.length === 3) {
+          notice('圆弧只需3点，请完成描点')
+          return
+        }
+        draft.push(pixel(e))
+        draw()
+        return
+      }
+      if (mode === 'points') return
+      if (e.target.dataset.object) {
+        selected = e.target.dataset.object
+        selectedEntrance = -1
+      } else if (e.target.dataset.entrance != null) {
+        selected = null
+        selectedEntrance = +e.target.dataset.entrance
+      } else {
+        selected = null
+        selectedEntrance = -1
+      }
+      renderEditor()
+    }
+    function setMode(next) {
+      draft = []
+      mode = next
+      redrawId = null
+      renderEditor()
+    }
+    $('selectMode').onclick = () => setMode('select')
+    $('drawObject').onclick = () => setMode('object')
+    $('drawEntrance').onclick = () => setMode('entrance')
+    $('drawArc').onclick = () => setMode('arc')
+    $('editPoints').onclick = () => {
+      if (!selected && selectedEntrance < 0) {
+        notice('先选择物体或入口')
+        return
+      }
+      setMode('points')
+    }
+    $('redrawObject').onclick = () => {
+      const id = selected
+      setMode('object')
+      redrawId = id
+    }
+    $('finish').onclick = () => {
+      const isObject = mode === 'object',
+        errors = isObject
+          ? polygonErrors(draft, store.image)
+          : entranceErrors(
+              [{ kind: mode === 'arc' ? 'arc' : 'polyline', points: draft }],
+              store.image,
+            )
+      if (!['object', 'entrance', 'arc'].includes(mode)) return
+      if (errors.length) {
+        notice(errors.join('；'))
+        return
+      }
+      const points = clone(draft),
+        id = redrawId,
+        kind = mode === 'arc' ? 'arc' : 'polyline'
+      draft = []
+      mode = 'select'
+      redrawId = null
+      change(
+        (r) => {
+          if (isObject) {
+            if (id) {
+              r.objects.find((o) => o.id === id).polygon = points
+              selected = id
+            } else {
+              const n = store.id + '-U' + Date.now().toString(36)
+              r.objects.push({
+                id: n,
+                label: '新物体',
+                category: 'furniture',
+                polygon: points,
+                sourceDimensions: {},
+                assetId: null,
+                geometryStatus: 'user_traced',
+                source: { page: store.page, imageSha256: store.image.sha256 },
+                note: '',
+              })
+              selected = n
+            }
+            selectedEntrance = -1
+          } else {
+            r.entrances.push({ kind, points })
+            selectedEntrance = r.entrances.length - 1
+            selected = null
+          }
+        },
+        isObject ? 'objects' : 'entrance',
+      )
+    }
+    $('saveObject').onclick = () => {
+      const label = $('label').value.trim()
+      if (!label) {
+        notice('请填写名称')
+        return
+      }
+      const dims = {}
+      for (const k of ['length', 'depth', 'height']) {
+        dims[k] = $(k).value === '' ? null : Number($(k).value)
+        if (dims[k] != null && (!Number.isFinite(dims[k]) || dims[k] <= 0)) {
+          notice('尺寸须为正数或留空')
+          return
+        }
+      }
+      const category = $('category').value,
+        note = $('objectNote').value
+      change((r) => {
+        const o = r.objects.find((o) => o.id === selected)
+        Object.assign(o, { label, category, note })
+        Object.assign(o.sourceDimensions, dims)
+      })
+    }
+    $('deleteObject').onclick = () =>
+      change((r) => {
+        r.objects = r.objects.filter((o) => o.id !== selected)
+        selected = null
+      })
+    $('deleteEntrance').onclick = () => {
+      if (selectedEntrance < 0) return
+      change((r) => {
+        r.entrances.splice(selectedEntrance, 1)
+        selectedEntrance = -1
+      }, 'entrance')
+    }
+    $('useProposal').onclick = () => {
+      change((r) => (r.entrances = clone(store.proposedEntrances)), 'entrance')
+      notice('已采用原图核对方案，请检查完整性；可撤销。')
+    }
+    $('reviewer').onchange = () => {
+      const v = $('reviewer').value
+      change((r) => (r.reviewer = v), 'objects')
+      rememberReviewer()
+    }
+    $('reviewNote').onchange = () => {
+      const v = $('reviewNote').value
+      change((r) => (r.notes = v), 'metadata')
+    }
+    $('approveEntrance').onclick = () => {
+      if (!$('entranceComplete').checked) {
+        notice('请先检查全部入口，并勾选完整性确认')
+        return
+      }
+      if (!current.reviewer.trim()) {
+        notice('请填写审核人')
+        $('reviewer').focus()
+        return
+      }
+      const errors = entranceErrors(current.entrances, store.image)
+      if (store.questions.some((q) => isEntranceQuestion(q) && !current.answers[q.id]?.trim()))
+        errors.push('请先回答入口用途问题')
+      if (errors.length) {
+        notice(errors.join('；'))
+        return
+      }
+      change((r) => {
+        r.entranceStatus = 'complete'
+        r.entranceReviewer = r.reviewer
+        r.entranceReviewedAt = new Date().toISOString()
+      }, 'metadata')
+      rememberReviewer()
+      closeStore()
+    }
+    $('approveObjects').onclick = () => {
+      if (draft.length) {
+        notice('请完成或放弃当前描点')
+        return
+      }
+      const errors = entryErrors(current, store)
+      if (!current.reviewer.trim()) errors.push('请填写审核人')
+      if (store.questions.some((q) => !current.answers[q.id]?.trim()))
+        errors.push('请回答本店待确认问题')
+      if (errors.length) {
+        notice(errors.join('；'))
+        $('problems').textContent = errors.join('\n')
+        return
+      }
+      change((r) => {
+        r.status = 'reviewed'
+        r.reviewedAt = new Date().toISOString()
+      }, 'metadata')
+      rememberReviewer()
+      closeStore()
+    }
+    $('saveBack').onclick = closeStore
+    $('close').onclick = closeStore
+    $('cancel').onclick = () => {
+      current = clone(opening)
+      records[store.id] = current
+      histories.delete(store.id)
+      futures.delete(store.id)
+      draft = []
+      if (persist()) {
+        $('editor').hidden = true
+        store = null
+        renderHome()
+      }
+    }
+    $('undo').onclick = () => restore()
+    $('redo').onclick = () => restore(true)
+    $('layer').onchange = renderEditor
+    $('overlay').onchange = draw
+    $('fit').onclick = () => {
+      view = { ...store.crop }
+      draw()
+    }
+    function zoom(f) {
+      const w = view.width * f,
+        h = view.height * f
+      view.left += (view.width - w) / 2
+      view.top += (view.height - h) / 2
+      view.width = w
+      view.height = h
+      draw()
+    }
+    $('zoomIn').onclick = () => zoom(0.8)
+    $('zoomOut').onclick = () => zoom(1.25)
+    $('canvas').onwheel = (e) => {
+      e.preventDefault()
+      if (e.ctrlKey) zoom(e.deltaY > 0 ? 1.12 : 0.89)
+      else {
+        view.left += e.deltaX + (e.shiftKey ? e.deltaY : 0)
+        view.top += e.shiftKey ? 0 : e.deltaY
+        draw()
+      }
+    }
+    document.addEventListener('keydown', (e) => {
+      if (!store) return
+      const editing = /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)
+      if (editing) return
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
+        e.preventDefault()
+        restore(e.shiftKey)
+      } else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') {
+        e.preventDefault()
+        restore(true)
+      } else if (e.key === 'Escape') {
+        draft = []
+        mode = 'select'
+        redrawId = null
+        renderEditor()
+      }
+    })
+    function download(name, obj) {
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json' }),
+        url = URL.createObjectURL(blob),
+        a = document.createElement('a')
+      a.href = url
+      a.download = name
+      a.click()
+      setTimeout(() => URL.revokeObjectURL(url), 10000)
+    }
+    $('export').onclick = () => {
+      try {
+        download('48家整店审核包.json', exportWholePack(data, records))
+      } catch (e) {
+        notice(e.message)
+      }
+    }
+    $('evalExport').onclick = () => {
+      try {
+        download('48家入口复评参照.json', evaluationPack(data, records))
+      } catch (e) {
+        notice(e.message)
+      }
+    }
+    $('import').onclick = () => $('file').click()
+    $('file').onchange = async (e) => {
+      try {
+        const pack = JSON.parse(await e.target.files[0].text()),
+          next = decodeWholePack(pack, data)
+        download('导入前审核备份.json', exportWholePack(data, records))
+        records = next
+        if (persist()) {
+          histories.clear()
+          futures.clear()
+          renderHome()
+          notice('已导入；导入前记录已下载备份')
+        }
+      } catch (err) {
+        notice('导入失败：' + err.message)
+      } finally {
+        e.target.value = ''
+      }
+    }
+    $('allTab').onclick = () => {
+      tab = 'all'
+      renderHome()
+    }
+    $('questionsTab').onclick = () => {
+      tab = 'questions'
+      renderHome()
+    }
+    $('search').oninput = renderHome
+    $('onlyPending').onchange = renderHome
+    $('category').innerHTML = Object.entries(categories)
+      .map(([k, v]) => `<option value="${k}">${v}</option>`)
+      .join('')
+    renderHome()
+  </script>
+</html>
