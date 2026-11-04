@@ -464,6 +464,7 @@
           </details>
           <p class="muted">记录当前布局下可通行的位置，支持折线、圆弧。</p>
           <div id="entranceList" class="items"></div>
+          <label id="purposeField" hidden>选中线的用途<select id="entrancePurpose"></select></label>
           <div class="toolbar">
             <button id="drawEntrance" class="small">描折线</button
             ><button id="drawArc" class="small">描圆弧</button
@@ -521,7 +522,9 @@
         ':' +
         (data.wholeReviewSha256 || 'draft') +
         ':' +
-        (data.supplementBatch || 'base')
+        (data.supplementBatch || 'base') +
+        ':' +
+        (data.decisionBatch || 'unapplied')
     let records = clone(data.initialRecords),
       store = null,
       current = null,
@@ -615,9 +618,11 @@
       const qs = data.stores.flatMap((s) =>
         s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).map((q) => ({ s, q })),
       )
-      $('stats').textContent = data.priorWholeReviewPack
-        ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
-        : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
+      $('stats').textContent = data.decisionSourcePack
+        ? `已确认 ${reviewed}/${data.stores.length} · 答复已归档 ${data.decisionLog.length} 项`
+        : data.priorWholeReviewPack
+          ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
+          : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
       $('summary').textContent =
         tab === 'questions'
           ? `${qs.length} 个未答问题；可从这里逐个处理。`
@@ -760,7 +765,7 @@
       $('entranceList').innerHTML = current.entrances
         .map(
           (p, i) =>
-            `<button class="item ${selectedEntrance === i ? 'selected' : ''}" data-i="${i}">入口 ${i + 1} · ${p.kind === 'arc' ? '圆弧' : p.points.length > 2 ? '折线' : '直线'}</button>`,
+            `<button class="item ${selectedEntrance === i ? 'selected' : ''}" data-i="${i}">${entrancePurposes[p.purpose || 'customer-access']} ${i + 1} · ${p.kind === 'arc' ? '圆弧' : p.points.length > 2 ? '折线' : '直线'}</button>`,
         )
         .join('')
       $('entranceList')
@@ -774,11 +779,15 @@
               renderEditor()
             }),
         )
+      $('purposeField').hidden = selectedEntrance < 0
+      if (selectedEntrance >= 0)
+        $('entrancePurpose').value =
+          current.entrances[selectedEntrance].purpose || 'customer-access'
       $('proposalArea').hidden = !store.proposedEntrances.length
       $('entranceState').textContent =
         current.entranceStatus === 'complete'
           ? `全集已确认 · ${current.entranceReviewer}`
-          : '已描线参与覆盖率复评；未勾选齐全时不计完整评分'
+          : '仅现状通行口参与覆盖率复评；开放边和辅助出口另存。齐全确认独立。'
       $('questions').innerHTML =
         store.questions
           .map(
@@ -803,6 +812,10 @@
         .forEach((el) => (el.onchange = () => answerQuestion(el.dataset.answer, el.value)))
       $('previous').textContent = `原审核：${store.previousReviewer} · ${store.previousReviewedAt}`
       $('sourceNotes').innerHTML =
+        (data.decisionLog || [])
+          .filter((d) => d.storeId === store.id)
+          .map((d) => `<p>答复：${esc(d.answer)}。${esc(d.note)}</p>`)
+          .join('') +
         store.notes.map((n) => `<p>${esc(n)}</p>`).join('') +
         `<p>原图第 ${store.page} 页 · SHA ${store.image.sha256.slice(0, 16)}…</p><a href="${store.image.path}" target="_blank" rel="noopener">打开原页</a>`
       $('problems').textContent = entryErrors(current, store).join('\n')
@@ -843,7 +856,7 @@
           html += `<polygon data-object="${o.id}" points="${pstr(o.polygon)}" fill="${selected === o.id ? '#ffd200' : color}" fill-opacity="${selected === o.id ? '.40' : '.10'}" stroke="${selected === o.id ? '#111111' : color}" stroke-width="${selected === o.id ? 3 : 1.4}"><title>${i + 1} ${esc(o.label)}</title></polygon>`
         }
         for (const [i, p] of current.entrances.entries())
-          html += `<polyline data-entrance="${i}" points="${pstr(entranceDrawPoints(p))}" fill="none" stroke="${selectedEntrance === i ? '#111111' : '#159846'}" stroke-width="4"/>`
+          html += `<polyline data-entrance="${i}" points="${pstr(entranceDrawPoints(p))}" fill="none" stroke="${selectedEntrance === i ? '#111111' : isCustomerEntrance(p) ? '#159846' : '#6b675f'}" stroke-dasharray="${isCustomerEntrance(p) ? '' : '9 5'}" stroke-width="4"/>`
         if (mode === 'points') {
           const points = selected
             ? current.objects.find((o) => o.id === selected)?.polygon
@@ -937,6 +950,14 @@
     }
     $('selectMode').onclick = () => setMode('select')
     $('drawObject').onclick = () => setMode('object')
+    $('entrancePurpose').innerHTML = Object.entries(entrancePurposes)
+      .map(([k, v]) => '<option value="' + k + '">' + v + '</option>')
+      .join('')
+    $('entrancePurpose').onchange = () => {
+      if (selectedEntrance < 0) return
+      const purpose = $('entrancePurpose').value
+      change((r) => (r.entrances[selectedEntrance].purpose = purpose), 'entrance')
+    }
     $('drawEntrance').onclick = () => setMode('entrance')
     $('drawArc').onclick = () => setMode('arc')
     $('editPoints').onclick = () => {
@@ -1084,6 +1105,11 @@
         return
       }
       const errors = entranceErrors(current.entrances, store.image)
+      if (
+        !customerEntrancePaths(current.entrances).length ||
+        current.entrances.some((p) => p.purpose === 'unknown')
+      )
+        errors.push('请先核对通行口用途，不能将只有开放边的线稿标为齐全')
       if (store.questions.some((q) => isEntranceQuestion(q) && !current.answers[q.id]?.trim()))
         errors.push('请先回答入口用途问题')
       if (errors.length) {

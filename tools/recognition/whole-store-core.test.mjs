@@ -3,6 +3,7 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import vm from 'node:vm'
 import { applySupplement } from './whole-store-supplement.mjs'
+import { applyDecisions } from './whole-store-decisions.mjs'
 import {
   clone,
   initialEntry,
@@ -16,6 +17,7 @@ import {
   entranceDrawPoints,
   wallAreaPolicy,
   wallPropertyErrors,
+  customerEntrancePaths,
 } from './whole-store-core.mjs'
 const store = {
     id: 'SYN-001',
@@ -373,4 +375,92 @@ test('增补保留前轮整包和用户坐标，只重开增补门店，隔离�
   assert.throws(() => applySupplement(data, pack, supplement, 'wrong'))
   supplement.stores[0].objects = [clone(r.objects[0])]
   assert.throws(() => applySupplement(data, pack, supplement, 'sha'))
+})
+
+test('开放边与辅助出口保留原坐标，但不进入通行口评分', () => {
+  const { data, records } = fixture(),
+    r = records[store.id]
+  r.entrances.push({ ...clone(r.entrances[0]), purpose: 'open-frontage' })
+  r.entrances.push({ ...clone(r.entrances[0]), purpose: 'auxiliary' })
+  const p = evaluationPack(data, records).annotations[0]
+  assert.equal(p.entrances.length, 1)
+  assert.equal(p.referencePaths.length, 3)
+  assert.equal(p.excludedReferencePaths.length, 2)
+  assert.deepEqual(p.referencePaths, r.entrances)
+  r.entrances[0].purpose = 'open-frontage'
+  assert.equal(customerEntrancePaths(r.entrances).length, 0)
+  assert.equal(evaluationPack(data, records).annotations[0].entrances.length, 0)
+})
+test('只有开放边或用途待定不能确认完整通行口', () => {
+  const { records } = fixture(),
+    r = records[store.id]
+  r.entranceStatus = 'complete'
+  r.entranceReviewer = '甲'
+  r.entranceReviewedAt = '2026-01-01'
+  for (const purpose of ['open-frontage', 'unknown', 'invalid']) {
+    r.entrances[0].purpose = purpose
+    assert.ok(entryErrors(r, store).length)
+  }
+})
+function decisionsFixture() {
+  const { data, records } = fixture(),
+    r = records[store.id]
+  r.status = 'reviewed'
+  r.reviewer = '甲'
+  r.reviewedAt = '2026-01-01'
+  r.answers.q = '空心'
+  const pack = clone(exportWholePack(data, records)),
+    spec = {
+      schemaVersion: 1,
+      reviewSha256: 'sha',
+      decisions: [
+        {
+          storeId: store.id,
+          questionId: 'q',
+          answer: '空心',
+          objects: [{ id: r.objects[0].id, set: { sourceDimensions: { height: 900 } } }],
+          paths: [
+            { index: 0, expectedPoints: clone(r.entrances[0].points), purpose: 'open-frontage' },
+          ],
+        },
+      ],
+    }
+  return { data, records, pack, spec }
+}
+test('裁决落实有原始签名和前后值，不改用户几何或源包', () => {
+  const { data, pack, spec } = decisionsFixture(),
+    before = clone(pack),
+    next = applyDecisions(data, pack, spec, 'sha'),
+    r = next.initialRecords[store.id]
+  assert.deepEqual(pack, before)
+  assert.deepEqual(next.decisionSourcePack, before)
+  assert.deepEqual(r.objects[0].polygon, pack.entries[0].objects[0].polygon)
+  assert.deepEqual(r.entrances[0].points, pack.entries[0].entrances[0].points)
+  assert.equal(r.objects[0].sourceDimensions.height, 900)
+  assert.equal(r.status, 'reviewed')
+  assert.equal(next.decisionLog[0].reviewer, '甲')
+  assert.deepEqual(
+    decodeWholePack(exportWholePack(next, next.initialRecords), next),
+    next.initialRecords,
+  )
+  const bad = exportWholePack(next, next.initialRecords)
+  bad.decisionLog[0].answer = '实心'
+  assert.throws(() => decodeWholePack(bad, next))
+})
+test('拒绝错答复、漏答复、坐标重写和路径索引误配', () => {
+  for (const change of [
+    (s) => (s.reviewSha256 = 'wrong'),
+    (s) => (s.decisions = []),
+    (s) => (s.decisions[0].answer = '实心'),
+    (s) => (s.decisions[0].objects[0].set.polygon = [[0, 0]]),
+    (s) =>
+      (s.decisions[0].paths[0].expectedPoints = [
+        [1, 2],
+        [3, 4],
+      ]),
+  ]) {
+    const { data, pack, spec } = decisionsFixture()
+    change(spec)
+    assert.throws(() => applyDecisions(data, pack, spec, 'sha'))
+  }
 })
