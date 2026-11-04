@@ -383,7 +383,7 @@
       </div>
       <aside>
         <div class="section">
-          <div class="legend">灰：设施　橙：柱　虚线：原轮廓　绿：入口　黄：选中</div>
+          <div class="legend">灰：设施　橙：柱　虚线：边界/墙体范围　绿：入口　黄：选中</div>
           <p id="modeHint" class="muted">点选标注查看详情</p>
           <div class="toolbar">
             <button class="small" id="selectMode">选取</button
@@ -412,6 +412,7 @@
           <p class="muted">空白表示原图未明确；尺寸与平面投影分别保存。</p>
           <label>备注<textarea id="objectNote"></textarea></label>
           <p id="extraDimensions" class="muted"></p>
+          <p id="assemblySummary" class="muted"></p>
           <details id="wallFields">
             <summary>墙体构造</summary>
             <label
@@ -527,7 +528,9 @@
         ':' +
         (data.decisionBatch || 'unapplied') +
         ':' +
-        (data.sourceRevision?.batch || 'no-source-revision')
+        (data.sourceRevision?.batch || 'no-source-revision') +
+        ':' +
+        (data.wallAssemblyBatch || 'no-assemblies')
     let records = clone(data.initialRecords),
       store = null,
       current = null,
@@ -551,7 +554,7 @@
     }
     try {
       const saved = localStorage.getItem(key)
-      if (saved) records = decodeWholePack(JSON.parse(saved), data)
+      if (saved) records = decodeWholeDraft(JSON.parse(saved), data)
     } catch (e) {
       notice('本机记录未载入：' + e.message + '。嵌入原稿仍在，可导入备份。')
     }
@@ -562,7 +565,7 @@
     }
     function persist() {
       try {
-        localStorage.setItem(key, JSON.stringify(exportWholePack(data, records)))
+        localStorage.setItem(key, JSON.stringify(exportWholeDraft(data, records)))
         return true
       } catch (e) {
         notice('保存失败：' + e.message + '。请先导出审核包备份。')
@@ -621,13 +624,15 @@
       const qs = data.stores.flatMap((s) =>
         s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).map((q) => ({ s, q })),
       )
-      $('stats').textContent = data.sourceRevision
-        ? `原审核 ${data.sourceRevision.sourcePack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 本轮补注 ${data.stores.length - reviewed} 家 · 待答 ${qs.length} 项`
-        : data.decisionSourcePack
-          ? `已确认 ${reviewed}/${data.stores.length} · 答复已归档 ${data.decisionLog.length} 项`
-          : data.priorWholeReviewPack
-            ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
-            : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
+      $('stats').textContent = data.wallAssemblyBatch
+        ? `原图形审核 ${reviewed}/${data.stores.length} · 墙面表达已说明 · 待答 ${qs.length} 项`
+        : data.sourceRevision
+          ? `原审核 ${data.sourceRevision.sourcePack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 本轮补注 ${data.stores.length - reviewed} 家 · 待答 ${qs.length} 项`
+          : data.decisionSourcePack
+            ? `已确认 ${reviewed}/${data.stores.length} · 答复已归档 ${data.decisionLog.length} 项`
+            : data.priorWholeReviewPack
+              ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
+              : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
       $('summary').textContent =
         tab === 'questions'
           ? `${qs.length} 个未答问题；可从这里逐个处理。`
@@ -725,6 +730,7 @@
       const o = current.objects.find((o) => o.id === selected)
       $('objectFields').hidden = !o
       if (o) {
+        $('assemblySummary').textContent = wallAssemblySummary(o, current.objects)
         $('label').value = o.label
         $('category').value = o.category
         for (const k of ['length', 'depth', 'height']) $(k).value = o.sourceDimensions[k] ?? ''
@@ -878,11 +884,10 @@
           html += `<polygon points="${pstr(revision.before)}" fill="none" stroke="#b2afa8" stroke-width="1" stroke-dasharray="2 5"/>`
         html += `<polygon points="${pstr(store.boundary)}" fill="none" stroke="#a6a297" stroke-width="1.6" stroke-dasharray="7 4"/>`
         const layer = $('layer').value
-        for (const [i, o] of current.objects.entries()) {
+        for (const { o, index: i } of wallDrawingObjects(current.objects)) {
           if (layer !== 'all' && layer !== o.category) continue
-          const color =
-            o.category === 'column' ? '#d75b00' : o.category === 'rear-zone' ? '#a6a297' : '#6b675f'
-          html += `<polygon data-object="${o.id}" points="${pstr(o.polygon)}" fill="${selected === o.id ? '#ffd200' : color}" fill-opacity="${selected === o.id ? '.40' : '.10'}" stroke="${selected === o.id ? '#111111' : color}" stroke-width="${selected === o.id ? 3 : 1.4}"><title>${i + 1} ${esc(o.label)}</title></polygon>`
+          const style = wallDrawingStyle(o, selected === o.id)
+          html += `<polygon data-object="${o.id}" points="${pstr(o.polygon)}" fill="${style.fill}" fill-opacity="${style.opacity}" stroke="${style.stroke}" stroke-width="${style.width}" stroke-dasharray="${style.dash}" pointer-events="all"><title>${i + 1} ${esc(o.label)}</title></polygon>`
         }
         for (const [i, p] of current.entrances.entries())
           html += `<polyline data-entrance="${i}" points="${pstr(entranceDrawPoints(p))}" fill="none" stroke="${selectedEntrance === i ? '#111111' : isCustomerEntrance(p) ? '#159846' : '#6b675f'}" stroke-dasharray="${isCustomerEntrance(p) ? '' : '9 5'}" stroke-width="4"/>`
@@ -1087,7 +1092,10 @@
       const proposedObjects = current.objects.map((o) =>
         o.id === selected ? { ...o, category } : o,
       )
-      const wallErrors = proposedObjects.flatMap((o) => wallPropertyErrors(o, proposedObjects))
+      const wallErrors = proposedObjects.flatMap((o) => [
+        ...wallPropertyErrors(o, proposedObjects),
+        ...wallAssemblyErrors(o, proposedObjects),
+      ])
       if (wallErrors.length) return notice(wallErrors.join('；'))
       change((r) => {
         const o = r.objects.find((o) => o.id === selected)
@@ -1100,6 +1108,8 @@
         return notice('先取消包墙与该核心的关联，再删除核心')
       change((r) => {
         r.objects = r.objects.filter((o) => o.id !== selected)
+        for (const o of r.objects)
+          if (o.wallInstallation?.hostObjectId === selected) delete o.wallInstallation
         selected = null
       })
     }

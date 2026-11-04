@@ -9,6 +9,8 @@ import {
   exportWholePack,
   evaluationPack,
   objectInventory,
+  wallDrawingObjects,
+  wallDrawingStyle,
 } from './whole-store-core.mjs'
 const hash = (b) => createHash('sha256').update(b).digest('hex')
 // 增量只允许新增物体和问题，既有用户坐标、答复与签名另存原包。
@@ -116,6 +118,10 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [],
       polygon: o.polygon.map((p) => p.map((v, j) => ((v - a.originPx[j]) * s.mmPerPixel) / 1000)),
     }))
     a.inventory = objectInventory(r)
+    if (data.wallAssemblyBatch) {
+      a.wallAssemblyBatch = data.wallAssemblyBatch
+      a.wallAssemblyLog = clone(data.wallAssemblyLog.filter((x) => x.storeId === s.id))
+    }
     await writeFile(path.join(out, 'annotations', s.id + '.json'), JSON.stringify(a, null, 2))
     const svg =
       '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' +
@@ -127,17 +133,29 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [],
       '" height="' +
       s.image.height +
       '"/>' +
-      r.objects
-        .map(
-          (o) =>
-            '<polygon points="' +
+      wallDrawingObjects(r.objects)
+        .map(({ o }) => {
+          const style = wallDrawingStyle(o)
+          return (
+            '<polygon data-object="' +
+            o.id +
+            '" points="' +
             o.polygon.map((p) => p.join(',')).join(' ') +
             '" fill="' +
-            (o.category === 'cladding' ? '#ffd200' : '#6b675f') +
-            '" fill-opacity=".15" stroke="#111" stroke-width="1.5"><title>' +
+            style.fill +
+            '" fill-opacity="' +
+            style.opacity +
+            '" stroke="' +
+            style.stroke +
+            '" stroke-width="' +
+            style.width +
+            '" stroke-dasharray="' +
+            style.dash +
+            '"><title>' +
             escape(o.label) +
-            '</title></polygon>',
-        )
+            '</title></polygon>'
+          )
+        })
         .join('') +
       '</svg>'
     await writeFile(path.join(out, 'evidence', s.id + '.svg'), svg)
@@ -179,6 +197,9 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [],
     supplementBatch: data.supplementBatch,
     decisionBatch: data.decisionBatch,
     decisionLog: data.decisionLog,
+    wallAssemblyBatch: data.wallAssemblyBatch,
+    wallAssemblyReviewSha256: data.wallAssemblyReviewSha256,
+    wallAssemblyLog: data.wallAssemblyLog,
     sourceRevisionBatch: data.sourceRevision?.batch,
     sourceRevisionLog: data.sourceRevision?.log,
     limitations: [

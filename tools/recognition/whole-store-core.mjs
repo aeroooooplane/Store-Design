@@ -126,6 +126,7 @@ export function entryErrors(entry, store) {
       errors.push('尺寸记录格式无效')
     if (!o.label?.trim() || !categories[o.category]) errors.push('物体名称或分类无效')
     errors.push(...wallPropertyErrors(o, entry.objects))
+    errors.push(...wallAssemblyErrors(o, entry.objects))
     errors.push(...polygonErrors(o.polygon, store.image).map((x) => o.label + '：' + x))
     for (const k of ['length', 'width', 'depth', 'height'])
       if (
@@ -182,6 +183,14 @@ export function initialEntry(store, reference, reviewer = '') {
 }
 export function decodeWholePack(pack, data) {
   if (
+    data.wallAssemblyBatch &&
+    (pack.wallAssemblyBatch !== data.wallAssemblyBatch ||
+      pack.wallAssemblyReviewSha256 !== data.wallAssemblyReviewSha256 ||
+      JSON.stringify(pack.wallAssemblySourcePack) !== JSON.stringify(data.wallAssemblySourcePack) ||
+      JSON.stringify(pack.wallAssemblyLog) !== JSON.stringify(data.wallAssemblyLog))
+  )
+    throw Error('墙体表达批次或原审核不符')
+  if (
     data.sourceRevision &&
     JSON.stringify(pack.sourceRevision) !== JSON.stringify(data.sourceRevision)
   )
@@ -225,6 +234,14 @@ export function decodeWholePack(pack, data) {
 }
 export function exportWholePack(data, records) {
   const pack = {
+    ...(data.wallAssemblyBatch
+      ? {
+          wallAssemblyBatch: data.wallAssemblyBatch,
+          wallAssemblyReviewSha256: data.wallAssemblyReviewSha256,
+          wallAssemblySourcePack: clone(data.wallAssemblySourcePack),
+          wallAssemblyLog: clone(data.wallAssemblyLog),
+        }
+      : {}),
     ...(data.sourceRevision ? { sourceRevision: clone(data.sourceRevision) } : {}),
     ...(data.decisionBatch
       ? {
@@ -299,6 +316,14 @@ export function objectInventory(entry) {
     assetId: o.assetId ?? null,
     sourceDimensions: clone(o.sourceDimensions || {}),
     status: entry.status,
+    ...(isWallAnnotation(o)
+      ? {
+          wallGeometry: clone(o.wallGeometry || { representation: 'unknown' }),
+          display3d: 'simplified-wall',
+          cutForEmbedded: false,
+        }
+      : {}),
+    ...(o.wallInstallation ? { wallInstallation: clone(o.wallInstallation) } : {}),
   }))
 }
 export function entranceDrawPoints(p) {
@@ -368,3 +393,111 @@ export const entrancePurposes = {
 }
 export const isCustomerEntrance = (p) => p.purpose == null || p.purpose === 'customer-access'
 export const customerEntrancePaths = (paths) => clone(paths.filter(isCustomerEntrance))
+
+// 图纸内嵌块保留二维几何；三维只用贴面，不挖槽也不加载厚实体。
+export const isWallAnnotation = (o) =>
+  ['partition', 'cladding', 'existing-wall'].includes(o.category)
+export function wallAssemblyErrors(o, objects) {
+  const errors = [],
+    g = o.wallGeometry,
+    i = o.wallInstallation
+  if (
+    g &&
+    (!isWallAnnotation(o) ||
+      !['assembly-envelope', 'plan-wall-band', 'unknown'].includes(g.representation) ||
+      g.display3d !== 'simplified-wall' ||
+      g.cutForEmbedded !== false ||
+      g.status !== 'agent_interpreted' ||
+      typeof g.evidence !== 'string' ||
+      !g.evidence.trim())
+  )
+    errors.push('墙体平面表达或三维规则无效')
+  if (i) {
+    const host = objects.find((x) => x.id === i.hostObjectId)
+    if (
+      !['screen', 'signage'].includes(o.category) ||
+      !host ||
+      host.id === o.id ||
+      !isWallAnnotation(host) ||
+      !['embedded', 'unknown'].includes(i.planMode) ||
+      i.display3d !== 'wall-surface' ||
+      i.cutWall !== false ||
+      i.solidBody !== false ||
+      i.status !== 'agent_interpreted' ||
+      typeof i.evidence !== 'string' ||
+      !i.evidence.trim()
+    )
+      errors.push('墙面设施关联或贴面规则无效')
+  }
+  return errors
+}
+export function wallDrawingObjects(objects) {
+  return objects
+    .map((o, index) => ({ o, index }))
+    .sort((a, b) => Number(isWallAnnotation(b.o)) - Number(isWallAnnotation(a.o)))
+}
+export function wallDrawingStyle(o, selected = false) {
+  const wall = isWallAnnotation(o),
+    color = o.category === 'column' ? '#d75b00' : o.category === 'rear-zone' ? '#a6a297' : '#6b675f'
+  return {
+    fill: wall ? 'none' : selected ? '#ffd200' : color,
+    opacity: selected ? '.40' : '.10',
+    stroke: selected ? '#b09200' : color,
+    width: selected ? 3 : 1.4,
+    dash: wall && o.wallGeometry?.representation !== 'plan-wall-band' ? '6 4' : '',
+  }
+}
+export function wallAssemblySummary(o, objects) {
+  if (isWallAnnotation(o))
+    return (
+      {
+        'assembly-envelope': '墙体整体范围',
+        'plan-wall-band': '已描墙带（保留原图凹口）',
+        unknown: '墙体表达待分类',
+      }[o.wallGeometry?.representation || 'unknown'] + '；三维简化墙体，内嵌设施用贴面，不开洞。'
+    )
+  if (o.wallInstallation) {
+    const host = objects.find((x) => x.id === o.wallInstallation.hostObjectId)
+    return (
+      (o.wallInstallation.planMode === 'embedded' ? '图纸内嵌' : '图纸安装方式待核') +
+      ' · 对应' +
+      (host?.label || '未知墙体') +
+      '；三维仅贴面。'
+    )
+  }
+  return ''
+}
+
+// 本机只缓存可变记录，完整审计链仍随导出包保留，避免多轮原包撑满localStorage。
+export function wholeDraftBinding(data) {
+  return [
+    data.fingerprint,
+    data.annotationBatch,
+    data.originalReviewSha256,
+    data.wholeReviewSha256 || null,
+    data.supplementBatch || null,
+    data.decisionBatch || null,
+    data.sourceRevision?.batch || null,
+    data.wallAssemblyBatch || null,
+  ]
+}
+export function exportWholeDraft(data, records) {
+  const p = exportWholePack(data, records)
+  return {
+    kind: 'whole-store-local-draft',
+    schemaVersion: 1,
+    binding: wholeDraftBinding(data),
+    entries: p.entries,
+  }
+}
+export function decodeWholeDraft(draft, data) {
+  if (draft.kind !== 'whole-store-local-draft') return decodeWholePack(draft, data)
+  if (
+    draft.schemaVersion !== 1 ||
+    JSON.stringify(draft.binding) !== JSON.stringify(wholeDraftBinding(data))
+  )
+    throw Error('本机草稿批次不符')
+  const p = exportWholePack(data, data.initialRecords)
+  p.entries = draft.entries
+  return decodeWholePack(p, data)
+}

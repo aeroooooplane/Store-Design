@@ -34,7 +34,7 @@ jobs:
       - name: 多入口路径评分
         run: node --test tools/recognition/entrance-metrics.test.mjs
       - name: 整店标注与原审核保留
-        run: node --test tools/recognition/whole-store-core.test.mjs tools/recognition/whole-store-source-revision.test.mjs
+        run: node --test tools/recognition/whole-store-core.test.mjs tools/recognition/whole-store-source-revision.test.mjs tools/recognition/whole-store-wall-assemblies.test.mjs
       - name: 试点数据交接契约
         run: node --test tools/recognition/pilot-contract.test.mjs
       - name: OpenAPI contract is up to date
