@@ -121,7 +121,7 @@ describe('layoutRadial', () => {
     expect(dist('w1')).toBeGreaterThan(dist('p1'))
   })
 
-  it('never lets two boxes overlap and draws straight branches without arrows', () => {
+  it('never lets two boxes overlap and draws curved branches without arrows', () => {
     const layout = layoutRadial('项目', nodes, label, true)
     const boxes = layout.boxes
     for (let i = 0; i < boxes.length; i++) {
@@ -135,7 +135,7 @@ describe('layoutRadial', () => {
       }
     }
     expect(layout.edges).toHaveLength(boxes.length - 1)
-    expect(layout.edges.every((e) => /^M[\d.]+ [\d.]+L[\d.]+ [\d.]+$/.test(e.d))).toBe(true)
+    expect(layout.edges.every((e) => /^M[\d.]+ [\d.]+C/.test(e.d))).toBe(true)
     // Everything lies inside the drawing.
     expect(Math.min(...boxes.map((b) => b.x - b.width / 2))).toBeGreaterThanOrEqual(0)
     expect(Math.max(...boxes.map((b) => b.x + b.width / 2))).toBeLessThanOrEqual(layout.width)
@@ -149,9 +149,24 @@ describe('layoutRadial', () => {
     expect(layoutRadial('项目', [], label, false).boxes).toHaveLength(1)
   })
 
-  it('keeps branches straight after a drag', () => {
+  it('does not change positions when Chinese labels grow or a draft is named', () => {
+    const a = layoutRadial('项目', nodes, label, false)
+    const b = layoutRadial(
+      '很长的中文项目名称',
+      nodes.map((n) => ({ ...n, name: n.name.repeat(20) })),
+      label,
+      false,
+    )
+    const positions = (layout: typeof a) =>
+      layout.boxes.map(({ id, x, y, width, height }) => ({ id, x, y, width, height }))
+    expect(positions(b)).toEqual(positions(a))
+    expect(b.width).toBe(a.width)
+    expect(b.height).toBe(a.height)
+  })
+
+  it('keeps branches connected after a drag', () => {
     const layout = layoutRadial('项目', nodes, label, false)
     const moved = applyOffsets(layout, { p1: [30, 20] })
-    expect(moved.edges.find((e) => e.to === 'p1')?.d).toMatch(/^M[\d.]+ [\d.]+L/)
+    expect(moved.edges.find((e) => e.to === 'p1')?.d).toMatch(/^M[\d.]+ [\d.]+C/)
   })
 })

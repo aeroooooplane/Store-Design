@@ -39,10 +39,11 @@ export const TREE_STYLE = {
 
 /** The radial arrangement: the project in the middle, each history level one ring further out. */
 export const RADIAL_STYLE = {
-  /** Smallest distance between two rings; wide labels push the rings further apart. */
-  ringGap: 92,
-  /** Space kept between neighbouring boxes, so labels never touch. */
-  boxGap: 14,
+  /** Smallest distance between two rings; names never affect dot positions. */
+  ringGap: 56,
+  /** Room between dots, including their larger pointer targets. */
+  boxGap: 20,
+  diameter: 16,
   /** Angle (degrees) of the first leaf; -90 starts at the top. */
   startAngle: -90,
   /** Angle (degrees) kept free below the hub for the stem that leads back to the project. */
@@ -81,8 +82,9 @@ export interface TreeLayout {
   edges: TreeEdge[]
   width: number
   height: number
-  /** Set by layoutRadial: branches are straight lines between centres and carry no arrows. */
+  /** Set by layoutRadial: curved branches between dots carry no arrows. */
   radial?: true
+  hubId?: string
 }
 
 export const ROOT_ID = 'project'
@@ -237,9 +239,16 @@ export function edgePath(parent: TreeBox, child: TreeBox, style = TREE_STYLE): s
   return `M${x1} ${y1}C${x1} ${y1 + bend} ${x2} ${y2 - bend} ${x2} ${y2}`
 }
 
-/** Straight branch between the two centres; the boxes are drawn on top and hide the ends. */
-export function radialEdgePath(parent: TreeBox, child: TreeBox): string {
-  return `M${parent.x} ${parent.y}L${child.x} ${child.y}`
+/** Radial Bézier branch; the dots cover the ends and dragged nodes remain connected. */
+export function radialEdgePath(parent: TreeBox, child: TreeBox, hub?: TreeBox): string {
+  const cx = hub?.x ?? parent.x
+  const cy = hub?.y ?? parent.y
+  const a = Math.atan2(parent.y - cy, parent.x - cx)
+  const b = child.id === hub?.id ? a : Math.atan2(child.y - cy, child.x - cx)
+  const radius =
+    (Math.hypot(parent.x - cx, parent.y - cy) + Math.hypot(child.x - cx, child.y - cy)) / 2
+  const start = parent.id === hub?.id ? b : a
+  return `M${parent.x} ${parent.y}C${cx + Math.cos(start) * radius} ${cy + Math.sin(start) * radius} ${cx + Math.cos(b) * radius} ${cy + Math.sin(b) * radius} ${child.x} ${child.y}`
 }
 
 /**
@@ -298,15 +307,14 @@ export function layoutRadial(
   }
   collect(hub, 0)
 
-  const boxWidth = (d: Draft) =>
-    Math.ceil(textWidth(shorten(d.fullLabel, style.maxLabelChars), style) + style.paddingX * 2)
-  const rect = (d: Draft, x: number, y: number) => ({ x, y, w: boxWidth(d), h: style.nodeHeight })
+  const boxWidth = (_d: Draft) => radial.diameter
+  const rect = (d: Draft, x: number, y: number) => ({ x, y, w: boxWidth(d), h: radial.diameter })
   const place = (d: Draft, r: number) => {
     const angle = angles.get(d.id) ?? first
     return rect(d, r * Math.cos(angle), r * Math.sin(angle))
   }
   // The hub and the stem stay where they are; the rings must clear them.
-  const stemStep = style.nodeHeight + radial.stemSpacing
+  const stemStep = radial.diameter + radial.stemSpacing
   const fixed = [rect(hub, 0, 0), ...stem.map((d, i) => rect(d, 0, (stem.length - i) * stemStep))]
   const clear = (a: { x: number; y: number; w: number; h: number }, b: typeof a) => {
     const gapX = Math.abs(a.x - b.x) - (a.w + b.w) / 2
@@ -372,7 +380,8 @@ export function layoutRadial(
     const parent = byId.get(d.id)
     for (const child of d.children) {
       const box = byId.get(child.id)
-      if (parent && box) edges.push({ from: d.id, to: child.id, d: radialEdgePath(parent, box) })
+      if (parent && box)
+        edges.push({ from: d.id, to: child.id, d: radialEdgePath(parent, box, byId.get(hub.id)) })
       walk(child)
     }
   }
@@ -383,6 +392,7 @@ export function layoutRadial(
     width: right - left + style.margin * 2,
     height: bottom - top + style.margin * 2,
     radial: true,
+    hubId: hub.id,
   }
 }
 
@@ -410,7 +420,14 @@ export function applyOffsets(
     const from = byId.get(e.from)
     const to = byId.get(e.to)
     if (!from || !to) return []
-    return [{ ...e, d: layout.radial ? radialEdgePath(from, to) : edgePath(from, to, style) }]
+    return [
+      {
+        ...e,
+        d: layout.radial
+          ? radialEdgePath(from, to, byId.get(layout.hubId ?? ROOT_ID))
+          : edgePath(from, to, style),
+      },
+    ]
   })
   const left = Math.min(0, ...boxes.map((b) => b.x - b.width / 2 - style.margin))
   const top = Math.min(0, ...boxes.map((b) => b.y - b.height / 2 - style.margin))

@@ -1,4 +1,13 @@
-import { useEffect, useId, useMemo, useRef, useState } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
+import { createPortal } from 'react-dom'
 import type { PointerEvent as ReactPointerEvent, ReactNode } from 'react'
 import {
   Eye,
@@ -16,7 +25,25 @@ import type { NodeSummary } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useNodeVisibility, useRenameNode } from './api.ts'
 import { ROOT_ID, TREE_STYLE, applyOffsets, layoutRadial, layoutTree } from './tree-layout.ts'
-import type { TreeOffsets } from './tree-layout.ts'
+import type { PlacedTree, TreeOffsets } from './tree-layout.ts'
+
+interface HistoryViewMemory {
+  showHidden: boolean
+  collapsed: boolean
+  enlarged: boolean
+  offsets: TreeOffsets
+  frame: { topology: string; projectId: string; bounds: PlacedTree }
+}
+
+const HistoryViewContext = createContext<Map<string, HistoryViewMemory> | null>(null)
+
+/** NodePanel is keyed by node ID; keep the history view alive across those remounts. */
+export function HistoryViewProvider({ children }: { children: ReactNode }) {
+  const memory = useRef(new Map<string, HistoryViewMemory>())
+  return (
+    <HistoryViewContext.Provider value={memory.current}>{children}</HistoryViewContext.Provider>
+  )
+}
 
 /** A square icon button; the label is its accessible name and its tooltip. */
 function IconButton({
@@ -111,23 +138,29 @@ export function HistoryTree({
   onNewSpace,
   newSpaceDisabled,
 }: HistoryTreeProps) {
-  const [showHidden, setShowHidden] = useState(false)
-  const [collapsed, setCollapsed] = useState(false)
-  const [enlarged, setEnlarged] = useState(false)
+  const memory = useContext(HistoryViewContext)
+  const remembered = memory?.get(projectId)
+  const [showHidden, setShowHidden] = useState(remembered?.showHidden ?? false)
+  const [collapsed, setCollapsed] = useState(remembered?.collapsed ?? false)
+  const [enlarged, setEnlarged] = useState(remembered?.enlarged ?? false)
   const [renaming, setRenaming] = useState<string | null>(null)
-  const [offsets, setOffsets] = useState<TreeOffsets>(() => loadOffsets(projectId))
+  const [offsets, setOffsets] = useState<TreeOffsets>(
+    () => remembered?.offsets ?? loadOffsets(projectId),
+  )
   const visibility = useNodeVisibility(projectId)
   const rename = useRenameNode(projectId)
-  const arrow = `tree-arrow-${useId().replace(/:/g, '')}`
-  const canvas = useRef<HTMLDivElement>(null)
+  const [tooltip, setTooltip] = useState<{ id: string; x: number; y: number } | null>(null)
   const svgRef = useRef<SVGSVGElement>(null)
   const drag = useRef<{
     id: string
     nodeId: string | null
     startX: number
     startY: number
+    screenX: number
+    screenY: number
     origin: readonly [number, number]
     moved: boolean
+    pointerId: number
   } | null>(null)
 
   const base = useMemo(
@@ -142,13 +175,64 @@ export function HistoryTree({
   )
   const layout = useMemo(() => applyOffsets(base, offsets), [base, offsets])
   const selected = nodes.find((n) => n.id === selectedId) ?? null
-  const { edge, levels, cornerRadius, fontSize } = TREE_STYLE
-
-  // Keep the open step in view when the history is taller or wider than the panel.
+  // Selection and dragging never change the viewport; topology changes and reset may fit it.
+  const topology = JSON.stringify([
+    projectId,
+    showHidden,
+    nodes.map((n) => [n.id, n.parentId, n.hidden]),
+  ])
+  const [frame, setFrame] = useState(
+    () => remembered?.frame ?? { topology, projectId, bounds: layout },
+  )
+  if (frame.topology !== topology) {
+    const remembered = loadOffsets(projectId)
+    if (frame.projectId !== projectId) setOffsets(remembered)
+    setFrame({ topology, projectId, bounds: applyOffsets(base, remembered) })
+  }
+  useLayoutEffect(() => {
+    memory?.set(projectId, { showHidden, collapsed, enlarged, offsets, frame })
+  }, [memory, projectId, showHidden, collapsed, enlarged, offsets, frame])
   useEffect(() => {
-    const current = canvas.current?.querySelector('[aria-current="true"]')
-    current?.scrollIntoView?.({ block: 'nearest', inline: 'nearest' })
-  }, [selectedId, collapsed, enlarged])
+    const ids = new Set([ROOT_ID, ...nodes.map((node) => node.id)])
+    const retained = Object.fromEntries(Object.entries(offsets).filter(([id]) => ids.has(id)))
+    if (Object.keys(retained).length !== Object.keys(offsets).length) {
+      setOffsets(retained)
+      saveOffsets(projectId, retained)
+    }
+  }, [nodes, offsets, projectId])
+  const width = Math.max(280, frame.bounds.width)
+  const height = Math.max(260, frame.bounds.height)
+  const viewX = frame.bounds.x - (width - frame.bounds.width) / 2
+  const viewY = frame.bounds.y - (height - frame.bounds.height) / 2
+  const related = new Set<string>()
+  const ancestors: NodeSummary[] = []
+  let ancestor = selected
+  while (ancestor && !related.has(ancestor.id)) {
+    related.add(ancestor.id)
+    ancestors.unshift(ancestor)
+    ancestor = nodes.find((n) => n.id === ancestor?.parentId) ?? null
+  }
+  if (selected) related.add(ROOT_ID)
+  const descendants = selectedId ? [selectedId] : []
+  const visited = new Set<string>()
+  while (descendants.length) {
+    const id = descendants.pop()!
+    if (visited.has(id)) continue
+    visited.add(id)
+    related.add(id)
+    descendants.push(...nodes.filter((n) => n.parentId === id).map((n) => n.id))
+  }
+  const hovered = layout.boxes.find((box) => box.id === tooltip?.id)
+  const pathLabel = [projectName, ...ancestors.map(nodeLabel)].join(' › ')
+
+  function showTooltip(id: string, target: SVGGElement) {
+    const rect = target.getBoundingClientRect()
+    setTooltip({
+      id,
+      x: Math.max(8, Math.min(window.innerWidth - 248, rect.x + rect.width / 2 - 120)),
+      y: Math.max(8, Math.min(window.innerHeight - 100, rect.bottom + 8)),
+    })
+  }
 
   useEffect(() => {
     if (!enlarged) return
@@ -175,24 +259,33 @@ export function HistoryTree({
       nodeId,
       startX: x,
       startY: y,
+      screenX: event.clientX,
+      screenY: event.clientY,
       origin: offsets[id] ?? [0, 0],
       moved: false,
+      pointerId: event.pointerId,
     }
     event.currentTarget.setPointerCapture?.(event.pointerId)
   }
 
   function onPointerMove(event: ReactPointerEvent<SVGGElement>) {
     const d = drag.current
-    if (!d) return
+    if (!d || d.pointerId !== event.pointerId) return
     const [x, y] = toDrawing(event)
     const dx = x - d.startX
     const dy = y - d.startY
-    if (!d.moved && Math.hypot(dx, dy) < TREE_STYLE.dragThreshold) return
+    if (
+      !d.moved &&
+      Math.hypot(event.clientX - d.screenX, event.clientY - d.screenY) < TREE_STYLE.dragThreshold
+    )
+      return
     d.moved = true
+    setTooltip(null)
     setOffsets((current) => ({ ...current, [d.id]: [d.origin[0] + dx, d.origin[1] + dy] }))
   }
 
-  function onPointerUp() {
+  function onPointerUp(event: ReactPointerEvent<SVGGElement>) {
+    if (drag.current?.pointerId !== event.pointerId) return
     const d = drag.current
     drag.current = null
     if (!d) return
@@ -209,6 +302,7 @@ export function HistoryTree({
   function resetPositions() {
     setOffsets({})
     saveOffsets(projectId, {})
+    setFrame({ topology, projectId, bounds: applyOffsets(base, {}) })
   }
 
   const hasOffsets = Object.keys(offsets).length > 0
@@ -258,11 +352,14 @@ export function HistoryTree({
             <IconButton label="新建空间" disabled={newSpaceDisabled} onClick={onNewSpace}>
               <Plus size={15} />
             </IconButton>
-            {hasOffsets && (
-              <IconButton label="重置位置" hint="恢复自动排列" onClick={resetPositions}>
-                <RotateCcw size={15} />
-              </IconButton>
-            )}
+            <IconButton
+              label="重置位置"
+              hint="一键归位，恢复自动排列"
+              disabled={!hasOffsets}
+              onClick={resetPositions}
+            >
+              <RotateCcw size={15} />
+            </IconButton>
             <span className="history-icons-end">
               <IconButton
                 label={enlarged ? '还原' : '放大'}
@@ -284,7 +381,10 @@ export function HistoryTree({
           </div>
         )}
         <div className="history-sub">
-          <span className="hint history-current">
+          <span
+            className="hint history-current"
+            title={selected ? nodeLabel(selected) : projectName}
+          >
             {selected ? `当前：${nodeLabel(selected)}` : '还没有节点'}
           </span>
           <label className="history-switch">
@@ -300,111 +400,109 @@ export function HistoryTree({
       </div>
       <ErrorMessage error={visibility.error ?? rename.error} />
       {(!collapsed || enlarged) && (
-        <div className="history-canvas" ref={canvas}>
-          <svg
-            ref={svgRef}
-            width={layout.width}
-            height={layout.height}
-            viewBox={`${layout.x} ${layout.y} ${layout.width} ${layout.height}`}
-            style={{ minWidth: layout.width * TREE_STYLE.minScale }}
-            role="group"
-            aria-label="历史树图"
-          >
-            <defs>
-              <marker
-                id={arrow}
-                viewBox="0 0 10 10"
-                refX="1"
-                refY="5"
-                markerWidth={edge.arrow}
-                markerHeight={edge.arrow}
-                markerUnits="userSpaceOnUse"
-                orient="auto"
-              >
-                <path d="M0 0L10 5L0 10z" fill={edge.color} />
-              </marker>
-            </defs>
-            {layout.edges.map((e) => (
-              <path
-                key={`${e.from}-${e.to}`}
-                d={e.d}
-                fill="none"
-                stroke={edge.color}
-                strokeWidth={edge.width}
-                markerEnd={layout.radial ? undefined : `url(#${arrow})`}
-              />
+        <>
+          <div className="history-legend" aria-label="节点颜色">
+            {(['space', 'plan', 'white', 'render'] as const).map((kind) => (
+              <span key={kind}>
+                <i className={`tree-color-${kind}`} />
+                {NODE_KIND_LABELS[kind]}
+              </span>
             ))}
-            {layout.boxes.map((box) => {
-              const colors = levels[box.level]
-              const current = box.id === selectedId
-              const nodeId = box.id === ROOT_ID ? null : (box.node?.id ?? null)
-              return (
-                <g
-                  key={box.id}
-                  role={nodeId ? 'button' : undefined}
-                  tabIndex={nodeId ? 0 : undefined}
-                  aria-label={
-                    nodeId
-                      ? `${box.fullLabel}${box.id === draftBaseId ? '（有草稿）' : ''}`
-                      : undefined
-                  }
-                  aria-current={current ? 'true' : undefined}
-                  className={[
-                    nodeId ? 'tree-item' : 'tree-root',
-                    box.hiddenBranch ? 'hidden-node' : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  onPointerDown={(event) => onPointerDown(event, box.id, nodeId)}
-                  onPointerMove={onPointerMove}
-                  onPointerUp={onPointerUp}
-                  onPointerCancel={() => (drag.current = null)}
-                  onKeyDown={(event) => {
-                    if (nodeId && (event.key === 'Enter' || event.key === ' ')) {
-                      event.preventDefault()
-                      onSelect(nodeId)
-                    }
-                  }}
-                >
-                  <title>{box.fullLabel}</title>
-                  <rect
-                    x={box.x - box.width / 2}
-                    y={box.y - box.height / 2}
-                    width={box.width}
-                    height={box.height}
-                    rx={cornerRadius}
-                    fill={colors.fill}
-                    className={current ? 'tree-node current' : 'tree-node'}
-                  />
-                  <text
-                    x={box.x}
-                    y={box.y}
-                    fill={colors.text}
-                    fontSize={fontSize}
-                    textAnchor="middle"
-                    dominantBaseline="central"
+          </div>
+          <div className="history-canvas">
+            <svg
+              ref={svgRef}
+              viewBox={`${viewX} ${viewY} ${width} ${height}`}
+              role="group"
+              aria-label="历史树图"
+            >
+              {layout.edges.map((e) => (
+                <path
+                  key={`${e.from}-${e.to}`}
+                  d={e.d}
+                  fill="none"
+                  className={`tree-edge ${selected && related.has(e.from) && related.has(e.to) ? 'related' : ''}`}
+                  vectorEffect="non-scaling-stroke"
+                />
+              ))}
+              {layout.boxes.map((box) => {
+                const current = box.id === selectedId
+                const nodeId = box.id === ROOT_ID ? null : (box.node?.id ?? null)
+                const label = `${box.fullLabel}${box.id === draftBaseId ? '（有草稿）' : ''}${box.hiddenBranch ? '（已隐藏）' : ''}`
+                return (
+                  <g
+                    key={box.id}
+                    data-node-id={box.id}
+                    role={nodeId ? 'button' : 'img'}
+                    tabIndex={0}
+                    aria-label={label}
+                    aria-current={current ? 'true' : undefined}
+                    className={[
+                      nodeId ? 'tree-item' : 'tree-root',
+                      `tree-color-${box.node?.kind ?? 'project'}`,
+                      current ? 'current' : '',
+                      selected && !related.has(box.id) ? 'unrelated' : '',
+                      box.hiddenBranch ? 'hidden-node' : '',
+                    ]
+                      .filter(Boolean)
+                      .join(' ')}
+                    onPointerEnter={(event) => showTooltip(box.id, event.currentTarget)}
+                    onPointerLeave={() => setTooltip(null)}
+                    onFocus={(event) => showTooltip(box.id, event.currentTarget)}
+                    onBlur={() => setTooltip(null)}
+                    onPointerDown={(event) => onPointerDown(event, box.id, nodeId)}
+                    onPointerMove={onPointerMove}
+                    onPointerUp={onPointerUp}
+                    onPointerCancel={() => {
+                      const d = drag.current
+                      if (d) setOffsets((current) => ({ ...current, [d.id]: d.origin }))
+                      drag.current = null
+                    }}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Escape') setTooltip(null)
+                      if (nodeId && (event.key === 'Enter' || event.key === ' ')) {
+                        event.preventDefault()
+                        onSelect(nodeId)
+                      }
+                    }}
                   >
-                    {box.label}
-                  </text>
-                  {box.id === draftBaseId && (
-                    <g className="tree-draft">
-                      <circle cx={box.x + box.width / 2} cy={box.y - box.height / 2} r={8} />
-                      <text
-                        x={box.x + box.width / 2}
-                        y={box.y - box.height / 2}
-                        textAnchor="middle"
-                        dominantBaseline="central"
-                        fontSize={10}
-                      >
-                        稿
-                      </text>
-                    </g>
-                  )}
-                </g>
-              )
-            })}
-          </svg>
-        </div>
+                    <circle className="tree-hit" cx={box.x} cy={box.y} r={16} />
+                    <circle className="tree-selection" cx={box.x} cy={box.y} r={11} />
+                    <circle className="tree-node" cx={box.x} cy={box.y} r={nodeId ? 5 : 7} />
+                    {box.id === draftBaseId && (
+                      <circle className="tree-draft" cx={box.x + 7} cy={box.y - 7} r={3} />
+                    )}
+                  </g>
+                )
+              })}
+            </svg>
+          </div>
+          <div className="history-caption">
+            <p className="history-path" title={pathLabel}>
+              {selected ? pathLabel : projectName}
+            </p>
+            <p>悬浮看名称 · 点击看关联 · 拖动排位置</p>
+          </div>
+          {tooltip &&
+            hovered &&
+            createPortal(
+              <div
+                role="tooltip"
+                className="history-tooltip"
+                style={{ left: tooltip.x, top: tooltip.y }}
+              >
+                <strong>{hovered.fullLabel}</strong>
+                <span>
+                  {hovered.id === ROOT_ID
+                    ? '项目起点'
+                    : `来源：${layout.boxes.find((box) => box.id === hovered.node?.parentId)?.fullLabel ?? projectName}`}
+                </span>
+                {hovered.id === draftBaseId && <span>有草稿</span>}
+                {hovered.hiddenBranch && <span>已隐藏</span>}
+              </div>,
+              document.body,
+            )}
+        </>
       )}
     </section>
   )
