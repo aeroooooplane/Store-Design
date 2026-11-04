@@ -31,6 +31,8 @@ jobs:
         run: pnpm test
       - name: 审核页多入口与记录兼容
         run: node tools/recognition/check-review-template.mjs
+      - name: 多入口路径评分
+        run: node --test tools/recognition/entrance-metrics.test.mjs
       - name: 试点数据交接契约
         run: node --test tools/recognition/pilot-contract.test.mjs
       - name: OpenAPI contract is up to date
