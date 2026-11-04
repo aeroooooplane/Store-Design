@@ -30,6 +30,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup()
   vi.unstubAllGlobals()
+  vi.restoreAllMocks()
 })
 
 function renderTree(onSelect = vi.fn(), selectedId: string | null = P1) {
@@ -264,6 +265,63 @@ describe('HistoryTree', () => {
         ?.getAttribute('cx'),
     ).toBe(before)
     expect(screen.getByRole('button', { name: '重置位置' }).hasAttribute('disabled')).toBe(true)
+  })
+
+  it('fits live dragged positions after topology changes even when local storage cannot be written', () => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('存储不可写')
+    })
+    function Harness() {
+      const [list, setList] = useState(nodes)
+      const [selectedId, select] = useState(S1)
+      return (
+        <HistoryViewProvider>
+          <button onClick={() => setList([...nodes, makeNodeSummary('added', S1)])}>
+            增加节点
+          </button>
+          <HistoryTree
+            key={selectedId}
+            projectId={PID}
+            projectName="项目"
+            nodes={list}
+            selectedId={selectedId}
+            draftBaseId={null}
+            onSelect={select}
+            onNewSpace={vi.fn()}
+            newSpaceDisabled={false}
+          />
+        </HistoryViewProvider>
+      )
+    }
+    renderWithClient(<Harness />)
+    const plan = screen.getByRole('button', { name: '方案 · 按面积推荐' })
+    fireEvent.pointerDown(plan, { button: 0, clientX: 10, clientY: 10 })
+    fireEvent.pointerMove(plan, { clientX: 810, clientY: -390 })
+    fireEvent.pointerUp(plan)
+    fireEvent.click(screen.getByRole('button', { name: '增加节点' }))
+    const svg = screen.getByRole('group', { name: '历史树图' })
+    const frame = svg.getAttribute('viewBox')!
+    const [left, top, width, height] = frame.split(' ').map(Number) as [
+      number,
+      number,
+      number,
+      number,
+    ]
+    const positions = () =>
+      Array.from(document.querySelectorAll('.tree-node')).map((dot) => [
+        Number(dot.getAttribute('cx')),
+        Number(dot.getAttribute('cy')),
+      ])
+    const before = positions()
+    for (const [x, y] of before as [number, number][]) {
+      expect(x).toBeGreaterThan(left)
+      expect(x).toBeLessThan(left + width)
+      expect(y).toBeGreaterThan(top)
+      expect(y).toBeLessThan(top + height)
+    }
+    fireEvent.keyDown(plan, { key: 'Enter' })
+    expect(positions()).toEqual(before)
+    expect(screen.getByRole('group', { name: '历史树图' }).getAttribute('viewBox')).toBe(frame)
   })
 
   it('renames the selected step and can fold the diagram away', async () => {

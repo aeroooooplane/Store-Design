@@ -185,7 +185,7 @@ export function HistoryTree({
     () => remembered?.frame ?? { topology, projectId, bounds: layout },
   )
   if (frame.topology !== topology) {
-    const remembered = loadOffsets(projectId)
+    const remembered = frame.projectId === projectId ? offsets : loadOffsets(projectId)
     if (frame.projectId !== projectId) setOffsets(remembered)
     setFrame({ topology, projectId, bounds: applyOffsets(base, remembered) })
   }
