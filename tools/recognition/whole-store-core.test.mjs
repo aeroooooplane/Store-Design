@@ -107,7 +107,7 @@ test('家具确认必须有签名和问题裁决，不影响入口状态', () =>
   assert.deepEqual(entryErrors(r, store), [])
   assert.equal(r.entranceStatus, 'partial')
 })
-test('部分参照导出维持原入口，代理建议不能自动计完整分', () => {
+test('部分参照导出最新已描入口，保留原入口且不能自动计完整分', () => {
   const { data, records } = fixture()
   records[store.id].entrances = [
     {
@@ -119,7 +119,11 @@ test('部分参照导出维持原入口，代理建议不能自动计完整分',
     },
   ]
   const p = evaluationPack(data, records)
-  assert.deepEqual(p.annotations[0].entrances, ref.entrances)
+  assert.deepEqual(p.annotations[0].entrances, records[store.id].entrances)
+  assert.deepEqual(p.annotations[0].originalEntrances, ref.entrances)
+  assert.equal(p.annotations[0].entranceReviewVersion, 2)
+  assert.equal(p.annotations[0].entranceSemantics, 'observed-current-layout')
+  assert.equal(p.annotations[0].entranceReviewedBy, undefined)
   assert.equal(p.annotations[0].entranceCoverage, 'partial')
 })
 test('显式完整性确认导出全部入口，并保留原入口与原审核', () => {

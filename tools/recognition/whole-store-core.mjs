@@ -212,20 +212,27 @@ export function exportWholePack(data, records) {
 }
 export function evaluationPack(data, records) {
   const p = clone(data.referencePack)
-  p.entranceReviewScope = '完整性仅来自独立整店入口确认；原轮廓审核保留'
+  p.entranceReviewScope = '当前布局下已标出的顾客通行口；不代表开放边或规划硬约束，完整性单独确认'
+  p.entranceSemantics = 'observed-current-layout'
   for (const r of p.annotations) {
     const e = records[r.store_id],
       s = data.stores.find((x) => x.id === r.store_id)
     const errors = entryErrors(e, s)
     if (errors.length) throw Error(errors.join('；'))
+    r.originalEntrances = clone(r.entrances)
+    r.entrances = clone(e.entrances)
+    r.entranceReviewVersion = 2
+    r.entranceSemantics = 'observed-current-layout'
     if (e.entranceStatus === 'complete') {
-      r.originalEntrances = clone(r.entrances)
-      r.entrances = clone(e.entrances)
       r.entranceCoverage = 'complete'
       r.entranceReviewVersion = 2
       r.entranceReviewedBy = e.entranceReviewer
       r.entranceReviewedAt = e.entranceReviewedAt
-    } else r.entranceCoverage = 'partial'
+    } else {
+      r.entranceCoverage = 'partial'
+      delete r.entranceReviewedBy
+      delete r.entranceReviewedAt
+    }
   }
   return p
 }
