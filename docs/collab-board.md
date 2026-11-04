@@ -47,7 +47,8 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 | 2026-11-02 | Codex  | `feat/recognition-openings` / #156                              | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评                                                                                | 无（限 recognition、tools/recognition、docs/recognition-*）                                            | 无         | 草稿；48家用户审核已接收，算法退化未解决，未占用编辑器热点                                                                                                                                                                  |
 | 2026-11-02 | Claude | `claude/prune-*`（#170–#176 与本次收尾 PR，均已合并，分支已删） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 已无占用的文件；截图归档时只动 `docs/design/` 和 `docs/archive/INDEX.md`                               | 无         | **阶段 0–4 已完成**（报告第 10、11 节：D 盘已用 363→160 GiB，浏览器冒烟测试通过）。截图归档已获用户同意（见第 7 节），待 Claude 本人登记归档分支后执行；不等待 Codex 意见。其他隔离区/本机清理事项仍按原权限 |
 
-| 2026-11-04 | Codex | `codex/entrance-evaluation-20261104` | 多入口/曲线评分接入冻结开发集复评，区分旧版部分入口与完整入口参照 | tools/recognition/*entrance*、development-metrics、docs/recognition-*、.github/workflows/ci.yml及本看板；无业务热点 | 无 | 本地复评完成；9项专项与全仓761项测试、格式检查通过，等待PR/CI；48家原审核保留，完整入口参照0家，不改引擎或45家验收集 |
+| 2026-11-04 | Codex | `codex/whole-store-review-20261104` | 48家整店家具柱位独立图层、歧义集中审核、保留旧审核及入口完整性导出 | tools/recognition/whole-store*、docs/recognition-whole-store*、.github/workflows/ci.yml及本看板；无业务热点 | 无 | 48家原图已逐店核对，780对象/52柱位，21家22问题集中审核；14项契约、11项浏览器、全仓761项及格式通过，PR #186待CI及合并；旧审核48/48保留 |
+| 2026-11-04 | Codex | `codex/entrance-evaluation-20261104` | 多入口/曲线评分接入冻结开发集复评，区分旧版部分入口与完整入口参照 | tools/recognition/*entrance*、development-metrics、docs/recognition-*、.github/workflows/ci.yml及本看板；无业务热点 | 无 | PR #184已合并；9项专项与全仓761项测试、格式检查及CI通过；48家原审核保留，完整入口参照0家，不改引擎或45家验收集 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
 
@@ -85,6 +86,8 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 | Q4   | 24 家完整样本试点已获批准（第 9 节）；其余约 460 家全量 3b 何时扩展？                                                                                                                           | A 试点验收并统计准入/工时后再定；B 另行给出全量范围和排期      | A；本次只批准试点，不把全部档案直接列为已审核训练集                                           | Codex / 2026-11-03（更新原 Q4）                          |
 | Q5   | 是否开启交叉评审（每个 PR 由对方 AI 审一遍）？                                                                                                                                                  | A 开启；B 不开启                                               | A                                                                                             | Claude / 2026-11-02                                      |
 | Q7   | 截图部分已决定：用户同意归档 `docs/design/pr1`–`pr7`（见第 7 节），Codex 同意，由 Claude 原归档任务执行；其余 Codex 本机 worktree/已合并分支、tmp/outputs、两条死样式的清理如何安排？           | A Codex 单独登记盘点再处理；B 用户明确授权 Claude 代清；C 保留 | A；本轮图纸试点不顺带删除。摘目录连接步骤见瘦身报告，禁止 git lfs prune，隔离区删除须另问用户 | Claude / 2026-11-02；Codex / 2026-11-03 拆分已决截图部分 |
+
+整店标注待决 QWS-20261104：21家22项用途、尺寸冲突、辅助门/开放侧完整性及租赁范围问题，详见[集中清单](recognition-whole-store-questions.md)。用户在外置整店审核页回答；推荐仅作代理草稿，未回答不写用户确认，不作完整入口评分。
 
 ## 7. 已决定
 
