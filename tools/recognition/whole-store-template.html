@@ -394,6 +394,8 @@
             <option value="all">全部设施</option>
             <option value="furniture">仅家具</option>
             <option value="column">仅柱位</option>
+            <option value="cladding">仅包墙/包柱</option>
+            <option value="partition">仅隔墙</option>
             <option value="entrance">仅入口</option>
           </select>
           <div id="objectList" class="items"></div>
@@ -409,6 +411,43 @@
           <p class="muted">空白表示原图未明确；尺寸与平面投影分别保存。</p>
           <label>备注<textarea id="objectNote"></textarea></label>
           <p id="extraDimensions" class="muted"></p>
+          <details id="wallFields">
+            <summary>墙体构造</summary>
+            <label
+              >新旧<select id="wallPhase">
+                <option value="unknown">待定</option>
+                <option value="existing">原有</option>
+                <option value="added">后加</option>
+              </select></label
+            >
+            <label
+              >空实<select id="wallSolidity">
+                <option value="unknown">待定</option>
+                <option value="solid">实心</option>
+                <option value="hollow">空心</option>
+              </select></label
+            >
+            <label
+              >作用<select id="wallRole">
+                <option value="unknown">待定</option>
+                <option value="core">原墙柱核心</option>
+                <option value="cladding">包墙/包柱</option>
+                <option value="partition">隔墙</option>
+              </select></label
+            >
+            <label>包覆核心<select id="wallCore"></select></label>
+            <label
+              >判断依据<textarea
+                id="wallEvidence"
+                placeholder="原图文字、详图或人工确认；不凭填充颜色猜测"
+              ></textarea>
+            </label>
+            <p id="wallPolicy" class="muted"></p>
+            <button id="saveWall" class="small">保存墙体信息</button>
+            <p class="muted">
+              包墙画外包轮廓，核心单独保留。空腔尺寸不明时只标空心，不猜厚度或承重。
+            </p>
+          </details>
           <div class="row">
             <button id="saveObject" class="small">保存属性</button
             ><button id="redrawObject" class="small">重描轮廓</button
@@ -480,7 +519,9 @@
         ':' +
         data.annotationBatch +
         ':' +
-        (data.wholeReviewSha256 || 'draft')
+        (data.wholeReviewSha256 || 'draft') +
+        ':' +
+        (data.supplementBatch || 'base')
     let records = clone(data.initialRecords),
       store = null,
       current = null,
@@ -574,8 +615,9 @@
       const qs = data.stores.flatMap((s) =>
         s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).map((q) => ({ s, q })),
       )
-      $('stats').textContent =
-        `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
+      $('stats').textContent = data.priorWholeReviewPack
+        ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
+        : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
       $('summary').textContent =
         tab === 'questions'
           ? `${qs.length} 个未答问题；可从这里逐个处理。`
@@ -638,6 +680,8 @@
     }
     function renderEditor() {
       $('newState').textContent = current.status === 'reviewed' ? '本轮已确认' : '本轮草稿'
+      if (store.supplementNote && current.status !== 'reviewed')
+        $('newState').textContent = '原整店已确认 · 仅增补待审'
       $('newState').className = 'badge ' + (current.status === 'reviewed' ? '' : 'pending')
       $('reviewer').value = current.reviewer || ''
       $('reviewNote').value = current.notes || ''
@@ -670,6 +714,41 @@
         $('category').value = o.category
         for (const k of ['length', 'depth', 'height']) $(k).value = o.sourceDimensions[k] ?? ''
         $('objectNote').value = o.note || ''
+        $('wallFields').hidden = ![
+          'column',
+          'existing-wall',
+          'structure-unknown',
+          'partition',
+          'cladding',
+        ].includes(o.category)
+        const w = o.wallProperties || {
+          phase: 'unknown',
+          solidity: 'unknown',
+          role: 'unknown',
+          evidence: '',
+          wrapsObjectId: null,
+        }
+        $('wallPhase').value = w.phase
+        $('wallSolidity').value = w.solidity
+        $('wallRole').value = w.role
+        $('wallEvidence').value = w.evidence
+        $('wallCore').innerHTML =
+          '<option value="">未关联</option>' +
+          current.objects
+            .filter(
+              (x) =>
+                x.id !== o.id &&
+                ['column', 'existing-wall', 'structure-unknown'].includes(x.category) &&
+                x.wallProperties?.role !== 'cladding',
+            )
+            .map((x) => '<option value="' + esc(x.id) + '">' + esc(x.label) + '</option>')
+            .join('')
+        $('wallCore').value = w.wrapsObjectId || ''
+        $('wallPolicy').textContent = {
+          unknown: '面积规则待定，不自动扣除',
+          'avoid-only': '后加构件：只避让，不扣面积',
+          'deduct-core': '原墙柱核心：按实际占地扣除，包层不重复扣',
+        }[wallAreaPolicy(w)]
         $('extraDimensions').textContent = Object.entries(o.sourceDimensions)
           .filter(([k]) => !['length', 'depth', 'height'].includes(k))
           .map(
@@ -922,6 +1001,23 @@
         isObject ? 'objects' : 'entrance',
       )
     }
+    $('saveWall').onclick = () => {
+      const o = current.objects.find((o) => o.id === selected)
+      if (!o) return
+      const wallProperties = {
+        phase: $('wallPhase').value,
+        solidity: $('wallSolidity').value,
+        role: $('wallRole').value,
+        wrapsObjectId: $('wallCore').value || null,
+        evidence: $('wallEvidence').value.trim(),
+      }
+      const proposedObjects = current.objects.map((x) =>
+        x.id === o.id ? { ...x, wallProperties } : x,
+      )
+      const errors = proposedObjects.flatMap((x) => wallPropertyErrors(x, proposedObjects))
+      if (errors.length) return notice(errors.join('；'))
+      change((r) => (r.objects.find((o) => o.id === selected).wallProperties = wallProperties))
+    }
     $('saveObject').onclick = () => {
       const label = $('label').value.trim()
       if (!label) {
@@ -938,17 +1034,25 @@
       }
       const category = $('category').value,
         note = $('objectNote').value
+      const proposedObjects = current.objects.map((o) =>
+        o.id === selected ? { ...o, category } : o,
+      )
+      const wallErrors = proposedObjects.flatMap((o) => wallPropertyErrors(o, proposedObjects))
+      if (wallErrors.length) return notice(wallErrors.join('；'))
       change((r) => {
         const o = r.objects.find((o) => o.id === selected)
         Object.assign(o, { label, category, note })
         Object.assign(o.sourceDimensions, dims)
       })
     }
-    $('deleteObject').onclick = () =>
+    $('deleteObject').onclick = () => {
+      if (current.objects.some((o) => o.wallProperties?.wrapsObjectId === selected))
+        return notice('先取消包墙与该核心的关联，再删除核心')
       change((r) => {
         r.objects = r.objects.filter((o) => o.id !== selected)
         selected = null
       })
+    }
     $('deleteEntrance').onclick = () => {
       if (selectedEntrance < 0) return
       change((r) => {

@@ -2,6 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import vm from 'node:vm'
+import { applySupplement } from './whole-store-supplement.mjs'
 import {
   clone,
   initialEntry,
@@ -13,6 +14,8 @@ import {
   evaluationPack,
   objectInventory,
   entranceDrawPoints,
+  wallAreaPolicy,
+  wallPropertyErrors,
 } from './whole-store-core.mjs'
 const store = {
     id: 'SYN-001',
@@ -287,4 +290,87 @@ test('离线页面可编译且禁止外发与自动接口', async () => {
   assert.doesNotMatch(script, /\bfetch\(|XMLHttpRequest|WebSocket/)
   for (const id of ['undo', 'redo', 'cancel', 'approveObjects', 'approveEntrance', 'questionsTab'])
     assert.match(html, new RegExp('id="' + id + '"'))
+})
+
+test('空实与新旧独立，后加实心墙也只避让，未知不猜扣面积', () => {
+  assert.equal(
+    wallAreaPolicy({ phase: 'added', solidity: 'solid', role: 'partition' }),
+    'avoid-only',
+  )
+  assert.equal(
+    wallAreaPolicy({ phase: 'existing', solidity: 'unknown', role: 'core' }),
+    'deduct-core',
+  )
+  assert.equal(wallAreaPolicy({ phase: 'unknown', solidity: 'solid', role: 'core' }), 'unknown')
+  assert.equal(
+    wallAreaPolicy({ phase: 'existing', solidity: 'hollow', role: 'cladding' }),
+    'unknown',
+  )
+})
+test('包墙关联、判断依据校验及整包往返', () => {
+  const { data, records } = fixture(),
+    r = records[store.id],
+    core = r.objects[0]
+  core.category = 'column'
+  const cover = {
+    ...clone(core),
+    id: 'COVER',
+    category: 'cladding',
+    wallProperties: {
+      phase: 'added',
+      solidity: 'unknown',
+      role: 'cladding',
+      wrapsObjectId: core.id,
+      evidence: '原图标包柱',
+    },
+  }
+  r.objects.push(cover)
+  assert.deepEqual(entryErrors(r, store), [])
+  assert.deepEqual(decodeWholePack(exportWholePack(data, records), data), records)
+  cover.wallProperties.wrapsObjectId = 'MISSING'
+  assert.ok(wallPropertyErrors(cover, r.objects).length)
+  cover.wallProperties.wrapsObjectId = cover.id
+  assert.ok(wallPropertyErrors(cover, r.objects).length)
+  cover.wallProperties.wrapsObjectId = core.id
+  cover.wallProperties.evidence = ''
+  assert.ok(wallPropertyErrors(cover, r.objects).length)
+})
+
+test('增补保留前轮整包和用户坐标，只重开增补门店，隔离旧批次', () => {
+  const { data, records } = fixture(),
+    r = records[store.id]
+  r.status = 'reviewed'
+  r.reviewer = '甲'
+  r.reviewedAt = '2026-01-01'
+  r.answers.q = '保留'
+  const pack = clone(exportWholePack(data, records)),
+    before = clone(pack)
+  const supplement = {
+    schemaVersion: 1,
+    reviewSha256: 'sha',
+    stores: [
+      {
+        id: store.id,
+        objects: [],
+        questions: [{ id: 'new', question: '墙体空实', options: ['待定'], recommendation: '待定' }],
+      },
+    ],
+  }
+  const next = applySupplement(data, pack, supplement, 'sha')
+  assert.deepEqual(pack, before)
+  assert.deepEqual(next.priorWholeReviewPack, before)
+  assert.deepEqual(next.initialRecords[store.id].entrances, r.entrances)
+  assert.deepEqual(next.initialRecords[store.id].objects, r.objects)
+  assert.equal(next.initialRecords[store.id].status, 'agent_corrected')
+  assert.equal(next.initialRecords[store.id].answers.q, '保留')
+  assert.throws(() => decodeWholePack(pack, next))
+  assert.deepEqual(
+    decodeWholePack(exportWholePack(next, next.initialRecords), next),
+    next.initialRecords,
+  )
+  const empty = applySupplement(data, pack, { ...supplement, stores: [] }, 'sha')
+  assert.equal(empty.initialRecords[store.id].status, 'reviewed')
+  assert.throws(() => applySupplement(data, pack, supplement, 'wrong'))
+  supplement.stores[0].objects = [clone(r.objects[0])]
+  assert.throws(() => applySupplement(data, pack, supplement, 'sha'))
 })
