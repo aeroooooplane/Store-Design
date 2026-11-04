@@ -5,6 +5,7 @@ import { isSimplePolygon } from '../../packages/shared/src/index.ts'
 import { loadReview } from './check-review-template.mjs'
 import { iou } from './development-metrics.mjs'
 import { scoreEntrances } from './entrance-metrics.mjs'
+import { entranceErrors } from './whole-store-core.mjs'
 const arg = (k) => {
     const i = process.argv.indexOf('--' + k)
     return i < 0 ? null : process.argv[i + 1]
@@ -17,7 +18,23 @@ const data = await json(arg('dataset')),
   pack = await json(arg('reviewed')),
   index = await json(path.join(arg('inputs'), 'inputs.json'))
 if (pack.annotations.length !== data.samples.length) throw Error('审核包必须覆盖固定全集')
-const { api } = await loadReview({ ...data, reviewedPack: pack }),
+// 现状通行线不一定与旧租赁轮廓重合。旧轮廓、量尺仍按原审核独立校验；
+// 新线只接受显式语义且携带原入口的参照，另校验其几何，不移动用户坐标。
+const observed = pack.entranceSemantics === 'observed-current-layout'
+if (
+  observed &&
+  pack.annotations.some(
+    (a) => a.entranceSemantics !== 'observed-current-layout' || !Array.isArray(a.originalEntrances),
+  )
+)
+  throw Error('现状通行参照缺少原入口或语义不一致')
+const validationPack = observed
+  ? {
+      ...pack,
+      annotations: pack.annotations.map((a) => ({ ...a, entrances: a.originalEntrances })),
+    }
+  : pack
+const { api } = await loadReview({ ...data, reviewedPack: validationPack }),
   refs = api.getRecords(),
   runs = {}
 const inputHash = hash(await readFile(path.join(arg('inputs'), 'inputs.json')))
@@ -56,6 +73,9 @@ for (const s of data.samples) {
   if (!r || r.status !== 'reviewed' || api.validate(r, s).length)
     throw Error(s.id + ' 审核参照未通过校验')
   const original = pack.annotations.find((a) => a.store_id === s.id)
+  const referencePaths = observed ? original.entrances : r.entrances
+  const pathErrors = entranceErrors(referencePaths, s.image)
+  if (pathErrors.length) throw Error(s.id + ' 入口几何错误：' + pathErrors.join('；'))
   const coverage =
     original.entranceCoverage === 'complete' && r.entranceReviewVersion === 2
       ? 'complete'
@@ -66,6 +86,10 @@ for (const s of data.samples) {
     page: s.page,
     referenceStatus: r.status,
     entranceCoverage: coverage,
+    entranceSemantics: observed ? 'observed-current-layout' : 'boundary-opening',
+    referenceWarnings: observed
+      ? api.validate({ ...r, entrances: referencePaths }, s).filter((e) => e.startsWith('入口 '))
+      : [],
     referenceMmPerPixel: api.scaleOf(r),
     versions: {},
   }
@@ -91,7 +115,7 @@ for (const s of data.samples) {
       predictionError = null
     try {
       entrance = scoreEntrances(
-        r.entrances,
+        referencePaths,
         validScale
           ? (draft.space?.entrances ?? [])
               .filter((e) => e.kind !== 'back')
