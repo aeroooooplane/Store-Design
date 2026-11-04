@@ -1,9 +1,25 @@
 import copy
 import unittest
-from sync_source_inventory import prepare
+import hashlib
+from sync_source_inventory import prepare, read_snapshot
 
 
 class IncrementTests(unittest.TestCase):
+    def test_snapshot_hash_matches_parsed_bytes_during_concurrent_change(self):
+        class ChangingFile:
+            content = b'{"manual": "old"}'
+
+            def read_bytes(self):
+                captured = self.content
+                self.content = b'{"manual": "new"}'
+                return captured
+
+        path = ChangingFile()
+        parsed, captured_hash = read_snapshot(path)
+        self.assertEqual(parsed, {'manual': 'old'})
+        self.assertEqual(captured_hash, hashlib.sha256(b'{"manual": "old"}').hexdigest())
+        self.assertNotEqual(captured_hash, hashlib.sha256(path.content).hexdigest())
+
     def setUp(self):
         self.old = {'source_id': 'NEW-101', 'filename': 'old.pdf', 'sha256': 'a',
                     'bytes': 1, 'page_count': 1, 'role': 'primary', 'git_tracked': True,

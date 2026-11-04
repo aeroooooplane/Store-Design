@@ -9,8 +9,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
-def read(path):
-    return json.loads(path.read_text(encoding='utf-8-sig'))
+def read_snapshot(path):
+    raw = path.read_bytes()
+    return json.loads(raw), hashlib.sha256(raw).hexdigest()
 
 
 def digest(path):
@@ -101,16 +102,17 @@ def main():
                           'page_count': pages, 'open_error': None})
     if len(inventory) != args.expected_count:
         raise ValueError('PDF count differs from the confirmed publication scope')
-    manifest, added = prepare(read(baseline_path), inventory, now)
-    stores = read(stores_path)
+    baseline, baseline_hash = read_snapshot(baseline_path)
+    manifest, added = prepare(baseline, inventory, now)
+    stores, stores_hash = read_snapshot(stores_path)
     existing_pending = {r['source_id']: r for r in stores.get('pending_source_registrations', [])}
     existing_pending.update({r['source_id']: r for r in added})
     stores['pending_source_registrations'] = list(existing_pending.values())
     stores['source_inventory'] = {'pdf_files': len(inventory), 'unique_contents': manifest['summary']['unique_sha256'],
                                 'registered_stores': len(stores['stores']), 'pending_sources': len(existing_pending),
                                 'updatedAt': now}
-    baseline_hashes = {str(baseline_path.relative_to(resources)): digest(baseline_path),
-                       str(stores_path.relative_to(resources)): digest(stores_path),
+    baseline_hashes = {baseline_path.relative_to(resources).as_posix(): baseline_hash,
+                       stores_path.relative_to(resources).as_posix(): stores_hash,
                        '01_各门店原图纸/README.md': digest(resources / '01_各门店原图纸/README.md')}
     out.mkdir(parents=True)
     for name, value in [('来源清单.json', manifest), ('门店总表.json', stores),
