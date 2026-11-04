@@ -5,7 +5,7 @@ import { isSimplePolygon } from '../../packages/shared/src/index.ts'
 import { loadReview } from './check-review-template.mjs'
 import { iou } from './development-metrics.mjs'
 import { scoreEntrances } from './entrance-metrics.mjs'
-import { entranceErrors } from './whole-store-core.mjs'
+import { entranceErrors, customerEntrancePaths, isCustomerEntrance } from './whole-store-core.mjs'
 const arg = (k) => {
     const i = process.argv.indexOf('--' + k)
     return i < 0 ? null : process.argv[i + 1]
@@ -74,7 +74,15 @@ for (const s of data.samples) {
     throw Error(s.id + ' 审核参照未通过校验')
   const original = pack.annotations.find((a) => a.store_id === s.id)
   const referencePaths = observed ? original.entrances : r.entrances
-  const pathErrors = entranceErrors(referencePaths, s.image)
+  const allPaths = original.entranceRoleVersion === 1 ? original.referencePaths : referencePaths
+  const pathErrors = entranceErrors(allPaths, s.image)
+  if (
+    original.entranceRoleVersion === 1 &&
+    (JSON.stringify(customerEntrancePaths(allPaths)) !== JSON.stringify(referencePaths) ||
+      JSON.stringify(allPaths.filter((p) => !isCustomerEntrance(p))) !==
+        JSON.stringify(original.excludedReferencePaths))
+  )
+    throw Error(s.id + ' 路径用途分组不一致')
   if (pathErrors.length) throw Error(s.id + ' 入口几何错误：' + pathErrors.join('；'))
   const coverage =
     original.entranceCoverage === 'complete' && r.entranceReviewVersion === 2
@@ -86,6 +94,7 @@ for (const s of data.samples) {
     page: s.page,
     referenceStatus: r.status,
     entranceCoverage: coverage,
+    excludedReferencePaths: original.excludedReferencePaths || [],
     entranceSemantics: observed ? 'observed-current-layout' : 'boundary-opening',
     referenceWarnings: observed
       ? api.validate({ ...r, entrances: referencePaths }, s).filter((e) => e.startsWith('入口 '))
@@ -125,7 +134,7 @@ for (const s of data.samples) {
       )
     } catch (e) {
       predictionError = e.message
-      entrance = scoreEntrances(r.entrances, [], { coverage })
+      entrance = scoreEntrances(referencePaths, [], { coverage })
     }
     const overlap = closed ? iou(r.boundary, polygon) : 0
     row.versions[v] = {
@@ -171,13 +180,16 @@ const summary = {
 }
 for (const v of ['baseline', 'candidate']) {
   const values = rows.map((r) => r.versions[v]),
-    full = values.filter((x) => x.entrance.coverage === 'complete')
+    full = values.filter((x) => x.entrance.coverage === 'complete'),
+    known = values.filter((x) => x.entrance.knownReferenceCoverage !== null)
   summary.versions[v] = {
     closed: values.filter((x) => x.closed).length,
     boundaryPass: values.filter((x) => x.boundaryPass).length,
     scalePass: values.filter((x) => x.scalePass).length,
-    knownPathCoverageMean:
-      values.reduce((sum, x) => sum + (x.entrance.knownReferenceCoverage ?? 0), 0) / values.length,
+    knownPathEligible: known.length,
+    knownPathCoverageMean: known.length
+      ? known.reduce((sum, x) => sum + x.entrance.knownReferenceCoverage, 0) / known.length
+      : null,
     completeEntrance: { eligible: full.length, passed: full.filter((x) => x.entrance.pass).length },
     allThree: { eligible: full.length, passed: full.filter((x) => x.allThree).length },
     invalidPredictions: values.filter((x) => x.predictionError).length,

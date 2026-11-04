@@ -74,6 +74,8 @@ export function entranceErrors(paths, image) {
     return ['请保留至少一条入口，最多100条']
   const errors = []
   for (const p of paths) {
+    if (p.purpose != null && !Object.hasOwn(entrancePurposes, p.purpose))
+      errors.push('路径用途无效')
     if (
       !['polyline', 'arc'].includes(p.kind) ||
       !Array.isArray(p.points) ||
@@ -134,6 +136,12 @@ export function entryErrors(entry, store) {
   }
   errors.push(...entranceErrors(entry.entrances, store.image))
   if (
+    entry.entranceStatus === 'complete' &&
+    (!customerEntrancePaths(entry.entrances).length ||
+      entry.entrances.some((p) => p.purpose === 'unknown'))
+  )
+    errors.push('完整通行口参照不能为空或含待定用途')
+  if (
     !['agent_corrected', 'reviewed'].includes(entry.status) ||
     !['partial', 'complete'].includes(entry.entranceStatus)
   )
@@ -174,6 +182,13 @@ export function initialEntry(store, reference, reviewer = '') {
 }
 export function decodeWholePack(pack, data) {
   if (
+    data.decisionBatch &&
+    (pack.decisionBatch !== data.decisionBatch ||
+      JSON.stringify(pack.decisionSourcePack) !== JSON.stringify(data.decisionSourcePack) ||
+      JSON.stringify(pack.decisionLog) !== JSON.stringify(data.decisionLog))
+  )
+    throw Error('答复落实批次、台账或原审核不符')
+  if (
     data.supplementBatch &&
     (pack.supplementBatch !== data.supplementBatch ||
       JSON.stringify(pack.priorWholeReviewPack) !== JSON.stringify(data.priorWholeReviewPack))
@@ -205,6 +220,13 @@ export function decodeWholePack(pack, data) {
 }
 export function exportWholePack(data, records) {
   const pack = {
+    ...(data.decisionBatch
+      ? {
+          decisionBatch: data.decisionBatch,
+          decisionSourcePack: clone(data.decisionSourcePack),
+          decisionLog: clone(data.decisionLog),
+        }
+      : {}),
     ...(data.supplementBatch
       ? {
           supplementBatch: data.supplementBatch,
@@ -234,10 +256,15 @@ export function evaluationPack(data, records) {
     const errors = entryErrors(e, s)
     if (errors.length) throw Error(errors.join('；'))
     r.originalEntrances = clone(r.entrances)
-    r.entrances = clone(e.entrances)
+    r.referencePaths = clone(e.entrances)
+    r.entranceRoleVersion = 1
+    r.entrances = customerEntrancePaths(e.entrances)
+    r.excludedReferencePaths = clone(e.entrances.filter((p) => !isCustomerEntrance(p)))
     r.entranceReviewVersion = 2
     r.entranceSemantics = 'observed-current-layout'
     if (e.entranceStatus === 'complete') {
+      if (!r.entrances.length || e.entrances.some((p) => p.purpose === 'unknown'))
+        throw Error('完整通行口参照不能为空或含待定用途')
       r.entranceCoverage = 'complete'
       r.entranceReviewVersion = 2
       r.entranceReviewedBy = e.entranceReviewer
@@ -320,3 +347,12 @@ export function wallPropertyErrors(o, objects) {
   }
   return errors
 }
+
+export const entrancePurposes = {
+  'customer-access': '现状通行口',
+  'open-frontage': '场地开放边',
+  auxiliary: '辅助/员工出口',
+  unknown: '用途待定',
+}
+export const isCustomerEntrance = (p) => p.purpose == null || p.purpose === 'customer-access'
+export const customerEntrancePaths = (paths) => clone(paths.filter(isCustomerEntrance))

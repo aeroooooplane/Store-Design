@@ -83,9 +83,19 @@ async function main() {
       JSON.parse(await readFile(patchPath, 'utf8')),
       hash(raw),
     )
+  await writeWholeBundle({
+    input,
+    out,
+    data,
+    raw,
+    extraFiles: [{ source: patchPath, name: '增补依据.json' }],
+  })
+}
+export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] }) {
+  if (out === input || out.startsWith(input + path.sep)) throw Error('输出须为新的独立目录')
   await mkdir(out)
   await cp(input, out, { recursive: true })
-  await cp(patchPath, path.join(out, '增补依据.json'))
+  for (const f of extraFiles) await cp(f.source, path.join(out, f.name))
   const records = data.initialRecords,
     escape = (s) =>
       String(s).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;')
@@ -159,6 +169,8 @@ async function main() {
     ),
     sourceSha256: hash(raw),
     supplementBatch: data.supplementBatch,
+    decisionBatch: data.decisionBatch,
+    decisionLog: data.decisionLog,
     limitations: [
       '仅补有原页依据的墙体范围，未穷尽48家包墙',
       '空实、厚度和承重无依据时待定',
