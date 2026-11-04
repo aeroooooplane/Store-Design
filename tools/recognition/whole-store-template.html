@@ -368,7 +368,8 @@
     <div class="edit-head">
       <div>
         <h2 id="storeTitle"></h2>
-        <span class="badge">原轮廓已确认</span> <span id="newState" class="badge pending"></span>
+        <span id="boundaryState" class="badge">原轮廓已确认</span>
+        <span id="newState" class="badge pending"></span>
       </div>
       <div class="toolbar">
         <label class="muted"><input type="checkbox" id="overlay" checked /> 显示标注</label
@@ -524,7 +525,9 @@
         ':' +
         (data.supplementBatch || 'base') +
         ':' +
-        (data.decisionBatch || 'unapplied')
+        (data.decisionBatch || 'unapplied') +
+        ':' +
+        (data.sourceRevision?.batch || 'no-source-revision')
     let records = clone(data.initialRecords),
       store = null,
       current = null,
@@ -618,11 +621,13 @@
       const qs = data.stores.flatMap((s) =>
         s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).map((q) => ({ s, q })),
       )
-      $('stats').textContent = data.decisionSourcePack
-        ? `已确认 ${reviewed}/${data.stores.length} · 答复已归档 ${data.decisionLog.length} 项`
-        : data.priorWholeReviewPack
-          ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
-          : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
+      $('stats').textContent = data.sourceRevision
+        ? `原审核 ${data.sourceRevision.sourcePack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 本轮补注 ${data.stores.length - reviewed} 家 · 待答 ${qs.length} 项`
+        : data.decisionSourcePack
+          ? `已确认 ${reviewed}/${data.stores.length} · 答复已归档 ${data.decisionLog.length} 项`
+          : data.priorWholeReviewPack
+            ? `原整店确认 ${data.priorWholeReviewPack.entries.filter((r) => r.status === 'reviewed').length} 家已保留 · 增补待审 ${data.stores.length - reviewed} 家`
+            : `原审核 ${data.stores.length}/${data.stores.length} · 本轮确认 ${reviewed} · 入口全集 ${complete}`
       $('summary').textContent =
         tab === 'questions'
           ? `${qs.length} 个未答问题；可从这里逐个处理。`
@@ -646,7 +651,7 @@
           .filter(matches)
           .map(
             (s) =>
-              `<button class="card" data-open="${s.id}"><img src="previews/${s.id}.jpg" loading="lazy" alt="${esc(s.id)} 原图"><div class="body"><strong>${s.id} · ${esc(s.name)}</strong><p class="muted">${records[s.id].objects.length} 个标注 · ${s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).length} 个待答问题</p><span class="badge ${records[s.id].status === 'reviewed' ? '' : 'pending'}">${records[s.id].status === 'reviewed' ? '本轮已确认' : '本轮待确认'}</span></div></button>`,
+              `<button class="card" data-open="${s.id}"><img src="previews/${s.id}.jpg" loading="lazy" alt="${esc(s.id)} 原图"><div class="body"><strong>${s.id} · ${esc(s.name)}</strong><p class="muted">${records[s.id].objects.length} 个标注 · ${s.questions.filter((q) => !records[s.id].answers[q.id]?.trim()).length} 个待答问题</p><span class="badge ${records[s.id].status === 'reviewed' ? '' : 'pending'}">${records[s.id].status === 'reviewed' ? '本轮已确认' : data.sourceRevision ? '原审核保留 · 有新补注' : '本轮待确认'}</span></div></button>`,
           )
           .join('')
       $('list')
@@ -684,6 +689,11 @@
       renderHome()
     }
     function renderEditor() {
+      $('boundaryState').textContent = data.sourceRevision?.boundaries.some(
+        (b) => b.storeId === store.id,
+      )
+        ? '边界已按原图校正 · 原审核保留'
+        : '原轮廓已确认'
       $('newState').textContent = current.status === 'reviewed' ? '本轮已确认' : '本轮草稿'
       if (store.supplementNote && current.status !== 'reviewed')
         $('newState').textContent = '原整店已确认 · 仅增补待审'
@@ -812,9 +822,25 @@
         .forEach((el) => (el.onchange = () => answerQuestion(el.dataset.answer, el.value)))
       $('previous').textContent = `原审核：${store.previousReviewer} · ${store.previousReviewedAt}`
       $('sourceNotes').innerHTML =
+        (data.sourceRevision?.log || [])
+          .filter((d) => d.storeId === store.id)
+          .map(
+            (d) =>
+              `<p>本轮补注：${esc(d.reason)}</p>` +
+              d.evidenceIds
+                .map((id) => {
+                  const e = data.sourceRevision.evidence.find((e) => e.id === id)
+                  return `<a href="source-evidence/${esc(e.path)}" target="_blank" rel="noopener">查看依据·第 ${e.page} 页</a> `
+                })
+                .join(''),
+          )
+          .join('') +
         (data.decisionLog || [])
           .filter((d) => d.storeId === store.id)
-          .map((d) => `<p>答复：${esc(d.answer)}。${esc(d.note)}</p>`)
+          .map(
+            (d) =>
+              `<p>${data.sourceRevision ? '上轮答复记录' : '答复'}：${esc(d.answer)}。${esc(d.note)}</p>`,
+          )
           .join('') +
         store.notes.map((n) => `<p>${esc(n)}</p>`).join('') +
         `<p>原图第 ${store.page} 页 · SHA ${store.image.sha256.slice(0, 16)}…</p><a href="${store.image.path}" target="_blank" rel="noopener">打开原页</a>`
@@ -847,6 +873,9 @@
       svg.setAttribute('viewBox', `${view.left} ${view.top} ${view.width} ${view.height}`)
       let html = `<image href="${store.image.path}" x="0" y="0" width="${store.image.width}" height="${store.image.height}"/>`
       if ($('overlay').checked) {
+        const revision = data.sourceRevision?.boundaries.find((b) => b.storeId === store.id)
+        if (revision)
+          html += `<polygon points="${pstr(revision.before)}" fill="none" stroke="#b2afa8" stroke-width="1" stroke-dasharray="2 5"/>`
         html += `<polygon points="${pstr(store.boundary)}" fill="none" stroke="#a6a297" stroke-width="1.6" stroke-dasharray="7 4"/>`
         const layer = $('layer').value
         for (const [i, o] of current.objects.entries()) {

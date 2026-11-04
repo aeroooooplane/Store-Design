@@ -91,7 +91,7 @@ async function main() {
     extraFiles: [{ source: patchPath, name: '增补依据.json' }],
   })
 }
-export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] }) {
+export async function writeWholeBundle({ input, out, data, raw, extraFiles = [], beforeManifest }) {
   if (out === input || out.startsWith(input + path.sep)) throw Error('输出须为新的独立目录')
   await mkdir(out)
   await cp(input, out, { recursive: true })
@@ -103,6 +103,14 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] 
     const r = records[s.id],
       a = JSON.parse(await readFile(path.join(out, 'annotations', s.id + '.json'), 'utf8'))
     Object.assign(a, clone(r))
+    if (data.sourceRevision) {
+      a.boundaryPx = clone(s.boundary)
+      a.metricBoundary = s.boundary.map((p) =>
+        p.map((v, j) => ((v - a.originPx[j]) * s.mmPerPixel) / 1000),
+      )
+      a.sourceRevisionBatch = data.sourceRevision.batch
+      a.sourceRevision = clone(data.sourceRevision.log.filter((x) => x.storeId === s.id))
+    }
     a.metricObjects = r.objects.map((o) => ({
       ...clone(o),
       polygon: o.polygon.map((p) => p.map((v, j) => ((v - a.originPx[j]) * s.mmPerPixel) / 1000)),
@@ -171,6 +179,8 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] 
     supplementBatch: data.supplementBatch,
     decisionBatch: data.decisionBatch,
     decisionLog: data.decisionLog,
+    sourceRevisionBatch: data.sourceRevision?.batch,
+    sourceRevisionLog: data.sourceRevision?.log,
     limitations: [
       '仅补有原页依据的墙体范围，未穷尽48家包墙',
       '空实、厚度和承重无依据时待定',
@@ -178,6 +188,7 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] 
     ],
   }
   await writeFile(path.join(out, '核验报告.json'), JSON.stringify(report, null, 2))
+  if (beforeManifest) await beforeManifest()
   const files = []
   async function walk(dir) {
     for (const e of await readdir(dir, { withFileTypes: true })) {
@@ -192,7 +203,17 @@ export async function writeWholeBundle({ input, out, data, raw, extraFiles = [] 
   }
   await walk(out)
   await writeFile(path.join(out, '文件指纹.json'), JSON.stringify(files, null, 2))
-  console.log(JSON.stringify(report))
+  console.log(
+    JSON.stringify({
+      stores: report.stores,
+      priorReviewed: report.priorReviewed,
+      unchangedReviewed: report.unchangedReviewed,
+      objects: report.objects,
+      newObjects: report.newObjects,
+      pendingQuestions: report.pendingQuestions.length,
+      sourceRevisionBatch: report.sourceRevisionBatch,
+    }),
+  )
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url))
   await main()
