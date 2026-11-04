@@ -5,7 +5,12 @@ import { isSimplePolygon } from '../../packages/shared/src/index.ts'
 import { loadReview } from './check-review-template.mjs'
 import { iou } from './development-metrics.mjs'
 import { scoreEntrances } from './entrance-metrics.mjs'
-import { entranceErrors, customerEntrancePaths, isCustomerEntrance } from './whole-store-core.mjs'
+import {
+  entranceErrors,
+  polygonErrors,
+  customerEntrancePaths,
+  isCustomerEntrance,
+} from './whole-store-core.mjs'
 const arg = (k) => {
     const i = process.argv.indexOf('--' + k)
     return i < 0 ? null : process.argv[i + 1]
@@ -73,6 +78,18 @@ for (const s of data.samples) {
   if (!r || r.status !== 'reviewed' || api.validate(r, s).length)
     throw Error(s.id + ' 审核参照未通过校验')
   const original = pack.annotations.find((a) => a.store_id === s.id)
+  if (original.boundaryRevision) {
+    const b = original.boundaryRevision
+    if (
+      b.storeId !== s.id ||
+      b.status !== 'agent-verified-from-user-decision' ||
+      !b.userDecision?.answer?.trim() ||
+      JSON.stringify(b.before) !== JSON.stringify(original.originalBoundary) ||
+      JSON.stringify(b.after) !== JSON.stringify(original.boundary) ||
+      polygonErrors(b.after, s.image).length
+    )
+      throw Error(s.id + ' 原图修订边界或依据不一致')
+  }
   const referencePaths = observed ? original.entrances : r.entrances
   const allPaths = original.entranceRoleVersion === 1 ? original.referencePaths : referencePaths
   const pathErrors = entranceErrors(allPaths, s.image)
@@ -93,6 +110,9 @@ for (const s of data.samples) {
     name: s.name,
     page: s.page,
     referenceStatus: r.status,
+    boundaryReferenceOrigin: original.boundaryRevision
+      ? 'agent-verified-from-user-decision'
+      : 'user-reviewed',
     entranceCoverage: coverage,
     excludedReferencePaths: original.excludedReferencePaths || [],
     entranceSemantics: observed ? 'observed-current-layout' : 'boundary-opening',
@@ -158,12 +178,16 @@ for (const s of data.samples) {
 const summary = {
   protocol: 'entrance-path-coverage-v1',
   scope:
-    '使用用户已审核参照重放固定基线/候选输出；不是重新运行引擎或45家验收。旧单入口仅评已知路径覆盖，不推定所有入口已标齐。',
+    '使用用户已审核参照及明确记录的原图修订重放固定基线/候选输出；不是重新运行引擎或45家验收。旧单入口仅评已知路径覆盖，不推定所有入口已标齐。',
   datasetFingerprint: data.fingerprint,
   reviewedSha256: hash(await readFile(arg('reviewed'))),
   inputsIndexSha256: inputHash,
   samples: rows.length,
-  humanReviewed: rows.length,
+  humanReviewed: rows.filter((r) => r.boundaryReferenceOrigin === 'user-reviewed').length,
+  originalHumanReviewed: rows.length,
+  boundarySourceCorrected: rows.filter(
+    (r) => r.boundaryReferenceOrigin === 'agent-verified-from-user-decision',
+  ).length,
   completeEntranceReferences: rows.filter((r) => r.entranceCoverage === 'complete').length,
   baselineRevision: runs.baseline.revision,
   candidateRevision: runs.candidate.revision,

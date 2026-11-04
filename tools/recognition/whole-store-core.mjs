@@ -182,6 +182,11 @@ export function initialEntry(store, reference, reviewer = '') {
 }
 export function decodeWholePack(pack, data) {
   if (
+    data.sourceRevision &&
+    JSON.stringify(pack.sourceRevision) !== JSON.stringify(data.sourceRevision)
+  )
+    throw Error('原图修订批次、证据或前轮审核不符')
+  if (
     data.decisionBatch &&
     (pack.decisionBatch !== data.decisionBatch ||
       JSON.stringify(pack.decisionSourcePack) !== JSON.stringify(data.decisionSourcePack) ||
@@ -220,6 +225,7 @@ export function decodeWholePack(pack, data) {
 }
 export function exportWholePack(data, records) {
   const pack = {
+    ...(data.sourceRevision ? { sourceRevision: clone(data.sourceRevision) } : {}),
     ...(data.decisionBatch
       ? {
           decisionBatch: data.decisionBatch,
@@ -256,6 +262,12 @@ export function evaluationPack(data, records) {
     const errors = entryErrors(e, s)
     if (errors.length) throw Error(errors.join('；'))
     r.originalEntrances = clone(r.entrances)
+    const revision = data.sourceRevision?.boundaries.find((b) => b.storeId === s.id)
+    if (revision) {
+      r.originalBoundary = clone(r.boundary)
+      r.boundary = clone(revision.after)
+      r.boundaryRevision = clone(revision)
+    }
     r.referencePaths = clone(e.entrances)
     r.entranceRoleVersion = 1
     r.entrances = customerEntrancePaths(e.entrances)
