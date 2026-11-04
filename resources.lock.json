@@ -199,10 +199,11 @@
     "10_产品与陈列/托盘照片/核对20261030/SI2.0-23-photo.png": "C5C6D8F9B9876374251AE592043CD143652486589210BE6E8C0C093E6B822F5C",
     "10_产品与陈列/托盘照片/核对20261030/SI2.0-24-photo.png": "CE06B374844B44FD23E78EE7B3483473D8545D487B0EAE2083E3F351CF39BA9B"
   },
-  "sourcePdfCount": 513,
+  "sourcePdfCount": 540,
   "releaseVersions": {
     "models": "models-20261030-12",
-    "display": "display-20261030-rev4095"
+    "display": "display-20261030-rev4095",
+    "sources": "sources-20261104-540"
   },
   "releaseManifest": "docs/evidence/resource-release-20261030.json"
 }
