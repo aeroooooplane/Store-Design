@@ -112,8 +112,15 @@ export function entryErrors(entry, store) {
   if (entry.storeId !== store.id) errors.push('门店身份不一致')
   if (!Array.isArray(entry.objects) || entry.objects.length > 2000) return ['物体列表无效']
   for (const o of entry.objects) {
-    if (!o.id || ids.has(o.id)) errors.push('物体编号重复或缺失')
+    if (typeof o.id !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(o.id) || ids.has(o.id))
+      errors.push('物体编号无效或重复')
     ids.add(o.id)
+    if (
+      !o.sourceDimensions ||
+      typeof o.sourceDimensions !== 'object' ||
+      Array.isArray(o.sourceDimensions)
+    )
+      errors.push('尺寸记录格式无效')
     if (!o.label?.trim() || !categories[o.category]) errors.push('物体名称或分类无效')
     errors.push(...polygonErrors(o.polygon, store.image).map((x) => o.label + '：' + x))
     for (const k of ['length', 'width', 'depth', 'height'])

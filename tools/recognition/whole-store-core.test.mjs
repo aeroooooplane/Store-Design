@@ -262,6 +262,15 @@ test('附属座位不重复计独立物体，未知资产不补造', () => {
   assert.equal(bom[0].attachedSeats, 4)
   assert.equal(bom[0].assetId, null)
 })
+test('导入拒绝可注入属性的物体编号和缺失尺寸记录', () => {
+  const { data, records } = fixture(),
+    p = exportWholePack(data, records)
+  p.entries[0].objects[0].id = 'x" onclick="alert(1)'
+  assert.throws(() => decodeWholePack(p, data))
+  p.entries[0].objects[0].id = 'O1'
+  delete p.entries[0].objects[0].sourceDimensions
+  assert.throws(() => decodeWholePack(p, data))
+})
 test('离线页面可编译且禁止外发与自动接口', async () => {
   const html = await readFile(new URL('./whole-store-template.html', import.meta.url), 'utf8'),
     core = (await readFile(new URL('./whole-store-core.mjs', import.meta.url), 'utf8')).replace(
