@@ -416,8 +416,14 @@
           </div>
         </div>
         <div class="section">
-          <h3>顾客入口 / 开放侧</h3>
-          <p class="muted">旧入口原样保留。可补多段、折线或圆弧。</p>
+          <h3>现状通行口</h3>
+          <details>
+            <summary>与开放边有什么区别？</summary>
+            <p class="muted">
+              边界是店铺范围；开放边是面向公共通道、可能进出的侧边。这里描的是当前墙柜布局下可走的口，家具调整后可变化，不自动锁成设计约束。仅员工或消防出口不计顾客入口。
+            </p>
+          </details>
+          <p class="muted">记录当前布局下可通行的位置，支持折线、圆弧。</p>
           <div id="entranceList" class="items"></div>
           <div class="toolbar">
             <button id="drawEntrance" class="small">描折线</button
@@ -428,8 +434,9 @@
             <button id="useProposal" class="small">采用原图核对方案</button>
             <p class="muted">替换本轮入口草稿；原确认记录保留，可撤销。</p>
           </div>
-          <label><input type="checkbox" id="entranceComplete" /> 我已检查所有顾客入口与开放侧</label
-          ><button id="approveEntrance">确认入口全集</button>
+          <label
+            ><input type="checkbox" id="entranceComplete" /> 我已检查当前布局的所有顾客通行口</label
+          ><button id="approveEntrance">确认通行口齐全</button>
           <p id="entranceState" class="muted"></p>
         </div>
         <div class="section">
@@ -692,7 +699,7 @@
       $('entranceState').textContent =
         current.entranceStatus === 'complete'
           ? `全集已确认 · ${current.entranceReviewer}`
-          : '部分参照：完整入口评分暂不计算'
+          : '已描线参与覆盖率复评；未勾选齐全时不计完整评分'
       $('questions').innerHTML =
         store.questions
           .map(
