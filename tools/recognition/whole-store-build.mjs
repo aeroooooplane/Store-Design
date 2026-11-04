@@ -4,6 +4,7 @@ import path from 'node:path'
 import { loadReview } from './check-review-template.mjs'
 import {
   initialEntry,
+  decodeWholePack,
   entryErrors,
   exportWholePack,
   evaluationPack,
@@ -166,6 +167,25 @@ for (const s of dataset.samples) {
   }
   report.sourceHashes.push({ id: s.id, image: s.image.sha256, source: s.sourceSha256 })
 }
+if (process.argv.includes('--whole-reviewed')) {
+  const wholeRaw = await readFile(arg('whole-reviewed'))
+  const reviewed = decodeWholePack(JSON.parse(wholeRaw), data)
+  Object.assign(records, reviewed)
+  data.wholeReviewSha256 = hash(wholeRaw)
+  report.wholeReviewSha256 = data.wholeReviewSha256
+  report.newUserReviewed = Object.values(records).filter((r) => r.status === 'reviewed').length
+  report.completeEntranceReferences = Object.values(records).filter(
+    (r) => r.entranceStatus === 'complete',
+  ).length
+  report.objects = Object.values(records).reduce((n, r) => n + r.objects.length, 0)
+  report.categories = {}
+  for (const r of Object.values(records))
+    for (const o of r.objects)
+      report.categories[o.category] = (report.categories[o.category] || 0) + 1
+  report.columns = report.categories.column || 0
+  report.limitations = report.limitations.filter((s) => !s.startsWith('家具未获'))
+  report.limitations.push('保留用户家具确认；入口全集状态独立，未明确确认完整性时不计算完整F1')
+}
 data.initialRecords = records
 await mkdir(out)
 for (const dir of ['images', 'previews', 'annotations', 'evidence', 'inputs'])
@@ -207,7 +227,7 @@ for (const s of data.stores) {
       2,
     ),
   )
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${s.crop.left} ${s.crop.top} ${s.crop.width} ${s.crop.height}"><image href="../${s.image.path}" x="0" y="0" width="${s.image.width}" height="${s.image.height}"/>${s.objects.map((o, i) => `<polygon points="${o.polygon.map((p) => p.join(',')).join(' ')}" fill="${o.category === 'column' ? '#ef7e20' : '#187aaf'}" fill-opacity=".13" stroke="${o.category === 'column' ? '#d55b00' : '#0875a8'}" stroke-width="1.5"><title>${i + 1} ${escape(o.label)}</title></polygon>`).join('')}</svg>`
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${s.crop.left} ${s.crop.top} ${s.crop.width} ${s.crop.height}"><image href="../${s.image.path}" x="0" y="0" width="${s.image.width}" height="${s.image.height}"/>${record.objects.map((o, i) => `<polygon points="${o.polygon.map((p) => p.join(',')).join(' ')}" fill="${o.category === 'column' ? '#ef7e20' : '#6b675f'}" fill-opacity=".13" stroke="${o.category === 'column' ? '#d55b00' : '#6b675f'}" stroke-width="1.5"><title>${i + 1} ${escape(o.label)}</title></polygon>`).join('')}</svg>`
   await writeFile(path.join(out, 'evidence', s.id + '.svg'), svg)
 }
 const core = (await readFile(new URL('./whole-store-core.mjs', import.meta.url), 'utf8')).replace(
@@ -231,6 +251,8 @@ await writeFile(
 )
 await writeFile(path.join(out, '构建数据.json'), JSON.stringify(data))
 await copyFile(arg('reviewed'), path.join(out, '原始用户审核包.json'))
+if (process.argv.includes('--whole-reviewed'))
+  await copyFile(arg('whole-reviewed'), path.join(out, '原始整店审核包.json'))
 await writeFile(path.join(out, '核验报告.json'), JSON.stringify(report, null, 2))
 const manifest = []
 async function walk(dir) {

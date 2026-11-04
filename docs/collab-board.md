@@ -47,8 +47,8 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 | 2026-11-02 | Codex  | `feat/recognition-openings` / #156                              | 识别：校验边界闭合候选、减少家具假凹口，48 家开发集复评                                                                                | 无（限 recognition、tools/recognition、docs/recognition-*）                                            | 无         | 草稿；48家用户审核已接收，算法退化未解决，未占用编辑器热点                                                                                                                                                                  |
 | 2026-11-02 | Claude | `claude/prune-*`（#170–#176 与本次收尾 PR，均已合并，分支已删） | 代码瘦身：清理不再描述当前系统的文档与脚本、已合并的 Claude worktree 与分支、死代码与未用依赖，功能不变；分 0–4 阶段，每阶段经用户确认 | 已无占用的文件；截图归档时只动 `docs/design/` 和 `docs/archive/INDEX.md`                               | 无         | **阶段 0–4 已完成**（报告第 10、11 节：D 盘已用 363→160 GiB，浏览器冒烟测试通过）。截图归档已获用户同意（见第 7 节），待 Claude 本人登记归档分支后执行；不等待 Codex 意见。其他隔离区/本机清理事项仍按原权限 |
 
-| 2026-11-04 | Codex | `codex/whole-store-review-20261104` | 48家整店家具柱位独立图层、歧义集中审核、保留旧审核及入口完整性导出 | tools/recognition/whole-store*、docs/recognition-whole-store*、.github/workflows/ci.yml及本看板；无业务热点 | 无 | 48家原图已逐店核对，780对象/52柱位，21家22问题集中审核；14项契约、11项浏览器、全仓761项及格式通过，PR #186待CI及合并；旧审核48/48保留 |
-| 2026-11-04 | Codex | `codex/entrance-evaluation-20261104` | 多入口/曲线评分接入冻结开发集复评，区分旧版部分入口与完整入口参照 | tools/recognition/*entrance*、development-metrics、docs/recognition-*、.github/workflows/ci.yml及本看板；无业务热点 | 无 | PR #184已合并；9项专项与全仓761项测试、格式检查及CI通过；48家原审核保留，完整入口参照0家，不改引擎或45家验收集 |
+
+| 2026-11-04 | Codex | `codex/review-brand-20261104` | 黑白黄审核页与已审核整包接续 | tools/recognition/whole-store-build、whole-store-template、对应文档及本看板；无业务热点 | 无 | 已接收48家、779物体、75入口路径与22答复，保留签名与坐标；实现和验证中 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
 
