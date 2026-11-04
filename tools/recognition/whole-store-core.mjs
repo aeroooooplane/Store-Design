@@ -3,6 +3,7 @@ export const categories = {
   furniture: '家具',
   column: '柱',
   partition: '隔断',
+  cladding: '包墙/包柱',
   'existing-wall': '原墙',
   'rear-zone': '后场',
   service: '设备',
@@ -122,6 +123,7 @@ export function entryErrors(entry, store) {
     )
       errors.push('尺寸记录格式无效')
     if (!o.label?.trim() || !categories[o.category]) errors.push('物体名称或分类无效')
+    errors.push(...wallPropertyErrors(o, entry.objects))
     errors.push(...polygonErrors(o.polygon, store.image).map((x) => o.label + '：' + x))
     for (const k of ['length', 'width', 'depth', 'height'])
       if (
@@ -172,6 +174,12 @@ export function initialEntry(store, reference, reviewer = '') {
 }
 export function decodeWholePack(pack, data) {
   if (
+    data.supplementBatch &&
+    (pack.supplementBatch !== data.supplementBatch ||
+      JSON.stringify(pack.priorWholeReviewPack) !== JSON.stringify(data.priorWholeReviewPack))
+  )
+    throw Error('增补批次或前轮整店审核不符')
+  if (
     pack.schemaVersion !== 1 ||
     pack.kind !== 'whole-store-review' ||
     pack.fingerprint !== data.fingerprint ||
@@ -197,6 +205,12 @@ export function decodeWholePack(pack, data) {
 }
 export function exportWholePack(data, records) {
   const pack = {
+    ...(data.supplementBatch
+      ? {
+          supplementBatch: data.supplementBatch,
+          priorWholeReviewPack: clone(data.priorWholeReviewPack),
+        }
+      : {}),
     schemaVersion: 1,
     kind: 'whole-store-review',
     datasetId: data.datasetId,
@@ -267,4 +281,42 @@ export function entranceDrawPoints(p) {
     cx + r * Math.cos(start + (sweep * i) / 64),
     cy + r * Math.sin(start + (sweep * i) / 64),
   ])
+}
+
+// 空实与新旧分开；后加实心构件也不能直接扣租赁面积。
+export function wallAreaPolicy(w) {
+  if (!w) return 'unknown'
+  if (w.phase === 'added') return 'avoid-only'
+  if (w.phase === 'existing' && w.role === 'core') return 'deduct-core'
+  return 'unknown'
+}
+export function wallPropertyErrors(o, objects) {
+  const w = o.wallProperties
+  if (w == null) return []
+  if (typeof w !== 'object' || Array.isArray(w)) return ['墙体信息格式无效']
+  const errors = []
+  if (
+    !['existing', 'added', 'unknown'].includes(w.phase) ||
+    !['solid', 'hollow', 'unknown'].includes(w.solidity) ||
+    !['core', 'cladding', 'partition', 'unknown'].includes(w.role)
+  )
+    errors.push('墙体新旧、空实或作用无效')
+  if (typeof w.evidence !== 'string' || w.evidence.length > 4000) errors.push('墙体依据须为文字')
+  if (
+    (w.phase !== 'unknown' || w.solidity !== 'unknown' || w.role !== 'unknown') &&
+    (typeof w.evidence !== 'string' || !w.evidence.trim())
+  )
+    errors.push('墙体判断需填写依据')
+  if (w.wrapsObjectId != null) {
+    const core = objects.find((x) => x.id === w.wrapsObjectId)
+    if (
+      w.role !== 'cladding' ||
+      !core ||
+      core.id === o.id ||
+      !['column', 'existing-wall', 'structure-unknown'].includes(core.category) ||
+      core.wallProperties?.role === 'cladding'
+    )
+      errors.push('包覆关系必须指向独立原墙柱核心')
+  }
+  return errors
 }
