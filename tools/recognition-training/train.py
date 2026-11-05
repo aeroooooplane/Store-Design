@@ -2,6 +2,7 @@
 
 import argparse
 import copy
+import math
 import importlib.metadata
 import json
 import platform
@@ -152,6 +153,21 @@ def mean(rows, key, split):
     return float(np.mean([r[key] for r in rows if r["split"] == split]))
 
 
+def augment_page(x, y):
+    # 对整页和标签应用同一变换；不依赖目标位置，不改变验证输入。
+    angle = random.uniform(-6, 6) * math.pi / 180
+    scale = random.uniform(0.9, 1.1)
+    c, s = math.cos(angle) / scale, math.sin(angle) / scale
+    theta = torch.tensor(
+        [[[c, -s, random.uniform(-0.12, 0.12)], [s, c, random.uniform(-0.12, 0.12)]]],
+        dtype=x.dtype,
+    )
+    grid = F.affine_grid(theta, x.shape, align_corners=False)
+    return F.grid_sample(x, grid, align_corners=False), F.grid_sample(
+        y, grid, mode="nearest", align_corners=False
+    )
+
+
 def main(a):
     # ONNX导出日志含Unicode；Windows重定向默认GBK会在训练完成后抛错。
     if hasattr(sys.stdout, "reconfigure"):
@@ -182,6 +198,9 @@ def main(a):
     foreground = sum(r["y"].sum().item() for r in train)
     pixels = sum(r["y"].numel() for r in train)
     weight = (pixels - foreground) / max(1, foreground)
+    if a.positive_weight is not None:
+        need(a.positive_weight > 0, "前景权重必须为正")
+        weight = a.positive_weight
     pos_weight = torch.tensor(weight, device=device)
     out.mkdir(parents=True)
     save(
@@ -193,7 +212,7 @@ def main(a):
             "loss": "训练: BCEWithLogits(训练像素负正比权重)+softDice；评估loss:无权重BCE+softDice",
             "trainingPositiveWeight": weight,
             "threshold": 0.5,
-            "augmentation": "训练门店随机水平/垂直翻转；验证无增强；整页等比例补白，无按标签裁图",
+            "augmentation": "训练门店随机水平/垂直翻转；可选整页同步仿射；验证无增强；整页等比例补白，无按标签裁图",
             "checkpointSelection": "仅internal_val平均IoU；包含epoch0基线以防训练退化",
         },
     )
@@ -247,6 +266,8 @@ def main(a):
                     if dims:
                         x = x.flip(dims)
                         y = y.flip(dims)
+                    if a.affine_augment:
+                        x, y = augment_page(x, y)
                     xs.append(x)
                     ys.append(y)
                 x, y = torch.cat(xs).to(device), torch.cat(ys).to(device)
@@ -407,4 +428,6 @@ if __name__ == "__main__":
     p.add_argument("--threads", type=int, default=4)
     p.add_argument("--batch-size", type=int, default=2)
     p.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
+    p.add_argument("--positive-weight", type=float)
+    p.add_argument("--affine-augment", action="store_true")
     main(p.parse_args())
