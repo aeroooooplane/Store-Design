@@ -161,7 +161,7 @@ function text(
 
 const brand = (market: Market) => (market === 'domestic' ? '影石 Insta360' : 'Insta360')
 
-function leftPanel(slide: Slide, input: DisplayDeckInput, title: string) {
+function leftPanel(slide: Slide, input: DisplayDeckInput, title: string, titleHeight = 0.6) {
   slide.addShape('rect', {
     x: 0,
     y: 0,
@@ -171,7 +171,7 @@ function leftPanel(slide: Slide, input: DisplayDeckInput, title: string) {
     line: { color: '000000', width: 0 },
   })
   text(slide, brand(input.market), { x: 0.35, y: 0.35, w: 3, h: 0.4 }, 13, 'FFFFFF', true)
-  text(slide, title, { x: 0.35, y: 1.0, w: 3.1, h: 0.6 }, 24, 'FFFFFF', true)
+  text(slide, title, { x: 0.35, y: 1.0, w: 3.1, h: titleHeight }, 24, 'FFFFFF', true)
 }
 
 const unitLabel = (rules: DisplayRules, unit: string | null) =>
@@ -742,7 +742,7 @@ function innerTraySlides(pptx: Pptx, input: DisplayDeckInput, table: DisplayTabl
   for (let offset = 0; offset < table.modules.length; offset += 4) {
     const modules = table.modules.slice(offset, offset + 4)
     const slide = pptx.addSlide()
-    leftPanel(slide, input, `${table.label}桌\n内嵌托盘配图`)
+    leftPanel(slide, input, `${table.label}桌\n内嵌托盘配图`, 1)
     text(
       slide,
       `${table.seat ?? '加桌'} · ${reference.title}`,
@@ -773,7 +773,7 @@ function innerTraySlides(pptx: Pptx, input: DisplayDeckInput, table: DisplayTabl
         INK,
         true,
       )
-      const image = reference.images[id]
+      const image = Object.hasOwn(reference.images, id) ? reference.images[id] : undefined
       if (image) picture(slide, image, { x, y: y + 0.5, w, h })
       else text(slide, '暂无对应配图，请核对', { x, y: y + 0.5, w, h }, 16, MUTED, false, 'center')
     })

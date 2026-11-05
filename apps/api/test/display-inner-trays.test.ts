@@ -37,6 +37,48 @@ afterAll(async () => {
   await rm(dir, { recursive: true, force: true })
 })
 
+it('手填继承属性名仍显示缺图，超过四模块分页且不丢编号', async () => {
+  const tables = planDisplay(rules, {
+    market: 'domestic',
+    entrance: { point: [0, 0], inward: [0, 1] },
+    tables: [{ id: 'custom', kind: 'island', cx: 0, cz: 2, w: 1, d: 1.8 }],
+  })
+  tables[0]!.modules = ['A2', '__proto__', 'constructor', 'toString', 'UNKNOWN']
+  const reference = await loadInnerTrayImages(
+    { resource: dir, storage: dir },
+    rules,
+    'SI1.0',
+    undefined,
+    tables,
+  )
+  const ppt = await buildDisplayDeck({
+    title: '手填核对',
+    date: '2026-11-05',
+    market: 'domestic',
+    subtitle: 'SI1.0',
+    rules,
+    tables,
+    innerTrays: reference,
+    plan: null,
+    planMarks: {},
+    overview: null,
+    tableViews: {},
+    photos: {},
+    landscapeEnd: 'left',
+    views: 'plan',
+    tables3d: {},
+    pending: [],
+  })
+  const pages = Object.entries(unzipSync(ppt))
+    .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
+    .map(([, data]) => strFromU8(data))
+    .filter((xml) => xml.includes('内嵌托盘配图'))
+  expect(pages).toHaveLength(2)
+  expect(pages.join('')).toContain('5. UNKNOWN')
+  expect([...pages.join('').matchAll(/暂无对应配图，请核对/g)]).toHaveLength(4)
+  expect([...pages.join('').matchAll(/<a:blip\s/g)]).toHaveLength(1)
+})
+
 it('按SI与保存的方案选图，覆盖2/3/4桌全部实际模块并嵌入PPT', async () => {
   for (const [si, scheme] of [
     ['SI1.0', 'standard'],
