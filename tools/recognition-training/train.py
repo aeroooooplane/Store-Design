@@ -17,6 +17,7 @@ import torch
 from torch import nn
 import torch.nn.functional as F
 from dataset import load, save, sha, need, validate, within
+from export_model import export_onnx
 
 
 class TinyUNet(nn.Module):
@@ -196,7 +197,7 @@ def main(a):
             "checkpointSelection": "仅internal_val平均IoU；包含epoch0基线以防训练退化",
         },
     )
-    for file in ["train.py", "dataset.py"]:
+    for file in ["train.py", "dataset.py", "export_model.py"]:
         shutil.copy2(Path(__file__).parent / file, out / ("source-" + file))
     save(
         out / "environment.json",
@@ -303,16 +304,7 @@ def main(a):
     final = evaluate(model, rows, "cpu")
     save(out / "best-metrics.json", final)
     # 只导出与本次试训完全相同的固定整页分辨率；不宣称已接入编辑器。
-    torch.onnx.export(
-        model,
-        (torch.zeros(1, 1, a.side, a.side),),
-        str(out / "outline.onnx"),
-        input_names=["image"],
-        output_names=["logits"],
-        dynamo=True,
-        opset_version=18,
-        external_data=False,
-    )
+    export_onnx(model, out / "outline.onnx", a.side)
     import onnxruntime as ort
 
     options = ort.SessionOptions()
