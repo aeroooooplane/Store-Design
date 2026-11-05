@@ -1,10 +1,11 @@
 """无需真实门店文件，验证打包后篡改、未准入、同源替换均会失败。"""
 
 import json
+import copy
 import unittest
 from pathlib import Path
 from unittest.mock import patch
-from dataset import validate, split_ids, identity_index_sha
+from dataset import validate, split_ids, identity_index_sha, inherited_splits
 
 
 class BundleTests(unittest.TestCase):
@@ -90,6 +91,63 @@ class BundleTests(unittest.TestCase):
 
     def test_complete_fixture_passes(self):
         self.run_validation(self.fixture())
+
+    def inherited_fixture(self):
+        d = self.fixture()
+        parent = copy.deepcopy(d["manifest.json"])
+        d["parent-manifest.json"] = parent
+        d["manifest.json"].update(
+            splitPolicy="inherit-parent", parentManifestSha256="parent"
+        )
+        d["manifest.json"]["files"]["parent-manifest.json"] = "parent"
+        return d
+
+    def test_expansion_keeps_old_split_and_new_stores_train(self):
+        d = self.inherited_fixture()
+        self.run_validation(d)
+        parent = d["parent-manifest.json"]
+        new = {
+            "store_id": "TRAIN-999",
+            "name": "新增",
+            "source": {"sha256": "new", "path": "new.pdf"},
+        }
+        result = inherited_splits(parent["samples"] + [new], parent)
+        self.assertEqual(result[new["store_id"]], "train")
+        for s in parent["samples"]:
+            self.assertEqual(result[s["store_id"]], s["split"])
+
+    def test_expansion_cannot_move_validation_into_training(self):
+        d = self.inherited_fixture()
+        samples = d["manifest.json"]["samples"]
+        a = next(s for s in samples if s["split"] == "train")
+        b = next(s for s in samples if s["split"] == "internal_val")
+        a["split"], b["split"] = b["split"], a["split"]
+        with self.assertRaisesRegex(ValueError, "冻结划分改变"):
+            self.run_validation(d)
+
+    def test_expansion_cannot_change_old_label_even_with_new_hash(self):
+        d = self.inherited_fixture()
+        d["manifest.json"]["files"]["TRAIN-000/mask.png"] = "new-valid-hash"
+        with self.assertRaisesRegex(ValueError, "旧图像或标签"):
+            self.run_validation(d)
+
+    def test_expansion_parent_hash_required(self):
+        d = self.inherited_fixture()
+        d["manifest.json"]["parentManifestSha256"] = "wrong"
+        with self.assertRaisesRegex(ValueError, "父版未绑定"):
+            self.run_validation(d)
+
+    def test_expansion_cannot_remove_old_store(self):
+        d = self.inherited_fixture()
+        d["manifest.json"]["samples"].pop()
+        with self.assertRaisesRegex(ValueError, "移除此前门店"):
+            self.run_validation(d)
+
+    def test_expansion_cannot_replace_protection_lists(self):
+        d = self.inherited_fixture()
+        d["manifest.json"]["files"]["identity-only/acceptance-index.json"] = "new-hash"
+        with self.assertRaisesRegex(ValueError, "替换保护清单"):
+            self.run_validation(d)
 
     def test_replaced_identity_index_rejected(self):
         d = self.fixture()
