@@ -1,0 +1,726 @@
+{
+  "date": "2026-11-05",
+  "productionReady": false,
+  "acceptance45GeometryOrScoresRead": false,
+  "trainingStores": 17,
+  "internalValidationStores": 3,
+  "developmentStores": 48,
+  "candidateSelectionBeforeDevelopment": [
+    {
+      "run": "outline-expansion-run-20261105-v1",
+      "means": {
+        "raw": 0.7071328264368645,
+        "clean": 0.7252780149240685
+      }
+    },
+    {
+      "run": "outline-quality-run-20261105-v1",
+      "means": {
+        "raw": 0.7213519564787977,
+        "clean": 0.7255503022623792
+      }
+    },
+    {
+      "run": "outline-quality-run-20261105-v2",
+      "means": {
+        "raw": 0.695582645858097,
+        "clean": 0.6984461706941488
+      }
+    }
+  ],
+  "developmentIterations": [
+    {
+      "version": 1,
+      "summary": {
+        "stores": 48,
+        "scorable": 48,
+        "metrics": {
+          "baseline-raw": {
+            "meanIoU": 0.6940972667100566,
+            "medianIoU": 0.7326866861330967,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 7
+          },
+          "baseline-clean": {
+            "meanIoU": 0.7137085554610468,
+            "medianIoU": 0.7438095519917785,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 12
+          },
+          "candidate-raw": {
+            "meanIoU": 0.7685397528128503,
+            "medianIoU": 0.8026854319309763,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 25
+          },
+          "candidate-clean": {
+            "meanIoU": 0.776449359046623,
+            "medianIoU": 0.8112170081674948,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 27
+          }
+        },
+        "frozenBeforeScoring": true,
+        "trainingOnDevelopment": false,
+        "acceptance45GeometryOrScoresRead": false,
+        "entranceScaleOrFurnitureEvaluated": false,
+        "productionReady": false,
+        "metric": "原图像素栅格IoU；按原审核多边形填充，不做对齐；无效参考记0并列出，不从48分母删除。"
+      }
+    },
+    {
+      "version": 2,
+      "summary": {
+        "stores": 48,
+        "scorable": 48,
+        "metrics": {
+          "baseline-raw": {
+            "meanIoU": 0.6963249115233761,
+            "medianIoU": 0.7326866861330967,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 7
+          },
+          "baseline-clean": {
+            "meanIoU": 0.7213428295913454,
+            "medianIoU": 0.7438095519917785,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 12
+          },
+          "candidate-raw": {
+            "meanIoU": 0.7624088854390981,
+            "medianIoU": 0.8026854319309763,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 25
+          },
+          "candidate-clean": {
+            "meanIoU": 0.7702946506499456,
+            "medianIoU": 0.8112170081674948,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 27
+          }
+        },
+        "frozenBeforeScoring": true,
+        "developmentInformedPreprocessing": true,
+        "trainingOnDevelopment": false,
+        "acceptance45GeometryOrScoresRead": false,
+        "entranceScaleOrFurnitureEvaluated": false,
+        "productionReady": false,
+        "metric": "原图像素栅格IoU；按原审核多边形填充，不做对齐；无效参考记0并列出，不从48分母删除。"
+      }
+    },
+    {
+      "version": 3,
+      "summary": {
+        "stores": 48,
+        "scorable": 48,
+        "metrics": {
+          "baseline-raw": {
+            "meanIoU": 0.7038439190453435,
+            "medianIoU": 0.7399283237825525,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 7
+          },
+          "baseline-clean": {
+            "meanIoU": 0.7285001048013514,
+            "medianIoU": 0.7447810213552128,
+            "iouAtLeast90": 0,
+            "iouAtLeast80": 12
+          },
+          "candidate-raw": {
+            "meanIoU": 0.7779402118342392,
+            "medianIoU": 0.8026854319309763,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 25
+          },
+          "candidate-clean": {
+            "meanIoU": 0.7807441659558153,
+            "medianIoU": 0.8112170081674948,
+            "iouAtLeast90": 6,
+            "iouAtLeast80": 27
+          }
+        },
+        "frozenBeforeScoring": true,
+        "developmentInformedPreprocessing": true,
+        "trainingOnDevelopment": false,
+        "acceptance45GeometryOrScoresRead": false,
+        "entranceScaleOrFurnitureEvaluated": false,
+        "productionReady": false,
+        "metric": "原图像素栅格IoU；按原审核多边形填充，不做对齐；无效参考记0并列出，不从48分母删除。"
+      }
+    }
+  ],
+  "finalComparison": "同一黑白底/对比度预处理下的原始预测；最大连通块清理仅作实验，不设为默认",
+  "improved": 37,
+  "regressed": 11,
+  "regressedIds": [
+    "NEW-020",
+    "NEW-023",
+    "NEW-065",
+    "NEW-098",
+    "PDF-079",
+    "PDF-098",
+    "PDF-140",
+    "PDF-302",
+    "PDF-321",
+    "PDF-351",
+    "PDF-407"
+  ],
+  "rows": [
+    {
+      "store_id": "NEW-015",
+      "iou": {
+        "baseline-raw": 0.7183931087127865,
+        "baseline-clean": 0.7175879011018144,
+        "candidate-raw": 0.8505895483292967,
+        "candidate-clean": 0.8505895483292967
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-019",
+      "iou": {
+        "baseline-raw": 0.7886452502562893,
+        "baseline-clean": 0.8120390653096874,
+        "candidate-raw": 0.8677105032107012,
+        "candidate-clean": 0.8674551365566285
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-020",
+      "iou": {
+        "baseline-raw": 0.7818648019466498,
+        "baseline-clean": 0.8564972386263977,
+        "candidate-raw": 0.6258164647286254,
+        "candidate-clean": 0.6258179789808967
+      },
+      "polarityInverted": false,
+      "visualNote": "中央及左侧出现与外界连通的大块漏标；简单填洞不能修复。"
+    },
+    {
+      "store_id": "NEW-023",
+      "iou": {
+        "baseline-raw": 0.5885360598250877,
+        "baseline-clean": 0.6037399047071943,
+        "candidate-raw": 0.5846339343750112,
+        "candidate-clean": 0.6174562552077134
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-024",
+      "iou": {
+        "baseline-raw": 0.5799677520738981,
+        "baseline-clean": 0.6756631764847245,
+        "candidate-raw": 0.7131742416473976,
+        "candidate-clean": 0.713473072493964
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-026",
+      "iou": {
+        "baseline-raw": 0.7829769833604969,
+        "baseline-clean": 0.7833146272358449,
+        "candidate-raw": 0.8305063953473817,
+        "candidate-clean": 0.8326305432567292
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-049",
+      "iou": {
+        "baseline-raw": 0.6819839949032735,
+        "baseline-clean": 0.6896787930284053,
+        "candidate-raw": 0.78522310101327,
+        "candidate-clean": 0.8061823948861536
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-064",
+      "iou": {
+        "baseline-raw": 0.7721375967003377,
+        "baseline-clean": 0.7867979455636105,
+        "candidate-raw": 0.8180023842668167,
+        "candidate-clean": 0.8182460313323426
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-065",
+      "iou": {
+        "baseline-raw": 0.751900212966045,
+        "baseline-clean": 0.7634830907569368,
+        "candidate-raw": 0.7454781608167664,
+        "candidate-clean": 0.743475921021137
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-084",
+      "iou": {
+        "baseline-raw": 0.8600609449820849,
+        "baseline-clean": 0.8602251375710462,
+        "candidate-raw": 0.9325454533988359,
+        "candidate-clean": 0.9325454533988359
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-096",
+      "iou": {
+        "baseline-raw": 0.44778642513459516,
+        "baseline-clean": 0.44433059049647033,
+        "candidate-raw": 0.6375037542095072,
+        "candidate-clean": 0.6378640764283969
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "NEW-098",
+      "iou": {
+        "baseline-raw": 0.7849977758268863,
+        "baseline-clean": 0.861598635157336,
+        "candidate-raw": 0.6933930515096455,
+        "candidate-clean": 0.6984617425898495
+      },
+      "polarityInverted": false,
+      "visualNote": "底部尺寸和说明被识别为大片外延，左侧休息区局部漏标。"
+    },
+    {
+      "store_id": "NEW-099",
+      "iou": {
+        "baseline-raw": 0.8070895678922614,
+        "baseline-clean": 0.8275680205336162,
+        "candidate-raw": 0.8843184854738655,
+        "candidate-clean": 0.8887450609112049
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-003",
+      "iou": {
+        "baseline-raw": 0.7124715725542319,
+        "baseline-clean": 0.7128673047393228,
+        "candidate-raw": 0.7699853138986363,
+        "candidate-clean": 0.7675367353897455
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-050",
+      "iou": {
+        "baseline-raw": 0.7804731250695959,
+        "baseline-clean": 0.7989876328677827,
+        "candidate-raw": 0.9176715310757182,
+        "candidate-clean": 0.9178242331387231
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-051",
+      "iou": {
+        "baseline-raw": 0.7417294178563503,
+        "baseline-clean": 0.751778949714031,
+        "candidate-raw": 0.8454485810685122,
+        "candidate-clean": 0.8463192179507744
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-073",
+      "iou": {
+        "baseline-raw": 0.689263489714228,
+        "baseline-clean": 0.7379743477015706,
+        "candidate-raw": 0.7148207860450423,
+        "candidate-clean": 0.7361214546736792
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-079",
+      "iou": {
+        "baseline-raw": 0.7865377688587012,
+        "baseline-clean": 0.7865377688587012,
+        "candidate-raw": 0.7466480360671937,
+        "candidate-clean": 0.5015767346817529
+      },
+      "polarityInverted": true,
+      "visualNote": "反色加对比度校正后主要区域恢复，但中部漏标将平面分裂；原始IoU74.66%，最大块清理会误删上半部并降至50.16%，所以不默认清理。"
+    },
+    {
+      "store_id": "PDF-090",
+      "iou": {
+        "baseline-raw": 0.8579812887379126,
+        "baseline-clean": 0.8579812887379126,
+        "candidate-raw": 0.9031056445015777,
+        "candidate-clean": 0.9031969864177525
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-095",
+      "iou": {
+        "baseline-raw": 0.7015028394394359,
+        "baseline-clean": 0.7015028394394359,
+        "candidate-raw": 0.8368928634660983,
+        "candidate-clean": 0.8376809529435475
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-096",
+      "iou": {
+        "baseline-raw": 0.7509509177684563,
+        "baseline-clean": 0.7552008295827861,
+        "candidate-raw": 0.7808081789905273,
+        "candidate-clean": 0.7816255478580517
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-097",
+      "iou": {
+        "baseline-raw": 0.7432729768982308,
+        "baseline-clean": 0.7456489506859664,
+        "candidate-raw": 0.8577337231690794,
+        "candidate-clean": 0.8588846804978265
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-098",
+      "iou": {
+        "baseline-raw": 0.7624642196282314,
+        "baseline-clean": 0.7731983311588128,
+        "candidate-raw": 0.7578826504819272,
+        "candidate-clean": 0.75810564309824
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-099",
+      "iou": {
+        "baseline-raw": 0.4725396910247501,
+        "baseline-clean": 0.47265996685732614,
+        "candidate-raw": 0.5604134473712581,
+        "candidate-clean": 0.5603454858225949
+      },
+      "polarityInverted": false,
+      "visualNote": "把上侧及左斜侧商场楼梯纳入店铺，右侧尺寸注记外扩。"
+    },
+    {
+      "store_id": "PDF-101",
+      "iou": {
+        "baseline-raw": 0.6807693981303531,
+        "baseline-clean": 0.8262774525769112,
+        "candidate-raw": 0.8034081636692744,
+        "candidate-clean": 0.8602968512496647
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-140",
+      "iou": {
+        "baseline-raw": 0.7392336925707754,
+        "baseline-clean": 0.7367700807576262,
+        "candidate-raw": 0.7368745787574833,
+        "candidate-clean": 0.7448315022836687
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-189",
+      "iou": {
+        "baseline-raw": 0.7803491295462686,
+        "baseline-clean": 0.7805409800368076,
+        "candidate-raw": 0.8021806242431484,
+        "candidate-clean": 0.8021806242431484
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-202",
+      "iou": {
+        "baseline-raw": 0.7261396796954181,
+        "baseline-clean": 0.7261612337780956,
+        "candidate-raw": 0.8688602357096477,
+        "candidate-clean": 0.8688602357096477
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-217",
+      "iou": {
+        "baseline-raw": 0.5372302027246296,
+        "baseline-clean": 0.6791807770623324,
+        "candidate-raw": 0.8784274017308197,
+        "candidate-clean": 0.8784274017308197
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-245",
+      "iou": {
+        "baseline-raw": 0.2571976329262617,
+        "baseline-clean": 0.37219334521377784,
+        "candidate-raw": 0.3434416958756537,
+        "candidate-clean": 0.3588437529860744
+      },
+      "polarityInverted": false,
+      "visualNote": "狭长店铺被扩到上方商场空区与两侧注记，仍是明显失败。"
+    },
+    {
+      "store_id": "PDF-259",
+      "iou": {
+        "baseline-raw": 0.7508708759187049,
+        "baseline-clean": 0.7439130920244593,
+        "candidate-raw": 0.8173536534789544,
+        "candidate-clean": 0.8179778652523528
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-261",
+      "iou": {
+        "baseline-raw": 0.641756419219169,
+        "baseline-clean": 0.7484427290000287,
+        "candidate-raw": 0.8134590675477239,
+        "candidate-clean": 0.8253717685191208
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-296",
+      "iou": {
+        "baseline-raw": 0.8728337070596768,
+        "baseline-clean": 0.8852781691021399,
+        "candidate-raw": 0.9045558312213181,
+        "candidate-clean": 0.9437925084877832
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-302",
+      "iou": {
+        "baseline-raw": 0.8166486706031356,
+        "baseline-clean": 0.8254581290077505,
+        "candidate-raw": 0.7169141416709648,
+        "candidate-clean": 0.7169150497250413
+      },
+      "polarityInverted": false,
+      "visualNote": "左上斜边及休息区漏标，底侧与斜侧注记误检。"
+    },
+    {
+      "store_id": "PDF-321",
+      "iou": {
+        "baseline-raw": 0.7406229549943295,
+        "baseline-clean": 0.7437060119590976,
+        "candidate-raw": 0.7176507959779594,
+        "candidate-clean": 0.7182021160918276
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-325",
+      "iou": {
+        "baseline-raw": 0.6951821697597901,
+        "baseline-clean": 0.6981593596278152,
+        "candidate-raw": 0.8109842394772397,
+        "candidate-clean": 0.813791310610957
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-330",
+      "iou": {
+        "baseline-raw": 0.6643760189658525,
+        "baseline-clean": 0.6666332331891319,
+        "candidate-raw": 0.829467112534892,
+        "candidate-clean": 0.8619062682499513
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-342",
+      "iou": {
+        "baseline-raw": 0.7635805809295472,
+        "baseline-clean": 0.7635805809295472,
+        "candidate-raw": 0.9265102646970311,
+        "candidate-clean": 0.9265102646970311
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-351",
+      "iou": {
+        "baseline-raw": 0.8595594538476498,
+        "baseline-clean": 0.8709061958817363,
+        "candidate-raw": 0.845979571959218,
+        "candidate-clean": 0.8550760866747401
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-353",
+      "iou": {
+        "baseline-raw": 0.5809384636763318,
+        "baseline-clean": 0.6604227506941941,
+        "candidate-raw": 0.6248025834625889,
+        "candidate-clean": 0.622395324816238
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-363",
+      "iou": {
+        "baseline-raw": 0.6226561013236371,
+        "baseline-clean": 0.6276974341069602,
+        "candidate-raw": 0.8031902396188042,
+        "candidate-clean": 0.8260158051640074
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-393",
+      "iou": {
+        "baseline-raw": 0.8821058417085427,
+        "baseline-clean": 0.8821058417085427,
+        "candidate-raw": 0.93699884672315,
+        "candidate-clean": 0.93699884672315
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-398",
+      "iou": {
+        "baseline-raw": 0.796932538026279,
+        "baseline-clean": 0.8121126957720242,
+        "candidate-raw": 0.8325882420641486,
+        "candidate-clean": 0.8327680710108545
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-405",
+      "iou": {
+        "baseline-raw": 0.5895290142363324,
+        "baseline-clean": 0.6087442221374914,
+        "candidate-raw": 0.7452726109853324,
+        "candidate-clean": 0.7459373441791501
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-407",
+      "iou": {
+        "baseline-raw": 0.668024148163307,
+        "baseline-clean": 0.6802788970799613,
+        "candidate-raw": 0.6600710002144153,
+        "candidate-clean": 0.6678051322655465
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-411",
+      "iou": {
+        "baseline-raw": 0.3972532550817294,
+        "baseline-clean": 0.45683611720241557,
+        "candidate-raw": 0.7256389790781077,
+        "candidate-clean": 0.8086427057240326
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-412",
+      "iou": {
+        "baseline-raw": 0.6645401295334935,
+        "baseline-clean": 0.6711470754549544,
+        "candidate-raw": 0.7667920883912392,
+        "candidate-clean": 0.7670487969353057
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    },
+    {
+      "store_id": "PDF-417",
+      "iou": {
+        "baseline-raw": 0.7106502534044602,
+        "baseline-clean": 0.7245962892443404,
+        "candidate-raw": 0.7694019644916841,
+        "candidate-clean": 0.7729634446831904
+      },
+      "polarityInverted": false,
+      "visualNote": null
+    }
+  ],
+  "runtimeConsistency": {
+    "passed": true,
+    "probabilityTolerance": 0.005,
+    "maskDifferenceTolerance": 0.0001,
+    "maxAbsProbabilityError": 6.008148193359375e-5,
+    "differentMaskPixelsTotal": 0
+  },
+  "finalFreezeSha256": "d594d13cf66bc863e66bf3ad58437828f6a3aa10366cfb44c683e795a0486fe3",
+  "model": {
+    "onnx": "C:\\Users\\insta360\\Documents\\Codex\\outline-quality-export-20261105-v1\\outline.onnx",
+    "sha256": "d070b7fe0127351ede7237feb14193e5a50753165f308197af948a5e9861f35a",
+    "exportCheckSha256": "9b0f5049b3ede6a0d8d84577170eac7b09228a808209e8c8979dd5097c6f0d93",
+    "checkpointSha256": "0733c1a2109c01bb713a55935cffdfb9a0c25916a4c22431d11ebd30f53adc6f"
+  },
+  "referenceSha256": "194ab609f524f93cf11737312d3304c487eaf827fe59a515668ea2de88c835f2",
+  "artifacts": {
+    "review": "C:\\Users\\insta360\\Documents\\Codex\\outline-development-review-20261105-v1\\复评审核.html",
+    "evaluation": "C:\\Users\\insta360\\Documents\\Codex\\outline-development-evaluation-20261105-v3",
+    "initialEvaluation": "C:\\Users\\insta360\\Documents\\Codex\\outline-development-evaluation-20261105-v1",
+    "failedPolarityEvaluation": "C:\\Users\\insta360\\Documents\\Codex\\outline-development-evaluation-20261105-v2"
+  },
+  "validation": {
+    "pythonPassed": 44,
+    "repositoryTestsPassed": 773,
+    "browserChecksPassed": 12,
+    "ci": "见本轮PR"
+  },
+  "pendingBusinessQuestions": []
+}

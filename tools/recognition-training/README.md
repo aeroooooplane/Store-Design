@@ -66,3 +66,5 @@ python tools/recognition-training/report.py --data <扩充数据> --run <新成�
 
 隔离测试使用标准库；可选 Pillow 裁图像素测试在完整训练环境执行，无 Pillow 的轻量 CI 会显式跳过这一项。扩充记录见 `docs/recognition-outline-expansion-20261105.md`。
 导出数值修复：仅导出副本以FP64累计GroupNorm统计，卷积与训练保持FP32；原权重可用 export_model.py 单独重新导出，无需重训。验证20家原图与8类合成输入，原阈值不变。详见 docs/recognition-outline-onnx-20261105.md。
+
+轮廓训练对照可选 --positive-weight 1 --affine-augment；不指定时保留原策略。固定48家复评使用 evaluate_development.py 和按SHA绑定的冻结JSON；drawing_input.py只按无标签的整页/边缘亮度处理黑底，对比度规则须在评分前固定。outline_mask.py的最大块清理仅供实验，不作为自动默认；development_report.py保留原始/清理四组指标，生成独立审核页。开发反馈必须另开冻结版本并保留失败结果，45家不参与。详见 docs/recognition-outline-development-20261105.md。
