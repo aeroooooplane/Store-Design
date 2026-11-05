@@ -23,7 +23,7 @@ export const DisplayEditsSchema = z.object({
   /** null: from the table nearest the entrance. */
   orientation: DisplayOrientationSchema.nullable().default(null),
   landscapeEnd: z.enum(['left', 'right']).default('left'),
-  /** The 2026 SI2.0 discussion scheme is opt-in; absent in old saved projects. */
+  /** Stable persisted id of the 2026 SI2.0 scheme; absent in old saved projects. */
   moduleScheme: z.enum(['standard', 'draft-2026']).optional(),
   /** Table id → slot → unit id (null empties the slot). */
   slots: z.record(TableIdSchema, z.record(SlotIdSchema, z.string().max(60).nullable())).default({}),
@@ -31,11 +31,12 @@ export const DisplayEditsSchema = z.object({
   modules: z.record(TableIdSchema, z.array(z.string().max(20)).max(12)).default({}),
 })
 export type DisplayEdits = z.output<typeof DisplayEditsSchema>
-export const emptyDisplayEdits = (): DisplayEdits => ({
+export const emptyDisplayEdits = (si?: 'SI1.0' | 'SI2.0'): DisplayEdits => ({
   orientation: null,
   landscapeEnd: 'left',
   slots: {},
   modules: {},
+  ...(si === 'SI2.0' ? { moduleScheme: 'draft-2026' as const } : {}),
 })
 
 const FileLinkSchema = z.object({ url: z.string(), name: z.string(), bytes: z.int().min(0) })

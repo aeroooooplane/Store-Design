@@ -2,6 +2,8 @@ import { copyFile, mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { unzipSync } from 'fflate'
+import { eq } from 'drizzle-orm'
+import { schema } from '@store/database'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import type {
   Delivery,
@@ -12,7 +14,7 @@ import type {
   NodeDisplay,
 } from '@store/shared'
 import { importDisplayRules } from '../src/modules/displays/importer.ts'
-import { api, renderChain } from './fixtures.ts'
+import { api, createNode, placeholderLayout, renderChain } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -267,6 +269,7 @@ describe('新版SI托盘配置的保存与重载', () => {
         siStyle: 'SI2.0',
       })
     ).json<DisplayTask>()
+    expect(task.state.edits.moduleScheme).toBe('draft-2026')
     const uploaded = await t.app.inject({
       method: 'PUT',
       url: `/api/v1/display-tasks/${task.id}/plan`,
@@ -304,7 +307,7 @@ describe('新版SI托盘配置的保存与重载', () => {
       tables3d: [],
     })
     expect(exported.statusCode).toBe(201)
-    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-10-30')
+    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-11-05')
     const ppt = await download(exported.json<DisplayExport>().pptx)
     const entries = unzipSync(new Uint8Array(ppt.rawPayload))
     const text = Object.entries(entries)
@@ -313,5 +316,59 @@ describe('新版SI托盘配置的保存与重载', () => {
       .join('')
     expect(text).toContain('内盘合计：10 个；外框：3 个；含外框合计：13 个')
     expect(text).toContain('未确认实物可放性')
+  })
+  it('新建SI2.0渲染节点直接导出后仍保留默认2026方案', async () => {
+    const chain = await renderChain(t, { projectName: '默认内嵌方案核对' })
+    const render = await createNode(t, chain.project.id, {
+      parentId: chain.white.id,
+      kind: 'render',
+      name: 'SI2.0渲染',
+      siStyle: 'SI2.0',
+      layout: placeholderLayout,
+    })
+    const url = `/nodes/${render.id}/display`
+    const before = (await inject('GET', url)).json<NodeDisplay>()
+    expect(before.edits.moduleScheme).toBe('draft-2026')
+    const copy = async () => {
+      const copied = await createNode(t, chain.project.id, {
+        parentId: chain.white.id,
+        sourceNodeId: render.id,
+        kind: 'render',
+        name: 'SI2.0渲染副本',
+        siStyle: 'SI2.0',
+        layout: placeholderLayout,
+      })
+      return (await inject('GET', `/nodes/${copied.id}/display`)).json<NodeDisplay>()
+    }
+    expect((await copy()).edits).toEqual(before.edits)
+    const exported = await inject('POST', `${url}/export`, {
+      planPng: png(400, 300).toString('base64'),
+      planViewBox: [-1, -1, 10, 8],
+    })
+    expect(exported.statusCode).toBe(201)
+    const after = (await inject('GET', url)).json<NodeDisplay>()
+    expect(after.edits).toEqual(before.edits)
+    expect(after.tables.map((table) => table.modules)).toEqual(
+      before.tables.map((table) => table.modules),
+    )
+    // A pre-upgrade render can exist without any saved display row. It must stay legacy.
+    await t.database.db.delete(schema.nodeDisplays).where(eq(schema.nodeDisplays.nodeId, render.id))
+    const legacy = (await inject('GET', url)).json<NodeDisplay>()
+    expect(legacy.edits.moduleScheme).toBeUndefined()
+    expect(legacy.tables[0]?.modules).toEqual(['A2', 'D1', 'D8', 'A4'])
+    expect((await copy()).edits).toEqual(legacy.edits)
+    expect(
+      (
+        await inject('POST', `${url}/export`, {
+          planPng: png(400, 300).toString('base64'),
+          planViewBox: [-1, -1, 10, 8],
+        })
+      ).statusCode,
+    ).toBe(201)
+    const legacyReloaded = (await inject('GET', url)).json<NodeDisplay>()
+    expect(legacyReloaded.edits.moduleScheme).toBeUndefined()
+    expect(legacyReloaded.tables.map((table) => table.modules)).toEqual(
+      legacy.tables.map((table) => table.modules),
+    )
   })
 })
