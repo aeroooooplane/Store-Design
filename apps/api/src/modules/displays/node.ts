@@ -83,7 +83,7 @@ async function compute(db: Database, nodeId: string): Promise<Computed> {
   const catalog = await catalogAssets(db)
   const ruleSet = await requireRules(db)
   const [saved] = await db.select().from(nodeDisplays).where(eq(nodeDisplays.nodeId, node.id))
-  const edits: DisplayEdits = saved?.edits ?? emptyDisplayEdits(context.siStyle)
+  const edits: DisplayEdits = saved?.edits ?? emptyDisplayEdits()
 
   const layout = node.layout as Layout
   const heights = new Map<string, number>()

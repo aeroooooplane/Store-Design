@@ -2,6 +2,8 @@ import { copyFile, mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { unzipSync } from 'fflate'
+import { eq } from 'drizzle-orm'
+import { schema } from '@store/database'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import type {
   Delivery,
@@ -327,6 +329,18 @@ describe('新版SI托盘配置的保存与重载', () => {
     const url = `/nodes/${render.id}/display`
     const before = (await inject('GET', url)).json<NodeDisplay>()
     expect(before.edits.moduleScheme).toBe('draft-2026')
+    const copy = async () => {
+      const copied = await createNode(t, chain.project.id, {
+        parentId: chain.white.id,
+        sourceNodeId: render.id,
+        kind: 'render',
+        name: 'SI2.0渲染副本',
+        siStyle: 'SI2.0',
+        layout: placeholderLayout,
+      })
+      return (await inject('GET', `/nodes/${copied.id}/display`)).json<NodeDisplay>()
+    }
+    expect((await copy()).edits).toEqual(before.edits)
     const exported = await inject('POST', `${url}/export`, {
       planPng: png(400, 300).toString('base64'),
       planViewBox: [-1, -1, 10, 8],
@@ -336,6 +350,25 @@ describe('新版SI托盘配置的保存与重载', () => {
     expect(after.edits).toEqual(before.edits)
     expect(after.tables.map((table) => table.modules)).toEqual(
       before.tables.map((table) => table.modules),
+    )
+    // A pre-upgrade render can exist without any saved display row. It must stay legacy.
+    await t.database.db.delete(schema.nodeDisplays).where(eq(schema.nodeDisplays.nodeId, render.id))
+    const legacy = (await inject('GET', url)).json<NodeDisplay>()
+    expect(legacy.edits.moduleScheme).toBeUndefined()
+    expect(legacy.tables[0]?.modules).toEqual(['A2', 'D1', 'D8', 'A4'])
+    expect((await copy()).edits).toEqual(legacy.edits)
+    expect(
+      (
+        await inject('POST', `${url}/export`, {
+          planPng: png(400, 300).toString('base64'),
+          planViewBox: [-1, -1, 10, 8],
+        })
+      ).statusCode,
+    ).toBe(201)
+    const legacyReloaded = (await inject('GET', url)).json<NodeDisplay>()
+    expect(legacyReloaded.edits.moduleScheme).toBeUndefined()
+    expect(legacyReloaded.tables.map((table) => table.modules)).toEqual(
+      legacy.tables.map((table) => table.modules),
     )
   })
 })
