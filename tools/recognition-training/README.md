@@ -65,3 +65,4 @@ python tools/recognition-training/report.py --data <扩充数据> --run <新成�
 本轮采用相同模型与160轮训练，但17家训练的参数更新数为1440，原7家为640，不能宣称是相同算力预算的纯数据增益实验。固定3家仅是内部模型选择集，仍需48家开发复评及45家最终验收。
 
 隔离测试使用标准库；可选 Pillow 裁图像素测试在完整训练环境执行，无 Pillow 的轻量 CI 会显式跳过这一项。扩充记录见 `docs/recognition-outline-expansion-20261105.md`。
+导出数值修复：仅导出副本以FP64累计GroupNorm统计，卷积与训练保持FP32；原权重可用 export_model.py 单独重新导出，无需重训。验证20家原图与8类合成输入，原阈值不变。详见 docs/recognition-outline-onnx-20261105.md。
