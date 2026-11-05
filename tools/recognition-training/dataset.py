@@ -139,7 +139,55 @@ def split_ids(ids, seed=20261105, val_count=3):
     return {id: ("internal_val" if id in ranked[:val_count] else "train") for id in ids}
 
 
-def build(inputs, decisions_file, resources, out, val_count=3):
+def inherited_splits(samples, parent):
+    previous = {s["store_id"]: s for s in parent["samples"]}
+    current = {s["store_id"]: s for s in samples}
+    need(set(previous) <= set(current), "扩充不能移除此前门店")
+    need(
+        {s["split"] for s in previous.values()} == {"train", "internal_val"},
+        "父版划分无效",
+    )
+    for id, old in previous.items():
+        need(identity_keys(current[id]) == identity_keys(old), "扩充不得改换旧门店身份")
+        need(current[id]["source"] == old["source"], "扩充不得改换旧来源")
+    return {id: previous[id]["split"] if id in previous else "train" for id in current}
+
+
+def check_crop(record):
+    """按图框选版的裁图须与原页逐像素一致，不能换成带标签叠图。"""
+    from PIL import Image
+
+    if "cropBoxPx" not in record:
+        return
+    need(record.get("cropBasis") == "document-panel-title", "裁图须有独立图框依据")
+    need(sha(record["sourceImage"]) == record["sourceImageSha256"], "裁图原页改变")
+    with Image.open(record["sourceImage"]) as source:
+        need(list(source.size) == record["sourceImageSize"], "裁图原页尺寸改变")
+        box = record["cropBoxPx"]
+        need(len(box) == 4 and all(type(v) is int for v in box), "裁图坐标无效")
+        left, top, right, bottom = box
+        need(
+            0 <= left < right <= source.width and 0 <= top < bottom <= source.height,
+            "裁图越界",
+        )
+        expected = source.convert("RGB").crop(box)
+        with Image.open(record["image"]) as actual:
+            need(
+                actual.size == expected.size
+                and actual.convert("RGB").tobytes() == expected.tobytes(),
+                "裁图与原页不一致",
+            )
+
+
+def build(
+    inputs,
+    decisions_file,
+    resources,
+    out,
+    val_count=3,
+    parent_dataset=None,
+    parent_manifest_sha256=None,
+):
     from PIL import Image, ImageDraw
 
     inputs, out, resources = Path(inputs), Path(out), Path(resources)
@@ -172,7 +220,18 @@ def build(inputs, decisions_file, resources, out, val_count=3):
     check_isolation(
         samples, indexes["acceptance"]["stores"] + indexes["development"]["stores"]
     )
-    splits = split_ids([s["store_id"] for s in samples], val_count=val_count)
+    parent = None
+    if parent_dataset:
+        need(
+            parent_manifest_sha256
+            and sha(Path(parent_dataset) / "manifest.json") == parent_manifest_sha256,
+            "父版manifest哈希不匹配",
+        )
+        parent = validate(parent_dataset)
+        splits = inherited_splits(samples, parent)
+    else:
+        need(not parent_manifest_sha256, "指定父版哈希时必须提供父版数据目录")
+        splits = split_ids([s["store_id"] for s in samples], val_count=val_count)
     # 先核对所有准入资料，任何一项失败都不生成半成品训练包。
     for r in admitted:
         s = next(s for s in samples if s["store_id"] == r["store_id"])
@@ -187,6 +246,7 @@ def build(inputs, decisions_file, resources, out, val_count=3):
         )
         need(sha(r["image"]) == r["imageSha256"], "原页图像改变")
         need(list(Image.open(r["image"]).size) == r["imageSize"], "坐标系尺寸不匹配")
+        check_crop(r)
         polygon_check(r["polygonPx"], r["imageSize"])
     out.mkdir(parents=True)
     (out / "identity-only").mkdir()
@@ -197,6 +257,10 @@ def build(inputs, decisions_file, resources, out, val_count=3):
     ]:
         shutil.copy2(inputs / name, out / "identity-only" / name)
     save(out / "decisions.json", decisions)
+    if parent is not None:
+        shutil.copy2(
+            Path(parent_dataset) / "manifest.json", out / "parent-manifest.json"
+        )
     manifest = {
         "schemaVersion": 1,
         "task": "outline-segmentation-trial",
@@ -207,6 +271,10 @@ def build(inputs, decisions_file, resources, out, val_count=3):
         "samples": [],
         "files": {},
     }
+    if parent is not None:
+        manifest.update(
+            splitPolicy="inherit-parent", parentManifestSha256=parent_manifest_sha256
+        )
     for r in admitted:
         id = r["store_id"]
         dest = out / id
@@ -303,11 +371,31 @@ def validate(root):
         p = load(within(root, s["polygon"]))
         polygon_check(p["polygonPx"], p["imageSize"])
         need(p["polygonPx"] == decisions[id]["polygonPx"], "标签与准入版本不一致")
-    expected = split_ids(
-        [s["store_id"] for s in samples],
-        m["seed"],
-        sum(s["split"] == "internal_val" for s in samples),
-    )
+    if m.get("splitPolicy") == "inherit-parent":
+        need(
+            m["files"].get("parent-manifest.json") == m.get("parentManifestSha256"),
+            "父版未绑定哈希",
+        )
+        parent = load(within(root, "parent-manifest.json"))
+        expected = inherited_splits(samples, parent)
+        current = {s["store_id"]: s for s in samples}
+        for old in parent["samples"]:
+            new = current[old["store_id"]]
+            for field in ("image", "mask", "polygon"):
+                need(
+                    m["files"][new[field]] == parent["files"][old[field]],
+                    "扩充不得改变旧图像或标签；修订应另开明确版本",
+                )
+        for kind in ("acceptance", "development"):
+            key = f"identity-only/{kind}-index.json"
+            need(m["files"][key] == parent["files"][key], "扩充不得替换保护清单")
+    else:
+        need(m.get("splitPolicy") in (None, "hash"), "未知划分策略")
+        expected = split_ids(
+            [s["store_id"] for s in samples],
+            m["seed"],
+            sum(s["split"] == "internal_val" for s in samples),
+        )
     need(all(s["split"] == expected[s["store_id"]] for s in samples), "冻结划分改变")
     return m
 
@@ -319,13 +407,23 @@ if __name__ == "__main__":
     for name in ["inputs", "decisions", "resources", "out"]:
         b.add_argument("--" + name, required=True)
     b.add_argument("--val-count", type=int, default=3)
+    b.add_argument("--parent-dataset")
+    b.add_argument("--parent-manifest-sha256")
     v = sub.add_parser("validate")
     v.add_argument("root")
     a = ap.parse_args()
     m = (
         validate(a.root)
         if a.command == "validate"
-        else build(a.inputs, a.decisions, a.resources, a.out, a.val_count)
+        else build(
+            a.inputs,
+            a.decisions,
+            a.resources,
+            a.out,
+            a.val_count,
+            a.parent_dataset,
+            a.parent_manifest_sha256,
+        )
     )
     print(
         json.dumps(

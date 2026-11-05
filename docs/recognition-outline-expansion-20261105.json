@@ -1,0 +1,132 @@
+{
+  "date": "2026-11-05",
+  "parentManifestSha256": "1d4f8099a7c0367d84c44730df284a0742ca705a30f46226ca4f253284cd85d8",
+  "dataManifestSha256": "21d24d47cfaef1ccdfee25b0bda24ff42561399b9550f953aa6a9a5e52a8a762",
+  "counts": {
+    "independentAdmitted": 20,
+    "train": 17,
+    "internalValidation": 3,
+    "agentDeferred": 4,
+    "pendingUser": 0,
+    "protectedDevelopment": 48,
+    "protectedAcceptance": 45
+  },
+  "newStores": [
+    "PDF-081",
+    "PDF-356",
+    "NEW-068",
+    "PDF-210",
+    "NEW-061",
+    "NEW-013",
+    "PDF-064",
+    "PDF-023",
+    "PDF-019",
+    "PDF-380"
+  ],
+  "summary": {
+    "trainStores": 17,
+    "internalValStores": 3,
+    "epochs": 160,
+    "optimizerSteps": 1440,
+    "bestEpoch": 144,
+    "weightMaxChange": 1.0340726375579834,
+    "gradientAndEpochEvaluationSeconds": 252.94612999999663,
+    "trainingAndExportSeconds": null,
+    "initialValIoU": 0.147230384178621,
+    "bestValIoU": 0.7071328264368645,
+    "lastValIoU": 0.6732396808874582,
+    "bestTrainIoU": 0.9480622071446433,
+    "onnxMaxAbsError": 0.022857636213302612,
+    "onnxMeanSeconds": null,
+    "parameterCount": 122673,
+    "exportPassed": false,
+    "development48ReadForTraining": false,
+    "acceptance45ReadForTraining": false,
+    "externalEvaluationPerformed": false,
+    "productionReady": false,
+    "summaryOrigin": "训练160轮及导出校验后命令失败；本摘要由原checkpoint、history、逐店指标及export-check事后恢复。未重训、未改变权重；原始文件保留。总耗时及推理延迟未保存，不补造。"
+  },
+  "comparison": [
+    {
+      "store_id": "PDF-402",
+      "beforeIoU": 0.4546045679915468,
+      "afterIoU": 0.5354077253218884,
+      "failure": "上方斜角仍被填平，左右及下边外扩，内部有漏标孔洞；仍是最弱样本。"
+    },
+    {
+      "store_id": "NEW-069",
+      "beforeIoU": 0.8207937395192845,
+      "afterIoU": 0.8650187810493154,
+      "failure": "上侧及左右凹入漏标，底侧小块外扩；尚未恢复准确矩形。"
+    },
+    {
+      "store_id": "PDF-188",
+      "beforeIoU": 0.6247571150988684,
+      "afterIoU": 0.7209719729393897,
+      "failure": "左/右尺寸文字和下方说明被误检成门店，边界出现离散区域。"
+    }
+  ],
+  "baselineMeanIoU": 0.6333851408698999,
+  "afterMeanIoU": 0.7071328264368645,
+  "layoutPriorMeanIoU": 0.5686233353276594,
+  "exportCheck": {
+    "maxAbsLogitError": 0.022857636213302612,
+    "maxAbsProbabilityError": 0.00556984543800354,
+    "maxMaskDifferenceFraction": 3.0517578125e-5,
+    "differentMaskPixelsTotal": 7,
+    "comparedImages": 20,
+    "probabilityTolerance": 0.005,
+    "maskDifferenceTolerance": 0.0001
+  },
+  "modelSha256": "ab4ce1a5859393c5f45962d93432f69ceb3c896a236a2f1f4e41d1d9d0063466",
+  "onnxSha256": "b5c7b2507863774547e08ded417fba9907093bdc33185487ec3c0f0d1371a10a",
+  "onnxApproved": false,
+  "deferred": [
+    {
+      "store_id": "PDF-065",
+      "reason": "主图楼梯/设备区明确不属于设计范围，边缘相接关系仍需结合原建筑平面核对，先不以猜测轮廓准入。",
+      "owner": "agent"
+    },
+    {
+      "store_id": "PDF-093",
+      "reason": "弧形外围与内侧展示背板之间区域归属尚需结合原立面/租赁依据核定；不把背板边缘直接当店铺范围。",
+      "owner": "agent"
+    },
+    {
+      "store_id": "PDF-150",
+      "reason": "右下原消防栓公区装饰面与租赁斜边交叠，需继续查局部原图后再描点。",
+      "owner": "agent"
+    },
+    {
+      "store_id": "NEW-009",
+      "reason": "一期施工利用橱窗与商场楼梯/外侧夹道范围需分清，保留原图红线待代理核查，不扩成整片扇形。",
+      "owner": "agent"
+    }
+  ],
+  "confirmed": [
+    {
+      "id": "QTR-01",
+      "store_id": "PDF-356",
+      "status": "resolved",
+      "source": "用户本会话直接答复",
+      "confirmedAt": "2026-11-05",
+      "quote": "遵义柱面灯箱外侧包板属于门店允许使用范围，继续推进",
+      "scope": "仅确认该柱面灯箱外侧包板允许使用范围，不等于整店几何人工验收，不把其他门店构件自动计入。"
+    }
+  ],
+  "artifacts": {
+    "dataset": "C:\\Users\\insta360\\Documents\\Codex\\outline-training-data-20261105-v3",
+    "run": "C:\\Users\\insta360\\Documents\\Codex\\outline-expansion-run-20261105-v1",
+    "review": "C:\\Users\\insta360\\Documents\\Codex\\outline-expansion-review-20261105-v1\\审核页.html",
+    "sourceReview": "C:\\Users\\insta360\\Documents\\Codex\\outline-expansion-source-review-20261105-v2",
+    "exportDiagnostics": "C:\\Users\\insta360\\Documents\\Codex\\outline-expansion-export-diagnostics.json",
+    "normalizationDiagnostic": "C:\\Users\\insta360\\Documents\\Codex\\outline-expansion-export-recovery-20261105-v1"
+  },
+  "validation": {
+    "pythonTestsPassed": 37,
+    "repositoryTestsPassed": 770,
+    "browserChecksPassed": 12,
+    "ci": "创建PR后记录"
+  },
+  "productionReady": false
+}

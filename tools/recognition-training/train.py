@@ -366,10 +366,7 @@ def main(a):
         "maskDifferenceTolerance": 0.0001,
     }
     save(out / "export-check.json", export_check)
-    need(
-        max_probability_error < 0.005 and max_mask_difference < 0.0001,
-        "ONNX概率或掩膜偏差超过容差",
-    )
+    export_passed = max_probability_error < 0.005 and max_mask_difference < 0.0001
     save(
         out / "summary.json",
         {
@@ -387,6 +384,7 @@ def main(a):
             "bestTrainIoU": mean(final, "iou", "train"),
             "onnxMaxAbsError": max_error,
             "onnxMeanSeconds": float(np.mean(latencies)),
+            "exportPassed": export_passed,
             "parameterCount": sum(p.numel() for p in model.parameters()),
             "development48ReadForTraining": False,
             "acceptance45ReadForTraining": False,
@@ -403,6 +401,8 @@ def main(a):
         },
     )
     print((out / "summary.json").read_text("utf-8"), flush=True)
+    # 导出未通过也先保存真实训练结果和哈希，命令仍以失败退出。
+    need(export_passed, "ONNX概率或掩膜偏差超过容差")
 
 
 if __name__ == "__main__":

@@ -1,6 +1,8 @@
 import unittest
+import tempfile
+import importlib.util
 from pathlib import Path
-from dataset import check_isolation, polygon_check, split_ids, within
+from dataset import check_isolation, polygon_check, split_ids, within, check_crop, sha
 
 
 def store(id="TRAIN-001", name="独立门店", digest="a"):
@@ -64,6 +66,37 @@ class IsolationTests(unittest.TestCase):
             check_isolation(
                 [store(name="ＳｔｏｒｅＡ")], [store("DEV-001", "Store A", "b")]
             )
+
+
+class CropTests(unittest.TestCase):
+    @unittest.skipUnless(
+        importlib.util.find_spec("PIL"), "裁图像素测试需要可选的训练环境Pillow"
+    )
+    def test_crop_pixels_and_provenance(self):
+        from PIL import Image
+
+        with tempfile.TemporaryDirectory() as td:
+            src, cropped = Path(td) / "source.png", Path(td) / "crop.png"
+            im = Image.new("RGB", (20, 10), "white")
+            im.putpixel((4, 4), (0, 0, 0))
+            im.save(src)
+            im.crop((2, 2, 12, 8)).save(cropped)
+            record = dict(
+                sourceImage=str(src),
+                sourceImageSha256=sha(src),
+                sourceImageSize=[20, 10],
+                image=str(cropped),
+                cropBoxPx=[2, 2, 12, 8],
+                cropBasis="document-panel-title",
+            )
+            check_crop(record)
+            record["cropBoxPx"] = [2, 2, 22, 8]
+            with self.assertRaisesRegex(ValueError, "裁图越界"):
+                check_crop(record)
+            record["cropBoxPx"] = [2, 2, 12, 8]
+            Image.new("RGB", (10, 6), "white").save(cropped)
+            with self.assertRaisesRegex(ValueError, "与原页不一致"):
+                check_crop(record)
 
 
 class GeometryAndSplitTests(unittest.TestCase):
