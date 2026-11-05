@@ -1,0 +1,73 @@
+{
+  "datasetManifestSha256": "1d4f8099a7c0367d84c44730df284a0742ca705a30f46226ca4f253284cd85d8",
+  "modelSha256": "afe6d62650a4890a24fc32b1a92513fc51d8e08e8bf8cff058c5da0c7a87a759",
+  "bestWeightsSha256": "fa2a04295fa630f1b889b603fdbd267a2f3052f4346513c7dfa35e1c0447cee1",
+  "summary": {
+    "trainStores": 7,
+    "internalValStores": 3,
+    "epochs": 160,
+    "optimizerSteps": 640,
+    "bestEpoch": 86,
+    "weightMaxChange": 0.7551708221435547,
+    "gradientAndEpochEvaluationSeconds": 84.14381450001383,
+    "trainingAndExportSeconds": 90.00423160000355,
+    "initialValIoU": 0.147230384178621,
+    "bestValIoU": 0.6333851408698999,
+    "lastValIoU": 0.45450787142361326,
+    "bestTrainIoU": 0.8656370371211424,
+    "onnxMaxAbsError": 0.012450635433197021,
+    "onnxMeanSeconds": 0.0165985500003444,
+    "parameterCount": 122673,
+    "development48ReadForTraining": false,
+    "acceptance45ReadForTraining": false,
+    "externalEvaluationPerformed": false,
+    "productionReady": false
+  },
+  "exportCheck": {
+    "maxAbsLogitError": 0.012450635433197021,
+    "maxAbsProbabilityError": 0.003055393695831299,
+    "maxMaskDifferenceFraction": 3.0517578125e-5,
+    "differentMaskPixelsTotal": 6,
+    "comparedImages": 10,
+    "probabilityTolerance": 0.005,
+    "maskDifferenceTolerance": 0.0001
+  },
+  "validation": [
+    {
+      "store_id": "PDF-402",
+      "split": "internal_val",
+      "loss": 0.9246962070465088,
+      "iou": 0.4546045679915468,
+      "dice": 0.6250558784085829,
+      "predPixels": 12230,
+      "labelPixels": 5666
+    },
+    {
+      "store_id": "NEW-069",
+      "split": "internal_val",
+      "loss": 0.4393625557422638,
+      "iou": 0.8207937395192845,
+      "dice": 0.9015779456007859,
+      "predPixels": 8106,
+      "labelPixels": 8181
+    },
+    {
+      "store_id": "PDF-188",
+      "split": "internal_val",
+      "loss": 0.6438612937927246,
+      "iou": 0.6247571150988684,
+      "dice": 0.7690467815687654,
+      "predPixels": 8352,
+      "labelPixels": 5863
+    }
+  ],
+  "repeatedRunEpochsIdentical": 160,
+  "protectedIdentityIndexes": {
+    "acceptance": "521012bfcffc3be55c82a62f140027cc0bfed18a28d763ffd30688cfca4bd080",
+    "development": "61dfe48c41f55a6642788383815e097f4606acf012a4d59af63d168783189ca3"
+  },
+  "specialTests": 30,
+  "repoTests": 767,
+  "browserChecks": 8,
+  "productionReady": false
+}

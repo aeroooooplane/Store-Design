@@ -1,0 +1,28 @@
+name: 轮廓训练数据隔离
+
+on:
+  pull_request:
+    paths:
+      - 'tools/recognition-training/**'
+      - '.github/workflows/outline-training.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/recognition-training/**'
+      - '.github/workflows/outline-training.yml'
+
+jobs:
+  isolation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: 检查训练工具语法
+        run: python -m compileall -q tools/recognition-training
+      - name: 验证同店隔离、冻结划分和数据篡改拒绝
+        run: python -m unittest discover -s tools/recognition-training -p 'test_*.py' -v
