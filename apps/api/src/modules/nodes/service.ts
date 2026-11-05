@@ -5,6 +5,7 @@ import {
   MAX_NODES_PER_PROJECT,
   STAGE_PARENT_KINDS,
   checkAssetFit,
+  emptyDisplayEdits,
   normalizeSpace,
   validateLayout,
   validateSpace,
@@ -179,10 +180,8 @@ export async function createNode(
   if (allowed && (!parent || !allowed.kinds.includes(parent.kind))) {
     throw new AppError('VALIDATION_FAILED', allowed.message)
   }
-  if (input.sourceNodeId) {
-    const source = await findNode(db, input.sourceNodeId)
-    if (source.projectId !== projectId) throw notFound('复制来源节点')
-  }
+  const source = input.sourceNodeId ? await findNode(db, input.sourceNodeId) : null
+  if (source && source.projectId !== projectId) throw notFound('复制来源节点')
 
   let space: Space | null = null
   /** The space the layout lives in (the node's own, or inherited). */
@@ -225,6 +224,22 @@ export async function createNode(
       })
       .returning()
     if (!inserted) throw new Error('Node insert returned no row')
+    if (input.kind === 'render' && input.siStyle === 'SI2.0') {
+      let edits = emptyDisplayEdits(input.siStyle)
+      if (source?.kind === 'render' && source.siStyle === input.siStyle) {
+        const [display] = await tx
+          .select()
+          .from(schema.nodeDisplays)
+          .where(eq(schema.nodeDisplays.nodeId, source.id))
+        edits = display?.edits ?? emptyDisplayEdits()
+      }
+      await tx.insert(schema.nodeDisplays).values({
+        nodeId: inserted.id,
+        edits,
+        exports: [],
+        revision: 0,
+      })
+    }
     await insertCameras(tx, inserted.id, cameras)
     await tx
       .update(projects)

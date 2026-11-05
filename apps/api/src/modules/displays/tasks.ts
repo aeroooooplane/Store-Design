@@ -4,7 +4,13 @@ import { and, desc, eq, inArray, isNull } from 'drizzle-orm'
 import sharp from 'sharp'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { DisplayTaskStateSchema, MARKET_LABELS, planTaskTables, storeTitle } from '@store/shared'
+import {
+  DisplayTaskStateSchema,
+  MARKET_LABELS,
+  emptyDisplayEdits,
+  planTaskTables,
+  storeTitle,
+} from '@store/shared'
 import type {
   DisplayDetectRequest,
   DisplayExport,
@@ -117,7 +123,10 @@ export async function createTask(
   authorize(ctx.actor, 'display:write')
   const [row] = await db
     .insert(displayTasks)
-    .values({ ...input, state: DisplayTaskStateSchema.parse({}) })
+    .values({
+      ...input,
+      state: DisplayTaskStateSchema.parse({ edits: emptyDisplayEdits(input.siStyle) }),
+    })
     .returning()
   if (!row) throw new Error('Display task insert returned no row')
   return toTask(db, row)

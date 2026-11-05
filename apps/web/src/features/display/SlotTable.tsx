@@ -181,7 +181,7 @@ export function SlotTable({
                 }
               >
                 <option value="standard">既有方案</option>
-                <option value="draft-2026">2026.10.26 讨论稿（试摆待实物确认）</option>
+                <option value="draft-2026">2026版（含试摆待确认项）</option>
               </select>
             </label>
           )}
@@ -193,8 +193,14 @@ export function SlotTable({
         </p>
         {edits.moduleScheme === 'draft-2026' && si === 'SI2.0' && (
           <p className="notice">
-            当前为讨论稿：A7/A8、D13/D16 同盘试摆，D9
-            遮光罩为建议；数量按图核对，实物可放性尚未确认。
+            2026版：A7/A8、D13/D16 同盘试摆，D9 遮光罩为建议；数量按图核对，实物可放性尚未确认。
+            <a
+              href="https://arashivision.feishu.cn/slides/E6LIsKO0XleWqIdpuy9c9tO7nZe"
+              target="_blank"
+              rel="noreferrer"
+            >
+              查看内嵌托盘指引
+            </a>
           </p>
         )}
       </section>

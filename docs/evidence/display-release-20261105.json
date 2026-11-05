@@ -1,0 +1,81 @@
+{
+  "resourceRevision": "display-20261105-rev4130",
+  "previousRevision": "display-20261030-rev4095",
+  "document": {
+    "id": "HNS2dxrKPo1Sgex3LxTcD8IwnPf",
+    "revision": 4130
+  },
+  "inner": {
+    "id": "E6LIsKO0XleWqIdpuy9c9tO7nZe",
+    "revision": 5471
+  },
+  "files": [
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI1.0-12-render.png",
+      "beforeSha256": null,
+      "sha256": "c66f8c97744e966723112ada9524288b7bea9ce7dd223c7ee2ece797abc1bc7f",
+      "bytes": 512110,
+      "sourceToken": "XGUvboYr9oUgpoxz520cFbLXncc",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI1.0-13-render.png",
+      "beforeSha256": null,
+      "sha256": "76267f8f5195b2417002dacfa14f9afdc753f91c9716111ed29190c5bbb14b66",
+      "bytes": 453323,
+      "sourceToken": "ODOkbODrWoWdLQx1WKUcrrxunTe",
+      "si": "SI1.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI1.0-13-photo.png",
+      "beforeSha256": null,
+      "sha256": "ef43b4429c0fcd4312d826e0f50a1589f8b1ce24483bc2ad2778cd77f2c8650e",
+      "bytes": 1020387,
+      "sourceToken": "AB2fbX57MoOuh7xSMVtcdI3SnFe",
+      "si": "SI1.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI2.0-7-render.png",
+      "beforeSha256": null,
+      "sha256": "9341b46defd92c28070a75a511958cc2717c95dad1063232f1ac368a91246579",
+      "bytes": 567827,
+      "sourceToken": "BsHZbq4gpoaNeXxQMNccXg3NnLg",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI2.0-8-render.png",
+      "beforeSha256": null,
+      "sha256": "ed8fea4a77cf70a9c203d050295143d4507f6f0544ef1051e46d02856274fb50",
+      "bytes": 485049,
+      "sourceToken": "EdvnbZBWOo1r9YxFKawclUc0nae",
+      "si": "SI2.0",
+      "kind": "render"
+    },
+    {
+      "path": "10_产品与陈列/托盘照片/核对20261105/SI2.0-8-photo.png",
+      "beforeSha256": null,
+      "sha256": "8907f93c1bc05142a98304c7376c46797c51a5a0667f6a1a063356b3c7a040fe",
+      "bytes": 1096627,
+      "sourceToken": "LatbbJy31oG4JtxaClIcHXOPn9g",
+      "si": "SI2.0",
+      "kind": "photo"
+    },
+    {
+      "path": "10_产品与陈列/展陈规则.xlsx",
+      "beforeSha256": "71d8abbea43d9d4c9c2ffe490bbd64203d478905f671adc4ad8e67fdac282f55",
+      "sha256": "5ab3b57f92412887a2881eac87cec7cd90215a0d2cc774d2a0303b1fa7d09e17",
+      "bytes": 33979
+    }
+  ],
+  "counts": {
+    "catalog": 52,
+    "links": 112,
+    "images": 100,
+    "render": 50,
+    "photo": 50
+  }
+}
