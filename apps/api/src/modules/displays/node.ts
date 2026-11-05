@@ -83,7 +83,7 @@ async function compute(db: Database, nodeId: string): Promise<Computed> {
   const catalog = await catalogAssets(db)
   const ruleSet = await requireRules(db)
   const [saved] = await db.select().from(nodeDisplays).where(eq(nodeDisplays.nodeId, node.id))
-  const edits: DisplayEdits = saved?.edits ?? emptyDisplayEdits()
+  const edits: DisplayEdits = saved?.edits ?? emptyDisplayEdits(context.siStyle)
 
   const layout = node.layout as Layout
   const heights = new Map<string, number>()
@@ -236,7 +236,12 @@ export async function nodeDisplayFiles(
   roots: StorageRoots,
   nodeId: string,
   request: NodeDisplayExportBody,
-): Promise<{ files: DisplayFiles; tables: DisplayTable[]; ruleVersion: string }> {
+): Promise<{
+  files: DisplayFiles
+  tables: DisplayTable[]
+  ruleVersion: string
+  edits: DisplayEdits
+}> {
   const { display, project, imageFiles } = await compute(db, nodeId)
   if (!display.tables.length) {
     throw new AppError('INVALID_STATE', '这个方案里没有中岛桌或带托盘的边桌，无法生成展陈方案')
@@ -297,7 +302,7 @@ export async function nodeDisplayFiles(
     tables3d: await tableShots(display.tables, request.tables3d),
     pending: pendingOf(display.tables, ruleSet.rules, si),
   })
-  return { files, tables: display.tables, ruleVersion: ruleSet.version }
+  return { files, tables: display.tables, ruleVersion: ruleSet.version, edits: display.edits }
 }
 
 export async function exportNodeDisplay(
@@ -309,7 +314,7 @@ export async function exportNodeDisplay(
 ): Promise<DisplayExport> {
   const node = await findRenderNode(db, nodeId)
   authorize(ctx.actor, 'display:write', { projectId: node.projectId })
-  const { files, ruleVersion } = await nodeDisplayFiles(db, roots, nodeId, request)
+  const { files, ruleVersion, edits } = await nodeDisplayFiles(db, roots, nodeId, request)
   const record = await storeDisplayFiles(db, roots, `displays/nodes/${nodeId}`, files, ruleVersion)
   const [saved] = await db.select().from(nodeDisplays).where(eq(nodeDisplays.nodeId, nodeId))
   if (saved) {
@@ -318,9 +323,7 @@ export async function exportNodeDisplay(
       .set({ exports: keepExports(saved.exports, record), updatedAt: new Date() })
       .where(eq(nodeDisplays.nodeId, nodeId))
   } else {
-    await db
-      .insert(nodeDisplays)
-      .values({ nodeId, edits: emptyDisplayEdits(), exports: [record], revision: 0 })
+    await db.insert(nodeDisplays).values({ nodeId, edits, exports: [record], revision: 0 })
   }
   return record
 }

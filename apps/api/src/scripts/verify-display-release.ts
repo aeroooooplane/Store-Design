@@ -22,21 +22,21 @@ try {
   if (!response.ok) throw new Error(`读取展陈规则失败：HTTP ${response.status}`)
   const view = DisplayRulesViewSchema.parse(await response.json())
   const rules = view.rules
-  check('规则版本', view.version, '2026-10-30')
+  check('规则版本', view.version, '2026-11-05')
   check('规则一致性', checkRules(rules), [])
   check('来源规格总行数', rules.catalog?.length ?? 0, 52)
-  check('已登记图片链接数', view.photos.length, 111)
+  check('已登记图片链接数', view.photos.length, 112)
   const urls = [...new Set(view.photos.map((p) => p.url))]
-  check('不同图片文件数', urls.length, 99)
+  check('不同图片文件数', urls.length, 100)
   check(
     '不同效果图文件数',
     new Set(view.photos.filter((p) => p.kind === 'render').map((p) => p.url)).size,
-    47,
+    50,
   )
   check(
     '不同实景图文件数',
     new Set(view.photos.filter((p) => p.kind === 'photo').map((p) => p.url)).size,
-    52,
+    50,
   )
   const moduleRows: Record<string, string[]> = {
     '2-1': ['A4', 'D13', 'D12', 'A2'],
@@ -118,7 +118,7 @@ try {
         check(
           `${si} ${n}桌试摆提示`,
           proposed.every((t) =>
-            t.notes.some((note) => note.includes('讨论稿') && note.includes('未确认')),
+            t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
           ),
           true,
         )

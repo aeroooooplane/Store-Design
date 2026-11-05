@@ -11,6 +11,14 @@ import type { DisplayTableInput } from './engine.ts'
 import { rotatedFootprint } from '../schemas/layout.ts'
 import { HERO_SLOT, ISLAND_SLOTS, SIDE_SLOTS, checkRules, diffRules } from './rules.ts'
 import type { DisplayRules } from './rules.ts'
+import { DisplayEditsSchema, emptyDisplayEdits } from './api.ts'
+
+it('只在新建SI2.0时初始化2026内嵌方案，旧存档缺省值保留', () => {
+  expect(emptyDisplayEdits('SI2.0').moduleScheme).toBe('draft-2026')
+  expect(emptyDisplayEdits('SI1.0').moduleScheme).toBeUndefined()
+  expect(DisplayEditsSchema.parse({}).moduleScheme).toBeUndefined()
+  expect(DisplayEditsSchema.parse({ moduleScheme: 'standard' }).moduleScheme).toBe('standard')
+})
 
 /** A small, consistent rule set: every island slot holds 'a' except the hero ('b'); sides hold 'c'. */
 function makeRules(): DisplayRules {

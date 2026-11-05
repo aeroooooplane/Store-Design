@@ -59,7 +59,20 @@ function planned(n: number, siStyle?: SiStyle, scheme?: 'standard' | 'draft-2026
   })
 }
 
-describe('权威指引 rev4095 逐行托盘核对', () => {
+describe('权威指引 rev4130 逐行托盘核对', () => {
+  it('AG Pac 四行图片依最新指引区分效果图和实景图', () => {
+    expect(rules.version).toBe('2026-11-05')
+    expect(rules.photos).toHaveLength(112)
+    expect(new Set(rules.photos.map((p) => p.file)).size).toBe(100)
+    for (const si of ['SI1.0', 'SI2.0'] as const) {
+      const neo = rules.photos.filter((p) => p.si === si && p.unit === 'AG Pac Neo')
+      const air = rules.photos.filter((p) => p.si === si && p.unit === 'AG Pac Air')
+      expect(neo.map((p) => p.kind)).toEqual(['render'])
+      expect(air.map((p) => p.kind)).toEqual(['render', 'photo'])
+      expect(neo[0]?.file).toContain('核对20261105')
+      expect(air.every((p) => p.file.includes('核对20261105'))).toBe(true)
+    }
+  })
   it('完整保留52行来源规格，每行可选且一选只算一个托盘，不因没有图片被丢弃', () => {
     expect(checkRules(rules)).toEqual([])
     expect(
@@ -108,7 +121,7 @@ describe('权威指引 rev4095 逐行托盘核对', () => {
       expect(summary.total).toBe(expected + n)
       expect(
         tables.every((t) =>
-          t.notes.some((note) => note.includes('讨论稿') && note.includes('未确认')),
+          t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
         ),
       ).toBe(true)
       expect(JSON.parse(JSON.stringify(tables))).toEqual(tables)
