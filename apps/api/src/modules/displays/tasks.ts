@@ -40,6 +40,7 @@ import {
   tableShots,
 } from './common.ts'
 import { detectTables } from './detect.ts'
+import { loadInnerTrayImages } from './inner-trays.ts'
 
 const { displayTasks, storedFiles } = schema
 type TaskRow = typeof displayTasks.$inferSelect
@@ -362,6 +363,13 @@ export async function exportTask(
       }),
     ),
     photos: await loadPhotos(roots, rules, row.siStyle, tables),
+    innerTrays: await loadInnerTrayImages(
+      roots,
+      rules,
+      row.siStyle,
+      state.edits.moduleScheme,
+      tables,
+    ),
     landscapeEnd: state.edits.landscapeEnd,
     views: options.views,
     tables3d: await tableShots(tables, options.tables3d),

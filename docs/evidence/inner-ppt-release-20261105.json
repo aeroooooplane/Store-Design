@@ -1,0 +1,522 @@
+{
+  "version": "inner-ppt-20261105",
+  "files": [
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-A4.png",
+      "beforeSha256": null,
+      "sha256": "f0e7157f706caf15cee40a9d422dd4a663b3ba296d99b0d8651b5d7228960648",
+      "bytes": 7124,
+      "width": 70,
+      "height": 80,
+      "scheme": "2026",
+      "module": "A4",
+      "source": "2026-2",
+      "crop": {
+        "left": 198,
+        "top": 690,
+        "width": 70,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D13.png",
+      "beforeSha256": null,
+      "sha256": "432f41f774a00287d1f33a45c33c0282eda84767f2075fd6457c79fc6e65836d",
+      "bytes": 13625,
+      "width": 137,
+      "height": 80,
+      "scheme": "2026",
+      "module": "D13",
+      "source": "2026-2",
+      "crop": {
+        "left": 274,
+        "top": 690,
+        "width": 137,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D12.png",
+      "beforeSha256": null,
+      "sha256": "813699528dc4b1fb39b5f95c3ad9a3cf6dad4c5d1d7d38b6734af6ded5a8e381",
+      "bytes": 10012,
+      "width": 137,
+      "height": 80,
+      "scheme": "2026",
+      "module": "D12",
+      "source": "2026-2",
+      "crop": {
+        "left": 418,
+        "top": 690,
+        "width": 137,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-A2.png",
+      "beforeSha256": null,
+      "sha256": "1ca0e3476f230ecd68cc900f15297bdda4b2e8a80a307c8d2343c5b22c2ac05f",
+      "bytes": 7090,
+      "width": 68,
+      "height": 80,
+      "scheme": "2026",
+      "module": "A2",
+      "source": "2026-2",
+      "crop": {
+        "left": 562,
+        "top": 690,
+        "width": 68,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-A7.png",
+      "beforeSha256": null,
+      "sha256": "27676da362fc1252edb8330d810220162776843e864b28722af8dcbabd39a1fd",
+      "bytes": 7059,
+      "width": 70,
+      "height": 80,
+      "scheme": "2026",
+      "module": "A7",
+      "source": "2026-2",
+      "crop": {
+        "left": 973,
+        "top": 690,
+        "width": 70,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-C4.png",
+      "beforeSha256": null,
+      "sha256": "632984feb9d4cd66d4d3bef79be745f8fa4d22cf42db3048f420bb8cd88bb8ae",
+      "bytes": 20856,
+      "width": 277,
+      "height": 80,
+      "scheme": "2026",
+      "module": "C4",
+      "source": "2026-2",
+      "crop": {
+        "left": 1049,
+        "top": 690,
+        "width": 277,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-A8.png",
+      "beforeSha256": null,
+      "sha256": "91547e6a2f89ebe326d4f3fdc0e960a8583eb960380eb4e734f969f50245a267",
+      "bytes": 6707,
+      "width": 70,
+      "height": 80,
+      "scheme": "2026",
+      "module": "A8",
+      "source": "2026-2",
+      "crop": {
+        "left": 1332,
+        "top": 690,
+        "width": 70,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D16.png",
+      "beforeSha256": null,
+      "sha256": "1d740066bcd9f0946a47c9ab9eb330d35f7167665ab84610c06f8b98ddfcd0b8",
+      "bytes": 15026,
+      "width": 138,
+      "height": 80,
+      "scheme": "2026",
+      "module": "D16",
+      "source": "2026-3",
+      "crop": {
+        "left": 70,
+        "top": 690,
+        "width": 138,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D4.png",
+      "beforeSha256": null,
+      "sha256": "4d21de6ccaacd826df8a7f725d635d168f9f8edc4e82ae669e577fc4c937a241",
+      "bytes": 14741,
+      "width": 138,
+      "height": 80,
+      "scheme": "2026",
+      "module": "D4",
+      "source": "2026-3",
+      "crop": {
+        "left": 1173,
+        "top": 690,
+        "width": 138,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D7.png",
+      "beforeSha256": null,
+      "sha256": "f01a4e760f8247118b7c2d27833d6a86615d2c8ba2b583aac2bdfa1cdc9c1256",
+      "bytes": 14143,
+      "width": 138,
+      "height": 80,
+      "scheme": "2026",
+      "module": "D7",
+      "source": "2026-3",
+      "crop": {
+        "left": 1318,
+        "top": 690,
+        "width": 138,
+        "height": 80
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D9.png",
+      "beforeSha256": null,
+      "sha256": "ac602f0d926076f0055d0764106a285a7ea8420059315d1f4bff052b892a8b0b",
+      "bytes": 7141,
+      "width": 112,
+      "height": 65,
+      "scheme": "2026",
+      "module": "D9",
+      "source": "2026-4",
+      "crop": {
+        "left": 49,
+        "top": 690,
+        "width": 112,
+        "height": 65
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-D11.png",
+      "beforeSha256": null,
+      "sha256": "5906bb2f1c759f45bf5d0e7f873a79cea6898f60534b34da1e2068443ebe9d38",
+      "bytes": 8067,
+      "width": 112,
+      "height": 65,
+      "scheme": "2026",
+      "module": "D11",
+      "source": "2026-4",
+      "crop": {
+        "left": 816,
+        "top": 690,
+        "width": 112,
+        "height": 65
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-A3.png",
+      "beforeSha256": null,
+      "sha256": "4320232ed04b196ac3f8a37d541213666b69ed51114dd9609ce30aac555080ba",
+      "bytes": 5085,
+      "width": 55,
+      "height": 65,
+      "scheme": "2026",
+      "module": "A3",
+      "source": "2026-4",
+      "crop": {
+        "left": 1199,
+        "top": 690,
+        "width": 55,
+        "height": 65
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/2026-C1.png",
+      "beforeSha256": null,
+      "sha256": "8061e19428d3250424483ee1027d5d8c670c8f61cf6fe8420fd93ff7d4c6dcd9",
+      "bytes": 15422,
+      "width": 232,
+      "height": 65,
+      "scheme": "2026",
+      "module": "C1",
+      "source": "2026-4",
+      "crop": {
+        "left": 1260,
+        "top": 690,
+        "width": 232,
+        "height": 65
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-A2.png",
+      "beforeSha256": null,
+      "sha256": "39d4683ad53d6c74f558d51584a05d94963021637c63d015b7eed365db24f712",
+      "bytes": 15830,
+      "width": 82,
+      "height": 98,
+      "scheme": "legacy",
+      "module": "A2",
+      "source": "legacy-2",
+      "crop": {
+        "left": 54,
+        "top": 550,
+        "width": 82,
+        "height": 98
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D1.png",
+      "beforeSha256": null,
+      "sha256": "310833958a1aa66e3734ea7597e38321c954e9ab9c95dc178b7c8d5ac69369cf",
+      "bytes": 30564,
+      "width": 164,
+      "height": 98,
+      "scheme": "legacy",
+      "module": "D1",
+      "source": "legacy-2",
+      "crop": {
+        "left": 140,
+        "top": 550,
+        "width": 164,
+        "height": 98
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D8.png",
+      "beforeSha256": null,
+      "sha256": "2c702c12de6387d7a77c008de2a68a18d61a1b5784fd7dd7a8e5852efea56a53",
+      "bytes": 27918,
+      "width": 160,
+      "height": 98,
+      "scheme": "legacy",
+      "module": "D8",
+      "source": "legacy-2",
+      "crop": {
+        "left": 309,
+        "top": 550,
+        "width": 160,
+        "height": 98
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-A4.png",
+      "beforeSha256": null,
+      "sha256": "9dcfc5d66f572ced9adc2b4102993d4fdbe9b9206da28e04820347d9e0dc224d",
+      "bytes": 16212,
+      "width": 86,
+      "height": 98,
+      "scheme": "legacy",
+      "module": "A4",
+      "source": "legacy-2",
+      "crop": {
+        "left": 475,
+        "top": 550,
+        "width": 86,
+        "height": 98
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-A1.png",
+      "beforeSha256": null,
+      "sha256": "32337ecf6306263111b9a0e000b84c1870add3c26201fad9459807de8eb1c422",
+      "bytes": 18911,
+      "width": 95,
+      "height": 100,
+      "scheme": "legacy",
+      "module": "A1",
+      "source": "legacy-2",
+      "crop": {
+        "left": 689,
+        "top": 546,
+        "width": 95,
+        "height": 100
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-A3.png",
+      "beforeSha256": null,
+      "sha256": "a56931c639e9673167ac48538dfaef67095a2ebaf412f6e69bb37798accc5a4d",
+      "bytes": 17362,
+      "width": 88,
+      "height": 100,
+      "scheme": "legacy",
+      "module": "A3",
+      "source": "legacy-2",
+      "crop": {
+        "left": 791,
+        "top": 546,
+        "width": 88,
+        "height": 100
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-C1.png",
+      "beforeSha256": null,
+      "sha256": "66939e3415315bd765627e93d68ec2458f345b755226d863774d2279453b87ee",
+      "bytes": 74140,
+      "width": 367,
+      "height": 100,
+      "scheme": "legacy",
+      "module": "C1",
+      "source": "legacy-2",
+      "crop": {
+        "left": 885,
+        "top": 546,
+        "width": 367,
+        "height": 100
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-C3.png",
+      "beforeSha256": null,
+      "sha256": "721f8e734fce8c2addbb459be97f2b691f7ea45dd31121bd9e2b88a8558a7782",
+      "bytes": 36221,
+      "width": 258,
+      "height": 73,
+      "scheme": "legacy",
+      "module": "C3",
+      "source": "legacy-3",
+      "crop": {
+        "left": 38,
+        "top": 476,
+        "width": 258,
+        "height": 73
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-C2.png",
+      "beforeSha256": null,
+      "sha256": "a5c79ac9f7da91fc1fb3bdd34fbd2f32d246aee98912c45d230c6be08f0c561b",
+      "bytes": 35205,
+      "width": 259,
+      "height": 73,
+      "scheme": "legacy",
+      "module": "C2",
+      "source": "legacy-3",
+      "crop": {
+        "left": 443,
+        "top": 476,
+        "width": 259,
+        "height": 73
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D4.png",
+      "beforeSha256": null,
+      "sha256": "af70d35cca532a2709db78cd4bc3b166799515f3274d35ec6061506566abe14f",
+      "bytes": 22063,
+      "width": 126,
+      "height": 73,
+      "scheme": "legacy",
+      "module": "D4",
+      "source": "legacy-3",
+      "crop": {
+        "left": 995,
+        "top": 476,
+        "width": 126,
+        "height": 73
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D7.png",
+      "beforeSha256": null,
+      "sha256": "0e14dfe918ddd3740f38178c904e3f82b0359a00f9fc9650188fd7faf371cbd1",
+      "bytes": 20712,
+      "width": 129,
+      "height": 73,
+      "scheme": "legacy",
+      "module": "D7",
+      "source": "legacy-3",
+      "crop": {
+        "left": 710,
+        "top": 476,
+        "width": 129,
+        "height": 73
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D6.png",
+      "beforeSha256": null,
+      "sha256": "900b0a576e3d90f0a752a08abada325eb9931bb6b3fe550f3a694b1e485b4a4f",
+      "bytes": 9555,
+      "width": 90,
+      "height": 52,
+      "scheme": "legacy",
+      "module": "D6",
+      "source": "legacy-4",
+      "crop": {
+        "left": 754,
+        "top": 479,
+        "width": 90,
+        "height": 52
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D2.png",
+      "beforeSha256": null,
+      "sha256": "4c1cb23e4cba28ace3b5158fbb96eb450c61386a8630f333e394beccb92f928c",
+      "bytes": 11124,
+      "width": 86,
+      "height": 52,
+      "scheme": "legacy",
+      "module": "D2",
+      "source": "legacy-4",
+      "crop": {
+        "left": 983,
+        "top": 479,
+        "width": 86,
+        "height": 52
+      }
+    },
+    {
+      "path": "10_产品与陈列/配件模块/PPT配图20261105/legacy-D3.png",
+      "beforeSha256": null,
+      "sha256": "0d25d2937243b0ddd70e92d9e06396deafd5bbd694d29bca84ad23ecdb8e5767",
+      "bytes": 13205,
+      "width": 96,
+      "height": 52,
+      "scheme": "legacy",
+      "module": "D3",
+      "source": "legacy-4",
+      "crop": {
+        "left": 1078,
+        "top": 479,
+        "width": 96,
+        "height": 52
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "2026-2",
+      "sha256": "2646cbd9a58ee3b12bb46ece4344f40bac33c3f0e1f44ed083ba6ed92454ccdd",
+      "path": "2026-2.png",
+      "source": "Docx HNS2dxrKPo1Sgex3LxTcD8IwnPf rev4130 第三节",
+      "token": "UFnCbdkbhoaZz9x7nMpcWjyUnhg"
+    },
+    {
+      "id": "2026-3",
+      "sha256": "843007382f251f0c4a9c5ef0b00dfe79e87a10df987aba9291a1b2f082b5a4f2",
+      "path": "2026-3.png",
+      "source": "Docx HNS2dxrKPo1Sgex3LxTcD8IwnPf rev4130 第三节",
+      "token": "BpKmbqvMlo3JM7xMhjecJyh5nDb"
+    },
+    {
+      "id": "2026-4",
+      "sha256": "3d7c7690aaf013382bdd8852690612f0d9e07944190d0de0c4e048e74a22ef80",
+      "path": "2026-4.png",
+      "source": "Docx HNS2dxrKPo1Sgex3LxTcD8IwnPf rev4130 第三节",
+      "token": "Wtpnb8go6oW1tLxFAZRcpjbPnjc"
+    },
+    {
+      "id": "legacy-2",
+      "sha256": "d74bf1e6d478a7be260ce5ce55d8b829b7a54c16aef29493ff73ca10049a6332",
+      "path": "10_产品与陈列/配件模块/2桌内嵌托盘方案.png",
+      "source": "既有2026-10-13资源原图"
+    },
+    {
+      "id": "legacy-3",
+      "sha256": "f36e538917f106c609c7ffdd57e5ccc12591ee50f49cc4271543cb6d8632fad6",
+      "path": "10_产品与陈列/配件模块/3桌内嵌托盘方案.png",
+      "source": "既有2026-10-13资源原图"
+    },
+    {
+      "id": "legacy-4",
+      "sha256": "172ea742f30e9e2e3ca499fb2443aa29e965a84c40075ed38decc52a83309b22",
+      "path": "10_产品与陈列/配件模块/4桌内嵌托盘方案.png",
+      "source": "既有2026-10-13资源原图"
+    }
+  ]
+}

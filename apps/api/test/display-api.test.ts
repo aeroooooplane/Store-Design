@@ -1,4 +1,4 @@
-import { copyFile, mkdir, mkdtemp, rm } from 'node:fs/promises'
+import { copyFile, cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { unzipSync } from 'fflate'
@@ -18,12 +18,26 @@ import { api, createNode, placeholderLayout, renderChain } from './fixtures.ts'
 import { createTestApp, png } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
-const RESOURCE = path.resolve(import.meta.dirname, 'fixtures')
+const FIXTURES = path.resolve(import.meta.dirname, 'fixtures')
+let RESOURCE: string
 let t: TestApp
 let dir: string
 
 beforeAll(async () => {
   dir = await mkdtemp(path.join(tmpdir(), 'store-displays-'))
+  RESOURCE = path.join(dir, 'resources')
+  await cp(FIXTURES, RESOURCE, { recursive: true })
+  const manifest = JSON.parse(
+    await readFile(
+      new URL('../../../docs/evidence/inner-ppt-release-20261105.json', import.meta.url),
+      'utf8',
+    ),
+  ) as { files: { path: string }[] }
+  for (const file of manifest.files) {
+    const target = path.join(RESOURCE, file.path)
+    await mkdir(path.dirname(target), { recursive: true })
+    await writeFile(target, png(80, 60))
+  }
   t = await createTestApp({
     STORAGE_ROOT: path.join(dir, 'files'),
     ARCHIVE_ROOT: path.join(dir, 'archive'),
@@ -148,7 +162,7 @@ describe('display tasks (uploaded plan and render)', () => {
       /^ppt\/slides\/slide\d+\.xml$/.test(n),
     )
     // Cover, overview, three islands, one side table, counts.
-    expect(slides).toHaveLength(8)
+    expect(slides).toHaveLength(11)
     await download(files.xlsx)
 
     const again = (await inject('GET', `/display-tasks/${task.id}`)).json<DisplayTask>()
@@ -219,7 +233,8 @@ describe('display of a render node', () => {
 
     const exported = await inject('POST', `/nodes/${render.id}/display/export`, exportBody)
     expect(exported.statusCode).toBe(201)
-    await download(exported.json<DisplayExport>().pptx)
+    const ppt = await download(exported.json<DisplayExport>().pptx)
+    expect(innerPictureCounts(new Uint8Array(ppt.rawPayload))).toEqual([4])
     display = (await inject('GET', `/nodes/${render.id}/display`)).json<NodeDisplay>()
     expect(display.exports).toHaveLength(1)
   })
@@ -239,12 +254,25 @@ describe('display of a render node', () => {
     expect(delivery.displayPpt?.name).toBe('影石展陈交付店展陈方案.pptx')
     const zip = await download(delivery.zip)
     const entries = Object.keys(unzipSync(new Uint8Array(zip.rawPayload)))
+    const ppt = unzipSync(new Uint8Array(zip.rawPayload))[
+      `${delivery.folderName}/影石展陈交付店展陈方案.pptx`
+    ]
+    expect(ppt).toBeDefined()
+    expect(innerPictureCounts(ppt!)).toEqual([4])
     const root = `${delivery.folderName}/`
     expect(entries).toContain(`${root}影石展陈交付店展陈方案.pptx`)
     expect(entries).toContain(`${root}04_展陈方案/影石展陈交付店展陈清单.xlsx`)
     expect(entries).toContain(`${root}04_展陈方案/展陈平面.png`)
   })
 })
+
+function innerPictureCounts(data: Uint8Array) {
+  return Object.entries(unzipSync(data))
+    .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
+    .map(([, bytes]) => new TextDecoder().decode(bytes))
+    .filter((xml) => xml.includes('内嵌托盘配图'))
+    .map((xml) => [...xml.matchAll(/<a:blip\s/g)].length)
+}
 
 describe('新版SI托盘配置的保存与重载', () => {
   it('保存讨论稿选择后重新读取并导出，规则版本、SI和模块保持一致', async () => {

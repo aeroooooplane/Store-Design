@@ -31,6 +31,7 @@ import { fileUrl } from '../../lib/file-url.ts'
 import { resolveStoredFile } from '../../lib/storage.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { catalogAssets } from '../assets/service.ts'
+import { loadInnerTrayImages } from './inner-trays.ts'
 import { requireActiveProject, resolveSpace } from '../nodes/service.ts'
 import { newestImages, renderContext } from '../renders/service.ts'
 import {
@@ -297,6 +298,13 @@ export async function nodeDisplayFiles(
       : null,
     tableViews,
     photos: await loadPhotos(roots, ruleSet.rules, si, display.tables),
+    innerTrays: await loadInnerTrayImages(
+      roots,
+      ruleSet.rules,
+      si,
+      display.edits.moduleScheme,
+      display.tables,
+    ),
     landscapeEnd: display.edits.landscapeEnd,
     views: request.views,
     tables3d: await tableShots(display.tables, request.tables3d),

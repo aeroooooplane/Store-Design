@@ -30,6 +30,12 @@ export interface DeckMark {
   y: number
 }
 
+export interface InnerTrayImages {
+  title: string
+  source: string
+  images: Record<string, DeckImage | undefined>
+}
+
 export interface DisplayDeckInput {
   /** 影石xxx店 */
   title: string
@@ -48,6 +54,8 @@ export interface DisplayDeckInput {
   tableViews: Record<string, { image: DeckImage; mark: DeckMark } | undefined>
   /** Photo of a slot content (unit id), already chosen for the store's SI style. */
   photos: Record<string, DeckImage | undefined>
+  /** The selected scheme's module pictures; absent only for legacy callers of the deck builder. */
+  innerTrays?: InnerTrayImages
   /** Side of the end slot on landscape tables as seen from the entrance. */
   landscapeEnd: 'left' | 'right'
   /** Pages per table: the 3D view, the slot diagram, or both (3D first). */
@@ -153,7 +161,7 @@ function text(
 
 const brand = (market: Market) => (market === 'domestic' ? '影石 Insta360' : 'Insta360')
 
-function leftPanel(slide: Slide, input: DisplayDeckInput, title: string) {
+function leftPanel(slide: Slide, input: DisplayDeckInput, title: string, titleHeight = 0.6) {
   slide.addShape('rect', {
     x: 0,
     y: 0,
@@ -163,7 +171,7 @@ function leftPanel(slide: Slide, input: DisplayDeckInput, title: string) {
     line: { color: '000000', width: 0 },
   })
   text(slide, brand(input.market), { x: 0.35, y: 0.35, w: 3, h: 0.4 }, 13, 'FFFFFF', true)
-  text(slide, title, { x: 0.35, y: 1.0, w: 3.1, h: 0.6 }, 24, 'FFFFFF', true)
+  text(slide, title, { x: 0.35, y: 1.0, w: 3.1, h: titleHeight }, 24, 'FFFFFF', true)
 }
 
 const unitLabel = (rules: DisplayRules, unit: string | null) =>
@@ -728,6 +736,66 @@ function quantitySlide(pptx: Pptx, input: DisplayDeckInput) {
  * render and the plan), and the product and tray counts. Everything except pictures is native
  * text, shapes and tables so that the store team can edit it.
  */
+function innerTraySlides(pptx: Pptx, input: DisplayDeckInput, table: DisplayTable) {
+  const reference = input.innerTrays
+  if (!reference || table.kind !== 'island' || !table.modules.length) return
+  for (let offset = 0; offset < table.modules.length; offset += 4) {
+    const modules = table.modules.slice(offset, offset + 4)
+    const slide = pptx.addSlide()
+    leftPanel(slide, input, `${table.label}桌\n内嵌托盘配图`, 1)
+    text(
+      slide,
+      `${table.seat ?? '加桌'} · ${reference.title}`,
+      { x: 0.35, y: 2.1, w: 3, h: 0.9 },
+      16,
+      'FFFFFF',
+    )
+    text(
+      slide,
+      `模块顺序：${table.modules.join('、')}`,
+      { x: 0.35, y: 3.2, w: 3, h: 1.8 },
+      16,
+      'FFFFFF',
+    )
+    const columns = Math.min(2, modules.length)
+    const rows = Math.ceil(modules.length / columns)
+    modules.forEach((id, i) => {
+      const x = 4.1 + (i % columns) * (8.7 / columns)
+      const y = 0.8 + Math.floor(i / columns) * 2.6
+      const w = 8.2 / columns
+      const h = rows === 1 ? 3.9 : 1.8
+      const module = input.rules.modules.find((item) => item.id === id)
+      text(
+        slide,
+        `${offset + i + 1}. ${id}${module ? ` · ${module.series}` : ' · 未识别模块'}`,
+        { x, y, w, h: 0.4 },
+        18,
+        INK,
+        true,
+      )
+      const image = Object.hasOwn(reference.images, id) ? reference.images[id] : undefined
+      if (image) picture(slide, image, { x, y: y + 0.5, w, h })
+      else text(slide, '暂无对应配图，请核对', { x, y: y + 0.5, w, h }, 16, MUTED, false, 'center')
+    })
+    const notes = [
+      ...new Set(
+        table.modules.flatMap((id) => input.rules.modules.find((m) => m.id === id)?.note ?? []),
+      ),
+    ]
+    text(slide, notes.join('；'), { x: 4.1, y: 6.2, w: 8.7, h: 0.6 }, 13)
+    text(
+      slide,
+      `配图来源：${reference.source}；以本页模块编号及当前数量明细为准`,
+      { x: 4.1, y: 7, w: 8.7, h: 0.3 },
+      10,
+      MUTED,
+    )
+    slide.addNotes(
+      `${reference.source}\n${reference.source.includes('rev4130') ? 'https://arashivision.feishu.cn/wiki/NwOVw5xTAiFcvGkn8TZcjEO1nNh（第三节内嵌方案配图）' : '归档原图：配件模块/2桌内嵌托盘方案.png、3桌内嵌托盘方案.png、4桌内嵌托盘方案.png'}\n每个图片与本页同位置的模块编号对应；手填编号没有对应图片时保留缺图提示。`,
+    )
+  }
+}
+
 export async function buildDisplayDeck(input: DisplayDeckInput): Promise<Buffer> {
   const pptx = new PptxGenJS()
   pptx.layout = 'LAYOUT_WIDE'
@@ -741,6 +809,7 @@ export async function buildDisplayDeck(input: DisplayDeckInput): Promise<Buffer>
     if (shot) table3dSlide(pptx, input, t, shot)
     // Without its 3D view a table still gets the slot diagram rather than no page.
     if (input.views !== '3d' || !shot) tableSlide(pptx, input, t)
+    innerTraySlides(pptx, input, t)
   }
   quantitySlide(pptx, input)
   const inner = summarizeDisplayModules(input.rules, input.tables)
