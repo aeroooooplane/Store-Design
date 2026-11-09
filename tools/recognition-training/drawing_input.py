@@ -4,6 +4,12 @@ import numpy as np
 from PIL import ImageOps
 
 
+def synthetic_dark_page(image):
+    """独立原页的深灰底/低对比线增强；不改变像素位置，不读取标签。"""
+    gray = image.convert("L")
+    return gray.point([12 + round((255 - value) * 0.55) for value in range(256)])
+
+
 def normalize_polarity(image):
     gray = image.convert("L")
     pixels = np.asarray(gray)

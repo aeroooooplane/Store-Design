@@ -68,3 +68,20 @@ python tools/recognition-training/report.py --data <扩充数据> --run <新成�
 导出数值修复：仅导出副本以FP64累计GroupNorm统计，卷积与训练保持FP32；原权重可用 export_model.py 单独重新导出，无需重训。验证20家原图与8类合成输入，原阈值不变。详见 docs/recognition-outline-onnx-20261105.md。
 
 轮廓训练对照可选 --positive-weight 1 --affine-augment；不指定时保留原策略。固定48家复评使用 evaluate_development.py 和按SHA绑定的冻结JSON；drawing_input.py只按无标签的整页/边缘亮度处理黑底，对比度规则须在评分前固定。outline_mask.py的最大块清理仅供实验，不作为自动默认；development_report.py保留原始/清理四组指标，生成独立审核页。开发反馈必须另开冻结版本并保留失败结果，45家不参与。详见 docs/recognition-outline-development-20261105.md。
+
+
+## 独立难例扩充与黑底增强
+
+本轮扩充使用同一 `dataset.py build --parent-dataset ... --parent-manifest-sha256 ...` 契约；仍继承原20家图像/标签及3家内部验证，新增12家只进入训练。14家新候选中另外2家归属待确认、旧4家暂缓记录均保留，不用不确定标签补数。
+
+训练可加 `--normalize-polarity`，使原页走与开发复评相同的黑底处理；预处理选择写入权重，`export_model.py` 自动继承，旧权重默认不开启。`--black-background-augment` 必须与此开关同时启用，仅对训练门店生成深灰底/低对比变体，以50%概率使用；不增加门店数，不改变验证标签或坐标。增强图保存到运行目录 `augmentation-inputs/`，供追溯及数值检查。
+
+候选主平面未发现天然整页黑底原图，不能把派生增强称作新增真实黑底门店。两组训练及选择规则在本轮48家评分前冻结，48家反馈仅用于独立样本分层，45家继续只读身份索引。完整数据、对照结果、退化清单及局限见 `docs/recognition-outline-hardcases-20261109.md`。
+
+补充标注审核生成命令：
+
+```powershell
+python tools/recognition-training/annotation_report.py --source <新增原页与decisions/questions目录> --inputs <冻结名单目录> --training-data <本轮训练数据目录> --out <独立审核目录>
+```
+
+复评页可从冻结JSON的 `trainingCounts` 读取真实训练/验证数量，并按 `priorRegressionStoreIds` 单列前轮退化样本；有补充审核证据时链接集中歧义，不要求重做旧48家审核。审核数据单独导出，测试用答复不能合并为真实用户审核结果。
