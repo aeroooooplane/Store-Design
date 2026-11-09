@@ -145,7 +145,9 @@ def main(a):
     torch.set_num_threads(a.threads)
     model = TinyUNet().eval()
     model.load_state_dict(state["state_dict"])
-    rows = read_samples(data, manifest, a.side)
+    normalize_input = state.get("normalizePolarity", False)
+    need(type(normalize_input) is bool, "权重预处理配置无效")
+    rows = read_samples(data, manifest, a.side, normalize_input)
     out.mkdir(parents=True)
     export_onnx(model, out / "outline.onnx", a.side)
     check = compare(
@@ -170,11 +172,12 @@ def main(a):
             "onnxSha256": sha(out / "outline.onnx"),
             "productionReady": False,
             "exportPassed": check["passed"],
+            "normalizePolarity": normalize_input,
         },
     )
     import shutil
 
-    for name in ["export_model.py", "train.py", "dataset.py"]:
+    for name in ["export_model.py", "train.py", "dataset.py", "drawing_input.py"]:
         shutil.copy2(Path(__file__).parent / name, out / ("source-" + name))
     save(
         out / "file-hashes.json", {p.name: sha(p) for p in out.iterdir() if p.is_file()}

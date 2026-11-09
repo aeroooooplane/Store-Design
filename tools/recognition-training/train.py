@@ -19,6 +19,7 @@ from torch import nn
 import torch.nn.functional as F
 from dataset import load, save, sha, need, validate, within
 from export_model import export_onnx
+from drawing_input import normalize_polarity, synthetic_dark_page
 
 
 class TinyUNet(nn.Module):
@@ -82,7 +83,7 @@ def letterbox(im, side, is_mask=False):
     }
 
 
-def read_samples(root, m, side):
+def read_samples(root, m, side, normalize_input=False):
     rows = []
     for s in m["samples"]:
         im = Image.open(within(root, s["image"])).convert("L")
@@ -95,6 +96,8 @@ def read_samples(root, m, side):
         expected = Image.new("L", im.size)
         ImageDraw.Draw(expected).polygon([tuple(p) for p in p["polygonPx"]], fill=255)
         need(np.array_equal(np.array(mask), np.array(expected)), "掩膜与多边形不符")
+        if normalize_input:
+            im, _ = normalize_polarity(im)
         x, tr = letterbox(im, side)
         y, _ = letterbox(mask, side, True)
         rows.append(
@@ -193,7 +196,11 @@ def main(a):
     torch.set_num_threads(a.threads)
     torch.use_deterministic_algorithms(True)
     device = torch.device(a.device)
-    rows = read_samples(root, m, a.side)
+    rows = read_samples(root, m, a.side, a.normalize_polarity)
+    need(
+        not a.black_background_augment or a.normalize_polarity,
+        "黑底增强须启用与复评一致的极性预处理",
+    )
     train = [r for r in rows if r["split"] == "train"]
     foreground = sum(r["y"].sum().item() for r in train)
     pixels = sum(r["y"].numel() for r in train)
@@ -203,6 +210,16 @@ def main(a):
         weight = a.positive_weight
     pos_weight = torch.tensor(weight, device=device)
     out.mkdir(parents=True)
+    if a.black_background_augment:
+        (out / "augmentation-inputs").mkdir()
+        for r in train:
+            dark = synthetic_dark_page(Image.open(within(root, r["image"])))
+            dark.save(
+                out / "augmentation-inputs" / (r["store_id"] + "-synthetic-dark.png")
+            )
+            normalized, _ = normalize_polarity(dark)
+            x, _ = letterbox(normalized, a.side)
+            r["dark_x"] = torch.from_numpy(1 - x)[None, None]
     save(
         out / "config.json",
         {
@@ -214,9 +231,10 @@ def main(a):
             "threshold": 0.5,
             "augmentation": "训练门店随机水平/垂直翻转；可选整页同步仿射；验证无增强；整页等比例补白，无按标签裁图",
             "checkpointSelection": "仅internal_val平均IoU；包含epoch0基线以防训练退化",
+            "blackBackgroundAugmentation": "若开启，仅训练原页生成深灰底低对比变体，50%概率替换输入；同标签/同划分，不计新增门店",
         },
     )
-    for file in ["train.py", "dataset.py", "export_model.py"]:
+    for file in ["train.py", "dataset.py", "export_model.py", "drawing_input.py"]:
         shutil.copy2(Path(__file__).parent / file, out / ("source-" + file))
     save(
         out / "environment.json",
@@ -262,6 +280,8 @@ def main(a):
                 ys = []
                 for r in order[start : start + a.batch_size]:
                     x, y = r["x"], r["y"]
+                    if a.black_background_augment and random.random() < 0.5:
+                        x = r["dark_x"]
                     dims = [d for d in (2, 3) if random.random() < 0.5]
                     if dims:
                         x = x.flip(dims)
@@ -304,6 +324,7 @@ def main(a):
             "state_dict": model.cpu().state_dict(),
             "epoch": a.epochs,
             "manifestSha256": a.manifest_sha256,
+            "normalizePolarity": a.normalize_polarity,
         },
         out / "last.pt",
     )
@@ -319,6 +340,7 @@ def main(a):
             "state_dict": model.state_dict(),
             "epoch": best_epoch,
             "manifestSha256": a.manifest_sha256,
+            "normalizePolarity": a.normalize_polarity,
         },
         out / "best.pt",
     )
@@ -430,4 +452,6 @@ if __name__ == "__main__":
     p.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
     p.add_argument("--positive-weight", type=float)
     p.add_argument("--affine-augment", action="store_true")
+    p.add_argument("--normalize-polarity", action="store_true")
+    p.add_argument("--black-background-augment", action="store_true")
     main(p.parse_args())
