@@ -70,7 +70,7 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 
 | 2026-11-10 | Codex主开发 | `codex/render-background-core-20261110` | 背景契约、上传、视角保存、渲染过期与交付一致性 | shared camera/background schema、API cameras/renders、app.ts、openapi.json、schema.d.ts、看板 | 无，沿用JSON | 已登记，3070/5250；见[背景契约](render-background-contract.md) |
 | 2026-11-10 | Codex UI | `codex/render-background-ui-20261110` | 图片/遮罩/辅助线编辑和撤销 | RenderStage.tsx及测试、workbench/api.ts、独立背景组件与样式 | 无 | 已派发，3071/5251；共用schema由主开发负责 |
-| 2026-11-10 | Codex模型 | `codex/render-background-composite-20261110` | 三维背景合成、透明墙与截图 | viewer3d/Viewer3D.tsx、white-scene.ts、独立合成模块 | 无 | 已派发，3072/5252 |
+| 2026-11-10 | Codex模型 | `codex/render-background-edge-20261110` | 修复 BG05：旋转照片添加遮罩后外部像素变化 | 仅 `viewer3d/background-composite.ts` | 无 | 主开发批准；原模型 PR #203（81fa74a2）已合并并释放，新分支固定照片底层、单独擦除模型层；3072/5252，等待严格像素复验，不放宽公差 |
 | 2026-11-10 | Codex展陈验收 | `codex/render-background-qa-20261110` | 独立体验验收与交叉审查 | 专项验收记录 | 无 | 已派发，3073/5253；等待功能集成 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
@@ -156,6 +156,7 @@ QWS-source405已由第三轮审核包答复并落实为利旧中岛桌，来源�
 
 ## 8. 变更记录
 
+- 2026-11-10，Codex UI 按主开发授权登记模型最小修复分支 `codex/render-background-edge-20261110`，唯一热点为 `viewer3d/background-composite.ts`。独立 QA 的 BG05 发现旋转照片开遮罩后外部少量像素最大差 6，模型纯二维复现并验证分离照片和模型合成路径可清除；待实现、严格复验及独立 PR，UI 总体验收仍阻塞。
 - 2026-11-10，主开发登记渲染背景四窗口职责和热点边界，统一视角保存、图片坐标、遮罩/辅助线及撤销验收。
 
 - 2026-11-09，Codex轮廓：新增12家独立狭长/复杂邻区标签、黑底增强及可追溯预处理；两次真实试训、48家完整复评与原11退化追踪完成。旧20家标签与原3验证划分不变，45验收未读几何/评分。保留8家新退化，2项归属歧义未训练；46/773/25项本地检查通过，CI/合并见本轮PR。本任务工具占用释放。
