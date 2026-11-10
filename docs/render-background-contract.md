@@ -33,7 +33,7 @@ type RenderBackground = {
   transform: {
     x: number // 背景中心相对画布宽度，默认0.5
     y: number // 背景中心相对画布高度，默认0.5
-    width: number // 图片绘制宽度/画布宽度，默认1，锁定原图比例
+    width: number // 图片绘制宽度/画布宽度，默认contain适配，锁定原图比例
     rotationDeg: number // 顺时针角度，绕图片中心旋转
   }
   masks: { id: string; points: BackgroundPoint[] }[]
@@ -43,13 +43,13 @@ type RenderBackground = {
 }
 ```
 
-画布与正式渲染均采用现有1800×1200的3比2坐标框，预览保持相同比例。图片高度由原图宽高比计算。遮罩和辅助线的点归一化到原图，各点跟随同一图片变换。多遮罩取并集，遮罩区域采用对应原照片像素覆盖模型。图片旋转后画布边界进行裁切，图片外沿用场景底色。替换图片时清空原遮罩和辅助线，整个替换作为一步可撤销操作。移除图片也可撤销。
+画布与正式渲染均采用现有1800×1200的3比2坐标框，预览保持相同比例。图片高度由原图宽高比计算。初始contain宽度取min(1,imageAspect/1.5)。变换x/y范围-10到10，width范围0.01到20，rotationDeg范围-360到360。遮罩最多32面、每面3到100点且禁止自交，辅助线最多100条。遮罩和辅助线的点归一化到原图，各点跟随同一图片变换。多遮罩取并集，遮罩区域采用对应原照片像素覆盖模型。图片旋转后画布边界进行裁切，图片外沿用场景底色。替换图片时清空原遮罩和辅助线，整个替换作为一步可撤销操作。移除图片也可撤销。
 
 背景编辑中的撤销栈按cameraId隔离。输入框内使用原生文字撤销，画布操作使用编辑撤销。未闭合绘制过程允许逐点撤销，闭合面后作为一个完整对象撤销。切换视角时保存队列按cameraId串行，上传/保存失败保留本地编辑并显示重试，过期响应不能覆盖其他视角。
 
-前端通过PATCH /api/v1/cameras/:cameraId的background保存完整当前编辑状态。上传通过POST /api/v1/cameras/:cameraId/background-image发送image/png或image/jpeg二进制，返回BackgroundImage，上传仅存储文件，应用到视角由PATCH执行以支持撤销。上限16MiB，服务端解码验证、规范化像素方向和输出PNG。确切schema以主开发提交为准，字段改动须同步本契约。
+Camera另有backgroundRevision可选整数，历史缺省0。PATCH /api/v1/cameras/:cameraId以{background,expectedBackgroundRevision}保存，服务端在同一事务锁定视角、校验版本并递增。冲突返回409，客户端保留草稿重试。渲染上传PUT原路径携带?backgroundRevision=本次快照版本，服务端保存前再次校验，拒绝过期上传。前端通过PATCH的background保存完整当前编辑状态。上传通过POST /api/v1/cameras/:cameraId/background-image发送image/png或image/jpeg二进制，返回BackgroundImage，上传仅存储文件，应用到视角由PATCH执行以支持撤销。上限16MiB，服务端解码验证、规范化像素方向和输出PNG。确切schema以主开发提交为准，字段改动须同步本契约。
 
-模型窗口提供独立合成函数供预览与导出复用，接收RenderBackground和透明场景帧。Viewer新增背景显示及隐藏半透明墙能力，普通视角沿用原行为。建议Viewer3DHandle.renderViews沿用原4参数，增加可选第5参数逐视角background数组，UI始终传入本次视角已保存的背景快照。图片解码失败必须报错并保留原有效图。辅助线由UI编辑层显示，截图只包含合成结果。
+模型窗口提供独立合成函数供预览与导出复用，接收RenderBackground和透明场景帧。Viewer新增背景显示及隐藏半透明墙能力，普通视角沿用原行为。Viewer3DHandle.renderViews沿用原4参数，增加可选第5参数逐视角background数组，UI始终传入本次视角已保存的背景快照。图片解码失败必须报错并保留原有效图。辅助线由UI编辑层显示，截图只包含合成结果。
 
 背景图、变换、遮罩及透明墙显隐参与渲染过期判定。辅助线及其显隐不参与。渲染开始前保存编辑并等待完成，再生成和上传同一快照，交付入口要求所有渲染为最新。旧图片下载与历史交付仍可追溯。
 

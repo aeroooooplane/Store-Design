@@ -42,7 +42,22 @@ const hash = (value: unknown) => createHash('sha256').update(stableJson(value)).
 
 /** Only the pose decides what a view shows; renaming a view keeps its images current. */
 export function cameraSignature(camera: Camera): string {
-  return hash({ position: camera.position, target: camera.target, fovDeg: camera.fovDeg })
+  const background = camera.background
+  return hash({
+    position: camera.position,
+    target: camera.target,
+    fovDeg: camera.fovDeg,
+    ...(background
+      ? {
+          background: {
+            image: background.image,
+            transform: background.transform,
+            masks: background.masks,
+            showTransparentWalls: background.showTransparentWalls,
+          },
+        }
+      : {}),
+  })
 }
 
 export interface RenderContext {
@@ -186,7 +201,13 @@ export async function saveRender(
   db: Database,
   ctx: RequestContext,
   roots: StorageRoots,
-  input: { nodeId: string; cameraId: string; mode: RenderMode; png: Buffer },
+  input: {
+    nodeId: string
+    cameraId: string
+    mode: RenderMode
+    png: Buffer
+    backgroundRevision?: number
+  },
 ): Promise<RenderImage> {
   const node = await findNode(db, input.nodeId)
   authorize(ctx.actor, 'render:write', { projectId: node.projectId })
@@ -194,6 +215,13 @@ export async function saveRender(
   const context = await renderContext(db, node)
   const view = context.cameras.find((c) => c.id === input.cameraId)
   if (!view) throw notFound('视角')
+  const revision = view.camera.backgroundRevision ?? 0
+  if (
+    (revision > 0 || input.backgroundRevision !== undefined) &&
+    input.backgroundRevision !== revision
+  ) {
+    throw new AppError('REVISION_CONFLICT', '背景已更新，请重新渲染')
+  }
   const { width, height } = pngSize(input.png)
 
   const sha256 = createHash('sha256').update(input.png).digest('hex')
@@ -206,6 +234,19 @@ export async function saveRender(
   await writeStorageFile(roots, storageKey, input.png)
 
   const row = await db.transaction(async (tx) => {
+    const [latest] = await tx
+      .select()
+      .from(nodeCameras)
+      .where(eq(nodeCameras.id, view.id))
+      .for('update')
+    if (
+      !latest ||
+      latest.deletedAt ||
+      (latest.camera.backgroundRevision ?? 0) !== revision ||
+      cameraSignature(latest.camera) !== view.signature
+    ) {
+      throw new AppError('REVISION_CONFLICT', '视角或背景已更新，请重新渲染')
+    }
     // The same picture uploaded twice is one file.
     const storedId = await registerStoredFile(tx, {
       storageKey,

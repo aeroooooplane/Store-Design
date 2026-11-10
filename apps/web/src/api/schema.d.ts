@@ -2690,6 +2690,120 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cameras/{cameraId}/background-image": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 上传当前渲染视角的背景图片 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    cameraId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "image/png": unknown;
+                    "image/jpeg": unknown;
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                201: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            fileId: string;
+                            url: string;
+                            width: number;
+                            height: number;
+                            name: string;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                413: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/nodes/{nodeId}/cameras": {
         parameters: {
             query?: never;
@@ -2741,6 +2855,45 @@ export interface paths {
                                     fovDeg: number;
                                     /** @enum {string} */
                                     source: "auto" | "user";
+                                    background?: {
+                                        image: {
+                                            /** Format: uuid */
+                                            fileId: string;
+                                            url: string;
+                                            width: number;
+                                            height: number;
+                                            name: string;
+                                        };
+                                        transform: {
+                                            x: number;
+                                            y: number;
+                                            width: number;
+                                            rotationDeg: number;
+                                        };
+                                        masks: {
+                                            id: string;
+                                            points: [
+                                                number,
+                                                number
+                                            ][];
+                                        }[];
+                                        guides: {
+                                            id: string;
+                                            points: [
+                                                [
+                                                    number,
+                                                    number
+                                                ],
+                                                [
+                                                    number,
+                                                    number
+                                                ]
+                                            ];
+                                        }[];
+                                        guidesVisible: boolean;
+                                        showTransparentWalls: boolean;
+                                    } | null;
+                                    backgroundRevision?: number;
                                 };
                                 deletedAt: string | null;
                             }[];
@@ -2854,6 +3007,45 @@ export interface paths {
                                 fovDeg: number;
                                 /** @enum {string} */
                                 source: "auto" | "user";
+                                background?: {
+                                    image: {
+                                        /** Format: uuid */
+                                        fileId: string;
+                                        url: string;
+                                        width: number;
+                                        height: number;
+                                        name: string;
+                                    };
+                                    transform: {
+                                        x: number;
+                                        y: number;
+                                        width: number;
+                                        rotationDeg: number;
+                                    };
+                                    masks: {
+                                        id: string;
+                                        points: [
+                                            number,
+                                            number
+                                        ][];
+                                    }[];
+                                    guides: {
+                                        id: string;
+                                        points: [
+                                            [
+                                                number,
+                                                number
+                                            ],
+                                            [
+                                                number,
+                                                number
+                                            ]
+                                        ];
+                                    }[];
+                                    guidesVisible: boolean;
+                                    showTransparentWalls: boolean;
+                                } | null;
+                                backgroundRevision?: number;
                             };
                             deletedAt: string | null;
                         };
@@ -2964,6 +3156,45 @@ export interface paths {
                                 fovDeg: number;
                                 /** @enum {string} */
                                 source: "auto" | "user";
+                                background?: {
+                                    image: {
+                                        /** Format: uuid */
+                                        fileId: string;
+                                        url: string;
+                                        width: number;
+                                        height: number;
+                                        name: string;
+                                    };
+                                    transform: {
+                                        x: number;
+                                        y: number;
+                                        width: number;
+                                        rotationDeg: number;
+                                    };
+                                    masks: {
+                                        id: string;
+                                        points: [
+                                            number,
+                                            number
+                                        ][];
+                                    }[];
+                                    guides: {
+                                        id: string;
+                                        points: [
+                                            [
+                                                number,
+                                                number
+                                            ],
+                                            [
+                                                number,
+                                                number
+                                            ]
+                                        ];
+                                    }[];
+                                    guidesVisible: boolean;
+                                    showTransparentWalls: boolean;
+                                } | null;
+                                backgroundRevision?: number;
                             };
                             deletedAt: string | null;
                         };
@@ -3046,6 +3277,45 @@ export interface paths {
                             number
                         ];
                         fovDeg?: number;
+                        background?: {
+                            image: {
+                                /** Format: uuid */
+                                fileId: string;
+                                url: string;
+                                width: number;
+                                height: number;
+                                name: string;
+                            };
+                            transform: {
+                                x: number;
+                                y: number;
+                                width: number;
+                                rotationDeg: number;
+                            };
+                            masks: {
+                                id: string;
+                                points: [
+                                    number,
+                                    number
+                                ][];
+                            }[];
+                            guides: {
+                                id: string;
+                                points: [
+                                    [
+                                        number,
+                                        number
+                                    ],
+                                    [
+                                        number,
+                                        number
+                                    ]
+                                ];
+                            }[];
+                            guidesVisible: boolean;
+                            showTransparentWalls: boolean;
+                        } | null;
+                        expectedBackgroundRevision?: number;
                     };
                 };
             };
@@ -3077,6 +3347,45 @@ export interface paths {
                                 fovDeg: number;
                                 /** @enum {string} */
                                 source: "auto" | "user";
+                                background?: {
+                                    image: {
+                                        /** Format: uuid */
+                                        fileId: string;
+                                        url: string;
+                                        width: number;
+                                        height: number;
+                                        name: string;
+                                    };
+                                    transform: {
+                                        x: number;
+                                        y: number;
+                                        width: number;
+                                        rotationDeg: number;
+                                    };
+                                    masks: {
+                                        id: string;
+                                        points: [
+                                            number,
+                                            number
+                                        ][];
+                                    }[];
+                                    guides: {
+                                        id: string;
+                                        points: [
+                                            [
+                                                number,
+                                                number
+                                            ],
+                                            [
+                                                number,
+                                                number
+                                            ]
+                                        ];
+                                    }[];
+                                    guidesVisible: boolean;
+                                    showTransparentWalls: boolean;
+                                } | null;
+                                backgroundRevision?: number;
                             };
                             deletedAt: string | null;
                         };
@@ -3182,6 +3491,45 @@ export interface paths {
                                 fovDeg: number;
                                 /** @enum {string} */
                                 source: "auto" | "user";
+                                background?: {
+                                    image: {
+                                        /** Format: uuid */
+                                        fileId: string;
+                                        url: string;
+                                        width: number;
+                                        height: number;
+                                        name: string;
+                                    };
+                                    transform: {
+                                        x: number;
+                                        y: number;
+                                        width: number;
+                                        rotationDeg: number;
+                                    };
+                                    masks: {
+                                        id: string;
+                                        points: [
+                                            number,
+                                            number
+                                        ][];
+                                    }[];
+                                    guides: {
+                                        id: string;
+                                        points: [
+                                            [
+                                                number,
+                                                number
+                                            ],
+                                            [
+                                                number,
+                                                number
+                                            ]
+                                        ];
+                                    }[];
+                                    guidesVisible: boolean;
+                                    showTransparentWalls: boolean;
+                                } | null;
+                                backgroundRevision?: number;
                             };
                             deletedAt: string | null;
                         };
@@ -3357,7 +3705,9 @@ export interface paths {
         /** 保存浏览器渲染的一张视角图（请求体为 PNG） */
         put: {
             parameters: {
-                query?: never;
+                query?: {
+                    backgroundRevision?: number;
+                };
                 header?: never;
                 path: {
                     nodeId: string;
