@@ -131,6 +131,50 @@ def polygon_check(points, size):
     need(area > 1, "轮廓面积为零")
 
 
+def outline_parts(record):
+    """单轮廓沿用原契约；多区域逐个闭合，禁止隐式桥接公区。"""
+    need(("polygonPx" in record) != ("polygonsPx" in record), "须且仅须一种轮廓字段")
+    parts = (
+        record.get("polygonsPx") if "polygonsPx" in record else [record["polygonPx"]]
+    )
+    need(isinstance(parts, list) and len(parts) > 0, "多区域轮廓不能为空")
+    for points in parts:
+        polygon_check(points, record["imageSize"])
+    return parts
+
+
+def outline_fields(record):
+    outline_parts(record)
+    key = "polygonsPx" if "polygonsPx" in record else "polygonPx"
+    return {key: record[key]}
+
+
+def outline_mask(record):
+    from PIL import Image, ImageDraw
+
+    mask = Image.new("L", tuple(record["imageSize"]), 0)
+    draw = ImageDraw.Draw(mask)
+    for points in outline_parts(record):
+        draw.polygon([tuple(p) for p in points], fill=255)
+    return mask
+
+
+def check_mask(path, record):
+    # 轻量隔离CI无需Pillow；实际训练环境必须逐像素核对。
+    import importlib.util
+
+    if importlib.util.find_spec("PIL"):
+        from PIL import Image
+
+        with Image.open(path) as mask:
+            expected = outline_mask(record)
+            need(
+                mask.size == expected.size
+                and mask.convert("L").tobytes() == expected.tobytes(),
+                "掩膜与轮廓不一致，禁止桥接公区或丢失库房",
+            )
+
+
 def split_ids(ids, seed=20261105, val_count=3):
     need(0 < val_count < len(ids), "训练和内部验证均须非空")
     ranked = sorted(
@@ -247,7 +291,7 @@ def build(
         need(sha(r["image"]) == r["imageSha256"], "原页图像改变")
         need(list(Image.open(r["image"]).size) == r["imageSize"], "坐标系尺寸不匹配")
         check_crop(r)
-        polygon_check(r["polygonPx"], r["imageSize"])
+        outline_parts(r)
     out.mkdir(parents=True)
     (out / "identity-only").mkdir()
     for name in [
@@ -281,8 +325,7 @@ def build(
         dest.mkdir()
         s = next(s for s in samples if s["store_id"] == id)
         shutil.copy2(r["image"], dest / "image.png")
-        mask = Image.new("L", tuple(r["imageSize"]), 0)
-        ImageDraw.Draw(mask).polygon([tuple(p) for p in r["polygonPx"]], fill=255)
+        mask = outline_mask(r)
         mask.save(dest / "mask.png")
         save(
             dest / "polygon.json",
@@ -290,7 +333,7 @@ def build(
                 "store_id": id,
                 "coordinateSystem": "source-image-pixels",
                 "imageSize": r["imageSize"],
-                "polygonPx": r["polygonPx"],
+                **outline_fields(r),
                 "target": decisions["target"],
                 "humanReviewed": False,
                 "evidence": r,
@@ -300,9 +343,10 @@ def build(
         im = Image.open(r["image"]).convert("RGBA")
         layer = Image.new("RGBA", im.size)
         d = ImageDraw.Draw(layer)
-        pts = [tuple(p) for p in r["polygonPx"]]
-        d.polygon(pts, fill=(255, 210, 0, 35))
-        d.line(pts + [pts[0]], fill=(220, 160, 0, 255), width=5)
+        for points in outline_parts(r):
+            pts = [tuple(p) for p in points]
+            d.polygon(pts, fill=(255, 210, 0, 35))
+            d.line(pts + [pts[0]], fill=(220, 160, 0, 255), width=5)
         Image.alpha_composite(im, layer).convert("RGB").save(dest / "review.png")
         manifest["samples"].append(
             {
@@ -369,8 +413,9 @@ def validate(root):
         need(digest not in image_hashes, "重复图像泄漏")
         image_hashes.add(digest)
         p = load(within(root, s["polygon"]))
-        polygon_check(p["polygonPx"], p["imageSize"])
-        need(p["polygonPx"] == decisions[id]["polygonPx"], "标签与准入版本不一致")
+        need(outline_fields(p) == outline_fields(decisions[id]), "标签与准入版本不一致")
+        need(p["imageSize"] == decisions[id]["imageSize"], "标签坐标系不一致")
+        check_mask(within(root, s["mask"]), p)
     if m.get("splitPolicy") == "inherit-parent":
         need(
             m["files"].get("parent-manifest.json") == m.get("parentManifestSha256"),

@@ -1,0 +1,1213 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-10",
+  "task": "确认范围、多区域标签与邻区退化复评",
+  "data": {
+    "manifestSha256": "90c744d19fc621cc8d1fd2de3b9fd8170aa6b05292a952ff7871f13dff2bbe23",
+    "old32InputLabelsByteIdentical": [
+      "PDF-081",
+      "NEW-074",
+      "PDF-231",
+      "PDF-402",
+      "NEW-047",
+      "PDF-356",
+      "PDF-337",
+      "NEW-068",
+      "PDF-364",
+      "PDF-157",
+      "NEW-069",
+      "PDF-210",
+      "NEW-061",
+      "NEW-013",
+      "PDF-064",
+      "PDF-023",
+      "PDF-019",
+      "PDF-380",
+      "PDF-188",
+      "NEW-028",
+      "PDF-196",
+      "PDF-395",
+      "PDF-085",
+      "PDF-400",
+      "PDF-340",
+      "PDF-108",
+      "PDF-041",
+      "PDF-378",
+      "PDF-374",
+      "PDF-263",
+      "PDF-308",
+      "NEW-007"
+    ],
+    "counts": {
+      "train": 37,
+      "internal_val": 3
+    },
+    "internalValidation": [
+      "PDF-402",
+      "NEW-069",
+      "PDF-188"
+    ],
+    "userConfirmationSha256": "ea3f2c0c10ce66255c5e9c979f8e1b179fd5eb684615f70b6d52f857b30f2a4e",
+    "maskChecks": [
+      {
+        "store_id": "PDF-113",
+        "point": [
+          450,
+          300
+        ],
+        "expected": 255,
+        "actual": 255,
+        "meaning": "上方库房保留"
+      },
+      {
+        "store_id": "PDF-113",
+        "point": [
+          650,
+          650
+        ],
+        "expected": 255,
+        "actual": 255,
+        "meaning": "主店保留"
+      },
+      {
+        "store_id": "PDF-113",
+        "point": [
+          600,
+          520
+        ],
+        "expected": 0,
+        "actual": 0,
+        "meaning": "连接通道排除"
+      },
+      {
+        "store_id": "PDF-113",
+        "point": [
+          900,
+          300
+        ],
+        "expected": 0,
+        "actual": 0,
+        "meaning": "相邻楼梯排除"
+      },
+      {
+        "store_id": "PDF-123",
+        "point": [
+          300,
+          700
+        ],
+        "expected": 0,
+        "actual": 0,
+        "meaning": "左下疏散通道排除"
+      },
+      {
+        "store_id": "PDF-123",
+        "point": [
+          200,
+          780
+        ],
+        "expected": 0,
+        "actual": 0,
+        "meaning": "疏散口排除"
+      },
+      {
+        "store_id": "PDF-123",
+        "point": [
+          850,
+          550
+        ],
+        "expected": 255,
+        "actual": 255,
+        "meaning": "主店保留"
+      }
+    ],
+    "dataContractValidated": true,
+    "oldReviewsModified": false,
+    "acceptance45GeometryOrScoresRead": false,
+    "failedPreflight": {
+      "error": "原训练读取器仅支持polygonPx",
+      "optimizerSteps": 0,
+      "log": "outline-regressions-v1.log",
+      "plan": "outline-regressions-training-plan-20261110.json"
+    },
+    "retryPlan": "outline-regressions-training-plan-20261110-v2.json"
+  },
+  "userConfirmation": {
+    "date": "2026-11-10",
+    "source": "用户当前聊天明确答复",
+    "quote": "哈尔滨松雷：上方库房与主店之间的连接通道不属于门店范围；大连华南万象汇：左下疏散通道不属于门店允许使用范围。继续推进",
+    "decisions": [
+      {
+        "id": "QHC-01",
+        "store_id": "PDF-123",
+        "answer": "属于公区，不纳入门店范围"
+      },
+      {
+        "id": "QHC-02",
+        "store_id": "PDF-113",
+        "answer": "库房纳入，连接通道属于公区"
+      }
+    ],
+    "scope": "范围归属已确认，像素边界仍为代理校正，不冒充用户逐点审核"
+  },
+  "annotations": [
+    {
+      "store_id": "PDF-123",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "用户确认左下疏散通道不属于门店允许使用范围；从主店左侧围合向下延伸分界，不把左下通道与疏散口并入；包含员工休息室和门店内后加灯箱包板。",
+      "imageSha256": "2f85d2d2d5308a5743fb459c6eb7d32256d7539132fa204b3e410f31fe1b05f5",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          567,
+          359
+        ],
+        [
+          707,
+          359
+        ],
+        [
+          707,
+          400
+        ],
+        [
+          761,
+          400
+        ],
+        [
+          761,
+          359
+        ],
+        [
+          1016,
+          359
+        ],
+        [
+          1016,
+          413
+        ],
+        [
+          1071,
+          413
+        ],
+        [
+          1071,
+          372
+        ],
+        [
+          1117,
+          372
+        ],
+        [
+          1117,
+          385
+        ],
+        [
+          1266,
+          385
+        ],
+        [
+          1266,
+          413
+        ],
+        [
+          1201,
+          413
+        ],
+        [
+          1201,
+          732
+        ],
+        [
+          627,
+          732
+        ],
+        [
+          567,
+          749
+        ]
+      ],
+      "scopeConfirmedByUser": true,
+      "scopeConfirmationSha256": "ea3f2c0c10ce66255c5e9c979f8e1b179fd5eb684615f70b6d52f857b30f2a4e",
+      "scopeConfirmationDate": "2026-11-10"
+    },
+    {
+      "store_id": "PDF-113",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "用户确认连接通道不属于门店。保留下方主店及上方库房两个独立区域，排除中间通道和右上楼梯非设计范围；范围归属经用户确认，顶点为代理校正。",
+      "imageSha256": "9f855e42b6090d90779368916076231f5a24d007ce92a226e6355e0fe627ccc3",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonsPx": [
+        [
+          [
+            344,
+            547
+          ],
+          [
+            998,
+            547
+          ],
+          [
+            998,
+            744
+          ],
+          [
+            1108,
+            744
+          ],
+          [
+            1108,
+            881
+          ],
+          [
+            336,
+            881
+          ],
+          [
+            336,
+            744
+          ],
+          [
+            344,
+            744
+          ]
+        ],
+        [
+          [
+            344,
+            157
+          ],
+          [
+            560,
+            157
+          ],
+          [
+            560,
+            447
+          ],
+          [
+            344,
+            447
+          ]
+        ]
+      ],
+      "scopeConfirmedByUser": true,
+      "scopeConfirmationSha256": "ea3f2c0c10ce66255c5e9c979f8e1b179fd5eb684615f70b6d52f857b30f2a4e",
+      "scopeConfirmationDate": "2026-11-10"
+    },
+    {
+      "store_id": "PDF-397",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "沿租赁斜弧线与围合内缘，包含顶部配件柜、后加灯箱及员工休息室；上方及右侧标明非设计范围，右下商场水井排除。斜弧以折线近似，保留图纸全页不按标签裁图。",
+      "imageSha256": "a302e14774d642758e1eed479a67fc3695fe2fe8830c680ce854790b2b76f02b",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          382,
+          315
+        ],
+        [
+          361,
+          265
+        ],
+        [
+          1000,
+          265
+        ],
+        [
+          1000,
+          735
+        ],
+        [
+          903,
+          735
+        ],
+        [
+          903,
+          776
+        ],
+        [
+          894,
+          808
+        ],
+        [
+          846,
+          773
+        ],
+        [
+          782,
+          724
+        ],
+        [
+          714,
+          670
+        ],
+        [
+          649,
+          614
+        ],
+        [
+          587,
+          554
+        ],
+        [
+          526,
+          489
+        ],
+        [
+          470,
+          425
+        ],
+        [
+          419,
+          362
+        ]
+      ]
+    },
+    {
+      "store_id": "PDF-236",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "沿主店围合与左上消防门内槛；包含上方店内连通区域，排除左侧大面积围合外白区及其孤立结构柱，下侧沿入口斜线闭合。",
+      "imageSha256": "b51f45004e17c8347d2d81e96d5b7ecc5be5659ae52e46a8685f7739534b9833",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          519,
+          231
+        ],
+        [
+          606,
+          231
+        ],
+        [
+          606,
+          314
+        ],
+        [
+          959,
+          314
+        ],
+        [
+          959,
+          899
+        ],
+        [
+          646,
+          863
+        ],
+        [
+          646,
+          401
+        ],
+        [
+          519,
+          401
+        ]
+      ]
+    },
+    {
+      "store_id": "PDF-059",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "按红色主入口线、围合内缘与下侧疏散门内槛；含左下员工休息室与右上储藏间，右下设备井和右上公区灰区排除。",
+      "imageSha256": "108688fd451319fceb7ea6ec4100a90ededbcd72b865c64fc8620c036509f3f7",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          530,
+          278
+        ],
+        [
+          815,
+          146
+        ],
+        [
+          815,
+          251
+        ],
+        [
+          959,
+          251
+        ],
+        [
+          959,
+          295
+        ],
+        [
+          1027,
+          295
+        ],
+        [
+          1027,
+          239
+        ],
+        [
+          1103,
+          239
+        ],
+        [
+          1103,
+          291
+        ],
+        [
+          1082,
+          291
+        ],
+        [
+          1082,
+          479
+        ],
+        [
+          891,
+          479
+        ],
+        [
+          891,
+          831
+        ],
+        [
+          545,
+          831
+        ],
+        [
+          545,
+          546
+        ],
+        [
+          574,
+          546
+        ],
+        [
+          574,
+          481
+        ],
+        [
+          545,
+          481
+        ],
+        [
+          545,
+          390
+        ],
+        [
+          562,
+          390
+        ],
+        [
+          562,
+          347
+        ],
+        [
+          545,
+          347
+        ]
+      ]
+    },
+    {
+      "store_id": "PDF-264",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "按图示租赁线、顶部凹入门店及右侧资料室围合；左侧隔壁商铺、左上D-P及右上PY区域明确排除，保留租赁范围内后加柜体与包板。",
+      "imageSha256": "a673c79a27da19b60df15fe344325fde73a3360007ecbde55b39ed74269d60b7",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          448,
+          371
+        ],
+        [
+          522,
+          371
+        ],
+        [
+          522,
+          212
+        ],
+        [
+          847,
+          212
+        ],
+        [
+          847,
+          362
+        ],
+        [
+          1039,
+          362
+        ],
+        [
+          1039,
+          449
+        ],
+        [
+          969,
+          449
+        ],
+        [
+          969,
+          539
+        ],
+        [
+          947,
+          578
+        ],
+        [
+          843,
+          644
+        ],
+        [
+          460,
+          859
+        ],
+        [
+          448,
+          836
+        ]
+      ]
+    },
+    {
+      "store_id": "PDF-282",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "沿上侧斜入口和左右既有围合；保留左下橱窗地台、右下员工休息室，中央大块斜线管井整体排除，形成深凹口而不以大矩形填平。",
+      "imageSha256": "a11d35897eba691ee6b1b865c75519927bdd8cdb86198da06892c9f9a4db9020",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          484,
+          280
+        ],
+        [
+          525,
+          280
+        ],
+        [
+          525,
+          364
+        ],
+        [
+          615,
+          364
+        ],
+        [
+          615,
+          331
+        ],
+        [
+          1035,
+          488
+        ],
+        [
+          1051,
+          488
+        ],
+        [
+          1051,
+          801
+        ],
+        [
+          938,
+          801
+        ],
+        [
+          938,
+          618
+        ],
+        [
+          746,
+          618
+        ],
+        [
+          746,
+          562
+        ],
+        [
+          568,
+          562
+        ],
+        [
+          568,
+          791
+        ],
+        [
+          523,
+          791
+        ],
+        [
+          523,
+          850
+        ],
+        [
+          484,
+          850
+        ]
+      ]
+    },
+    {
+      "store_id": "PDF-110",
+      "status": "admitted",
+      "humanReviewed": false,
+      "reviewDate": "2026-11-10",
+      "reason": "按6000×3000及18平方米外收边闭合，含后加矮墙、柜台，排除顶部商场弧形玻璃围栏与外围尺寸文字。",
+      "imageSha256": "47a648ed94e1d17b99cfe6e51010c7971baf9a9b5ce013758b65f98219f3f7d8",
+      "imageSize": [
+        1600,
+        1132
+      ],
+      "identityReview": "原页标题与来源逐项核对；ID、名称别名、同店键、PDF哈希与45验收/48开发身份索引隔离。仅同城不同商场不视为同店。",
+      "polygonPx": [
+        [
+          342,
+          312
+        ],
+        [
+          1253,
+          312
+        ],
+        [
+          1253,
+          767
+        ],
+        [
+          342,
+          767
+        ]
+      ]
+    }
+  ],
+  "training": {
+    "runs": [
+      {
+        "run": "outline-regressions-run-20261110-v1",
+        "summary": {
+          "trainStores": 37,
+          "internalValStores": 3,
+          "epochs": 160,
+          "optimizerSteps": 3040,
+          "bestEpoch": 120,
+          "weightMaxChange": 1.2776379585266113,
+          "gradientAndEpochEvaluationSeconds": 719.1586403000401,
+          "trainingAndExportSeconds": 758.0839628000977,
+          "initialValIoU": 0.147230384178621,
+          "bestValIoU": 0.770220194773136,
+          "lastValIoU": 0.7147402056087669,
+          "bestTrainIoU": 0.8838187201501764,
+          "onnxMaxAbsError": 9.393692016601562e-05,
+          "onnxMeanSeconds": 0.039418687505531125,
+          "exportPassed": true,
+          "parameterCount": 122673,
+          "development48ReadForTraining": false,
+          "acceptance45ReadForTraining": false,
+          "externalEvaluationPerformed": false,
+          "productionReady": false
+        },
+        "checkpointSha256": "cef5568ba07657884518ed357f5fcbd52fa31e9c59f02fecad4c2c88b8fa2b36"
+      },
+      {
+        "run": "outline-regressions-run-20261110-v2",
+        "summary": {
+          "trainStores": 37,
+          "internalValStores": 3,
+          "epochs": 160,
+          "optimizerSteps": 3040,
+          "bestEpoch": 132,
+          "weightMaxChange": 1.274616003036499,
+          "gradientAndEpochEvaluationSeconds": 757.1577230000403,
+          "trainingAndExportSeconds": 808.3376389000332,
+          "initialValIoU": 0.147230384178621,
+          "bestValIoU": 0.7758017047424688,
+          "lastValIoU": 0.7123596854391843,
+          "bestTrainIoU": 0.9152417682335293,
+          "onnxMaxAbsError": 6.246566772460938e-05,
+          "onnxMeanSeconds": 0.023588165003457107,
+          "exportPassed": true,
+          "parameterCount": 122673,
+          "development48ReadForTraining": false,
+          "acceptance45ReadForTraining": false,
+          "externalEvaluationPerformed": false,
+          "productionReady": false
+        },
+        "checkpointSha256": "ccb6f22093a0f440dabed6471d25df38e6e4e836c9b4bcf21bff57e60907f654"
+      }
+    ],
+    "selected": "outline-regressions-run-20261110-v2",
+    "selectionBeforeDevelopmentScoring": true
+  },
+  "evaluation": {
+    "baselineReproducedExactly": true,
+    "improved": [
+      {
+        "store_id": "NEW-020",
+        "before": 0.7460855814251043,
+        "after": 0.8105957324426191,
+        "delta": 0.06451015101751478
+      },
+      {
+        "store_id": "NEW-049",
+        "before": 0.8863754949918472,
+        "after": 0.8875500650831515,
+        "delta": 0.0011745700913042834
+      },
+      {
+        "store_id": "NEW-065",
+        "before": 0.8406231612685843,
+        "after": 0.866528363855572,
+        "delta": 0.025905202586987697
+      },
+      {
+        "store_id": "PDF-073",
+        "before": 0.7281342711676645,
+        "after": 0.7637789610755333,
+        "delta": 0.03564468990786884
+      },
+      {
+        "store_id": "PDF-079",
+        "before": 0.7781325176357011,
+        "after": 0.8728833832062993,
+        "delta": 0.0947508655705982
+      },
+      {
+        "store_id": "PDF-095",
+        "before": 0.8815736109233473,
+        "after": 0.8854391156272682,
+        "delta": 0.0038655047039208856
+      },
+      {
+        "store_id": "PDF-098",
+        "before": 0.8079438586596519,
+        "after": 0.8187644851308891,
+        "delta": 0.01082062647123716
+      },
+      {
+        "store_id": "PDF-099",
+        "before": 0.68912100279129,
+        "after": 0.8029296158968672,
+        "delta": 0.11380861310557722
+      },
+      {
+        "store_id": "PDF-245",
+        "before": 0.24318448363612225,
+        "after": 0.3731119601544502,
+        "delta": 0.12992747651832795
+      },
+      {
+        "store_id": "PDF-259",
+        "before": 0.7628803893890581,
+        "after": 0.843430319510537,
+        "delta": 0.08054993012147893
+      },
+      {
+        "store_id": "PDF-261",
+        "before": 0.8105853741509847,
+        "after": 0.8405919991260826,
+        "delta": 0.030006624975097873
+      },
+      {
+        "store_id": "PDF-321",
+        "before": 0.7649518876040547,
+        "after": 0.7980399274047187,
+        "delta": 0.03308803980066399
+      },
+      {
+        "store_id": "PDF-353",
+        "before": 0.6946464049639148,
+        "after": 0.7489310345720642,
+        "delta": 0.05428462960814939
+      },
+      {
+        "store_id": "PDF-398",
+        "before": 0.8197784156164232,
+        "after": 0.8617102628384025,
+        "delta": 0.04193184722197929
+      },
+      {
+        "store_id": "PDF-411",
+        "before": 0.6968085758468929,
+        "after": 0.8115662751765904,
+        "delta": 0.11475769932969748
+      }
+    ],
+    "regressed": [
+      {
+        "store_id": "NEW-015",
+        "before": 0.8828318159159605,
+        "after": 0.7942671431669445,
+        "delta": -0.08856467274901603
+      },
+      {
+        "store_id": "NEW-019",
+        "before": 0.9045365529510623,
+        "after": 0.8572035131572189,
+        "delta": -0.0473330397938434
+      },
+      {
+        "store_id": "NEW-023",
+        "before": 0.6055751248738036,
+        "after": 0.6039655727516419,
+        "delta": -0.0016095521221617393
+      },
+      {
+        "store_id": "NEW-024",
+        "before": 0.7545782522469302,
+        "after": 0.7041026158238151,
+        "delta": -0.050475636423115144
+      },
+      {
+        "store_id": "NEW-026",
+        "before": 0.8295676115387022,
+        "after": 0.8260640297517075,
+        "delta": -0.003503581786994725
+      },
+      {
+        "store_id": "NEW-064",
+        "before": 0.88231859553842,
+        "after": 0.8048459406869904,
+        "delta": -0.07747265485142951
+      },
+      {
+        "store_id": "NEW-084",
+        "before": 0.9435526142127194,
+        "after": 0.9086598200517987,
+        "delta": -0.034892794160920726
+      },
+      {
+        "store_id": "NEW-096",
+        "before": 0.8656405038714465,
+        "after": 0.6655594248416157,
+        "delta": -0.20008107902983086
+      },
+      {
+        "store_id": "NEW-098",
+        "before": 0.8386797890793588,
+        "after": 0.6270016842020901,
+        "delta": -0.21167810487726868
+      },
+      {
+        "store_id": "NEW-099",
+        "before": 0.8620519420282932,
+        "after": 0.7520706663557907,
+        "delta": -0.10998127567250249
+      },
+      {
+        "store_id": "PDF-003",
+        "before": 0.955819754746652,
+        "after": 0.9109459638361485,
+        "delta": -0.044873790910503586
+      },
+      {
+        "store_id": "PDF-050",
+        "before": 0.9441511003869035,
+        "after": 0.8448697997191709,
+        "delta": -0.09928130066773266
+      },
+      {
+        "store_id": "PDF-051",
+        "before": 0.8593719296253761,
+        "after": 0.8278151249798282,
+        "delta": -0.03155680464554789
+      },
+      {
+        "store_id": "PDF-090",
+        "before": 0.9404567264022912,
+        "after": 0.937828363015266,
+        "delta": -0.002628363387025212
+      },
+      {
+        "store_id": "PDF-096",
+        "before": 0.8553089805306745,
+        "after": 0.8549465309441225,
+        "delta": -0.0003624495865519606
+      },
+      {
+        "store_id": "PDF-097",
+        "before": 0.8755322052401747,
+        "after": 0.8587608405217351,
+        "delta": -0.016771364718439652
+      },
+      {
+        "store_id": "PDF-101",
+        "before": 0.8700660798206064,
+        "after": 0.797869103301977,
+        "delta": -0.07219697651862933
+      },
+      {
+        "store_id": "PDF-140",
+        "before": 0.7753457454699313,
+        "after": 0.7736588921482525,
+        "delta": -0.0016868533216788384
+      },
+      {
+        "store_id": "PDF-189",
+        "before": 0.9432229894171155,
+        "after": 0.8957259427077539,
+        "delta": -0.04749704670936161
+      },
+      {
+        "store_id": "PDF-202",
+        "before": 0.9383239983015295,
+        "after": 0.8662783352046667,
+        "delta": -0.07204566309686278
+      },
+      {
+        "store_id": "PDF-217",
+        "before": 0.9390109611101842,
+        "after": 0.8067933047682779,
+        "delta": -0.1322176563419063
+      },
+      {
+        "store_id": "PDF-296",
+        "before": 0.9730698662684291,
+        "after": 0.9611567527517838,
+        "delta": -0.011913113516645257
+      },
+      {
+        "store_id": "PDF-302",
+        "before": 0.9258232804124346,
+        "after": 0.8117572825744032,
+        "delta": -0.1140659978380314
+      },
+      {
+        "store_id": "PDF-325",
+        "before": 0.9015638182272228,
+        "after": 0.767738411384939,
+        "delta": -0.13382540684228372
+      },
+      {
+        "store_id": "PDF-330",
+        "before": 0.859008635107846,
+        "after": 0.6912436806475187,
+        "delta": -0.16776495446032724
+      },
+      {
+        "store_id": "PDF-342",
+        "before": 0.9414663192557307,
+        "after": 0.7642291408092173,
+        "delta": -0.17723717844651332
+      },
+      {
+        "store_id": "PDF-351",
+        "before": 0.9528890382862563,
+        "after": 0.944994281913076,
+        "delta": -0.007894756373180267
+      },
+      {
+        "store_id": "PDF-363",
+        "before": 0.9070986068426614,
+        "after": 0.8711557412449087,
+        "delta": -0.03594286559775273
+      },
+      {
+        "store_id": "PDF-393",
+        "before": 0.9216917932352525,
+        "after": 0.8829371677424939,
+        "delta": -0.038754625492758654
+      },
+      {
+        "store_id": "PDF-405",
+        "before": 0.8350183368024581,
+        "after": 0.7669940195508169,
+        "delta": -0.06802431725164115
+      },
+      {
+        "store_id": "PDF-407",
+        "before": 0.7272107447359908,
+        "after": 0.5819859684784708,
+        "delta": -0.14522477625751995
+      },
+      {
+        "store_id": "PDF-412",
+        "before": 0.7968182065830746,
+        "after": 0.6988189332008491,
+        "delta": -0.09799927338222547
+      },
+      {
+        "store_id": "PDF-417",
+        "before": 0.7716971177177646,
+        "after": 0.7516101253551557,
+        "delta": -0.020086992362608913
+      }
+    ],
+    "unchanged": [],
+    "priorRegressions": [
+      {
+        "store_id": "NEW-026",
+        "before": 0.8295676115387022,
+        "after": 0.8260640297517075,
+        "delta": -0.003503581786994725
+      },
+      {
+        "store_id": "NEW-099",
+        "before": 0.8620519420282932,
+        "after": 0.7520706663557907,
+        "delta": -0.10998127567250249
+      },
+      {
+        "store_id": "PDF-245",
+        "before": 0.24318448363612225,
+        "after": 0.3731119601544502,
+        "delta": 0.12992747651832795
+      },
+      {
+        "store_id": "PDF-259",
+        "before": 0.7628803893890581,
+        "after": 0.843430319510537,
+        "delta": 0.08054993012147893
+      },
+      {
+        "store_id": "PDF-261",
+        "before": 0.8105853741509847,
+        "after": 0.8405919991260826,
+        "delta": 0.030006624975097873
+      },
+      {
+        "store_id": "PDF-393",
+        "before": 0.9216917932352525,
+        "after": 0.8829371677424939,
+        "delta": -0.038754625492758654
+      },
+      {
+        "store_id": "PDF-398",
+        "before": 0.8197784156164232,
+        "after": 0.8617102628384025,
+        "delta": 0.04193184722197929
+      },
+      {
+        "store_id": "PDF-411",
+        "before": 0.6968085758468929,
+        "after": 0.8115662751765904,
+        "delta": 0.11475769932969748
+      }
+    ],
+    "summary": {
+      "stores": 48,
+      "scorable": 48,
+      "metrics": {
+        "baseline-raw": {
+          "meanIoU": 0.8318775847261227,
+          "medianIoU": 0.8591902823666111,
+          "iouAtLeast90": 15,
+          "iouAtLeast80": 33
+        },
+        "baseline-clean": {
+          "meanIoU": 0.8400679791663016,
+          "medianIoU": 0.8687437601890837,
+          "iouAtLeast90": 20,
+          "iouAtLeast80": 33
+        },
+        "candidate-raw": {
+          "meanIoU": 0.7999938670560728,
+          "medianIoU": 0.8116617788754967,
+          "iouAtLeast90": 5,
+          "iouAtLeast80": 29
+        },
+        "candidate-clean": {
+          "meanIoU": 0.8155371381528472,
+          "medianIoU": 0.8355417618628929,
+          "iouAtLeast90": 9,
+          "iouAtLeast80": 31
+        }
+      },
+      "frozenBeforeScoring": true,
+      "developmentInformedPreprocessing": true,
+      "trainingOnDevelopment": false,
+      "acceptance45GeometryOrScoresRead": false,
+      "entranceScaleOrFurnitureEvaluated": false,
+      "productionReady": false,
+      "metric": "原图像素栅格IoU；按原审核多边形填充，不做对齐；无效参考记0并列出，不从48分母删除。"
+    }
+  },
+  "onnx": {
+    "export48": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 2.703070640563965e-05,
+      "differentMaskPixelsTotal": 0
+    },
+    "development48": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 2.2649765014648438e-05,
+      "differentMaskPixelsTotal": 0
+    },
+    "syntheticDark37": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 1.3172626495361328e-05,
+      "differentMaskPixelsTotal": 0
+    }
+  },
+  "validation": {
+    "pythonTests": 54,
+    "browserChecks": 23,
+    "browserErrors": [],
+    "legacyBrowserChecks": 16,
+    "repositoryTests": 799,
+    "repositoryTestGroups": {
+      "packages/shared": 256,
+      "apps/web": 326,
+      "database": 7,
+      "apps/api": 210
+    },
+    "initialParallelPassed": false,
+    "serialRerunPassed": true,
+    "serialCommand": "pnpm -r --workspace-concurrency=1 test --maxWorkers 1"
+  },
+  "provenance": {
+    "trainingPlanSha256": "5379b23a1f5f91525e8512951219692b97f8b25887ea3010ba3594b4298d1cb5",
+    "freezeSha256": "8afc046d412ce38f0dee39e900dcee655212019add9eda5cdc1d27bf197353f0",
+    "resultsSha256": "725092e028fc44a52a9dfab277b7270e6d471044e78c5e7eeb729a837eac5deb",
+    "referenceSha256": "194ab609f524f93cf11737312d3304c487eaf827fe59a515668ea2de88c835f2",
+    "developmentInformed": true,
+    "acceptance45GeometryOrScoresRead": false,
+    "oldReviewsModified": false,
+    "productionReady": false
+  },
+  "modelDisposition": {
+    "adoptCandidate": false,
+    "retainedRun": "outline-hardcases-run-20261109-v2",
+    "retainedOnnxSha256": "cfdcfc0c325b7d7389d316a3630bec64630f58b6ddea163a6f2732791798bda4",
+    "reason": "48家宏平均IoU83.19%降至80.00%，33家退化，≥90%从15降至5；重点3家改善不足以抵消整体退化。",
+    "nextStep": "先从未训练独立门店扩充内部验证覆盖，再做尺寸/文字误检抑制对照；45家继续隔离，不按本轮48家分数回选另一候选。"
+  }
+}
