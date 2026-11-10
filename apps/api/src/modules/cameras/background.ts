@@ -1,4 +1,6 @@
-import { createHash } from 'node:crypto'
+import { createHash, randomUUID } from 'node:crypto'
+import { mkdir, readFile, rename, rm, writeFile } from 'node:fs/promises'
+import path from 'node:path'
 import sharp from 'sharp'
 import { eq } from 'drizzle-orm'
 import { schema } from '@store/database'
@@ -11,7 +13,7 @@ import { AppError, notFound } from '../../lib/app-error.ts'
 import { fileUrl } from '../../lib/file-url.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { resolveStoredFile } from '../../lib/storage.ts'
-import { registerStoredFile, writeStorageFile } from '../../lib/stored-files.ts'
+import { registerStoredFile } from '../../lib/stored-files.ts'
 import { findNode, requireActiveProject } from '../nodes/repository.ts'
 
 export async function uploadBackgroundImage(
@@ -63,7 +65,7 @@ export async function uploadBackgroundImage(
   }
   const sha256 = createHash('sha256').update(pixels).digest('hex')
   const storageKey = `backgrounds/${node.projectId}/${sha256}.png`
-  await writeStorageFile(roots, storageKey, pixels)
+  await publishBackgroundFile(roots, storageKey, pixels, sha256)
   const fileId = await registerStoredFile(db, {
     storageKey,
     kind: 'render-background',
@@ -98,5 +100,38 @@ export async function validateBackgroundImage(
   const meta = await sharp(resolved.file).metadata()
   if (meta.width !== image.width || meta.height !== image.height) {
     throw new AppError('VALIDATION_FAILED', '背景尺寸与原图不一致，请重新上传')
+  }
+}
+
+/** Complete the immutable image before making its path visible to readers. */
+async function publishBackgroundFile(
+  roots: StorageRoots,
+  key: string,
+  pixels: Buffer,
+  sha256: string,
+) {
+  const file = path.join(roots.storage, key)
+  try {
+    const existing = await readFile(file)
+    if (createHash('sha256').update(existing).digest('hex') !== sha256) {
+      throw new Error('Stored background checksum mismatch')
+    }
+    return
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error
+  }
+  await mkdir(path.dirname(file), { recursive: true })
+  const temporary = `${file}.${randomUUID()}.tmp`
+  try {
+    await writeFile(temporary, pixels, { flag: 'wx' })
+    try {
+      await rename(temporary, file)
+    } catch (error) {
+      // Another uploader may already have published the same complete content on Windows.
+      const existing = await readFile(file).catch(() => null)
+      if (!existing || createHash('sha256').update(existing).digest('hex') !== sha256) throw error
+    }
+  } finally {
+    await rm(temporary, { force: true })
   }
 }
