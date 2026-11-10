@@ -54,6 +54,10 @@ export function cameraSignature(camera: Camera): string {
             transform: background.transform,
             masks: background.masks,
             showTransparentWalls: background.showTransparentWalls,
+            ...(background.showFloor === false ? { showFloor: false } : {}),
+            ...(background.modelOpacity !== undefined && background.modelOpacity !== 1
+              ? { modelOpacity: background.modelOpacity }
+              : {}),
           },
         }
       : {}),

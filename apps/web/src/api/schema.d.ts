@@ -2892,6 +2892,8 @@ export interface paths {
                                         }[];
                                         guidesVisible: boolean;
                                         showTransparentWalls: boolean;
+                                        showFloor?: boolean;
+                                        modelOpacity?: number;
                                     } | null;
                                     backgroundRevision?: number;
                                 };
@@ -3044,6 +3046,8 @@ export interface paths {
                                         }[];
                                         guidesVisible: boolean;
                                         showTransparentWalls: boolean;
+                                        showFloor?: boolean;
+                                        modelOpacity?: number;
                                     } | null;
                                     backgroundRevision?: number;
                                 };
@@ -3196,6 +3200,8 @@ export interface paths {
                                     }[];
                                     guidesVisible: boolean;
                                     showTransparentWalls: boolean;
+                                    showFloor?: boolean;
+                                    modelOpacity?: number;
                                 } | null;
                                 backgroundRevision?: number;
                             };
@@ -3345,6 +3351,8 @@ export interface paths {
                                     }[];
                                     guidesVisible: boolean;
                                     showTransparentWalls: boolean;
+                                    showFloor?: boolean;
+                                    modelOpacity?: number;
                                 } | null;
                                 backgroundRevision?: number;
                             };
@@ -3466,6 +3474,8 @@ export interface paths {
                             }[];
                             guidesVisible: boolean;
                             showTransparentWalls: boolean;
+                            showFloor?: boolean;
+                            modelOpacity?: number;
                         } | null;
                         expectedBackgroundRevision?: number;
                     };
@@ -3536,6 +3546,8 @@ export interface paths {
                                     }[];
                                     guidesVisible: boolean;
                                     showTransparentWalls: boolean;
+                                    showFloor?: boolean;
+                                    modelOpacity?: number;
                                 } | null;
                                 backgroundRevision?: number;
                             };
@@ -3680,6 +3692,8 @@ export interface paths {
                                     }[];
                                     guidesVisible: boolean;
                                     showTransparentWalls: boolean;
+                                    showFloor?: boolean;
+                                    modelOpacity?: number;
                                 } | null;
                                 backgroundRevision?: number;
                             };

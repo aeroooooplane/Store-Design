@@ -117,12 +117,29 @@ export function BackgroundTools({
 }) {
   const bg = draft.background
   const input = useRef<HTMLInputElement>(null)
+  const adjustingOpacity = useRef(false)
+  useEffect(
+    () => () => {
+      if (adjustingOpacity.current) drafts.end(cameraId)
+    },
+    [cameraId, drafts],
+  )
   useEffect(() => {
     const element = input.current
     element?.addEventListener('cancel', cancelUpload)
     return () => element?.removeEventListener('cancel', cancelUpload)
   }, [cancelUpload])
   const blocked = disabled || uploading || !!draft.gesture
+  function beginOpacity() {
+    if (adjustingOpacity.current) return
+    adjustingOpacity.current = true
+    drafts.begin(cameraId)
+  }
+  function finishOpacity(cancel = false) {
+    if (!adjustingOpacity.current) return
+    adjustingOpacity.current = false
+    drafts.end(cameraId, cancel)
+  }
   const change = (patch: Partial<RenderBackground>) => {
     if (bg) drafts.commit(cameraId, { ...bg, ...patch })
   }
@@ -311,6 +328,37 @@ export function BackgroundTools({
                 onChange={(e) => change({ showTransparentWalls: e.target.checked })}
               />
               显示半透明墙
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={bg.showFloor !== false}
+                disabled={blocked}
+                onChange={(e) => change({ showFloor: e.target.checked })}
+              />
+              显示地板
+            </label>
+            <label>
+              模型整体不透明度 {Math.round((bg.modelOpacity ?? 1) * 100)}%
+              <input
+                type="range"
+                aria-label="模型整体不透明度"
+                min={0}
+                max={100}
+                step={1}
+                value={Math.round((bg.modelOpacity ?? 1) * 100)}
+                disabled={disabled || uploading || (!!draft.gesture && !adjustingOpacity.current)}
+                onPointerDown={beginOpacity}
+                onChange={(e) => {
+                  beginOpacity()
+                  drafts.preview(cameraId, { ...bg, modelOpacity: Number(e.target.value) / 100 })
+                }}
+                onPointerUp={() => finishOpacity()}
+                onPointerCancel={() => finishOpacity(true)}
+                onLostPointerCapture={() => finishOpacity()}
+                onKeyUp={() => finishOpacity()}
+                onBlur={() => finishOpacity()}
+              />
             </label>
           </div>
           <div className="background-object-list" aria-label="遮罩和辅助线">
@@ -530,7 +578,8 @@ export function BackgroundCanvas({
       const target = e.target
       if (
         target instanceof HTMLElement &&
-        (target.matches('input,textarea,select') || target.isContentEditable)
+        (target.matches('input:not([type="range"]):not([type="checkbox"]),textarea,select') ||
+          target.isContentEditable)
       )
         return
       if (disabled) return

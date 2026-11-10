@@ -9742,6 +9742,14 @@
                                       },
                                       "showTransparentWalls": {
                                         "type": "boolean"
+                                      },
+                                      "showFloor": {
+                                        "type": "boolean"
+                                      },
+                                      "modelOpacity": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1
                                       }
                                     },
                                     "required": [
@@ -10235,6 +10243,14 @@
                                       },
                                       "showTransparentWalls": {
                                         "type": "boolean"
+                                      },
+                                      "showFloor": {
+                                        "type": "boolean"
+                                      },
+                                      "modelOpacity": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 1
                                       }
                                     },
                                     "required": [
@@ -10778,6 +10794,14 @@
                                 },
                                 "showTransparentWalls": {
                                   "type": "boolean"
+                                },
+                                "showFloor": {
+                                  "type": "boolean"
+                                },
+                                "modelOpacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
                                 }
                               },
                               "required": [
@@ -11198,6 +11222,14 @@
                           },
                           "showTransparentWalls": {
                             "type": "boolean"
+                          },
+                          "showFloor": {
+                            "type": "boolean"
+                          },
+                          "modelOpacity": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
                           }
                         },
                         "required": [
@@ -11510,6 +11542,14 @@
                                 },
                                 "showTransparentWalls": {
                                   "type": "boolean"
+                                },
+                                "showFloor": {
+                                  "type": "boolean"
+                                },
+                                "modelOpacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
                                 }
                               },
                               "required": [
@@ -11970,6 +12010,14 @@
                                 },
                                 "showTransparentWalls": {
                                   "type": "boolean"
+                                },
+                                "showFloor": {
+                                  "type": "boolean"
+                                },
+                                "modelOpacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
                                 }
                               },
                               "required": [
@@ -12432,6 +12480,14 @@
                                 },
                                 "showTransparentWalls": {
                                   "type": "boolean"
+                                },
+                                "showFloor": {
+                                  "type": "boolean"
+                                },
+                                "modelOpacity": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 1
                                 }
                               },
                               "required": [
