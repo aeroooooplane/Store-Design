@@ -13,6 +13,16 @@ def build(source, inputs, root, training_data):
     need(not (root / "补充标注审核.html").exists(), "报告已存在，保留旧版")
     decisions = load(source / "decisions.json")
     questions = load(source / "questions.json")
+    resolved = decisions.get("resolvedQuestions", [])
+    confirmation = None
+    if resolved:
+        confirmation = load(source / "user-confirmations.json")
+        need(
+            sha(source / "user-confirmations.json")
+            == decisions.get("userConfirmationSha256"),
+            "用户确认记录哈希不一致",
+        )
+        need(confirmation["decisions"] == resolved, "已回答问题与用户确认不一致")
     samples = load(inputs / "pilot-manifest.json")["samples"]
     manifest = validate(training_data)
     need(
@@ -72,7 +82,10 @@ def build(source, inputs, root, training_data):
             switch = ""
             filename = sid + "-original.png"
         else:
+            answer = next((x for x in resolved if x["store_id"] == sid), None)
             controls = '<p class="small">代理已校正，本轮无需逐店确认。</p>'
+            if answer:
+                controls = f'<p class="resolved"><strong>范围已由你确认：</strong>{html.escape(answer["answer"])}。像素边界由代理校正。</p>'
             switch = f'<button data-switch="{sid}" data-view="original">原图</button> <button data-switch="{sid}" data-view="review">标注</button>'
             filename = sid + "-review.png"
         cards.append(
@@ -85,6 +98,8 @@ def build(source, inputs, root, training_data):
         "questions": questions,
         "sourceDecisionsSha256": sha(source / "decisions.json"),
         "existingReviewsUnchanged": True,
+        "resolvedQuestions": resolved,
+        "userConfirmation": confirmation,
     }
     encoded = json.dumps(payload, ensure_ascii=False).replace("<", "\\u003c")
     page = """<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>独立难例补充审核</title>
@@ -104,6 +119,15 @@ def build(source, inputs, root, training_data):
         "两项待决样本及旧4家暂缓样本均未训练。",
         f"{len(questions)}项待决样本及旧{old_deferred}家暂缓样本均未训练。",
     )
+    if not questions:
+        page = page.replace(
+            f"只需判断0处范围归属，其余{admitted_count}家已由我校正。",
+            f"你已确认{len(resolved)}处范围归属。本轮{admitted_count}家标注已完成，无新增待确认问题。",
+        )
+        page = page.replace(
+            "本页答复只保存到当前浏览器；导出后交回即可。",
+            "已回答的范围结论来自聊天确认，固定保存在本页及导出记录中，无需重复填写。",
+        )
     (root / "补充标注审核.html").write_text(page, encoding="utf-8")
     save(root / "annotation-review-evidence.json", payload)
 
