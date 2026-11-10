@@ -208,7 +208,7 @@ export async function updateCamera(
     const camera: Camera = {
       ...row.camera,
       ...fields,
-      ...(changingBackground
+      ...(changingBackground || reaimed !== undefined
         ? { backgroundRevision: (row.camera.backgroundRevision ?? 0) + 1 }
         : {}),
       source: reaimed === undefined ? row.camera.source : 'user',
