@@ -3,7 +3,7 @@ import type { Ref } from 'react'
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
-import type { Delivery, NodeCamera, RenderImage } from '@store/shared'
+import type { Delivery, NodeCamera, RenderImage, RenderBackground } from '@store/shared'
 import { makeCamera, makeNode, makeProject } from '../../test-utils/factories.ts'
 import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
 import type { FakeRequest } from '../../test-utils/fake-api.ts'
@@ -12,14 +12,24 @@ import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { RenderStage } from './RenderStage.tsx'
 
 const looks = vi.hoisted(() => [] as string[])
+const backgroundShots = vi.hoisted(() => [] as (RenderBackground | null | undefined)[])
+const shownViews = vi.hoisted(() => [] as unknown[])
+
+// Matrix/pixel fidelity is checked in the real browser; jsdom lacks DOMMatrix/DOMPoint.
+vi.mock('../viewer3d/background-composite.ts', () => ({
+  backgroundPhotoMatrix: () => ({ a: 1, b: 0, c: 0, d: 1, e: 0, f: 0 }),
+}))
 
 // The real viewer needs WebGL; this one renders a tiny PNG and reports which look it used.
 vi.mock('../viewer3d/Viewer3D.tsx', () => ({
   Viewer3D: ({ ref, onReady }: { ref?: Ref<Viewer3DHandle>; onReady?: () => void }) => {
     useImperativeHandle(ref, () => ({
       currentView: () => ({ position: [0, 1, 0], target: [0, 0, 0], fovDeg: 48 }),
-      showView: () => undefined,
-      renderViews: async (views, _width, _height, look) => {
+      showView: (view) => {
+        shownViews.push(view)
+      },
+      renderViews: async (views, _width, _height, look, backgrounds) => {
+        backgroundShots.push(...(backgrounds ?? []))
         looks.push(look ?? 'shown')
         return views.map(() => 'data:image/png;base64,iVBORw0KGgo=')
       },
@@ -78,7 +88,45 @@ function fakeApi(cameras: NodeCamera[], images: RenderImage[], deliveryFails = f
   const uploads: { path: string; type: string | null }[] = []
   const deliveries: Delivery[] = []
   const posted: unknown[] = []
+  const backgroundSaves: {
+    background: RenderBackground | null
+    expectedBackgroundRevision: number
+  }[] = []
+  let saveGate: Promise<void> | null = null
+  let saveFails = false
+  const photo = {
+    fileId: '99999999-9999-4999-8999-999999999999',
+    url: '/api/v1/files/99999999-9999-4999-8999-999999999999',
+    width: 1200,
+    height: 1800,
+    name: '背景.jpg',
+  }
   const handle = async ({ request, path: pathname }: FakeRequest) => {
+    if (pathname.endsWith('/background-image')) return json(201, photo)
+    if (request.method === 'PATCH' && pathname.includes('/cameras/')) {
+      const patch = (await request.json()) as {
+        background: RenderBackground | null
+        expectedBackgroundRevision: number
+      }
+      backgroundSaves.push(patch)
+      if (saveGate) await saveGate
+      if (saveFails)
+        return json(409, {
+          error: { code: 'CONFLICT', message: '背景版本已变化', requestId: 'conflict' },
+        })
+      const c = cameras.find((c) => pathname.endsWith(c.id))!
+      c.camera = {
+        ...c.camera,
+        background: patch.background,
+        backgroundRevision: patch.expectedBackgroundRevision + 1,
+      }
+      images
+        .filter((i) => i.cameraId === c.id)
+        .forEach((i) => {
+          i.stale = true
+        })
+      return json(200, c)
+    }
     if (pathname.endsWith('/deliveries')) {
       if (request.method === 'POST') {
         if (deliveryFails) return notFound('交付生成失败', 'delivery')
@@ -115,7 +163,17 @@ function fakeApi(cameras: NodeCamera[], images: RenderImage[], deliveryFails = f
   }
   // The images are PNG uploads, so the handler reads the one JSON body itself.
   stubFetch(handle, { readBody: () => undefined })
-  return { uploads, posted }
+  return {
+    uploads,
+    posted,
+    backgroundSaves,
+    setSaveGate: (gate: Promise<void> | null) => {
+      saveGate = gate
+    },
+    setSaveFails: (value: boolean) => {
+      saveFails = value
+    },
+  }
 }
 
 function show() {
@@ -131,7 +189,23 @@ function show() {
 }
 
 beforeEach(() => {
+  vi.stubGlobal(
+    'DOMPoint',
+    class {
+      x: number
+      y: number
+      constructor(x = 0, y = 0) {
+        this.x = x
+        this.y = y
+      }
+      matrixTransform() {
+        return this
+      }
+    },
+  )
   looks.length = 0
+  backgroundShots.length = 0
+  shownViews.length = 0
 })
 
 afterEach(() => {
@@ -179,6 +253,107 @@ describe('RenderStage', () => {
     expect(full.getAttribute('href')).toBe('/api/v1/files/00-影石渲染测试店完整方案.pdf')
     expect(screen.getByRole('link', { name: '展示版 PDF（3 页）' })).toBeTruthy()
     expect(screen.getByText('影石渲染测试店_边厅店_48.0㎡_2026-10-10')).toBeTruthy()
+  })
+
+  it('uploads a per-view background, resets to its saved camera and waits for serial saves before rendering', async () => {
+    const a = camera(0, '正面'),
+      b = camera(1, '背面')
+    const api = fakeApi([a, b], [image(a.id, 'material'), image(b.id, 'material')])
+    let release!: () => void
+    api.setSaveGate(
+      new Promise<void>((resolve) => {
+        release = resolve
+      }),
+    )
+    show()
+    await screen.findByText(/已渲染 2\/2 张/)
+    fireEvent.click(screen.getByRole('button', { name: '背景编辑' }))
+    expect(shownViews.at(-1)).toEqual(a.camera)
+    fireEvent.change(screen.getByLabelText('选择背景图片'), {
+      target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
+    })
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(1))
+    expect(api.backgroundSaves[0]).toMatchObject({
+      expectedBackgroundRevision: 0,
+      background: { showTransparentWalls: false, guidesVisible: true, masks: [], guides: [] },
+    })
+    fireEvent.click(screen.getByRole('button', { name: '重新渲染' }))
+    expect(looks).toHaveLength(0)
+    release()
+    await waitFor(() => expect(api.uploads).toHaveLength(2))
+    expect(backgroundShots[0]?.transform.width).toBeCloseTo(4 / 9)
+    expect(backgroundShots[1]).toBeNull()
+    await waitFor(() =>
+      expect(screen.getByRole('button', { name: '查看视角 背面' })).not.toHaveProperty(
+        'disabled',
+        true,
+      ),
+    )
+    fireEvent.click(screen.getByRole('button', { name: '查看视角 背面' }))
+    expect(screen.getByRole('button', { name: '添加背景图片' })).toBeTruthy()
+    expect(shownViews.at(-1)).toEqual(b.camera)
+    fireEvent.click(screen.getByRole('button', { name: '查看视角 正面' }))
+    expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
+  })
+
+  it('offers a direct upload entry and accepts file drops from the rendered-image view', async () => {
+    const a = camera(0, '正面')
+    const api = fakeApi([a], [image(a.id, 'material')])
+    show()
+    await screen.findByText(/已渲染 1\/1 张/)
+    fireEvent.click(screen.getByRole('button', { name: '添加背景图片' }))
+    expect(screen.getByRole('button', { name: '背景编辑' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    fireEvent.change(screen.getByLabelText('添加当前视角背景图片'), {
+      target: { files: [new File(['png'], '选择.png', { type: 'image/png' })] },
+    })
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(1))
+    await screen.findByText('已保存')
+    fireEvent.click(screen.getByRole('button', { name: '移除背景' }))
+    await waitFor(() => expect(api.backgroundSaves.at(-1)?.background).toBeNull())
+    fireEvent.click(screen.getByRole('button', { name: '渲染图' }))
+    fireEvent.drop(document.querySelector('.render-main')!, {
+      dataTransfer: {
+        types: ['Files'],
+        files: [new File(['png'], '拖入.png', { type: 'image/png' })],
+      },
+    })
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(3))
+    expect(screen.getByRole('button', { name: '背景编辑' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
+  })
+
+  it('keeps conflicting local background and undo, blocks delivery, and rejects invalid uploads', async () => {
+    const a = camera(0, '正面')
+    const api = fakeApi([a], [image(a.id, 'material')])
+    api.setSaveFails(true)
+    show()
+    await screen.findByText(/已渲染 1\/1 张/)
+    fireEvent.click(screen.getByRole('button', { name: '背景编辑' }))
+    fireEvent.change(screen.getByLabelText('选择背景图片'), {
+      target: { files: [new File(['bad'], 'bad.txt', { type: 'text/plain' })] },
+    })
+    expect(await screen.findByText('请选择 PNG 或 JPEG 图片')).toBeTruthy()
+    expect(api.backgroundSaves).toHaveLength(0)
+    fireEvent.change(screen.getByLabelText('选择背景图片'), {
+      target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
+    })
+    expect(await screen.findByText('背景版本已变化')).toBeTruthy()
+    expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
+    expect(screen.getByRole('button', { name: '撤销' })).not.toHaveProperty('disabled', true)
+    fireEvent.click(screen.getByRole('button', { name: '生成交付文件' }))
+    await waitFor(() => expect(screen.queryByText('正在生成交付文件…')).toBeNull())
+    expect(api.posted).toHaveLength(0)
+    api.setSaveFails(false)
+    fireEvent.click(screen.getByRole('button', { name: '重试保存' }))
+    await screen.findByText('已保存')
+    fireEvent.click(screen.getByRole('button', { name: '移除背景' }))
+    await waitFor(() => expect(api.backgroundSaves.at(-1)?.background).toBeNull())
+    fireEvent.keyDown(window, { key: 'z', ctrlKey: true })
+    await waitFor(() => expect(api.backgroundSaves.at(-1)?.background?.image.fileId).toBeTruthy())
   })
 
   it('marks stale images and does not re-render them on its own', async () => {
