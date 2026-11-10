@@ -326,6 +326,35 @@ describe('RenderStage', () => {
     expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
   })
 
+  it('leaves empty background editing on picker cancellation, but keeps an existing background', async () => {
+    const a = camera(0, '正面')
+    const api = fakeApi([a], [image(a.id, 'material')])
+    show()
+    await screen.findByText(/已渲染 1\/1 张/)
+    fireEvent.click(screen.getByRole('button', { name: '添加背景图片' }))
+    fireEvent(screen.getByLabelText('添加当前视角背景图片'), new Event('cancel'))
+    expect(screen.getByRole('button', { name: '三维查看' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    fireEvent.click(screen.getByRole('button', { name: '背景编辑' }))
+    fireEvent(screen.getByLabelText('选择背景图片'), new Event('cancel'))
+    expect(screen.getByRole('button', { name: '三维查看' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    fireEvent.click(screen.getByRole('button', { name: '背景编辑' }))
+    fireEvent.change(screen.getByLabelText('选择背景图片'), {
+      target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
+    })
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(1))
+    await screen.findByText('已保存')
+    fireEvent(screen.getByLabelText('选择背景图片'), new Event('cancel'))
+    expect(screen.getByRole('button', { name: '背景编辑' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
+    expect(api.backgroundSaves).toHaveLength(1)
+  })
+
   it('keeps conflicting local background and undo, blocks delivery, and rejects invalid uploads', async () => {
     const a = camera(0, '正面')
     const api = fakeApi([a], [image(a.id, 'material')])

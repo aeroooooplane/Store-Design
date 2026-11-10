@@ -97,14 +97,21 @@ export function BackgroundTools({
   uploading,
   uploadError,
   reload,
+  cancelUpload,
 }: CommonProps & {
   upload: (file: File) => void
   uploading: boolean
   uploadError: unknown
   reload: () => void
+  cancelUpload: () => void
 }) {
   const bg = draft.background
   const input = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    const element = input.current
+    element?.addEventListener('cancel', cancelUpload)
+    return () => element?.removeEventListener('cancel', cancelUpload)
+  }, [cancelUpload])
   const blocked = disabled || uploading || !!draft.gesture
   const change = (patch: Partial<RenderBackground>) => {
     if (bg) drafts.commit(cameraId, { ...bg, ...patch })
