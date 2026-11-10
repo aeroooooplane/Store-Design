@@ -1,6 +1,6 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { useQueryClient } from '@tanstack/react-query'
+import { useIsMutating, useQueryClient } from '@tanstack/react-query'
 import { AlertTriangle, Check, ExternalLink, FileArchive, ImageIcon } from 'lucide-react'
 import { RENDERED_MODES, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
@@ -43,6 +43,7 @@ import {
 } from './render-background/BackgroundEditor.tsx'
 import { useBackgroundEditor } from './render-background/useBackgroundEditor.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
+import { CameraPanel } from './CameraPanel.tsx'
 
 const Viewer3D = lazy(() =>
   import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
@@ -86,7 +87,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const backgroundInput = useRef<HTMLInputElement>(null)
   const [viewerReady, setViewerReady] = useState(false)
   const [show, setShow] = useState<Show>('3d')
-  const posed = useRef(false)
+  const posed = useRef<string | null>(null)
   const [chosen, setChosen] = useState<string | null>(null)
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
   const [error, setError] = useState<unknown>(null)
@@ -101,6 +102,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const createDelivery = useCreateDelivery(node.id)
   const [exporting, setExporting] = useState(false)
   const [deliveryError, setDeliveryError] = useState<unknown>(null)
+  const cameraBusy = useIsMutating({ mutationKey: workbenchKeys.cameraActions(node.id) }) > 0
 
   const siStyle = node.siStyle ?? project.siStyle
   const views = useMemo(
@@ -121,7 +123,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     images.get(`${cameraId}:${mode}`)
   const all: Target[] = views.flatMap((camera) => MODES.map((mode) => ({ camera, mode })))
   const missing = all.filter((t) => !imageOf(t.camera.id, t.mode))
-  const stale = [...images.values()].filter((i) => i.stale)
+  const stale = all.filter(({ camera, mode }) => imageOf(camera.id, mode)?.stale)
   const current = all.length - missing.length - stale.length
   const selected = views.find((c) => c.id === chosen) ?? views[0] ?? null
   const selectedDraft = selected ? backgroundEditor.drafts.get(selected.id) : undefined
@@ -141,7 +143,14 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const deliverable = all.length > 0 && missing.length === 0 && stale.length === 0
 
   async function render(targets: Target[]) {
-    if (!viewer.current || progress || !targets.length || backgroundEditor.uploading.size) return
+    if (
+      !viewer.current ||
+      progress ||
+      cameraBusy ||
+      !targets.length ||
+      backgroundEditor.uploading.size
+    )
+      return
     setError(null)
     setProgress({ done: 0, total: targets.length })
     const ordered = MODES.flatMap((mode) => targets.filter((t) => t.mode === mode))
@@ -183,8 +192,8 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
 
   // The 3D view opens at the chosen view, once the scene and the views are there.
   useEffect(() => {
-    if (posed.current || !viewerReady || !selected) return
-    posed.current = true
+    if (!viewerReady || !selected || posed.current === selected.id) return
+    posed.current = selected.id
     viewer.current?.showView(selected.camera)
   })
 
@@ -194,6 +203,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
       started.current ||
       !viewerReady ||
       !cameras.data ||
+      !views.length ||
       !renders.data ||
       views.some((c) => !backgroundEditor.drafts.get(c.id))
     )
@@ -262,10 +272,14 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   function choose(camera: NodeCamera) {
     setChosen(camera.id)
     if (show === '3d' || show === 'background') viewer.current?.showView(camera.camera)
+    if (show === 'display') {
+      setShow('3d')
+      viewer.current?.showView(camera.camera)
+    }
   }
 
   const mainImage = selected && show === 'image' ? imageOf(selected.id, 'material') : undefined
-  const busy = progress !== null
+  const busy = progress !== null || cameraBusy
   const delivering = exporting || createDelivery.isPending
   function openBackground() {
     setShow('background')
@@ -275,6 +289,28 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   return (
     <WorkbenchLayout
       left={left}
+      cameras={
+        <CameraPanel
+          nodeId={node.id}
+          viewer={viewer}
+          viewerReady={viewerReady}
+          layout={layout}
+          onShow={choose}
+          selectedId={selected?.id ?? null}
+          canCapture={show === '3d'}
+          onOpenViewer={() => setShow('3d')}
+          disabled={busy || delivering || !!selectedDraft?.gesture}
+          actionsDisabled={backgroundEditor.pending || show === 'background'}
+          renderImages={
+            new Map(
+              views.flatMap(({ id }) => {
+                const image = imageOf(id, 'material')
+                return image ? [[id, image]] : []
+              }),
+            )
+          }
+        />
+      }
       center={
         <section className="render-stage wb-card" aria-label="渲染">
           <h2 className="node-heading">
@@ -487,43 +523,6 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               />
             )}
           </div>
-
-          <div className="render-strip-heading">
-            <h3>
-              视角 <span className="hint">（{views.length}）</span>
-            </h3>
-            <span className="hint">选择缩略图切换视角</span>
-          </div>
-          {views.length === 0 && (
-            <p className="hint">暂无视角，请回到白模添加视角后重新开始渲染。</p>
-          )}
-          <ol className="render-strip" aria-label="视角">
-            {views.map((camera) => {
-              const image = imageOf(camera.id, 'material')
-              return (
-                <li key={camera.id}>
-                  <button
-                    type="button"
-                    className="camera-thumb"
-                    aria-pressed={camera.id === selected?.id}
-                    aria-label={`查看视角 ${camera.camera.name}`}
-                    disabled={busy || delivering || !!selectedDraft?.gesture}
-                    onClick={() => choose(camera)}
-                  >
-                    {image ? (
-                      <img src={image.url} alt="" />
-                    ) : (
-                      <span className="camera-thumb-empty">{busy ? '渲染中…' : '未渲染'}</span>
-                    )}
-                  </button>
-                  <span className="render-strip-name">
-                    {camera.camera.name}
-                    {image?.stale ? <span className="tag render-status warning">过期</span> : null}
-                  </span>
-                </li>
-              )
-            })}
-          </ol>
         </section>
       }
       right={
@@ -532,7 +531,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             <StagePanel
               title="渲染阶段"
               status={
-                busy ? (
+                progress ? (
                   <span className="tag render-status" role="status">
                     正在渲染 {progress.done}/{progress.total}
                   </span>

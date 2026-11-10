@@ -30,6 +30,7 @@ import type {
   RenderedMode,
 } from '@store/shared'
 import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
+import { displayKeys } from '../display/queries.ts'
 
 /** Every response is parsed with the shared schemas, so runtime data matches the types. */
 export const workbenchKeys = {
@@ -38,6 +39,7 @@ export const workbenchKeys = {
   draft: (projectId: string) => ['workbench', projectId, 'draft'] as const,
   assets: ['workbench', 'assets'] as const,
   cameras: (nodeId: string) => ['workbench', 'cameras', nodeId] as const,
+  cameraActions: (nodeId: string) => ['workbench', 'camera-actions', nodeId] as const,
   renders: (nodeId: string) => ['workbench', 'renders', nodeId] as const,
   deliveries: (nodeId: string) => ['workbench', 'deliveries', nodeId] as const,
 }
@@ -185,9 +187,10 @@ export function useGenerateLayouts() {
 }
 
 /** All views of a white-model node, including removed ones (they can be restored). */
-export function useCameras(nodeId: string) {
+export function useCameras(nodeId: string, enabled = true) {
   return useQuery({
     queryKey: workbenchKeys.cameras(nodeId),
+    enabled,
     queryFn: async () =>
       NodeCameraListSchema.parse(
         unwrap(
@@ -199,6 +202,25 @@ export function useCameras(nodeId: string) {
   })
 }
 
+export function useInitializeCameras(nodeId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async () =>
+      NodeCameraListSchema.parse(
+        unwrap(
+          await api.POST('/api/v1/nodes/{nodeId}/cameras/initialize', {
+            params: { path: { nodeId } },
+          }),
+        ),
+      ).cameras,
+    onSuccess: async (cameras) => {
+      const queryKey = workbenchKeys.cameras(nodeId)
+      await client.cancelQueries({ queryKey })
+      client.setQueryData(queryKey, cameras)
+    },
+  })
+}
+
 export type CameraAction =
   | { type: 'add'; camera: CameraCreate }
   | { type: 'update'; cameraId: string; patch: CameraUpdate }
@@ -207,6 +229,7 @@ export type CameraAction =
 export function useCameraAction(nodeId: string) {
   const client = useQueryClient()
   return useMutation({
+    mutationKey: workbenchKeys.cameraActions(nodeId),
     mutationFn: async (action: CameraAction) => {
       if (action.type === 'add') {
         return unwrap(
@@ -231,6 +254,7 @@ export function useCameraAction(nodeId: string) {
       await client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) })
       // A re-aimed view makes its images stale.
       await client.invalidateQueries({ queryKey: workbenchKeys.renders(nodeId) })
+      await client.invalidateQueries({ queryKey: displayKeys.node(nodeId) })
     },
   })
 }

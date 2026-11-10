@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router'
+import { useParams } from 'react-router'
+import { ProjectNavSlot } from '../../components/AppNav.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { Workbench } from '../workbench/Workbench.tsx'
 import { projectExportUrl, useProject } from './queries.ts'
@@ -10,20 +11,13 @@ export function ProjectPage() {
 
   return (
     <main className="page page-workbench">
-      <header className="workbench-bar">
-        <Link to="/">← 项目列表</Link>
-        <span className="workbench-bar-end">
-          {project.data && !project.data.deletedAt && (
-            <a
-              href={projectExportUrl(projectId)}
-              download
-              title="导出为项目文件（含全部节点与草稿）"
-            >
-              导出项目
-            </a>
-          )}
-        </span>
-      </header>
+      {project.data && !project.data.deletedAt && (
+        <ProjectNavSlot slot="actions">
+          <a href={projectExportUrl(projectId)} download title="导出为项目文件（含全部节点与草稿）">
+            导出项目
+          </a>
+        </ProjectNavSlot>
+      )}
       <ErrorMessage error={project.error} />
       {project.data?.deletedAt ? (
         <p className="notice">项目在回收站中，恢复后才能继续编辑。</p>

@@ -283,6 +283,7 @@ describe('RenderStage', () => {
     await waitFor(() => expect(api.uploads).toHaveLength(2))
     expect(backgroundShots[0]?.transform.width).toBeCloseTo(4 / 9)
     expect(backgroundShots[1]).toBeNull()
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
     await waitFor(() =>
       expect(screen.getByRole('button', { name: '查看视角 背面' })).not.toHaveProperty(
         'disabled',
@@ -442,6 +443,7 @@ describe('RenderStage', () => {
     expect(screen.queryByRole('link', { name: '查看大图' })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: '渲染图' }))
     expect(screen.getByRole('link', { name: '查看大图' }).getAttribute('href')).toBe(frontImage.url)
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
     fireEvent.click(screen.getByRole('button', { name: '查看视角 入口方向' }))
     const open = screen.getByRole('link', { name: '查看大图' })
     expect(open.getAttribute('href')).toBe(entryImage.url)

@@ -68,6 +68,11 @@ export class BackgroundDrafts {
         revision <= current.revision)
     )
       return
+    if (current && equal(value, current.saved)) {
+      current.revision = revision
+      this.notify()
+      return
+    }
     this.entries.set(id, {
       background: copy(value),
       saved: copy(value),

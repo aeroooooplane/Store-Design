@@ -1,5 +1,7 @@
 import { MARKET_LABELS, SHOP_TYPE_LABELS, SI_STYLES, mToMm, polygonArea } from '@store/shared'
 import type { Project, SiStyle, Space } from '@store/shared'
+import { Info } from 'lucide-react'
+import { useState } from 'react'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { formatDateTime } from '../../lib/format.ts'
 
@@ -41,17 +43,20 @@ export function ProjectCard({
   error,
 }: ProjectCardProps) {
   const facts = space ? spaceFacts(space) : null
+  const [detailsOpen, setDetailsOpen] = useState(false)
   return (
     <section className="project-bar" aria-label="项目信息">
-      <h2>{project.name}</h2>
-      <span className="tag">
-        {SHOP_TYPE_LABELS[project.shopType]} · {MARKET_LABELS[project.market]}
-      </span>
-      {facts && (
-        <span className="hint project-bar-size">
-          面积 {facts.area} · {facts.size} · 层高 {facts.height}
+      <h2 title={project.name}>{project.name}</h2>
+      <span className="project-bar-facts">
+        <span className="tag">
+          {SHOP_TYPE_LABELS[project.shopType]} · {MARKET_LABELS[project.market]}
         </span>
-      )}
+        {facts && (
+          <span className="hint project-bar-size">
+            面积 {facts.area} · {facts.size} · 层高 {facts.height}
+          </span>
+        )}
+      </span>
       <div className="tabs" role="group" aria-label="SI 风格">
         {SI_STYLES.map((style) => (
           <button
@@ -71,13 +76,29 @@ export function ProjectCard({
           </button>
         ))}
       </div>
-      {notice ? (
-        <p className="hint project-bar-notice" role="status">
+      <details
+        className="project-bar-details"
+        onToggle={(event) => setDetailsOpen(event.currentTarget.open)}
+      >
+        <summary aria-label="项目信息与 SI 提示" title="项目信息与 SI 提示">
+          <Info size={16} aria-hidden="true" />
+          {(notice || (error !== null && error !== undefined)) && (
+            <span className="project-bar-dot" aria-hidden="true" />
+          )}
+        </summary>
+        {detailsOpen && (
+          <div className="project-bar-details-content">
+            <ProjectDetails project={project} space={space} siStyle={siStyle} />
+            {siLocked && <p className="hint">{siLocked}</p>}
+            <ErrorMessage error={error} />
+          </div>
+        )}
+      </details>
+      {notice && (
+        <span className="project-bar-live" role="status">
           {notice}
-        </p>
-      ) : null}
-      {siLocked ? <p className="hint project-bar-notice">{siLocked}</p> : null}
-      <ErrorMessage error={error} />
+        </span>
+      )}
     </section>
   )
 }
