@@ -21,7 +21,9 @@ Chrome 实际浏览器 18 项通过：正常入口选图、精确变换、闭合
 
 UI 窗口另补四项真实键盘组合：输入框 Ctrl+Z 恢复原文字且不改变背景保存值；A、B 分别修改后在 B 撤销只恢复 B；切回 A 撤销只恢复 A；A 重做及再次撤销均恢复正确值。该补测属于 UI 验收，未改写独立 QA 的覆盖声明。
 
-证据在本机 `C:/Users/insta360/Documents/Codex/ui-review/render-background-ui/`：`results.json`、`verify.cjs`、`output-results.json`、`output-check.cjs`、`cancel-check.cjs`、`keyboard-results.json`、`keyboard-check.cjs`、`desktop-editor.png`、`desktop-render.png`、`narrow-editor.png`。合入 `7084468b` 像素修复后，全仓 `pnpm check` 788 项（shared 256、database 7、web 319、api 206）及 `pnpm format:check` 再次通过。
+主开发末轮静态审查的两项边界已在 `acef7c91` 修复：极窄图初始宽度不低于接口最小值；数值框文字未改时不因显示四舍五入而保存。专项总数 18 项通过。实际 Chrome 用 1×8192 PNG 验证首次保存成功；以 12.3456789 验证聚焦/失焦和原生 Ctrl+Z 回到初始显示文本时零 PATCH、保留全精度，且一次撤销直接回到真正编辑前。证据为 `boundary-check.cjs`、`boundary-check.log`、`boundary-results.json`。此后代码冻结，最终全仓检查通过。
+
+证据在本机 `C:/Users/insta360/Documents/Codex/ui-review/render-background-ui/`：`results.json`、`verify.cjs`、`output-results.json`、`output-check.cjs`、`cancel-check.cjs`、`keyboard-results.json`、`keyboard-check.cjs`、`desktop-editor.png`、`desktop-render.png`、`narrow-editor.png`。合入 `7084468b` 像素修复后，全仓 `pnpm check` 790 项（shared 256、database 7、web 321、api 206）及 `pnpm format:check` 再次通过。
 
 独立 QA 的 BG05 曾发现旋转照片添加遮罩后外部少量像素最大差 6。`7084468b` 将擦除移到单独模型缓冲后，独立 QA 在 20° 旋转、75% 宽度下复验：约 2 像素的几何抗锯齿带以外差异为 0，未放宽色差公差；旧无罩图及撤销恢复图逐字节一致。双 ZIP、双 PDF 与选配 PPT 使用最终候选成图核对通过，已复现阻塞清除，见[独立验收记录](render-background-qa-20261110.md)。近水平视角预览/截图对照引用模型窗口 Viewer 实测，独立 QA 未重复覆盖；其他单项覆盖边界以其记录为准。
 
@@ -29,5 +31,6 @@ UI 窗口另补四项真实键盘组合：输入框 Ctrl+Z 恢复原文字且不
 
 - 控制点、辅助线和编辑中的半透明遮罩提示仅用于编辑；正式图只包含照片、模型及恢复原照片的遮罩。
 - 上传单图不超过 16 MiB；最多 32 个遮罩、每面 3–100 点、100 条辅助线，拒绝自交面。
+- 初始图片在允许缩放范围内适配。极窄图片（如 1×8192）使用最小 1% 宽度并由画布裁切，保证首次保存仍符合接口约束。
 - 撤销历史驻留当前前端编辑会话；重新载入页面读取已保存的背景，不恢复撤销栈。失败时需重试或明确放弃；页面关闭/刷新有未保存提示。
 - 本轮不改受保护平面类名和导出 CSS，不改识别与历史树交互。
