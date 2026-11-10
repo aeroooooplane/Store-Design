@@ -612,6 +612,7 @@ export class WhiteScene {
           this.renderLayer(shot, {
             transparent: true,
             hideWalls: !background.showTransparentWalls,
+            hideFloor: background.showFloor === false,
             hideMarks: true,
           })
           drawBackgroundComposition(context, background, photo, this.canvas)
@@ -631,16 +632,27 @@ export class WhiteScene {
 
   private renderLayer(
     camera: THREE.Camera,
-    options: { transparent?: boolean; hideWalls: boolean; hideMarks?: boolean },
+    options: {
+      transparent?: boolean
+      hideWalls: boolean
+      hideFloor?: boolean
+      hideMarks?: boolean
+    },
   ) {
     const originalBackground = this.scene.background
     const clearAlpha = this.renderer.getClearAlpha()
     const marksVisible = this.marks.visible
-    const hiddenWalls = options.hideWalls
-      ? this.room.children.filter((object) => object.visible && object.userData['boundaryWall'])
-      : []
+    const hiddenSurfaces = this.room.children.filter(
+      (object) =>
+        object.visible &&
+        ((options.hideWalls && object.userData['boundaryWall']) ||
+          (options.hideFloor &&
+            ['floor', 'edging'].includes(object.userData['surface'] as string))),
+    )
+    const hiddenCasters = hiddenSurfaces.some((surface) => surface.castShadow)
     try {
-      for (const wall of hiddenWalls) wall.visible = false
+      for (const surface of hiddenSurfaces) surface.visible = false
+      if (hiddenCasters) this.renderer.shadowMap.needsUpdate = true
       if (options.hideMarks) this.marks.visible = false
       if (options.transparent) {
         this.scene.background = null
@@ -648,7 +660,8 @@ export class WhiteScene {
       }
       this.renderer.render(this.scene, camera)
     } finally {
-      for (const wall of hiddenWalls) wall.visible = true
+      for (const surface of hiddenSurfaces) surface.visible = true
+      if (hiddenCasters) this.renderer.shadowMap.needsUpdate = true
       this.marks.visible = marksVisible
       if (options.transparent) {
         this.scene.background = originalBackground
@@ -678,6 +691,7 @@ export class WhiteScene {
     this.renderLayer(this.camera, {
       transparent: true,
       hideWalls: !background.showTransparentWalls,
+      hideFloor: background.showFloor === false,
     })
     drawBackgroundComposition(context, background, photo, this.canvas)
     output.style.visibility = 'visible'

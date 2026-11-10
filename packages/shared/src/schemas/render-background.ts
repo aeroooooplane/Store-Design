@@ -47,6 +47,8 @@ export const RenderBackgroundSchema = z
       .max(100),
     guidesVisible: z.boolean(),
     showTransparentWalls: z.boolean(),
+    showFloor: z.boolean().optional(),
+    modelOpacity: z.number().finite().min(0).max(1).optional(),
   })
   .superRefine((value, ctx) => {
     for (const key of ['masks', 'guides'] as const) {
