@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useIsMutating, useQueryClient } from '@tanstack/react-query'
 import { AlertTriangle, Check, ExternalLink, FileArchive, ImageIcon } from 'lucide-react'
@@ -42,8 +42,10 @@ import {
   emptyEditing,
 } from './render-background/BackgroundEditor.tsx'
 import { useBackgroundEditor } from './render-background/useBackgroundEditor.ts'
-import { WorkbenchLayout } from './WorkbenchLayout.tsx'
+import { LeftTabContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
+
+import type { LeftTab } from './WorkbenchLayout.tsx'
 
 const Viewer3D = lazy(() =>
   import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
@@ -54,7 +56,7 @@ const NO_FLAGS: ReadonlySet<string> = new Set()
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
 /** The 3D material view (rotatable), the rendered image of the chosen view, or the 展陈 plan. */
-type Show = '3d' | 'image' | 'display' | 'background'
+type Show = '3d' | 'image' | 'display'
 const NO_NUMBERS: Readonly<Record<string, number>> = {}
 type Target = { camera: NodeCamera; mode: RenderedMode }
 
@@ -84,9 +86,13 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const renders = useRenders(node.id)
   const client = useQueryClient()
   const viewer = useRef<Viewer3DHandle>(null)
-  const backgroundInput = useRef<HTMLInputElement>(null)
   const [viewerReady, setViewerReady] = useState(false)
   const [show, setShow] = useState<Show>('3d')
+  const sharedTabs = useContext(LeftTabContext)
+  const [localTab, setLocalTab] = useState<LeftTab | null>(null)
+  const currentTab = sharedTabs ? sharedTabs.tab : localTab
+  const setLeftTab = sharedTabs?.setTab ?? setLocalTab
+  const editingBackground = currentTab === 'background' && show === '3d'
   const posed = useRef<string | null>(null)
   const [chosen, setChosen] = useState<string | null>(null)
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(null)
@@ -127,15 +133,6 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const current = all.length - missing.length - stale.length
   const selected = views.find((c) => c.id === chosen) ?? views[0] ?? null
   const selectedDraft = selected ? backgroundEditor.drafts.get(selected.id) : undefined
-  const hasSelectedBackground = !!selectedDraft?.background
-  useEffect(() => {
-    const input = backgroundInput.current
-    const cancel = () => {
-      if (!hasSelectedBackground) setShow('3d')
-    }
-    input?.addEventListener('cancel', cancel)
-    return () => input?.removeEventListener('cancel', cancel)
-  }, [hasSelectedBackground])
   const editing = (selected && backgroundEditor.editing[selected.id]) || emptyEditing()
   const layout = node.layout ?? EMPTY_LAYOUT
   // Same numbering as the PDF legend (the server runs deliveryLegend too).
@@ -271,7 +268,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
 
   function choose(camera: NodeCamera) {
     setChosen(camera.id)
-    if (show === '3d' || show === 'background') viewer.current?.showView(camera.camera)
+    if (show === '3d') viewer.current?.showView(camera.camera)
     if (show === 'display') {
       setShow('3d')
       viewer.current?.showView(camera.camera)
@@ -281,13 +278,15 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const mainImage = selected && show === 'image' ? imageOf(selected.id, 'material') : undefined
   const busy = progress !== null || cameraBusy
   const delivering = exporting || createDelivery.isPending
-  function openBackground() {
-    setShow('background')
-    if (selected) viewer.current?.showView(selected.camera)
+  function selectTab(tab: LeftTab) {
+    setLeftTab(tab)
+    setShow('3d')
+    if (tab === 'background' && selected) viewer.current?.showView(selected.camera)
   }
 
   return (
     <WorkbenchLayout
+      tabState={{ tab: currentTab, setTab: selectTab }}
       left={left}
       cameras={
         <CameraPanel
@@ -297,10 +296,10 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
           layout={layout}
           onShow={choose}
           selectedId={selected?.id ?? null}
-          canCapture={show === '3d'}
+          canCapture={show === '3d' && !editingBackground}
           onOpenViewer={() => setShow('3d')}
           disabled={busy || delivering || !!selectedDraft?.gesture}
-          actionsDisabled={backgroundEditor.pending || show === 'background'}
+          actionsDisabled={backgroundEditor.pending || editingBackground}
           renderImages={
             new Map(
               views.flatMap(({ id }) => {
@@ -310,6 +309,41 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             )
           }
         />
+      }
+      background={
+        editingBackground && selected && selectedDraft ? (
+          <BackgroundTools
+            key={selected.id}
+            cameraId={selected.id}
+            draft={selectedDraft}
+            drafts={backgroundEditor.drafts}
+            editing={editing}
+            setEditing={(value) => backgroundEditor.updateEditing(selected.id, value)}
+            disabled={busy || delivering}
+            uploading={backgroundEditor.uploading.has(selected.id)}
+            upload={(file) => backgroundEditor.upload(selected.id, file)}
+            uploadError={backgroundEditor.errors[selected.id]}
+            cancelUpload={() => {
+              if (!selectedDraft.background) selectTab('history')
+            }}
+            reload={() => {
+              if (!window.confirm('放弃当前视角未保存的修改并读取服务器背景？')) return
+              void cameras.refetch().then((result) => {
+                const camera = result.data?.find((c) => c.id === selected.id)
+                if (camera) {
+                  backgroundEditor.drafts.reload(
+                    camera.id,
+                    camera.camera.background ?? null,
+                    camera.camera.backgroundRevision ?? 0,
+                  )
+                  backgroundEditor.updateEditing(camera.id, emptyEditing())
+                }
+              })
+            }}
+          />
+        ) : (
+          <p className="hint">请选择视角后添加背景图片。</p>
+        )
       }
       center={
         <section className="render-stage wb-card" aria-label="渲染">
@@ -322,7 +356,6 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 [
                   ['3d', '三维查看'],
                   ['image', '渲染图'],
-                  ['background', '背景编辑'],
                   ['display', '展陈'],
                 ] as const
               ).map(([mode, label]) => (
@@ -332,9 +365,9 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   aria-pressed={show === mode}
                   disabled={busy || delivering}
                   onClick={() => {
+                    if (currentTab === 'background') setLeftTab('history')
                     setShow(mode)
-                    if ((mode === '3d' || mode === 'background') && selected)
-                      viewer.current?.showView(selected.camera)
+                    if (mode === '3d' && selected) viewer.current?.showView(selected.camera)
                   }}
                 >
                   {label}
@@ -342,63 +375,10 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               ))}
             </div>
             {selected && <span className="hint">{selected.camera.name}</span>}
-            {show === '3d' && <span className="hint">拖动旋转，滚轮缩放，右键平移</span>}
-            {show !== 'background' && show !== 'display' && (
-              <button
-                type="button"
-                disabled={!selected || busy || delivering || !!backgroundEditor.uploading.size}
-                onClick={() => {
-                  openBackground()
-                  if (!selectedDraft?.background) backgroundInput.current?.click()
-                }}
-              >
-                {selectedDraft?.background ? '编辑背景图片' : '添加背景图片'}
-              </button>
+            {show === '3d' && !editingBackground && (
+              <span className="hint">拖动旋转，滚轮缩放，右键平移</span>
             )}
-            <input
-              ref={backgroundInput}
-              type="file"
-              accept="image/png,image/jpeg"
-              className="background-file"
-              aria-label="添加当前视角背景图片"
-              onChange={(e) => {
-                const file = e.target.files?.[0]
-                if (file && selected) backgroundEditor.upload(selected.id, file)
-                e.target.value = ''
-              }}
-            />
           </div>
-          {show === 'background' && selected && selectedDraft && (
-            <BackgroundTools
-              key={selected.id}
-              cameraId={selected.id}
-              draft={selectedDraft}
-              drafts={backgroundEditor.drafts}
-              editing={editing}
-              setEditing={(value) => backgroundEditor.updateEditing(selected.id, value)}
-              disabled={busy || delivering}
-              uploading={backgroundEditor.uploading.has(selected.id)}
-              upload={(file) => backgroundEditor.upload(selected.id, file)}
-              uploadError={backgroundEditor.errors[selected.id]}
-              cancelUpload={() => {
-                if (!selectedDraft.background) setShow('3d')
-              }}
-              reload={() => {
-                if (!window.confirm('放弃当前视角未保存的修改并读取服务器背景？')) return
-                void cameras.refetch().then((result) => {
-                  const camera = result.data?.find((c) => c.id === selected.id)
-                  if (camera) {
-                    backgroundEditor.drafts.reload(
-                      camera.id,
-                      camera.camera.background ?? null,
-                      camera.camera.backgroundRevision ?? 0,
-                    )
-                    backgroundEditor.updateEditing(camera.id, emptyEditing())
-                  }
-                })
-              }}
-            />
-          )}
           {/* The delivery plan, drawn off screen at a fixed width and exported as an image. */}
           <div className="delivery-plan" aria-hidden="true">
             <PlanView
@@ -432,7 +412,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               e.preventDefault()
               const file = e.dataTransfer.files[0]
               if (file && selected && !busy && !delivering && !selectedDraft?.gesture) {
-                openBackground()
+                selectTab('background')
                 backgroundEditor.upload(selected.id, file)
               }
             }}
@@ -487,7 +467,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               </div>
             )}
             {/* Always mounted: it is the scene the images are rendered from. */}
-            <div className="render-live" hidden={show !== '3d' && show !== 'background'}>
+            <div className="render-live" hidden={show !== '3d'}>
               <Suspense fallback={<p className="notice">正在载入三维…</p>}>
                 <Viewer3D
                   ref={viewer}
@@ -498,7 +478,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
                   look="material"
-                  hideBoundaryWalls={show === 'background'}
+                  hideBoundaryWalls={editingBackground}
                   background={
                     selectedDraft ? selectedDraft.background : (selected?.camera.background ?? null)
                   }
@@ -510,7 +490,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 />
               </Suspense>
             </div>
-            {show === 'background' && selected && selectedDraft && (
+            {editingBackground && selected && selectedDraft && (
               <BackgroundCanvas
                 key={selected.id}
                 cameraId={selected.id}

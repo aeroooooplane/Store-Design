@@ -338,7 +338,7 @@ export function BackgroundTools({
               />
               显示地板
             </label>
-            <label>
+            <label className="background-opacity">
               模型整体不透明度 {Math.round((bg.modelOpacity ?? 1) * 100)}%
               <input
                 type="range"

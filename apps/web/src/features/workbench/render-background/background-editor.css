@@ -6,6 +6,20 @@
   display: grid;
   gap: 8px;
 }
+.wb-tab-panel > .background-tools {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.background-toolbar .background-opacity {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+}
+.background-opacity input {
+  width: 100%;
+  min-width: 0;
+}
 .background-toolbar,
 .background-transform,
 .background-object-list {
