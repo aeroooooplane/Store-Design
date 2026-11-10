@@ -1,7 +1,16 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { VIEW_ASPECT } from '@store/shared'
-import type { Asset, Camera, Layout, Market, ShopType, SiStyle, Space } from '@store/shared'
+import type {
+  Asset,
+  Camera,
+  Layout,
+  Market,
+  RenderBackground,
+  ShopType,
+  SiStyle,
+  Space,
+} from '@store/shared'
 import { WhiteScene } from './white-scene.ts'
 import type { LoadStatus, Look, SceneHandlers, ViewPose } from './white-scene.ts'
 
@@ -12,13 +21,14 @@ export interface Viewer3DHandle {
   showView: (view: View) => void
   /**
    * Waits for models still loading, then renders each view to a PNG data URL, in the given look
-   * (default: the one on screen).
+   * (default: the one on screen). Pass each view's saved background snapshot for a composite.
    */
   renderViews: (
     views: readonly View[],
     width: number,
     height: number,
     look?: Look,
+    backgrounds?: readonly (RenderBackground | null | undefined)[],
   ) => Promise<string[]>
 }
 
@@ -31,6 +41,7 @@ interface Viewer3DProps {
   flaggedIds: ReadonlySet<string>
   /** White model (default) or the material look of the renders. */
   look?: Look | undefined
+  background?: RenderBackground | null | undefined
   siStyle?: SiStyle | undefined
   /** The project's market: LOGO models with a version per market show that one. */
   market?: Market | undefined
@@ -65,6 +76,7 @@ export function Viewer3D({
   selectedId,
   flaggedIds,
   look = 'white',
+  background,
   siStyle = 'SI1.0',
   market = 'domestic',
   onSelect,
@@ -78,6 +90,7 @@ export function Viewer3D({
   title,
 }: Viewer3DProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const compositionRef = useRef<HTMLCanvasElement>(null)
   const sceneRef = useRef<WhiteScene | null>(null)
   const viewedSpace = useRef<Space | null>(null)
   const readyCallback = useRef(onReady)
@@ -87,13 +100,14 @@ export function Viewer3D({
   const startView = useRef(initialView)
   const [status, setStatus] = useState<LoadStatus>({ loading: 0, failed: [] })
   const [error, setError] = useState<string | null>(null)
+  const [backgroundError, setBackgroundError] = useState<string | null>(null)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
     let scene: WhiteScene
     try {
-      scene = new WhiteScene(canvas)
+      scene = new WhiteScene(canvas, compositionRef.current ?? undefined)
     } catch {
       setError('浏览器无法启动三维显示（WebGL 不可用）')
       return
@@ -143,6 +157,17 @@ export function Viewer3D({
   }, [look, siStyle])
 
   useEffect(() => {
+    let active = true
+    setBackgroundError(null)
+    void sceneRef.current?.setBackground(background ?? null).catch((caught: unknown) => {
+      if (active) setBackgroundError(caught instanceof Error ? caught.message : '背景图片无法加载')
+    })
+    return () => {
+      active = false
+    }
+  }, [background])
+
+  useEffect(() => {
     sceneRef.current?.setMarks(selectedId, flaggedIds)
   }, [selectedId, flaggedIds, layout])
 
@@ -152,12 +177,8 @@ export function Viewer3D({
       currentView: () =>
         sceneRef.current?.currentView() ?? { position: [0, 1, 0], target: [0, 0, 0], fovDeg: 48 },
       showView: (view) => sceneRef.current?.showView(view),
-      renderViews: async (views, width, height, look) => {
-        const scene = sceneRef.current
-        if (!scene) return []
-        await scene.whenLoaded()
-        return sceneRef.current === scene ? await scene.renderViews(views, width, height, look) : []
-      },
+      renderViews: async (views, width, height, look, backgrounds) =>
+        (await sceneRef.current?.renderViews(views, width, height, look, backgrounds)) ?? [],
     }),
     [],
   )
@@ -166,8 +187,21 @@ export function Viewer3D({
   return (
     <div className="viewer3d">
       <canvas ref={canvasRef} style={{ aspectRatio: String(VIEW_ASPECT) }} aria-label={title} />
-      {(status.loading > 0 || status.failed.length > 0) && (
-        <p className="viewer3d-status hint" role="status">
+      <canvas
+        ref={compositionRef}
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          visibility: 'hidden',
+        }}
+      />
+      {(backgroundError || status.loading > 0 || status.failed.length > 0) && (
+        <p className="viewer3d-status hint" role={backgroundError ? 'alert' : 'status'}>
+          {backgroundError ? `${backgroundError}。` : null}
           {status.loading > 0 ? `正在加载 ${status.loading} 个模型…` : null}
           {status.failed.length > 0
             ? ` ${status.failed.length} 个模型未能加载，以方框代替：${status.failed.join('、')}`
