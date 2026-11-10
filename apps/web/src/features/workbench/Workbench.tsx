@@ -1,19 +1,21 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { nodeSiStyle, spaceAncestor } from '@store/shared'
 import type {
   Asset,
+  Camera,
   DesignNode,
   Draft,
+  NodeCamera,
   NodeSummary,
   Project,
-  ShopType,
   SiStyle,
   Space,
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { ProjectNavSlot } from '../../components/AppNav.tsx'
 import {
   deleteDraft,
   useCreateNode,
@@ -24,9 +26,11 @@ import {
   workbenchKeys,
 } from './api.ts'
 import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
+import { CameraPanel } from './CameraPanel.tsx'
 import { HistoryTree, HistoryViewProvider } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
+import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
 import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
@@ -40,6 +44,12 @@ import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
 import { ViewMemoryContext } from './view-memory.ts'
 import type { ViewState } from './view-memory.ts'
 import type { SiSwitch } from './si-switch.ts'
+import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
+
+const Viewer3D = lazy(() =>
+  import('../viewer3d/Viewer3D.tsx').then((module) => ({ default: module.Viewer3D })),
+)
+const NO_FLAGS: ReadonlySet<string> = new Set()
 
 type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
 
@@ -196,16 +206,18 @@ export function Workbench({ project }: { project: Project }) {
   ) : null
   return (
     <AgentSelectionProvider>
-      <ProjectCard
-        project={project}
-        space={cardSpaceData}
-        siStyle={shownSi}
-        siLocked={siLocked}
-        siBusy={siBusy}
-        onSiSwitch={(style) => void switchSi(style)}
-        notice={siNotice}
-        error={updateProject.error}
-      />
+      <ProjectNavSlot slot="info">
+        <ProjectCard
+          project={project}
+          space={creatingSpace ? null : cardSpaceData}
+          siStyle={shownSi}
+          siLocked={siLocked}
+          siBusy={siBusy}
+          onSiSwitch={(style) => void switchSi(style)}
+          notice={siNotice}
+          error={updateProject.error}
+        />
+      </ProjectNavSlot>
       <WorkbenchInfoContext.Provider
         value={<ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />}
       >
@@ -330,11 +342,12 @@ function NodePanel({
   // One shared draft per project: editing another step first needs the draft resolved.
   if (draft && draft.baseNodeId !== current.id) {
     return (
-      <WorkbenchLayout
+      <StagePreview
         left={left}
-        center={
-          <ReadOnly node={current} space={space} shopType={project.shopType} assets={assetMap} />
-        }
+        node={current}
+        project={project}
+        space={space}
+        assets={assetMap}
         right={
           <div className="wb-card">
             <DraftElsewhere
@@ -437,29 +450,12 @@ function SpaceStage({
     existingNames,
   })
   return (
-    <WorkbenchLayout
+    <StagePreview
       left={left}
-      center={
-        <div className="wb-card">
-          <NodeHeading node={spaceNode} />
-          <div className="space-summary">
-            <PlanView
-              space={spaceNode.space}
-              shopType={project.shopType}
-              layout={spaceNode.layout}
-              assets={assets}
-              title={`${spaceNode.name} 平面`}
-            />
-          </div>
-          <CandidateGallery
-            generation={generation}
-            shopType={project.shopType}
-            siStyle={project.siStyle}
-            assets={assets}
-            onChosen={onSelect}
-          />
-        </div>
-      }
+      project={project}
+      node={spaceNode}
+      space={spaceNode.space}
+      assets={assets}
       right={
         <div className="wb-card">
           <StagePanel
@@ -478,7 +474,15 @@ function SpaceStage({
           />
         </div>
       }
-    />
+    >
+      <CandidateGallery
+        generation={generation}
+        shopType={project.shopType}
+        siStyle={project.siStyle}
+        assets={assets}
+        onChosen={onSelect}
+      />
+    </StagePreview>
   )
 }
 
@@ -486,30 +490,110 @@ function NodeHeading({ node }: { node: DesignNode }) {
   return <h2 className="node-heading">{node.name}</h2>
 }
 
-function ReadOnly({
+/** Saved geometry can be viewed and its cameras changed even when the design itself is read-only. */
+function StagePreview({
+  left,
+  right,
+  children,
   node,
+  project,
   space,
-  shopType,
   assets,
 }: {
+  left: ReactNode
+  right: ReactNode
+  children?: ReactNode
   node: DesignNode
+  project: Project
   space: Space
-  shopType: ShopType
   assets: ReadonlyMap<string, Asset>
 }) {
+  const [mode, setMode] = useState<'plan' | '3d'>('plan')
+  const [opened, setOpened] = useState(false)
+  const [ready, setReady] = useState(false)
+  const viewer = useRef<Viewer3DHandle>(null)
+  const pending = useRef<Camera | null>(null)
+  const layout = node.layout ?? EMPTY_LAYOUT
+
+  useEffect(() => {
+    if (!ready || !pending.current) return
+    viewer.current?.showView(pending.current)
+    pending.current = null
+  }, [ready])
+
+  function openViewer() {
+    setOpened(true)
+    setMode('3d')
+  }
+
+  function showCamera(camera: NodeCamera) {
+    openViewer()
+    if (ready) viewer.current?.showView(camera.camera)
+    else pending.current = camera.camera
+  }
+
   return (
-    <div className="wb-card">
-      <NodeHeading node={node} />
-      <div className="space-summary">
-        <PlanView
-          space={space}
-          shopType={shopType}
-          layout={node.layout}
-          assets={assets}
-          title={`${node.name} 平面`}
+    <WorkbenchLayout
+      left={left}
+      right={right}
+      cameras={
+        <CameraPanel
+          nodeId={node.id}
+          viewer={viewer}
+          viewerReady={ready}
+          layout={layout}
+          onShow={showCamera}
+          canCapture={mode === '3d'}
+          onOpenViewer={openViewer}
         />
-      </div>
-    </div>
+      }
+      center={
+        <section className="wb-card">
+          <NodeHeading node={node} />
+          <div className="toolbar">
+            <div className="tabs" role="group" aria-label="显示">
+              <button type="button" aria-pressed={mode === 'plan'} onClick={() => setMode('plan')}>
+                平面
+              </button>
+              <button type="button" aria-pressed={mode === '3d'} onClick={openViewer}>
+                三维
+              </button>
+            </div>
+          </div>
+          <div className="space-summary" hidden={mode !== 'plan'}>
+            <PlanView
+              space={space}
+              shopType={project.shopType}
+              layout={node.layout}
+              assets={assets}
+              title={`${node.name} 平面`}
+            />
+          </div>
+          {opened && (
+            <div className="space-summary" hidden={mode !== '3d'}>
+              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                <Viewer3D
+                  ref={viewer}
+                  space={space}
+                  shopType={project.shopType}
+                  layout={layout}
+                  assets={assets}
+                  selectedId={null}
+                  flaggedIds={NO_FLAGS}
+                  look={node.kind === 'white' ? 'material' : 'white'}
+                  siStyle={nodeSiStyle(node, project.siStyle)}
+                  market={project.market}
+                  onSelect={() => undefined}
+                  onReady={() => setReady(true)}
+                  title={`${node.name} 三维预览`}
+                />
+              </Suspense>
+            </div>
+          )}
+          {children}
+        </section>
+      }
+    />
   )
 }
 

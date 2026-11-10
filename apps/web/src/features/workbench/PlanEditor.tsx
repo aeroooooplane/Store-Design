@@ -21,6 +21,7 @@ import {
 import type {
   Asset,
   Camera,
+  NodeCamera,
   DesignNode,
   Draft,
   NodeSummary,
@@ -138,7 +139,16 @@ export function PlanEditor({
   const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
-  const onViewerReady = useCallback(() => setViewerReady(true), [])
+  const pendingCamera = useRef<Camera | null>(null)
+  const onViewerReady = useCallback(() => {
+    setViewerReady(true)
+    // The viewer applies its initial room and camera in the remaining mount effects.
+    queueMicrotask(() => {
+      if (!viewerRef.current || !pendingCamera.current) return
+      viewerRef.current.showView(pendingCamera.current)
+      pendingCamera.current = null
+    })
+  }, [])
   const memoryRef = useRef(memory)
   memoryRef.current = memory
   const rememberPose = useCallback((pose: ViewPose) => memoryRef.current.update({ pose }), [])
@@ -314,9 +324,10 @@ export function PlanEditor({
     memory.update({ look: next })
   }
 
-  function showCamera(camera: Camera) {
+  function showCamera(camera: NodeCamera) {
     switchView('3d')
-    viewerRef.current?.showView(camera)
+    if (viewerRef.current) viewerRef.current.showView(camera.camera)
+    else pendingCamera.current = camera.camera
   }
 
   const planMain = view === 'plan'
@@ -331,13 +342,15 @@ export function PlanEditor({
       }
       defaultTab={isWhite ? 'history' : 'models'}
       cameras={
-        isWhite ? (
+        !editWalls.editing ? (
           <CameraPanel
             nodeId={baseNode.id}
             viewer={viewerRef}
             viewerReady={viewerReady}
             layout={state.layout}
             onShow={showCamera}
+            canCapture={!planMain}
+            onOpenViewer={() => switchView('3d')}
           />
         ) : undefined
       }

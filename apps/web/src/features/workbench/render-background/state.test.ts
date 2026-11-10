@@ -16,6 +16,22 @@ const deferred = <T>() => {
 }
 
 describe('background drafts', () => {
+  it('keeps photo undo history when a camera adjustment advances the snapshot revision', async () => {
+    const save = vi.fn(async (_id: string, background: BackgroundValue, revision: number) => ({
+      background,
+      revision: revision + 1,
+    }))
+    const store = new BackgroundDrafts(save)
+    store.receive('a', null, 0)
+    store.commit('a', bg())
+    await store.flush('a')
+    store.receive('a', bg(), 2)
+    expect(store.get('a')?.past).toHaveLength(1)
+    store.undo('a')
+    await store.flush('a')
+    expect(store.get('a')?.background).toBeNull()
+    expect(save).toHaveBeenLastCalledWith('a', null, 2)
+  })
   it('contains portrait and landscape photos and starts with hidden translucent walls', () => {
     expect(bg().transform.width).toBeCloseTo(4 / 9)
     expect(newBackground({ ...image, width: 2400, height: 1200 }).transform.width).toBe(1)

@@ -538,7 +538,7 @@ describe('Workbench', () => {
     fireEvent.click(screen.getByRole('tab', { name: '历史' }))
     fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
     await screen.findByRole('heading', { name: '方案 A' })
-    expect(screen.queryByRole('tab', { name: '视角' })).toBeNull()
+    expect(screen.getByRole('tab', { name: '视角' })).toBeTruthy()
   })
 
   it('autosaves edits to the draft, then saves a version and clears the draft', async () => {

@@ -7,6 +7,7 @@ import { json, stubFetch } from '../../test-utils/fake-api.ts'
 import { renderWithClient } from '../../test-utils/render.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
+import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 
 const NODE = '55555555-5555-4555-8555-555555555555'
 const pose = { position: [1, 2, 3], target: [4, 0.8, 3], fovDeg: 50 } as const
@@ -61,6 +62,56 @@ afterEach(() => {
 })
 
 describe('CameraPanel', () => {
+  it('renames a view without replacing its pose', async () => {
+    renderPanel(viewer())
+    fireEvent.click(await screen.findByRole('button', { name: '重命名视角 左前方' }))
+    fireEvent.change(screen.getByRole('textbox', { name: '视角名称' }), {
+      target: { value: '  门口细节  ' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: '保存' }))
+    await waitFor(() =>
+      expect(server.calls.find((c) => c.method === 'PATCH')).toMatchObject({
+        path: `/api/v1/cameras/${camera(1).id}`,
+        body: { name: '门口细节' },
+      }),
+    )
+  })
+
+  it('does not initialize a hidden panel and initializes an empty node on opening it', async () => {
+    server = stubFetch(({ request }) =>
+      request.method === 'GET'
+        ? json(200, { nodeId: NODE, cameras: [] })
+        : json(200, { nodeId: NODE, cameras: [camera(0)] }),
+    )
+    renderWithClient(
+      <WorkbenchLayout
+        left={null}
+        center={null}
+        cameras={
+          <CameraPanel
+            nodeId={NODE}
+            viewer={{ current: viewer() }}
+            viewerReady
+            layout={{ schemaVersion: 3, items: [], planning: null }}
+            onShow={vi.fn()}
+          />
+        }
+      />,
+    )
+    expect(server.calls).toHaveLength(0)
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
+    await screen.findByRole('button', { name: '查看视角 正面鸟瞰' })
+    expect(server.calls.filter((c) => c.method === 'POST')).toEqual([
+      expect.objectContaining({ path: `/api/v1/nodes/${NODE}/cameras/initialize` }),
+    ])
+  })
+
+  it('keeps deliberately deleted views removed when opening the panel', async () => {
+    server = fakeApi([camera(0, { deletedAt: '2026-10-10T01:00:00.000Z' })])
+    renderPanel(viewer())
+    await screen.findByRole('button', { name: '恢复「正面鸟瞰」' })
+    expect(server.calls.some((c) => c.method === 'POST')).toBe(false)
+  })
   it('shows active views with rendered thumbnails and offers removed ones for restore', async () => {
     renderPanel(viewer())
     expect(await screen.findByText('视角（3）')).toBeTruthy()
@@ -105,6 +156,6 @@ describe('CameraPanel', () => {
   it('shows a view in 3D when its thumbnail is clicked', async () => {
     const onShow = renderPanel(viewer())
     fireEvent.click(await screen.findByRole('button', { name: '查看视角 右前方' }))
-    expect(onShow).toHaveBeenCalledWith(camera(2).camera)
+    expect(onShow).toHaveBeenCalledWith(camera(2))
   })
 })

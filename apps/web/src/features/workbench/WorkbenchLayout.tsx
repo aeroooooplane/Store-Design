@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useState } from 'react'
 import type { ReactNode } from 'react'
 
 interface WorkbenchLayoutProps {
@@ -6,7 +6,7 @@ interface WorkbenchLayoutProps {
   left: ReactNode
   /** The model list: only where props can be added (plan stage); it becomes the default tab. */
   models?: ReactNode
-  /** Saved views, available in the white-model stage. */
+  /** Saved views of the current node. */
   cameras?: ReactNode
   /** The plan / 3D canvas (or the page's main content). */
   center: ReactNode
@@ -18,12 +18,13 @@ interface WorkbenchLayoutProps {
 
 /** Project details shown in the "空间信息" tab; the workbench provides them to every layout. */
 export const WorkbenchInfoContext = createContext<ReactNode>(null)
+export const CameraPanelVisibility = createContext(true)
 
 /** The open left tab lives in the workbench, so changing step (which remounts the layout) keeps it. */
 export const LeftTabContext = createContext<{
   tab: LeftTab | null
   setTab: (tab: LeftTab) => void
-}>({ tab: null, setTab: () => {} })
+} | null>(null)
 
 export type LeftTab = 'history' | 'models' | 'info' | 'cameras'
 
@@ -56,7 +57,9 @@ function LeftTabs({
     'info',
     ...(cameras ? (['cameras'] as const) : []),
   ]
-  const { tab, setTab } = useContext(LeftTabContext)
+  const sharedTab = useContext(LeftTabContext)
+  const [localTab, setLocalTab] = useState<LeftTab | null>(null)
+  const { tab, setTab } = sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const current = tab && tabs.includes(tab) ? tab : fallback
   const panels: Record<LeftTab, ReactNode> = { history, models, info, cameras }
@@ -90,7 +93,13 @@ function LeftTabs({
           className="wb-tab-panel"
           hidden={current !== tab}
         >
-          {panels[tab]}
+          {tab === 'cameras' ? (
+            <CameraPanelVisibility.Provider value={current === 'cameras'}>
+              {cameras}
+            </CameraPanelVisibility.Provider>
+          ) : (
+            panels[tab]
+          )}
         </div>
       ))}
     </section>
