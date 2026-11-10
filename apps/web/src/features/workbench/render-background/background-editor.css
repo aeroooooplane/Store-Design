@@ -1,0 +1,130 @@
+.background-tools {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  display: grid;
+  gap: 8px;
+}
+.background-toolbar,
+.background-transform,
+.background-object-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.background-toolbar label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-xs);
+}
+.background-toolbar button,
+.background-transform button,
+.background-object-list button {
+  padding: 6px 8px;
+  font-size: var(--fs-xs);
+}
+.background-toolbar button[aria-pressed='true'],
+.background-object-list button[aria-pressed='true'] {
+  background: var(--accent-soft);
+  border-color: var(--brand);
+}
+.background-number {
+  display: grid;
+  gap: 4px;
+  color: var(--muted);
+  font-size: var(--fs-xs);
+}
+.background-number input {
+  width: 96px;
+  min-height: 32px;
+}
+.background-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+.background-object-list {
+  max-height: 84px;
+  overflow: auto;
+}
+.background-object-list > span {
+  display: inline-flex;
+  gap: 4px;
+}
+.background-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+.background-canvas svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.background-canvas.drag-over {
+  outline: 3px solid var(--brand);
+  outline-offset: -3px;
+}
+.background-drop-hint {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+}
+.background-border {
+  fill: none;
+  stroke: var(--ink);
+  stroke-dasharray: 6 4;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+.background-mask {
+  fill: color-mix(in srgb, var(--brand) 12%, transparent);
+  stroke: var(--brand-ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.background-mask.selected {
+  stroke-width: 2;
+}
+.background-guide,
+.background-drawing {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2;
+  stroke-dasharray: 7 4;
+  vector-effect: non-scaling-stroke;
+}
+.background-drawing {
+  pointer-events: none;
+}
+.background-handle {
+  fill: var(--brand);
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  cursor: grab;
+}
+.render-stage:has(.background-tools) .render-main {
+  flex: none;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  min-height: 0;
+}
+@media (max-width: 600px) {
+  .background-tools {
+    padding: 8px;
+  }
+  .background-number input {
+    width: 80px;
+  }
+}

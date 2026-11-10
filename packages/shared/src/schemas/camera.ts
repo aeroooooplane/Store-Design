@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Vec3Schema } from './common.ts'
+import { RenderBackgroundSchema } from './render-background.ts'
 
 export const CAMERA_SOURCES = ['auto', 'user'] as const
 
@@ -15,6 +16,8 @@ export const CameraSchema = z.object({
   target: Vec3Schema,
   fovDeg: z.number().finite().min(10).max(120),
   source: z.enum(CAMERA_SOURCES),
+  background: RenderBackgroundSchema.nullable().optional(),
+  backgroundRevision: z.int().min(0).optional(),
 })
 
 export type Camera = z.output<typeof CameraSchema>
@@ -45,8 +48,10 @@ export const CameraCreateSchema = z.strictObject({
 export type CameraCreate = z.output<typeof CameraCreateSchema>
 
 /** Rename or re-aim a view; at least one field. */
-export const CameraUpdateSchema = CameraCreateSchema.partial().refine(
-  (patch) => Object.keys(patch).length > 0,
-  { message: '至少修改一项' },
-)
+export const CameraUpdateSchema = CameraCreateSchema.partial()
+  .extend({
+    background: RenderBackgroundSchema.nullable().optional(),
+    expectedBackgroundRevision: z.int().min(0).optional(),
+  })
+  .refine((patch) => Object.keys(patch).length > 0, { message: '至少修改一项' })
 export type CameraUpdate = z.output<typeof CameraUpdateSchema>

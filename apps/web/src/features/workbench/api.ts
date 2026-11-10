@@ -8,6 +8,7 @@ import {
   LayoutCandidatesSchema,
   NodeCameraListSchema,
   NodeCameraSchema,
+  BackgroundImageSchema,
   NodeCreatedSchema,
   NodeRenderListSchema,
   NodeSchema,
@@ -17,6 +18,7 @@ import {
 import type {
   CameraCreate,
   CameraUpdate,
+  RenderBackground,
   DeliveryCreate,
   Draft,
   DraftSaved,
@@ -250,14 +252,43 @@ export async function uploadRender(
   cameraId: string,
   mode: RenderedMode,
   png: Blob,
+  backgroundRevision?: number,
 ): Promise<RenderImage> {
   return RenderImageSchema.parse(
     unwrap(
       await api.PUT('/api/v1/nodes/{nodeId}/renders/{cameraId}/{mode}', {
-        params: { path: { nodeId, cameraId, mode } },
+        params: { path: { nodeId, cameraId, mode }, query: { backgroundRevision } },
         body: png,
         bodySerializer: (body) => body as Blob,
         headers: { 'content-type': 'image/png' },
+      }),
+    ),
+  )
+}
+
+export async function uploadBackgroundImage(cameraId: string, file: File) {
+  return BackgroundImageSchema.parse(
+    unwrap(
+      await api.POST('/api/v1/cameras/{cameraId}/background-image', {
+        params: { path: { cameraId } },
+        body: file,
+        bodySerializer: (body) => body as Blob,
+        headers: { 'content-type': file.type },
+      }),
+    ),
+  )
+}
+
+export async function saveCameraBackground(
+  cameraId: string,
+  background: RenderBackground | null,
+  expectedBackgroundRevision: number,
+) {
+  return NodeCameraSchema.parse(
+    unwrap(
+      await api.PATCH('/api/v1/cameras/{cameraId}', {
+        params: { path: { cameraId } },
+        body: { background, expectedBackgroundRevision },
       }),
     ),
   )

@@ -23,6 +23,7 @@ import type {
   LayoutItem,
   Market,
   ModelSize,
+  RenderBackground,
   ShopType,
   SiStyle,
   Space,
@@ -37,12 +38,14 @@ import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from '.
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { wallArt } from './wall-art.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
+import {
+  SCENE_BACKGROUND,
+  drawBackgroundComposition,
+  loadBackgroundPhoto,
+} from './background-composite.ts'
 
 // The GLB cache lives in model-cache.ts (one instance per page); re-exported for the callers.
 export { loadSource }
-
-/** Legacy white-mode look (demo/src/scene.js in tag archive/pre-cleanup-20261013). */
-const BACKGROUND = '#e8eaed'
 
 export interface ViewPose {
   position: [number, number, number]
@@ -52,6 +55,7 @@ export interface ViewPose {
 
 /** White model, or the material look of the renders (same scene, other materials). */
 export type Look = 'white' | 'material'
+type ShotView = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
 export interface SceneHandlers {
   onSelect: (itemId: string | null) => void
@@ -132,6 +136,11 @@ export class WhiteScene {
   readonly controls: OrbitControls
 
   private readonly canvas: HTMLCanvasElement
+  private readonly compositionCanvas: HTMLCanvasElement | undefined
+  private liveBackground: { background: RenderBackground; photo: HTMLImageElement } | null = null
+  private pendingPhoto: { url: string; photo: Promise<HTMLImageElement> } | null = null
+  private backgroundRevision = 0
+  private hideBoundaryWalls = false
   private readonly room = new THREE.Group()
   private readonly props = new THREE.Group()
   /** 空心隔板: boxes in the wall material. */
@@ -163,6 +172,9 @@ export class WhiteScene {
   private frame = 0
   private disposed = false
   private look: Look = 'white'
+  private displayLook: Look = 'white'
+  private captureLook: Look | null = null
+  private captureQueue: Promise<void> = Promise.resolve()
   private siStyle: SiStyle = 'SI1.0'
   private shopType: ShopType = 'side_hall'
   private space: Space | null = null
@@ -176,10 +188,12 @@ export class WhiteScene {
   /** Front-side-only copies of finished materials, for the two sides of SketchUp faces. */
   private readonly frontMaterials = new Map<THREE.Material, THREE.Material>()
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, compositionCanvas?: HTMLCanvasElement) {
     this.canvas = canvas
+    this.compositionCanvas = compositionCanvas
     this.renderer = new THREE.WebGLRenderer({
       canvas,
+      alpha: true,
       antialias: true,
       preserveDrawingBuffer: true,
     })
@@ -192,7 +206,7 @@ export class WhiteScene {
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping
     this.renderer.toneMappingExposure = 0.82
 
-    this.scene.background = new THREE.Color(BACKGROUND)
+    this.scene.background = new THREE.Color(SCENE_BACKGROUND)
     const pmrem = new THREE.PMREMGenerator(this.renderer)
     this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
     pmrem.dispose()
@@ -259,8 +273,9 @@ export class WhiteScene {
 
   /** White, or the material look; the props follow, loading textured models when needed. */
   setLook(look: Look, siStyle: SiStyle) {
+    this.displayLook = look
     this.siStyle = siStyle
-    this.applyLook(look)
+    this.applyLook(this.captureLook ?? look)
   }
 
   private applyLook(look: Look) {
@@ -468,7 +483,7 @@ export class WhiteScene {
     this.requestRender()
   }
 
-  showView(view: Pick<Camera, 'position' | 'target' | 'fovDeg'>) {
+  showView(view: ShotView) {
     this.camera.position.set(...view.position)
     this.camera.fov = view.fovDeg
     this.camera.updateProjectionMatrix()
@@ -490,54 +505,182 @@ export class WhiteScene {
     while (this.pending.size) await Promise.allSettled([...this.pending])
   }
 
+  private photoFor(url: string): Promise<HTMLImageElement> {
+    if (this.liveBackground?.background.image.url === url) {
+      return Promise.resolve(this.liveBackground.photo)
+    }
+    if (this.pendingPhoto?.url === url) return this.pendingPhoto.photo
+    const photo = loadBackgroundPhoto(url).finally(() => {
+      if (this.pendingPhoto?.photo === photo) this.pendingPhoto = null
+    })
+    this.pendingPhoto = { url, photo }
+    return photo
+  }
+
+  /** Keep the last decoded preview visible until the replacement is ready. */
+  async setBackground(background: RenderBackground | null): Promise<void> {
+    const revision = ++this.backgroundRevision
+    if (!background) {
+      this.liveBackground = null
+      this.requestRender()
+      return
+    }
+    const photo = await this.photoFor(background.image.url)
+    if (this.disposed || this.backgroundRevision !== revision) return
+    this.liveBackground = { background, photo }
+    this.requestRender()
+  }
+
+  setHideBoundaryWalls(hide: boolean) {
+    this.hideBoundaryWalls = hide
+    this.requestRender()
+  }
+
   /**
    * Renders views to PNG data URLs at a fixed size, one view per task so the page stays
    * responsive. Within a task the canvas is resized, drawn, read and restored, so the on-screen
    * view never flickers. Returns fewer images if the scene is disposed meanwhile.
    */
-  async renderViews(
-    views: readonly Pick<Camera, 'position' | 'target' | 'fovDeg'>[],
+  renderViews(
+    views: readonly ShotView[],
     width: number,
     height: number,
-    look: Look = this.look,
+    look: Look = this.displayLook,
+    backgrounds?: readonly (RenderBackground | null | undefined)[],
   ): Promise<string[]> {
-    const shown = this.look
-    if (look !== shown) {
-      this.applyLook(look)
-      await this.whenLoaded()
-    }
-    try {
-      return await this.shoot(views, width, height)
-    } finally {
-      if (!this.disposed && this.look !== shown) this.applyLook(shown)
-    }
+    // Capture and camera thumbnails share one renderer and may request different looks.
+    const captures = this.captureQueue.then(async () => {
+      if (this.disposed) return []
+      this.captureLook = look
+      try {
+        if (look !== this.look) this.applyLook(look)
+        await this.whenLoaded()
+        return await this.shoot(views, width, height, backgrounds)
+      } finally {
+        this.captureLook = null
+        if (!this.disposed && this.look !== this.displayLook) this.applyLook(this.displayLook)
+      }
+    })
+    this.captureQueue = captures.then(
+      () => undefined,
+      () => undefined,
+    )
+    return captures
   }
 
   private async shoot(
-    views: readonly Pick<Camera, 'position' | 'target' | 'fovDeg'>[],
+    views: readonly ShotView[],
     width: number,
     height: number,
+    backgrounds?: readonly (RenderBackground | null | undefined)[],
   ): Promise<string[]> {
     const shot = new THREE.PerspectiveCamera(48, width / height, 0.05, 300)
     const images: string[] = []
-    for (const view of views) {
+    let output: HTMLCanvasElement | null = null
+    for (const [index, view] of views.entries()) {
       await new Promise((resolve) => setTimeout(resolve, 0))
+      if (this.disposed) break
+      const background = backgrounds?.[index]
+      const photo = background ? await this.photoFor(background.image.url) : null
       if (this.disposed) break
       const size = this.renderer.getSize(new THREE.Vector2())
       const ratio = this.renderer.getPixelRatio()
-      this.renderer.setPixelRatio(1)
-      this.renderer.setSize(width, height, false)
-      shot.position.set(...view.position)
-      shot.fov = view.fovDeg
-      shot.updateProjectionMatrix()
-      shot.lookAt(...view.target)
-      this.renderer.render(this.scene, shot)
-      images.push(this.canvas.toDataURL('image/png'))
-      this.renderer.setPixelRatio(ratio)
-      this.renderer.setSize(size.x, size.y, false)
-      this.renderer.render(this.scene, this.camera)
+      try {
+        this.renderer.setPixelRatio(1)
+        this.renderer.setSize(width, height, false)
+        shot.position.set(...view.position)
+        shot.fov = view.fovDeg
+        shot.updateProjectionMatrix()
+        if (background) {
+          // Match the editor's orbit limit for stored near-horizontal views, including 入口方向.
+          const target = new THREE.Vector3(...view.target)
+          const orbit = new THREE.Spherical().setFromVector3(shot.position.clone().sub(target))
+          if (orbit.phi > this.controls.maxPolarAngle) {
+            orbit.phi = this.controls.maxPolarAngle
+            shot.position.setFromSpherical(orbit).add(target)
+          }
+        }
+        shot.lookAt(...view.target)
+        if (background && photo) {
+          if (!output) {
+            output = document.createElement('canvas')
+            output.width = width
+            output.height = height
+          }
+          const context = output.getContext('2d')
+          if (!context) throw new Error('浏览器无法合成背景图片')
+          this.renderLayer(shot, {
+            transparent: true,
+            hideWalls: !background.showTransparentWalls,
+            hideMarks: true,
+          })
+          drawBackgroundComposition(context, background, photo, this.canvas)
+          images.push(output.toDataURL('image/png'))
+        } else {
+          this.renderer.render(this.scene, shot)
+          images.push(this.canvas.toDataURL('image/png'))
+        }
+      } finally {
+        this.renderer.setPixelRatio(ratio)
+        this.renderer.setSize(size.x, size.y, false)
+        this.renderLive()
+      }
     }
     return images
+  }
+
+  private renderLayer(
+    camera: THREE.Camera,
+    options: { transparent?: boolean; hideWalls: boolean; hideMarks?: boolean },
+  ) {
+    const originalBackground = this.scene.background
+    const clearAlpha = this.renderer.getClearAlpha()
+    const marksVisible = this.marks.visible
+    const hiddenWalls = options.hideWalls
+      ? this.room.children.filter((object) => object.visible && object.userData['boundaryWall'])
+      : []
+    try {
+      for (const wall of hiddenWalls) wall.visible = false
+      if (options.hideMarks) this.marks.visible = false
+      if (options.transparent) {
+        this.scene.background = null
+        this.renderer.setClearAlpha(0)
+      }
+      this.renderer.render(this.scene, camera)
+    } finally {
+      for (const wall of hiddenWalls) wall.visible = true
+      this.marks.visible = marksVisible
+      if (options.transparent) {
+        this.scene.background = originalBackground
+        this.renderer.setClearAlpha(clearAlpha)
+      }
+    }
+  }
+
+  private renderLive() {
+    const output = this.compositionCanvas
+    if (!output || !this.liveBackground) {
+      if (output) output.style.visibility = 'hidden'
+      if (this.hideBoundaryWalls) this.renderLayer(this.camera, { hideWalls: true })
+      else this.renderer.render(this.scene, this.camera)
+      return
+    }
+    const { background, photo } = this.liveBackground
+    const { width, height } = this.canvas
+    if (output.width !== width) output.width = width
+    if (output.height !== height) output.height = height
+    const context = output.getContext('2d')
+    if (!context) {
+      output.style.visibility = 'hidden'
+      this.renderer.render(this.scene, this.camera)
+      return
+    }
+    this.renderLayer(this.camera, {
+      transparent: true,
+      hideWalls: !background.showTransparentWalls,
+    })
+    drawBackgroundComposition(context, background, photo, this.canvas)
+    output.style.visibility = 'visible'
   }
 
   resize(width: number, height: number) {
@@ -558,7 +701,7 @@ export class WhiteScene {
     if (this.frame || this.disposed) return
     this.frame = requestAnimationFrame(() => {
       this.frame = 0
-      this.renderer.render(this.scene, this.camera)
+      this.renderLive()
     })
   }
 
