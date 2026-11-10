@@ -72,7 +72,7 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 
 
 | 2026-11-10 | Codex主开发 | `codex/stage-cameras-20261110` | 四阶段视角API、默认初始化及继承 | API cameras/service.ts及routes.ts、视角测试、openapi.json、schema.d.ts、看板 | 无 | 已登记，3070/5250，沿用node_cameras |
-| 2026-11-10 | Codex模型窗口（前端） | `codex/compact-header-views-20261110` | 顶部项目下拉/信息收纳，各阶段视角移左栏且可编辑 | AppNav.tsx、ProjectPage.tsx、Workbench.tsx、ProjectCard.tsx、WorkbenchLayout.tsx、PlanEditor.tsx、CameraPanel.tsx、RenderStage.tsx及样式/测试 | 无 | 已派发，3071/5251；前端api.ts由UI接线，生成文件主开发负责 |
+| 2026-11-10 | Codex模型窗口（前端） | `codex/compact-header-views-20261110` | 顶部项目下拉/信息收纳，各阶段视角移左栏且可编辑 | AppNav.tsx、ProjectPage.tsx、Workbench.tsx、ProjectCard.tsx、WorkbenchLayout.tsx、PlanEditor.tsx、CameraPanel.tsx、RenderStage.tsx、render-background/state.ts及样式/测试 | 无 | 已派发，3071/5251；前端api.ts由UI接线，生成文件主开发负责 |
 | 2026-11-10 | Codex QA | `codex/compact-header-views-qa-20261110` | 紧凑顶栏与四阶段视角独立验收 | 专项验收文档 | 无 | 已派发，3073/5253，独立库 |
 
 ## 4. 共用热点文件（改动前必须在第 3 节登记）
