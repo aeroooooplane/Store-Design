@@ -9,13 +9,21 @@
 - 每视角同步上传锁、串行保存和版本检查；旧响应仅确认对应快照。保存失败保留本地编辑，可重试或明确放弃重载。渲染/交付等待保存，失败和过期图阻止交付。
 - 独立样式使用品牌变量，预览固定 3:2，与 1800×1200 渲染坐标一致；手柄保持屏幕尺寸。
 
-## 候选验收
+## 验收
 
 2026-11-10：独立 worktree，API 3071 使用内存数据库，前端 5251；未操作主库、主服务或共享资源。测试图片为本地生成的网格/色块，场景采用无道具的房间，能检查地面遮挡与照片坐标。真实道具及最终交付一致性由独立验收窗口补充。
 
 Chrome 实际浏览器 18 项通过：正常入口选图、精确变换、闭合遮罩、顶点拖动撤销、辅助线退出后保留与显隐、旋转缩放对齐、照片移动撤销、墙显隐、跨视角隔离、刷新恢复、保存失败重试、替换撤销、移除撤销、辅助线删除撤销、遮罩删除撤销、渲染等待保存、390px 无横溢、零 pageerror。
 
-证据在本机 `C:/Users/insta360/Documents/Codex/ui-review/render-background-ui/`：`results.json`、`verify.cjs`、`desktop-editor.png`、`narrow-editor.png`。专项 14 项通过；候选全仓 web 317 项通过，完整检查和补充入口测试结果待最终更新。
+额外读取实际 1800×1200 PNG：两个遮罩内部采样点与原照片像素一致，辅助线上的采样点仍为原照片颜色；渲染 ZIP 含有逐字节一致的 PNG。实际编辑页和渲染图页截图均已核对。浏览器实际生成双 PDF（10/9 页）与交付 ZIP，交付 ZIP 含同一 PNG；包含像素修复后重新运行上述 18 项和输出检查通过。
+
+独立 QA 发现空视角取消选图后墙体未恢复。`af0f2fab` 修复两个入口的原生 cancel 监听：无背景返回三维，已有背景保留设置。专项 16 项及实际 Chrome 三种取消路径通过，空视角取消前后画布逐字节一致，独立 QA 已复验清除此项。
+
+UI 窗口另补四项真实键盘组合：输入框 Ctrl+Z 恢复原文字且不改变背景保存值；A、B 分别修改后在 B 撤销只恢复 B；切回 A 撤销只恢复 A；A 重做及再次撤销均恢复正确值。该补测属于 UI 验收，未改写独立 QA 的覆盖声明。
+
+证据在本机 `C:/Users/insta360/Documents/Codex/ui-review/render-background-ui/`：`results.json`、`verify.cjs`、`output-results.json`、`output-check.cjs`、`cancel-check.cjs`、`keyboard-results.json`、`keyboard-check.cjs`、`desktop-editor.png`、`desktop-render.png`、`narrow-editor.png`。合入 `7084468b` 像素修复后，全仓 `pnpm check` 788 项（shared 256、database 7、web 319、api 206）及 `pnpm format:check` 再次通过。
+
+独立 QA 的 BG05 曾发现旋转照片添加遮罩后外部少量像素最大差 6。`7084468b` 将擦除移到单独模型缓冲后，独立 QA 在 20° 旋转、75% 宽度下复验：约 2 像素的几何抗锯齿带以外差异为 0，未放宽色差公差；旧无罩图及撤销恢复图逐字节一致。双 ZIP、双 PDF 与选配 PPT 使用最终候选成图核对通过，已复现阻塞清除，见[独立验收记录](render-background-qa-20261110.md)。近水平视角预览/截图对照引用模型窗口 Viewer 实测，独立 QA 未重复覆盖；其他单项覆盖边界以其记录为准。
 
 ## 边界
 
