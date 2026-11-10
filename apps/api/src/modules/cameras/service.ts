@@ -22,7 +22,7 @@ const { nodeCameras } = schema
 type CameraRow = typeof nodeCameras.$inferSelect
 
 /** Every saved design stage owns its own view records. */
-const CAMERA_NODE_KINDS = new Set(['space', 'plan', 'white', 'render'])
+const CAMERA_NODE_KINDS = new Set(['space', 'plan', 'edit', 'white', 'render'])
 
 function toNodeCamera(row: CameraRow): NodeCamera {
   return {

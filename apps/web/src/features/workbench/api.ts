@@ -30,6 +30,7 @@ import type {
   RenderedMode,
 } from '@store/shared'
 import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
+import { displayKeys } from '../display/queries.ts'
 
 /** Every response is parsed with the shared schemas, so runtime data matches the types. */
 export const workbenchKeys = {
@@ -253,6 +254,7 @@ export function useCameraAction(nodeId: string) {
       await client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) })
       // A re-aimed view makes its images stale.
       await client.invalidateQueries({ queryKey: workbenchKeys.renders(nodeId) })
+      await client.invalidateQueries({ queryKey: displayKeys.node(nodeId) })
     },
   })
 }

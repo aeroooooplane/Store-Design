@@ -46,6 +46,9 @@ it('puts project actions in the project menu and project information after setti
   expect(within(menu).getByRole('link', { name: '导出项目' }).getAttribute('href')).toBe(
     '/project-export',
   )
-  fireEvent.keyDown(menu, { key: 'Escape' })
+  fireEvent.keyDown(within(menu).getByRole('link', { name: '导出项目' }), { key: 'Escape' })
+  expect(menu.open).toBe(false)
+  fireEvent.click(within(nav).getByText('项目', { selector: 'summary span' }))
+  fireEvent.pointerDown(screen.getByText('工作区域'))
   expect(menu.open).toBe(false)
 })

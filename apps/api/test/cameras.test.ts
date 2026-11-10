@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { DEFAULT_VIEW_NAMES, MAX_CAMERAS_PER_NODE } from '@store/shared'
 import type { NodeCamera, NodeCameraList, NodeCreated } from '@store/shared'
-import { api, placeholderLayout as layout, whiteChain } from './fixtures.ts'
+import { api, placeholderLayout as layout, seedLegacyEdit, whiteChain } from './fixtures.ts'
 import { createTestApp } from './helpers.ts'
 import type { TestApp } from './helpers.ts'
 
@@ -28,6 +28,20 @@ const list = async (nodeId: string, includeDeleted = false) =>
 const view = { name: '收银台近景', position: [6, 1.6, 5], target: [7, 1, 1], fovDeg: 55 }
 
 describe('cameras', () => {
+  it('initializes and edits saved views on an imported legacy edit node', async () => {
+    const { project, plan } = await whiteModel()
+    const legacy = await seedLegacyEdit(t, project.id, plan.id, '旧版调整', layout)
+    const initialized = await inject('POST', `/nodes/${legacy.id}/cameras/initialize`)
+    expect(initialized.statusCode).toBe(200)
+    expect(initialized.json<NodeCameraList>().cameras).toHaveLength(8)
+    expect((await inject('POST', `/nodes/${legacy.id}/cameras`, view)).statusCode).toBe(201)
+    const [first] = await list(legacy.id)
+    expect(
+      (await inject('PATCH', `/cameras/${first?.id}`, { name: '旧图视角', fovDeg: 42 })).statusCode,
+    ).toBe(200)
+    expect((await inject('DELETE', `/cameras/${first?.id}`)).statusCode).toBe(200)
+    expect((await inject('POST', `/cameras/${first?.id}/restore`)).statusCode).toBe(200)
+  })
   it('gives a confirmed white model eight defaults and allows a plan to add views', async () => {
     const { plan, white } = await whiteModel()
     const cameras = await list(white.id)

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Boxes, ChevronDown, FolderKanban, Settings } from 'lucide-react'
@@ -32,6 +32,31 @@ export function AppLayout() {
   const project = useMatch('/projects/:projectId')
   const [actions, setActions] = useState<HTMLDivElement | null>(null)
   const [info, setInfo] = useState<HTMLDivElement | null>(null)
+  const menu = useRef<HTMLDetailsElement>(null)
+  useEffect(() => {
+    // Export is portaled from the project page. Native listeners include its DOM events.
+    function closeOutside(event: PointerEvent) {
+      if (menu.current && event.target instanceof Node && !menu.current.contains(event.target))
+        menu.current.open = false
+    }
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key !== 'Escape' || !menu.current?.open) return
+      menu.current.open = false
+      menu.current.querySelector('summary')?.focus()
+    }
+    function closeOnLink(event: MouseEvent) {
+      if (event.target instanceof Element && menu.current?.contains(event.target.closest('a')))
+        menu.current.open = false
+    }
+    document.addEventListener('pointerdown', closeOutside)
+    document.addEventListener('keydown', closeOnEscape)
+    document.addEventListener('click', closeOnLink)
+    return () => {
+      document.removeEventListener('pointerdown', closeOutside)
+      document.removeEventListener('keydown', closeOnEscape)
+      document.removeEventListener('click', closeOnLink)
+    }
+  }, [])
   return (
     <ProjectNavContext.Provider value={{ actions, info }}>
       <nav className={project ? 'app-nav app-nav-project' : 'app-nav'} aria-label="主导航">
@@ -44,20 +69,11 @@ export function AppLayout() {
         <div className="app-nav-links">
           {project ? (
             <details
+              ref={menu}
               className="app-project-menu"
               key={project.params.projectId}
               onBlur={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget))
-                  event.currentTarget.open = false
-              }}
-              onKeyDown={(event) => {
-                if (event.key === 'Escape' && event.currentTarget.open) {
-                  event.currentTarget.open = false
-                  event.currentTarget.querySelector('summary')?.focus()
-                }
-              }}
-              onClick={(event) => {
-                if (event.target instanceof Element && event.target.closest('a'))
                   event.currentTarget.open = false
               }}
             >

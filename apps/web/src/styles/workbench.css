@@ -904,7 +904,7 @@ ul.issues li.warning {
   height: calc(100vh - var(--nav-height) - 130px);
   overflow: visible;
 }
-@media (max-width: 1180px) {
+@media (max-width: 959px) {
   .wb-layout,
   .wb-layout.no-right {
     grid-template-columns: minmax(0, 1fr);
@@ -1802,9 +1802,10 @@ ul.issues li.warning {
 .stage-row button {
   min-height: 36px;
 }
-@media (min-width: 1181px) and (min-height: 600px) {
+@media (min-width: 960px) and (min-height: 540px) {
   .page.page-workbench {
     height: calc(100dvh - var(--nav-height));
+    min-height: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -1885,7 +1886,7 @@ ul.issues li.warning {
     overflow: auto;
   }
 }
-@media (max-width: 1180px), (max-height: 599px) {
+@media (max-width: 959px), (max-height: 539px) {
   .wb-layout,
   .wb-layout.no-right {
     grid-template-columns: minmax(0, 1fr);
