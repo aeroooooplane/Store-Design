@@ -9,6 +9,44 @@ from pathlib import Path
     "需要完整训练环境",
 )
 class TrainingInputTests(unittest.TestCase):
+    def test_multipart_reader_keeps_warehouse_and_excludes_corridor(self):
+        from PIL import Image
+        from train import read_samples
+        from dataset import save, outline_mask
+
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            p = {
+                "imageSize": [64, 64],
+                "polygonsPx": [
+                    [[4, 4], [20, 4], [20, 20], [4, 20]],
+                    [[4, 40], [55, 40], [55, 55], [4, 55]],
+                ],
+            }
+            Image.new("L", (64, 64), 255).save(root / "image.png")
+            mask = outline_mask(p)
+            mask.save(root / "mask.png")
+            save(root / "polygon.json", p)
+            manifest = {
+                "samples": [
+                    {
+                        "store_id": "SYN-002",
+                        "split": "train",
+                        "image": "image.png",
+                        "mask": "mask.png",
+                        "polygon": "polygon.json",
+                    }
+                ]
+            }
+            y = read_samples(root, manifest, 64)[0]["y"][0, 0]
+            self.assertEqual(float(y[10, 10]), 1)
+            self.assertEqual(float(y[45, 10]), 1)
+            self.assertEqual(float(y[30, 10]), 0)
+            mask.putpixel((10, 30), 255)
+            mask.save(root / "mask.png")
+            with self.assertRaisesRegex(ValueError, "掩膜"):
+                read_samples(root, manifest, 64)
+
     def test_black_variant_keeps_coordinates_and_contrast_order(self):
         from PIL import Image, ImageDraw
         from drawing_input import synthetic_dark_page, normalize_polarity

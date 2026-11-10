@@ -57,6 +57,7 @@ class BundleTests(unittest.TestCase):
                 {
                     "store_id": id,
                     "status": "admitted",
+                    "imageSize": [10, 10],
                     "polygonPx": points,
                     "imageSha256": s["image"],
                 }
@@ -86,7 +87,7 @@ class BundleTests(unittest.TestCase):
 
         with patch("dataset.load", side_effect=lambda p: docs[rel(p)]), patch(
             "dataset.sha", side_effect=digest
-        ):
+        ), patch("dataset.check_mask"):
             return validate(root)
 
     def test_complete_fixture_passes(self):

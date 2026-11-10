@@ -13,11 +13,11 @@ import time
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image
 import torch
 from torch import nn
 import torch.nn.functional as F
-from dataset import load, save, sha, need, validate, within
+from dataset import load, save, sha, need, validate, within, outline_mask
 from export_model import export_onnx
 from drawing_input import normalize_polarity, synthetic_dark_page
 
@@ -93,8 +93,7 @@ def read_samples(root, m, side, normalize_input=False):
             list(im.size) == p["imageSize"] and im.size == mask.size,
             "图像、标签坐标系不同",
         )
-        expected = Image.new("L", im.size)
-        ImageDraw.Draw(expected).polygon([tuple(p) for p in p["polygonPx"]], fill=255)
+        expected = outline_mask(p)
         need(np.array_equal(np.array(mask), np.array(expected)), "掩膜与多边形不符")
         if normalize_input:
             im, _ = normalize_polarity(im)
