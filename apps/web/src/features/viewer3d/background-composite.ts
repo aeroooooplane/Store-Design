@@ -53,26 +53,20 @@ export function drawBackgroundComposition(
     context.globalAlpha = 1
     context.globalCompositeOperation = 'source-over'
     context.fillStyle = SCENE_BACKGROUND
-    context.fillRect(0, 0, width, height)
-    context.setTransform(matrix)
-    context.drawImage(photo, 0, 0, 1, 1)
-    context.resetTransform()
+    context.clearRect(0, 0, width, height)
     context.drawImage(modelLayer, 0, 0, width, height)
 
     if (background.masks.length) {
-      context.save()
-      try {
-        context.clip(maskPath(background, matrix))
-        // Replace the covered 3D pixels even where the original PNG is translucent.
-        context.globalCompositeOperation = 'copy'
-        context.setTransform(matrix)
-        context.drawImage(photo, 0, 0, 1, 1)
-      } finally {
-        context.restore()
-      }
-      context.globalCompositeOperation = 'destination-over'
-      context.fillRect(0, 0, width, height)
+      // Erase just the 3D layer, so the mask edge leaves unchanged photo pixels untouched.
+      context.globalCompositeOperation = 'destination-out'
+      context.fill(maskPath(background, matrix))
     }
+
+    context.globalCompositeOperation = 'destination-over'
+    context.setTransform(matrix)
+    context.drawImage(photo, 0, 0, 1, 1)
+    context.resetTransform()
+    context.fillRect(0, 0, width, height)
   } finally {
     context.restore()
   }
