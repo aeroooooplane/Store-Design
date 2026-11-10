@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest'
+import { RenderBackgroundSchema } from '@store/shared'
 import { BackgroundDrafts, newBackground } from './state.ts'
 import type { SavedBackground, BackgroundValue } from './state.ts'
 
@@ -24,6 +25,17 @@ describe('background drafts', () => {
       guidesVisible: true,
       showTransparentWalls: false,
     })
+  })
+  it('creates a schema-valid initial background for an accepted 1 by 8192 image', () => {
+    const value = newBackground({
+      ...image,
+      fileId: '99999999-9999-4999-8999-999999999999',
+      url: '/api/v1/files/99999999-9999-4999-8999-999999999999',
+      width: 1,
+      height: 8192,
+    })
+    expect(value.transform.width).toBe(0.01)
+    expect(RenderBackgroundSchema.parse(value)).toEqual(value)
   })
   it('serializes saves, binds expected revisions and does not replace newer local edits with an old response', async () => {
     const a = deferred<SavedBackground>(),

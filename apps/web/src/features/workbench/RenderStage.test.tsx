@@ -355,6 +355,34 @@ describe('RenderStage', () => {
     expect(api.backgroundSaves).toHaveLength(1)
   })
 
+  it('does not save or add undo history when an unchanged rounded fractional field loses focus', async () => {
+    const a = camera(0, '正面')
+    const api = fakeApi([a], [image(a.id, 'material')])
+    show()
+    await screen.findByText(/已渲染 1\/1 张/)
+    fireEvent.click(screen.getByRole('button', { name: '背景编辑' }))
+    fireEvent.change(screen.getByLabelText('选择背景图片'), {
+      target: { files: [new File(['png'], '竖图.png', { type: 'image/png' })] },
+    })
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(1))
+    await screen.findByText('已保存')
+    const width = screen.getByLabelText('宽度（%）')
+    expect(api.backgroundSaves[0]?.background?.transform.width).toBeCloseTo(4 / 9, 12)
+    fireEvent.focus(width)
+    fireEvent.blur(width)
+    await screen.findByText('已保存')
+    expect(api.backgroundSaves).toHaveLength(1)
+    fireEvent.focus(width)
+    fireEvent.change(width, { target: { value: '60' } })
+    fireEvent.change(width, { target: { value: '44.44' } })
+    fireEvent.blur(width)
+    await screen.findByText('已保存')
+    expect(api.backgroundSaves).toHaveLength(1)
+    fireEvent.click(screen.getByRole('button', { name: '撤销' }))
+    await waitFor(() => expect(api.backgroundSaves).toHaveLength(2))
+    expect(api.backgroundSaves[1]?.background).toBeNull()
+  })
+
   it('keeps conflicting local background and undo, blocks delivery, and rejects invalid uploads', async () => {
     const a = camera(0, '正面')
     const api = fakeApi([a], [image(a.id, 'material')])

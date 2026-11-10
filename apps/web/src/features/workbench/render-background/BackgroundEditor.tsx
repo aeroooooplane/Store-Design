@@ -49,10 +49,19 @@ function Numeric({
   const [text, setText] = useState(String(value))
   const [active, setActive] = useState(false)
   const cancelled = useRef(false)
+  const initialText = useRef(String(Math.round(value * 100) / 100))
   const displayed = active ? text : String(Math.round(value * 100) / 100)
   const commit = () => {
     const n = Number(text)
-    if (!cancelled.current && text.trim() && Number.isFinite(n) && n >= min && n <= max) onChange(n)
+    if (
+      !cancelled.current &&
+      text !== initialText.current &&
+      text.trim() &&
+      Number.isFinite(n) &&
+      n >= min &&
+      n <= max
+    )
+      onChange(n)
     cancelled.current = false
     setActive(false)
   }
@@ -67,7 +76,8 @@ function Numeric({
         step="0.1"
         disabled={disabled}
         onFocus={() => {
-          setText(String(Math.round(value * 100) / 100))
+          initialText.current = String(Math.round(value * 100) / 100)
+          setText(initialText.current)
           setActive(true)
         }}
         onChange={(e) => setText(e.target.value)}

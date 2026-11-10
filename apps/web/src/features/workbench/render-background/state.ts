@@ -22,7 +22,7 @@ export function newBackground(image: BackgroundImage): RenderBackground {
     transform: {
       x: 0.5,
       y: 0.5,
-      width: Math.min(1, image.width / image.height / 1.5),
+      width: Math.max(0.01, Math.min(1, image.width / image.height / 1.5)),
       rotationDeg: 0,
     },
     masks: [],
