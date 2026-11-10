@@ -1,6 +1,21 @@
 import type { BackgroundPoint, RenderBackground } from '@store/shared'
 
 export const SCENE_BACKGROUND = '#e8eaed'
+const modelBuffers = new WeakMap<CanvasRenderingContext2D, CanvasRenderingContext2D>()
+
+function modelBuffer(output: CanvasRenderingContext2D): CanvasRenderingContext2D {
+  let buffer = modelBuffers.get(output)
+  if (!buffer) {
+    const created = document.createElement('canvas').getContext('2d')
+    if (!created) throw new Error('浏览器无法合成三维模型层')
+    buffer = created
+    modelBuffers.set(output, buffer)
+  }
+  const { width, height } = output.canvas
+  if (buffer.canvas.width !== width) buffer.canvas.width = width
+  if (buffer.canvas.height !== height) buffer.canvas.height = height
+  return buffer
+}
 
 /** Converts a point in the original photo (0…1) to the target frame's pixel coordinates. */
 export function backgroundPhotoMatrix(
@@ -47,6 +62,16 @@ export function drawBackgroundComposition(
 ): void {
   const { width, height } = context.canvas
   const matrix = backgroundPhotoMatrix(background, width, height)
+  const model = modelBuffer(context)
+  model.globalCompositeOperation = 'source-over'
+  model.clearRect(0, 0, width, height)
+  model.drawImage(modelLayer, 0, 0, width, height)
+  if (background.masks.length) {
+    // Erase on the model buffer so rotated photo sampling does not depend on the masks.
+    model.globalCompositeOperation = 'destination-out'
+    model.fill(maskPath(background, matrix))
+  }
+
   context.save()
   try {
     context.resetTransform()
@@ -54,13 +79,7 @@ export function drawBackgroundComposition(
     context.globalCompositeOperation = 'source-over'
     context.fillStyle = SCENE_BACKGROUND
     context.clearRect(0, 0, width, height)
-    context.drawImage(modelLayer, 0, 0, width, height)
-
-    if (background.masks.length) {
-      // Erase just the 3D layer, so the mask edge leaves unchanged photo pixels untouched.
-      context.globalCompositeOperation = 'destination-out'
-      context.fill(maskPath(background, matrix))
-    }
+    context.drawImage(model.canvas, 0, 0)
 
     context.globalCompositeOperation = 'destination-over'
     context.setTransform(matrix)
