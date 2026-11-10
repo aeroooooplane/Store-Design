@@ -42,6 +42,8 @@ it('上传后按版本保存、重载、撤销移除，旧渲染上传不能冒�
     guides: [],
     guidesVisible: true,
     showTransparentWalls: false,
+    showFloor: false,
+    modelOpacity: 0.45,
   }
   const saved = await inject('PATCH', `/cameras/${camera.id}`, {
     background,
@@ -177,6 +179,24 @@ it('辅助线显隐不改变渲染签名，照片、遮罩与墙显隐改变签�
     showTransparentWalls: false,
   }
   const signature = cameraSignature({ ...camera, background })
+  expect(
+    cameraSignature({ ...camera, background: { ...background, showFloor: true, modelOpacity: 1 } }),
+  ).toBe(signature)
+  expect(cameraSignature({ ...camera, background: { ...background, showFloor: false } })).not.toBe(
+    signature,
+  )
+  expect(cameraSignature({ ...camera, background: { ...background, modelOpacity: 0 } })).not.toBe(
+    signature,
+  )
+  expect(cameraSignature({ ...camera, background: { ...background, modelOpacity: 0.5 } })).not.toBe(
+    signature,
+  )
+  expect(RenderBackgroundSchema.safeParse({ ...background, modelOpacity: -0.01 }).success).toBe(
+    false,
+  )
+  expect(RenderBackgroundSchema.safeParse({ ...background, modelOpacity: 1.01 }).success).toBe(
+    false,
+  )
   expect(
     cameraSignature({
       ...camera,

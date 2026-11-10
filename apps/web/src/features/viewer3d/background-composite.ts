@@ -79,7 +79,9 @@ export function drawBackgroundComposition(
     context.globalCompositeOperation = 'source-over'
     context.fillStyle = SCENE_BACKGROUND
     context.clearRect(0, 0, width, height)
+    context.globalAlpha = background.modelOpacity ?? 1
     context.drawImage(model.canvas, 0, 0)
+    context.globalAlpha = 1
 
     context.globalCompositeOperation = 'destination-over'
     context.setTransform(matrix)

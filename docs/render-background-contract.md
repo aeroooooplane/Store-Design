@@ -40,6 +40,8 @@ type RenderBackground = {
   guides: { id: string; points: [BackgroundPoint, BackgroundPoint] }[]
   guidesVisible: boolean
   showTransparentWalls: boolean
+  showFloor?: boolean // 缺省为true，控制地板及地板收边
+  modelOpacity?: number // 0到1，缺省为1，作用于整个三维合成层
 }
 ```
 
@@ -51,7 +53,7 @@ Camera另有backgroundRevision可选整数，历史缺省0。PATCH /api/v1/camer
 
 模型窗口提供独立合成函数供预览与导出复用，接收RenderBackground和透明场景帧。Viewer新增background与hideBoundaryWalls属性，用于背景显示和空编辑临时隐藏半透明墙，普通视角沿用原行为。Viewer3DHandle.renderViews沿用原4参数，增加可选第5参数逐视角background数组，UI始终传入本次视角已保存的背景快照。图片解码失败必须报错并保留原有效图。辅助线由UI编辑层显示，截图只包含合成结果。
 
-背景图、变换、遮罩及透明墙显隐参与渲染过期判定。辅助线及其显隐不参与。渲染开始前保存编辑并等待完成，再生成和上传同一快照，交付入口要求所有渲染为最新。旧图片下载与历史交付仍可追溯。
+背景图、变换、遮罩、透明墙及地板显隐、整体不透明度参与渲染过期判定。辅助线及其显隐不参与。地板显示与不透明度1的显式默认值和历史缺省值生成相同签名。整体不透明度在模型层合成时应用，照片保持原像素，遮罩继续遮盖模型。滑块一次连续拖动作为一步撤销，滑块和显隐复选框获焦时支持Ctrl+Z。渲染开始前保存编辑并等待完成，再生成和上传同一快照，交付入口要求所有渲染为最新。旧图片下载与历史交付仍可追溯。
 
 ## 验收
 
