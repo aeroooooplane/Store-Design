@@ -125,6 +125,15 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const current = all.length - missing.length - stale.length
   const selected = views.find((c) => c.id === chosen) ?? views[0] ?? null
   const selectedDraft = selected ? backgroundEditor.drafts.get(selected.id) : undefined
+  const hasSelectedBackground = !!selectedDraft?.background
+  useEffect(() => {
+    const input = backgroundInput.current
+    const cancel = () => {
+      if (!hasSelectedBackground) setShow('3d')
+    }
+    input?.addEventListener('cancel', cancel)
+    return () => input?.removeEventListener('cancel', cancel)
+  }, [hasSelectedBackground])
   const editing = (selected && backgroundEditor.editing[selected.id]) || emptyEditing()
   const layout = node.layout ?? EMPTY_LAYOUT
   // Same numbering as the PDF legend (the server runs deliveryLegend too).
@@ -335,6 +344,9 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               uploading={backgroundEditor.uploading.has(selected.id)}
               upload={(file) => backgroundEditor.upload(selected.id, file)}
               uploadError={backgroundEditor.errors[selected.id]}
+              cancelUpload={() => {
+                if (!selectedDraft.background) setShow('3d')
+              }}
               reload={() => {
                 if (!window.confirm('放弃当前视角未保存的修改并读取服务器背景？')) return
                 void cameras.refetch().then((result) => {
