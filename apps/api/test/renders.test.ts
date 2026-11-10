@@ -37,10 +37,16 @@ async function seedOldWhite(nodeId: string, cameraId: string) {
   await t.database.db.insert(renders).values({ ...rest, mode: 'white' })
 }
 
-const upload = (nodeId: string, cameraId: string, mode: string, body: Buffer | string) =>
+const upload = (
+  nodeId: string,
+  cameraId: string,
+  mode: string,
+  body: Buffer | string,
+  revision?: number,
+) =>
   t.app.inject({
     method: 'PUT',
-    url: `/api/v1/nodes/${nodeId}/renders/${cameraId}/${mode}`,
+    url: `/api/v1/nodes/${nodeId}/renders/${cameraId}/${mode}${revision === undefined ? '' : `?backgroundRevision=${revision}`}`,
     headers: { 'content-type': typeof body === 'string' ? 'text/plain' : 'image/png' },
     payload: body,
   })
@@ -102,7 +108,8 @@ describe('renders', () => {
     await inject('PATCH', `/cameras/${front.id}`, { fovDeg: 60 })
     expect((await images(render.id))[0]?.stale).toBe(true)
     // A new image for the new pose is current again.
-    await upload(render.id, front.id, 'material', png(96, 64, 10))
+    expect((await upload(render.id, front.id, 'material', png(96, 64, 10), 0)).statusCode).toBe(409)
+    expect((await upload(render.id, front.id, 'material', png(96, 64, 10), 1)).statusCode).toBe(201)
     expect((await images(render.id))[0]?.stale).toBe(false)
   })
 
