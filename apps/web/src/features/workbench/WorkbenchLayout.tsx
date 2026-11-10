@@ -8,12 +8,14 @@ interface WorkbenchLayoutProps {
   models?: ReactNode
   /** Saved views of the current node. */
   cameras?: ReactNode
+  background?: ReactNode
   /** The plan / 3D canvas (or the page's main content). */
   center: ReactNode
   /** Stage actions, selected prop and checks. Without it the centre takes the room. */
   right?: ReactNode
   /** Which tab opens first: the model list in the plan stage, history elsewhere. */
   defaultTab?: LeftTab
+  tabState?: LeftTabState
 }
 
 /** Project details shown in the "空间信息" tab; the workbench provides them to every layout. */
@@ -21,18 +23,20 @@ export const WorkbenchInfoContext = createContext<ReactNode>(null)
 export const CameraPanelVisibility = createContext(true)
 
 /** The open left tab lives in the workbench, so changing step (which remounts the layout) keeps it. */
-export const LeftTabContext = createContext<{
+interface LeftTabState {
   tab: LeftTab | null
   setTab: (tab: LeftTab) => void
-} | null>(null)
+}
+export const LeftTabContext = createContext<LeftTabState | null>(null)
 
-export type LeftTab = 'history' | 'models' | 'info' | 'cameras'
+export type LeftTab = 'history' | 'models' | 'info' | 'cameras' | 'background'
 
 const TAB_LABELS: Record<LeftTab, string> = {
   history: '历史',
   models: '添加模型',
   info: '空间信息',
   cameras: '视角',
+  background: '背景编辑',
 }
 
 /**
@@ -43,11 +47,15 @@ function LeftTabs({
   history,
   models,
   cameras,
+  background,
+  tabState,
   defaultTab = 'history',
 }: {
   history: ReactNode
   models?: ReactNode
   cameras?: ReactNode
+  background?: ReactNode
+  tabState?: LeftTabState
   defaultTab?: LeftTab
 }) {
   const info = useContext(WorkbenchInfoContext)
@@ -56,13 +64,14 @@ function LeftTabs({
     ...(models ? (['models'] as const) : []),
     'info',
     ...(cameras ? (['cameras'] as const) : []),
+    ...(background ? (['background'] as const) : []),
   ]
   const sharedTab = useContext(LeftTabContext)
   const [localTab, setLocalTab] = useState<LeftTab | null>(null)
-  const { tab, setTab } = sharedTab ?? { tab: localTab, setTab: setLocalTab }
+  const { tab, setTab } = tabState ?? sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const current = tab && tabs.includes(tab) ? tab : fallback
-  const panels: Record<LeftTab, ReactNode> = { history, models, info, cameras }
+  const panels: Record<LeftTab, ReactNode> = { history, models, info, cameras, background }
   return (
     <section className="wb-tabs-card">
       <div
@@ -111,14 +120,23 @@ export function WorkbenchLayout({
   left,
   models,
   cameras,
+  background,
   center,
   right,
   defaultTab,
+  tabState,
 }: WorkbenchLayoutProps) {
   return (
     <div className={right ? 'wb-layout' : 'wb-layout no-right'}>
       <aside className="wb-left">
-        <LeftTabs history={left} models={models} cameras={cameras} defaultTab={defaultTab} />
+        <LeftTabs
+          history={left}
+          models={models}
+          cameras={cameras}
+          background={background}
+          defaultTab={defaultTab}
+          tabState={tabState}
+        />
       </aside>
       <div className="wb-center">{center}</div>
       {right ? <aside className="wb-right">{right}</aside> : null}
