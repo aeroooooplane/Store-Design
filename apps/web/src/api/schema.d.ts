@@ -2804,6 +2804,158 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/nodes/{nodeId}/cameras/initialize": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 首次打开阶段视角时初始化默认视角（幂等） */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            /** Format: uuid */
+                            nodeId: string;
+                            cameras: {
+                                /** Format: uuid */
+                                id: string;
+                                /** Format: uuid */
+                                nodeId: string;
+                                sort: number;
+                                camera: {
+                                    name: string;
+                                    position: [
+                                        number,
+                                        number,
+                                        number
+                                    ];
+                                    target: [
+                                        number,
+                                        number,
+                                        number
+                                    ];
+                                    fovDeg: number;
+                                    /** @enum {string} */
+                                    source: "auto" | "user";
+                                    background?: {
+                                        image: {
+                                            /** Format: uuid */
+                                            fileId: string;
+                                            url: string;
+                                            width: number;
+                                            height: number;
+                                            name: string;
+                                        };
+                                        transform: {
+                                            x: number;
+                                            y: number;
+                                            width: number;
+                                            rotationDeg: number;
+                                        };
+                                        masks: {
+                                            id: string;
+                                            points: [
+                                                number,
+                                                number
+                                            ][];
+                                        }[];
+                                        guides: {
+                                            id: string;
+                                            points: [
+                                                [
+                                                    number,
+                                                    number
+                                                ],
+                                                [
+                                                    number,
+                                                    number
+                                                ]
+                                            ];
+                                        }[];
+                                        guidesVisible: boolean;
+                                        showTransparentWalls: boolean;
+                                    } | null;
+                                    backgroundRevision?: number;
+                                };
+                                deletedAt: string | null;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/nodes/{nodeId}/cameras": {
         parameters: {
             query?: never;
@@ -2811,7 +2963,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 白模节点的视角列表（按顺序；includeDeleted=true 含已删除） */
+        /** 阶段视角列表（按顺序；includeDeleted=true 含已删除） */
         get: {
             parameters: {
                 query?: {

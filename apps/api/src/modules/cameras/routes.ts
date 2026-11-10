@@ -61,12 +61,25 @@ export const cameraRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageR
         )
     },
   )
+  app.post(
+    '/nodes/:nodeId/cameras/initialize',
+    {
+      config: writeLimit,
+      schema: {
+        tags: ['cameras'],
+        summary: '首次打开阶段视角时初始化默认视角（幂等）',
+        params: NodeParams,
+        response: { 200: NodeCameraListSchema, ...errors },
+      },
+    },
+    (request) => service.initializeCameras(db, request.ctx, request.params.nodeId),
+  )
   app.get(
     '/nodes/:nodeId/cameras',
     {
       schema: {
         tags: ['cameras'],
-        summary: '白模节点的视角列表（按顺序；includeDeleted=true 含已删除）',
+        summary: '阶段视角列表（按顺序；includeDeleted=true 含已删除）',
         params: NodeParams,
         querystring: z.object({ includeDeleted: z.enum(['true', 'false']).default('false') }),
         response: { 200: NodeCameraListSchema, ...errors },
