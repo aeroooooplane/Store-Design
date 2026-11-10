@@ -14,6 +14,8 @@ import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import { findNode, requireActiveProject } from '../nodes/repository.ts'
+import { validateBackgroundImage } from './background.ts'
+import type { StorageRoots } from '../../lib/storage.ts'
 
 const { nodeCameras } = schema
 type CameraRow = typeof nodeCameras.$inferSelect
@@ -137,25 +139,48 @@ export async function updateCamera(
   ctx: RequestContext,
   cameraId: string,
   patch: CameraUpdate,
+  roots?: StorageRoots,
 ): Promise<NodeCamera> {
-  const row = await findCamera(db, cameraId)
-  const node = await findNode(db, row.nodeId)
-  authorize(ctx.actor, 'camera:write', { projectId: node.projectId })
-  await requireActiveProject(db, node.projectId)
-  if (row.deletedAt) throw new AppError('INVALID_STATE', '视角已删除，请先恢复')
-  const reaimed = patch.position ?? patch.target ?? patch.fovDeg
-  const camera: Camera = {
-    ...row.camera,
-    ...patch,
-    source: reaimed === undefined ? row.camera.source : 'user',
-  }
-  const [updated] = await db
-    .update(nodeCameras)
-    .set({ camera })
-    .where(eq(nodeCameras.id, cameraId))
-    .returning()
-  if (!updated) throw notFound('视角')
-  return toNodeCamera(updated)
+  return db.transaction(async (tx) => {
+    const [row] = await tx
+      .select()
+      .from(nodeCameras)
+      .where(eq(nodeCameras.id, cameraId))
+      .for('update')
+    if (!row) throw notFound('视角')
+    const node = await findNode(tx, row.nodeId)
+    authorize(ctx.actor, 'camera:write', { projectId: node.projectId })
+    await requireActiveProject(tx, node.projectId)
+    if (row.deletedAt) throw new AppError('INVALID_STATE', '视角已删除，请先恢复')
+    const { expectedBackgroundRevision, ...fields } = patch
+    const changingBackground = Object.hasOwn(fields, 'background')
+    if (changingBackground) {
+      if (node.kind !== 'render') throw new AppError('INVALID_STATE', '请在渲染步骤设置背景')
+      if (expectedBackgroundRevision !== (row.camera.backgroundRevision ?? 0)) {
+        throw new AppError('REVISION_CONFLICT', '背景已更新，请重新读取后再保存')
+      }
+      if (fields.background) {
+        if (!roots) throw new Error('Background storage roots missing')
+        await validateBackgroundImage(tx, node.projectId, fields.background.image, roots)
+      }
+    }
+    const reaimed = patch.position ?? patch.target ?? patch.fovDeg
+    const camera: Camera = {
+      ...row.camera,
+      ...fields,
+      ...(changingBackground
+        ? { backgroundRevision: (row.camera.backgroundRevision ?? 0) + 1 }
+        : {}),
+      source: reaimed === undefined ? row.camera.source : 'user',
+    }
+    const [updated] = await tx
+      .update(nodeCameras)
+      .set({ camera })
+      .where(eq(nodeCameras.id, cameraId))
+      .returning()
+    if (!updated) throw notFound('视角')
+    return toNodeCamera(updated)
+  })
 }
 
 export async function setCameraDeleted(

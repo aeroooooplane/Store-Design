@@ -50,6 +50,7 @@ export const renderRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageR
         consumes: ['image/png'],
         // White renders are no longer made (2026-10-12); old ones are still read.
         params: NodeParams.extend({ cameraId: z.uuid(), mode: z.enum(RENDERED_MODES) }),
+        querystring: z.object({ backgroundRevision: z.coerce.number().int().min(0).optional() }),
         body: z.unknown().describe('PNG 图片'),
         response: { 201: RenderImageSchema, ...errors, 413: ApiErrorSchema },
       },
@@ -60,6 +61,7 @@ export const renderRoutes: FastifyPluginAsyncZod<{ db: Database; roots: StorageR
       }
       const image = await service.saveRender(db, request.ctx, roots, {
         ...request.params,
+        backgroundRevision: request.query.backgroundRevision,
         png: request.body,
       })
       return reply.code(201).send(image)

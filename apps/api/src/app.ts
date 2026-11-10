@@ -55,7 +55,7 @@ export async function buildApp({ config, db }: AppDependencies): Promise<Fastify
   await app.register(exchangeRoutes, { prefix: API_PREFIX, db })
   await app.register(nodeRoutes, { prefix: API_PREFIX, db })
   await app.register(draftRoutes, { prefix: API_PREFIX, db })
-  await app.register(cameraRoutes, { prefix: API_PREFIX, db })
+  await app.register(cameraRoutes, { prefix: API_PREFIX, db, roots })
   await app.register(renderRoutes, { prefix: API_PREFIX, db, roots })
   await app.register(deliveryRoutes, {
     prefix: API_PREFIX,
