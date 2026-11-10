@@ -36,6 +36,12 @@ import { exportPlan } from './plan-export.ts'
 import { PlanView } from './PlanView.tsx'
 import { DeliveryList } from './DeliveryList.tsx'
 import { StagePanel } from './StagePanel.tsx'
+import {
+  BackgroundCanvas,
+  BackgroundTools,
+  emptyEditing,
+} from './render-background/BackgroundEditor.tsx'
+import { useBackgroundEditor } from './render-background/useBackgroundEditor.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 
 const Viewer3D = lazy(() =>
@@ -47,7 +53,7 @@ const NO_FLAGS: ReadonlySet<string> = new Set()
 const EMPTY_LAYOUT: Layout = { schemaVersion: 3, items: [], planning: null }
 
 /** The 3D material view (rotatable), the rendered image of the chosen view, or the 展陈 plan. */
-type Show = '3d' | 'image' | 'display'
+type Show = '3d' | 'image' | 'display' | 'background'
 const NO_NUMBERS: Readonly<Record<string, number>> = {}
 type Target = { camera: NodeCamera; mode: RenderedMode }
 
@@ -77,6 +83,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const renders = useRenders(node.id)
   const client = useQueryClient()
   const viewer = useRef<Viewer3DHandle>(null)
+  const backgroundInput = useRef<HTMLInputElement>(null)
   const [viewerReady, setViewerReady] = useState(false)
   const [show, setShow] = useState<Show>('3d')
   const posed = useRef(false)
@@ -100,6 +107,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
     () => (cameras.data ?? []).filter((c) => c.deletedAt === null),
     [cameras.data],
   )
+  const backgroundEditor = useBackgroundEditor(node.id, views)
   const images = useMemo(
     () =>
       new Map(
@@ -116,27 +124,48 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   const stale = [...images.values()].filter((i) => i.stale)
   const current = all.length - missing.length - stale.length
   const selected = views.find((c) => c.id === chosen) ?? views[0] ?? null
+  const selectedDraft = selected ? backgroundEditor.drafts.get(selected.id) : undefined
+  const hasSelectedBackground = !!selectedDraft?.background
+  useEffect(() => {
+    const input = backgroundInput.current
+    const cancel = () => {
+      if (!hasSelectedBackground) setShow('3d')
+    }
+    input?.addEventListener('cancel', cancel)
+    return () => input?.removeEventListener('cancel', cancel)
+  }, [hasSelectedBackground])
+  const editing = (selected && backgroundEditor.editing[selected.id]) || emptyEditing()
   const layout = node.layout ?? EMPTY_LAYOUT
   // Same numbering as the PDF legend (the server runs deliveryLegend too).
   const numbers = useMemo(() => deliveryLegend(layout.items, assets).numbers, [layout, assets])
   const deliverable = all.length > 0 && missing.length === 0 && stale.length === 0
 
   async function render(targets: Target[]) {
-    if (!viewer.current || progress || !targets.length) return
+    if (!viewer.current || progress || !targets.length || backgroundEditor.uploading.size) return
     setError(null)
     setProgress({ done: 0, total: targets.length })
     const ordered = MODES.flatMap((mode) => targets.filter((t) => t.mode === mode))
     try {
+      const snapshots = await backgroundEditor.drafts.flushAll(views.map((c) => c.id))
+      const backgrounds = new Map(views.map((c, i) => [c.id, snapshots[i]!]))
       for (const [index, { camera, mode }] of ordered.entries()) {
+        const snapshot = backgrounds.get(camera.id)!
         const [url] =
           (await viewer.current?.renderViews(
             [camera.camera],
             RENDER_SIZE.width,
             RENDER_SIZE.height,
             mode,
+            [snapshot.background],
           )) ?? []
         if (!url) throw new Error('三维视图已关闭，渲染中断')
-        const image = await uploadRender(node.id, camera.id, mode, dataUrlToBlob(url))
+        const image = await uploadRender(
+          node.id,
+          camera.id,
+          mode,
+          dataUrlToBlob(url),
+          snapshot.revision,
+        )
         client.setQueryData<NodeRenderList>(workbenchKeys.renders(node.id), (list) =>
           withImage(list, node.id, image),
         )
@@ -161,7 +190,14 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
 
   // Opening a render node renders whatever is still missing, once.
   useEffect(() => {
-    if (started.current || !viewerReady || !cameras.data || !renders.data) return
+    if (
+      started.current ||
+      !viewerReady ||
+      !cameras.data ||
+      !renders.data ||
+      views.some((c) => !backgroundEditor.drafts.get(c.id))
+    )
+      return
     started.current = true
     if (missing.length) void render(missing)
   })
@@ -194,10 +230,22 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   /** Draws the numbered plan at print size, then the server builds both PDFs and the ZIP. */
   async function deliver() {
     const svg = planRef.current
-    if (!svg || exporting) return
+    if (!svg || exporting || backgroundEditor.uploading.size) return
     setDeliveryError(null)
     setExporting(true)
     try {
+      await backgroundEditor.drafts.flushAll(views.map((c) => c.id))
+      const latest = await renders.refetch()
+      if (latest.error) throw latest.error
+      if (
+        views.some(
+          (c) =>
+            !latest.data?.images.some(
+              (image) => image.cameraId === c.id && image.mode === 'material' && !image.stale,
+            ),
+        )
+      )
+        throw new Error('背景已修改，请重新渲染后生成交付')
       const plan = await exportPlan(svg)
       await createDelivery.mutateAsync({
         planPng: plan.png,
@@ -213,12 +261,16 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
 
   function choose(camera: NodeCamera) {
     setChosen(camera.id)
-    if (show === '3d') viewer.current?.showView(camera.camera)
+    if (show === '3d' || show === 'background') viewer.current?.showView(camera.camera)
   }
 
   const mainImage = selected && show === 'image' ? imageOf(selected.id, 'material') : undefined
   const busy = progress !== null
   const delivering = exporting || createDelivery.isPending
+  function openBackground() {
+    setShow('background')
+    if (selected) viewer.current?.showView(selected.camera)
+  }
 
   return (
     <WorkbenchLayout
@@ -234,6 +286,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 [
                   ['3d', '三维查看'],
                   ['image', '渲染图'],
+                  ['background', '背景编辑'],
                   ['display', '展陈'],
                 ] as const
               ).map(([mode, label]) => (
@@ -241,9 +294,11 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   key={mode}
                   type="button"
                   aria-pressed={show === mode}
+                  disabled={busy || delivering}
                   onClick={() => {
                     setShow(mode)
-                    if (mode === '3d' && selected) viewer.current?.showView(selected.camera)
+                    if ((mode === '3d' || mode === 'background') && selected)
+                      viewer.current?.showView(selected.camera)
                   }}
                 >
                   {label}
@@ -252,7 +307,62 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             </div>
             {selected && <span className="hint">{selected.camera.name}</span>}
             {show === '3d' && <span className="hint">拖动旋转，滚轮缩放，右键平移</span>}
+            {show !== 'background' && show !== 'display' && (
+              <button
+                type="button"
+                disabled={!selected || busy || delivering || !!backgroundEditor.uploading.size}
+                onClick={() => {
+                  openBackground()
+                  if (!selectedDraft?.background) backgroundInput.current?.click()
+                }}
+              >
+                {selectedDraft?.background ? '编辑背景图片' : '添加背景图片'}
+              </button>
+            )}
+            <input
+              ref={backgroundInput}
+              type="file"
+              accept="image/png,image/jpeg"
+              className="background-file"
+              aria-label="添加当前视角背景图片"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file && selected) backgroundEditor.upload(selected.id, file)
+                e.target.value = ''
+              }}
+            />
           </div>
+          {show === 'background' && selected && selectedDraft && (
+            <BackgroundTools
+              key={selected.id}
+              cameraId={selected.id}
+              draft={selectedDraft}
+              drafts={backgroundEditor.drafts}
+              editing={editing}
+              setEditing={(value) => backgroundEditor.updateEditing(selected.id, value)}
+              disabled={busy || delivering}
+              uploading={backgroundEditor.uploading.has(selected.id)}
+              upload={(file) => backgroundEditor.upload(selected.id, file)}
+              uploadError={backgroundEditor.errors[selected.id]}
+              cancelUpload={() => {
+                if (!selectedDraft.background) setShow('3d')
+              }}
+              reload={() => {
+                if (!window.confirm('放弃当前视角未保存的修改并读取服务器背景？')) return
+                void cameras.refetch().then((result) => {
+                  const camera = result.data?.find((c) => c.id === selected.id)
+                  if (camera) {
+                    backgroundEditor.drafts.reload(
+                      camera.id,
+                      camera.camera.background ?? null,
+                      camera.camera.backgroundRevision ?? 0,
+                    )
+                    backgroundEditor.updateEditing(camera.id, emptyEditing())
+                  }
+                })
+              }}
+            />
+          )}
           {/* The delivery plan, drawn off screen at a fixed width and exported as an image. */}
           <div className="delivery-plan" aria-hidden="true">
             <PlanView
@@ -276,7 +386,21 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             />
           </div>
 
-          <div className={show === 'display' ? 'render-main render-main-display' : 'render-main'}>
+          <div
+            className={show === 'display' ? 'render-main render-main-display' : 'render-main'}
+            onDragOver={(e) => {
+              if (show !== 'display' && e.dataTransfer.types.includes('Files')) e.preventDefault()
+            }}
+            onDrop={(e) => {
+              if (show === 'display' || !e.dataTransfer.types.includes('Files')) return
+              e.preventDefault()
+              const file = e.dataTransfer.files[0]
+              if (file && selected && !busy && !delivering && !selectedDraft?.gesture) {
+                openBackground()
+                backgroundEditor.upload(selected.id, file)
+              }
+            }}
+          >
             {show === 'display' && (
               <DisplayPanel
                 project={project}
@@ -327,7 +451,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               </div>
             )}
             {/* Always mounted: it is the scene the images are rendered from. */}
-            <div className="render-live" hidden={show !== '3d'}>
+            <div className="render-live" hidden={show !== '3d' && show !== 'background'}>
               <Suspense fallback={<p className="notice">正在载入三维…</p>}>
                 <Viewer3D
                   ref={viewer}
@@ -338,6 +462,10 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
                   look="material"
+                  hideBoundaryWalls={show === 'background'}
+                  background={
+                    selectedDraft ? selectedDraft.background : (selected?.camera.background ?? null)
+                  }
                   siStyle={siStyle}
                   market={project.market}
                   onSelect={() => undefined}
@@ -346,6 +474,18 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 />
               </Suspense>
             </div>
+            {show === 'background' && selected && selectedDraft && (
+              <BackgroundCanvas
+                key={selected.id}
+                cameraId={selected.id}
+                draft={selectedDraft}
+                drafts={backgroundEditor.drafts}
+                editing={editing}
+                setEditing={(value) => backgroundEditor.updateEditing(selected.id, value)}
+                disabled={busy || delivering || backgroundEditor.uploading.has(selected.id)}
+                upload={(file) => backgroundEditor.upload(selected.id, file)}
+              />
+            )}
           </div>
 
           <div className="render-strip-heading">
@@ -367,6 +507,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                     className="camera-thumb"
                     aria-pressed={camera.id === selected?.id}
                     aria-label={`查看视角 ${camera.camera.name}`}
+                    disabled={busy || delivering || !!selectedDraft?.gesture}
                     onClick={() => choose(camera)}
                   >
                     {image ? (
@@ -406,14 +547,20 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                   label: '重新渲染',
                   title: '按当前模型与视角重新渲染全部材质图',
                   onClick: () => void render(all),
-                  disabled: busy || !viewerReady || !all.length,
+                  disabled:
+                    busy ||
+                    delivering ||
+                    !!selectedDraft?.gesture ||
+                    !!backgroundEditor.uploading.size ||
+                    !viewerReady ||
+                    !all.length,
                   primary: !deliverable,
                 },
                 {
                   label: '下载图片',
                   title: '下载当前（未过期）的全部渲染图（ZIP）',
                   onClick: () => window.location.assign(renderArchiveUrl(node.id)),
-                  disabled: current <= 0,
+                  disabled: current <= 0 || !!backgroundEditor.pending || busy,
                 },
               ]}
               hint={
@@ -472,7 +619,13 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
               type="button"
               className="primary delivery-generate"
               onClick={() => void deliver()}
-              disabled={busy || delivering || !deliverable}
+              disabled={
+                busy ||
+                delivering ||
+                !!selectedDraft?.gesture ||
+                !!backgroundEditor.uploading.size ||
+                !deliverable
+              }
               aria-describedby="delivery-availability"
             >
               {delivering ? '正在生成交付文件…' : '生成交付文件'}
