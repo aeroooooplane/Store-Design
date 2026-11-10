@@ -140,6 +140,7 @@ export class WhiteScene {
   private liveBackground: { background: RenderBackground; photo: HTMLImageElement } | null = null
   private pendingPhoto: { url: string; photo: Promise<HTMLImageElement> } | null = null
   private backgroundRevision = 0
+  private hideBoundaryWalls = false
   private readonly room = new THREE.Group()
   private readonly props = new THREE.Group()
   /** 空心隔板: boxes in the wall material. */
@@ -530,6 +531,11 @@ export class WhiteScene {
     this.requestRender()
   }
 
+  setHideBoundaryWalls(hide: boolean) {
+    this.hideBoundaryWalls = hide
+    this.requestRender()
+  }
+
   /**
    * Renders views to PNG data URLs at a fixed size, one view per task so the page stays
    * responsive. Within a task the canvas is resized, drawn, read and restored, so the on-screen
@@ -603,7 +609,11 @@ export class WhiteScene {
           }
           const context = output.getContext('2d')
           if (!context) throw new Error('浏览器无法合成背景图片')
-          this.renderModelLayer(shot, background.showTransparentWalls, false)
+          this.renderLayer(shot, {
+            transparent: true,
+            hideWalls: !background.showTransparentWalls,
+            hideMarks: true,
+          })
           drawBackgroundComposition(context, background, photo, this.canvas)
           images.push(output.toDataURL('image/png'))
         } else {
@@ -619,28 +629,31 @@ export class WhiteScene {
     return images
   }
 
-  private renderModelLayer(
+  private renderLayer(
     camera: THREE.Camera,
-    showTransparentWalls: boolean,
-    showMarks: boolean,
+    options: { transparent?: boolean; hideWalls: boolean; hideMarks?: boolean },
   ) {
     const originalBackground = this.scene.background
     const clearAlpha = this.renderer.getClearAlpha()
     const marksVisible = this.marks.visible
-    const hiddenWalls = showTransparentWalls
-      ? []
-      : this.room.children.filter((object) => object.visible && object.userData['boundaryWall'])
+    const hiddenWalls = options.hideWalls
+      ? this.room.children.filter((object) => object.visible && object.userData['boundaryWall'])
+      : []
     try {
       for (const wall of hiddenWalls) wall.visible = false
-      this.marks.visible = marksVisible && showMarks
-      this.scene.background = null
-      this.renderer.setClearAlpha(0)
+      if (options.hideMarks) this.marks.visible = false
+      if (options.transparent) {
+        this.scene.background = null
+        this.renderer.setClearAlpha(0)
+      }
       this.renderer.render(this.scene, camera)
     } finally {
       for (const wall of hiddenWalls) wall.visible = true
       this.marks.visible = marksVisible
-      this.scene.background = originalBackground
-      this.renderer.setClearAlpha(clearAlpha)
+      if (options.transparent) {
+        this.scene.background = originalBackground
+        this.renderer.setClearAlpha(clearAlpha)
+      }
     }
   }
 
@@ -648,7 +661,8 @@ export class WhiteScene {
     const output = this.compositionCanvas
     if (!output || !this.liveBackground) {
       if (output) output.style.visibility = 'hidden'
-      this.renderer.render(this.scene, this.camera)
+      if (this.hideBoundaryWalls) this.renderLayer(this.camera, { hideWalls: true })
+      else this.renderer.render(this.scene, this.camera)
       return
     }
     const { background, photo } = this.liveBackground
@@ -661,7 +675,10 @@ export class WhiteScene {
       this.renderer.render(this.scene, this.camera)
       return
     }
-    this.renderModelLayer(this.camera, background.showTransparentWalls, true)
+    this.renderLayer(this.camera, {
+      transparent: true,
+      hideWalls: !background.showTransparentWalls,
+    })
     drawBackgroundComposition(context, background, photo, this.canvas)
     output.style.visibility = 'visible'
   }

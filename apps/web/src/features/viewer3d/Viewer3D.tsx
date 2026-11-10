@@ -42,6 +42,8 @@ interface Viewer3DProps {
   /** White model (default) or the material look of the renders. */
   look?: Look | undefined
   background?: RenderBackground | null | undefined
+  /** Hide the gray boundary walls during background editing before the first photo is added. */
+  hideBoundaryWalls?: boolean | undefined
   siStyle?: SiStyle | undefined
   /** The project's market: LOGO models with a version per market show that one. */
   market?: Market | undefined
@@ -77,6 +79,7 @@ export function Viewer3D({
   flaggedIds,
   look = 'white',
   background,
+  hideBoundaryWalls = false,
   siStyle = 'SI1.0',
   market = 'domestic',
   onSelect,
@@ -166,6 +169,10 @@ export function Viewer3D({
       active = false
     }
   }, [background])
+
+  useEffect(() => {
+    sceneRef.current?.setHideBoundaryWalls(hideBoundaryWalls)
+  }, [hideBoundaryWalls])
 
   useEffect(() => {
     sceneRef.current?.setMarks(selectedId, flaggedIds)
