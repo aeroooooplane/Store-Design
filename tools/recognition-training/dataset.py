@@ -183,7 +183,7 @@ def split_ids(ids, seed=20261105, val_count=3):
     return {id: ("internal_val" if id in ranked[:val_count] else "train") for id in ids}
 
 
-def inherited_splits(samples, parent):
+def inherited_splits(samples, parent, extension=None):
     previous = {s["store_id"]: s for s in parent["samples"]}
     current = {s["store_id"]: s for s in samples}
     need(set(previous) <= set(current), "扩充不能移除此前门店")
@@ -194,7 +194,34 @@ def inherited_splits(samples, parent):
     for id, old in previous.items():
         need(identity_keys(current[id]) == identity_keys(old), "扩充不得改换旧门店身份")
         need(current[id]["source"] == old["source"], "扩充不得改换旧来源")
-    return {id: previous[id]["split"] if id in previous else "train" for id in current}
+    added_validation = set()
+    if extension is not None:
+        ids = extension.get("newValidationIds", [])
+        need(
+            isinstance(ids, list) and ids and all(isinstance(x, str) for x in ids),
+            "新增验证名单无效",
+        )
+        need(len(ids) == len(set(ids)), "新增验证名单重复")
+        added_validation = set(ids)
+        need(
+            added_validation <= set(current) - set(previous),
+            "新增验证只能使用未入旧版的新门店",
+        )
+        need(
+            extension.get("modelInferenceBeforeSelection") is False
+            and extension.get("frozenAt")
+            and extension.get("reason"),
+            "验证扩充缺少预测前冻结证据",
+        )
+        check_isolation([current[x] for x in ids], list(previous.values()))
+    return {
+        id: (
+            previous[id]["split"]
+            if id in previous
+            else ("internal_val" if id in added_validation else "train")
+        )
+        for id in current
+    }
 
 
 def check_crop(record):
@@ -231,6 +258,7 @@ def build(
     val_count=3,
     parent_dataset=None,
     parent_manifest_sha256=None,
+    validation_extension=None,
 ):
     from PIL import Image, ImageDraw
 
@@ -265,6 +293,8 @@ def build(
         samples, indexes["acceptance"]["stores"] + indexes["development"]["stores"]
     )
     parent = None
+    extension = load(validation_extension) if validation_extension else None
+    need(extension is None or parent_dataset, "验证扩充必须指定父版")
     if parent_dataset:
         need(
             parent_manifest_sha256
@@ -272,7 +302,12 @@ def build(
             "父版manifest哈希不匹配",
         )
         parent = validate(parent_dataset)
-        splits = inherited_splits(samples, parent)
+        if extension is not None:
+            need(
+                extension.get("parentManifestSha256") == parent_manifest_sha256,
+                "验证扩充父版哈希不匹配",
+            )
+        splits = inherited_splits(samples, parent, extension)
     else:
         need(not parent_manifest_sha256, "指定父版哈希时必须提供父版数据目录")
         splits = split_ids([s["store_id"] for s in samples], val_count=val_count)
@@ -301,6 +336,8 @@ def build(
     ]:
         shutil.copy2(inputs / name, out / "identity-only" / name)
     save(out / "decisions.json", decisions)
+    if extension is not None:
+        shutil.copy2(validation_extension, out / "validation-extension.json")
     if parent is not None:
         shutil.copy2(
             Path(parent_dataset) / "manifest.json", out / "parent-manifest.json"
@@ -319,6 +356,8 @@ def build(
         manifest.update(
             splitPolicy="inherit-parent", parentManifestSha256=parent_manifest_sha256
         )
+    if extension is not None:
+        manifest["validationExtensionSha256"] = sha(out / "validation-extension.json")
     for r in admitted:
         id = r["store_id"]
         dest = out / id
@@ -422,7 +461,21 @@ def validate(root):
             "父版未绑定哈希",
         )
         parent = load(within(root, "parent-manifest.json"))
-        expected = inherited_splits(samples, parent)
+        extension = None
+        if "validationExtensionSha256" in m:
+            need(
+                m["files"].get("validation-extension.json")
+                == m["validationExtensionSha256"],
+                "验证扩充未绑定哈希",
+            )
+            extension = load(within(root, "validation-extension.json"))
+            need(
+                extension.get("parentManifestSha256") == m["parentManifestSha256"],
+                "验证扩充父版哈希不匹配",
+            )
+        else:
+            need("validation-extension.json" not in m["files"], "验证扩充声明缺失")
+        expected = inherited_splits(samples, parent, extension)
         current = {s["store_id"]: s for s in samples}
         for old in parent["samples"]:
             new = current[old["store_id"]]
@@ -435,6 +488,11 @@ def validate(root):
             key = f"identity-only/{kind}-index.json"
             need(m["files"][key] == parent["files"][key], "扩充不得替换保护清单")
     else:
+        need(
+            "validationExtensionSha256" not in m
+            and "validation-extension.json" not in m["files"],
+            "验证扩充必须继承父版",
+        )
         need(m.get("splitPolicy") in (None, "hash"), "未知划分策略")
         expected = split_ids(
             [s["store_id"] for s in samples],
@@ -454,6 +512,7 @@ if __name__ == "__main__":
     b.add_argument("--val-count", type=int, default=3)
     b.add_argument("--parent-dataset")
     b.add_argument("--parent-manifest-sha256")
+    b.add_argument("--validation-extension")
     v = sub.add_parser("validate")
     v.add_argument("root")
     a = ap.parse_args()
@@ -468,6 +527,7 @@ if __name__ == "__main__":
             a.val_count,
             a.parent_dataset,
             a.parent_manifest_sha256,
+            a.validation_extension,
         )
     )
     print(

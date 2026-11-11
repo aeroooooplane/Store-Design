@@ -37,6 +37,7 @@ def build(source, inputs, root, training_data):
     )
     train_count = sum(s["split"] == "train" for s in manifest["samples"])
     val_count = sum(s["split"] == "internal_val" for s in manifest["samples"])
+    split_by_id = {s["store_id"]: s["split"] for s in manifest["samples"]}
     question_ids = {q["store_id"] for q in questions}
     records = {r["store_id"]: r for r in decisions["records"]}
     need(
@@ -89,7 +90,7 @@ def build(source, inputs, root, training_data):
             switch = f'<button data-switch="{sid}" data-view="original">原图</button> <button data-switch="{sid}" data-view="review">标注</button>'
             filename = sid + "-review.png"
         cards.append(
-            f'<article id="ann-{sid}" data-store="{sid}"><h2>{sid} · {html.escape(s["name"])}</h2><p>{"待你判断 · 未用于训练" if q else "代理校正 · 已用于本轮训练"}</p>{switch}<a class="picture" target="_blank" href="annotation-images/{filename}"><img src="annotation-images/{filename}" loading="lazy" alt="{sid}原图或轮廓标注"></a><p>{html.escape(r["reason"])}</p>{controls}</article>'
+            f'<article id="ann-{sid}" data-store="{sid}"><h2>{sid} · {html.escape(s["name"])}</h2><p>{"待你判断 · 未用于训练" if q else ("代理校正 · 仅内部验证，不参与训练" if split_by_id.get(sid) == "internal_val" else "代理校正 · 训练样本")}</p>{switch}<a class="picture" target="_blank" href="annotation-images/{filename}"><img src="annotation-images/{filename}" loading="lazy" alt="{sid}原图或轮廓标注"></a><p>{html.escape(r["reason"])}</p>{controls}</article>'
         )
     payload = {
         "schemaVersion": 1,
@@ -113,7 +114,7 @@ def build(source, inputs, root, training_data):
     )
     page = page.replace(
         "本轮总计32家独立样本：29训练、原3家内部验证。",
-        f"本轮总计{len(manifest['samples'])}家独立样本：{train_count}训练、原{val_count}家内部验证。",
+        f"本轮总计{len(manifest['samples'])}家独立样本：{train_count}训练、{val_count}家内部验证。",
     )
     page = page.replace(
         "两项待决样本及旧4家暂缓样本均未训练。",

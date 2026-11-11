@@ -117,6 +117,93 @@ class BundleTests(unittest.TestCase):
         for s in parent["samples"]:
             self.assertEqual(result[s["store_id"]], s["split"])
 
+    def test_explicit_new_validation_preserves_old_splits(self):
+        parent = self.inherited_fixture()["parent-manifest.json"]
+        new = {
+            "store_id": "NEW-999",
+            "name": "新验证",
+            "source": {"sha256": "fresh", "path": "fresh.pdf"},
+        }
+        extension = {
+            "newValidationIds": ["NEW-999"],
+            "modelInferenceBeforeSelection": False,
+            "frozenAt": "2026-11-11",
+            "reason": "先冻结再预测",
+        }
+        actual = inherited_splits(parent["samples"] + [new], parent, extension)
+        self.assertEqual(actual.pop("NEW-999"), "internal_val")
+        self.assertEqual(actual, {r["store_id"]: r["split"] for r in parent["samples"]})
+        for ids in [
+            [parent["samples"][0]["store_id"]],
+            ["UNKNOWN"],
+            ["NEW-999", "NEW-999"],
+            [],
+        ]:
+            with self.subTest(ids=ids), self.assertRaises(ValueError):
+                inherited_splits(
+                    parent["samples"] + [new],
+                    parent,
+                    {**extension, "newValidationIds": ids},
+                )
+        with self.assertRaisesRegex(ValueError, "冻结证据"):
+            inherited_splits(
+                parent["samples"] + [new],
+                parent,
+                {**extension, "modelInferenceBeforeSelection": True},
+            )
+        with self.assertRaisesRegex(ValueError, "开发/验收"):
+            inherited_splits(
+                parent["samples"] + [{**new, "source": parent["samples"][0]["source"]}],
+                parent,
+                extension,
+            )
+
+    def validation_extension_fixture(self):
+        d = self.inherited_fixture()
+        old = d["parent-manifest.json"]["samples"]
+        new = next(s for s in old if s["split"] == "train")
+        old.remove(new)
+        d["manifest.json"]["samples"][
+            [s["store_id"] for s in d["manifest.json"]["samples"]].index(
+                new["store_id"]
+            )
+        ]["split"] = "internal_val"
+        d["manifest.json"]["validationExtensionSha256"] = "extension"
+        d["manifest.json"]["files"]["validation-extension.json"] = "extension"
+        d["validation-extension.json"] = {
+            "newValidationIds": [new["store_id"]],
+            "parentManifestSha256": "parent",
+            "modelInferenceBeforeSelection": False,
+            "frozenAt": "2026-11-11",
+            "reason": "测试",
+        }
+        return d
+
+    def test_bundle_validation_extension_bound_and_split_enforced(self):
+        d = self.validation_extension_fixture()
+        self.run_validation(d)
+        sid = d["validation-extension.json"]["newValidationIds"][0]
+        next(s for s in d["manifest.json"]["samples"] if s["store_id"] == sid)[
+            "split"
+        ] = "train"
+        with self.assertRaisesRegex(ValueError, "冻结划分改变"):
+            self.run_validation(d)
+
+    def test_validation_extension_hash_and_parent_required(self):
+        for field in ["validationExtensionSha256", "parentManifestSha256"]:
+            d = self.validation_extension_fixture()
+            d["manifest.json"][field] = "wrong"
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                self.run_validation(d)
+        d = self.validation_extension_fixture()
+        d["validation-extension.json"]["parentManifestSha256"] = "wrong"
+        with self.assertRaisesRegex(ValueError, "父版哈希"):
+            self.run_validation(d)
+        with self.assertRaisesRegex(ValueError, "文件改变"):
+            self.run_validation(
+                self.validation_extension_fixture(), "validation-extension.json"
+            )
+
     def test_expansion_cannot_move_validation_into_training(self):
         d = self.inherited_fixture()
         samples = d["manifest.json"]["samples"]
