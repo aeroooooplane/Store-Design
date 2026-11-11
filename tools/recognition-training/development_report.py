@@ -24,6 +24,10 @@ def build(root):
     )
     if not question_count and (root / "annotation-review-evidence.json").exists():
         question_note += ' <a href="补充标注审核.html">查看已确认范围及新增标注</a>'
+    if (root / "内部验证.html").exists():
+        question_note += (
+            f' <a href="内部验证.html">查看{counts["internal_val"]}家内部验证</a>'
+        )
     s = result["summary"]
     promotion_note = ""
     if (root / "promotion-decision.json").exists():
@@ -118,7 +122,7 @@ def build(root):
 <section class="box"><p>平均轮廓IoU：<b>{before:.1%} → {after:.1%}</b>（原始预测，同预处理）。改善{improved}家，退化{regressed}家。完整保留48家分母；可评分参考{s['scorable']}家。</p><table><tr><th>方案</th><th>平均IoU</th><th>IoU≥90%</th></tr>{metrics}</table><details><summary>评估口径与限制</summary><p><small>{revision_note}</small></p><p><small>IoU是区域交并比，不是门店完整通过率。按原图像素比较，未平移对齐；栅格指标不直接等同旧矢量引擎的精确多边形指标。入口、量尺、家具、墙柱分类本轮未重评分。</small></p><p><small>清理仅保留最大连通块、填内部孔洞，保留外侧凹口。它能去掉离散文字，也可能误删多块平面；不能修复所有边界外扩。原始预测同时保留。清理会误删有效区域，本轮不设为默认。</small></p></details></section>
 {promotion_note}<p>{question_note} <a href="#feedback-block">补充意见</a></p>{focus_table}
 <p>按本轮结果从弱到强排列。黄色为参考，青色为预测；点击图可放大。</p><div class="grid">{''.join(cards)}</div><section class="box" id="feedback-block"><h2>补充意见（选填）</h2><p>{question_note} 已有48家审核不要求重做。识别错误继续由我处理。</p><label>补充意见（选填，自动保存）<textarea id="feedback" placeholder="例如：门店编号＋你发现的问题"></textarea></label><p><button id="export-feedback">导出补充意见</button> <span id="saved" role="status"></span></p><small>只保存本页新意见，不修改原整店审核包。</small></section>
-<section class="box"><p>训练为独立{counts["train"]}家，原{counts["internal_val"]}家仅作内部模型选择。48家用于开发复评和预处理诊断，未进入训练；45家只保留身份隔离索引，未读原图、几何或分数。云识别默认关闭，本轮全部本机完成。</p><a href="results.json">逐店结果JSON</a> · <a href="frozen-candidate.json">冻结版本记录</a></section></main>
+<section class="box"><p>训练为独立{counts["train"]}家，{counts["internal_val"]}家仅作内部模型选择。48家用于开发复评和预处理诊断，未进入训练；45家只保留身份隔离索引，未读原图、几何或分数。云识别默认关闭，本轮全部本机完成。</p><a href="results.json">逐店结果JSON</a> · <a href="frozen-candidate.json">冻结版本记录</a></section></main>
 <script>const key={key!r};document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{{const card=b.closest('article'),a=card.querySelector('a');a.href='images/'+card.dataset.store+'-'+b.dataset.view+'.jpg';a.querySelector('img').src=a.href}});const field=document.querySelector('#feedback');try{{field.value=localStorage.getItem(key)||''}}catch{{}}field.oninput=()=>{{try{{localStorage.setItem(key,field.value);document.querySelector('#saved').textContent='已保存'}}catch{{document.querySelector('#saved').textContent='请导出保存'}}}};document.querySelector('#export-feedback').onclick=()=>{{const data={{task:'outline-development-review',batch:key,feedback:field.value,createdAt:new Date().toISOString()}};const u=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{{type:'application/json'}}));const a=document.createElement('a');a.href=u;a.download='48家轮廓复评-补充意见.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}};const id=new URLSearchParams(location.search).get('store');if(id)document.getElementById(id)?.scrollIntoView();</script></html>"""
     (root / "复评审核.html").write_text(page, encoding="utf-8")
     save(

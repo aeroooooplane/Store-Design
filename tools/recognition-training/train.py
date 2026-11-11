@@ -20,6 +20,7 @@ import torch.nn.functional as F
 from dataset import load, save, sha, need, validate, within, outline_mask
 from export_model import export_onnx
 from drawing_input import normalize_polarity, synthetic_dark_page
+from negative_loss import negative_ink_weights
 
 
 class TinyUNet(nn.Module):
@@ -110,14 +111,20 @@ def read_samples(root, m, side, normalize_input=False):
     return rows
 
 
-def loss_fn(logits, y, pos_weight=None):
+def loss_fn(logits, y, pos_weight=None, ink=None, negative_ink_weight=0):
     probs = logits.sigmoid()
     dims = (1, 2, 3)
     dice = (2 * (probs * y).sum(dims) + 1) / (probs.sum(dims) + y.sum(dims) + 1)
-    return (
-        F.binary_cross_entropy_with_logits(logits, y, pos_weight=pos_weight)
-        + (1 - dice).mean()
-    )
+    if negative_ink_weight:
+        need(ink is not None, "难负样本损失缺少训练输入")
+        weights = negative_ink_weights(ink, y, negative_ink_weight)
+        bce = F.binary_cross_entropy_with_logits(
+            logits, y, pos_weight=pos_weight, reduction="none"
+        )
+        bce = (bce * weights).sum() / weights.sum()
+    else:
+        bce = F.binary_cross_entropy_with_logits(logits, y, pos_weight=pos_weight)
+    return bce + (1 - dice).mean()
 
 
 def metric(pred, y):
@@ -189,6 +196,10 @@ def main(a):
         and a.threads > 0,
         "参数无效",
     )
+    need(
+        math.isfinite(a.negative_ink_weight) and a.negative_ink_weight >= 0,
+        "难负样本权重必须为非负有限数",
+    )
     random.seed(m["seed"])
     np.random.seed(m["seed"])
     torch.manual_seed(m["seed"])
@@ -225,7 +236,9 @@ def main(a):
             **vars(a),
             "seed": m["seed"],
             "architecture": "TinyUNet-8-16-32-64-GroupNorm4",
-            "loss": "训练: BCEWithLogits(训练像素负正比权重)+softDice；评估loss:无权重BCE+softDice",
+            "loss": "训练: 加权BCE+softDice；可选对标签外墨线邻域提高负样本权重；评估loss:无权重BCE+softDice",
+            "negativeInkWeight": a.negative_ink_weight,
+            "negativeInkPolicy": "仅训练标签外5x5墨线邻域；权重1+强度*局部墨量，BCE按总权重归一；原图/标签不擦除、不裁图；验证推理不使用标签",
             "trainingPositiveWeight": weight,
             "threshold": 0.5,
             "augmentation": "训练门店随机水平/垂直翻转；可选整页同步仿射；验证无增强；整页等比例补白，无按标签裁图",
@@ -233,7 +246,13 @@ def main(a):
             "blackBackgroundAugmentation": "若开启，仅训练原页生成深灰底低对比变体，50%概率替换输入；同标签/同划分，不计新增门店",
         },
     )
-    for file in ["train.py", "dataset.py", "export_model.py", "drawing_input.py"]:
+    for file in [
+        "train.py",
+        "dataset.py",
+        "export_model.py",
+        "drawing_input.py",
+        "negative_loss.py",
+    ]:
         shutil.copy2(Path(__file__).parent / file, out / ("source-" + file))
     save(
         out / "environment.json",
@@ -291,7 +310,7 @@ def main(a):
                     ys.append(y)
                 x, y = torch.cat(xs).to(device), torch.cat(ys).to(device)
                 optimizer.zero_grad()
-                loss = loss_fn(model(x), y, pos_weight)
+                loss = loss_fn(model(x), y, pos_weight, x, a.negative_ink_weight)
                 need(torch.isfinite(loss).item(), "训练损失非有限数")
                 loss.backward()
                 optimizer.step()
@@ -450,6 +469,7 @@ if __name__ == "__main__":
     p.add_argument("--batch-size", type=int, default=2)
     p.add_argument("--device", choices=["cpu", "cuda"], default="cpu")
     p.add_argument("--positive-weight", type=float)
+    p.add_argument("--negative-ink-weight", type=float, default=0)
     p.add_argument("--affine-augment", action="store_true")
     p.add_argument("--normalize-polarity", action="store_true")
     p.add_argument("--black-background-augment", action="store_true")

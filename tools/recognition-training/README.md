@@ -99,3 +99,7 @@ python tools/recognition-training/annotation_report.py --source <新增原页与
 ## 显式扩充内部验证
 
 补强验证时使用 `--validation-extension <JSON>`，同时绑定父版目录和manifest哈希。声明包含 `newValidationIds`、`parentManifestSha256`、`frozenAt`、`reason`、`modelInferenceBeforeSelection: false`；只能把全新且未参与历史训练的独立门店指定为验证，不能重分旧训练/验证，仍验证保护清单和旧文件字节一致。调用者必须先核对所有历史训练版本、冻结名单及原页标签；声明本身不是未见过数据的证明。未指定时扩充行为不变，新增样本仍为训练。详见 [11家内部验证](../../docs/recognition-outline-validation-20261111.md)。
+
+## 店外墨线难负样本对照
+
+`train.py --negative-ink-weight 2` 只在训练标签外的5×5墨线邻域提高负样本BCE权重，按总权重归一，softDice不变；默认0保留旧损失。墨量从相同仿射后的完整训练原图取得，店内文字/道具不加负样本权重，不擦图、不裁图，推理无标签依赖。参数、损失源码、训练数据及候选选择在48家评分前冻结；OCR语义和尺寸数值提取不属于此开关。源码快照 `source-negative_loss.py` 与训练器一并保留，复现实验需恢复同一运行目录中的全部源码。结果和未解决样本见 [本轮对照](../../docs/recognition-outline-negative-20261111.md)。
