@@ -61,5 +61,13 @@
     "ID/别名/同源哈希隔离不能证明不存在未登记跨店复用",
     "v1为预测前草稿，v2按原页修正两店并保留v1"
   ],
-  "previousBetterModel": "outline-hardcases-run-20261109-v2/best.pt"
+  "previousBetterModel": "outline-hardcases-run-20261109-v2/best.pt",
+  "repoTests": {
+    "shared": 256,
+    "web": 328,
+    "database": 7,
+    "api": 210,
+    "total": 801
+  },
+  "staticTypeFormatPassed": true
 }
