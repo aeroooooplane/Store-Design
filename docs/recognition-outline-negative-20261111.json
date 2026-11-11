@@ -1,0 +1,756 @@
+{
+  "date": "2026-11-11",
+  "task": "十一家内部验证选模与店外文字尺寸邻区误检训练对照",
+  "training": {
+    "runs": [
+      {
+        "run": "outline-negative-run-20261111-v1",
+        "summary": {
+          "trainStores": 37,
+          "internalValStores": 11,
+          "epochs": 160,
+          "optimizerSteps": 3040,
+          "bestEpoch": 153,
+          "weightMaxChange": 1.2776379585266113,
+          "gradientAndEpochEvaluationSeconds": 453.62367390003055,
+          "trainingAndExportSeconds": 466.6269919000333,
+          "initialValIoU": 0.15331317200812022,
+          "bestValIoU": 0.8044857902205126,
+          "lastValIoU": 0.7803751221184807,
+          "bestTrainIoU": 0.9338410206979125,
+          "onnxMaxAbsError": 7.62939453125e-05,
+          "onnxMeanSeconds": 0.025250089573091827,
+          "exportPassed": true,
+          "parameterCount": 122673,
+          "development48ReadForTraining": false,
+          "acceptance45ReadForTraining": false,
+          "externalEvaluationPerformed": false,
+          "productionReady": false
+        },
+        "checkpointSha256": "6fe97b1d15dcedfbacb78ea0792ad5c67724de9c0665222886ec53490460d915"
+      },
+      {
+        "run": "outline-negative-run-20261111-v2",
+        "summary": {
+          "trainStores": 37,
+          "internalValStores": 11,
+          "epochs": 160,
+          "optimizerSteps": 3040,
+          "bestEpoch": 138,
+          "weightMaxChange": 1.2778518199920654,
+          "gradientAndEpochEvaluationSeconds": 468.97344600001816,
+          "trainingAndExportSeconds": 477.32789930002764,
+          "initialValIoU": 0.15331317200812022,
+          "bestValIoU": 0.8244837211613376,
+          "lastValIoU": 0.774486119677288,
+          "bestTrainIoU": 0.9178396012965873,
+          "onnxMaxAbsError": 0.00011527538299560547,
+          "onnxMeanSeconds": 0.020561291664004482,
+          "exportPassed": true,
+          "parameterCount": 122673,
+          "development48ReadForTraining": false,
+          "acceptance45ReadForTraining": false,
+          "externalEvaluationPerformed": false,
+          "productionReady": false
+        },
+        "checkpointSha256": "0cff34fc269832d8ba346cdb0f2a1998531b4332be73fb28583b22879ec81c33"
+      }
+    ],
+    "selected": "outline-negative-run-20261111-v2",
+    "selectionBeforeDevelopmentScoring": true
+  },
+  "internalValidation": {
+    "rows": {
+      "baseline": [
+        {
+          "store_id": "PDF-402",
+          "split": "internal_val",
+          "loss": 0.24786388874053955,
+          "iou": 0.7533958829295617,
+          "dice": 0.8593562814471688,
+          "predPixels": 6855,
+          "labelPixels": 5666
+        },
+        {
+          "store_id": "NEW-069",
+          "split": "internal_val",
+          "loss": 0.15803351998329163,
+          "iou": 0.8538949798038085,
+          "dice": 0.9211902390438247,
+          "predPixels": 7883,
+          "labelPixels": 8181
+        },
+        {
+          "store_id": "PDF-188",
+          "split": "internal_val",
+          "loss": 0.21057721972465515,
+          "iou": 0.7837796006810092,
+          "dice": 0.8787852494577006,
+          "predPixels": 5662,
+          "labelPixels": 5863
+        },
+        {
+          "store_id": "PDF-142",
+          "split": "internal_val",
+          "loss": 0.06682635843753815,
+          "iou": 0.9356549815498155,
+          "dice": 0.9667580126295723,
+          "predPixels": 8273,
+          "labelPixels": 8513
+        },
+        {
+          "store_id": "NEW-045",
+          "split": "internal_val",
+          "loss": 0.09551794826984406,
+          "iou": 0.9063921993499459,
+          "dice": 0.9508979313480337,
+          "predPixels": 8618,
+          "labelPixels": 8978
+        },
+        {
+          "store_id": "PDF-291",
+          "split": "internal_val",
+          "loss": 0.057461947202682495,
+          "iou": 0.9436964504283966,
+          "dice": 0.9710327455919395,
+          "predPixels": 6419,
+          "labelPixels": 6285
+        },
+        {
+          "store_id": "PDF-082",
+          "split": "internal_val",
+          "loss": 0.07477237284183502,
+          "iou": 0.9290511265164645,
+          "dice": 0.9632208433937897,
+          "predPixels": 9182,
+          "labelPixels": 8627
+        },
+        {
+          "store_id": "PDF-345",
+          "split": "internal_val",
+          "loss": 0.1728474199771881,
+          "iou": 0.858321240357443,
+          "dice": 0.9237598125847684,
+          "predPixels": 12004,
+          "labelPixels": 12327
+        },
+        {
+          "store_id": "NEW-033",
+          "split": "internal_val",
+          "loss": 0.26247438788414,
+          "iou": 0.7496790757381258,
+          "dice": 0.8569332355099046,
+          "predPixels": 6426,
+          "labelPixels": 5841
+        },
+        {
+          "store_id": "NEW-011",
+          "split": "internal_val",
+          "loss": 0.1016089916229248,
+          "iou": 0.9162475998902807,
+          "dice": 0.9562935394598722,
+          "predPixels": 10381,
+          "labelPixels": 10577
+        },
+        {
+          "store_id": "PDF-214",
+          "split": "internal_val",
+          "loss": 0.6789010763168335,
+          "iou": 0.4646713977167541,
+          "dice": 0.6345060037918685,
+          "predPixels": 6150,
+          "labelPixels": 3344
+        }
+      ],
+      "candidate": [
+        {
+          "store_id": "PDF-402",
+          "split": "internal_val",
+          "loss": 0.3189406394958496,
+          "iou": 0.7204370179948586,
+          "dice": 0.8375046694060515,
+          "predPixels": 7719,
+          "labelPixels": 5666
+        },
+        {
+          "store_id": "NEW-069",
+          "split": "internal_val",
+          "loss": 0.12906180322170258,
+          "iou": 0.8716651333946642,
+          "dice": 0.9314327844679282,
+          "predPixels": 8095,
+          "labelPixels": 8181
+        },
+        {
+          "store_id": "PDF-188",
+          "split": "internal_val",
+          "loss": 0.16054561734199524,
+          "iou": 0.8205455415536769,
+          "dice": 0.9014281959169368,
+          "predPixels": 5550,
+          "labelPixels": 5863
+        },
+        {
+          "store_id": "PDF-142",
+          "split": "internal_val",
+          "loss": 0.11498042196035385,
+          "iou": 0.8864700374531835,
+          "dice": 0.9398188360838814,
+          "predPixels": 7605,
+          "labelPixels": 8513
+        },
+        {
+          "store_id": "NEW-045",
+          "split": "internal_val",
+          "loss": 0.07887965440750122,
+          "iou": 0.9205752924761189,
+          "dice": 0.9586453559852465,
+          "predPixels": 8916,
+          "labelPixels": 8978
+        },
+        {
+          "store_id": "PDF-291",
+          "split": "internal_val",
+          "loss": 0.06645873934030533,
+          "iou": 0.9221039642140985,
+          "dice": 0.9594735574993981,
+          "predPixels": 6176,
+          "labelPixels": 6285
+        },
+        {
+          "store_id": "PDF-082",
+          "split": "internal_val",
+          "loss": 0.08425583690404892,
+          "iou": 0.9110921136995085,
+          "dice": 0.9534779691344218,
+          "predPixels": 9257,
+          "labelPixels": 8627
+        },
+        {
+          "store_id": "PDF-345",
+          "split": "internal_val",
+          "loss": 0.3410206437110901,
+          "iou": 0.7695412559186525,
+          "dice": 0.8697635653814099,
+          "predPixels": 10470,
+          "labelPixels": 12327
+        },
+        {
+          "store_id": "NEW-033",
+          "split": "internal_val",
+          "loss": 0.26388049125671387,
+          "iou": 0.7346730741226154,
+          "dice": 0.8470449966420417,
+          "predPixels": 6071,
+          "labelPixels": 5841
+        },
+        {
+          "store_id": "NEW-011",
+          "split": "internal_val",
+          "loss": 0.05195927619934082,
+          "iou": 0.9543038328825888,
+          "dice": 0.9766176751288413,
+          "predPixels": 10379,
+          "labelPixels": 10577
+        },
+        {
+          "store_id": "PDF-214",
+          "split": "internal_val",
+          "loss": 0.4831756353378296,
+          "iou": 0.5579136690647482,
+          "dice": 0.716231817132302,
+          "predPixels": 5318,
+          "labelPixels": 3344
+        }
+      ]
+    },
+    "summary": {
+      "baseline": {
+        "mean11": 0.8267985940874186,
+        "meanNew8": 0.8379642589434032,
+        "meanOriginal3": 0.7970234878047932
+      },
+      "candidate": {
+        "mean11": 0.8244837211613376,
+        "meanNew8": 0.8320841549789393,
+        "meanOriginal3": 0.8042158976477332
+      }
+    },
+    "selected": "outline-negative-run-20261111-v2",
+    "coordinateSystem": "整页256像素；内部模型选择指标，不与48家原尺寸评分直接比较",
+    "manifestSha256": "aef698b97ba2934090a7a8473542801735b8a14f03c068bc15e9611320e9c29f"
+  },
+  "developmentEvaluation": {
+    "baselineReproducedExactly": true,
+    "improved": [
+      {
+        "store_id": "NEW-023",
+        "before": 0.6055751248738036,
+        "after": 0.6294374455213929,
+        "delta": 0.023862320647589308
+      },
+      {
+        "store_id": "NEW-026",
+        "before": 0.8295676115387022,
+        "after": 0.9217157357214908,
+        "delta": 0.09214812418278862
+      },
+      {
+        "store_id": "NEW-049",
+        "before": 0.8863754949918472,
+        "after": 0.9129624742447757,
+        "delta": 0.026586979252928522
+      },
+      {
+        "store_id": "NEW-064",
+        "before": 0.88231859553842,
+        "after": 0.9360105465977081,
+        "delta": 0.053691951059288145
+      },
+      {
+        "store_id": "NEW-098",
+        "before": 0.8386797890793588,
+        "after": 0.9351771458539712,
+        "delta": 0.09649735677461235
+      },
+      {
+        "store_id": "NEW-099",
+        "before": 0.8620519420282932,
+        "after": 0.8987496691216542,
+        "delta": 0.036697727093361054
+      },
+      {
+        "store_id": "PDF-051",
+        "before": 0.8593719296253761,
+        "after": 0.9004042737510829,
+        "delta": 0.04103234412570678
+      },
+      {
+        "store_id": "PDF-073",
+        "before": 0.7281342711676645,
+        "after": 0.7757059734213377,
+        "delta": 0.04757170225367324
+      },
+      {
+        "store_id": "PDF-079",
+        "before": 0.7781325176357011,
+        "after": 0.8573845263143031,
+        "delta": 0.07925200867860194
+      },
+      {
+        "store_id": "PDF-090",
+        "before": 0.9404567264022912,
+        "after": 0.968715738986913,
+        "delta": 0.028259012584621823
+      },
+      {
+        "store_id": "PDF-098",
+        "before": 0.8079438586596519,
+        "after": 0.8249203309500396,
+        "delta": 0.01697647229038768
+      },
+      {
+        "store_id": "PDF-101",
+        "before": 0.8700660798206064,
+        "after": 0.8714610140149194,
+        "delta": 0.0013949341943130245
+      },
+      {
+        "store_id": "PDF-140",
+        "before": 0.7753457454699313,
+        "after": 0.8229673166232817,
+        "delta": 0.04762157115335042
+      },
+      {
+        "store_id": "PDF-245",
+        "before": 0.24318448363612225,
+        "after": 0.41343498675096463,
+        "delta": 0.17025050311484238
+      },
+      {
+        "store_id": "PDF-259",
+        "before": 0.7628803893890581,
+        "after": 0.8045366395484975,
+        "delta": 0.04165625015943941
+      },
+      {
+        "store_id": "PDF-261",
+        "before": 0.8105853741509847,
+        "after": 0.8218895035542709,
+        "delta": 0.011304129403286178
+      },
+      {
+        "store_id": "PDF-321",
+        "before": 0.7649518876040547,
+        "after": 0.8492383240217725,
+        "delta": 0.08428643641771771
+      },
+      {
+        "store_id": "PDF-330",
+        "before": 0.859008635107846,
+        "after": 0.9054260141841377,
+        "delta": 0.04641737907629173
+      },
+      {
+        "store_id": "PDF-363",
+        "before": 0.9070986068426614,
+        "after": 0.9199397566485672,
+        "delta": 0.012841149805905783
+      },
+      {
+        "store_id": "PDF-398",
+        "before": 0.8197784156164232,
+        "after": 0.8433915345330089,
+        "delta": 0.023613118916585685
+      },
+      {
+        "store_id": "PDF-407",
+        "before": 0.7272107447359908,
+        "after": 0.754432235886379,
+        "delta": 0.02722149115038819
+      },
+      {
+        "store_id": "PDF-411",
+        "before": 0.6968085758468929,
+        "after": 0.9300198816545693,
+        "delta": 0.23321130580767635
+      },
+      {
+        "store_id": "PDF-412",
+        "before": 0.7968182065830746,
+        "after": 0.8432522321094438,
+        "delta": 0.046434025526369216
+      }
+    ],
+    "regressed": [
+      {
+        "store_id": "NEW-015",
+        "before": 0.8828318159159605,
+        "after": 0.7982333293772571,
+        "delta": -0.08459848653870339
+      },
+      {
+        "store_id": "NEW-019",
+        "before": 0.9045365529510623,
+        "after": 0.8989280459609053,
+        "delta": -0.005608506990157025
+      },
+      {
+        "store_id": "NEW-020",
+        "before": 0.7460855814251043,
+        "after": 0.6938644910032444,
+        "delta": -0.05222109042185985
+      },
+      {
+        "store_id": "NEW-024",
+        "before": 0.7545782522469302,
+        "after": 0.5678927871489583,
+        "delta": -0.1866854650979719
+      },
+      {
+        "store_id": "NEW-065",
+        "before": 0.8406231612685843,
+        "after": 0.7779174965964496,
+        "delta": -0.06270566467213468
+      },
+      {
+        "store_id": "NEW-084",
+        "before": 0.9435526142127194,
+        "after": 0.9295907018200252,
+        "delta": -0.013961912392694176
+      },
+      {
+        "store_id": "NEW-096",
+        "before": 0.8656405038714465,
+        "after": 0.8407586454017967,
+        "delta": -0.024881858469649853
+      },
+      {
+        "store_id": "PDF-003",
+        "before": 0.955819754746652,
+        "after": 0.9436377320216126,
+        "delta": -0.012182022725039432
+      },
+      {
+        "store_id": "PDF-050",
+        "before": 0.9441511003869035,
+        "after": 0.9039595747820732,
+        "delta": -0.0401915256048303
+      },
+      {
+        "store_id": "PDF-095",
+        "before": 0.8815736109233473,
+        "after": 0.8710665410704947,
+        "delta": -0.010507069852852546
+      },
+      {
+        "store_id": "PDF-096",
+        "before": 0.8553089805306745,
+        "after": 0.7831002262509917,
+        "delta": -0.07220875427968276
+      },
+      {
+        "store_id": "PDF-097",
+        "before": 0.8755322052401747,
+        "after": 0.8456929217719431,
+        "delta": -0.029839283468231614
+      },
+      {
+        "store_id": "PDF-099",
+        "before": 0.68912100279129,
+        "after": 0.6859229773189222,
+        "delta": -0.0031980254723678048
+      },
+      {
+        "store_id": "PDF-189",
+        "before": 0.9432229894171155,
+        "after": 0.8348282852343415,
+        "delta": -0.10839470418277397
+      },
+      {
+        "store_id": "PDF-202",
+        "before": 0.9383239983015295,
+        "after": 0.8460973558971734,
+        "delta": -0.09222664240435607
+      },
+      {
+        "store_id": "PDF-217",
+        "before": 0.9390109611101842,
+        "after": 0.9132731920458936,
+        "delta": -0.025737769064290594
+      },
+      {
+        "store_id": "PDF-296",
+        "before": 0.9730698662684291,
+        "after": 0.9608258066863689,
+        "delta": -0.012244059582060207
+      },
+      {
+        "store_id": "PDF-302",
+        "before": 0.9258232804124346,
+        "after": 0.8937180137054578,
+        "delta": -0.032105266706976776
+      },
+      {
+        "store_id": "PDF-325",
+        "before": 0.9015638182272228,
+        "after": 0.8206334330581888,
+        "delta": -0.08093038516903395
+      },
+      {
+        "store_id": "PDF-342",
+        "before": 0.9414663192557307,
+        "after": 0.8944046909794426,
+        "delta": -0.047061628276288014
+      },
+      {
+        "store_id": "PDF-351",
+        "before": 0.9528890382862563,
+        "after": 0.9107298979264348,
+        "delta": -0.04215914035982149
+      },
+      {
+        "store_id": "PDF-353",
+        "before": 0.6946464049639148,
+        "after": 0.6421364343841559,
+        "delta": -0.052509970579758924
+      },
+      {
+        "store_id": "PDF-393",
+        "before": 0.9216917932352525,
+        "after": 0.9091777494409972,
+        "delta": -0.012514043794255358
+      },
+      {
+        "store_id": "PDF-405",
+        "before": 0.8350183368024581,
+        "after": 0.7041633375023012,
+        "delta": -0.13085499930015687
+      },
+      {
+        "store_id": "PDF-417",
+        "before": 0.7716971177177646,
+        "after": 0.6676753637861308,
+        "delta": -0.10402175393163382
+      }
+    ],
+    "unchanged": [],
+    "priorRegressions": [
+      {
+        "store_id": "NEW-026",
+        "before": 0.8295676115387022,
+        "after": 0.9217157357214908,
+        "delta": 0.09214812418278862
+      },
+      {
+        "store_id": "NEW-096",
+        "before": 0.8656405038714465,
+        "after": 0.8407586454017967,
+        "delta": -0.024881858469649853
+      },
+      {
+        "store_id": "NEW-098",
+        "before": 0.8386797890793588,
+        "after": 0.9351771458539712,
+        "delta": 0.09649735677461235
+      },
+      {
+        "store_id": "NEW-099",
+        "before": 0.8620519420282932,
+        "after": 0.8987496691216542,
+        "delta": 0.036697727093361054
+      },
+      {
+        "store_id": "PDF-245",
+        "before": 0.24318448363612225,
+        "after": 0.41343498675096463,
+        "delta": 0.17025050311484238
+      },
+      {
+        "store_id": "PDF-259",
+        "before": 0.7628803893890581,
+        "after": 0.8045366395484975,
+        "delta": 0.04165625015943941
+      },
+      {
+        "store_id": "PDF-261",
+        "before": 0.8105853741509847,
+        "after": 0.8218895035542709,
+        "delta": 0.011304129403286178
+      },
+      {
+        "store_id": "PDF-330",
+        "before": 0.859008635107846,
+        "after": 0.9054260141841377,
+        "delta": 0.04641737907629173
+      },
+      {
+        "store_id": "PDF-342",
+        "before": 0.9414663192557307,
+        "after": 0.8944046909794426,
+        "delta": -0.047061628276288014
+      },
+      {
+        "store_id": "PDF-393",
+        "before": 0.9216917932352525,
+        "after": 0.9091777494409972,
+        "delta": -0.012514043794255358
+      },
+      {
+        "store_id": "PDF-398",
+        "before": 0.8197784156164232,
+        "after": 0.8433915345330089,
+        "delta": 0.023613118916585685
+      },
+      {
+        "store_id": "PDF-411",
+        "before": 0.6968085758468929,
+        "after": 0.9300198816545693,
+        "delta": 0.23321130580767635
+      }
+    ],
+    "summary": {
+      "stores": 48,
+      "scorable": 48,
+      "metrics": {
+        "baseline-raw": {
+          "meanIoU": 0.8318775847261227,
+          "medianIoU": 0.8591902823666111,
+          "iouAtLeast90": 15,
+          "iouAtLeast80": 33
+        },
+        "baseline-clean": {
+          "meanIoU": 0.8400679791663016,
+          "medianIoU": 0.8687437601890837,
+          "iouAtLeast90": 20,
+          "iouAtLeast80": 33
+        },
+        "candidate-raw": {
+          "meanIoU": 0.8308208818997093,
+          "medianIoU": 0.8476678399594729,
+          "iouAtLeast90": 16,
+          "iouAtLeast80": 35
+        },
+        "candidate-clean": {
+          "meanIoU": 0.8418224099051539,
+          "medianIoU": 0.8488414905489539,
+          "iouAtLeast90": 20,
+          "iouAtLeast80": 35
+        }
+      },
+      "frozenBeforeScoring": true,
+      "developmentInformedPreprocessing": true,
+      "trainingOnDevelopment": false,
+      "acceptance45GeometryOrScoresRead": false,
+      "entranceScaleOrFurnitureEvaluated": false,
+      "productionReady": false,
+      "metric": "原图像素栅格IoU；按原审核多边形填充，不做对齐；无效参考记0并列出，不从48分母删除。"
+    }
+  },
+  "onnx": {
+    "data48AndSynthetic8": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 3.153085708618164e-05,
+      "differentMaskPixelsTotal": 0
+    },
+    "development48": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 4.011392593383789e-05,
+      "differentMaskPixelsTotal": 0
+    },
+    "syntheticDark37": {
+      "passed": true,
+      "probabilityTolerance": 0.005,
+      "maskDifferenceTolerance": 0.0001,
+      "maxAbsProbabilityError": 1.5288591384887695e-05,
+      "differentMaskPixelsTotal": 0
+    }
+  },
+  "modelDecision": {
+    "adoptCandidate": false,
+    "retainedBaseline": {
+      "onnx": "C:\\Users\\insta360\\Documents\\Codex\\outline-hardcases-export-20261109-v1\\outline.onnx",
+      "sha256": "cfdcfc0c325b7d7389d316a3630bec64630f58b6ddea163a6f2732791798bda4",
+      "exportCheckSha256": "c271a310cba61b348f327eae8aa7ae733e9b2e1506f4ac98cae8c4b0ff49cc15",
+      "checkpointSha256": "7150c1cedd00e562827303f1da41d5bb1d52c5b763329fe8c9476e08f8b43c3b"
+    },
+    "candidate": {
+      "onnx": "C:\\Users\\insta360\\Documents\\Codex\\outline-negative-export-20261111-v1\\outline.onnx",
+      "sha256": "7d94ffaa4c136433c11679666d1eac3750f1f3ff19c83d44d469caf67e498fdf",
+      "exportCheckSha256": "7c26a4afe2ee15a4181aef240dfbbfcc006d154c73a1266fb0c2a5b5c88201a8",
+      "checkpointSha256": "0cff34fc269832d8ba346cdb0f2a1998531b4332be73fb28583b22879ec81c33"
+    },
+    "reason": "11家内部验证82.68%→82.45%，48家原始IoU83.19%→83.08%，25家退化；未满足两组同时改善的预定替换条件。",
+    "message": "本轮候选未达到替换条件，保留上一版83.19%的较好模型；两版仍未接入项目。",
+    "nextStep": "保留较好权重；先核查整页256缩小造成的细线/尺寸邻域信息损失，再以独立训练样本做更高分辨率与页面区域/边界几何对照。不把11家验证改作训练，不按48分数回选另一模型，45保持隔离。",
+    "evaluationSha256": "4dad24751f7f75733dffd4b735dc062f0c66be29317664eefeef1825854a2fa8"
+  },
+  "validation": {
+    "pythonTests": 60,
+    "repositoryTests": 801,
+    "browserChecks": 26,
+    "staticTypeFormatPassed": true
+  },
+  "data": {
+    "manifestSha256": "aef698b97ba2934090a7a8473542801735b8a14f03c068bc15e9611320e9c29f",
+    "train": 37,
+    "internalVal": 11,
+    "development": 48,
+    "acceptance": 45,
+    "acceptanceGeometryRead": false,
+    "old40Unchanged": true
+  },
+  "provenance": {
+    "planSha256": "c73b21e94de29e6d71751cb40bccc99f84309afd0302ab4f6c56f4a843f7fc85",
+    "freezeSha256": "2b21bd872c4ec82ade665ae8ff4aec36821f0e4a0537530b03de334e60ea51e8",
+    "resultsSha256": "4dad24751f7f75733dffd4b735dc062f0c66be29317664eefeef1825854a2fa8",
+    "referenceSha256": "194ab609f524f93cf11737312d3304c487eaf827fe59a515668ea2de88c835f2",
+    "developmentInformed": true,
+    "oldReviewsModified": false,
+    "productionReady": false
+  }
+}
