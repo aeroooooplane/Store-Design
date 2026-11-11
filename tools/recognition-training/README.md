@@ -95,3 +95,7 @@ python tools/recognition-training/annotation_report.py --source <新增原页与
 本轮新增6家独立邻区/凹口样本及2家答复后准入样本，累计37训练、原3家内部验证。40家数据与黑底派生输入不含45验收或48开发身份。两组160轮仅比较固定前景权重1和0.75，候选按3家验证选择后冻结再评48家；结果及退化清单见 `docs/recognition-outline-regressions-20261110.md`。
 
 补充审核页用 `decisions.json.resolvedQuestions` 关联原 `user-confirmations.json`（逐SHA绑定），只读显示已确认范围，并随导出保留原答复来源。已解决问题不再出现在待答列表，旧审核包和浏览器数据不覆盖；无新问题时，复评页仍可跳转查看新增标注。
+
+## 显式扩充内部验证
+
+补强验证时使用 `--validation-extension <JSON>`，同时绑定父版目录和manifest哈希。声明包含 `newValidationIds`、`parentManifestSha256`、`frozenAt`、`reason`、`modelInferenceBeforeSelection: false`；只能把全新且未参与历史训练的独立门店指定为验证，不能重分旧训练/验证，仍验证保护清单和旧文件字节一致。调用者必须先核对所有历史训练版本、冻结名单及原页标签；声明本身不是未见过数据的证明。未指定时扩充行为不变，新增样本仍为训练。详见 [11家内部验证](../../docs/recognition-outline-validation-20261111.md)。

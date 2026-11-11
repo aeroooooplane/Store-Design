@@ -1,0 +1,65 @@
+{
+  "date": "2026-11-11",
+  "status": "内部验证扩充完成；尚未对新增验证运行模型",
+  "trainCount": 37,
+  "validationCount": 11,
+  "originalValidationIds": [
+    "PDF-402",
+    "NEW-069",
+    "PDF-188"
+  ],
+  "newValidation": [
+    {
+      "store_id": "PDF-142",
+      "name": "山东菏泽佳和城授权体验店"
+    },
+    {
+      "store_id": "NEW-045",
+      "name": "成都来福士授权专卖店（调优）"
+    },
+    {
+      "store_id": "PDF-291",
+      "name": "潍坊泰华城新天地"
+    },
+    {
+      "store_id": "PDF-082",
+      "name": "南京金陵天地授权体验店"
+    },
+    {
+      "store_id": "PDF-345",
+      "name": "西安百脑汇照材专卖店"
+    },
+    {
+      "store_id": "NEW-033",
+      "name": "宁波万象城授权体验店（中岛）"
+    },
+    {
+      "store_id": "NEW-011",
+      "name": "东莞民盈国贸授权体验店"
+    },
+    {
+      "store_id": "PDF-214",
+      "name": "杭州临平银泰授权体验店"
+    }
+  ],
+  "old40ImageMaskPolygonAndSplitUnchanged": true,
+  "protectedCounts": {
+    "development": 48,
+    "acceptance": 45
+  },
+  "manifestSha256": "aef698b97ba2934090a7a8473542801735b8a14f03c068bc15e9611320e9c29f",
+  "data": "C:\\Users\\insta360\\Documents\\Codex\\outline-validation-data-20261111-v2",
+  "review": "C:\\Users\\insta360\\Documents\\Codex\\outline-validation-review-20261111-v2\\补充标注审核.html",
+  "pythonTests": 57,
+  "browserChecks": 15,
+  "pendingQuestions": 0,
+  "modelPromotion": false,
+  "limitations": [
+    "代理校正标签，不是用户金标准",
+    "新增8家是按失败类型覆盖的内部模型选择集，不代表随机抽样的泛化估计",
+    "仅两类暗色邻区/侧栏，没有天然整页黑底覆盖",
+    "ID/别名/同源哈希隔离不能证明不存在未登记跨店复用",
+    "v1为预测前草稿，v2按原页修正两店并保留v1"
+  ],
+  "previousBetterModel": "outline-hardcases-run-20261109-v2/best.pt"
+}
