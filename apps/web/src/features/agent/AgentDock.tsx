@@ -3,6 +3,7 @@ import type { KeyboardEvent, ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { Link } from 'react-router'
 import type { AgentAction, AgentMessage } from '@store/shared'
+import { BrandFace } from '../../components/BrandFace.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useAiOverview } from '../settings/queries.ts'
 import { exportPlan } from '../workbench/plan-export.ts'
@@ -75,6 +76,7 @@ export function AgentDock({ projectId, nodeId, onSelect }: AgentDockProps) {
         />
       ) : (
         <button type="button" className="primary agent-dock-toggle" onClick={() => setOpen(true)}>
+          <BrandFace size={22} plate={false} />
           设计助理
         </button>
       )}
@@ -151,6 +153,7 @@ function AgentPanel({
   return (
     <section className="agent-panel" aria-label="设计助理">
       <header className="agent-head">
+        <BrandFace mood={send.error ? 'error' : 'idle'} />
         <h2>设计助理</h2>
         {sessions.data && sessions.data.length > 0 ? (
           <select
@@ -209,7 +212,12 @@ function AgentPanel({
             undoing={undo.isPending}
           />
         ))}
-        {busy ? <p className="hint agent-busy">助理正在处理…</p> : null}
+        {busy ? (
+          <p className="hint agent-busy">
+            <BrandFace mood="think" size={22} />
+            助理正在处理…
+          </p>
+        ) : null}
         <ErrorMessage error={send.error ?? create.error ?? undo.error ?? messages.error} />
       </div>
       <div className="agent-compose">

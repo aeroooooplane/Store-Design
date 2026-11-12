@@ -1742,7 +1742,66 @@ ul.issues li.hint::before {
 }
 
 .agent-dock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+/* The assistant face (components/BrandFace.tsx): blinks now and then while waiting, and both eyes
+   hop up together while it is thinking. */
+.brand-face {
+  display: block;
+  flex: none;
+}
+.brand-face-plate {
+  fill: var(--ink);
+}
+.brand-face-walls {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 5;
+}
+.brand-face-eyes rect {
+  fill: var(--brand);
+}
+path.brand-face-eyes {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+.brand-face.idle .brand-face-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: face-blink 5s infinite;
+}
+.brand-face.think .brand-face-eyes {
+  animation: face-hop 0.9s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+}
+@keyframes face-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes face-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-face .brand-face-eyes {
+    animation: none;
+  }
 }
 
 .agent-panel {
@@ -1834,6 +1893,9 @@ ul.issues li.hint::before {
 
 .agent-busy {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .agent-compose {
