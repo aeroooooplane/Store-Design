@@ -1,3 +1,4 @@
+import sharp from 'sharp'
 import { itemCorners, openingPieces } from '@store/shared'
 import { afterAll, beforeAll, describe, expect, it, vi } from 'vitest'
 import { mkdtemp, rm } from 'node:fs/promises'
@@ -116,6 +117,29 @@ describe('精细几何草稿与原生转换', () => {
       })
       expect(a.statusCode).toBe(400)
     }
+  })
+  it('带EXIF旋转的JPEG明确拒绝，不保存错位候选', async () => {
+    const p = await createProject(t, { name: '旋转JPEG', shopType: 'side_hall' })
+    const bytes = await sharp({
+      create: { width: 200, height: 300, channels: 3, background: 'white' },
+    })
+      .jpeg()
+      .withMetadata({ orientation: 6 })
+      .toBuffer()
+    const u = await t.app.inject({
+      method: 'POST',
+      url: '/api/v1/projects/' + p.id + '/uploads',
+      headers: { 'content-type': 'image/jpeg' },
+      payload: bytes,
+    })
+    expect(u.statusCode).toBe(201)
+    const response = await t.app.inject({
+      method: 'POST',
+      url: '/api/v1/uploads/' + u.json().id + '/fine',
+    })
+    expect(response.statusCode).toBe(400)
+    expect(response.json().error.message).toContain('EXIF')
+    expect((await t.app.inject('/api/v1/uploads/' + u.json().id + '/fine')).json()).toBeNull()
   })
   it('量尺和层高未知时不生成空间', () => {
     expect(() => convertFine({ ...base, heightMm: null })).toThrow()

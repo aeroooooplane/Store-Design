@@ -95,6 +95,12 @@ export async function extractFine(
     if (!f) throw notFound('图纸文件')
     const file = await resolveStoredFile(roots, 'storage', f.storageKey),
       bytes = await readFile(file.file)
+    const metadata = await sharp(bytes).metadata()
+    if (metadata.orientation && metadata.orientation !== 1)
+      throw new AppError(
+        'VALIDATION_FAILED',
+        '原图含EXIF旋转或镜像信息，请先旋转并重新保存图片后上传，避免坐标错位',
+      )
     const { data, info } = await sharp(bytes)
       .flatten({ background: '#fff' })
       .greyscale()
