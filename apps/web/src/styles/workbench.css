@@ -628,16 +628,50 @@ table.rows input {
 }
 ul.issues {
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 4px;
   font-size: 12px;
   max-height: 240px;
   overflow: auto;
 }
-ul.issues li.error {
-  color: var(--danger);
+/* Each line starts with a status dot: red for errors, yellow for warnings, green when all is well. */
+ul.issues li {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-1);
+  color: var(--ink);
 }
-ul.issues li.warning {
+ul.issues li::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-busy);
+  box-shadow: inset 0 0 0 0.75px var(--dot-busy-edge);
+}
+/* A short status line, not the global .error box. */
+ul.issues li.error {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  line-height: inherit;
+}
+ul.issues li.error::before {
+  position: static;
+  background: var(--dot-error);
+  box-shadow: inset 0 0 0 0.75px var(--dot-error-edge);
+}
+ul.issues li.hint {
   color: var(--muted);
+}
+ul.issues li.hint::before {
+  background: var(--dot-ok);
+  box-shadow: inset 0 0 0 0.75px var(--dot-ok-edge);
 }
 .toolbar.vertical {
   flex-direction: column;
@@ -650,7 +684,27 @@ ul.issues li.warning {
 }
 .save-state.conflict,
 .save-state.error {
-  color: var(--danger);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  /* A short status line, not the global .error box. */
+  padding: 0;
+  margin: 0 0 0 auto;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  line-height: inherit;
+  color: var(--ink);
+}
+.save-state.conflict::before,
+.save-state.error::before {
+  position: static;
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-error);
+  box-shadow: inset 0 0 0 0.75px var(--dot-error-edge);
 }
 .draft-elsewhere p {
   margin: 0 0 var(--space-1);
@@ -858,6 +912,9 @@ ul.issues li.warning {
   gap: var(--space-1);
 }
 .stage-head h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
   margin: 0;
 }
 .stage-row {
@@ -1344,20 +1401,45 @@ ul.issues li.warning {
   box-shadow: var(--shadow);
   font-size: var(--fs-sm);
 }
+/* Render state: a small dot in front of black text (yellow and pulsing while rendering, red when
+   out of date, green when ready). */
 .render-status {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-half);
-  background: var(--accent-soft);
+  gap: 6px;
+  background: var(--paper);
   color: var(--ink);
+  font-weight: 600;
 }
-.render-status.warning {
-  background: var(--warn-soft);
-  color: var(--warn);
+.render-status::before {
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-busy);
+  box-shadow: inset 0 0 0 0.75px var(--dot-busy-edge);
+  animation: status-pulse 1.6s ease-in-out infinite;
 }
-.render-status.complete {
-  background: var(--ok-soft);
-  color: var(--ok);
+.render-status.warning::before {
+  background: var(--dot-error);
+  box-shadow: inset 0 0 0 0.75px var(--dot-error-edge);
+  animation: none;
+}
+.render-status.complete::before {
+  background: var(--dot-ok);
+  box-shadow: inset 0 0 0 0.75px var(--dot-ok-edge);
+  animation: none;
+}
+@keyframes status-pulse {
+  50% {
+    opacity: 0.35;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .render-status::before {
+    animation: none;
+  }
 }
 .render-empty {
   display: grid;
@@ -1476,7 +1558,7 @@ ul.issues li.warning {
   font-weight: 500;
 }
 .delivery-included svg {
-  color: var(--ok);
+  color: var(--ink);
 }
 .delivery-included span {
   grid-column: 2;
@@ -1663,7 +1745,66 @@ ul.issues li.warning {
 }
 
 .agent-dock-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   box-shadow: 0 6px 18px rgb(0 0 0 / 0.16);
+}
+
+/* The assistant face (components/BrandFace.tsx): blinks now and then while waiting, and both eyes
+   hop up together while it is thinking. */
+.brand-face {
+  display: block;
+  flex: none;
+}
+.brand-face-plate {
+  fill: var(--ink);
+}
+.brand-face-walls {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 5;
+}
+.brand-face-eyes rect {
+  fill: var(--brand);
+}
+path.brand-face-eyes {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+.brand-face.idle .brand-face-eyes {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: face-blink 5s infinite;
+}
+.brand-face.think .brand-face-eyes {
+  animation: face-hop 0.9s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+}
+@keyframes face-blink {
+  0%,
+  93%,
+  100% {
+    transform: scaleY(1);
+  }
+  96% {
+    transform: scaleY(0.15);
+  }
+}
+@keyframes face-hop {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  45% {
+    transform: translateY(-5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brand-face .brand-face-eyes {
+    animation: none;
+  }
 }
 
 .agent-panel {
@@ -1755,6 +1896,9 @@ ul.issues li.warning {
 
 .agent-busy {
   align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .agent-compose {

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 品牌图形“店铺平面”（2026-11-12 用户选定）：俯视的三面墙，底边门洞是入口，两张黄色中岛桌。
+       改动后运行 node tools/brand/build-icons.mjs 重新生成 public 下的位图图标；
+       设计助理的脸 src/components/BrandFace.tsx 是同一图形，要一起改。 -->
+  <rect width="64" height="64" rx="14" fill="#111111"/>
+  <path d="M26.5 50H14V14H50V50H37.5" fill="none" stroke="#ffffff" stroke-width="5"/>
+  <rect x="21" y="21" width="8" height="17" rx="1.5" fill="#ffd200"/>
+  <rect x="35" y="21" width="8" height="17" rx="1.5" fill="#ffd200"/>
+</svg>

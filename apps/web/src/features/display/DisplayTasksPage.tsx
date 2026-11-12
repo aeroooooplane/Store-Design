@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router'
 import { MARKETS, MARKET_LABELS, SI_STYLES } from '@store/shared'
 import type { DisplayTaskCreate } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
-import { TrashIcon } from '../../components/icons.tsx'
+import { Trash2 } from 'lucide-react'
 import { formatDateTime } from '../../lib/format.ts'
 import {
   useCreateDisplayTask,
@@ -124,7 +124,7 @@ export function DisplayTasksPage() {
                       if (window.confirm(`删除展陈方案“${t.name}”？`)) remove.mutate(t.id)
                     }}
                   >
-                    <TrashIcon />
+                    <Trash2 size={16} aria-hidden="true" />
                   </button>
                 </td>
               </tr>

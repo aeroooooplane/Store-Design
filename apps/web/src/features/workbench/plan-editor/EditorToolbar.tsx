@@ -1,7 +1,13 @@
 import type { Dispatch } from 'react'
 import type { Look } from '../../viewer3d/white-scene.ts'
 import type { EditorAction } from '../editor-state.ts'
-import { ArcArrow } from './ArcArrow.tsx'
+import { Box, Redo2, Rotate3d, Undo2 } from 'lucide-react'
+import {
+  MaterialIcon,
+  PartitionIcon,
+  PlanViewIcon,
+  SpacingIcon,
+} from '../../../components/StoreIcons.tsx'
 import type { SaveState } from './useDraftAutosave.ts'
 
 const SAVE_LABELS = {
@@ -50,10 +56,22 @@ export function EditorToolbar({
   return (
     <div className="toolbar">
       <div className="tabs" role="group" aria-label="视图">
-        <button type="button" aria-pressed={view === 'plan'} onClick={() => onSwitchView('plan')}>
+        <button
+          type="button"
+          className="with-icon"
+          aria-pressed={view === 'plan'}
+          onClick={() => onSwitchView('plan')}
+        >
+          <PlanViewIcon size={16} aria-hidden="true" />
           平面
         </button>
-        <button type="button" aria-pressed={view === '3d'} onClick={() => onSwitchView('3d')}>
+        <button
+          type="button"
+          className="with-icon"
+          aria-pressed={view === '3d'}
+          onClick={() => onSwitchView('3d')}
+        >
+          <Rotate3d size={16} aria-hidden="true" />
           三维
         </button>
       </div>
@@ -61,16 +79,20 @@ export function EditorToolbar({
         <div className="tabs" role="group" aria-label="外观">
           <button
             type="button"
+            className="with-icon"
             aria-pressed={look === 'material'}
             onClick={() => onSwitchLook('material')}
           >
+            <MaterialIcon size={16} aria-hidden="true" />
             材质
           </button>
           <button
             type="button"
+            className="with-icon"
             aria-pressed={look === 'white'}
             onClick={() => onSwitchLook('white')}
           >
+            <Box size={16} aria-hidden="true" />
             白模
           </button>
         </div>
@@ -78,20 +100,24 @@ export function EditorToolbar({
       {view === 'plan' && (
         <button
           type="button"
+          className="with-icon"
           aria-pressed={spacing}
           title="在平面上标出每件软装到最近软装或墙体的距离（100 mm–3 m）"
           onClick={onToggleSpacing}
         >
+          <SpacingIcon size={16} aria-hidden="true" />
           显示间距
         </button>
       )}
       {view === 'plan' && (
         <button
           type="button"
+          className="with-icon"
           aria-pressed={drawingFixture}
           title="在平面上拖出一个矩形，边缘吸附墙体和配件柜（按住 Alt 不吸附，Esc 取消）"
           onClick={onToggleDrawFixture}
         >
+          <PartitionIcon size={16} aria-hidden="true" />
           画空心隔板
         </button>
       )}
@@ -104,7 +130,7 @@ export function EditorToolbar({
           disabled={!canUndo}
           onClick={() => dispatch({ type: 'undo' })}
         >
-          <ArcArrow direction="left" />
+          <Undo2 size={16} aria-hidden="true" />
         </button>
         <button
           type="button"
@@ -114,7 +140,7 @@ export function EditorToolbar({
           disabled={!canRedo}
           onClick={() => dispatch({ type: 'redo' })}
         >
-          <ArcArrow direction="right" />
+          <Redo2 size={16} aria-hidden="true" />
         </button>
       </span>
       <span className={`save-state ${saveState}`} role="status">

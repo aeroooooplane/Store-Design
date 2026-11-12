@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { ArrowDown } from 'lucide-react'
 import {
   DISPLAY_ORIENTATION_LABELS,
   summarizeDisplay,
@@ -148,7 +149,10 @@ export function SlotTable({
         <div className="slot-board portrait">
           {['L1', 'L2', 'L3', 'R1', 'R2', 'R3', 'E'].map((c) => cell(t, c))}
           {modules}
-          <div className="slot-entrance">↓ 端头朝入口</div>
+          <div className="slot-entrance">
+            <ArrowDown size={14} aria-hidden="true" />
+            端头朝入口
+          </div>
         </div>
       )
     }

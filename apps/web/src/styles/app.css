@@ -19,16 +19,30 @@
   font-size: var(--fs-lg);
   text-decoration: none;
 }
+/* A button or link with a 16 px icon in front of its text. */
+.with-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.with-icon > svg {
+  flex: none;
+}
+/* Search fields start with a magnifier (lucide Search, muted). */
+input[type='search'] {
+  padding-left: 32px;
+  background: var(--paper)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236b675f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m21 21-4.34-4.34'/%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3C/svg%3E")
+    10px center / 16px no-repeat;
+}
+
+/* Brand mark: public/favicon.svg, the same drawing as the browser tab and install icons. */
 .app-logo {
-  display: grid;
-  place-items: center;
+  display: block;
+  flex: none;
   width: 28px;
   height: 28px;
-  border-radius: 8px;
-  background: var(--brand);
-  color: var(--brand-ink);
-  font-size: var(--fs-sm);
-  font-weight: 800;
 }
 .app-nav-links {
   display: flex;
@@ -294,13 +308,44 @@ table.projects td.actions > * + * {
   background: var(--paper);
   color: var(--muted);
 }
+/* Error message (2026-11-12, user's choice): white box, a thin red edge on the left and a red dot;
+   red stays small, the text stays ink. */
 .error {
-  padding: var(--space-1) var(--space-2);
-  border-left: 3px solid var(--danger);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  background: var(--danger-soft);
-  color: var(--danger);
+  position: relative;
+  padding: var(--space-1) 12px var(--space-1) 28px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--dot-error);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
   margin: var(--space-1) 0;
+}
+.error::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: calc(var(--space-1) + 0.75em - 4px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-error);
+  box-shadow: inset 0 0 0 0.75px var(--dot-error-edge);
+}
+/* Under a form field: only the dot and the text; the field itself gets the red edge. */
+.error.inline {
+  padding: 0 0 0 16px;
+  border: 0;
+  background: none;
+  font-size: var(--fs-sm);
+}
+.error.inline::before {
+  left: 0;
+  top: calc(0.75em - 4px);
+}
+input[aria-invalid='true'],
+select[aria-invalid='true'] {
+  border-color: var(--dot-error);
 }
 .pager {
   display: flex;
