@@ -294,13 +294,44 @@ table.projects td.actions > * + * {
   background: var(--paper);
   color: var(--muted);
 }
+/* Error message (2026-11-12, user's choice): white box, a thin red edge on the left and a red dot;
+   red stays small, the text stays ink. */
 .error {
-  padding: var(--space-1) var(--space-2);
-  border-left: 3px solid var(--danger);
-  border-radius: 0 var(--radius) var(--radius) 0;
-  background: var(--danger-soft);
-  color: var(--danger);
+  position: relative;
+  padding: var(--space-1) 12px var(--space-1) 28px;
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--dot-error);
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.5;
   margin: var(--space-1) 0;
+}
+.error::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  top: calc(var(--space-1) + 0.75em - 4px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot-error);
+  box-shadow: inset 0 0 0 0.75px var(--dot-error-edge);
+}
+/* Under a form field: only the dot and the text; the field itself gets the red edge. */
+.error.inline {
+  padding: 0 0 0 16px;
+  border: 0;
+  background: none;
+  font-size: var(--fs-sm);
+}
+.error.inline::before {
+  left: 0;
+  top: calc(0.75em - 4px);
+}
+input[aria-invalid='true'],
+select[aria-invalid='true'] {
+  border-color: var(--dot-error);
 }
 .pager {
   display: flex;

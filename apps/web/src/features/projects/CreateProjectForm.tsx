@@ -41,6 +41,7 @@ export function CreateProjectForm() {
           onChange={(e) => setName(e.target.value)}
           maxLength={100}
           placeholder="例如：南京德基广场"
+          aria-invalid={formError ? true : undefined}
         />
       </label>
       <label>
@@ -77,7 +78,7 @@ export function CreateProjectForm() {
         新建项目
       </button>
       {formError ? (
-        <div className="error" role="alert" style={{ gridColumn: '1 / -1' }}>
+        <div className="error inline" role="alert" style={{ gridColumn: '1 / -1' }}>
           {formError}
         </div>
       ) : null}
