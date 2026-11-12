@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { DemandSchema } from './demand.ts'
 import {
   boundaryPath,
   isSimplePolygon,
@@ -43,6 +44,7 @@ export const CalibrationSchema = z.object({
  */
 export const SpaceSchema = z.object({
   schemaVersion: z.literal(1),
+  demand: DemandSchema.optional(),
   boundary: z.array(PointSchema).min(3).max(200),
   height: z.number().finite().min(1.5).max(20),
   entrances: z.array(EntranceSchema).max(20).default([]),
@@ -172,9 +174,9 @@ export function validateSpace(space: Space): SpaceIssue[] {
 
 const roundPoint = (p: Point): [number, number] => [roundM(p[0]), roundM(p[1])]
 
-/** Canonical form for storage: millimetre precision and clockwise rings. */
+/** Clockwise rings; millimetre precision only when rounding preserves valid topology. */
 export function normalizeSpace(space: Space): Space {
-  return {
+  const rounded: Space = {
     ...space,
     height: roundM(space.height),
     boundary: toClockwise(space.boundary).map(roundPoint),
@@ -186,6 +188,23 @@ export function normalizeSpace(space: Space): Space {
       polygon: toClockwise(o.polygon).map(roundPoint),
     })),
   }
+  // Independently rounding a clipped wall and its diagonal boundary can make them cross,
+  // or collapse a thin wall. Keep the valid source geometry rather than move/delete a wall.
+  if (
+    validateSpace(rounded).some((i) => i.severity === 'error') &&
+    !validateSpace(space).some((i) => i.severity === 'error')
+  ) {
+    return {
+      ...space,
+      height: roundM(space.height),
+      boundary: toClockwise(space.boundary).map(([x, z]): [number, number] => [x, z]),
+      obstacles: space.obstacles.map((o) => ({
+        ...o,
+        polygon: toClockwise(o.polygon).map(([x, z]): [number, number] => [x, z]),
+      })),
+    }
+  }
+  return rounded
 }
 
 /**

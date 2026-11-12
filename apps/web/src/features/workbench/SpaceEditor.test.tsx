@@ -27,6 +27,38 @@ const change = (label: string, value: string | number) =>
 const valueOf = (label: string) => screen.getByLabelText<HTMLInputElement>(label).value
 
 describe('SpaceEditor', () => {
+  it('修改空间时保留已导入的必配清单', () => {
+    const initial: Space = {
+      schemaVersion: 1,
+      boundary: [
+        [0, 0],
+        [6, 0],
+        [6, 5],
+        [0, 5],
+      ],
+      height: 3,
+      entrances: [],
+      openEdges: [],
+      obstacles: [],
+      calibration: null,
+      demand: {
+        schemaVersion: 1,
+        sourceStoreId: 'test',
+        entities: [
+          {
+            id: 'a',
+            label: '收银',
+            roles: ['cashier'],
+            quantity: 2,
+            dimensions: {},
+            placeholderFootprint: null,
+          },
+        ],
+      },
+    }
+    const { submitted } = renderEditor(initial)
+    expect(submitted().demand).toEqual(initial.demand)
+  })
   it('builds an L shape from a template, then sets a storefront and an open edge', () => {
     const { submitted, marked } = renderEditor()
     click('模板')

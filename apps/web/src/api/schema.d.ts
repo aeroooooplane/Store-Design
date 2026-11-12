@@ -758,6 +758,33 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    demand?: {
+                                        /** @enum {number} */
+                                        schemaVersion: 1;
+                                        sourceStoreId?: string;
+                                        entities: {
+                                            id: string;
+                                            label: string;
+                                            roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                            quantity: number;
+                                            /** @default {} */
+                                            dimensions: {
+                                                length?: number;
+                                                width?: number;
+                                                depth?: number;
+                                                height?: number;
+                                                attachedSeats?: number;
+                                            };
+                                            /** @default null */
+                                            placeholderFootprint: {
+                                                w: number;
+                                                d: number;
+                                                h: number;
+                                            } | null;
+                                            origin?: string;
+                                            sourceAnnotationHash?: string;
+                                        }[];
+                                    };
                                     boundary: [
                                         number,
                                         number
@@ -835,6 +862,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
@@ -894,6 +929,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
@@ -1103,6 +1146,33 @@ export interface paths {
                         space?: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
                             boundary: [
                                 number,
                                 number
@@ -1180,6 +1250,14 @@ export interface paths {
                             }[];
                             /** @default null */
                             planning?: {
+                                demand?: {
+                                    id: string;
+                                    label: string;
+                                    required: number;
+                                    placed: number;
+                                    placeholders: number;
+                                    reason: string | null;
+                                }[];
                                 /** @enum {string} */
                                 strategy: "max" | "area" | "min" | "case";
                                 requested: number;
@@ -1242,6 +1320,33 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    demand?: {
+                                        /** @enum {number} */
+                                        schemaVersion: 1;
+                                        sourceStoreId?: string;
+                                        entities: {
+                                            id: string;
+                                            label: string;
+                                            roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                            quantity: number;
+                                            /** @default {} */
+                                            dimensions: {
+                                                length?: number;
+                                                width?: number;
+                                                depth?: number;
+                                                height?: number;
+                                                attachedSeats?: number;
+                                            };
+                                            /** @default null */
+                                            placeholderFootprint: {
+                                                w: number;
+                                                d: number;
+                                                h: number;
+                                            } | null;
+                                            origin?: string;
+                                            sourceAnnotationHash?: string;
+                                        }[];
+                                    };
                                     boundary: [
                                         number,
                                         number
@@ -1319,6 +1424,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
@@ -1456,6 +1569,33 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                demand?: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    sourceStoreId?: string;
+                                    entities: {
+                                        id: string;
+                                        label: string;
+                                        roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                        quantity: number;
+                                        /** @default {} */
+                                        dimensions: {
+                                            length?: number;
+                                            width?: number;
+                                            depth?: number;
+                                            height?: number;
+                                            attachedSeats?: number;
+                                        };
+                                        /** @default null */
+                                        placeholderFootprint: {
+                                            w: number;
+                                            d: number;
+                                            h: number;
+                                        } | null;
+                                        origin?: string;
+                                        sourceAnnotationHash?: string;
+                                    }[];
+                                };
                                 boundary: [
                                     number,
                                     number
@@ -1533,6 +1673,14 @@ export interface paths {
                                 }[];
                                 /** @default null */
                                 planning: {
+                                    demand?: {
+                                        id: string;
+                                        label: string;
+                                        required: number;
+                                        placed: number;
+                                        placeholders: number;
+                                        reason: string | null;
+                                    }[];
                                     /** @enum {string} */
                                     strategy: "max" | "area" | "min" | "case";
                                     requested: number;
@@ -1659,6 +1807,33 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                demand?: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    sourceStoreId?: string;
+                                    entities: {
+                                        id: string;
+                                        label: string;
+                                        roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                        quantity: number;
+                                        /** @default {} */
+                                        dimensions: {
+                                            length?: number;
+                                            width?: number;
+                                            depth?: number;
+                                            height?: number;
+                                            attachedSeats?: number;
+                                        };
+                                        /** @default null */
+                                        placeholderFootprint: {
+                                            w: number;
+                                            d: number;
+                                            h: number;
+                                        } | null;
+                                        origin?: string;
+                                        sourceAnnotationHash?: string;
+                                    }[];
+                                };
                                 boundary: [
                                     number,
                                     number
@@ -1736,6 +1911,14 @@ export interface paths {
                                 }[];
                                 /** @default null */
                                 planning: {
+                                    demand?: {
+                                        id: string;
+                                        label: string;
+                                        required: number;
+                                        placed: number;
+                                        placeholders: number;
+                                        reason: string | null;
+                                    }[];
                                     /** @enum {string} */
                                     strategy: "max" | "area" | "min" | "case";
                                     requested: number;
@@ -1862,6 +2045,33 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                demand?: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    sourceStoreId?: string;
+                                    entities: {
+                                        id: string;
+                                        label: string;
+                                        roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                        quantity: number;
+                                        /** @default {} */
+                                        dimensions: {
+                                            length?: number;
+                                            width?: number;
+                                            depth?: number;
+                                            height?: number;
+                                            attachedSeats?: number;
+                                        };
+                                        /** @default null */
+                                        placeholderFootprint: {
+                                            w: number;
+                                            d: number;
+                                            h: number;
+                                        } | null;
+                                        origin?: string;
+                                        sourceAnnotationHash?: string;
+                                    }[];
+                                };
                                 boundary: [
                                     number,
                                     number
@@ -1939,6 +2149,14 @@ export interface paths {
                                 }[];
                                 /** @default null */
                                 planning: {
+                                    demand?: {
+                                        id: string;
+                                        label: string;
+                                        required: number;
+                                        placed: number;
+                                        placeholders: number;
+                                        reason: string | null;
+                                    }[];
                                     /** @enum {string} */
                                     strategy: "max" | "area" | "min" | "case";
                                     requested: number;
@@ -2069,6 +2287,33 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                demand?: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    sourceStoreId?: string;
+                                    entities: {
+                                        id: string;
+                                        label: string;
+                                        roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                        quantity: number;
+                                        /** @default {} */
+                                        dimensions: {
+                                            length?: number;
+                                            width?: number;
+                                            depth?: number;
+                                            height?: number;
+                                            attachedSeats?: number;
+                                        };
+                                        /** @default null */
+                                        placeholderFootprint: {
+                                            w: number;
+                                            d: number;
+                                            h: number;
+                                        } | null;
+                                        origin?: string;
+                                        sourceAnnotationHash?: string;
+                                    }[];
+                                };
                                 boundary: [
                                     number,
                                     number
@@ -2146,6 +2391,14 @@ export interface paths {
                                 }[];
                                 /** @default null */
                                 planning: {
+                                    demand?: {
+                                        id: string;
+                                        label: string;
+                                        required: number;
+                                        placed: number;
+                                        placeholders: number;
+                                        reason: string | null;
+                                    }[];
                                     /** @enum {string} */
                                     strategy: "max" | "area" | "min" | "case";
                                     requested: number;
@@ -2285,6 +2538,14 @@ export interface paths {
                                 }[];
                                 /** @default null */
                                 planning: {
+                                    demand?: {
+                                        id: string;
+                                        label: string;
+                                        required: number;
+                                        placed: number;
+                                        placeholders: number;
+                                        reason: string | null;
+                                    }[];
                                     /** @enum {string} */
                                     strategy: "max" | "area" | "min" | "case";
                                     requested: number;
@@ -2425,6 +2686,14 @@ export interface paths {
                             }[];
                             /** @default null */
                             planning?: {
+                                demand?: {
+                                    id: string;
+                                    label: string;
+                                    required: number;
+                                    placed: number;
+                                    placeholders: number;
+                                    reason: string | null;
+                                }[];
                                 /** @enum {string} */
                                 strategy: "max" | "area" | "min" | "case";
                                 requested: number;
@@ -2491,6 +2760,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
@@ -4374,6 +4651,33 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
                             boundary: [
                                 number,
                                 number
@@ -4454,6 +4758,33 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                demand?: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    sourceStoreId?: string;
+                                    entities: {
+                                        id: string;
+                                        label: string;
+                                        roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                        quantity: number;
+                                        /** @default {} */
+                                        dimensions: {
+                                            length?: number;
+                                            width?: number;
+                                            depth?: number;
+                                            height?: number;
+                                            attachedSeats?: number;
+                                        };
+                                        /** @default null */
+                                        placeholderFootprint: {
+                                            w: number;
+                                            d: number;
+                                            h: number;
+                                        } | null;
+                                        origin?: string;
+                                        sourceAnnotationHash?: string;
+                                    }[];
+                                };
                                 boundary: [
                                     number,
                                     number
@@ -4534,6 +4865,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
@@ -4618,6 +4957,33 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
                             boundary: [
                                 number,
                                 number
@@ -4695,6 +5061,14 @@ export interface paths {
                             }[];
                             /** @default null */
                             planning?: {
+                                demand?: {
+                                    id: string;
+                                    label: string;
+                                    required: number;
+                                    placed: number;
+                                    placeholders: number;
+                                    reason: string | null;
+                                }[];
                                 /** @enum {string} */
                                 strategy: "max" | "area" | "min" | "case";
                                 requested: number;
@@ -6241,6 +6615,33 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
                             boundary: [
                                 number,
                                 number
@@ -6318,6 +6719,14 @@ export interface paths {
                             }[];
                             /** @default null */
                             planning?: {
+                                demand?: {
+                                    id: string;
+                                    label: string;
+                                    required: number;
+                                    placed: number;
+                                    placeholders: number;
+                                    reason: string | null;
+                                }[];
                                 /** @enum {string} */
                                 strategy: "max" | "area" | "min" | "case";
                                 requested: number;
@@ -6373,6 +6782,33 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    demand?: {
+                                        /** @enum {number} */
+                                        schemaVersion: 1;
+                                        sourceStoreId?: string;
+                                        entities: {
+                                            id: string;
+                                            label: string;
+                                            roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                            quantity: number;
+                                            /** @default {} */
+                                            dimensions: {
+                                                length?: number;
+                                                width?: number;
+                                                depth?: number;
+                                                height?: number;
+                                                attachedSeats?: number;
+                                            };
+                                            /** @default null */
+                                            placeholderFootprint: {
+                                                w: number;
+                                                d: number;
+                                                h: number;
+                                            } | null;
+                                            origin?: string;
+                                            sourceAnnotationHash?: string;
+                                        }[];
+                                    };
                                     boundary: [
                                         number,
                                         number
@@ -6450,6 +6886,14 @@ export interface paths {
                                     }[];
                                     /** @default null */
                                     planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
                                         /** @enum {string} */
                                         strategy: "max" | "area" | "min" | "case";
                                         requested: number;
