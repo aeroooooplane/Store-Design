@@ -15,10 +15,17 @@
 
 ## 品牌图形
 
-- 2026-11-12 用户选定“店铺平面”：黑底圆角方块，白色三面墙，底边门洞是入口，两张黄色中岛桌。浏览器标签图标、安装图标和网页顶栏 Logo 用同一个图形；以后也作为设计助理的形象（两张桌是眼睛，门洞是嘴）。
+- 2026-11-12 用户选定“店铺平面”：黑底圆角方块，白色三面墙，底边门洞是入口，两张黄色中岛桌。浏览器标签图标、安装图标和网页顶栏 Logo 用同一个图形；它也是设计助理的脸（`components/BrandFace.tsx`：两张桌是眼睛，门洞是嘴；待命偶尔眨眼，思考时两眼一起上下跳，出错时叉眼）。
 - 只用网页现有的黑、白、黄；不使用影石 Insta360 官方标志，避免内部工具被当成官方产品。
 - 源文件是 `apps/web/public/favicon.svg`。位图（`favicon.ico` 16/32/48、`icon-192.png`、`icon-512.png`、`icon-maskable-512.png`、`apple-touch-icon.png`）由 `node tools/brand/build-icons.mjs` 生成并入库；改图形只改 SVG，再运行脚本。
 - 应用要上云，所以不做本机桌面快捷方式。`apps/web/public/manifest.webmanifest` 让 Chrome / Edge 地址栏出现“安装”，装上后桌面、开始菜单和任务栏都显示这个图标，打开的仍是同一个网址。
+
+## 页面图标
+
+- 通用图标一律用 lucide（`lucide-react`）；lucide 没有的门店图标（阶段、平面视图、材质、显示间距、空心隔板、展陈）在 `components/StoreIcons.tsx`，按 lucide 的画法画：24 网格、线宽 2、圆头圆角。不再另画别的图标，也不用文字符号（✓ ▾ ↓ ×）代替图标。
+- 尺寸只用 16（按钮、列表行）、18（面板标题）、24；颜色跟随文字。文字按钮配图标时加 `.with-icon`；只有图标的按钮用 `.icon-button`，必须有 `aria-label` 和悬停提示。
+- 阶段面板的标题和按钮图标集中在 `StagePanel.tsx` 的 `STAGE_ICONS` / `ACTION_ICONS`，按文字对应；改按钮文字时同步改这里。
+- 搜索框（`input[type='search']`）自动带放大镜。
 
 ## 维护入口
 

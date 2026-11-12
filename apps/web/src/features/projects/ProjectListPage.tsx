@@ -2,7 +2,7 @@ import { useDeferredValue, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
-import { Trash2 } from 'lucide-react'
+import { ArchiveRestore, Trash2, Upload } from 'lucide-react'
 import { formatDateTime } from '../../lib/format.ts'
 import { CreateProjectForm } from './CreateProjectForm.tsx'
 import {
@@ -78,10 +78,12 @@ export function ProjectListPage() {
           />
           <button
             type="button"
+            className="with-icon"
             title="导入本系统导出的项目文件，或旧版工作台的备份"
             disabled={importProject.isPending}
             onClick={() => fileInput.current?.click()}
           >
+            <Upload size={16} aria-hidden="true" />
             {importProject.isPending ? '正在导入…' : '导入项目'}
           </button>
         </span>
@@ -190,9 +192,11 @@ export function ProjectListPage() {
                     ) : (
                       <button
                         type="button"
+                        className="with-icon"
                         disabled={setDeleted.isPending}
                         onClick={() => setDeleted.mutate({ project, deleted: false })}
                       >
+                        <ArchiveRestore size={16} aria-hidden="true" />
                         恢复
                       </button>
                     )}

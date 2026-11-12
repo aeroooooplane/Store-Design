@@ -1,7 +1,8 @@
 import { Suspense, lazy, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useIsMutating, useQueryClient } from '@tanstack/react-query'
-import { AlertTriangle, Check, ExternalLink, FileArchive, ImageIcon } from 'lucide-react'
+import { AlertTriangle, Check, ExternalLink, FileArchive, ImageIcon, Rotate3d } from 'lucide-react'
+import { DisplayIcon } from '../../components/StoreIcons.tsx'
 import { RENDERED_MODES, RENDER_SIZE, deliveryLegend } from '@store/shared'
 import type {
   Asset,
@@ -354,14 +355,15 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
             <div className="tabs" role="group" aria-label="显示">
               {(
                 [
-                  ['3d', '三维查看'],
-                  ['image', '渲染图'],
-                  ['display', '展陈'],
+                  ['3d', '三维查看', Rotate3d],
+                  ['image', '渲染图', ImageIcon],
+                  ['display', '展陈', DisplayIcon],
                 ] as const
-              ).map(([mode, label]) => (
+              ).map(([mode, label, Icon]) => (
                 <button
                   key={mode}
                   type="button"
+                  className="with-icon"
                   aria-pressed={show === mode}
                   disabled={busy || delivering}
                   onClick={() => {
@@ -370,6 +372,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                     if (mode === '3d' && selected) viewer.current?.showView(selected.camera)
                   }}
                 >
+                  <Icon size={16} aria-hidden="true" />
                   {label}
                 </button>
               ))}

@@ -1,4 +1,5 @@
 import { useParams } from 'react-router'
+import { Download } from 'lucide-react'
 import { ProjectNavSlot } from '../../components/AppNav.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { Workbench } from '../workbench/Workbench.tsx'
@@ -13,7 +14,13 @@ export function ProjectPage() {
     <main className="page page-workbench">
       {project.data && !project.data.deletedAt && (
         <ProjectNavSlot slot="actions">
-          <a href={projectExportUrl(projectId)} download title="导出为项目文件（含全部节点与草稿）">
+          <a
+            className="with-icon"
+            href={projectExportUrl(projectId)}
+            download
+            title="导出为项目文件（含全部节点与草稿）"
+          >
+            <Download size={16} aria-hidden="true" />
             导出项目
           </a>
         </ProjectNavSlot>
