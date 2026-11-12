@@ -47,6 +47,8 @@ jobs:
         run: node --test tools/recognition/alignment-core.test.mjs
       - name: 原图精细几何与贡献计分
         run: node --test tools/recognition/fine-geometry.test.mjs tools/recognition/fine-evaluate.test.mjs
+      - name: 布局试点隔离与标注转换
+        run: node --test tools/layout-pilot/core.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
