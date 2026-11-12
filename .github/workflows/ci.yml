@@ -39,6 +39,8 @@ jobs:
         run: node --test tools/recognition/pilot-contract.test.mjs
       - name: 可导入空间样例与来源校验
         run: node --test tools/recognition/usable-project.test.mjs
+      - name: 原图候选比例与未知项校验
+        run: node --test tools/recognition/raw-project.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
