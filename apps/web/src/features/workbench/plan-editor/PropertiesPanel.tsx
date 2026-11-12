@@ -12,6 +12,7 @@ import {
 import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 import { RotateCcwSquare, RotateCwSquare, Trash2 } from 'lucide-react'
+import { ItemFunctionIcon } from '../../../components/StoreIcons.tsx'
 
 interface PropertiesPanelProps {
   selected: LayoutItem | null
@@ -160,7 +161,14 @@ export function PropertiesPanel({
       {selected ? (
         <>
           <div className="properties-head">
-            <h3>{assetMap.get(selected.assetId ?? '')?.name ?? selected.name}</h3>
+            <h3 className="with-cat">
+              <ItemFunctionIcon
+                fn={selected.function}
+                name={assetMap.get(selected.assetId ?? '')?.name ?? selected.name}
+                size={18}
+              />
+              {assetMap.get(selected.assetId ?? '')?.name ?? selected.name}
+            </h3>
             <button
               type="button"
               className="icon-button"

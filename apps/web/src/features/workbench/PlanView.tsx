@@ -1,4 +1,5 @@
-import { useId, useMemo } from 'react'
+import { useId, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
   WALL_THICKNESS_M,
@@ -40,6 +41,7 @@ import {
   tickHalf,
   wallBands,
 } from './plan-drawing.ts'
+import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import type { RadiusMark, TextBox } from './plan-drawing.ts'
 import { placeSpacingLabels, spacingItems, spacingMarks } from './plan-spacing.ts'
 import { renderShapes, usePlanSymbols } from './plan-symbols.ts'
@@ -395,6 +397,8 @@ export function PlanView({
   const flagged = new Set(
     issues.filter((i) => i.severity === 'error').flatMap((i) => i.itemIds ?? []),
   )
+  // The item under the pointer: its own tooltip shows the category icon, name and size.
+  const [hover, setHover] = useState<{ item: LayoutItem; x: number; y: number } | null>(null)
   const assetOf = (item: LayoutItem) => (item.assetId ? assets?.get(item.assetId) : undefined)
   const symbolUrls = (layout?.items ?? []).flatMap((item) => {
     const url = assetOf(item)?.planSymbol?.url
@@ -592,11 +596,22 @@ export function PlanView({
               key={item.id}
               className={classes.filter(Boolean).join(' ')}
               data-item-id={item.id}
-              onPointerDown={
-                onItemPointerDown ? (event) => onItemPointerDown(item, event) : undefined
+              onPointerDown={(event) => {
+                setHover(null)
+                onItemPointerDown?.(item, event)
+              }}
+              onPointerEnter={(event) => setHover({ item, x: event.clientX, y: event.clientY })}
+              onPointerMove={(event) =>
+                // Move the tooltip only when the pointer has really gone somewhere: the drawing
+                // is a big SVG and re-rendering it on every pixel would make hovering drag.
+                setHover((h) =>
+                  h && Math.abs(h.x - event.clientX) + Math.abs(h.y - event.clientY) > 2
+                    ? { ...h, x: event.clientX, y: event.clientY }
+                    : h,
+                )
               }
+              onPointerLeave={() => setHover(null)}
             >
-              <title>{`${item.name}（${mToMm(item.w)} × ${mToMm(item.d)} × ${mToMm(item.h)} mm）`}</title>
               {drawing && !mounted ? drawing : <g transform={turn}>{drawing ?? block(item)}</g>}
               {!drawing && <g transform={turn}>{frontMarker(item, asset)}</g>}
               <rect
@@ -839,6 +854,23 @@ export function PlanView({
           面积 {area.toFixed(1)} m² · 层高 {mToMm(space.height)} mm
         </text>
       )}
+      {hover &&
+        createPortal(
+          <div
+            className="plan-hover"
+            style={{ left: hover.x + 14, top: hover.y + 16 }}
+            role="tooltip"
+          >
+            <ItemFunctionIcon fn={hover.item.function} name={hover.item.name} size={14} />
+            <b>
+              {(assetOf(hover.item)?.name ?? hover.item.name).split(' · ')[0] ?? hover.item.name}
+            </b>
+            <small>
+              {mToMm(hover.item.w)} × {mToMm(hover.item.d)} × {mToMm(hover.item.h)} mm
+            </small>
+          </div>,
+          document.body,
+        )}
     </svg>
   )
 }

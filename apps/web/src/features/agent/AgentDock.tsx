@@ -1,10 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent, ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { Link } from 'react-router'
-import type { AgentAction, AgentMessage } from '@store/shared'
+import type { AgentAction, AgentMessage, Asset } from '@store/shared'
 import { BrandFace } from '../../components/BrandFace.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
+
 import { useAiOverview } from '../settings/queries.ts'
 import { exportPlan } from '../workbench/plan-export.ts'
 import {
@@ -55,31 +57,39 @@ async function planScreenshot(): Promise<string | undefined> {
   }
 }
 
+/** The catalogue loaded by the workbench, shared with the action records. */
+const AgentCatalogContext = createContext<readonly Asset[]>([])
+
 interface AgentDockProps {
   projectId: string
   /** The node on screen; the agent's changes start from it. */
   nodeId: string | null
   onSelect: (nodeId: string) => void
+  /** The catalogue the workbench has already loaded, for the model names in action records. */
+  assets?: readonly Asset[]
 }
 
 /** The design assistant, folded into a button at the bottom right until opened. */
-export function AgentDock({ projectId, nodeId, onSelect }: AgentDockProps) {
+export function AgentDock({ projectId, nodeId, onSelect, assets = [] }: AgentDockProps) {
   const [open, setOpen] = useState(false)
   return (
     <div className="agent-dock">
-      {open ? (
-        <AgentPanel
-          projectId={projectId}
-          nodeId={nodeId}
-          onSelect={onSelect}
-          onClose={() => setOpen(false)}
-        />
-      ) : (
-        <button type="button" className="primary agent-dock-toggle" onClick={() => setOpen(true)}>
-          <BrandFace size={22} plate={false} />
-          设计助理
-        </button>
-      )}
+      {/* The catalogue is already loaded by the workbench; pass it down instead of fetching again. */}
+      <AgentCatalogContext.Provider value={assets}>
+        {open ? (
+          <AgentPanel
+            projectId={projectId}
+            nodeId={nodeId}
+            onSelect={onSelect}
+            onClose={() => setOpen(false)}
+          />
+        ) : (
+          <button type="button" className="primary agent-dock-toggle" onClick={() => setOpen(true)}>
+            <BrandFace size={22} plate={false} />
+            设计助理
+          </button>
+        )}
+      </AgentCatalogContext.Provider>
     </div>
   )
 }
@@ -305,6 +315,11 @@ function ActionRow({
     action.status === 'failed'
       ? asText(action.result?.error, '失败')
       : asText(action.result?.done, '完成')
+  // Actions on a prop (place, move, rotate, remove) name its model: show the category icon too.
+  const catalog = useContext(AgentCatalogContext)
+  const touched = action.result?.item as { modelId?: unknown; name?: unknown } | undefined
+  const modelId = typeof touched?.modelId === 'string' ? touched.modelId : null
+  const model = modelId ? catalog.find((a) => a.id === modelId) : undefined
   const nodes = madeNodes(action)
   const undoable =
     nodes.length > 0 ||
@@ -312,8 +327,12 @@ function ActionRow({
     typeof action.result?.restoreCameraId === 'string'
   return (
     <li className={`agent-action ${action.status}`}>
-      <span>
-        {label}：{detail}
+      <span className="agent-action-text">
+        {label}：
+        {model ? (
+          <ItemFunctionIcon fn={model.function} name={model.name} size={13} aria-hidden="true" />
+        ) : null}
+        {detail}
       </span>
       {action.resultingNodeId && !action.undoneAt ? (
         <button

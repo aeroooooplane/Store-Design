@@ -2,7 +2,7 @@ import { cleanup, fireEvent, render, screen, within } from '@testing-library/rea
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Asset, AssetCategory } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
-import { ModelPicker, pickableGroups } from './ModelPicker.tsx'
+import { ModelPicker, pickableSections } from './ModelPicker.tsx'
 
 const file = (name: string) => ({
   fileId: '00000000-0000-4000-8000-000000000001',
@@ -47,17 +47,23 @@ const catalog = [
   }),
   asset('asset-4', '广告机', '信息化物料', {
     siFamily: '通用',
+    function: 'screen',
     placeable: false,
     footprint: { w: 1.69, d: 0.05, h: 0.958 },
   }),
-  asset('asset-5', '墙面LOGO', '品牌标识', { siFamily: '通用', placeable: false }),
-  asset('asset-6', '休闲沙发', '非标陈列', { siFamily: '非标' }),
+  asset('asset-5', '墙面LOGO', '品牌标识', {
+    siFamily: '通用',
+    function: 'signage',
+    placeable: false,
+  }),
+  asset('asset-6', '休闲沙发', '非标陈列', { siFamily: '非标', function: 'seating' }),
   asset('asset-7', '消防栓箱', '环境设施', { siFamily: '通用', placeable: false }),
+  asset('asset-8', '灯箱墙贴', '信息化物料', { siFamily: '通用', function: 'signage' }),
 ]
 
 afterEach(cleanup)
 
-describe('pickableGroups', () => {
+describe('pickableSections', () => {
   it('按精确编号隐藏LED和审核停用款，保留在用水牌及其他名称含LED的物料', () => {
     const reviewed = [
       ...['asset-11525629', 'asset-11511980', 'asset-2463847'].map((id) =>
@@ -67,23 +73,24 @@ describe('pickableGroups', () => {
       asset('asset-2587726', '电子水牌', '信息化物料'),
       asset('asset-990001', 'LED摄影补光展示道具', '非标陈列'),
     ]
-    const ids = pickableGroups(reviewed, 'SI1.0').flatMap((g) => g.assets.map((a) => a.id))
+    const ids = pickableSections(reviewed, 'SI1.0').flatMap((s) => s.assets.map((a) => a.id))
     expect(ids).toEqual(['asset-2587726', 'asset-990001'])
     expect(reviewed).toHaveLength(6)
     expect(reviewed[0]?.retired).toBe(false)
   })
 
   it('offers furniture of the project SI and every style-free category, never 环境设施', () => {
-    const si1 = pickableGroups(catalog, 'SI1.0')
-    expect(si1.map((g) => [g.title, g.assets.map((a) => a.id)])).toEqual([
-      ['软装道具 · SI1.0', ['asset-2', 'asset-1']],
-      ['信息化物料', ['asset-4']],
-      ['品牌标识', ['asset-5']],
-      ['非标陈列', ['asset-6']],
+    const si1 = pickableSections(catalog, 'SI1.0')
+    expect(si1.map((s) => [s.label, s.assets.map((a) => a.id)])).toEqual([
+      ['中岛桌', ['asset-2']],
+      ['配件柜', ['asset-1']],
+      ['屏幕', ['asset-4']],
+      ['灯箱', ['asset-8']],
+      ['标识', ['asset-5']],
+      ['坐凳', ['asset-6']],
     ])
-    const si2 = pickableGroups(catalog, 'SI2.0')
-    expect(si2[0]).toMatchObject({ title: '软装道具 · SI2.0' })
-    expect(si2[0]?.assets.map((a) => a.id)).toEqual(['asset-3'])
+    const si2 = pickableSections(catalog, 'SI2.0')
+    expect(si2.find((s) => s.label === '中岛桌')?.assets.map((a) => a.id)).toEqual(['asset-3'])
   })
 })
 
@@ -125,9 +132,20 @@ describe('ModelPicker', () => {
       '空台 · 1800 × 1000 × 900 mm',
     ])
     expect(screen.queryByText('75寸横屏广告机')).toBeNull()
-    expect(pickableGroups(named, 'SI1.0')[0]?.assets.map((a) => a.id)).toEqual([
+    expect(pickableSections(named, 'SI1.0')[0]?.assets.map((a) => a.id)).toEqual([
       'asset-11',
       'asset-12',
     ])
+  })
+
+  it('splits signage into 灯箱 and 标识 and jumps to a section', () => {
+    render(<ModelPicker assets={catalog} siStyle="SI1.0" onPick={vi.fn()} />)
+    // Both the jump cell and the section title carry the label.
+    expect(screen.getAllByText('灯箱').length).toBeGreaterThanOrEqual(2)
+    expect(screen.getAllByText('标识').length).toBeGreaterThanOrEqual(2)
+    const lightbox = screen.getByRole('button', { name: '灯箱' })
+    expect(lightbox).toBeTruthy()
+    fireEvent.click(lightbox)
+    expect(lightbox.getAttribute('aria-current')).toBe('true')
   })
 })

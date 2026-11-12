@@ -231,6 +231,7 @@ export function Workbench({ project }: { project: Project }) {
         projectId={project.id}
         nodeId={creatingSpace ? null : selectedId}
         onSelect={select}
+        assets={assets.data}
       />
     </AgentSelectionProvider>
   )
