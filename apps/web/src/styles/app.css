@@ -19,16 +19,12 @@
   font-size: var(--fs-lg);
   text-decoration: none;
 }
+/* Brand mark: public/favicon.svg, the same drawing as the browser tab and install icons. */
 .app-logo {
-  display: grid;
-  place-items: center;
+  display: block;
+  flex: none;
   width: 28px;
   height: 28px;
-  border-radius: 8px;
-  background: var(--brand);
-  color: var(--brand-ink);
-  font-size: var(--fs-sm);
-  font-weight: 800;
 }
 .app-nav-links {
   display: flex;
