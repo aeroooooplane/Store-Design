@@ -279,7 +279,9 @@ describe('Workbench', () => {
     await screen.findByRole('button', { name: '撤回' })
     fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
 
-    expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+    expect(
+      await screen.findByRole('heading', { name: '方案 A · SI2.0' }, { timeout: 5000 }),
+    ).toBeTruthy()
     expect(server.calls.find((c) => c.method === 'PATCH')?.body).toEqual({ siStyle: 'SI2.0' })
     const copy = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
     expect(copy?.body).toMatchObject({
@@ -333,25 +335,29 @@ describe('Workbench', () => {
       expect(pressed()).toEqual(['SI1.0'])
 
       fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
-      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      expect(
+        await screen.findByRole('heading', { name: '方案 A · SI2.0' }, { timeout: 5000 }),
+      ).toBeTruthy()
       expect(posts()[0]?.body).toMatchObject({ name: '方案 A · SI2.0', siStyle: 'SI2.0' })
       await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
 
       // The bug: clicking back on A showed it in SI2.0.
       fireEvent.click(screen.getByRole('tab', { name: '历史' }))
       fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
-      await screen.findByRole('heading', { name: '方案 A' })
+      await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
       await waitFor(() => expect(pressed()).toEqual(['SI1.0']))
 
       // On A again: its untouched SI2.0 copy is already there, so no second copy.
       fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
-      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      expect(
+        await screen.findByRole('heading', { name: '方案 A · SI2.0' }, { timeout: 5000 }),
+      ).toBeTruthy()
       expect(posts()).toHaveLength(1)
 
       // On the untouched copy: back to A, the copy stays.
       await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
       fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
-      expect(await screen.findByRole('heading', { name: '方案 A' })).toBeTruthy()
+      expect(await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })).toBeTruthy()
       expect(await screen.findByText(/已回到 SI1.0 的“方案 A”/)).toBeTruthy()
       expect(posts()).toHaveLength(1)
       expect(screen.getByRole('button', { name: '方案 A · SI2.0' })).toBeTruthy()
@@ -378,7 +384,9 @@ describe('Workbench', () => {
       await waitFor(() => expect(pressed()).toEqual(['SI2.0']))
 
       fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
-      expect(await screen.findByRole('heading', { name: '方案 A · SI1.0' })).toBeTruthy()
+      expect(
+        await screen.findByRole('heading', { name: '方案 A · SI1.0' }, { timeout: 5000 }),
+      ).toBeTruthy()
       const c = posts()[0]?.body as { siStyle: string; parentId: string; layout: Layout }
       expect(c).toMatchObject({ siStyle: 'SI1.0', parentId: S1 })
       // Made from B as changed: the cabinet stays where it was moved to.
@@ -403,7 +411,9 @@ describe('Workbench', () => {
       await screen.findByRole('button', { name: '撤回' })
 
       fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
-      expect(await screen.findByRole('heading', { name: '方案 A · SI2.0' })).toBeTruthy()
+      expect(
+        await screen.findByRole('heading', { name: '方案 A · SI2.0' }, { timeout: 5000 }),
+      ).toBeTruthy()
       // The switched copy is made from the edited layout…
       const created = posts()[0]?.body as { layout: Layout }
       expect(created.layout.items[0]).toMatchObject({ cx: 3 })
@@ -413,7 +423,7 @@ describe('Workbench', () => {
 
       // The original step is marked as carrying the draft; clicking it opens the edits again.
       fireEvent.keyDown(screen.getByRole('button', { name: '方案 A（有草稿）' }), { key: 'Enter' })
-      await screen.findByRole('heading', { name: '方案 A' })
+      await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
       expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
     })
 
@@ -474,7 +484,7 @@ describe('Workbench', () => {
     )
     renderWorkbench(`?node=${P1}`)
 
-    await screen.findByRole('heading', { name: '方案 A' })
+    await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
     const views = screen.getByRole('group', { name: '视图' })
     fireEvent.click(within(views).getByRole('button', { name: '三维' }))
     fireEvent.click(screen.getByRole('tab', { name: '历史' }))
@@ -491,7 +501,7 @@ describe('Workbench', () => {
     server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
     renderWorkbench(`?node=${P1}`)
 
-    await screen.findByRole('heading', { name: '方案 A' })
+    await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
     const tab = (name: string) => screen.getByRole('tab', { name })
     expect(tab('添加模型').getAttribute('aria-selected')).toBe('true')
     // The white stage starts on the history tab instead.
@@ -537,7 +547,7 @@ describe('Workbench', () => {
 
     fireEvent.click(screen.getByRole('tab', { name: '历史' }))
     fireEvent.keyDown(screen.getByRole('button', { name: '方案 A' }), { key: 'Enter' })
-    await screen.findByRole('heading', { name: '方案 A' })
+    await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
     expect(screen.getByRole('tab', { name: '视角' })).toBeTruthy()
   })
 

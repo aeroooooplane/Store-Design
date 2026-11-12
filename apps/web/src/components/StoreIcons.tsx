@@ -1,4 +1,6 @@
 import type { ReactNode, SVGProps } from 'react'
+import type { ItemFunction } from '@store/shared'
+import { Shapes } from 'lucide-react'
 
 type IconProps = Omit<SVGProps<SVGSVGElement>, 'children'> & { size?: number }
 
@@ -115,4 +117,154 @@ export function PartitionIcon(props: IconProps) {
       <path d="M7 12h10" strokeDasharray="0.5 3.5" />
     </Base>
   )
+}
+
+/* ---- Prop categories of the catalog (12 display categories, 2026-11-12). ---- */
+
+/** 中岛桌: a table with the trays on top. */
+export function IslandTableIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="10" width="18" height="2.5" rx="0.5" />
+      <path d="M5 12.5V20M19 12.5V20" />
+      <rect x="6.5" y="5.5" width="3.5" height="4.5" rx="0.5" />
+      <rect x="14" y="6.5" width="3.5" height="3.5" rx="0.5" />
+    </Base>
+  )
+}
+
+/** 开箱桌: a table with a shelf below and a box on top. */
+export function UnboxingTableIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="9.5" width="18" height="2.5" rx="0.5" />
+      <path d="M5 12v8M19 12v8M5 16.5h14" />
+      <path d="M9 9.5v-3h6v3" />
+    </Base>
+  )
+}
+
+/** 收银: a counter with a screen on it. */
+export function CashierIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="3" y="12" width="18" height="8" rx="1" />
+      <path d="M14.5 12V9.5M6 15.5h5" />
+      <rect x="11" y="4" width="7" height="5.5" rx="1" />
+    </Base>
+  )
+}
+
+/** 配件柜: a tall cabinet with shelves. */
+export function AccessoryCabinetIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="5" y="3" width="14" height="18" rx="1" />
+      <path d="M5 9h14M5 15h14" />
+      <path d="M9 5.5V7M15 5.5V7M9 11.5V13M15 11.5V13M9 17.5V19M15 17.5V19" />
+    </Base>
+  )
+}
+
+/** 配件边柜: a low cabinet. */
+export function SideCabinetIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <path d="M5 10.5V6h14v4.5" />
+      <rect x="3" y="10.5" width="18" height="2.5" rx="0.5" />
+      <path d="M4.5 13v7h15v-7M12 13v7" />
+    </Base>
+  )
+}
+
+/** 展示台: a small stand with a product on it. */
+export function DisplayStandIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="6" y="12" width="12" height="2.5" rx="0.5" />
+      <path d="M7 14.5V21h10v-6.5M12 10v2" />
+      <rect x="9.5" y="4.5" width="5" height="5.5" rx="1" />
+    </Base>
+  )
+}
+
+/** 屏幕: a display on a stand. */
+export function ScreenIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="6.5" y="2.5" width="11" height="15" rx="1.5" />
+      <path d="M12 17.5V21M8.5 21h7" />
+    </Base>
+  )
+}
+
+/** 灯箱: a lit picture box. */
+export function LightboxIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="4" y="7" width="16" height="10" rx="1" />
+      <rect x="8" y="10.5" width="8" height="3" rx="0.5" />
+      <path d="M2 4l2 1.5M22 4l-2 1.5M2 20l2-1.5M22 20l-2-1.5" />
+    </Base>
+  )
+}
+
+/** 标识: a wall plate with a logo and text. */
+export function SignageIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="4" y="6" width="16" height="12" rx="1" />
+      <path d="M7.5 9.5h4.5M7.5 12h4.5M7.5 14.5h2.5" />
+      <path d="M13.5 10.5 16.5 12l-3 1.5" />
+    </Base>
+  )
+}
+
+/** 坐凳: a bench. */
+export function SeatingIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="4" y="9" width="16" height="4" rx="1" />
+      <path d="M6 13v7M18 13v7" />
+    </Base>
+  )
+}
+
+/** 储物柜: a locker with doors. */
+export function StorageIcon(props: IconProps) {
+  return (
+    <Base {...props}>
+      <rect x="5" y="3" width="14" height="18" rx="1" />
+      <path d="M5 9h14M5 15h14M11 6h2M11 12h2M11 18h2" />
+    </Base>
+  )
+}
+
+const CATEGORY_ICONS: Record<ItemFunction, (props: IconProps) => ReactNode> = {
+  island_table: IslandTableIcon,
+  unboxing_table: UnboxingTableIcon,
+  cashier: CashierIcon,
+  accessory_cabinet: AccessoryCabinetIcon,
+  side_cabinet: SideCabinetIcon,
+  display_stand: DisplayStandIcon,
+  screen: ScreenIcon,
+  signage: SignageIcon,
+  seating: SeatingIcon,
+  storage: StorageIcon,
+  other: (props: IconProps) => <Shapes {...props} />,
+}
+
+/**
+ * The icon for one catalog item. Function 'signage' is shown in the UI as two categories:
+ * 灯箱 (the name says so) and 标识 (everything else, mostly LOGO plates).
+ */
+export function ItemFunctionIcon({
+  fn,
+  name,
+  size = 16,
+  ...rest
+}: { fn: ItemFunction; name?: string } & IconProps) {
+  const Icon =
+    fn === 'signage' && name?.includes('灯箱') ? LightboxIcon : (CATEGORY_ICONS[fn] ?? Shapes)
+  return <Icon size={size} {...rest} />
 }
