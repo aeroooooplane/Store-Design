@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent, ReactNode } from 'react'
+import { X } from 'lucide-react'
 import { Link } from 'react-router'
 import type { AgentAction, AgentMessage } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
@@ -178,8 +179,14 @@ function AgentPanel({
         >
           新对话
         </button>
-        <button type="button" onClick={onClose} aria-label="收起">
-          ×
+        <button
+          type="button"
+          className="icon-button"
+          onClick={onClose}
+          aria-label="收起"
+          title="收起"
+        >
+          <X size={16} aria-hidden="true" />
         </button>
       </header>
       <div className="agent-messages" ref={listRef}>
