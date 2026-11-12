@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>二维对齐审核 · 武昌万象城</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      input {
+        accent-color: #c79d00;
+      }
+      body {
+        margin: 0;
+        background: #f3f3ef;
+        color: #181818;
+        font:
+          14px/1.6 system-ui,
+          'Microsoft Yahei',
+          sans-serif;
+      }
+      header {
+        background: #171717;
+        color: white;
+        padding: 18px 24px;
+        border-bottom: 5px solid #f4ce33;
+      }
+      h1 {
+        font-size: 22px;
+        margin: 0;
+      }
+      header p {
+        margin: 4px 0 0;
+        color: #ddd;
+      }
+      main {
+        padding: 16px;
+        max-width: 1600px;
+        margin: auto;
+      }
+      .stats,
+      .tools,
+      .links {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      .stats {
+        margin-bottom: 14px;
+      }
+      .stat {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 10px 18px;
+        flex: 1;
+        min-width: 170px;
+      }
+      .stat b {
+        font-size: 22px;
+        display: block;
+      }
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        gap: 16px;
+      }
+      .panel {
+        background: white;
+        border: 1px solid #ddd;
+        padding: 16px;
+      }
+      .tools {
+        position: sticky;
+        top: 0;
+        background: white;
+        padding: 10px;
+        z-index: 1;
+        border-bottom: 1px solid #ddd;
+      }
+      button,
+      select,
+      input,
+      textarea {
+        font: inherit;
+        border: 1px solid #aaa;
+        border-radius: 4px;
+        padding: 7px;
+        background: white;
+        color: #111;
+      }
+      button {
+        cursor: pointer;
+      }
+      button.active,
+      button.primary {
+        background: #f4ce33;
+        border-color: #ad8800;
+      }
+      button:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #ac8000;
+      }
+      a {
+        color: #695000;
+      }
+      label {
+        display: block;
+      }
+      input[type='range'] {
+        width: 110px;
+        padding: 0;
+      }
+      #viewport {
+        height: 76vh;
+        min-height: 500px;
+        overflow: auto;
+        background: white;
+        touch-action: pan-x pan-y;
+      }
+      #drawing {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-width: 100%;
+      }
+      #corrected path {
+        cursor: pointer;
+        pointer-events: stroke;
+      }
+      #corrected path:hover,
+      #corrected path.selected {
+        stroke: #111;
+        stroke-width: 3;
+      }
+      #detail {
+        min-height: 110px;
+        background: #f6f4e8;
+        padding: 10px;
+        white-space: pre-wrap;
+      }
+      h2 {
+        font-size: 16px;
+        margin: 16px 0 8px;
+      }
+      p {
+        margin: 8px 0;
+      }
+      .muted {
+        color: #666;
+        font-size: 12px;
+      }
+      #choices label {
+        margin: 8px 0;
+      }
+      textarea {
+        width: 100%;
+        height: 70px;
+      }
+      #reviewer {
+        width: 100%;
+      }
+      .links {
+        margin-top: 14px;
+      }
+      details {
+        margin-top: 12px;
+      }
+      pre {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      #status {
+        min-height: 24px;
+        font-weight: 600;
+      }
+      #filters {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 8px 12px;
+      }
+      #filters label {
+        white-space: nowrap;
+      }
+      #summary {
+        margin: 0;
+      }
+      .tag {
+        background: #f4ce33;
+        color: #111;
+        padding: 2px 6px;
+      }
+      @media (max-width: 800px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+        header {
+          padding: 14px;
+        }
+        main {
+          padding: 8px;
+        }
+        #viewport {
+          height: 65vh;
+          min-height: 360px;
+        }
+        .stat {
+          min-width: 140px;
+          padding: 8px;
+        }
+        h1 {
+          font-size: 19px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>二维对齐审核 <span class="tag">PDF-222</span></h1>
+      <p>武昌万象城 · 原图逐项对齐 · 开发样例，未作为盲测成绩</p>
+    </header>
+    <main>
+      <div class="stats">
+        <div class="stat">自动运行<b id="autoTime"></b>原始结果已冻结</div>
+        <div class="stat">代理按图校正<b id="manualTime"></b>含查图、录点、验证和等待</div>
+        <div class="stat">
+          最终对象<b id="counts"></b><span id="automaticCount"></span>；待你审核
+        </div>
+      </div>
+      <div class="layout">
+        <section class="panel" style="padding: 0">
+          <div class="tools">
+            <button data-mode="corrected" class="active">校正叠图</button
+            ><button data-mode="automatic">自动原始</button
+            ><button data-mode="source">只看原图</button><button data-mode="clean">二维线稿</button
+            ><label
+              >底图
+              <input id="opacity" type="range" min="0" max="1" step=".05" value=".65" /></label
+            ><button id="plus" aria-label="放大">＋</button
+            ><button id="minus" aria-label="缩小">－</button><button id="reset">复位</button>
+          </div>
+          <div id="filters"></div>
+          <div id="viewport">
+            <svg id="drawing" xmlns="http://www.w3.org/2000/svg" viewBox="VIEWBOX">
+              <rect width="2200" height="1556" fill="white" />
+              <defs>
+                <clipPath id="sourceCrop"><rect CROPBOX /></clipPath>
+              </defs>
+              <image
+                clip-path="url(#sourceCrop)"
+                id="underlay"
+                href="原图.png"
+                width="2200"
+                height="1556"
+                opacity=".65"
+              />
+              <g id="automatic" style="display: none"><!--AUTO--></g>
+              <g id="corrected"><!--SHAPES--></g>
+            </svg>
+          </div>
+        </section>
+        <aside class="panel">
+          <p id="summary">黄色细线是校正结果。点击对象看依据；放大后可滚动查看。</p>
+          <div id="detail">范围、卷门、消防卷帘与门头投影分别保留。图面凹位不等于三维挖槽。</div>
+          <h2>只需确认 1 项</h2>
+          <p id="question"></p>
+          <p id="reason" class="muted"></p>
+          <div id="choices"></div>
+          <label>补充说明<textarea id="comment" placeholder="可不填"></textarea></label
+          ><label>审核人（记住一次）<input id="reviewer" autocomplete="name" /></label>
+          <div class="tools" style="position: static; padding: 10px 0">
+            <button id="save" class="primary">保存意见</button><button id="undo">撤销</button
+            ><button id="export">导出审核包</button>
+          </div>
+          <div id="status" aria-live="polite"></div>
+          <p class="muted">
+            Ctrl+Z 可撤销已保存意见。未选择不会默认同意；审核只保存意见，不改动已有标注。
+          </p>
+          <details>
+            <summary>范围与限制</summary>
+            <p id="coverage"></p>
+            <p>
+              墙体实心/空心、未知高度仍留空。二维 JSON
+              是审核标注格式，尚未接入工作台导入。该样例含代理按图校正，不代表无人值守识别能力。
+            </p>
+          </details>
+        </aside>
+      </div>
+      <div class="links">
+        <a href="二维叠图.svg" download>下载叠图 SVG</a
+        ><a href="二维线稿.svg" download>下载线稿 SVG</a
+        ><a href="校正结果.json" download>下载二维标注 JSON</a
+        ><a href="过程记录.json" download>逐项改动与耗时</a
+        ><a href="自动原始.json" download>自动原始结果</a
+        ><a href="自动文字.json" download>自动 OCR</a><a href="原图.png" download>原图</a>
+      </div>
+      <details>
+        <summary>贴线检查与计时说明</summary>
+        <p id="metric"></p>
+        <p id="timingNote"></p>
+        <p>
+          最近墨线距离仅用于找偏移；文字和填充也可能成为近邻，不是语义准确率或金标准评分。自动轮廓与校正对象的统计范围不同，不作同口径提升率。45
+          家验收集未读取，本轮未向外部模型发送图片。
+        </p>
+      </details>
+    </main>
+    <!--DATA-->
+    <script>
+      const { annotation: d, audit: a } = JSON.parse(document.getElementById('data').textContent)
+      const $ = (id) => document.getElementById(id),
+        fmt = (s) => (s == null ? '未记录' : `${(s / 60).toFixed(1)} 分钟`)
+      $('automaticCount').textContent = `自动直接保留 ${d.automaticFinalFeatures} 项`
+      $('autoTime').textContent =
+        a.timing.automaticSeconds == null ? '未记录' : a.timing.automaticSeconds.toFixed(2) + ' 秒'
+      $('manualTime').textContent = fmt(
+        a.timing.agentCorrectionSessionSeconds == null ||
+          a.timing.agentCorrectionRecheckSeconds == null
+          ? null
+          : a.timing.agentCorrectionSessionSeconds + a.timing.agentCorrectionRecheckSeconds,
+      )
+      $('counts').textContent = d.agentManualFeatures + ' 项代理校正'
+      $('timingNote').textContent =
+        `录点 ${fmt(a.timing.agentCorrectionSessionSeconds)}，复核 ${fmt(a.timing.agentCorrectionRecheckSeconds)}。${a.timing.note}`
+      $('metric').textContent =
+        `校正实体 ${a.metrics.correctedVisibleObjects.sampleCount} 个边线采样点，P95 距离 ${a.metrics.correctedVisibleObjects.p95Px} px；${(a.metrics.correctedVisibleObjects.within2PxFraction * 100).toFixed(2)}% 在原图墨线 2 px 内。虚拟边界、入口及参考线不纳入此统计。`
+      $('coverage').textContent =
+        '本次覆盖：' + d.coverage.included + '。未覆盖：' + d.coverage.excluded.join('、') + '。'
+      let mode = 'corrected',
+        zoom = 1
+      function show() {
+        $('corrected').style.display = ['corrected', 'clean'].includes(mode) ? '' : 'none'
+        $('automatic').style.display = mode === 'automatic' ? '' : 'none'
+        $('underlay').style.display = mode === 'clean' ? 'none' : ''
+        $('underlay').setAttribute('opacity', mode === 'source' ? 1 : $('opacity').value)
+        document
+          .querySelectorAll('[data-mode]')
+          .forEach((b) => b.classList.toggle('active', b.dataset.mode === mode))
+      }
+      document.querySelectorAll('[data-mode]').forEach(
+        (b) =>
+          (b.onclick = () => {
+            mode = b.dataset.mode
+            show()
+          }),
+      )
+      $('opacity').oninput = show
+      function scale() {
+        $('drawing').style.width = zoom * 100 + '%'
+        $('drawing').style.height = zoom * 100 + '%'
+      }
+      $('plus').onclick = () => {
+        zoom = Math.min(5, zoom * 1.4)
+        scale()
+      }
+      $('minus').onclick = () => {
+        zoom = Math.max(1, zoom / 1.4)
+        scale()
+      }
+      $('reset').onclick = () => {
+        zoom = 1
+        scale()
+        $('viewport').scrollTo(0, 0)
+      }
+      const names = {
+        boundary: '范围',
+        wall: '墙',
+        cladding: '包墙',
+        column: '柱',
+        service: '设施',
+        opening: '门洞',
+        reference: '参考线',
+        furniture: '家具',
+        'wall-display': '屏幕/灯箱',
+        sign: '标牌',
+      }
+      for (const kind of Object.keys(a.summary.byKind)) {
+        const label = document.createElement('label'),
+          cb = document.createElement('input')
+        cb.type = 'checkbox'
+        cb.checked = true
+        cb.onchange = () =>
+          document
+            .querySelectorAll(`[data-kind="${kind}"]`)
+            .forEach((p) => (p.style.display = cb.checked ? '' : 'none'))
+        label.append(cb, document.createTextNode(names[kind] || kind))
+        $('filters').append(label)
+      }
+      document.querySelectorAll('[data-id]').forEach(
+        (p) =>
+          (p.onclick = () => {
+            document.querySelectorAll('.selected').forEach((e) => e.classList.remove('selected'))
+            p.classList.add('selected')
+            const f = d.features.find((f) => f.id === p.dataset.id)
+            $('detail').textContent =
+              `${f.id} · ${f.label}\n来源：代理按图校正，尚未用户确认\n${f.evidence || '门扇图面参考表达'}${f.heightMm === null ? '\n高度：未知' : ''}`
+          }),
+      )
+      const q = d.questions[0]
+      $('question').textContent = q.title
+      $('reason').textContent = q.reason + ' 推荐：' + q.recommendation
+      q.options.forEach((o, i) => {
+        const l = document.createElement('label'),
+          r = document.createElement('input')
+        r.type = 'radio'
+        r.name = 'answer'
+        r.value = o
+        r.id = 'answer' + i
+        l.append(r, document.createTextNode(o))
+        $('choices').append(l)
+      })
+      const key = 'alignment-review:' + d.storeId + ':' + a.annotationSha256,
+        reviewerKey = 'alignment-reviewer'
+      let state = null,
+        history = []
+      function storageGet(k) {
+        try {
+          return localStorage.getItem(k)
+        } catch {
+          return null
+        }
+      }
+      function persist() {
+        try {
+          localStorage.setItem(key, JSON.stringify(state))
+          localStorage.setItem(reviewerKey, $('reviewer').value)
+        } catch {
+          $('status').textContent = '浏览器存储不可用，请导出审核包'
+        }
+      }
+      try {
+        state = JSON.parse(storageGet(key) || 'null')
+      } catch {
+        state = null
+      }
+      $('reviewer').value = storageGet(reviewerKey) || ''
+      function apply() {
+        document
+          .querySelectorAll('[name=answer]')
+          .forEach((r) => (r.checked = r.value === state?.answer))
+        $('comment').value = state?.comment || ''
+        $('status').textContent = state ? '已保存意见，导出后可回传' : '尚未确认'
+      }
+      apply()
+      $('save').onclick = () => {
+        const answer = document.querySelector('[name=answer]:checked')?.value
+        if (!answer) {
+          $('status').textContent = '请先选择意见'
+          return
+        }
+        history.push(state)
+        state = {
+          questionId: q.id,
+          answer,
+          comment: $('comment').value,
+          reviewer: $('reviewer').value,
+          at: new Date().toISOString(),
+        }
+        apply()
+        persist()
+      }
+      function undo() {
+        if (!history.length) {
+          $('status').textContent = '没有可撤销的已保存意见'
+          return
+        }
+        state = history.pop()
+        apply()
+        persist()
+      }
+      $('undo').onclick = undo
+      document.addEventListener('keydown', (e) => {
+        if (
+          (e.ctrlKey || e.metaKey) &&
+          e.key.toLowerCase() === 'z' &&
+          !['INPUT', 'TEXTAREA'].includes(e.target.tagName)
+        ) {
+          e.preventDefault()
+          undo()
+        }
+      })
+      $('export').onclick = () => {
+        const blob = new Blob(
+          [
+            JSON.stringify(
+              {
+                schemaVersion: 1,
+                storeId: d.storeId,
+                sourceSha256: d.sourceSha256,
+                annotationSha256: a.annotationSha256,
+                answers: state ? [state] : [],
+                exportedAt: new Date().toISOString(),
+              },
+              null,
+              2,
+            ),
+          ],
+          { type: 'application/json' },
+        )
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = '二维对齐审核包.json'
+        link.click()
+        setTimeout(() => URL.revokeObjectURL(link.href), 1000)
+      }
+    </script>
+  </body>
+</html>
