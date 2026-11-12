@@ -1,0 +1,12 @@
+import test from 'node:test'
+import assert from 'node:assert/strict'
+import {extractFineGeometry} from '../../apps/api/src/modules/recognition/fine-geometry.ts'
+function canvas(w=240,h=200){const pixels=new Uint8Array(w*h).fill(255);return {pixels,w,h,rect(x,y,rw,rh,filled=false){for(let j=y;j<y+rh;j++)for(let i=x;i<x+rw;i++)if(filled||i===x||i===x+rw-1||j===y||j===y+rh-1)pixels[j*w+i]=0}}}
+test('原图坐标闭合矩形保留，无256像素回映射',()=>{const c=canvas();c.rect(30,35,61,81);const d=extractFineGeometry(c.pixels,c.w,c.h);assert.ok(d.candidates.some(f=>f.geometry.points.some(p=>p[0]===30&&p[1]===35)));assert.equal(d.completeAutomatically,false)})
+test('黑底与白底得到同一几何',()=>{const c=canvas();c.rect(30,35,61,81);const a=extractFineGeometry(c.pixels,c.w,c.h),b=extractFineGeometry(c.pixels.map(v=>255-v),c.w,c.h);assert.equal(b.inverted,true);assert.deepEqual(a.candidates,b.candidates)})
+test('连接细墙线的实心柱可以分离',()=>{const c=canvas();c.rect(70,70,40,50,true);for(let y=0;y<70;y++)c.pixels[y*c.w+80]=0;const d=extractFineGeometry(c.pixels,c.w,c.h);assert.ok(d.candidates.some(f=>f.kind==='column'&&f.geometry.points.some(p=>p[0]===70&&p[1]===70)))})
+test('OCR只提供候选类别，不赋予确认状态',()=>{const c=canvas();c.rect(30,35,61,81);const d=extractFineGeometry(c.pixels,c.w,c.h,[{text:'中岛桌',x:40,y:120,w:35,h:10}]);assert.ok(d.candidates.some(f=>f.kind==='furniture'));assert.equal(d.completeAutomatically,false)})
+test('无尺寸信息不编造比例和层高',()=>{const c=canvas();c.rect(30,35,61,81);const d=extractFineGeometry(c.pixels,c.w,c.h);assert.equal(d.scale,undefined);assert.equal(d.ceilingHeight,undefined);assert.ok(d.pending.some(s=>s.includes('比例')))})
+test('不闭合矩形不当闭合实体，不静默补边',()=>{const c=canvas();c.rect(30,35,61,81);for(let x=31;x<90;x++)c.pixels[35*c.w+x]=255;const d=extractFineGeometry(c.pixels,c.w,c.h);assert.equal(d.candidates.length,0);assert.ok(d.lines.length>0)})
+test('拒绝长度不符和过大输入',()=>{assert.throws(()=>extractFineGeometry(new Uint8Array(10),10,10));assert.throws(()=>extractFineGeometry(new Uint8Array(10),5000,100))})
+test('斜矩形不被吸附为水平框',()=>{const c=canvas(300,300);for(let y=0;y<300;y++)for(let x=0;x<300;x++){const u=(x-150)*Math.cos(.4)+(y-150)*Math.sin(.4),v=-(x-150)*Math.sin(.4)+(y-150)*Math.cos(.4);if(Math.abs(u)<45&&Math.abs(v)<30)c.pixels[y*300+x]=0}const d=extractFineGeometry(c.pixels,c.w,c.h);const col=d.candidates.find(f=>f.kind==='column');assert.ok(col);const [a,b]=col.geometry.points;assert.ok(Math.abs(a[1]-b[1])>5)})
