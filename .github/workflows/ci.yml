@@ -41,6 +41,8 @@ jobs:
         run: node --test tools/recognition/usable-project.test.mjs
       - name: 原图候选比例与未知项校验
         run: node --test tools/recognition/raw-project.test.mjs
+      - name: 云端对照发送范围与几何拦截
+        run: node --test tools/recognition/cloud-compare-core.test.mjs tools/recognition/cloud-compare-geometry.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
