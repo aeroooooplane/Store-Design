@@ -60,10 +60,15 @@ export function AppLayout() {
   return (
     <ProjectNavContext.Provider value={{ actions, info }}>
       <nav className={project ? 'app-nav app-nav-project' : 'app-nav'} aria-label="主导航">
-        <NavLink to="/" className="app-brand" end>
-          <span className="app-logo" aria-hidden="true">
-            门
-          </span>
+        {/* The name stays readable when narrow screens hide the text next to the logo. */}
+        <NavLink to="/" className="app-brand" end aria-label="门店空间设计工作台">
+          <img
+            className="app-logo"
+            src={`${import.meta.env.BASE_URL}favicon.svg`}
+            alt=""
+            width={28}
+            height={28}
+          />
           <span className="app-brand-name">门店空间设计工作台</span>
         </NavLink>
         <div className="app-nav-links">
