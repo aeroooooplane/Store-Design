@@ -1,5 +1,5 @@
 import type { Database } from '@store/database'
-import { checkAssetFit, planLayout, validateLayout } from '@store/shared'
+import { checkAssetFit, generateRequired, planLayout, validateLayout } from '@store/shared'
 import type { Issue, Layout, LayoutCandidates, LayoutGenerate, Space } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
@@ -14,9 +14,12 @@ export async function generateLayouts(
 ): Promise<LayoutCandidates> {
   authorize(ctx.actor, 'layout:generate')
   const { space, warnings } = checkSpace(input.space)
-  const catalog = plannerCatalog((await placeableAssets(db)).values(), input.siStyle)
+  const assets = [...(await placeableAssets(db)).values()]
+  const catalog = plannerCatalog(assets, input.siStyle)
   const candidates = input.strategies.map((strategy) => {
-    const result = planLayout({ space, shopType: input.shopType, strategy, catalog })
+    const result = space.demand
+      ? generateRequired(space, space.demand.entities, assets, input.siStyle, strategy)
+      : planLayout({ space, shopType: input.shopType, strategy, catalog })
     return {
       strategy,
       layout: result.layout,

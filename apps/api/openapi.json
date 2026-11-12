@@ -1741,6 +1741,154 @@
                                       1
                                     ]
                                   },
+                                  "demand": {
+                                    "type": "object",
+                                    "properties": {
+                                      "schemaVersion": {
+                                        "type": "number",
+                                        "enum": [
+                                          1
+                                        ]
+                                      },
+                                      "sourceStoreId": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                      },
+                                      "entities": {
+                                        "maxItems": 100,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string",
+                                              "minLength": 1,
+                                              "maxLength": 50
+                                            },
+                                            "label": {
+                                              "type": "string",
+                                              "minLength": 1,
+                                              "maxLength": 120
+                                            },
+                                            "roles": {
+                                              "minItems": 1,
+                                              "maxItems": 8,
+                                              "type": "array",
+                                              "items": {
+                                                "type": "string",
+                                                "enum": [
+                                                  "island_table",
+                                                  "unboxing_table",
+                                                  "cashier",
+                                                  "accessory_cabinet",
+                                                  "side_cabinet",
+                                                  "display_stand",
+                                                  "screen",
+                                                  "signage",
+                                                  "seating",
+                                                  "storage",
+                                                  "other"
+                                                ]
+                                              }
+                                            },
+                                            "quantity": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "dimensions": {
+                                              "default": {},
+                                              "type": "object",
+                                              "properties": {
+                                                "length": {
+                                                  "type": "number",
+                                                  "exclusiveMinimum": 0,
+                                                  "maximum": 50000
+                                                },
+                                                "width": {
+                                                  "type": "number",
+                                                  "exclusiveMinimum": 0,
+                                                  "maximum": 50000
+                                                },
+                                                "depth": {
+                                                  "type": "number",
+                                                  "exclusiveMinimum": 0,
+                                                  "maximum": 50000
+                                                },
+                                                "height": {
+                                                  "type": "number",
+                                                  "exclusiveMinimum": 0,
+                                                  "maximum": 50000
+                                                },
+                                                "attachedSeats": {
+                                                  "type": "integer",
+                                                  "minimum": 0,
+                                                  "maximum": 100
+                                                }
+                                              },
+                                              "additionalProperties": false
+                                            },
+                                            "placeholderFootprint": {
+                                              "default": null,
+                                              "anyOf": [
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "w": {
+                                                      "type": "number",
+                                                      "exclusiveMinimum": 0,
+                                                      "maximum": 50
+                                                    },
+                                                    "d": {
+                                                      "type": "number",
+                                                      "exclusiveMinimum": 0,
+                                                      "maximum": 50
+                                                    },
+                                                    "h": {
+                                                      "type": "number",
+                                                      "exclusiveMinimum": 0,
+                                                      "maximum": 50
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "w",
+                                                    "d",
+                                                    "h"
+                                                  ],
+                                                  "additionalProperties": false
+                                                },
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            },
+                                            "origin": {
+                                              "type": "string",
+                                              "maxLength": 100
+                                            },
+                                            "sourceAnnotationHash": {
+                                              "type": "string",
+                                              "pattern": "^[a-f0-9]{64}$"
+                                            }
+                                          },
+                                          "required": [
+                                            "id",
+                                            "label",
+                                            "roles",
+                                            "quantity",
+                                            "dimensions",
+                                            "placeholderFootprint"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "schemaVersion",
+                                      "entities"
+                                    ],
+                                    "additionalProperties": false
+                                  },
                                   "boundary": {
                                     "minItems": 3,
                                     "maxItems": 200,
@@ -2145,6 +2293,58 @@
                                       {
                                         "type": "object",
                                         "properties": {
+                                          "demand": {
+                                            "maxItems": 100,
+                                            "type": "array",
+                                            "items": {
+                                              "type": "object",
+                                              "properties": {
+                                                "id": {
+                                                  "type": "string",
+                                                  "maxLength": 50
+                                                },
+                                                "label": {
+                                                  "type": "string",
+                                                  "maxLength": 120
+                                                },
+                                                "required": {
+                                                  "type": "integer",
+                                                  "minimum": 0,
+                                                  "maximum": 200
+                                                },
+                                                "placed": {
+                                                  "type": "integer",
+                                                  "minimum": 0,
+                                                  "maximum": 200
+                                                },
+                                                "placeholders": {
+                                                  "type": "integer",
+                                                  "minimum": 0,
+                                                  "maximum": 200
+                                                },
+                                                "reason": {
+                                                  "anyOf": [
+                                                    {
+                                                      "type": "string",
+                                                      "maxLength": 500
+                                                    },
+                                                    {
+                                                      "type": "null"
+                                                    }
+                                                  ]
+                                                }
+                                              },
+                                              "required": [
+                                                "id",
+                                                "label",
+                                                "required",
+                                                "placed",
+                                                "placeholders",
+                                                "reason"
+                                              ],
+                                              "additionalProperties": false
+                                            }
+                                          },
                                           "strategy": {
                                             "type": "string",
                                             "enum": [
@@ -2500,6 +2700,58 @@
                                     {
                                       "type": "object",
                                       "properties": {
+                                        "demand": {
+                                          "maxItems": 100,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string",
+                                                "maxLength": 50
+                                              },
+                                              "label": {
+                                                "type": "string",
+                                                "maxLength": 120
+                                              },
+                                              "required": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placed": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placeholders": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "reason": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "maxLength": 500
+                                                  },
+                                                  {
+                                                    "type": "null"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "id",
+                                              "label",
+                                              "required",
+                                              "placed",
+                                              "placeholders",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        },
                                         "strategy": {
                                           "type": "string",
                                           "enum": [
@@ -3096,6 +3348,148 @@
                           1
                         ]
                       },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
+                        ]
+                      },
                       "boundary": {
                         "minItems": 3,
                         "maxItems": 200,
@@ -3479,6 +3873,57 @@
                           {
                             "type": "object",
                             "properties": {
+                              "demand": {
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "maxLength": 50
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 120
+                                    },
+                                    "required": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placed": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placeholders": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "reason": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "maxLength": 500
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "label",
+                                    "required",
+                                    "placed",
+                                    "placeholders",
+                                    "reason"
+                                  ]
+                                }
+                              },
                               "strategy": {
                                 "type": "string",
                                 "enum": [
@@ -3765,6 +4210,154 @@
                                   "enum": [
                                     1
                                   ]
+                                },
+                                "demand": {
+                                  "type": "object",
+                                  "properties": {
+                                    "schemaVersion": {
+                                      "type": "number",
+                                      "enum": [
+                                        1
+                                      ]
+                                    },
+                                    "sourceStoreId": {
+                                      "type": "string",
+                                      "maxLength": 100
+                                    },
+                                    "entities": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 120
+                                          },
+                                          "roles": {
+                                            "minItems": 1,
+                                            "maxItems": 8,
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "enum": [
+                                                "island_table",
+                                                "unboxing_table",
+                                                "cashier",
+                                                "accessory_cabinet",
+                                                "side_cabinet",
+                                                "display_stand",
+                                                "screen",
+                                                "signage",
+                                                "seating",
+                                                "storage",
+                                                "other"
+                                              ]
+                                            }
+                                          },
+                                          "quantity": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "dimensions": {
+                                            "default": {},
+                                            "type": "object",
+                                            "properties": {
+                                              "length": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "width": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "depth": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "height": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "attachedSeats": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 100
+                                              }
+                                            },
+                                            "additionalProperties": false
+                                          },
+                                          "placeholderFootprint": {
+                                            "default": null,
+                                            "anyOf": [
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "w": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "d": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "h": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  }
+                                                },
+                                                "required": [
+                                                  "w",
+                                                  "d",
+                                                  "h"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
+                                          "origin": {
+                                            "type": "string",
+                                            "maxLength": 100
+                                          },
+                                          "sourceAnnotationHash": {
+                                            "type": "string",
+                                            "pattern": "^[a-f0-9]{64}$"
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "roles",
+                                          "quantity",
+                                          "dimensions",
+                                          "placeholderFootprint"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "entities"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "boundary": {
                                   "minItems": 3,
@@ -4170,6 +4763,58 @@
                                     {
                                       "type": "object",
                                       "properties": {
+                                        "demand": {
+                                          "maxItems": 100,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string",
+                                                "maxLength": 50
+                                              },
+                                              "label": {
+                                                "type": "string",
+                                                "maxLength": 120
+                                              },
+                                              "required": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placed": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placeholders": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "reason": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "maxLength": 500
+                                                  },
+                                                  {
+                                                    "type": "null"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "id",
+                                              "label",
+                                              "required",
+                                              "placed",
+                                              "placeholders",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        },
                                         "strategy": {
                                           "type": "string",
                                           "enum": [
@@ -4621,6 +5266,154 @@
                                 1
                               ]
                             },
+                            "demand": {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                "sourceStoreId": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "entities": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 50
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120
+                                      },
+                                      "roles": {
+                                        "minItems": 1,
+                                        "maxItems": 8,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "island_table",
+                                            "unboxing_table",
+                                            "cashier",
+                                            "accessory_cabinet",
+                                            "side_cabinet",
+                                            "display_stand",
+                                            "screen",
+                                            "signage",
+                                            "seating",
+                                            "storage",
+                                            "other"
+                                          ]
+                                        }
+                                      },
+                                      "quantity": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "dimensions": {
+                                        "default": {},
+                                        "type": "object",
+                                        "properties": {
+                                          "length": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "width": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "depth": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "height": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "attachedSeats": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "placeholderFootprint": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "w": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "d": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "h": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              }
+                                            },
+                                            "required": [
+                                              "w",
+                                              "d",
+                                              "h"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "origin": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                      },
+                                      "sourceAnnotationHash": {
+                                        "type": "string",
+                                        "pattern": "^[a-f0-9]{64}$"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "roles",
+                                      "quantity",
+                                      "dimensions",
+                                      "placeholderFootprint"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "entities"
+                              ],
+                              "additionalProperties": false
+                            },
                             "boundary": {
                               "minItems": 3,
                               "maxItems": 200,
@@ -5025,6 +5818,58 @@
                                 {
                                   "type": "object",
                                   "properties": {
+                                    "demand": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "maxLength": 120
+                                          },
+                                          "required": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placed": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placeholders": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "reason": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "maxLength": 500
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "required",
+                                          "placed",
+                                          "placeholders",
+                                          "reason"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
                                     "strategy": {
                                       "type": "string",
                                       "enum": [
@@ -5446,6 +6291,154 @@
                                 1
                               ]
                             },
+                            "demand": {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                "sourceStoreId": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "entities": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 50
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120
+                                      },
+                                      "roles": {
+                                        "minItems": 1,
+                                        "maxItems": 8,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "island_table",
+                                            "unboxing_table",
+                                            "cashier",
+                                            "accessory_cabinet",
+                                            "side_cabinet",
+                                            "display_stand",
+                                            "screen",
+                                            "signage",
+                                            "seating",
+                                            "storage",
+                                            "other"
+                                          ]
+                                        }
+                                      },
+                                      "quantity": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "dimensions": {
+                                        "default": {},
+                                        "type": "object",
+                                        "properties": {
+                                          "length": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "width": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "depth": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "height": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "attachedSeats": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "placeholderFootprint": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "w": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "d": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "h": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              }
+                                            },
+                                            "required": [
+                                              "w",
+                                              "d",
+                                              "h"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "origin": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                      },
+                                      "sourceAnnotationHash": {
+                                        "type": "string",
+                                        "pattern": "^[a-f0-9]{64}$"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "roles",
+                                      "quantity",
+                                      "dimensions",
+                                      "placeholderFootprint"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "entities"
+                              ],
+                              "additionalProperties": false
+                            },
                             "boundary": {
                               "minItems": 3,
                               "maxItems": 200,
@@ -5850,6 +6843,58 @@
                                 {
                                   "type": "object",
                                   "properties": {
+                                    "demand": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "maxLength": 120
+                                          },
+                                          "required": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placed": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placeholders": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "reason": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "maxLength": 500
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "required",
+                                          "placed",
+                                          "placeholders",
+                                          "reason"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
                                     "strategy": {
                                       "type": "string",
                                       "enum": [
@@ -6252,6 +7297,154 @@
                                 1
                               ]
                             },
+                            "demand": {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                "sourceStoreId": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "entities": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 50
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120
+                                      },
+                                      "roles": {
+                                        "minItems": 1,
+                                        "maxItems": 8,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "island_table",
+                                            "unboxing_table",
+                                            "cashier",
+                                            "accessory_cabinet",
+                                            "side_cabinet",
+                                            "display_stand",
+                                            "screen",
+                                            "signage",
+                                            "seating",
+                                            "storage",
+                                            "other"
+                                          ]
+                                        }
+                                      },
+                                      "quantity": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "dimensions": {
+                                        "default": {},
+                                        "type": "object",
+                                        "properties": {
+                                          "length": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "width": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "depth": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "height": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "attachedSeats": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "placeholderFootprint": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "w": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "d": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "h": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              }
+                                            },
+                                            "required": [
+                                              "w",
+                                              "d",
+                                              "h"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "origin": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                      },
+                                      "sourceAnnotationHash": {
+                                        "type": "string",
+                                        "pattern": "^[a-f0-9]{64}$"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "roles",
+                                      "quantity",
+                                      "dimensions",
+                                      "placeholderFootprint"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "entities"
+                              ],
+                              "additionalProperties": false
+                            },
                             "boundary": {
                               "minItems": 3,
                               "maxItems": 200,
@@ -6656,6 +7849,58 @@
                                 {
                                   "type": "object",
                                   "properties": {
+                                    "demand": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "maxLength": 120
+                                          },
+                                          "required": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placed": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placeholders": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "reason": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "maxLength": 500
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "required",
+                                          "placed",
+                                          "placeholders",
+                                          "reason"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
                                     "strategy": {
                                       "type": "string",
                                       "enum": [
@@ -7058,6 +8303,154 @@
                                 1
                               ]
                             },
+                            "demand": {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                "sourceStoreId": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "entities": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 50
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 120
+                                      },
+                                      "roles": {
+                                        "minItems": 1,
+                                        "maxItems": 8,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string",
+                                          "enum": [
+                                            "island_table",
+                                            "unboxing_table",
+                                            "cashier",
+                                            "accessory_cabinet",
+                                            "side_cabinet",
+                                            "display_stand",
+                                            "screen",
+                                            "signage",
+                                            "seating",
+                                            "storage",
+                                            "other"
+                                          ]
+                                        }
+                                      },
+                                      "quantity": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "dimensions": {
+                                        "default": {},
+                                        "type": "object",
+                                        "properties": {
+                                          "length": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "width": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "depth": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "height": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50000
+                                          },
+                                          "attachedSeats": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 100
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "placeholderFootprint": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "object",
+                                            "properties": {
+                                              "w": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "d": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              },
+                                              "h": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50
+                                              }
+                                            },
+                                            "required": [
+                                              "w",
+                                              "d",
+                                              "h"
+                                            ],
+                                            "additionalProperties": false
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "origin": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                      },
+                                      "sourceAnnotationHash": {
+                                        "type": "string",
+                                        "pattern": "^[a-f0-9]{64}$"
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "roles",
+                                      "quantity",
+                                      "dimensions",
+                                      "placeholderFootprint"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "entities"
+                              ],
+                              "additionalProperties": false
+                            },
                             "boundary": {
                               "minItems": 3,
                               "maxItems": 200,
@@ -7462,6 +8855,58 @@
                                 {
                                   "type": "object",
                                   "properties": {
+                                    "demand": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "maxLength": 120
+                                          },
+                                          "required": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placed": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placeholders": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "reason": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "maxLength": 500
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "required",
+                                          "placed",
+                                          "placeholders",
+                                          "reason"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
                                     "strategy": {
                                       "type": "string",
                                       "enum": [
@@ -7907,6 +9352,58 @@
                             {
                               "type": "object",
                               "properties": {
+                                "demand": {
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "maxLength": 50
+                                      },
+                                      "label": {
+                                        "type": "string",
+                                        "maxLength": 120
+                                      },
+                                      "required": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "placed": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "placeholders": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "reason": {
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "maxLength": 500
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "label",
+                                      "required",
+                                      "placed",
+                                      "placeholders",
+                                      "reason"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
                                 "strategy": {
                                   "type": "string",
                                   "enum": [
@@ -8363,6 +9860,57 @@
                           {
                             "type": "object",
                             "properties": {
+                              "demand": {
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "maxLength": 50
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 120
+                                    },
+                                    "required": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placed": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placeholders": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "reason": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "maxLength": 500
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "label",
+                                    "required",
+                                    "placed",
+                                    "placeholders",
+                                    "reason"
+                                  ]
+                                }
+                              },
                               "strategy": {
                                 "type": "string",
                                 "enum": [
@@ -8677,6 +10225,58 @@
                                 {
                                   "type": "object",
                                   "properties": {
+                                    "demand": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "maxLength": 120
+                                          },
+                                          "required": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placed": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "placeholders": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "reason": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string",
+                                                "maxLength": 500
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "required",
+                                          "placed",
+                                          "placeholders",
+                                          "reason"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    },
                                     "strategy": {
                                       "type": "string",
                                       "enum": [
@@ -14105,6 +15705,148 @@
                           1
                         ]
                       },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
+                        ]
+                      },
                       "boundary": {
                         "minItems": 3,
                         "maxItems": 200,
@@ -14418,6 +16160,154 @@
                           "enum": [
                             1
                           ]
+                        },
+                        "demand": {
+                          "type": "object",
+                          "properties": {
+                            "schemaVersion": {
+                              "type": "number",
+                              "enum": [
+                                1
+                              ]
+                            },
+                            "sourceStoreId": {
+                              "type": "string",
+                              "maxLength": 100
+                            },
+                            "entities": {
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "id": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 50
+                                  },
+                                  "label": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 120
+                                  },
+                                  "roles": {
+                                    "minItems": 1,
+                                    "maxItems": 8,
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "enum": [
+                                        "island_table",
+                                        "unboxing_table",
+                                        "cashier",
+                                        "accessory_cabinet",
+                                        "side_cabinet",
+                                        "display_stand",
+                                        "screen",
+                                        "signage",
+                                        "seating",
+                                        "storage",
+                                        "other"
+                                      ]
+                                    }
+                                  },
+                                  "quantity": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 200
+                                  },
+                                  "dimensions": {
+                                    "default": {},
+                                    "type": "object",
+                                    "properties": {
+                                      "length": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50000
+                                      },
+                                      "width": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50000
+                                      },
+                                      "depth": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50000
+                                      },
+                                      "height": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50000
+                                      },
+                                      "attachedSeats": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 100
+                                      }
+                                    },
+                                    "additionalProperties": false
+                                  },
+                                  "placeholderFootprint": {
+                                    "default": null,
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "w": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50
+                                          },
+                                          "d": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50
+                                          },
+                                          "h": {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50
+                                          }
+                                        },
+                                        "required": [
+                                          "w",
+                                          "d",
+                                          "h"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "null"
+                                      }
+                                    ]
+                                  },
+                                  "origin": {
+                                    "type": "string",
+                                    "maxLength": 100
+                                  },
+                                  "sourceAnnotationHash": {
+                                    "type": "string",
+                                    "pattern": "^[a-f0-9]{64}$"
+                                  }
+                                },
+                                "required": [
+                                  "id",
+                                  "label",
+                                  "roles",
+                                  "quantity",
+                                  "dimensions",
+                                  "placeholderFootprint"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "required": [
+                            "schemaVersion",
+                            "entities"
+                          ],
+                          "additionalProperties": false
                         },
                         "boundary": {
                           "minItems": 3,
@@ -14829,6 +16719,58 @@
                                   {
                                     "type": "object",
                                     "properties": {
+                                      "demand": {
+                                        "maxItems": 100,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string",
+                                              "maxLength": 50
+                                            },
+                                            "label": {
+                                              "type": "string",
+                                              "maxLength": 120
+                                            },
+                                            "required": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placed": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placeholders": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "reason": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "maxLength": 500
+                                                },
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "id",
+                                            "label",
+                                            "required",
+                                            "placed",
+                                            "placeholders",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
                                       "strategy": {
                                         "type": "string",
                                         "enum": [
@@ -15093,6 +17035,148 @@
                         "type": "number",
                         "enum": [
                           1
+                        ]
+                      },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
                         ]
                       },
                       "boundary": {
@@ -15478,6 +17562,57 @@
                           {
                             "type": "object",
                             "properties": {
+                              "demand": {
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "maxLength": 50
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 120
+                                    },
+                                    "required": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placed": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placeholders": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "reason": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "maxLength": 500
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "label",
+                                    "required",
+                                    "placed",
+                                    "placeholders",
+                                    "reason"
+                                  ]
+                                }
+                              },
                               "strategy": {
                                 "type": "string",
                                 "enum": [
@@ -20677,6 +22812,148 @@
                           1
                         ]
                       },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
+                        ]
+                      },
                       "boundary": {
                         "minItems": 3,
                         "maxItems": 200,
@@ -21060,6 +23337,57 @@
                           {
                             "type": "object",
                             "properties": {
+                              "demand": {
+                                "maxItems": 100,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "maxLength": 50
+                                    },
+                                    "label": {
+                                      "type": "string",
+                                      "maxLength": 120
+                                    },
+                                    "required": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placed": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "placeholders": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 200
+                                    },
+                                    "reason": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "maxLength": 500
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "label",
+                                    "required",
+                                    "placed",
+                                    "placeholders",
+                                    "reason"
+                                  ]
+                                }
+                              },
                               "strategy": {
                                 "type": "string",
                                 "enum": [
@@ -21321,6 +23649,154 @@
                                   "enum": [
                                     1
                                   ]
+                                },
+                                "demand": {
+                                  "type": "object",
+                                  "properties": {
+                                    "schemaVersion": {
+                                      "type": "number",
+                                      "enum": [
+                                        1
+                                      ]
+                                    },
+                                    "sourceStoreId": {
+                                      "type": "string",
+                                      "maxLength": 100
+                                    },
+                                    "entities": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 120
+                                          },
+                                          "roles": {
+                                            "minItems": 1,
+                                            "maxItems": 8,
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "enum": [
+                                                "island_table",
+                                                "unboxing_table",
+                                                "cashier",
+                                                "accessory_cabinet",
+                                                "side_cabinet",
+                                                "display_stand",
+                                                "screen",
+                                                "signage",
+                                                "seating",
+                                                "storage",
+                                                "other"
+                                              ]
+                                            }
+                                          },
+                                          "quantity": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "dimensions": {
+                                            "default": {},
+                                            "type": "object",
+                                            "properties": {
+                                              "length": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "width": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "depth": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "height": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "attachedSeats": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 100
+                                              }
+                                            },
+                                            "additionalProperties": false
+                                          },
+                                          "placeholderFootprint": {
+                                            "default": null,
+                                            "anyOf": [
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "w": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "d": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "h": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  }
+                                                },
+                                                "required": [
+                                                  "w",
+                                                  "d",
+                                                  "h"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
+                                          "origin": {
+                                            "type": "string",
+                                            "maxLength": 100
+                                          },
+                                          "sourceAnnotationHash": {
+                                            "type": "string",
+                                            "pattern": "^[a-f0-9]{64}$"
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "roles",
+                                          "quantity",
+                                          "dimensions",
+                                          "placeholderFootprint"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "entities"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "boundary": {
                                   "minItems": 3,
@@ -21726,6 +24202,58 @@
                                     {
                                       "type": "object",
                                       "properties": {
+                                        "demand": {
+                                          "maxItems": 100,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string",
+                                                "maxLength": 50
+                                              },
+                                              "label": {
+                                                "type": "string",
+                                                "maxLength": 120
+                                              },
+                                              "required": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placed": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placeholders": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "reason": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "maxLength": 500
+                                                  },
+                                                  {
+                                                    "type": "null"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "id",
+                                              "label",
+                                              "required",
+                                              "placed",
+                                              "placeholders",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        },
                                         "strategy": {
                                           "type": "string",
                                           "enum": [

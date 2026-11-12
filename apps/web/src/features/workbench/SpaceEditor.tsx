@@ -352,7 +352,8 @@ export function SpaceEditor({
 
   function submit(event: FormEvent) {
     event.preventDefault()
-    if (space && !errors.length && name.trim()) onSubmit(space, name.trim())
+    if (space && !errors.length && name.trim())
+      onSubmit({ ...space, ...(initial?.demand ? { demand: initial.demand } : {}) }, name.trim())
   }
 
   // Recognised values are to the millimetre; the browser must not block them for the 10 mm step.

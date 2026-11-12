@@ -85,6 +85,20 @@ export const RelaxationSchema = z.object({
 })
 
 export const PlanningSchema = z.object({
+  /** 生成时的逐项数量记录；手动编辑后仅作为历史基线。 */
+  demand: z
+    .array(
+      z.object({
+        id: z.string().max(50),
+        label: z.string().max(120),
+        required: z.int().min(0).max(200),
+        placed: z.int().min(0).max(200),
+        placeholders: z.int().min(0).max(200),
+        reason: z.string().max(500).nullable(),
+      }),
+    )
+    .max(100)
+    .optional(),
   strategy: PlanStrategySchema,
   requested: z.int().min(0).max(MAX_LAYOUT_ITEMS),
   placed: z.int().min(0).max(MAX_LAYOUT_ITEMS),

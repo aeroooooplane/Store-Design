@@ -78,6 +78,92 @@ function generate(payload: object) {
 }
 
 describe('POST /layouts/generate', () => {
+  it('按清单数量生成并保留轮廓、墙柱、禁放区，缺项随方案保存', async () => {
+    const space = {
+      ...rectangleSpace(9, 7, 3.2),
+      obstacles: [
+        {
+          kind: 'fixed',
+          polygon: [
+            [0, 0],
+            [1, 0],
+            [1, 2],
+            [0, 2],
+          ],
+          height: 2.4,
+          label: '已确认墙',
+          addedLater: true,
+        },
+        {
+          kind: 'other',
+          polygon: [
+            [6, 2],
+            [7, 2],
+            [7, 3],
+            [6, 3],
+          ],
+          height: 0.001,
+          label: '禁放区',
+          addedLater: true,
+        },
+      ],
+      demand: {
+        schemaVersion: 1,
+        sourceStoreId: 'test',
+        entities: [
+          { id: 'cash', label: '收银台', roles: ['cashier'], quantity: 2 },
+          { id: 'combo', label: '收银开箱组合', roles: ['cashier', 'unboxing_table'], quantity: 1 },
+          { id: 'unknown', label: '未知凳', roles: ['seating'], quantity: 1 },
+        ],
+      },
+    }
+    const before = JSON.stringify(space)
+    const response = await generate({ space, shopType: 'side_hall' })
+    expect(response.statusCode).toBe(200)
+    expect(JSON.stringify(space)).toBe(before)
+    const result = response.json<LayoutCandidates>()
+    expect(result.space.boundary).toEqual(space.boundary)
+    expect(result.space.obstacles).toEqual(space.obstacles)
+    for (const c of result.candidates) {
+      expect(c.layout.items).toHaveLength(2)
+      expect(c.layout.items.every((i) => i.assetId === 'asset-3')).toBe(true)
+      expect(c.layout.planning).toMatchObject({
+        requested: 4,
+        placed: 2,
+        demand: [
+          { id: 'cash', required: 2, placed: 2, placeholders: 0, reason: null },
+          { id: 'combo', required: 1, placed: 0 },
+          { id: 'unknown', required: 1, placed: 0 },
+        ],
+      })
+      expect(c.issues.filter((i) => i.severity === 'error')).toEqual([])
+      expect(c.notes).toHaveLength(2)
+    }
+  })
+  it('显式空清单不自动增加道具，非法数量和重复编号返回400', async () => {
+    const space = { ...rectangleSpace(5, 5, 3), demand: { schemaVersion: 1, entities: [] } }
+    const empty = await generate({ space, shopType: 'island' })
+    expect(empty.statusCode).toBe(200)
+    expect(
+      empty.json<LayoutCandidates>().candidates.every((c) => c.layout.items.length === 0),
+    ).toBe(true)
+    for (const quantities of [[201], [-1], [1.5], [101, 100], [1, 1]]) {
+      const entities = quantities.map((quantity, i) => ({
+        id: quantities[0] === 1 ? 'same' : String(i),
+        label: '台',
+        roles: ['cashier'],
+        quantity,
+      }))
+      expect(
+        (
+          await generate({
+            space: { ...space, demand: { schemaVersion: 1, entities } },
+            shopType: 'island',
+          })
+        ).statusCode,
+      ).toBe(400)
+    }
+  })
   it('returns one candidate per strategy, without hard-constraint errors', async () => {
     const response = await generate({ space: rectangleSpace(9, 7, 3.2), shopType: 'side_hall' })
     expect(response.statusCode).toBe(200)
