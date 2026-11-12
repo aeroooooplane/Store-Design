@@ -6542,6 +6542,568 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/uploads/{uploadId}/fine": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 读取本地精细几何草稿与冻结原始候选 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    uploadId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        /** 按版本保存原图校正草稿，保留旧版本 */
+        put: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    uploadId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        revision: number;
+                        draft: {
+                            objects: {
+                                id: string;
+                                candidateId: string | null;
+                                /** @enum {string} */
+                                kind: "unknown" | "furniture" | "column" | "wall-display" | "service" | "sign";
+                                label: string;
+                                points: [
+                                    number,
+                                    number
+                                ][];
+                                /** @enum {string} */
+                                status: "pending" | "keep" | "reject";
+                                heightMm: number | null;
+                            }[];
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            calibration: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                mm: number;
+                            } | null;
+                            heightMm: number | null;
+                            openEdges: number[];
+                            entrances: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            structureReviewed: boolean;
+                            reviewer: string;
+                            notes: string;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        /** 仅本地像素精细提取；不调用云端兜底 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    uploadId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/uploads/{uploadId}/fine/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 检查原生空间转换及二维保留清单 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    uploadId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        revision: number;
+                        draft: {
+                            objects: {
+                                id: string;
+                                candidateId: string | null;
+                                /** @enum {string} */
+                                kind: "unknown" | "furniture" | "column" | "wall-display" | "service" | "sign";
+                                label: string;
+                                points: [
+                                    number,
+                                    number
+                                ][];
+                                /** @enum {string} */
+                                status: "pending" | "keep" | "reject";
+                                heightMm: number | null;
+                            }[];
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            calibration: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                mm: number;
+                            } | null;
+                            heightMm: number | null;
+                            openEdges: number[];
+                            entrances: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            structureReviewed: boolean;
+                            reviewer: string;
+                            notes: string;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/uploads/{uploadId}/fine/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** 确认二维保留清单后生成原生空间并保存审计 */
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    uploadId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        revision: number;
+                        draft: {
+                            objects: {
+                                id: string;
+                                candidateId: string | null;
+                                /** @enum {string} */
+                                kind: "unknown" | "furniture" | "column" | "wall-display" | "service" | "sign";
+                                label: string;
+                                points: [
+                                    number,
+                                    number
+                                ][];
+                                /** @enum {string} */
+                                status: "pending" | "keep" | "reject";
+                                heightMm: number | null;
+                            }[];
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            calibration: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                mm: number;
+                            } | null;
+                            heightMm: number | null;
+                            openEdges: number[];
+                            entrances: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            structureReviewed: boolean;
+                            reviewer: string;
+                            notes: string;
+                        };
+                        name: string;
+                        acknowledgedOmissions: string[];
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": unknown;
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/projects/{projectId}/agent/sessions": {
         parameters: {
             query?: never;
