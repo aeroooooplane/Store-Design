@@ -43,6 +43,8 @@ jobs:
         run: node --test tools/recognition/raw-project.test.mjs
       - name: 云端对照发送范围与几何拦截
         run: node --test tools/recognition/cloud-compare-core.test.mjs tools/recognition/cloud-compare-geometry.test.mjs
+      - name: 二维对齐来源与贡献记录
+        run: node --test tools/recognition/alignment-core.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
