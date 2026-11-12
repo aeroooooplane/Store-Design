@@ -28,3 +28,18 @@ node tools/layout-pilot/build.mjs <配置.json>
 现有排布器仅覆盖中岛桌、收银和配件柜/边柜，数量按现有策略计算，并非原图数量硬要求。放宽间距等提示必须保留。几何通过不能代替设计业务审核；同店不同策略可能生成相同布局。
 
 审核答复仅为新一轮补充，不覆盖旧审核，也不会自动改变训练准入。下一步根据经营需求确定必配角色及数量、完善缺失模型/高度，重新生成并记录修正工时；之后再选择与45/48隔离的数据建设训练集。
+
+## 空间补标与原注数量试验
+
+`build-requirements.mjs`在已冻结布局包上复用原注，不调用云端，不修改旧API规则。先完成轮廓/墙体/禁放区审查，再按实体清单生成；通过原生项目导入工作台。工作台内重新生成仍使用旧规则。
+
+```sh
+node --test tools/layout-pilot/core.test.mjs tools/layout-pilot/requirements.test.mjs
+node tools/layout-pilot/build-requirements.mjs <配置.json>
+```
+
+配置：`source`（上一轮布局包）、`out`（不存在的独立输出目录）、`acceptanceIndex`、`developmentIndex`（只含身份）、`resourceRoot`（只读）、`assets`（本机API `/api/v1/assets` 返回的 `items` 数组快照）、`corrections`（逐店原图补标记录）。先校验隔离和源SHA；原标注逐字节保留。模型快照可从自有隔离环境导出，不使用主库写入。
+
+补标输入按门店ID存 `{note,walls,heightsMm?,keepouts?,question?}`。`walls/keepouts`是审图接触表900×900缩略图的手工顶点；接触表每行两张、每张40像素标题，按固定24家顺序，每4家一张1800×1880图。裁切为原边界像素包围盒外扩60像素并限于原图，保持比例居中；工具用同一变换恢复原像素与米制坐标。`heightsMm`按wall下标存明确原注高度。禁放区与墙体分开记录；原生适配为1毫米禁放标记，非实体墙。使用其他裁切方式的录点不能直接送入此转换。
+
+输出增加 `空间与需求/<编号>.json`（原注实体、角色数量、补墙/禁放区、来源与未决问题）、`复评汇总.json`，以及可编辑/计时的新版审核页。原注配置不是统一业务必配；三维尺寸不齐不猜高。组合台多功能一实体，模型长边超容差不静默替换。完整结果、失败、耗时口径和接入限制见 [本轮报告](../../docs/layout-requirements-20261112.md)。
