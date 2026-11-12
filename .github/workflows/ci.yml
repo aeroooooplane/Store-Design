@@ -37,6 +37,8 @@ jobs:
         run: node --test tools/recognition/whole-store-core.test.mjs tools/recognition/whole-store-source-revision.test.mjs tools/recognition/whole-store-wall-assemblies.test.mjs
       - name: 试点数据交接契约
         run: node --test tools/recognition/pilot-contract.test.mjs
+      - name: 可导入空间样例与来源校验
+        run: node --test tools/recognition/usable-project.test.mjs
       - name: OpenAPI contract is up to date
         run: |
           pnpm api:openapi
