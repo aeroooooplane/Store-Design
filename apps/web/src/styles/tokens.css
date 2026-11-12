@@ -32,6 +32,14 @@
   --warn-soft: #fff1c9;
   --danger: #b4233c;
   --danger-soft: #fdeaed;
+  /* Status dots (2026-11-12, like the window dots on a Mac): red, yellow and green appear only as
+     small dots; the text next to them stays ink or muted. Yellow is the brand yellow. */
+  --dot-error: #ff5f57;
+  --dot-error-edge: #e0443e;
+  --dot-busy: #ffd200;
+  --dot-busy-edge: #e5b800;
+  --dot-ok: #28c840;
+  --dot-ok-edge: #1aab29;
   /* Red markers on drawings and renders (table labels, the main slot): must stay visible on any picture. */
   --mark: #e60012;
   --mark-hover: #c40010;
