@@ -14,6 +14,9 @@ import {
 import type { AppConfig } from '../../config/env.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import * as service from './service.ts'
+import * as fine from './fine-service.ts'
+import { FineSaveSchema, FineConfirmSchema } from './fine-contract.ts'
+import { convertFine } from './fine-convert.ts'
 
 const ProjectParams = z.object({ projectId: z.uuid() })
 const UploadParams = z.object({ uploadId: z.uuid() })
@@ -150,5 +153,82 @@ export const recognitionRoutes: FastifyPluginAsyncZod<{
       reply
         .code(201)
         .send(await service.confirmRun(db, request.ctx, request.params.runId, request.body)),
+  )
+  app.get(
+    '/uploads/:uploadId/fine',
+    {
+      schema: {
+        tags: ['recognition'],
+        summary: '读取本地精细几何草稿与冻结原始候选',
+        params: UploadParams,
+        response: { 200: z.unknown(), ...errors },
+      },
+    },
+    (r) => fine.getFine(db, r.ctx, roots, r.params.uploadId),
+  )
+  app.post(
+    '/uploads/:uploadId/fine',
+    {
+      config: writeLimit,
+      schema: {
+        tags: ['recognition'],
+        summary: '仅本地像素精细提取；不调用云端兜底',
+        params: UploadParams,
+        response: { 200: z.unknown(), ...errors },
+      },
+    },
+    (r) => fine.extractFine(db, r.ctx, roots, r.params.uploadId),
+  )
+  app.put(
+    '/uploads/:uploadId/fine',
+    {
+      bodyLimit: 8 * 1024 * 1024,
+      config: writeLimit,
+      schema: {
+        tags: ['recognition'],
+        summary: '按版本保存原图校正草稿，保留旧版本',
+        params: UploadParams,
+        body: FineSaveSchema,
+        response: { 200: z.unknown(), ...errors },
+      },
+    },
+    (r) => fine.saveFine(db, r.ctx, roots, r.params.uploadId, r.body.revision, r.body.draft),
+  )
+  app.post(
+    '/uploads/:uploadId/fine/preview',
+    {
+      bodyLimit: 8 * 1024 * 1024,
+      config: writeLimit,
+      schema: {
+        tags: ['recognition'],
+        summary: '检查原生空间转换及二维保留清单',
+        params: UploadParams,
+        body: FineSaveSchema,
+        response: { 200: z.unknown(), ...errors },
+      },
+    },
+    async (r) => {
+      await fine.getFine(db, r.ctx, roots, r.params.uploadId)
+      return convertFine(r.body.draft)
+    },
+  )
+  app.post(
+    '/uploads/:uploadId/fine/confirm',
+    {
+      bodyLimit: 8 * 1024 * 1024,
+      config: writeLimit,
+      schema: {
+        tags: ['recognition'],
+        summary: '确认二维保留清单后生成原生空间并保存审计',
+        params: UploadParams,
+        body: FineConfirmSchema,
+        response: { 200: z.unknown(), ...errors },
+      },
+    },
+    (r) =>
+      fine.saveFine(db, r.ctx, roots, r.params.uploadId, r.body.revision, r.body.draft, {
+        name: r.body.name,
+        acknowledgedOmissions: r.body.acknowledgedOmissions,
+      }),
   )
 }

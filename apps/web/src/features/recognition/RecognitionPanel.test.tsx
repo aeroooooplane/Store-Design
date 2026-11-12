@@ -172,6 +172,7 @@ describe('RecognitionPanel', () => {
   it('offers a remote model only while cloud recognition is on', async () => {
     fakeApi(false)
     renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: '矢量识别与描点' }))
     const file = new File([new Uint8Array([137, 80, 78, 71])], '简图.png', { type: 'image/png' })
     fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
     await screen.findByText(/简图.png/)
@@ -181,6 +182,7 @@ describe('RecognitionPanel', () => {
 
     fakeApi(true)
     renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: '矢量识别与描点' }))
     fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
     expect(await screen.findByLabelText(/直接用模型识别（图纸会发到外部）/)).toBeTruthy()
   })
@@ -189,6 +191,7 @@ describe('RecognitionPanel', () => {
     const server = fakeApi()
     const onCreated = vi.fn()
     renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={onCreated} />)
+    fireEvent.click(screen.getByRole('button', { name: '矢量识别与描点' }))
 
     const file = new File([new Uint8Array([137, 80, 78, 71])], '简图.png', { type: 'image/png' })
     fireEvent.change(screen.getByLabelText('选择简图文件'), { target: { files: [file] } })
@@ -258,11 +261,13 @@ describe('RecognitionPanel', () => {
     }
     server.fetchMock.mockImplementation(async (request: Request) => {
       const { pathname } = new URL(request.url)
-      if (pathname.endsWith('/uploads')) return json(201, upload)
+      if (pathname.endsWith('/uploads'))
+        return request.method === 'POST' ? json(201, upload) : json(200, [])
       if (pathname.endsWith('/recognize')) return json(200, { run: failed, attempted: null })
       return json(200, [])
     })
     renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+    fireEvent.click(screen.getByRole('button', { name: '矢量识别与描点' }))
     fireEvent.change(screen.getByLabelText('选择简图文件'), {
       target: { files: [new File(['x'], 'a.gif', { type: 'image/gif' })] },
     })
@@ -276,4 +281,26 @@ describe('RecognitionPanel', () => {
     expect(await screen.findByText(/比例无法标定/)).toBeTruthy()
     expect(screen.getByText(/指定一段已知长度后重新识别/)).toBeTruthy()
   })
+})
+
+it('图片默认打开本地精细模式，开启云端设置也不自动发送', async () => {
+  const server = stubFetch(
+    ({ request, path }) => {
+      if (path === '/api/v1/ai') return json(200, overview(true))
+      if (path.endsWith('/fine')) return json(200, null)
+      if (path.endsWith('/uploads'))
+        return request.method === 'POST' ? json(201, upload) : json(200, [])
+      return notFound()
+    },
+    { readBody },
+  )
+  renderWithClient(<RecognitionPanel projectId={PROJECT} assets={ASSETS} onCreated={vi.fn()} />)
+  fireEvent.change(screen.getByLabelText('选择简图文件'), {
+    target: { files: [new File(['x'], '原图.png', { type: 'image/png' })] },
+  })
+  expect(await screen.findByRole('button', { name: '提取几何' })).toBeTruthy()
+  expect(screen.queryByLabelText(/直接用模型识别/)).toBeNull()
+  expect(server.calls.filter((c) => c.method === 'POST').map((c) => c.path)).toEqual([
+    '/api/v1/projects/' + PROJECT + '/uploads',
+  ])
 })

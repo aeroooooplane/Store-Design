@@ -1,4 +1,6 @@
-import { useMemo, useRef, useState } from 'react'
+import { FineGeometryPanel } from './FineGeometryPanel.tsx'
+import { api, unwrap } from '../../api/client.ts'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
 import {
   ITEM_SOURCE_LABELS,
@@ -155,6 +157,20 @@ export function RecognitionPanel({
   onCreated,
   onCancel,
 }: RecognitionPanelProps) {
+  const [fineMode, setFineMode] = useState(true)
+  const [recentUploads, setRecentUploads] = useState<PlanUpload[]>([])
+  useEffect(() => {
+    let active = true
+    void api
+      .GET('/api/v1/projects/{projectId}/uploads', { params: { path: { projectId } } })
+      .then((r) => {
+        if (active) setRecentUploads(unwrap(r))
+      })
+      .catch(() => {})
+    return () => {
+      active = false
+    }
+  }, [projectId])
   const fileInput = useRef<HTMLInputElement>(null)
   const [pdf, setPdf] = useState<PdfSource | null>(null)
   const [preparing, setPreparing] = useState<string | null>(null)
@@ -341,7 +357,7 @@ export function RecognitionPanel({
           <span className="hint">
             {upload.originalName ?? '简图'}
             {upload.page ? ` 第 ${upload.page} 页` : ''} · {upload.width}×{upload.height} px
-            {vector ? ' · 矢量图纸，可本地识别' : ' · 图片，需模型识别'}
+            {vector ? ' · 矢量图纸，可本地识别' : ' · 图片，可本地提取几何'}
           </span>
         )}
         {preparing && (
@@ -350,6 +366,43 @@ export function RecognitionPanel({
           </span>
         )}
       </div>
+      <div className="toolbar">
+        <button onClick={() => setFineMode(true)} aria-pressed={fineMode}>
+          原图精细识别
+        </button>
+        <button onClick={() => setFineMode(false)} aria-pressed={!fineMode}>
+          矢量识别与描点
+        </button>
+        {recentUploads.length > 0 && (
+          <label>
+            继续已上传图纸
+            <select
+              aria-label="继续已上传图纸"
+              value={upload?.id ?? ''}
+              onChange={(e) => {
+                const previous = recentUploads.find((u) => u.id === e.target.value)
+                if (previous) {
+                  setUpload(previous)
+                  setVector(null)
+                  setRun(null)
+                  setPdf(null)
+                  setFineMode(true)
+                }
+              }}
+            >
+              <option value="">请选择</option>
+              {recentUploads.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.originalName ?? u.id}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
+      </div>
+      {upload && fineMode && (
+        <FineGeometryPanel key={upload.id} upload={upload} onCreated={onCreated} />
+      )}
       <ErrorMessage error={localError ?? uploadPlan.error ?? recognize.error ?? confirm.error} />
 
       {pdf && pdf.pages.length > 1 && (
@@ -374,7 +427,7 @@ export function RecognitionPanel({
         </div>
       )}
 
-      {upload && (
+      {upload && !fineMode && (
         <div className="recognition-work">
           <div className="recognition-picture">
             <div className="toolbar">

@@ -1,0 +1,89 @@
+.fine-panel {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid #bbb;
+  border-top: 4px solid #ffd200;
+  border-radius: 8px;
+  background: #fafaf8;
+  color: #171717;
+}
+.fine-panel button {
+  background: #ffd200;
+  color: #171717;
+  border: 1px solid #bfa000;
+  border-radius: 5px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+.fine-panel button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+.fine-panel [role='alert'] {
+  color: #a32418;
+}
+.fine-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 270px;
+  gap: 12px;
+}
+.fine-canvas {
+  height: 650px;
+  overflow: auto;
+  background: white;
+  border: 1px solid #bbb;
+  touch-action: none;
+}
+.fine-canvas svg {
+  display: block;
+  height: auto;
+  max-width: none;
+}
+.fine-panel aside {
+  max-height: 650px;
+  overflow: auto;
+}
+.fine-panel label {
+  display: block;
+  margin: 8px 0;
+}
+.fine-panel input:not([type='checkbox']):not([type='range']),
+.fine-panel select,
+.fine-panel textarea {
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 6px;
+}
+.fine-panel small {
+  display: block;
+}
+.fine-omissions {
+  max-height: 160px;
+  overflow: auto;
+  font-size: 12px;
+}
+.fine-panel .toolbar {
+  flex-wrap: wrap;
+}
+.fine-panel details label {
+  display: inline-block;
+  margin: 5px;
+}
+@media (max-width: 900px) {
+  .fine-grid {
+    grid-template-columns: 1fr;
+  }
+  .fine-canvas {
+    height: 450px;
+  }
+}
+
+.fine-edit-fields {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+.fine-edit-fields:disabled .fine-canvas {
+  pointer-events: none;
+}

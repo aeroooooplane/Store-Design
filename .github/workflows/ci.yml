@@ -28,7 +28,7 @@ jobs:
       - name: Type check
         run: pnpm typecheck
       - name: Test
-        run: pnpm test
+        run: pnpm --workspace-concurrency=1 -r test --maxWorkers=2
       - name: 审核页多入口与记录兼容
         run: node tools/recognition/check-review-template.mjs
       - name: 多入口路径评分
