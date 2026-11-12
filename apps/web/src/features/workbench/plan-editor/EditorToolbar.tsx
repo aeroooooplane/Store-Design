@@ -1,7 +1,7 @@
 import type { Dispatch } from 'react'
 import type { Look } from '../../viewer3d/white-scene.ts'
 import type { EditorAction } from '../editor-state.ts'
-import { ArcArrow } from './ArcArrow.tsx'
+import { Redo2, Undo2 } from 'lucide-react'
 import type { SaveState } from './useDraftAutosave.ts'
 
 const SAVE_LABELS = {
@@ -104,7 +104,7 @@ export function EditorToolbar({
           disabled={!canUndo}
           onClick={() => dispatch({ type: 'undo' })}
         >
-          <ArcArrow direction="left" />
+          <Undo2 size={16} aria-hidden="true" />
         </button>
         <button
           type="button"
@@ -114,7 +114,7 @@ export function EditorToolbar({
           disabled={!canRedo}
           onClick={() => dispatch({ type: 'redo' })}
         >
-          <ArcArrow direction="right" />
+          <Redo2 size={16} aria-hidden="true" />
         </button>
       </span>
       <span className={`save-state ${saveState}`} role="status">

@@ -2,7 +2,7 @@ import { useDeferredValue, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
-import { TrashIcon } from '../../components/icons.tsx'
+import { Trash2 } from 'lucide-react'
 import { formatDateTime } from '../../lib/format.ts'
 import { CreateProjectForm } from './CreateProjectForm.tsx'
 import {
@@ -184,7 +184,7 @@ export function ProjectListPage() {
                             }
                           }}
                         >
-                          <TrashIcon />
+                          <Trash2 size={16} aria-hidden="true" />
                         </button>
                       </>
                     ) : (

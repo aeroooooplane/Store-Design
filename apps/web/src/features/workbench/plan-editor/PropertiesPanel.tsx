@@ -10,9 +10,8 @@ import {
   mToMm,
 } from '@store/shared'
 import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
-import { TrashIcon } from '../../../components/icons.tsx'
 import type { EditorAction } from '../editor-state.ts'
-import { ArcArrow } from './ArcArrow.tsx'
+import { RotateCcwSquare, RotateCwSquare, Trash2 } from 'lucide-react'
 
 interface PropertiesPanelProps {
   selected: LayoutItem | null
@@ -68,7 +67,7 @@ function FixtureFields({
           title="删除（Delete）"
           onClick={() => dispatch({ type: 'remove', id: fixture.id })}
         >
-          <TrashIcon />
+          <Trash2 size={16} aria-hidden="true" />
         </button>
       </div>
       {field('长（左右）', 'w')}
@@ -169,7 +168,7 @@ export function PropertiesPanel({
               title="删除（Delete）"
               onClick={() => dispatch({ type: 'remove', id: selected.id })}
             >
-              <TrashIcon />
+              <Trash2 size={16} aria-hidden="true" />
             </button>
           </div>
           <div className="field-row">
@@ -326,7 +325,7 @@ export function PropertiesPanel({
                 aria-label="逆时针旋转 90°"
                 onClick={() => onRotate(-90)}
               >
-                <ArcArrow direction="left" />
+                <RotateCcwSquare size={16} aria-hidden="true" />
               </button>
               <button
                 type="button"
@@ -334,7 +333,7 @@ export function PropertiesPanel({
                 aria-label="顺时针旋转 90°"
                 onClick={() => onRotate(90)}
               >
-                <ArcArrow direction="right" />
+                <RotateCwSquare size={16} aria-hidden="true" />
               </button>
             </span>
           </div>
