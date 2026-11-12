@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>原图直入 · 本地识别试验</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font:
+        15px/1.6 system-ui,
+        'Microsoft Yahei',
+        sans-serif;
+      color: #171717;
+      background: #f5f4ef;
+    }
+    header {
+      background: #171717;
+      color: white;
+      padding: 18px 30px;
+    }
+    header b {
+      color: #ffd400;
+    }
+    main {
+      max-width: 1480px;
+      padding: 22px;
+      margin: auto;
+    }
+    h1 {
+      font-size: 25px;
+      margin: 0 0 8px;
+    }
+    h2 {
+      font-size: 18px;
+      margin: 0 0 12px;
+    }
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+    button,
+    a.button {
+      font: inherit;
+      background: #ffd400;
+      border: 1px solid #171717;
+      color: #111;
+      padding: 9px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    button:disabled {
+      opacity: 0.45;
+      cursor: default;
+    }
+    .panel {
+      background: white;
+      border: 1px solid #ddd8cd;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 350px;
+      gap: 18px;
+    }
+    .muted {
+      color: #68645b;
+    }
+    .notice {
+      background: #fff4b8;
+      padding: 12px;
+      border-radius: 6px;
+    }
+    input,
+    select,
+    textarea {
+      font: inherit;
+      padding: 8px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+      max-width: 100%;
+    }
+    input[type='number'],
+    select,
+    textarea {
+      width: 100%;
+      margin: 5px 0 12px;
+    }
+    label {
+      display: block;
+    }
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: white;
+      touch-action: manipulation;
+    }
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 330px;
+      overflow: auto;
+      font-size: 13px;
+    }
+    details {
+      margin: 14px 0;
+    }
+    summary {
+      cursor: pointer;
+    }
+    a {
+      color: #171717;
+    }
+    .hidden {
+      display: none;
+    }
+    #error {
+      color: #8d1a12;
+    }
+    #exports a {
+      display: block;
+      margin: 8px 0;
+    }
+    @media (max-width: 850px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      main {
+        padding: 12px;
+      }
+    }
+  </style>
+  <header><b>门店设计工作台</b> · 原图直入试验 / 本地运行 / 云端关闭</header>
+  <main>
+    <h1>放入图片，先看自动结果</h1>
+    <p class="muted">
+      无需预先描点。识别器只读取这张图片；原始结果与后续补充分别保存。当前模型输出轮廓候选，还不能自动完成整店。
+    </p>
+    <div class="panel">
+      <div class="toolbar">
+        <input id="file" type="file" accept="image/png,image/jpeg" aria-label="选择原图" /><button
+          id="run"
+        >
+          开始本地识别
+        </button>
+      </div>
+      <p id="status" role="status">
+        支持 PNG/JPG，最长边4000像素、20MB以内。PDF先导出主平面页图片。
+      </p>
+      <p id="error" role="alert"></p>
+    </div>
+    <div id="results" class="layout hidden">
+      <section class="panel">
+        <h2>自动轮廓叠加</h2>
+        <p class="notice">
+          黄色线为自动候选，不是已确认边界。多个区域全部保留；文字、邻铺和门口可能误识别。
+        </p>
+        <svg id="canvas" aria-label="原图与自动轮廓"></svg>
+        <div class="toolbar">
+          <button id="measure">点选一个已知长度的两端</button><button id="clear">清除量尺点</button>
+        </div>
+        <p id="measure-status" class="muted">
+          只有图纸缺少可靠比例时才需要补长度；不会猜真实米数。
+        </p>
+      </section>
+      <aside>
+        <section class="panel">
+          <h2>识别到了什么</h2>
+          <p id="summary"></p>
+          <p class="notice">
+            入口、柱位、内部墙体尚未可靠识别；家具下一阶段处理。当前不计作自动完成。
+          </p>
+          <details>
+            <summary>查看OCR文字与尺寸依据</summary>
+            <pre id="ocr"></pre>
+          </details>
+          <div id="rawlinks"></div>
+        </section>
+        <section class="panel">
+          <h2>导出轮廓候选</h2>
+          <p class="muted">
+            只验证形状进入工作台后的编辑与三维；入口和内部构件仍缺失，不能作为完整门店。
+          </p>
+          <label
+            >门店类型（模型尚未判定）<select id="shop-type">
+              <option value="">请选择</option>
+              <option value="side_hall">边厅店</option>
+              <option value="island">中岛店</option>
+            </select></label
+          ><label>候选区域<select id="region"></select></label
+          ><label>比例候选<select id="scale"></select></label
+          ><label
+            >手动量尺长度（毫米，已点选两端时填写）<input
+              id="length"
+              type="number"
+              min="1"
+              placeholder="例如图上明确标出的5000" /></label
+          ><label
+            >室内层高（毫米）<input
+              id="height"
+              type="number"
+              min="1500"
+              max="20000"
+              placeholder="未读到时留空，不猜测"
+          /></label>
+          <label id="holes-label" class="notice hidden"
+            ><input id="ack-holes" type="checkbox" />
+            这张预测含内部孔洞。我只预览外轮廓，允许本次三维省略孔洞；原始预测仍保留。</label
+          ><label
+            ><input id="ack" type="checkbox" />
+            我知道这只是轮廓候选，入口、柱位和内部墙体尚未识别。</label
+          >
+          <div class="toolbar"><button id="export">生成工作台文件</button></div>
+          <div id="exports"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const $ = (id) => document.getElementById(id),
+      NS = 'http://www.w3.org/2000/svg'
+    let result = null,
+      points = [],
+      measuring = false
+    function svgElement(name, attrs) {
+      const e = document.createElementNS(NS, name)
+      for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v)
+      return e
+    }
+    function draw() {
+      const raw = result.raw,
+        svg = $('canvas')
+      svg.replaceChildren()
+      svg.setAttribute('viewBox', `0 0 ${raw.width} ${raw.height}`)
+      svg.append(
+        svgElement('image', {
+          href: `/result/${result.id}/input.png`,
+          width: raw.width,
+          height: raw.height,
+        }),
+      )
+      raw.polygons.forEach((p, i) =>
+        svg.append(
+          svgElement('polygon', {
+            points: p.points.map((p) => p.join(',')).join(' '),
+            fill: 'none',
+            stroke: i === Number($('region').value) ? '#e0aa00' : '#df4634',
+            'stroke-width': 4,
+            'vector-effect': 'non-scaling-stroke',
+          }),
+        ),
+      )
+      for (const p of points)
+        svg.append(svgElement('circle', { cx: p[0], cy: p[1], r: 7, fill: '#111' }))
+      if (points.length === 2)
+        svg.append(
+          svgElement('line', {
+            x1: points[0][0],
+            y1: points[0][1],
+            x2: points[1][0],
+            y2: points[1][1],
+            stroke: '#111',
+            'stroke-width': 3,
+          }),
+        )
+    }
+    async function post(url, data) {
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-local-recognition': '1' },
+        body: JSON.stringify(data),
+      })
+      const v = await r.json()
+      if (!r.ok) throw Error(v.error || '操作失败')
+      return v
+    }
+    $('run').onclick = async () => {
+      const file = $('file').files[0]
+      if (!file) {
+        $('error').textContent = '先选择一张图片。'
+        return
+      }
+      if (file.size > 20 * 1024 * 1024) {
+        $('error').textContent = '图片超过20MB。'
+        return
+      }
+      $('run').disabled = true
+      $('error').textContent = ''
+      $('results').classList.add('hidden')
+      $('status').textContent = '正在本机识别轮廓、读取文字；未向外部发送图片…'
+      try {
+        const image = await new Promise((ok, no) => {
+          const r = new FileReader()
+          r.onload = () => ok(r.result.split(',')[1])
+          r.onerror = no
+          r.readAsDataURL(file)
+        })
+        result = await post('/recognize', { image })
+        points = []
+        measuring = false
+        $('ack').checked = false
+        $('ack-holes').checked = false
+        $('holes-label').classList.toggle('hidden', !(result.raw.holeCount > 0))
+        $('shop-type').value = ''
+        $('exports').replaceChildren()
+        $('length').value = ''
+        $('region').replaceChildren()
+        result.raw.polygons.forEach((p, i) => {
+          const opt = new Option(`区域 ${i + 1} · ${p.points.length} 个点`, String(i))
+          $('region').add(opt)
+        })
+        $('scale').replaceChildren(new Option('未确认：请检查候选或补一个已知长度', ''))
+        result.semantic.scale.forEach((s, i) =>
+          $('scale').add(
+            new Option(
+              `${s.mmPerPixel.toFixed(4)} mm/像素 · ${s.readings.length} 条读数支持`,
+              String(i),
+            ),
+          ),
+        )
+        $('height').value =
+          result.semantic.height.length === 1
+            ? Math.round(result.semantic.height[0].metres * 1000)
+            : ''
+        $('summary').textContent =
+          `${result.raw.polygons.length} 个轮廓候选，${result.reading.texts.length} 条文字，${result.semantic.scale.length} 组比例候选，${result.semantic.height.length} 条室内高度候选。`
+        $('ocr').textContent = JSON.stringify(
+          {
+            scale: result.semantic.scale,
+            height: result.semantic.height,
+            texts: result.reading.texts.map((t) => t.text),
+          },
+          null,
+          2,
+        )
+        $('rawlinks').replaceChildren()
+        for (const [file, label] of [
+          ['raw.json', '下载原始预测'],
+          ['reading.json', '下载OCR结果'],
+        ]) {
+          const a = document.createElement('a')
+          a.href = `/result/${result.id}/${file}`
+          a.download = file
+          a.textContent = label
+          $('rawlinks').append(a, document.createElement('br'))
+        }
+        $('results').classList.remove('hidden')
+        draw()
+        $('status').textContent =
+          `本地识别完成，用时 ${result.seconds.toFixed(1)} 秒。自动完整门店：未完成。原始结果已保存。`
+      } catch (e) {
+        $('error').textContent = e.message
+        $('status').textContent = '识别失败，未生成可用结论。'
+      } finally {
+        $('run').disabled = false
+      }
+    }
+    $('region').onchange = () => {
+      points = []
+      draw()
+    }
+    $('measure').onclick = () => {
+      measuring = true
+      points = []
+      draw()
+      $('measure-status').textContent = '点击已知尺寸线的两个端点，勿点数字本身。'
+    }
+    $('clear').onclick = () => {
+      points = []
+      measuring = false
+      draw()
+      $('measure-status').textContent = '量尺点已清除。'
+    }
+    $('canvas').onclick = (e) => {
+      if (!measuring || !result) return
+      const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(
+        $('canvas').getScreenCTM().inverse(),
+      )
+      points.push([p.x, p.y])
+      if (points.length === 2) {
+        measuring = false
+        $('measure-status').textContent =
+          `已选两端，相距 ${Math.hypot(points[1][0] - points[0][0], points[1][1] - points[0][1]).toFixed(1)} 像素，请填写实际毫米数。`
+      }
+      draw()
+    }
+    $('export').onclick = async () => {
+      try {
+        $('error').textContent = ''
+        const index = $('scale').value,
+          options = {
+            shopType: $('shop-type').value,
+            polygonIndex: Number($('region').value),
+            mmPerPixel: index === '' ? null : result.semantic.scale[Number(index)].mmPerPixel,
+            heightMm: Number($('height').value),
+            acknowledgeOmittedHoles: $('ack-holes').checked,
+            acknowledgeIncomplete: $('ack').checked,
+          }
+        if (points.length === 2)
+          options.reference = { a: points[0], b: points[1], lengthMm: Number($('length').value) }
+        const r = await post('/export', { id: result.id, options })
+        $('exports').replaceChildren()
+        for (const [url, name, label] of [
+          [r.projectUrl, '自动轮廓候选.store-design.json', '下载项目（导入工作台）'],
+          [r.provenanceUrl, '候选来源与限制.json', '下载来源与限制'],
+        ]) {
+          const a = document.createElement('a')
+          a.href = url
+          a.download = name
+          a.textContent = label
+          $('exports').append(a)
+        }
+      } catch (e) {
+        $('error').textContent = e.message
+      }
+    }
+  </script>
+</html>
