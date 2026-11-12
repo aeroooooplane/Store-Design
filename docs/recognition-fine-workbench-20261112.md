@@ -37,3 +37,5 @@ PDF-222、PDF-107、PDF-025原图层高明确，显式确认保留二维清单�
 测试服务3082/5262仅本任务使用，交付后关闭。主开发已确认识别文件无冲突；未改Workbench/PlanView/editor-state/white-scene/deliveries/PlanEditor等业务热点。用户主工作区由主开发统一同步。
 
 本地最终全仓812项（shared256、web331、api218、database7）、格式、类型与静态检查通过；生成OpenAPI一致。CI结果见PR。首次回归发现旧测试仍直接使用旧入口，以及新增mock把图片当JSON；修正为显式切换旧模式并按content-type读取，保留了旧功能断言，不跳过测试。
+
+最终CI连续两次在既有Workbench副本标题的默认等待窗口失败，本地定向复验通过。Test步骤改为与本地相同的按工作区串行、每工作区最多2个worker执行，保留全部测试和原断言，不修改业务热点；最终结果见PR。
