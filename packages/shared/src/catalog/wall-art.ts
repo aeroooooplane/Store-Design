@@ -6,22 +6,33 @@ import { roundM } from '../units.ts'
 
 /** 用户确认的标准灯箱：独立于旧灯箱型号，宽高可分别调整。 */
 export const WALL_ART_ID = 'asset-90000003'
-export const WALL_ART_DEPTH = 0.001
+export const LEGACY_WALL_ART_DEPTH = 0.001
+export const WALL_ART_DEPTH = 0.08
 
 export const isWallArt = (item: { assetId?: string | null }) => item.assetId === WALL_ART_ID
+
+export function isDisplayPanel(
+  item: Pick<LayoutItem, 'function' | 'name'> & { assetId?: string | null },
+) {
+  return (
+    isWallArt(item) ||
+    (item.function === 'screen' && item.name.includes('广告机')) ||
+    (item.function === 'signage' && item.name.includes('灯箱'))
+  )
+}
 
 export function wallArtAsset(): Asset {
   return {
     id: WALL_ART_ID,
-    name: '灯箱墙贴',
-    standardName: '灯箱墙贴',
-    variant: '标准1500×850，可调尺寸',
+    name: '灯箱',
+    standardName: '灯箱',
+    variant: '标准1700×980，可调尺寸',
     materialCategory: '灯箱',
     siFamily: '通用',
     category: '信息化物料',
     function: 'signage',
-    installation: 'wall',
-    footprint: { w: 1.5, d: WALL_ART_DEPTH, h: 0.85 },
+    installation: 'embedded',
+    footprint: { w: 1.7, d: WALL_ART_DEPTH, h: 0.98 },
     footprintSource: 'source',
     extent: null,
     front: '+Z',
@@ -29,7 +40,7 @@ export function wallArtAsset(): Asset {
     facingConfidence: 'high',
     placeable: true,
     retired: false,
-    judgment: '标准墙面画片；宽高独立调整，图库画面待接入',
+    judgment: '标准灯箱，宽高可独立调整',
     glb: null,
     whiteGlb: null,
     finishGlb: null,
@@ -55,12 +66,12 @@ export function resizeWallArt(item: LayoutItem, width: number, height: number): 
   if (!isWallArt(item) || !Number.isFinite(width) || !Number.isFinite(height)) return item
   const q = nearestQuarter(item.rotation)
   const swap = q === 90 || q === 270
+  const { d } = wallArtSize(item)
   const next = {
     ...item,
-    w: swap ? WALL_ART_DEPTH : dimension(width),
-    d: swap ? dimension(width) : WALL_ART_DEPTH,
+    w: swap ? d : dimension(width),
+    d: swap ? dimension(width) : d,
     h: dimension(height),
-    mount: 'wall' as const,
   }
   delete next.scale
   return next

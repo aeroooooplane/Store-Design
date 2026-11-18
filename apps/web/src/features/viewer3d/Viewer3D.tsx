@@ -149,7 +149,7 @@ export function Viewer3D({
 
   useEffect(() => {
     sceneRef.current?.setItems(layout.items, assets, market)
-  }, [layout, assets, market])
+  }, [layout, assets, market, space])
 
   useEffect(() => {
     sceneRef.current?.setFixtures(layout.fixtures ?? [], layout.items)

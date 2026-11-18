@@ -227,13 +227,17 @@ function mountedBlock(item: LayoutItem) {
  * Where a wall piece's number or label goes: on its back edge, along the wall, so it stays clear
  * of the cabinet below; a ceiling piece (or one off the wall) keeps its centre.
  */
-function mountedAnchor(item: LayoutItem, space: Space): { at: Point; angle: number } {
+function mountedAnchor(
+  item: LayoutItem,
+  space: Space,
+  layout?: Layout | null,
+): { at: Point; angle: number } {
   const mount = itemMount(item)
   const face =
     mount === 'wall'
-      ? mountedWall(item, space)
+      ? mountedWall(item, space, layout?.fixtures, layout?.items)
       : mount === 'embedded'
-        ? embeddedWall(item, space)
+        ? embeddedWall(item, space, layout?.fixtures, layout?.items)
         : null
   if (!face) return { at: [item.cx, item.cz], angle: 0 }
   // On the wall face: a wall piece's back edge, a built-in piece's front edge.
@@ -249,10 +253,10 @@ function mountedAnchor(item: LayoutItem, space: Space): { at: Point; angle: numb
  * A piece built into the wall (内嵌): a solid outline inside the wall with its front, on the
  * wall face, drawn bold.
  */
-function embeddedBlock(item: LayoutItem, space: Space) {
+function embeddedBlock(item: LayoutItem, space: Space, layout?: Layout | null) {
   const x = item.cx - item.w / 2
   const y = item.cz - item.d / 2
-  const face = embeddedWall(item, space)
+  const face = embeddedWall(item, space, layout?.fixtures, layout?.items)
   const front: [Point, Point] | null = face
     ? face.along === 'x'
       ? [
@@ -575,11 +579,11 @@ export function PlanView({
           const symbol = asset?.planSymbol ? symbols.get(asset.planSymbol.url) : undefined
           const drawing =
             itemMount(item) === 'embedded'
-              ? embeddedBlock(item, space)
+              ? embeddedBlock(item, space, layout)
               : mounted
                 ? mountedBlock(item)
                 : symbolFor(item, asset, symbol)
-          const anchor = mounted ? mountedAnchor(item, space) : null
+          const anchor = mounted ? mountedAnchor(item, space, layout) : null
           const classes = [
             'plan-item',
             mounted ? 'mounted' : '',

@@ -178,7 +178,7 @@ export function wallFaces(
 }
 
 /** Partition support must cover the full width and installed height, including cabinet niches. */
-function supportsPiece(
+export function supportsPiece(
   face: WallFace,
   at: number,
   length: number,
@@ -261,6 +261,73 @@ export interface WallPlacement {
   w: number
   d: number
   elevation?: number
+}
+
+/** Screens use the side of the wall under the dragged body to distinguish inset from surface-mounted. */
+export function displayPanelSnap(
+  item: Pick<LayoutItem, 'w' | 'd' | 'h' | 'rotation' | 'elevation'>,
+  cx: number,
+  cz: number,
+  space: Pick<Space, 'boundary' | 'openEdges'>,
+  front: FrontAxis | null,
+  fixtures: readonly Fixture[] = [],
+  items: readonly FaceItem[] = [],
+  adding = false,
+): (WallPlacement & { mount: 'embedded' | 'wall' }) | null {
+  const facing = front && front !== 'any' ? front : '+Z'
+  let best: { placement: WallPlacement & { mount: 'embedded' | 'wall' }; score: number } | null =
+    null
+  for (const face of wallFaces(space, fixtures, items)) {
+    const rotation = rotationFacing(facing, face.inward)
+    if (rotation === null) continue
+    const alongX = face.along === 'x'
+    const at = alongX ? cx : cz
+    const across = alongX ? cz : cx
+    const inward = alongX ? face.inward[1] : face.inward[0]
+    const size = turned(item, item.rotation, rotation)
+    const length = alongX ? size.w : size.d
+    const depth = alongX ? size.d : size.w
+    const first = coord(face.a, face.along)
+    const last = coord(face.b, face.along)
+    let solid: [number, number][] = [[Math.min(first, last), Math.max(first, last)]]
+    for (const [left, right] of face.open) {
+      solid = solid.flatMap(([lo, hi]): [number, number][] =>
+        right <= lo || left >= hi
+          ? [[lo, hi]]
+          : [
+              [lo, left],
+              [right, hi],
+            ],
+      )
+    }
+    for (const [lo, hi] of solid) {
+      if (hi - lo + EPSILON_M < length) continue
+      const centre = Math.max(lo + length / 2, Math.min(hi - length / 2, at))
+      if (!supportsPiece(face, centre, length, item.elevation ?? 0, item.h)) continue
+      const line = faceLineAt(face, centre)
+      const signed = (across - line) * inward
+      const fixture = fixtures.find((f) => f.id === face.fixtureId)
+      const canRecess = !fixture || (alongX ? fixture.d : fixture.w) + EPSILON_M >= depth
+      const mount = (adding || signed < 0) && canRecess ? 'embedded' : 'wall'
+      const target = line + inward * depth * (mount === 'embedded' ? -0.5 : 0.5)
+      const distance = Math.hypot(centre - at, target - across)
+      if (!adding && distance > WALL_SNAP_M) continue
+      // On add a usable partition outranks any perimeter wall. The nearest eligible face wins.
+      const score = adding && !fixture ? 1000 + distance : distance
+      if (best && best.score <= score) continue
+      best = {
+        score,
+        placement: {
+          ...size,
+          rotation,
+          mount,
+          cx: roundM(alongX ? centre : target),
+          cz: roundM(alongX ? target : centre),
+        },
+      }
+    }
+  }
+  return best?.placement ?? null
 }
 
 /**

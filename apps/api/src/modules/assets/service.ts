@@ -1,4 +1,4 @@
-import { aliasedTable, and, asc, eq, ilike, or } from 'drizzle-orm'
+import { aliasedTable, and, asc, eq, ilike, ne, or } from 'drizzle-orm'
 import type { SQL } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
@@ -120,7 +120,10 @@ export async function listAssets(
   authorize(ctx.actor, 'asset:read')
   const filters: SQL[] = []
   if (query.function) filters.push(eq(assets.function, query.function))
-  if (query.placeable !== undefined) filters.push(eq(assets.placeable, query.placeable))
+  if (query.placeable === true)
+    filters.push(or(eq(assets.placeable, true), eq(assets.id, WALL_ART_ID))!)
+  if (query.placeable === false)
+    filters.push(and(eq(assets.placeable, false), ne(assets.id, WALL_ART_ID))!)
   if (query.siFamily) filters.push(eq(assets.siFamily, query.siFamily))
   if (query.category) filters.push(eq(assets.category, query.category))
   if (query.q) {

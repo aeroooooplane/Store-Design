@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { facingAfter } from '@store/shared'
+import { facingAfter, nearestQuarter } from '@store/shared'
 import type { FrontAxis, LayoutItem } from '@store/shared'
 import { loadSource } from './model-cache.ts'
 import { cropScreenArtwork, screenArtwork } from './screen-artwork.ts'
@@ -76,7 +76,10 @@ export function wallPicture(
   screenModelUrl: string | null = null,
   portrait = false,
 ) {
-  const [fx, fz] = facingAfter(front && front !== 'any' ? front : '+Z', item.rotation)
+  const [fx, fz] = facingAfter(
+    front && front !== 'any' ? front : '+Z',
+    nearestQuarter(item.rotation),
+  )
   const across = fx !== 0 ? item.d : item.w
   const depth = fx !== 0 ? item.w : item.d
   const material = new THREE.MeshBasicMaterial({ color: '#5b6068', side: THREE.FrontSide })

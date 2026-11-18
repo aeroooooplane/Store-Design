@@ -4,6 +4,7 @@ import {
   MIN_ITEM_SCALE,
   advertisingScreenName,
   isWallArt,
+  isDisplayPanel,
   wallArtSize,
   itemElevation,
   itemMount,
@@ -146,10 +147,11 @@ export function PropertiesPanel({
   const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
   const screenName = advertisingScreenName(asset?.id)
   const name = screenName ?? asset?.name ?? selected?.name
+  const automaticMount = selected && isDisplayPanel(selected)
   // Screens and light boxes (信息化物料) may hang on the wall or be built into it (N1, 10-15);
   // LOGOs only hang on it.
   const switchable =
-    !isWallArt(selected ?? {}) &&
+    !automaticMount &&
     asset?.category === '信息化物料' &&
     (asset.installation === 'wall' || asset.installation === 'embedded')
   // LOGO may be resized uniformly (10-15): the width is typed, depth and height follow.
@@ -179,7 +181,7 @@ export function PropertiesPanel({
               <Trash2 size={16} aria-hidden="true" />
             </button>
           </div>
-          {screenName && asset && ['embedded', 'wall'].includes(itemMount(selected)) && (
+          {screenName && asset && ['embedded', 'wall', 'ceiling'].includes(itemMount(selected)) && (
             <div className="field-row">
               屏幕方向
               <span className="tabs" role="group" aria-label="屏幕方向">
@@ -293,6 +295,18 @@ export function PropertiesPanel({
               </span>
             </div>
           )}
+          {automaticMount && (
+            <div className="field-row">
+              安装状态
+              <output>
+                {itemMount(selected) === 'embedded'
+                  ? '内嵌'
+                  : itemMount(selected) === 'wall'
+                    ? '贴墙'
+                    : '悬空外置'}
+              </output>
+            </div>
+          )}
           {itemMount(selected) !== 'floor' && (
             <label className="field-row">
               {ELEVATION_LABELS[itemMount(selected)]}
@@ -323,6 +337,7 @@ export function PropertiesPanel({
                   id: selected.id,
                   cx: mmToM(Number(e.target.value)),
                   cz: selected.cz,
+                  ...(automaticMount ? { snapTo: space, front: asset?.front ?? null } : {}),
                 })
               }
             />
@@ -339,6 +354,7 @@ export function PropertiesPanel({
                   id: selected.id,
                   cx: selected.cx,
                   cz: mmToM(Number(e.target.value)),
+                  ...(automaticMount ? { snapTo: space, front: asset?.front ?? null } : {}),
                 })
               }
             />

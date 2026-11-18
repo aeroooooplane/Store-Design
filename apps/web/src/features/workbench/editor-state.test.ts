@@ -623,12 +623,12 @@ describe('内嵌', () => {
     })
   })
 
-  it('switches between 贴墙 and 内嵌 in place', () => {
+  it('switches between 贴墙 and 内嵌 by crossing the wall face without changing height', () => {
     let s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
     const id = s.layout.items[0]?.id ?? ''
-    s = editorReducer(s, { type: 'setMount', id, mount: 'wall', space, front: '+Z' })
-    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.8 })
-    s = editorReducer(s, { type: 'setMount', id, mount: 'embedded', space, front: '+Z' })
+    s = editorReducer(s, { type: 'move', id, cx: 4, cz: 0.04, snapTo: space, front: '+Z' })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.021 })
+    s = editorReducer(s, { type: 'move', id, cx: 4, cz: -0.04, snapTo: space, front: '+Z' })
     expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.021 })
   })
 })

@@ -5,6 +5,7 @@ import {
   defaultCameras,
   advertisingScreenName,
   isWallArt,
+  isDisplayPanel,
   wallArtSize,
   wallArtFromCorner,
   fixtureSolids,
@@ -37,7 +38,7 @@ import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
-import { wallArt } from './wall-art.ts'
+import { displayPanelBody } from './display-panel-body.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
 import {
   SCENE_BACKGROUND,
@@ -329,13 +330,16 @@ export class WhiteScene {
       const catalogued = item.assetId ? assets.get(item.assetId) : undefined
       const art = isWallArt(item)
       const mount = itemMount(item)
+      const panel = isDisplayPanel(item)
       const adjustableScreen = item.function === 'screen' && advertisingScreenName(catalogued?.id)
       // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
       const picture =
-        mount === 'embedded' || (adjustableScreen && mount === 'wall')
+        panel || mount === 'embedded'
           ? {
-              url: catalogued?.preview?.url ?? null,
-              front: catalogued?.front ?? null,
+              url: art
+                ? (catalogued?.productImage?.url ?? null)
+                : (catalogued?.preview?.url ?? null),
+              front: art ? ('+Z' as const) : (catalogued?.front ?? null),
               screenModelUrl:
                 item.function === 'screen'
                   ? (catalogued?.finishGlb?.url ?? catalogued?.glb?.url ?? null)
@@ -351,13 +355,12 @@ export class WhiteScene {
       const url = marketUrl ?? asset?.whiteGlb?.url ?? asset?.glb?.url ?? null
       // The light material copy when there is one (see pnpm catalog:finish).
       const finishUrl = marketUrl ?? asset?.finishGlb?.url ?? asset?.glb?.url ?? null
-      const signature = art
-        ? `art:${catalogued?.productImage?.url}:${item.w}:${item.d}:${item.h}:${item.rotation}`
-        : picture
-          ? `picture:${picture.url}:${picture.front}:${picture.screenModelUrl}:${item.w}:${item.d}:${item.h}:${item.rotation}`
-          : url
-            ? `${url}|${finishUrl}`
-            : `box:${item.w}:${item.d}:${item.h}`
+      const suspension = mount === 'ceiling' ? `:${item.elevation}:${this.space?.height}` : ''
+      const signature = picture
+        ? `picture:${picture.url}:${picture.front}:${picture.screenModelUrl}:${item.w}:${item.d}:${item.h}:${item.rotation}:${mount}${suspension}`
+        : url
+          ? `${url}|${finishUrl}`
+          : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
@@ -379,11 +382,7 @@ export class WhiteScene {
         placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
-        if (art)
-          placed.white.add(
-            wallArt(item, catalogued?.productImage?.url ?? null, () => this.requestRender()),
-          )
-        else if (picture) {
+        if (picture) {
           const { plane, loaded } = wallPicture(
             item,
             picture.front,
@@ -391,6 +390,8 @@ export class WhiteScene {
             picture.screenModelUrl,
             picture.portrait,
           )
+          if (panel)
+            placed.white.add(displayPanelBody(item, picture.front, this.space?.height ?? 0))
           placed.white.add(plane)
           if (picture.url || picture.screenModelUrl) {
             const load = loaded.finally(() => {
@@ -422,7 +423,7 @@ export class WhiteScene {
       group.position.set(model.cx, elevation, model.cz)
       // A box already has the footprint at its nearest quarter turn and turns only by the tilt
       // beyond it; a model turns by the whole rotation (legacy: +Z front → −X at 90°).
-      group.rotation.y = art ? 0 : ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
+      group.rotation.y = ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
       // A LOGO resized in the properties panel (scale) shows at that size, like its plan symbol;
       // a placeholder box is drawn at the item's size already.
       group.scale.setScalar(url ? (item.scale ?? 1) : 1)
@@ -871,7 +872,12 @@ export class WhiteScene {
     if (!placed) return
     // Keep shared model geometry and textures cached; free geometry and materials made here.
     placed.group.traverse((node) => {
-      if (node.userData['placeholder'] || node.userData['wallPicture']) disposeTree(node)
+      if (
+        node.userData['placeholder'] ||
+        node.userData['wallPicture'] ||
+        node.userData['displayPanelBody']
+      )
+        disposeTree(node)
     })
     this.props.remove(placed.group)
     this.hits.remove(placed.hit)

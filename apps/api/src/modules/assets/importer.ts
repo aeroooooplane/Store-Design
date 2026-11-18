@@ -13,9 +13,11 @@ import {
   functionFor,
   isCatalogAssetRetired,
   roundM,
+  wallArtAsset,
+  WALL_ART_ID,
 } from '@store/shared'
 import { contentTypeFor, isLfsPointer, resolveStoredFile, sha256File } from '../../lib/storage.ts'
-import type { StorageRoots } from '../../lib/storage.ts'
+import type { StorageRootName, StorageRoots } from '../../lib/storage.ts'
 import { FinishRecordSchema, WhiteRecordSchema } from './light-records.ts'
 import type { LightKind } from './light-records.ts'
 
@@ -144,10 +146,14 @@ interface FileFacts {
 }
 
 /** Hashes a resource file; returns null (with a reason) when it is absent or only an LFS pointer. */
-async function inspect(roots: StorageRoots, key: string): Promise<FileFacts | string> {
+async function inspect(
+  roots: StorageRoots,
+  key: string,
+  root: StorageRootName = 'resource',
+): Promise<FileFacts | string> {
   let resolved: { file: string; bytes: number }
   try {
-    resolved = await resolveStoredFile(roots, 'resource', key)
+    resolved = await resolveStoredFile(roots, root, key)
   } catch {
     return `缺少文件 ${key}`
   }
@@ -155,9 +161,14 @@ async function inspect(roots: StorageRoots, key: string): Promise<FileFacts | st
   return { key, sha256: await sha256File(resolved.file), bytes: resolved.bytes }
 }
 
-async function registerFile(db: Database, facts: FileFacts, kind: string): Promise<string> {
+async function registerFile(
+  db: Database,
+  facts: FileFacts,
+  kind: string,
+  root: StorageRootName = 'resource',
+): Promise<string> {
   const values = {
-    root: 'resource',
+    root,
     storageKey: facts.key,
     kind,
     contentType: contentTypeFor(facts.key),
@@ -174,6 +185,44 @@ async function registerFile(db: Database, facts: FileFacts, kind: string): Promi
     .returning({ id: schema.storedFiles.id })
   if (!row) throw new Error('stored_files upsert returned no row')
   return row.id
+}
+
+/** Project-specific artwork lives in local app storage, alongside other private uploads. */
+export async function importLightboxArtwork(db: Database, roots: StorageRoots): Promise<void> {
+  const facts = await inspect(roots, 'catalog-artwork/lightbox-a1.png', 'storage')
+  if (typeof facts === 'string') return
+  const asset = wallArtAsset()
+  await db.transaction(async (tx) => {
+    const productImageFileId = await registerFile(tx, facts, 'product_image', 'storage')
+    const values = {
+      id: asset.id,
+      materialCategory: asset.materialCategory,
+      standardName: asset.standardName,
+      variant: asset.variant,
+      siFamily: asset.siFamily,
+      category: asset.category,
+      function: asset.function,
+      installation: asset.installation,
+      // The renderer builds the procedural body; the database requires a GLB for regular assets.
+      placeable: false,
+      retired: false,
+      footprintSource: asset.footprintSource,
+      width: asset.footprint.w,
+      depth: asset.footprint.d,
+      height: asset.footprint.h,
+      front: asset.front,
+      productImageFileId,
+      productImageMatch: 'exact',
+    }
+    const { id: _id, ...update } = values
+    await tx
+      .insert(schema.assets)
+      .values(values)
+      .onConflictDoUpdate({
+        target: schema.assets.id,
+        set: { ...update, importedAt: sql`now()` },
+      })
+  })
 }
 
 const LIGHT_MODELS: Record<
@@ -381,7 +430,8 @@ export async function importCatalog(
   }
   // A model taken out of manifest.json (e.g. 全景相机 LOGO, 10-15) is retired where it was
   // imported before: old layouts still show it, it is no longer offered or planned.
-  const listed = manifest.assets.map((entry) => entry.asset_id)
+  await importLightboxArtwork(db, roots)
+  const listed = [...manifest.assets.map((entry) => entry.asset_id), WALL_ART_ID]
   const dropped = await db
     .update(schema.assets)
     .set({ retired: true, importedAt: sql`now()` })
