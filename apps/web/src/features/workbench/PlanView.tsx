@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
   WALL_THICKNESS_M,
+  advertisingScreenName,
   isWallArt,
   wallArtSize,
   facingAfter,
@@ -586,7 +587,10 @@ export function PlanView({
             item.id === selectedId ? 'selected' : '',
           ]
           // The catalogue name (模型选用表) wins over the name saved with older layouts.
-          const name = (asset?.name ?? item.name).split(' · ')[0] ?? item.name
+          const name =
+            advertisingScreenName(item.assetId) ??
+            (asset?.name ?? item.name).split(' · ')[0] ??
+            item.name
           // Boxes are drawn at the nearest quarter turn and turned by the rest; plan symbols
           // already turn by the whole rotation.
           const tilt = itemTilt(item)

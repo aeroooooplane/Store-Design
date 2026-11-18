@@ -15,6 +15,27 @@ import type { LayoutInput } from './layout.ts'
 import { ARC, arcFront } from '../planner/shapes.fixture.ts'
 import { SpaceSchema, rectangleSpace } from './space.ts'
 
+it('validates the two exact advertising-screen sizes while rejecting arbitrary resizing', () => {
+  const asset = {
+    id: 'asset-3021147',
+    placeable: true,
+    footprint: { w: 1.465, d: 0.116, h: 0.846 },
+  }
+  const landscape = {
+    function: 'screen' as const,
+    placeholder: false,
+    rotation: 90,
+    w: 0.116,
+    d: 1.465,
+    h: 0.846,
+  }
+  const portrait = { ...landscape, d: 0.846, h: 1.465 }
+  expect(assetFitProblem(landscape, asset)).toBeNull()
+  expect(assetFitProblem(portrait, asset)).toBeNull()
+  expect(assetFitProblem({ ...portrait, h: 1.5 }, asset)).toBe('size')
+  expect(assetFitProblem(portrait, { ...asset, id: 'another-screen' })).toBe('size')
+})
+
 const space = SpaceSchema.parse({
   schemaVersion: 1,
   boundary: [

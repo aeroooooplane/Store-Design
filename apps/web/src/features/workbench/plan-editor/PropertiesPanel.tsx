@@ -2,6 +2,7 @@ import type { Dispatch } from 'react'
 import {
   MAX_ITEM_SCALE,
   MIN_ITEM_SCALE,
+  advertisingScreenName,
   isWallArt,
   wallArtSize,
   itemElevation,
@@ -11,6 +12,7 @@ import {
 } from '@store/shared'
 import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
+import { screenOrientationChange } from '../editor-state.ts'
 import { RotateCcwSquare, RotateCwSquare, Trash2 } from 'lucide-react'
 import { ItemFunctionIcon } from '../../../components/StoreIcons.tsx'
 
@@ -142,6 +144,8 @@ export function PropertiesPanel({
   onRotate,
 }: PropertiesPanelProps) {
   const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
+  const screenName = advertisingScreenName(asset?.id)
+  const name = screenName ?? asset?.name ?? selected?.name
   // Screens and light boxes (信息化物料) may hang on the wall or be built into it (N1, 10-15);
   // LOGOs only hang on it.
   const switchable =
@@ -162,12 +166,8 @@ export function PropertiesPanel({
         <>
           <div className="properties-head">
             <h3 className="with-cat">
-              <ItemFunctionIcon
-                fn={selected.function}
-                name={assetMap.get(selected.assetId ?? '')?.name ?? selected.name}
-                size={18}
-              />
-              {assetMap.get(selected.assetId ?? '')?.name ?? selected.name}
+              <ItemFunctionIcon fn={selected.function} name={name ?? selected.name} size={18} />
+              {name}
             </h3>
             <button
               type="button"
@@ -179,6 +179,41 @@ export function PropertiesPanel({
               <Trash2 size={16} aria-hidden="true" />
             </button>
           </div>
+          {screenName && asset && ['embedded', 'wall'].includes(itemMount(selected)) && (
+            <div className="field-row">
+              屏幕方向
+              <span className="tabs" role="group" aria-label="屏幕方向">
+                {(['landscape', 'portrait'] as const).map((orientation) => {
+                  const next = screenOrientationChange(selected, asset, orientation, space.height)
+                  const portrait = selected.h > asset.footprint.h
+                  return (
+                    <button
+                      key={orientation}
+                      type="button"
+                      aria-pressed={portrait === (orientation === 'portrait')}
+                      disabled={!next}
+                      title={
+                        !next && !selected.locked
+                          ? '切换后会超出地面或层高，请先调整离地高度'
+                          : undefined
+                      }
+                      onClick={() =>
+                        dispatch({
+                          type: 'setScreenOrientation',
+                          id: selected.id,
+                          asset,
+                          orientation,
+                          spaceHeight: space.height,
+                        })
+                      }
+                    >
+                      {orientation === 'landscape' ? '横版' : '竖版'}
+                    </button>
+                  )
+                })}
+              </span>
+            </div>
+          )}
           <div className="field-row">
             道具尺寸
             <output>

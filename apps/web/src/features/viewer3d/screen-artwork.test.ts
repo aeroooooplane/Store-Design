@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import * as THREE from 'three'
-import { screenArtwork } from './screen-artwork.ts'
+import { cropScreenArtwork, screenArtwork } from './screen-artwork.ts'
 
 function panel(width: number, texture: THREE.Texture) {
   return new THREE.Mesh(
@@ -10,6 +10,11 @@ function panel(width: number, texture: THREE.Texture) {
 }
 
 describe('screenArtwork', () => {
+  it('centre-crops the horizontal axis and keeps the top and bottom of upright artwork', () => {
+    expect(cropScreenArtwork([0, 1, 1, 1, 0, 0, 1, 0], 0.5)).toEqual([
+      0.25, 1, 0.75, 1, 0.25, 0, 0.75, 0,
+    ])
+  })
   it('keeps authored UVs and wrapping for a rotated screen and ignores a larger back face', () => {
     const screen = new THREE.Group()
     const texture = new THREE.Texture()

@@ -1,5 +1,10 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
-import { canSelectCatalogAsset, mToMm } from '@store/shared'
+import {
+  advertisingScreenName,
+  canSelectCatalogAsset,
+  LEGACY_PORTRAIT_SCREENS,
+  mToMm,
+} from '@store/shared'
 import type { Asset, ItemFunction, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 
@@ -69,10 +74,15 @@ export function pickableSections(assets: readonly Asset[], si: SiStyle): Pickabl
       .filter(
         (a) =>
           canSelectCatalogAsset(a) &&
+          !LEGACY_PORTRAIT_SCREENS.has(a.id) &&
           PLACEABLE_CATEGORIES.has(a.category) &&
           match(a) &&
           (a.category !== '软装道具' || a.siFamily === si),
       )
+      .map((asset) => {
+        const name = advertisingScreenName(asset.id)
+        return name ? { ...asset, name } : asset
+      })
       .sort((a, b) => a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id)),
   })).filter((section) => section.assets.length > 0)
 }

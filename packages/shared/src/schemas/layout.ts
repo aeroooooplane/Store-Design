@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { isWallArt, wallArtSize, WALL_ART_DEPTH, WALL_ART_ID } from '../catalog/wall-art.ts'
+import { advertisingScreenName, portraitScreenFootprint } from '../catalog/advertising-screen.ts'
 import { ItemFunctionSchema, PlanStrategySchema } from '../enums.ts'
 import {
   nearestQuarter,
@@ -271,6 +272,12 @@ export function assetFitProblem(
   const expected = scaledSize(rotatedFootprint(asset, item.rotation), scale)
   const differs = (size: { w: number; d: number; h: number }) =>
     (['w', 'd', 'h'] as const).some((k) => Math.abs(item[k] - size[k]) > EPSILON_M)
+  if (
+    item.function === 'screen' &&
+    advertisingScreenName(asset.id) &&
+    !differs(portraitScreenFootprint(expected, item.rotation))
+  )
+    return null
   // Items placed before the body was corrected keep the whole model's size until reopened
   // (fitBodyFootprints); they are still the real model.
   const legacy = asset.extent

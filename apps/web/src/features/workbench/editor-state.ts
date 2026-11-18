@@ -1,5 +1,8 @@
 import {
   MIN_FIXTURE_M,
+  advertisingScreenName,
+  itemElevation,
+  portraitScreenFootprint,
   isWallArt,
   resizeWallArt,
   wallArtSize,
@@ -28,6 +31,7 @@ import type {
   LayoutItem,
   Point,
   Rect,
+  ScreenOrientation,
   Space,
 } from '@store/shared'
 import { magnetSnap } from './snap.ts'
@@ -36,6 +40,31 @@ import { magnetSnap } from './snap.ts'
 export const SNAP_M = 0.01
 /** Undo steps kept per editing session. */
 export const HISTORY_LIMIT = 100
+
+/** The screen rolls about its own centre. Its floor-plan heading and wall depth stay fixed. */
+export function screenOrientationChange(
+  item: LayoutItem,
+  asset: Asset,
+  orientation: ScreenOrientation,
+  spaceHeight: number,
+): LayoutItem | null {
+  const mount = itemMount(item)
+  if (
+    !advertisingScreenName(asset.id) ||
+    item.assetId !== asset.id ||
+    item.function !== 'screen' ||
+    (mount !== 'embedded' && mount !== 'wall') ||
+    item.locked
+  )
+    return null
+  const native = rotatedFootprint(asset, item.rotation)
+  const size = orientation === 'portrait' ? portraitScreenFootprint(native, item.rotation) : native
+  const h = roundM(size.h)
+  if (item.h === h) return item
+  const elevation = itemElevation(item) + (item.h - h) / 2
+  if (elevation < -0.000001 || elevation + h > spaceHeight + 0.000001 || elevation > 20) return null
+  return { ...item, w: roundM(size.w), d: roundM(size.d), h, elevation: Math.max(0, elevation) }
+}
 
 export interface EditorState {
   layout: Layout
@@ -68,6 +97,13 @@ export type EditorAction =
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
   | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
+  | {
+      type: 'setScreenOrientation'
+      id: string
+      asset: Asset
+      orientation: ScreenOrientation
+      spaceHeight: number
+    }
   /**
    * Turns a prop to any angle (the rotation handle, the 3D ring, the angle field); `group`
    * joins the steps of one drag into one undo step.
@@ -381,11 +417,17 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         (item) => {
           if (item.locked) return item
           const rotation = (((item.rotation + (action.by ?? 90)) % 360) + 360) % 360
-          const size = isWallArt(item)
+          const native = isWallArt(item)
             ? rotatedFootprint({ footprint: wallArtSize(item) }, rotation)
             : action.asset
               ? rotatedFootprint(action.asset, rotation)
               : { w: item.d, d: item.w, h: item.h }
+          const size =
+            action.asset &&
+            advertisingScreenName(action.asset.id) &&
+            item.h > action.asset.footprint.h
+              ? portraitScreenFootprint(native, rotation)
+              : native
           const turned = {
             ...item,
             rotation,
@@ -424,6 +466,15 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                 action.space,
                 state.layout.fixtures,
               ),
+        null,
+      )
+    case 'setScreenOrientation':
+      return changeItem(
+        state,
+        action.id,
+        (item) =>
+          screenOrientationChange(item, action.asset, action.orientation, action.spaceHeight) ??
+          item,
         null,
       )
     case 'resizeWallArt':
@@ -580,7 +631,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         id,
         assetId: action.asset.id,
         function: action.asset.function,
-        name: action.asset.name.slice(0, 100),
+        name: (advertisingScreenName(action.asset.id) ?? action.asset.name).slice(0, 100),
         cx: snap(action.cx),
         cz: snap(action.cz),
         rotation: 0,

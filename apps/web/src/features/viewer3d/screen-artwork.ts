@@ -9,6 +9,17 @@ interface ScreenArtwork {
   /** Top left, top right, bottom left, bottom right, as in PlaneGeometry. */
   uv: number[]
   area: number
+  aspect: number
+}
+
+/** Centre-crop both rows of UVs so the picture stays upright on a portrait screen. */
+export function cropScreenArtwork(uv: readonly number[], fraction: number): number[] {
+  const inset = (1 - Math.min(1, fraction)) / 2
+  const corner = (from: number, to: number) =>
+    uv
+      .slice(from, from + 2)
+      .map((value, axis) => value + ((uv[to + axis] ?? value) - value) * inset)
+  return [...corner(0, 2), ...corner(2, 0), ...corner(4, 6), ...corner(6, 4)]
 }
 
 /** Take the largest front-facing textured rectangle, excluding the housing and rear faces. */
@@ -79,6 +90,7 @@ export function screenArtwork(root: THREE.Object3D, front: FrontAxis | null): Sc
       // Preserve the authored UVs and GLB sampler, including wrapping and negative coordinates.
       uv: authoredUv,
       area: width * height,
+      aspect: width / height,
     }
   })
   return artwork
