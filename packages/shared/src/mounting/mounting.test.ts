@@ -14,6 +14,75 @@ import {
 
 // 6 m × 4 m, 3 m high; the main entrance runs along the bottom edge (z = 4).
 const space = rectangleSpace(6, 4, 3)
+const partition = {
+  id: 'partition-1',
+  kind: 'hollow_partition' as const,
+  cx: 3,
+  cz: 2,
+  w: 4,
+  d: 0.2,
+  h: 2.4,
+}
+
+describe('空心隔板上的贴墙道具', () => {
+  it('隔板两侧分别朝外，背面贴合且校验认可', () => {
+    for (const [z, expectedZ, rotation] of [
+      [1.8, 1.875, 180],
+      [2.2, 2.125, 0],
+    ]) {
+      const placed = wallMountSnap(logo({ elevation: 1.2 }), 3, z!, space, '+Z', undefined, [
+        partition,
+      ])!
+      expect(placed).toMatchObject({ cx: 3, cz: expectedZ, rotation })
+      const piece = logo({ ...placed, elevation: 1.2 })
+      expect(mountedWall(piece, space, [partition])?.fixtureId).toBe(partition.id)
+      const layout = LayoutSchema.parse({
+        schemaVersion: 3,
+        items: [piece],
+        fixtures: [partition],
+        planning: null,
+      })
+      expect(validateLayout(space, layout).some((i) => i.code === 'item_not_on_wall')).toBe(false)
+      expect(
+        validateLayout(space, { ...layout, fixtures: [] }).some(
+          (i) => i.code === 'item_not_on_wall',
+        ),
+      ).toBe(true)
+    }
+  })
+  it('默认安装高度不超过隔板顶部，远处不自动吸附', () => {
+    const piece = logo({ cz: 2.125, h: 0.8 })
+    expect(defaultElevation(piece, [], space, [partition])).toBe(1.6)
+    expect(wallMountSnap(piece, 3, 3, space, '+Z', undefined, [partition])).toBeNull()
+  })
+  it('隔板窄端面与低矮面不能支撑超宽或超高道具，外围墙仍沿用原行为', () => {
+    const wide = logo({ w: 1.2, elevation: 1, h: 0.5 })
+    expect(wallMountSnap(wide, 0.97, 2, space, '+Z', undefined, [partition])).toBeNull()
+    const short = { ...partition, h: 0.4 }
+    expect(wallMountSnap(wide, 3, 2.2, space, '+Z', undefined, [short])).toBeNull()
+    expect(
+      mountedWall({ ...wide, cx: 0.975, cz: 2, w: 0.05, d: 1.2 }, space, [partition]),
+    ).toBeNull()
+    expect(mountedWall({ ...wide, cz: 2.125, elevation: 2.1 }, space, [partition])).toBeNull()
+    expect(wallMountSnap(logo(), 0.2, 3.6, space, '+Z')).not.toBeNull()
+  })
+  it('配件柜穿过外表面形成的缺口不算支撑，柜顶以上的实体仍可贴面', () => {
+    const cabinet = item('cabinet', { cx: 3, cz: 3, w: 1.2, d: 2, h: 2.4 })
+    const piece = logo({ w: 1, cz: 2.125, elevation: 1.2, h: 0.5 })
+    expect(mountedWall(piece, space, [partition], [cabinet])).toBeNull()
+    expect(wallMountSnap(piece, 3, 2.2, space, '+Z', undefined, [partition], [cabinet])).toBeNull()
+    const layout = LayoutSchema.parse({
+      schemaVersion: 3,
+      planning: null,
+      fixtures: [partition],
+      items: [piece, cabinet],
+    })
+    expect(validateLayout(space, layout).some((i) => i.code === 'item_not_on_wall')).toBe(true)
+    expect(mountedWall(piece, space, [partition], [{ ...cabinet, h: 1 }])?.fixtureId).toBe(
+      partition.id,
+    )
+  })
+})
 
 function item(id: string, overrides: Partial<LayoutItem> = {}): LayoutItem {
   return {

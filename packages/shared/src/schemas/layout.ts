@@ -433,7 +433,7 @@ export function validateLayout(
         itemIds: [item.id],
       })
     }
-    if (mount === 'wall' && !mountedWall(item, space)) {
+    if (mount === 'wall' && !mountedWall(item, space, layout.fixtures, layout.items)) {
       issues.push({
         code: 'item_not_on_wall',
         severity: 'warning',
