@@ -1,0 +1,662 @@
+{
+  "version": "models-20261118-leica7",
+  "models": [
+    {
+      "id": "asset-90000101",
+      "name": "徕卡墙画框 A 410×570",
+      "folder": "软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101",
+      "w": 0.41,
+      "d": 0.025,
+      "h": 0.57,
+      "bytes": 324604,
+      "frames": [
+        {
+          "kind": "A",
+          "x": 0,
+          "y": 0,
+          "source": "group_17",
+          "width": 410,
+          "height": 570
+        }
+      ]
+    },
+    {
+      "id": "asset-90000102",
+      "name": "徕卡墙画框 B 730×570",
+      "folder": "软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102",
+      "w": 0.73,
+      "d": 0.025,
+      "h": 0.57,
+      "bytes": 860204,
+      "frames": [
+        {
+          "kind": "B",
+          "x": 0,
+          "y": 0,
+          "source": "group_20",
+          "width": 730,
+          "height": 570
+        }
+      ]
+    },
+    {
+      "id": "asset-90000103",
+      "name": "徕卡墙画框 C 1040×570",
+      "folder": "软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103",
+      "w": 1.04,
+      "d": 0.025,
+      "h": 0.57,
+      "bytes": 885224,
+      "frames": [
+        {
+          "kind": "C",
+          "x": 0,
+          "y": 0,
+          "source": "group_3",
+          "width": 1040,
+          "height": 570
+        }
+      ]
+    },
+    {
+      "id": "asset-90000104",
+      "name": "徕卡墙画框 D 800×1200",
+      "folder": "软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104",
+      "w": 0.8,
+      "d": 0.025,
+      "h": 1.2,
+      "bytes": 962264,
+      "frames": [
+        {
+          "kind": "D",
+          "x": 0,
+          "y": 0,
+          "source": "group_18",
+          "width": 800,
+          "height": 1200
+        }
+      ]
+    },
+    {
+      "id": "asset-90000105",
+      "name": "徕卡墙画框组合 1200",
+      "folder": "软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105",
+      "w": 1.2,
+      "d": 0.025,
+      "h": 1.2,
+      "bytes": 2600736,
+      "frames": [
+        {
+          "kind": "A",
+          "x": 0,
+          "y": 630,
+          "source": "group_17",
+          "width": 410,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 470,
+          "y": 630,
+          "source": "group_20",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 0,
+          "y": 0,
+          "source": "group_19",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "A",
+          "x": 790,
+          "y": 0,
+          "source": "group_18",
+          "width": 410,
+          "height": 570
+        }
+      ]
+    },
+    {
+      "id": "asset-90000106",
+      "name": "徕卡墙画框组合 1990",
+      "folder": "软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106",
+      "w": 1.99,
+      "d": 0.025,
+      "h": 1.2,
+      "bytes": 4550100,
+      "frames": [
+        {
+          "kind": "A",
+          "x": 0,
+          "y": 630,
+          "source": "group_17",
+          "width": 410,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 470,
+          "y": 630,
+          "source": "group_19",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 1260,
+          "y": 630,
+          "source": "group_20",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 0,
+          "y": 0,
+          "source": "group_3",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 790,
+          "y": 0,
+          "source": "group_7",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "A",
+          "x": 1580,
+          "y": 0,
+          "source": "group_18",
+          "width": 410,
+          "height": 570
+        }
+      ]
+    },
+    {
+      "id": "asset-90000107",
+      "name": "徕卡墙画框组合 3000",
+      "folder": "软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107",
+      "w": 3,
+      "d": 0.025,
+      "h": 1.2,
+      "bytes": 4095124,
+      "frames": [
+        {
+          "kind": "D",
+          "x": 0,
+          "y": 0,
+          "source": "group_18",
+          "width": 800,
+          "height": 1200
+        },
+        {
+          "kind": "A",
+          "x": 860,
+          "y": 630,
+          "source": "group_17",
+          "width": 410,
+          "height": 570
+        },
+        {
+          "kind": "A",
+          "x": 1330,
+          "y": 630,
+          "source": "group_18",
+          "width": 410,
+          "height": 570
+        },
+        {
+          "kind": "B",
+          "x": 1800,
+          "y": 630,
+          "source": "group_20",
+          "width": 730,
+          "height": 570
+        },
+        {
+          "kind": "A",
+          "x": 2590,
+          "y": 630,
+          "source": "group_17",
+          "width": 410,
+          "height": 570
+        },
+        {
+          "kind": "C",
+          "x": 860,
+          "y": 0,
+          "source": "group_3",
+          "width": 1040,
+          "height": 570
+        },
+        {
+          "kind": "C",
+          "x": 1960,
+          "y": 0,
+          "source": "group_7",
+          "width": 1040,
+          "height": 570
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "04_模型库/facing.json",
+      "bytes": 15864,
+      "sha256": "083487dec2e1b596ad1c4f4966cc9d57ed5aab78d96b9c7ced844117e5feadd9"
+    },
+    {
+      "path": "04_模型库/manifest.json",
+      "bytes": 455260,
+      "sha256": "38add2ccbba355ddfddf329b9d222a0b2fd896ad5d6894e5817d00b7d53c36a5"
+    },
+    {
+      "path": "04_模型库/品类对照.csv",
+      "bytes": 3233,
+      "sha256": "e7c6a77190a6af0d77080fc5f9e63c1328f8107350b24002ad9750303ff38b16"
+    },
+    {
+      "path": "04_模型库/模型清单.csv",
+      "bytes": 36345,
+      "sha256": "cff91c295a57bd5ab56f04cd4ee3bbae8d356e64f3776d1e42777bac483743d5"
+    },
+    {
+      "path": "04_模型库/模型目录.html",
+      "bytes": 101622,
+      "sha256": "43d761e23322d263fdda4d712827e9264b83cce537b957e941e0c97a11caf4d1"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000101.png",
+      "bytes": 238817,
+      "sha256": "12388ed0ee335dee6d77ef6f89db69f5ba76af6bb96bfd4863636c62cd4c3b55"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000102.png",
+      "bytes": 681467,
+      "sha256": "78de4ebbd7f5bc0efe0e320a0605c9b04048feeb60fb3132e4131a0e6b56f5ac"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000103.png",
+      "bytes": 519146,
+      "sha256": "a4f83bea1701279a72fa9c9a045b72e3740390f02d6207b490a69d7b0dbf0535"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000104.png",
+      "bytes": 374766,
+      "sha256": "9d294285436d4d36e987a749ea77d2b433d136d40352185c390ac29bf269b64f"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000105.png",
+      "bytes": 517963,
+      "sha256": "bcbc2e1e3dead8ae473de61e9e8b331a685479fff5aca20eb5746fab2673b6cd"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000106.png",
+      "bytes": 555179,
+      "sha256": "7ff6cb679ec49d4822040639be473077499440d7b9919b157b1f83ab9317b113"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/01_道具图片PNG/asset-90000107.png",
+      "bytes": 385280,
+      "sha256": "662710d4f24aca5438050b16f221f6753c2d4b46142bb0c19cff6749d0406cd5"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000101.svg",
+      "bytes": 141,
+      "sha256": "864da681510afb18b00ae580182f93b0e56684b103bb6d7417b4dd11712abe3b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000102.svg",
+      "bytes": 141,
+      "sha256": "3c4cdfa6c19c9f580558e098157d4d7320fb5f1db4aa3d0b0af353f8beaeb19d"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000103.svg",
+      "bytes": 143,
+      "sha256": "e92ed11307fad8d65db33cf3ffdabbfe8dd87970727e2771038f50c7dea3a8b3"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000104.svg",
+      "bytes": 141,
+      "sha256": "b1ed096e14a082ad110df37edcdf50c852241d7dc0aedf2388645ad2e9483d20"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000105.svg",
+      "bytes": 143,
+      "sha256": "d919e596864a37d4b19f2171458327a7ff697b80075ac292cb7df79c6bb2705b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000106.svg",
+      "bytes": 143,
+      "sha256": "fb5071018c183ad39f2bb9427427855ef4e482488438ab1e0d3b9beaf5925013"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/品类图库/03_平面图SVG/asset-90000107.svg",
+      "bytes": 143,
+      "sha256": "5b75a0df89baf04cf0c95fb3357a5e216f2c4983f8c950b88655a4582b685f85"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/平面图.svg",
+      "bytes": 141,
+      "sha256": "864da681510afb18b00ae580182f93b0e56684b103bb6d7417b4dd11712abe3b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/效果图.png",
+      "bytes": 238817,
+      "sha256": "12388ed0ee335dee6d77ef6f89db69f5ba76af6bb96bfd4863636c62cd4c3b55"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/conversion.json",
+      "bytes": 1082,
+      "sha256": "00df1cb66a1e3a3b58c2adb6b60c1236109ae3081de32650d57958cab819876e"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/finish.glb",
+      "bytes": 69264,
+      "sha256": "5d8b21dd270adaaf8a3baeeccc15354c74f9a72c6a123bf23b55df1edba8c543"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/finish.json",
+      "bytes": 419,
+      "sha256": "10ab08d4c79d67ec1d321c5a36278e40d8308b8427379ee874220fd06f91371b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/model.glb",
+      "bytes": 324604,
+      "sha256": "6f38a5c9f5a67ff3ab48f86ef5d5b3eba213b61e8a628ce6484fb57c4e69d43f"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/white.glb",
+      "bytes": 2488,
+      "sha256": "695eb5ec36ad45a33fcd38db5a57e8e574665076af443dfaabdf7925ddf2b2db"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/网页模型/white.json",
+      "bytes": 332,
+      "sha256": "4f224ae55566e8cd0b8752e1a45cae821bb3b2d5d9d4f3143b5c3eed9c503bb4"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_A_410x570__asset-90000101/预览.png",
+      "bytes": 238817,
+      "sha256": "12388ed0ee335dee6d77ef6f89db69f5ba76af6bb96bfd4863636c62cd4c3b55"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/平面图.svg",
+      "bytes": 141,
+      "sha256": "3c4cdfa6c19c9f580558e098157d4d7320fb5f1db4aa3d0b0af353f8beaeb19d"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/效果图.png",
+      "bytes": 681467,
+      "sha256": "78de4ebbd7f5bc0efe0e320a0605c9b04048feeb60fb3132e4131a0e6b56f5ac"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/conversion.json",
+      "bytes": 1082,
+      "sha256": "825972fdd16e3b1245bc4022181ecc8719be3ff04593802003bc4429c77493b9"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/finish.glb",
+      "bytes": 214540,
+      "sha256": "b86f78aaa3d7025ba8cd300f1a2c4d44adab6e620068e52e5769617b748e35c2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/finish.json",
+      "bytes": 420,
+      "sha256": "acfff22924a6e6773b6e7251ae86b1a6341b599e5d9529cba3cdd16cb9dd8c96"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/model.glb",
+      "bytes": 860204,
+      "sha256": "a23fe0468a96fe491880658c9c3cd252228a31994364c523dc1dbc988ee24cc5"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/white.glb",
+      "bytes": 2472,
+      "sha256": "f8b447cdb5f536e3d05d8a43046be62e858c985dfa82f33aeed3b2ad9403bae2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/网页模型/white.json",
+      "bytes": 332,
+      "sha256": "c20284f7452a6eb31588159c551e4b87670b209db243c3bd962f439b6ac7eb1b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_B_730x570__asset-90000102/预览.png",
+      "bytes": 681467,
+      "sha256": "78de4ebbd7f5bc0efe0e320a0605c9b04048feeb60fb3132e4131a0e6b56f5ac"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/平面图.svg",
+      "bytes": 143,
+      "sha256": "e92ed11307fad8d65db33cf3ffdabbfe8dd87970727e2771038f50c7dea3a8b3"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/效果图.png",
+      "bytes": 519146,
+      "sha256": "a4f83bea1701279a72fa9c9a045b72e3740390f02d6207b490a69d7b0dbf0535"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/conversion.json",
+      "bytes": 1083,
+      "sha256": "c0a119a6914f238165f6d239efa7804d2c1eb348365a777ce3283146e59542d6"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/finish.glb",
+      "bytes": 178948,
+      "sha256": "e32ca4d2a8e1138ee099cbe4c1c7e6de8c70c84ba7bc3ab5be3fda5a8d56b52d"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/finish.json",
+      "bytes": 420,
+      "sha256": "58444c528651c87a6507f275f9d164dcb812fc80c6ffd7ebfe0ffc1a768dfab9"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/model.glb",
+      "bytes": 885224,
+      "sha256": "903270a48bb9ce13295d3fb50d6adcf10284a4d6dece29eecff24c41c4766260"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/white.glb",
+      "bytes": 2472,
+      "sha256": "efbaa313b75852b2a10bf5caef3c9aab2d6d2d8a840d5dcea7a454a0dfd4857d"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/网页模型/white.json",
+      "bytes": 332,
+      "sha256": "8b66e52dcfd72f51d68c4988eed233198d19f279c7005ad4c5086180f2ece9f5"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_C_1040x570__asset-90000103/预览.png",
+      "bytes": 519146,
+      "sha256": "a4f83bea1701279a72fa9c9a045b72e3740390f02d6207b490a69d7b0dbf0535"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/平面图.svg",
+      "bytes": 141,
+      "sha256": "b1ed096e14a082ad110df37edcdf50c852241d7dc0aedf2388645ad2e9483d20"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/效果图.png",
+      "bytes": 374766,
+      "sha256": "9d294285436d4d36e987a749ea77d2b433d136d40352185c390ac29bf269b64f"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/conversion.json",
+      "bytes": 1082,
+      "sha256": "c5d3900ea274ef5578e9c3acdbdc267474f5e21a7b17e6ed830654a4dc0b5f27"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/finish.glb",
+      "bytes": 242500,
+      "sha256": "b05eb7389ac28f33675c99ff92dc11781510aaae7cab9a7268817337e3303820"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/finish.json",
+      "bytes": 420,
+      "sha256": "4971fb2b7c0cb636ca5e0907e6fb711ab37250f160fb39d3ac580270143b6a32"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/model.glb",
+      "bytes": 962264,
+      "sha256": "33346cdff12f97c85a9c22283ce1d0656fdab2f23b586561d16c3699c61e1fe2"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/white.glb",
+      "bytes": 2472,
+      "sha256": "110065b3eee2312472b8c636eecd6b478651ead56bd9a5f517a8b19232a82cef"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/网页模型/white.json",
+      "bytes": 332,
+      "sha256": "2eb25e0c67e65ec4b2860231b21ca51971572dfc9f2bbb420ea7cb3168741150"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框_D_800x1200__asset-90000104/预览.png",
+      "bytes": 374766,
+      "sha256": "9d294285436d4d36e987a749ea77d2b433d136d40352185c390ac29bf269b64f"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/平面图.svg",
+      "bytes": 143,
+      "sha256": "d919e596864a37d4b19f2171458327a7ff697b80075ac292cb7df79c6bb2705b"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/效果图.png",
+      "bytes": 517963,
+      "sha256": "bcbc2e1e3dead8ae473de61e9e8b331a685479fff5aca20eb5746fab2673b6cd"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/conversion.json",
+      "bytes": 1545,
+      "sha256": "07046ae5fa6865559d3b7a7f51adffb870394457f190891dee682f0a6f6a07fd"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/finish.glb",
+      "bytes": 684096,
+      "sha256": "5d959324ba6c419411cfa43351d7303f7333ff7ab07ddb9f0b6aab35cb0c775a"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/finish.json",
+      "bytes": 424,
+      "sha256": "9a8d82ada01370291f17ca9403b90002f238e054365e938868791de577cea930"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/model.glb",
+      "bytes": 2600736,
+      "sha256": "f427eef371c17368690a43db5ffdcf46d307675751e4d473e0652126b6b2c3bf"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/white.glb",
+      "bytes": 3184,
+      "sha256": "e5ce898a54d2581dab9bc30ec9048b7bbc35301d78a3ff6334cdaf82f6af2c99"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/网页模型/white.json",
+      "bytes": 334,
+      "sha256": "047584a67e181fedb54fbd01f24568b8857703bc4577135279cdef9373b7dd00"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1200__asset-90000105/预览.png",
+      "bytes": 517963,
+      "sha256": "bcbc2e1e3dead8ae473de61e9e8b331a685479fff5aca20eb5746fab2673b6cd"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/平面图.svg",
+      "bytes": 143,
+      "sha256": "fb5071018c183ad39f2bb9427427855ef4e482488438ab1e0d3b9beaf5925013"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/效果图.png",
+      "bytes": 555179,
+      "sha256": "7ff6cb679ec49d4822040639be473077499440d7b9919b157b1f83ab9317b113"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/conversion.json",
+      "bytes": 1856,
+      "sha256": "50ddb12f8477b01d69a132e7877ee0aaf183b9c9a1865e3557f60ddc85eb4520"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/finish.glb",
+      "bytes": 1106992,
+      "sha256": "8e74c4c6a0b8ad4de98a143e9b8530a415fe69ceaed2c444c5adc19e6e71d1de"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/finish.json",
+      "bytes": 425,
+      "sha256": "730988ecf0e183222f2066023bad7794c2bded4f21b32811d8e4511b5c7d0110"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/model.glb",
+      "bytes": 4550100,
+      "sha256": "5c37371e8ca3e45c149719be80e9d86e42a1bcd94c7d946013ef2c73f158c05a"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/white.glb",
+      "bytes": 3616,
+      "sha256": "3a2ec6b244a3c67cf244221a52b049f85b97f66c7d9a84f555499fc54df694ed"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/网页模型/white.json",
+      "bytes": 334,
+      "sha256": "ce2a8d9ec98fcc11a54399703462118b840ee1686ee789d53bc4b1a2a88aade0"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_1990__asset-90000106/预览.png",
+      "bytes": 555179,
+      "sha256": "7ff6cb679ec49d4822040639be473077499440d7b9919b157b1f83ab9317b113"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/平面图.svg",
+      "bytes": 143,
+      "sha256": "5b75a0df89baf04cf0c95fb3357a5e216f2c4983f8c950b88655a4582b685f85"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/效果图.png",
+      "bytes": 385280,
+      "sha256": "662710d4f24aca5438050b16f221f6753c2d4b46142bb0c19cff6749d0406cd5"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/conversion.json",
+      "bytes": 2016,
+      "sha256": "a9310ef80f1b1b2b6a5acb83d4380d914fd2885627859a733a551ba30029091c"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/finish.glb",
+      "bytes": 945104,
+      "sha256": "b356a648f3cdfa6abc4b26259b03e199c461be4c5a73a011201b0c2b250d1888"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/finish.json",
+      "bytes": 429,
+      "sha256": "af4efc1ce57055afe63444b62e9538e1e081e05233b68948fbd0f10b2f098eff"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/model.glb",
+      "bytes": 4095124,
+      "sha256": "e1a2451f05b104ea70c77a3abff515f8bb9d3769295ec1abd04ba101a4eb085d"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/white.glb",
+      "bytes": 3720,
+      "sha256": "7e1925360834cb594462c3747f608bcfb4162c00153918f08bdb4c15ceb42371"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/网页模型/white.json",
+      "bytes": 340,
+      "sha256": "ac8915bda1bf5f6be064ef499858de3f401317c07001673975c699491cf1326f"
+    },
+    {
+      "path": "04_模型库/软装道具/SI2.0/徕卡墙画框组合_3000__asset-90000107/预览.png",
+      "bytes": 385280,
+      "sha256": "662710d4f24aca5438050b16f221f6753c2d4b46142bb0c19cff6749d0406cd5"
+    }
+  ]
+}
