@@ -3,6 +3,37 @@ import { SpaceSchema, rectangleSpace } from '@store/shared'
 import { magnetSnap } from './snap.ts'
 
 const room = rectangleSpace(6, 4, 3)
+const partition = {
+  id: 'partition-1',
+  kind: 'hollow_partition' as const,
+  cx: 3,
+  cz: 2,
+  w: 2,
+  d: 0.2,
+  h: 2.4,
+}
+
+describe('空心隔板外表面吸附', () => {
+  const prop = { id: 'a', w: 0.5, d: 0.4 }
+  it.each([
+    [3, 1.64, 3, 1.7],
+    [3, 2.36, 3, 2.3],
+    [1.69, 2, 1.75, 2],
+    [4.31, 2, 4.25, 2],
+  ])('从 %s,%s 接近时贴到隔板外侧', (cx, cz, x, z) => {
+    expect(magnetSnap(prop, cx, cz, [], room, [partition])).toMatchObject({ cx: x, cz: z })
+  })
+  it('不向隔板内部吸附，也不吸附到远处边线的延长线上', () => {
+    expect(magnetSnap(prop, 3, 2, [], room, [partition])).toMatchObject({
+      snappedX: false,
+      snappedZ: false,
+    })
+    expect(magnetSnap(prop, 4.8, 1.64, [], room, [partition])).toMatchObject({
+      snappedX: false,
+      snappedZ: false,
+    })
+  })
+})
 
 describe('magnetSnap at any angle', () => {
   it('still sticks an upright prop to the wall and its neighbours', () => {

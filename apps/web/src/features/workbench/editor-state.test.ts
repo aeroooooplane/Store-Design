@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { locatePoint, rectangleSpace } from '@store/shared'
+import { LayoutSchema, locatePoint, rectangleSpace, validateLayout } from '@store/shared'
 import type { Asset, Layout, LayoutItem } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import {
@@ -40,6 +40,142 @@ const asset = makeAsset({
   function: 'accessory_cabinet',
   footprint: { w: 1.2, d: 0.45, h: 2.1 },
   placeable: true,
+})
+
+describe('隔板吸附接线', () => {
+  const space = rectangleSpace(8, 6, 3)
+  const fixture = {
+    id: 'partition-1',
+    kind: 'hollow_partition' as const,
+    cx: 4,
+    cz: 3,
+    w: 4,
+    d: 0.2,
+    h: 2.4,
+  }
+  const start = (piece: LayoutItem) =>
+    initialEditorState({ schemaVersion: 3, items: [piece], fixtures: [fixture], planning: null })
+  it('隔板候选保留手设高度，超高时不吸附，也不偷改高度', () => {
+    const piece = item({
+      mount: 'wall',
+      w: 1.2,
+      d: 0.05,
+      h: 0.5,
+      cx: 4,
+      cz: 0.025,
+      elevation: 2.1,
+    })
+    const moved = editorReducer(start(piece), {
+      type: 'move',
+      id: piece.id,
+      cx: 4,
+      cz: 3.2,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(moved.layout.items[0]).toMatchObject({ cz: 3.2, elevation: 2.1 })
+  })
+  it('自动高度用候选位置的柜顶计算，吸附与实际落地使用同一高度', () => {
+    const piece = item({ mount: 'wall', w: 1, d: 0.05, h: 0.5, cx: 4, cz: 0.025, elevation: 1.8 })
+    const cabinet = item({
+      id: 'cabinet',
+      function: 'accessory_cabinet',
+      cx: 4,
+      cz: 3.5,
+      w: 1.2,
+      d: 1,
+      h: 1.9,
+    })
+    const before = initialEditorState({
+      schemaVersion: 3,
+      planning: null,
+      items: [piece, cabinet],
+      fixtures: [{ ...fixture, h: 2.6 }],
+    })
+    const moved = editorReducer(before, {
+      type: 'move',
+      id: piece.id,
+      cx: 4,
+      cz: 3.2,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(moved.layout.items[0]).toMatchObject({ cz: 3.125, elevation: 2, rotation: 0 })
+    expect(validateLayout(space, moved.layout).some((i) => i.code === 'item_not_on_wall')).toBe(
+      false,
+    )
+  })
+  it('普通道具拖动吸附与Alt自由移动分开，整次拖动一步撤销', () => {
+    const piece = item({ cx: 4, cz: 2, w: 1, d: 0.4 })
+    const before = start(piece)
+    const action = {
+      type: 'move' as const,
+      id: piece.id,
+      cx: 4,
+      cz: 2.64,
+      group: 'drag',
+      snapTo: space,
+    }
+    const moved = editorReducer(before, action)
+    expect(moved.layout.items[0]?.cz).toBe(2.7)
+    expect(editorReducer(before, { ...action, snapTo: null }).layout.items[0]?.cz).toBe(2.64)
+    const continued = editorReducer(moved, { ...action, cx: 4.3 })
+    expect(editorReducer(continued, { type: 'undo' }).layout).toEqual(before.layout)
+    expect(
+      editorReducer(editorReducer(continued, { type: 'undo' }), { type: 'redo' }).layout,
+    ).toEqual(continued.layout)
+  })
+  it('贴墙道具换到隔板另一侧会朝外，保存重开保留位置和朝向', () => {
+    const piece = item({ mount: 'wall', w: 1, d: 0.05, h: 0.5, cx: 4, cz: 2.5, elevation: 1.2 })
+    const north = editorReducer(start(piece), {
+      type: 'move',
+      id: piece.id,
+      cx: 4,
+      cz: 2.8,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(north.layout.items[0]).toMatchObject({ cz: 2.875, rotation: 180, elevation: 1.2 })
+    const south = editorReducer(north, {
+      type: 'move',
+      id: piece.id,
+      cx: 4,
+      cz: 3.2,
+      snapTo: space,
+      front: '+Z',
+    })
+    expect(south.layout.items[0]).toMatchObject({ cz: 3.125, rotation: 0, elevation: 1.2 })
+    const reopened = editorReducer(start(piece), {
+      type: 'load',
+      layout: LayoutSchema.parse(JSON.parse(JSON.stringify(south.layout))),
+    })
+    expect(reopened.layout).toEqual(south.layout)
+    const free = editorReducer(north, {
+      type: 'move',
+      id: piece.id,
+      cx: 4,
+      cz: 3.2,
+      snapTo: null,
+      front: '+Z',
+    })
+    expect(free.layout.items[0]).toMatchObject({ cz: 3.2, rotation: 180 })
+  })
+  it('新加贴墙模型可落到最近隔板上，默认高度受隔板约束', () => {
+    const empty = initialEditorState({
+      schemaVersion: 3,
+      items: [],
+      fixtures: [fixture],
+      planning: null,
+    })
+    const added = editorReducer(empty, {
+      type: 'add',
+      asset: makeAsset({ installation: 'wall', front: '+Z', footprint: { w: 1, d: 0.05, h: 0.8 } }),
+      cx: 4,
+      cz: 3.2,
+      space,
+    })
+    expect(added.layout.items[0]).toMatchObject({ cz: 3.125, rotation: 0, elevation: 1.6 })
+  })
 })
 
 describe('editorReducer', () => {

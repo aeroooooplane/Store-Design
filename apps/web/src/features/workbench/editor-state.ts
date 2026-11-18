@@ -180,17 +180,20 @@ function changeItem(
  */
 function relocate(
   item: LayoutItem,
-  placed: Partial<Pick<LayoutItem, 'cx' | 'cz' | 'rotation' | 'w' | 'd'>>,
+  placed: Partial<Pick<LayoutItem, 'cx' | 'cz' | 'rotation' | 'w' | 'd' | 'elevation'>>,
   items: readonly LayoutItem[],
   space: Space,
+  fixtures: readonly Fixture[] = [],
 ): LayoutItem {
   const next = { ...item, ...placed }
   // A built-in piece's default height does not depend on where it is (mountedElevation).
   if (
+    placed.elevation === undefined &&
     itemMount(item) !== 'embedded' &&
-    (item.elevation === undefined || item.elevation === defaultElevation(item, items, space))
+    (item.elevation === undefined ||
+      item.elevation === defaultElevation(item, items, space, fixtures))
   )
-    next.elevation = defaultElevation(next, items, space)
+    next.elevation = defaultElevation(next, items, space, fixtures)
   const same = (['cx', 'cz', 'rotation', 'w', 'd', 'elevation'] as const).every(
     (k) => next[k] === item[k],
   )
@@ -206,17 +209,35 @@ function snapToWall(
   space: Space,
   front: FrontAxis | null,
   reach?: number,
+  fixtures: readonly Fixture[] = [],
+  items: readonly LayoutItem[] = [],
+  forceDefaultHeight = false,
 ) {
-  if (mount === 'wall') return wallMountSnap(item, cx, cz, space, front, reach)
+  if (mount === 'wall') {
+    const autoHeight =
+      forceDefaultHeight ||
+      item.elevation === undefined ||
+      item.elevation === defaultElevation(item, items, space, fixtures)
+    return wallMountSnap(item, cx, cz, space, front, reach, fixtures, items, (placed) =>
+      autoHeight
+        ? defaultElevation({ ...item, ...placed }, items, space, fixtures)
+        : item.elevation!,
+    )
+  }
   if (mount === 'embedded') return embeddedSnap(item, cx, cz, space, front, reach)
   return null
 }
 
 /** Default height of a raised piece where it is. */
-function mountedElevation(item: LayoutItem, items: readonly LayoutItem[], space: Space) {
+function mountedElevation(
+  item: LayoutItem,
+  items: readonly LayoutItem[],
+  space: Space,
+  fixtures: readonly Fixture[],
+) {
   return itemMount(item) === 'embedded'
     ? defaultEmbeddedElevation(item, space)
-    : defaultElevation(item, items, space)
+    : defaultElevation(item, items, space, fixtures)
 }
 
 /**
@@ -230,12 +251,27 @@ function mountAs(
   front: FrontAxis | null,
   items: readonly LayoutItem[],
   space: Space,
+  fixtures: readonly Fixture[] = [],
 ): LayoutItem {
   if (!mount || mount === 'floor') return item
   let mounted: LayoutItem = { ...item, mount }
-  const placed = snapToWall(mounted, mount, item.cx, item.cz, space, front, Infinity)
+  const placed = snapToWall(
+    mounted,
+    mount,
+    item.cx,
+    item.cz,
+    space,
+    front,
+    Infinity,
+    fixtures,
+    items,
+    true,
+  )
   if (placed) mounted = { ...mounted, ...placed }
-  return { ...mounted, elevation: mountedElevation(mounted, items, space) }
+  return {
+    ...mounted,
+    elevation: placed?.elevation ?? mountedElevation(mounted, items, space, fixtures),
+  }
 }
 
 const withFixtures = (layout: Layout, fixtures: Fixture[]): Layout =>
@@ -286,11 +322,35 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           let exactZ = false
           if (action.snapTo) {
             const mount = itemMount(item)
-            const placed = snapToWall(item, mount, cx, cz, action.snapTo, action.front ?? null)
-            if (placed) return relocate(item, placed, state.layout.items, action.snapTo)
+            const placed = snapToWall(
+              item,
+              mount,
+              cx,
+              cz,
+              action.snapTo,
+              action.front ?? null,
+              undefined,
+              state.layout.fixtures,
+              state.layout.items,
+            )
+            if (placed)
+              return relocate(
+                item,
+                placed,
+                state.layout.items,
+                action.snapTo,
+                state.layout.fixtures,
+              )
           }
           if (action.snapTo) {
-            const snapped = magnetSnap(item, cx, cz, state.layout.items, action.snapTo)
+            const snapped = magnetSnap(
+              item,
+              cx,
+              cz,
+              state.layout.items,
+              action.snapTo,
+              itemMount(item) === 'floor' ? state.layout.fixtures : [],
+            )
             ;({ cx, cz } = snapped)
             exactX = snapped.snappedX
             exactZ = snapped.snappedZ
@@ -298,7 +358,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           // A snapped axis keeps millimetres so the prop sits exactly against the wall.
           const next = { cx: exactX ? roundM(cx) : snap(cx), cz: exactZ ? roundM(cz) : snap(cz) }
           if (action.snapTo && itemMount(item) !== 'floor')
-            return relocate(item, next, state.layout.items, action.snapTo)
+            return relocate(item, next, state.layout.items, action.snapTo, state.layout.fixtures)
           return next.cx === item.cx && next.cz === item.cz ? item : { ...item, ...next }
         },
         action.group ?? null,
@@ -356,7 +416,14 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           itemMount(item) === action.mount ||
           (isWallArt(item) && action.mount !== 'wall')
             ? item
-            : mountAs(item, action.mount, action.front, state.layout.items, action.space),
+            : mountAs(
+                item,
+                action.mount,
+                action.front,
+                state.layout.items,
+                action.space,
+                state.layout.fixtures,
+              ),
         null,
       )
     case 'resizeWallArt':
@@ -377,8 +444,18 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                   : {}),
               }
             : resized
-          if (!mountedWall(item, action.space)) return next
-          const placed = wallMountSnap(next, next.cx, next.cz, action.space, '+Z')
+          if (!mountedWall(item, action.space, state.layout.fixtures, state.layout.items))
+            return next
+          const placed = wallMountSnap(
+            next,
+            next.cx,
+            next.cz,
+            action.space,
+            '+Z',
+            undefined,
+            state.layout.fixtures,
+            state.layout.items,
+          )
           return placed ? { ...next, cx: placed.cx, cz: placed.cz } : next
         },
         action.group ?? null,
@@ -402,10 +479,23 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                     : {}),
                 }
               : resized
-          if (scaled === item || itemMount(item) !== 'wall' || !mountedWall(item, action.space))
+          if (
+            scaled === item ||
+            itemMount(item) !== 'wall' ||
+            !mountedWall(item, action.space, state.layout.fixtures, state.layout.items)
+          )
             return scaled
           // The back stays on the wall as the depth changes.
-          const placed = wallMountSnap(scaled, scaled.cx, scaled.cz, action.space, action.front)
+          const placed = wallMountSnap(
+            scaled,
+            scaled.cx,
+            scaled.cz,
+            action.space,
+            action.front,
+            undefined,
+            state.layout.fixtures,
+            state.layout.items,
+          )
           return placed ? { ...scaled, cx: placed.cx, cz: placed.cz } : scaled
         },
         action.group ?? `scale:${action.id}`,
@@ -508,6 +598,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
             action.asset.front,
             state.layout.items,
             action.space,
+            state.layout.fixtures,
           )
         : item
       return commit(state, { ...state.layout, items: [...state.layout.items, added] }, null, {

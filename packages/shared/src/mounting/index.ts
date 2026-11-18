@@ -5,7 +5,7 @@ import type { Point } from '../geometry/types.ts'
 import { rotationFacing } from '../planner/orientation.ts'
 import type { PlanDirection } from '../planner/orientation.ts'
 import type { FrontAxis, Installation } from '../schemas/asset.ts'
-import type { LayoutItem, Rotation } from '../schemas/layout.ts'
+import type { Fixture, LayoutItem, Rotation } from '../schemas/layout.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
@@ -88,12 +88,23 @@ export interface WallFace {
   inward: PlanDirection
   /** Stretches of this edge without a wall (open edges), as [from, to] along `along`. */
   open: [number, number][]
+  /** Outer face of a drawn partition; normals point away from its solid footprint. */
+  fixtureId?: string
+  height?: number
+  cutouts?: { from: number; to: number; top: number }[]
 }
+
+type FaceItem = Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h'> &
+  Partial<Pick<LayoutItem, 'function' | 'mount'>>
 
 const coord = (p: Point, axis: 'x' | 'z') => (axis === 'x' ? p[0] : p[1])
 
 /** The straight wall faces of a space, open edges marked. */
-export function wallFaces(space: Pick<Space, 'boundary' | 'openEdges'>): WallFace[] {
+export function wallFaces(
+  space: Pick<Space, 'boundary' | 'openEdges'>,
+  fixtures: readonly Fixture[] = [],
+  items: readonly FaceItem[] = [],
+): WallFace[] {
   const tan = Math.tan((STRAIGHT_WALL_DEG * Math.PI) / 180)
   const open = new Map<number, [Point, Point][]>()
   for (const opening of space.openEdges) {
@@ -127,7 +138,67 @@ export function wallFaces(space: Pick<Space, 'boundary' | 'openEdges'>): WallFac
       }),
     })
   })
+  for (const f of fixtures) {
+    const l = f.cx - f.w / 2
+    const r = f.cx + f.w / 2
+    const t = f.cz - f.d / 2
+    const b = f.cz + f.d / 2
+    const common = { edge: -1, open: [], fixtureId: f.id, height: f.h }
+    const outer: WallFace[] = [
+      { ...common, a: [l, t], b: [r, t], along: 'x', inward: [0, -1] },
+      { ...common, a: [l, b], b: [r, b], along: 'x', inward: [0, 1] },
+      { ...common, a: [l, t], b: [l, b], along: 'z', inward: [-1, 0] },
+      { ...common, a: [r, t], b: [r, b], along: 'z', inward: [1, 0] },
+    ]
+    // The same accessory-cabinet niches as fixtureSolids, restricted to the outer skin.
+    const cabinets = items.filter(
+      (item) =>
+        itemMount(item) === 'floor' &&
+        (item.function === 'accessory_cabinet' || item.function === 'side_cabinet') &&
+        rectsOverlap(
+          rectFromCenter(f.cx, f.cz, f.w, f.d),
+          rectFromCenter(item.cx, item.cz, item.w, item.d),
+        ),
+    )
+    for (const face of outer) {
+      const across = face.along === 'x' ? 'z' : 'x'
+      const line = coord(face.a, across)
+      face.cutouts = cabinets.flatMap((cabinet) => {
+        const centre = across === 'x' ? cabinet.cx : cabinet.cz
+        const half = (across === 'x' ? cabinet.w : cabinet.d) / 2
+        if (line < centre - half - EPSILON_M || line > centre + half + EPSILON_M) return []
+        const at = face.along === 'x' ? cabinet.cx : cabinet.cz
+        const length = face.along === 'x' ? cabinet.w : cabinet.d
+        return [{ from: at - length / 2, to: at + length / 2, top: cabinet.h }]
+      })
+      faces.push(face)
+    }
+  }
   return faces
+}
+
+/** Partition support must cover the full width and installed height, including cabinet niches. */
+function supportsPiece(
+  face: WallFace,
+  at: number,
+  length: number,
+  bottom: number,
+  height: number,
+): boolean {
+  if (!face.fixtureId) return true
+  const low = at - length / 2
+  const high = at + length / 2
+  if (
+    low < Math.min(coord(face.a, face.along), coord(face.b, face.along)) - EPSILON_M ||
+    high > Math.max(coord(face.a, face.along), coord(face.b, face.along)) + EPSILON_M ||
+    bottom < -EPSILON_M ||
+    bottom + height > (face.height ?? Infinity) + EPSILON_M
+  )
+    return false
+  return !(face.cutouts ?? []).some(
+    (cut) =>
+      low < cut.to - EPSILON_M && high > cut.from + EPSILON_M && bottom < cut.top - EPSILON_M,
+  )
 }
 
 /** Where the wall face is across its run at `at` along it (sloping a little within 3°). */
@@ -152,11 +223,13 @@ function hasWallAt(face: WallFace, at: number): boolean {
  * (a long LOGO's end reaching the next wall): the one it runs along the furthest wins.
  */
 export function mountedWall(
-  item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'>,
+  item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'> & Partial<Pick<LayoutItem, 'h' | 'elevation'>>,
   space: Pick<Space, 'boundary' | 'openEdges'>,
+  fixtures: readonly Fixture[] = [],
+  items: readonly FaceItem[] = [],
 ): WallFace | null {
   let best: { face: WallFace; contact: number } | null = null
-  for (const face of wallFaces(space)) {
+  for (const face of wallFaces(space, fixtures, items)) {
     const at = face.along === 'x' ? item.cx : item.cz
     if (!hasWallAt(face, at)) continue
     const inwardSign = face.along === 'x' ? face.inward[1] : face.inward[0]
@@ -165,6 +238,7 @@ export function mountedWall(
     const back = centre - inwardSign * half
     if (Math.abs(back - faceLineAt(face, at)) > ON_WALL_M + EPSILON_M) continue
     const contact = face.along === 'x' ? item.w : item.d
+    if (!supportsPiece(face, at, contact, item.elevation ?? 0, item.h ?? 0)) continue
     if (!best || contact > best.contact) best = { face, contact }
   }
   return best?.face ?? null
@@ -186,6 +260,7 @@ export interface WallPlacement {
   rotation: Rotation
   w: number
   d: number
+  elevation?: number
 }
 
 /**
@@ -194,16 +269,19 @@ export interface WallPlacement {
  * the wall. Null when no wall is near.
  */
 export function wallMountSnap(
-  item: Pick<LayoutItem, 'w' | 'd' | 'rotation'>,
+  item: Pick<LayoutItem, 'w' | 'd' | 'rotation'> & Partial<Pick<LayoutItem, 'h' | 'elevation'>>,
   cx: number,
   cz: number,
   space: Pick<Space, 'boundary' | 'openEdges'>,
   front: FrontAxis | null,
   reach = WALL_SNAP_M,
+  fixtures: readonly Fixture[] = [],
+  items: readonly FaceItem[] = [],
+  elevationAt?: (placement: WallPlacement) => number,
 ): WallPlacement | null {
   const facing = front && front !== 'any' ? front : '+Z'
   let best: (WallPlacement & { gap: number }) | null = null
-  for (const face of wallFaces(space)) {
+  for (const face of wallFaces(space, fixtures, items)) {
     const at = face.along === 'x' ? cx : cz
     if (!hasWallAt(face, at)) continue
     const rotation = rotationFacing(facing, face.inward)
@@ -220,13 +298,19 @@ export function wallMountSnap(
     const target = faceLineAt(face, middle) + (inwardSign * depth) / 2
     const gap = Math.abs((face.along === 'x' ? cz : cx) - target)
     if (gap > reach + depth / 2 || (best && gap >= best.gap)) continue
-    best = {
+    const placement: WallPlacement = {
       cx: roundM(face.along === 'x' ? middle : target),
       cz: roundM(face.along === 'x' ? target : middle),
       rotation,
       ...size,
-      gap,
     }
+    const height = item.h ?? 0
+    const bottom =
+      elevationAt?.(placement) ??
+      item.elevation ??
+      Math.min(DEFAULT_WALL_ELEVATION_M, Math.max(0, (face.height ?? Infinity) - height))
+    if (!supportsPiece(face, middle, length, bottom, height)) continue
+    best = { ...placement, ...(face.fixtureId ? { elevation: bottom } : {}), gap }
   }
   if (!best) return null
   const { gap: _gap, ...placement } = best
@@ -240,13 +324,16 @@ export function wallMountSnap(
  */
 export function defaultElevation(
   item: Pick<LayoutItem, 'id' | 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount'>,
-  others: readonly Pick<LayoutItem, 'id' | 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount'>[],
+  others: readonly (Pick<LayoutItem, 'id' | 'cx' | 'cz' | 'w' | 'd' | 'h' | 'mount'> &
+    Partial<Pick<LayoutItem, 'function'>>)[],
   space: Pick<Space, 'boundary' | 'openEdges' | 'height'>,
+  fixtures: readonly Fixture[] = [],
 ): number {
   const highest = Math.max(0, space.height - item.h)
   if (itemMount(item) === 'ceiling') return roundM(highest)
   if (itemMount(item) === 'floor') return 0
-  const face = mountedWall(item, space)
+  // Find the footprint's support before choosing its default bottom height.
+  const face = mountedWall({ ...item, h: 0, elevation: 0 }, space, fixtures)
   const reach = face
     ? rectFromCenter(
         item.cx + (face.inward[0] * BELOW_DEPTH_M) / 2,
@@ -264,5 +351,5 @@ export function defaultElevation(
   const base = below.length
     ? Math.max(...below.map((o) => o.h)) + ABOVE_PROP_GAP_M
     : DEFAULT_WALL_ELEVATION_M
-  return roundM(Math.min(base, highest))
+  return roundM(Math.min(base, highest, Math.max(0, (face?.height ?? space.height) - item.h)))
 }

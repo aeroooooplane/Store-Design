@@ -1,5 +1,5 @@
 import { edges, itemTilt, roundM, wallFlushSnap } from '@store/shared'
-import type { LayoutItem, Space } from '@store/shared'
+import type { Fixture, LayoutItem, Space } from '@store/shared'
 
 /** Dragged props stick to walls and neighbours within this distance (metres). */
 export const SNAP_DISTANCE_M = 0.1
@@ -52,6 +52,7 @@ export function magnetSnap(
     rotation?: number | undefined
   })[],
   space: Space,
+  fixtures: readonly Fixture[] = [],
 ): { cx: number; cz: number; snappedX: boolean; snappedZ: boolean } {
   // A tilted prop has no axis-aligned edges: it only goes flush onto a wall it lies parallel to.
   if (itemTilt(item)) {
@@ -85,6 +86,18 @@ export function magnetSnap(
         edges: ['low', 'high'],
       })
     }
+  }
+  // Partition faces only catch the outside edge, so snapping never pulls a prop inside.
+  for (const f of fixtures) {
+    const [l, r, t, b] = [f.cx - f.w / 2, f.cx + f.w / 2, f.cz - f.d / 2, f.cz + f.d / 2]
+    xLines.push(
+      { at: l, from: t, to: b, edges: ['high'] },
+      { at: r, from: t, to: b, edges: ['low'] },
+    )
+    zLines.push(
+      { at: t, from: l, to: r, edges: ['high'] },
+      { at: b, from: l, to: r, edges: ['low'] },
+    )
   }
   for (const o of others) {
     // Tilted neighbours have no axis-aligned edges to line up with.
