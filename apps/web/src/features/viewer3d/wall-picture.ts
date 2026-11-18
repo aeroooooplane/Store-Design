@@ -1,11 +1,13 @@
 import * as THREE from 'three'
 import { facingAfter } from '@store/shared'
 import type { FrontAxis, LayoutItem } from '@store/shared'
+import { loadSource } from './model-cache.ts'
+import { screenArtwork } from './screen-artwork.ts'
 
 /**
  * Built-in screens and light boxes (内嵌) in 3D: only their picture, on the wall face, facing
- * into the shop (user 10-15 N1/N2: no solid body, the model's preview with its white margins
- * cropped). The plane hangs in front of the wall by a hair so it does not flicker.
+ * into the shop. A screen uses its authored GLB texture when available, with the cropped
+ * preview as fallback. The plane hangs slightly in front of the wall to avoid flicker.
  */
 
 const IN_FRONT_M = 0.003
@@ -65,14 +67,14 @@ export function croppedTexture(url: string): Promise<THREE.Texture> {
 /**
  * The picture of a built-in piece, placed relative to its group at (cx, elevation, cz): on the
  * front face, as wide as the piece along the wall and as tall as it is. Grey until the picture
- * has loaded (or for good, without a preview); `onLoad` asks for a redraw.
+ * has loaded. Callers can await `loaded` before drawing a still image.
  */
 export function wallPicture(
   item: Pick<LayoutItem, 'w' | 'd' | 'h' | 'rotation'>,
   front: FrontAxis | null,
   url: string | null,
-  onLoad: () => void,
-): THREE.Mesh {
+  screenModelUrl: string | null = null,
+) {
   const [fx, fz] = facingAfter(front && front !== 'any' ? front : '+Z', item.rotation)
   const across = fx !== 0 ? item.d : item.w
   const depth = fx !== 0 ? item.w : item.d
@@ -81,17 +83,26 @@ export function wallPicture(
   plane.position.set(fx * (depth / 2 + IN_FRONT_M), item.h / 2, fz * (depth / 2 + IN_FRONT_M))
   plane.rotation.y = Math.atan2(fx, fz)
   plane.userData['wallPicture'] = true
-  if (url) {
-    void croppedTexture(url)
-      .then((texture) => {
-        material.map = texture
-        material.color.set('#ffffff')
-        material.needsUpdate = true
-        onLoad()
-      })
-      .catch(() => undefined)
+  const loadPicture = async () => {
+    if (screenModelUrl) {
+      const source = await loadSource(screenModelUrl).catch(() => null)
+      const artwork = source && screenArtwork(source.scene, front)
+      if (artwork) {
+        plane.geometry.setAttribute('uv', new THREE.Float32BufferAttribute(artwork.uv, 2))
+        return artwork.texture
+      }
+    }
+    return url ? croppedTexture(url) : null
   }
-  return plane
+  const loaded = loadPicture()
+    .then((texture) => {
+      if (!texture) return
+      material.map = texture
+      material.color.set('#ffffff')
+      material.needsUpdate = true
+    })
+    .catch(() => undefined)
+  return { plane, loaded }
 }
 
 /**
