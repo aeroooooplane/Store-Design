@@ -330,7 +330,14 @@ export class WhiteScene {
       // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
       const picture =
         itemMount(item) === 'embedded'
-          ? { url: catalogued?.preview?.url ?? null, front: catalogued?.front ?? null }
+          ? {
+              url: catalogued?.preview?.url ?? null,
+              front: catalogued?.front ?? null,
+              screenModelUrl:
+                item.function === 'screen'
+                  ? (catalogued?.finishGlb?.url ?? catalogued?.glb?.url ?? null)
+                  : null,
+            }
           : null
       const asset = !art && !picture && item.assetId && !item.placeholder ? catalogued : undefined
       // A LOGO in the other market's version (影石Insta360 ⇄ Insta360): one file for both looks.
@@ -343,7 +350,7 @@ export class WhiteScene {
       const signature = art
         ? `art:${catalogued?.productImage?.url}:${item.w}:${item.d}:${item.h}:${item.rotation}`
         : picture
-          ? `picture:${picture.url}:${picture.front}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+          ? `picture:${picture.url}:${picture.front}:${picture.screenModelUrl}:${item.w}:${item.d}:${item.h}:${item.rotation}`
           : url
             ? `${url}|${finishUrl}`
             : `box:${item.w}:${item.d}:${item.h}`
@@ -372,11 +379,24 @@ export class WhiteScene {
           placed.white.add(
             wallArt(item, catalogued?.productImage?.url ?? null, () => this.requestRender()),
           )
-        else if (picture)
-          placed.white.add(
-            wallPicture(item, picture.front, picture.url, () => this.requestRender()),
+        else if (picture) {
+          const { plane, loaded } = wallPicture(
+            item,
+            picture.front,
+            picture.url,
+            picture.screenModelUrl,
           )
-        else this.fill(placed, url)
+          placed.white.add(plane)
+          if (picture.url || picture.screenModelUrl) {
+            const load = loaded.finally(() => {
+              this.pending.delete(load)
+              this.emitStatus()
+              this.sceneChanged()
+            })
+            this.pending.add(load)
+            this.emitStatus()
+          }
+        } else this.fill(placed, url)
         // A sign still without a web model shows its preview on both faces (双面侧招).
         if (!picture && !url && catalogued?.standardName.includes('侧招') && catalogued.preview)
           placed.white.add(signFaces(item, catalogued.preview.url, () => this.requestRender()))
@@ -844,9 +864,9 @@ export class WhiteScene {
   private removeItem(id: string) {
     const placed = this.items.get(id)
     if (!placed) return
-    // Shared model geometry stays cached; only boxes made for this item are freed.
+    // Keep shared model geometry and textures cached; free geometry and materials made here.
     placed.group.traverse((node) => {
-      if (node.userData['placeholder']) disposeTree(node)
+      if (node.userData['placeholder'] || node.userData['wallPicture']) disposeTree(node)
     })
     this.props.remove(placed.group)
     this.hits.remove(placed.hit)
