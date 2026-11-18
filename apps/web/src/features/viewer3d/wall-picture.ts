@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { facingAfter } from '@store/shared'
 import type { FrontAxis, LayoutItem } from '@store/shared'
 import { loadSource } from './model-cache.ts'
-import { screenArtwork } from './screen-artwork.ts'
+import { cropScreenArtwork, screenArtwork } from './screen-artwork.ts'
 
 /**
  * Built-in screens and light boxes (内嵌) in 3D: only their picture, on the wall face, facing
@@ -74,6 +74,7 @@ export function wallPicture(
   front: FrontAxis | null,
   url: string | null,
   screenModelUrl: string | null = null,
+  portrait = false,
 ) {
   const [fx, fz] = facingAfter(front && front !== 'any' ? front : '+Z', item.rotation)
   const across = fx !== 0 ? item.d : item.w
@@ -88,7 +89,10 @@ export function wallPicture(
       const source = await loadSource(screenModelUrl).catch(() => null)
       const artwork = source && screenArtwork(source.scene, front)
       if (artwork) {
-        plane.geometry.setAttribute('uv', new THREE.Float32BufferAttribute(artwork.uv, 2))
+        const uv = portrait
+          ? cropScreenArtwork(artwork.uv, across / item.h / artwork.aspect)
+          : artwork.uv
+        plane.geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
         return artwork.texture
       }
     }

@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import {
   defaultCameras,
+  advertisingScreenName,
   isWallArt,
   wallArtSize,
   wallArtFromCorner,
@@ -327,9 +328,11 @@ export class WhiteScene {
       seen.add(item.id)
       const catalogued = item.assetId ? assets.get(item.assetId) : undefined
       const art = isWallArt(item)
+      const mount = itemMount(item)
+      const adjustableScreen = item.function === 'screen' && advertisingScreenName(catalogued?.id)
       // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
       const picture =
-        itemMount(item) === 'embedded'
+        mount === 'embedded' || (adjustableScreen && mount === 'wall')
           ? {
               url: catalogued?.preview?.url ?? null,
               front: catalogued?.front ?? null,
@@ -337,6 +340,7 @@ export class WhiteScene {
                 item.function === 'screen'
                   ? (catalogued?.finishGlb?.url ?? catalogued?.glb?.url ?? null)
                   : null,
+              portrait: Boolean(adjustableScreen && catalogued && item.h > catalogued.footprint.h),
             }
           : null
       const asset = !art && !picture && item.assetId && !item.placeholder ? catalogued : undefined
@@ -385,6 +389,7 @@ export class WhiteScene {
             picture.front,
             picture.url,
             picture.screenModelUrl,
+            picture.portrait,
           )
           placed.white.add(plane)
           if (picture.url || picture.screenModelUrl) {

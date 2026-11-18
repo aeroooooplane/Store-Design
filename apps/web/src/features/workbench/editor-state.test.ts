@@ -42,6 +42,53 @@ const asset = makeAsset({
   placeable: true,
 })
 
+it('rolls an advertising screen about its centre and keeps portrait size during plan rotation', () => {
+  const screenAsset = makeAsset({
+    id: 'asset-3021147',
+    function: 'screen',
+    installation: 'embedded',
+    front: '+Z',
+    footprint: { w: 1.465, d: 0.116, h: 0.846 },
+    placeable: true,
+  })
+  const space = rectangleSpace(8, 6, 3)
+  const added = editorReducer(state([]), {
+    type: 'add',
+    asset: screenAsset,
+    cx: 4,
+    cz: 0.25,
+    space,
+  })
+  const landscape = added.layout.items[0]!
+  expect(landscape).toMatchObject({ name: '65寸广告机', w: 1.465, d: 0.116, h: 0.846 })
+  const action = {
+    type: 'setScreenOrientation' as const,
+    id: landscape.id,
+    asset: screenAsset,
+    orientation: 'portrait' as const,
+    spaceHeight: space.height,
+  }
+  const portrait = editorReducer(added, action)
+  expect(portrait.layout.items[0]).toMatchObject({
+    w: 0.846,
+    d: 0.116,
+    h: 1.465,
+    cx: landscape.cx,
+    cz: landscape.cz,
+    rotation: landscape.rotation,
+  })
+  expect(portrait.layout.items[0]!.elevation! + 1.465 / 2).toBeCloseTo(
+    landscape.elevation! + 0.846 / 2,
+  )
+  expect(editorReducer(portrait, { type: 'undo' }).layout).toEqual(added.layout)
+  expect(
+    editorReducer(portrait, { type: 'rotate', id: landscape.id, asset: screenAsset }).layout
+      .items[0],
+  ).toMatchObject({ w: 0.116, d: 0.846, h: 1.465 })
+  const low = state([{ ...landscape, elevation: 0 }])
+  expect(editorReducer(low, action).layout).toEqual(low.layout)
+})
+
 describe('隔板吸附接线', () => {
   const space = rectangleSpace(8, 6, 3)
   const fixture = {

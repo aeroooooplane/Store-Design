@@ -61,6 +61,20 @@ const catalog = [
   asset('asset-8', '灯箱墙贴', '信息化物料', { siFamily: '通用', function: 'signage' }),
 ]
 
+it('shows one advertising machine per size with no separate portrait entry', () => {
+  const screens = [
+    asset('asset-11479197', '75寸横屏广告机', '信息化物料', { function: 'screen' }),
+    asset('asset-2595839', '75寸竖屏广告机', '信息化物料', { function: 'screen' }),
+    asset('asset-2597250', '55寸竖屏广告机', '信息化物料', { function: 'screen' }),
+    asset('asset-3021147', '65寸横屏广告机', '信息化物料', { function: 'screen' }),
+  ]
+  expect(
+    pickableSections(screens, 'SI1.0').flatMap((section) =>
+      section.assets.map((item) => item.name),
+    ),
+  ).toEqual(['65寸广告机', '75寸广告机'])
+})
+
 afterEach(cleanup)
 
 describe('pickableSections', () => {
