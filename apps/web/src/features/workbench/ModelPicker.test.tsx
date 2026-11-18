@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react'
+import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { Asset, AssetCategory } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
@@ -84,10 +84,10 @@ describe('pickableSections', () => {
     expect(si1.map((s) => [s.label, s.assets.map((a) => a.id)])).toEqual([
       ['中岛桌', ['asset-2']],
       ['配件柜', ['asset-1']],
+      ['坐凳', ['asset-6']],
       ['屏幕', ['asset-4']],
       ['灯箱', ['asset-8']],
       ['标识', ['asset-5']],
-      ['坐凳', ['asset-6']],
     ])
     const si2 = pickableSections(catalog, 'SI2.0')
     expect(si2.find((s) => s.label === '中岛桌')?.assets.map((a) => a.id)).toEqual(['asset-3'])
@@ -136,6 +136,79 @@ describe('ModelPicker', () => {
       'asset-11',
       'asset-12',
     ])
+  })
+
+  it('lists the categories in the order the user chose, icons and sections alike', () => {
+    const storage = asset('asset-9', '1.8米边桌储物柜', '软装道具', {
+      siFamily: 'SI1.0',
+      function: 'storage',
+    })
+    render(<ModelPicker assets={[...catalog, storage]} siStyle="SI1.0" onPick={vi.fn()} />)
+    const order = [
+      '中岛桌',
+      '开箱桌',
+      '收银',
+      '配件柜',
+      '配件边柜',
+      '储物边柜',
+      '展示台',
+      '坐凳',
+      '屏幕',
+      '灯箱',
+      '标识',
+      '其他',
+    ]
+    const jump = screen.getByRole('toolbar', { name: '按类别跳到' })
+    expect(
+      within(jump)
+        .getAllByRole('button')
+        .map((b) => b.textContent),
+    ).toEqual(order)
+    // The sections that have models appear in that same order (储物边柜 sits before 坐凳).
+    const headings = [...document.querySelectorAll('.model-section h5')].map((h) =>
+      h.textContent?.replace(/\d+$/, ''),
+    )
+    expect(headings).toEqual(order.filter((label) => headings.includes(label)))
+    expect(headings.indexOf('储物边柜')).toBeLessThan(headings.indexOf('坐凳'))
+  })
+
+  it('keeps the clicked icon lit while the list scrolls, even where it cannot reach the top', () => {
+    vi.useFakeTimers()
+    try {
+      render(<ModelPicker assets={catalog} siStyle="SI1.0" onPick={vi.fn()} />)
+      const list = document.querySelector<HTMLElement>('.model-list') as HTMLElement
+      const lit = () => document.querySelector('.model-jump-cell[aria-current="true"]')?.textContent
+      // jsdom has no layout: fake a list that is scrolled to its very end.
+      Object.defineProperty(list, 'scrollHeight', { configurable: true, value: 1000 })
+      Object.defineProperty(list, 'clientHeight', { configurable: true, value: 400 })
+      const scrollTo = vi.fn()
+      list.scrollTo = scrollTo
+
+      // The list ends in the last section (标识), so scrolling alone lights it up ...
+      list.scrollTop = 600
+      fireEvent.scroll(list)
+      expect(lit()).toBe('标识')
+      // ... but clicking an icon wins over the scroll events its own scrolling causes.
+      fireEvent.click(screen.getByRole('button', { name: '中岛桌' }))
+      expect(scrollTo).toHaveBeenCalled()
+      list.scrollTop = 580
+      fireEvent.scroll(list)
+      expect(lit()).toBe('中岛桌')
+      // Once the list stops, the highlight follows the list again; a wheel takes over at once.
+      act(() => {
+        vi.advanceTimersByTime(500)
+      })
+      list.scrollTop = 600
+      fireEvent.scroll(list)
+      expect(lit()).toBe('标识')
+      fireEvent.click(screen.getByRole('button', { name: '中岛桌' }))
+      fireEvent.wheel(list)
+      list.scrollTop = 600
+      fireEvent.scroll(list)
+      expect(lit()).toBe('标识')
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   it('splits signage into 灯箱 and 标识 and jumps to a section', () => {

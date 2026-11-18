@@ -1,44 +1,49 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState } from 'react'
-import { canSelectCatalogAsset, ITEM_FUNCTIONS, mToMm } from '@store/shared'
+import { canSelectCatalogAsset, mToMm } from '@store/shared'
 import type { Asset, ItemFunction, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 
 /**
- * The picker lists one section per prop category (2026-11-12, 用户确认), in this order.
- * Function 'signage' is shown as two categories: 灯箱 (name says so) and 标识 (LOGO plates etc.).
+ * The picker lists one section per prop category, in this order (用户 2026-11-18). The jump
+ * icons above the list follow the same order. Function 'signage' is shown as two categories:
+ * 灯箱 (the name says so) and 标识 (LOGO plates etc.); function 'storage' is shown as 储物边柜.
  * 环境设施 (fire boxes, spotlights) are not placed by hand.
  */
+const section = (
+  key: string,
+  fn: ItemFunction,
+  label: string,
+  match: (a: Asset) => boolean = (a) => a.function === fn,
+) => ({ key, fn, label, match })
 const SECTIONS: {
   key: string
   fn: ItemFunction
   label: string
   match: (a: Asset) => boolean
-}[] = (
-  [
-    ['island_table', '中岛桌'],
-    ['unboxing_table', '开箱桌'],
-    ['cashier', '收银'],
-    ['accessory_cabinet', '配件柜'],
-    ['side_cabinet', '配件边柜'],
-    ['display_stand', '展示台'],
-    ['screen', '屏幕'],
-    ['seating', '坐凳'],
-    ['storage', '储物柜'],
-    ['other', '其他'],
-  ] as [ItemFunction, string][]
-).map(([fn, label]) => ({ key: fn, fn, label, match: (a: Asset) => a.function === fn }))
-SECTIONS.splice(7, 0, {
-  key: 'lightbox',
-  fn: 'signage',
-  label: '灯箱',
-  match: (a) => a.function === 'signage' && a.name.includes('灯箱'),
-})
-SECTIONS.splice(8, 0, {
-  key: 'signage',
-  fn: 'signage',
-  label: '标识',
-  match: (a) => a.function === 'signage' && !a.name.includes('灯箱'),
-})
+}[] = [
+  section('island_table', 'island_table', '中岛桌'),
+  section('unboxing_table', 'unboxing_table', '开箱桌'),
+  section('cashier', 'cashier', '收银'),
+  section('accessory_cabinet', 'accessory_cabinet', '配件柜'),
+  section('side_cabinet', 'side_cabinet', '配件边柜'),
+  section('storage', 'storage', '储物边柜'),
+  section('display_stand', 'display_stand', '展示台'),
+  section('seating', 'seating', '坐凳'),
+  section('screen', 'screen', '屏幕'),
+  section(
+    'lightbox',
+    'signage',
+    '灯箱',
+    (a) => a.function === 'signage' && a.name.includes('灯箱'),
+  ),
+  section(
+    'signage',
+    'signage',
+    '标识',
+    (a) => a.function === 'signage' && !a.name.includes('灯箱'),
+  ),
+  section('other', 'other', '其他'),
+]
 
 export interface PickableSection {
   /** Unique per section (灯箱 and 标识 share the model function 'signage'). */
@@ -56,7 +61,6 @@ const PLACEABLE_CATEGORIES = new Set(['软装道具', '信息化物料', '品牌
  * to a style. Retired models (模型选用表 删除) are left out. One section per category, in UI order.
  */
 export function pickableSections(assets: readonly Asset[], si: SiStyle): PickableSection[] {
-  const order = (a: Asset) => ITEM_FUNCTIONS.indexOf(a.function)
   return SECTIONS.map(({ key, fn, label, match }) => ({
     key,
     fn,
@@ -69,10 +73,7 @@ export function pickableSections(assets: readonly Asset[], si: SiStyle): Pickabl
           match(a) &&
           (a.category !== '软装道具' || a.siFamily === si),
       )
-      .sort(
-        (a, b) =>
-          order(a) - order(b) || a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
-      ),
+      .sort((a, b) => a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id)),
   })).filter((section) => section.assets.length > 0)
 }
 
@@ -117,32 +118,84 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
   const [active, setActive] = useState<string | null>(null)
   const current =
     active && sections.some((s) => s.key === active) ? active : (sections[0]?.key ?? null)
+  // While a click is scrolling the list to its section, the scroll does not change the highlight:
+  // the clicked icon stays lit even if the list stops short (first and last sections cannot reach
+  // the top line). It lets go when the list stops moving or the user scrolls by hand.
+  const target = useRef<{ key: string; timer: number } | null>(null)
 
-  // While the list scrolls, the jump icon of the section at the top lights up.
+  /** The section the list shows: the last one whose title has reached the top; at either end of the list, the first / last. */
+  function sectionAtTop(root: HTMLDivElement): string | null {
+    const heads = [...root.querySelectorAll<HTMLElement>('[data-section]')]
+    if (heads.length === 0) return null
+    if (root.scrollTop <= 1) return heads[0]?.dataset.section ?? null
+    if (root.scrollTop + root.clientHeight >= root.scrollHeight - 1) {
+      return heads[heads.length - 1]?.dataset.section ?? null
+    }
+    const line = root.getBoundingClientRect().top + 8
+    let found = heads[0]
+    for (const head of heads) {
+      if (head.getBoundingClientRect().top <= line) found = head
+      else break
+    }
+    return found?.dataset.section ?? null
+  }
+
+  // Scrolling the list lights the icon of the section at the top, unless a click is in charge.
   useEffect(() => {
     const root = listRef.current
-    if (!root || typeof IntersectionObserver === 'undefined') return
-    const heads = [...root.querySelectorAll('[data-section]')]
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const top = entries
-          .filter((e) => e.isIntersecting)
-          .sort(
-            (a, b) => (a.target as HTMLElement).offsetTop - (b.target as HTMLElement).offsetTop,
-          )[0]
-        if (top) setActive(((top.target as HTMLElement).dataset.section as string) ?? null)
-      },
-      { root, rootMargin: '-30px 0px -60% 0px', threshold: 0 },
-    )
-    for (const head of heads) observer.observe(head)
-    return () => observer.disconnect()
+    if (!root) return
+    function onScroll() {
+      if (!root) return
+      const held = target.current
+      if (held) {
+        // Still scrolling towards the clicked section: keep the click's icon, release once the
+        // list has been still for a moment.
+        window.clearTimeout(held.timer)
+        held.timer = window.setTimeout(() => {
+          target.current = null
+        }, 150)
+        return
+      }
+      const key = sectionAtTop(root)
+      if (key) setActive(key)
+    }
+    root.addEventListener('scroll', onScroll, { passive: true })
+    // A wheel or touch by the user always takes over from a click.
+    const release = () => {
+      if (target.current) window.clearTimeout(target.current.timer)
+      target.current = null
+    }
+    root.addEventListener('wheel', release, { passive: true })
+    root.addEventListener('touchstart', release, { passive: true })
+    return () => {
+      root.removeEventListener('scroll', onScroll)
+      root.removeEventListener('wheel', release)
+      root.removeEventListener('touchstart', release)
+      if (target.current) window.clearTimeout(target.current.timer)
+      target.current = null
+    }
   }, [sections])
 
   function jump(key: string) {
-    listRef.current
-      ?.querySelector(`[data-section="${key}"]`)
-      ?.scrollIntoView?.({ behavior: 'smooth', block: 'start' })
+    const root = listRef.current
+    if (target.current) window.clearTimeout(target.current.timer)
     setActive(key)
+    // The section's own box tells where it starts: its title is sticky, so scrolling the title
+    // into view would stop at the place where the sticky title happens to be pinned, not at the top
+    // of the section (a section already scrolled past would land on its last rows).
+    const section = root?.querySelector(`[data-section="${key}"]`)?.parentElement
+    if (!root || !section) return
+    const top =
+      root.scrollTop + section.getBoundingClientRect().top - root.getBoundingClientRect().top
+    // If the list is already there (e.g. the first section at the very top) no scroll event
+    // follows, so the lock also lets go on its own after a short time.
+    target.current = {
+      key,
+      timer: window.setTimeout(() => {
+        target.current = null
+      }, 400),
+    }
+    root.scrollTo?.({ top, behavior: 'smooth' })
   }
 
   return (

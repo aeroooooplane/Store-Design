@@ -1275,9 +1275,6 @@ ul.issues li.hint::before {
   font-weight: 400;
   color: var(--muted);
 }
-.model-section {
-  scroll-margin-top: 4px;
-}
 .model-list ul {
   list-style: none;
   margin: 0;
