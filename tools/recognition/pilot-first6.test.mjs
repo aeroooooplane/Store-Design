@@ -252,7 +252,7 @@ describe('首6输入、校正质检与出图（纯合成）', () => {
     })
     const result = await reader.forLayout({ items: [{ assetId: 'asset-90000003' }] })
     assert.equal(result.get('asset-90000003').placeable, true)
-    assert.equal(result.get('asset-90000003').footprint.d, 0.001)
+    assert.equal(result.get('asset-90000003').footprint.d, 0.08)
     assert.equal(reader.snapshots.size, 0)
   })
   it('沿折线入口渲染实际边界片段而非跨角弦线', () => {

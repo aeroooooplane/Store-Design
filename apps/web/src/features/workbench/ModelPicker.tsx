@@ -77,7 +77,9 @@ export function pickableSections(assets: readonly Asset[], si: SiStyle): Pickabl
           !LEGACY_PORTRAIT_SCREENS.has(a.id) &&
           PLACEABLE_CATEGORIES.has(a.category) &&
           match(a) &&
-          (a.category !== '软装道具' || a.siFamily === si),
+          (a.category !== '软装道具' ||
+            a.siFamily === si ||
+            (a.function === 'signage' && a.standardName.startsWith('徕卡墙'))),
       )
       .map((asset) => {
         const name = advertisingScreenName(asset.id)
@@ -255,6 +257,7 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
               <ul>
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
+                  const imageUrl = image && thumbnailUrl(image.url)
                   return (
                     <li key={asset.id}>
                       <button
@@ -267,8 +270,8 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
                           setLastPicked(asset.id)
                         }}
                       >
-                        {image ? (
-                          <img src={thumbnailUrl(image.url)} alt="" loading="lazy" />
+                        {imageUrl ? (
+                          <img src={imageUrl} alt="" loading="lazy" />
                         ) : (
                           <span className="model-row-empty" />
                         )}

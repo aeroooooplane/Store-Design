@@ -1,10 +1,10 @@
 import type { Point } from '../geometry/types.ts'
 import { facingAfter } from '../planner/orientation.ts'
 import type { FrontAxis } from '../schemas/asset.ts'
-import type { LayoutItem } from '../schemas/layout.ts'
+import type { Fixture, LayoutItem } from '../schemas/layout.ts'
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
-import { ON_WALL_M, WALL_SNAP_M, wallFaces, wallMountSnap } from './index.ts'
+import { ON_WALL_M, WALL_SNAP_M, supportsPiece, wallFaces, wallMountSnap } from './index.ts'
 import type { WallFace, WallPlacement } from './index.ts'
 
 /**
@@ -52,11 +52,13 @@ const coord = (p: Point, axis: 'x' | 'z') => (axis === 'x' ? p[0] : p[1])
 
 /** The wall face a built-in piece's front is flush with, or null. */
 export function embeddedWall(
-  item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'>,
+  item: Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd'> & Partial<Pick<LayoutItem, 'h' | 'elevation'>>,
   space: Pick<Space, 'boundary' | 'openEdges'>,
+  fixtures: readonly Fixture[] = [],
+  items: readonly LayoutItem[] = [],
 ): WallFace | null {
   let best: { face: WallFace; contact: number } | null = null
-  for (const face of wallFaces(space)) {
+  for (const face of wallFaces(space, fixtures, items)) {
     const at = face.along === 'x' ? item.cx : item.cz
     const s0 = coord(face.a, face.along)
     const s1 = coord(face.b, face.along)
@@ -70,6 +72,7 @@ export function embeddedWall(
     const centre = face.along === 'x' ? item.cz : item.cx
     if (Math.abs(centre + inwardSign * half - line) > ON_WALL_M + EPSILON_M) continue
     const contact = face.along === 'x' ? item.w : item.d
+    if (!supportsPiece(face, at, contact, item.elevation ?? 0, item.h ?? 0)) continue
     if (!best || contact > best.contact) best = { face, contact }
   }
   return best?.face ?? null

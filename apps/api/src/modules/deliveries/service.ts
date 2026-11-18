@@ -90,7 +90,7 @@ function notesFor(space: Space, layout: Layout, placeholderNames: string[]): str
   notes.push('效果图为浏览器实时渲染（Three.js）；正式渲染上线后可按同一视角替换。')
   notes.push(
     layout.items.some(isWallArt)
-      ? '标准灯箱墙贴按实际宽高呈现；图库画面尚未接入，当前为素色。平面尺寸单位为毫米。'
+      ? '标准灯箱按实例宽高呈现。平面尺寸单位为毫米。'
       : '灯箱画面与品牌 Logo 尚未放入渲染；平面尺寸单位为毫米。',
   )
   return notes

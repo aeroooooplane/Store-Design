@@ -1,5 +1,12 @@
 import { z } from 'zod'
-import { isWallArt, wallArtSize, WALL_ART_DEPTH, WALL_ART_ID } from '../catalog/wall-art.ts'
+import {
+  isDisplayPanel,
+  isWallArt,
+  wallArtSize,
+  WALL_ART_DEPTH,
+  LEGACY_WALL_ART_DEPTH,
+  WALL_ART_ID,
+} from '../catalog/wall-art.ts'
 import { advertisingScreenName, portraitScreenFootprint } from '../catalog/advertising-screen.ts'
 import { ItemFunctionSchema, PlanStrategySchema } from '../enums.ts'
 import {
@@ -261,10 +268,12 @@ export function assetFitProblem(
   if (!asset.placeable && !item.placeholder) return 'not_placeable'
   const scale = item.scale ?? 1
   if (asset.id === WALL_ART_ID && isWallArt(item)) {
-    return item.mount === 'wall' &&
+    return (item.mount === 'wall' || item.mount === 'embedded' || item.mount === 'ceiling') &&
       item.function === 'signage' &&
       scale === 1 &&
-      Math.abs(wallArtSize(item).d - WALL_ART_DEPTH) < 0.000001
+      [WALL_ART_DEPTH, LEGACY_WALL_ART_DEPTH].some(
+        (depth) => Math.abs(wallArtSize(item).d - depth) < 0.000001,
+      )
       ? null
       : 'size'
   }
@@ -432,7 +441,10 @@ export function validateLayout(
         itemIds: [item.id],
       })
     }
-    if (builtIn && !embeddedWall(item, space)) {
+    if (
+      builtIn &&
+      !embeddedWall(item, space, isDisplayPanel(item) ? layout.fixtures : [], layout.items)
+    ) {
       issues.push({
         code: 'item_not_in_wall',
         severity: 'warning',

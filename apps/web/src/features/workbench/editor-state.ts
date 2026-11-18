@@ -8,6 +8,8 @@ import {
   wallArtSize,
   defaultElevation,
   defaultEmbeddedElevation,
+  displayPanelSnap,
+  isDisplayPanel,
   embeddedSnap,
   defaultFixtureHeight,
   fixtureRect,
@@ -53,7 +55,7 @@ export function screenOrientationChange(
     !advertisingScreenName(asset.id) ||
     item.assetId !== asset.id ||
     item.function !== 'screen' ||
-    (mount !== 'embedded' && mount !== 'wall') ||
+    (mount !== 'embedded' && mount !== 'wall' && mount !== 'ceiling') ||
     item.locked
   )
     return null
@@ -354,6 +356,29 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         (item) => {
           if (item.locked) return item
           let { cx, cz } = action
+          if (isDisplayPanel(item)) {
+            if (cx === item.cx && cz === item.cz) return item
+            const placed =
+              action.snapTo &&
+              displayPanelSnap(
+                item,
+                cx,
+                cz,
+                action.snapTo,
+                action.front ?? null,
+                state.layout.fixtures,
+                state.layout.items,
+              )
+            return placed
+              ? { ...item, ...placed }
+              : {
+                  ...item,
+                  cx: snap(cx),
+                  cz: snap(cz),
+                  mount: 'ceiling',
+                  elevation: itemElevation(item),
+                }
+          }
           let exactX = false
           let exactZ = false
           if (action.snapTo) {
@@ -454,9 +479,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         state,
         action.id,
         (item) =>
-          item.locked ||
-          itemMount(item) === action.mount ||
-          (isWallArt(item) && action.mount !== 'wall')
+          item.locked || itemMount(item) === action.mount || isDisplayPanel(item)
             ? item
             : mountAs(
                 item,
@@ -495,19 +518,17 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                   : {}),
               }
             : resized
-          if (!mountedWall(item, action.space, state.layout.fixtures, state.layout.items))
-            return next
-          const placed = wallMountSnap(
+          if (itemMount(item) === 'ceiling') return next
+          const placed = displayPanelSnap(
             next,
             next.cx,
             next.cz,
             action.space,
             '+Z',
-            undefined,
             state.layout.fixtures,
             state.layout.items,
           )
-          return placed ? { ...next, cx: placed.cx, cz: placed.cz } : next
+          return placed ? { ...next, ...placed } : next
         },
         action.group ?? null,
       )
@@ -642,16 +663,31 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         placeholder: !action.asset.placeable,
         locked: false,
       }
-      const added = action.space
-        ? mountAs(
-            item,
-            action.asset.installation,
-            action.asset.front,
-            state.layout.items,
-            action.space,
-            state.layout.fixtures,
-          )
-        : item
+      const space = action.space
+      let added = item
+      if (space && isDisplayPanel(item)) {
+        const elevation = defaultEmbeddedElevation(item, space)
+        const placed = displayPanelSnap(
+          { ...item, elevation },
+          item.cx,
+          item.cz,
+          space,
+          action.asset.front,
+          state.layout.fixtures,
+          state.layout.items,
+          true,
+        )
+        added = { ...item, elevation, mount: 'ceiling', ...placed }
+      } else if (space) {
+        added = mountAs(
+          item,
+          action.asset.installation,
+          action.asset.front,
+          state.layout.items,
+          space,
+          state.layout.fixtures,
+        )
+      }
       return commit(state, { ...state.layout, items: [...state.layout.items, added] }, null, {
         selectedId: id,
       })

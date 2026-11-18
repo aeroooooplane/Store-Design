@@ -61,6 +61,21 @@ const catalog = [
   asset('asset-8', '灯箱墙贴', '信息化物料', { siFamily: '通用', function: 'signage' }),
 ]
 
+it('allows the current Leica wall combinations under SI1.0 signage', () => {
+  const leica = asset('asset-90000111', '徕卡墙画框组合 1200（含联名LOGO）', '软装道具', {
+    function: 'signage',
+    siFamily: 'SI2.0',
+  })
+  const ordinary = asset('asset-other', '普通墙面标识', '软装道具', {
+    function: 'signage',
+    siFamily: 'SI2.0',
+  })
+  expect(
+    pickableSections([leica, ordinary], 'SI1.0').find((section) => section.key === 'signage')
+      ?.assets,
+  ).toEqual([leica])
+})
+
 it('shows one advertising machine per size with no separate portrait entry', () => {
   const screens = [
     asset('asset-11479197', '75寸横屏广告机', '信息化物料', { function: 'screen' }),
