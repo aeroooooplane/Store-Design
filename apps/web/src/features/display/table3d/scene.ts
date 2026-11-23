@@ -1,4 +1,7 @@
 import * as THREE from 'three'
+import { makeProductTray, outwardAngle, placeProductTray } from './product-tray.ts'
+import { buildInnerTrays, type InnerVersion } from './inner-trays.ts'
+import type { ProductTray } from './product-tray.ts'
 import type { DisplayTable, PictureRect } from '@store/shared'
 import type { BodyMeta } from './bodies.ts'
 import { tableShape } from './layout.ts'
@@ -6,6 +9,8 @@ import type { SlotPlace, TableShape } from './layout.ts'
 
 /** What a slot holds, as the scene needs it. */
 export interface SlotContent {
+  sceneRender?: string | undefined
+  tray?: ProductTray | undefined
   slot: string
   hero: boolean
   /** Product name; drawn on the card only when `names` is on (the PPT writes it as text). */
@@ -16,6 +21,8 @@ export interface SlotContent {
 }
 
 export interface TableSceneInput {
+  innerVersion?: InnerVersion
+  previewModels?: boolean
   table: DisplayTable
   end: 'left' | 'right'
   contents: SlotContent[]
@@ -44,6 +51,7 @@ export type SlotDresser = (
 }>
 
 export interface SceneSlot {
+  modelCorners?: THREE.Vector3[]
   slot: string
   card: THREE.Object3D | null
   pick: THREE.Object3D
@@ -315,6 +323,7 @@ function placeBody(
 
 /** Points of a slot's card plane (x, y in the card) in the world, as it stands now. */
 export function slotPoints(slot: SceneSlot, points: [number, number][]) {
+  if (slot.modelCorners) return slot.modelCorners
   const space = slot.card ?? slot.pick
   space.updateWorldMatrix(true, false)
   return points.map(([x, y]) => new THREE.Vector3(x, y, 0).applyMatrix4(space.matrixWorld))
@@ -367,7 +376,18 @@ export async function buildTableScene(
     wall.position.set(0, 0.75, -shape.depth / 2 - 0.05)
     root.add(wall)
   }
-  if (shape.strip && input.table.modules.length) {
+  if (shape.strip && input.table.modules.length && input.innerVersion) {
+    root.add(
+      await buildInnerTrays(
+        input.table.modules,
+        shape.strip,
+        shape.height,
+        input.end,
+        input.innerVersion,
+        loadImage,
+      ),
+    )
+  } else if (shape.strip && input.table.modules.length) {
     const { x, z, w, d } = shape.strip
     const strip = new THREE.Mesh(
       new THREE.PlaneGeometry(w, d),
@@ -398,6 +418,33 @@ export async function buildTableScene(
         free.splice(near.i, 1)
         at = { ...place, x: near.t.x, z: near.t.z, w: near.t.w, d: near.t.d }
       }
+    }
+    if (input.previewModels && content.tray) {
+      const graphic = content.sceneRender ? await loadImage(content.sceneRender) : null
+      const model = makeProductTray(content.tray, place.slot + ' · ' + content.name, graphic)
+      placeProductTray(
+        model,
+        at,
+        shape.height,
+        outwardAngle(place.slot, input.table.orientation, input.end),
+      )
+      model.group.userData.slot = place.slot
+      root.add(model.group)
+      const bounds = new THREE.Box3().setFromObject(model.group)
+      const modelCorners = [bounds.min.x, bounds.max.x].flatMap((x) =>
+        [bounds.min.y, bounds.max.y].flatMap((y) =>
+          [bounds.min.z, bounds.max.z].map((z) => new THREE.Vector3(x, y, z)),
+        ),
+      )
+      slots.push({
+        slot: place.slot,
+        card: null,
+        pick: model.group,
+        outline: [],
+        name: [],
+        modelCorners,
+      })
+      continue
     }
     const dressed = await dress(at, content, shape, input.names)
     dressed.pick.userData.slot = place.slot

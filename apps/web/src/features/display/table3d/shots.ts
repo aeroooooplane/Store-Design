@@ -8,6 +8,8 @@ import type {
   PictureRect,
   SiStyle,
 } from '@store/shared'
+import { productTray } from './product-tray.ts'
+import type { InnerVersion } from './inner-trays.ts'
 import { photoOf } from '../photos.ts'
 import { bodyFor } from './bodies.ts'
 import { buildTableScene, pictureRect, slotPoints, stripRect } from './scene.ts'
@@ -15,6 +17,7 @@ import type { SlotContent } from './scene.ts'
 
 /** What the 3D views need besides the table: names and pictures of the units, the SI, the end. */
 export interface TableViewContext {
+  innerVersion?: InnerVersion
   rules: DisplayRules
   photos: DisplayRulesView['photos']
   si: SiStyle
@@ -27,6 +30,11 @@ export function slotContents(table: DisplayTable, ctx: TableViewContext): SlotCo
     slot: s.slot,
     hero: s.hero,
     name: s.unit ? (labelOf.get(s.unit) ?? s.unit) : '待定',
+    tray: productTray(ctx.si, s.unit),
+    sceneRender:
+      s.unit === 'scene-X6' && ctx.si === 'SI2.0'
+        ? ctx.photos.find((p) => p.unit === s.unit && p.si === ctx.si && p.kind === 'render')?.url
+        : undefined,
     empty: !s.unit,
     photo: photoOf(ctx.photos, s.unit, ctx.si)?.url ?? null,
   }))
@@ -45,7 +53,9 @@ export const viewKey = (table: DisplayTable, ctx: TableViewContext, names: boole
     table.modules,
     ctx.si,
     ctx.end,
+    ctx.innerVersion,
     names,
+    slotContents(table, ctx),
   ])
 
 export interface TableSnapshot {

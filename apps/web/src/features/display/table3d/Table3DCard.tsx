@@ -101,6 +101,8 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
           end: ctx.end,
           contents: slotContents(table, ctx),
           names: true,
+          previewModels: true,
+          innerVersion: ctx.innerVersion ?? 'legacy',
           body,
         }),
       )
@@ -164,7 +166,7 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
         ref={canvas}
         className="table3d-canvas"
         style={{ cursor: hover ? 'pointer' : 'grab' }}
-        aria-label={`${table.label}桌三维：拖动旋转，点立牌更换产品`}
+        aria-label={`${table.label}桌三维：拖动旋转，点托盘或立牌更换产品`}
         onPointerDown={(event) => {
           pressed.current = { x: event.clientX, y: event.clientY }
         }}

@@ -61,8 +61,19 @@ export function SlotTable({
   }
   const end = edits.landscapeEnd
   const ctx = useMemo<TableViewContext>(
-    () => ({ rules, photos, si, end }),
-    [rules, photos, si, end],
+    () => ({
+      rules,
+      photos,
+      si,
+      end,
+      innerVersion:
+        si === 'SI2.0' &&
+        edits.moduleScheme === 'draft-2026' &&
+        rules.seatModules.some((m) => m.si === si && m.scheme === edits.moduleScheme)
+          ? '2026'
+          : 'legacy',
+    }),
+    [rules, photos, si, end, edits.moduleScheme],
   )
   const setSlot = (table: DisplayTable, slot: string, unit: string | null) =>
     onChange({
@@ -225,7 +236,7 @@ export function SlotTable({
           </button>
         ))}
         <span className="hint">
-          {look === '3d' ? '拖动可旋转查看，点立牌即可更换产品' : '点格子即可更换产品'}
+          {look === '3d' ? '拖动可旋转查看，点托盘或立牌即可更换产品' : '点格子即可更换产品'}
         </span>
       </div>
       <div className="slot-tables">
