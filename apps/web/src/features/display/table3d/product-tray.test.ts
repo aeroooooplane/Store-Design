@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { Group, Vector3 } from 'three'
+import { Box3, Group, Vector3 } from 'three'
+import { buildAdditionalProduct } from './four-table-products.ts'
 import { productTray, outwardAngle, placeProductTray } from './product-tray.ts'
 
 describe('SI2.0 产品托盘', () => {
@@ -10,7 +11,7 @@ describe('SI2.0 产品托盘', () => {
     expect(productTray('SI2.0', 'AP2')).toBe('ace')
     expect(productTray('SI2.0', 'Mic Pro')).toBe('mic-pro')
     expect(productTray('SI2.0', 'GO Ultra')).toBe('go-ultra')
-    for (const unit of ['AP2 大师', 'GO Ultra HK', 'scene-X6-opt', null])
+    for (const unit of ['scene-Luna Ultra', 'Luna C', 'scene-X6-opt', null])
       expect(productTray('SI2.0', unit)).toBeUndefined()
     expect(productTray('SI1.0', 'X5')).toBeUndefined()
   })
@@ -37,4 +38,27 @@ describe('SI2.0 产品托盘', () => {
     expect(group.position.toArray()).toEqual([0.1, 0.901, -0.2])
     expect(group.scale.x).toBeCloseTo(x === 0 ? 0.18 / 0.32 : 1)
   })
+})
+
+it.each([
+  'Luna A',
+  'Luna B',
+  'Flow2',
+  'Link2',
+  'AG',
+  'AG Pac Air',
+  'AG Pac Neo',
+  'GO Ultra HK',
+  'GO 3S 复古',
+  'AP2 大师',
+  'AP2 街拍',
+] as const)('将四桌选款 %s 装到一个可旋转的实体托盘', (unit) => {
+  expect(productTray('SI2.0', unit)).toBe(unit)
+  expect(productTray('SI1.0', unit)).toBeUndefined()
+  const group = new Group()
+  buildAdditionalProduct(unit, group)
+  const bounds = new Box3().setFromObject(group)
+  expect(bounds.max.y).toBeGreaterThan(0.06)
+  expect(bounds.max.y).toBeLessThan(0.4)
+  expect(Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x))).toBeLessThan(0.16)
 })
