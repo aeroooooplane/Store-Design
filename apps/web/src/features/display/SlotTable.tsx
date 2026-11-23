@@ -225,7 +225,7 @@ export function SlotTable({
           </button>
         ))}
         <span className="hint">
-          {look === '3d' ? '拖动可旋转查看，点立牌即可更换产品' : '点格子即可更换产品'}
+          {look === '3d' ? '拖动可旋转查看，点托盘或立牌即可更换产品' : '点格子即可更换产品'}
         </span>
       </div>
       <div className="slot-tables">
