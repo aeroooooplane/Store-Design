@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { makeProductTray, outwardAngle, placeProductTray } from './product-tray.ts'
+import { buildInnerTrays, type InnerVersion } from './inner-trays.ts'
 import type { ProductTray } from './product-tray.ts'
 import type { DisplayTable, PictureRect } from '@store/shared'
 import type { BodyMeta } from './bodies.ts'
@@ -20,6 +21,7 @@ export interface SlotContent {
 }
 
 export interface TableSceneInput {
+  innerVersion?: InnerVersion
   previewModels?: boolean
   table: DisplayTable
   end: 'left' | 'right'
@@ -374,7 +376,18 @@ export async function buildTableScene(
     wall.position.set(0, 0.75, -shape.depth / 2 - 0.05)
     root.add(wall)
   }
-  if (shape.strip && input.table.modules.length) {
+  if (shape.strip && input.table.modules.length && input.innerVersion) {
+    root.add(
+      await buildInnerTrays(
+        input.table.modules,
+        shape.strip,
+        shape.height,
+        input.end,
+        input.innerVersion,
+        loadImage,
+      ),
+    )
+  } else if (shape.strip && input.table.modules.length) {
     const { x, z, w, d } = shape.strip
     const strip = new THREE.Mesh(
       new THREE.PlaneGeometry(w, d),

@@ -5,7 +5,7 @@ import { afterAll, beforeAll, expect, it } from 'vitest'
 import { unzipSync, strFromU8 } from 'fflate'
 import { planDisplay } from '@store/shared'
 import type { DisplayRules } from '@store/shared'
-import { loadInnerTrayImages } from '../src/modules/displays/inner-trays.ts'
+import { innerTrayPicture, loadInnerTrayImages } from '../src/modules/displays/inner-trays.ts'
 import { buildDisplayDeck, deckImage } from '../src/modules/displays/deck.ts'
 import { parseDisplayWorkbook } from '../src/modules/displays/workbook.ts'
 import { png } from './helpers.ts'
@@ -183,4 +183,12 @@ it('缺图和未知编号不跨版本借图；只加载中岛桌实际使用模�
       )
     ).images,
   ).toEqual({})
+})
+
+it('预览原图按版本精确匹配，缺失编号不跨方案借图', async () => {
+  const roots = { storage: dir, resource: dir }
+  expect(await innerTrayPicture(roots, 'legacy', 'A2')).toEqual(legacyImage)
+  expect(await innerTrayPicture(roots, '2026', 'A2')).toEqual(newImage)
+  await expect(innerTrayPicture(roots, 'legacy', 'A7')).rejects.toThrow()
+  await expect(innerTrayPicture(roots, '2026', '../A2')).rejects.toThrow()
 })

@@ -21,6 +21,7 @@ import type { AppConfig } from '../../config/env.ts'
 import { requireRevision } from '../../lib/revision.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import { listDisplayBodies } from './bodies.ts'
+import { innerTrayPicture } from './inner-trays.ts'
 import { rulesView } from './common.ts'
 import { exportNodeDisplay, getNodeDisplay, updateNodeDisplay } from './node.ts'
 import * as tasks from './tasks.ts'
@@ -73,6 +74,23 @@ export const displayRoutes: FastifyPluginAsyncZod<{
       },
     },
     () => listDisplayBodies(db, roots),
+  )
+
+  app.get(
+    '/display-inner-trays/:version/:id',
+    {
+      schema: {
+        tags: ['displays'],
+        summary: '读取指定方案的内嵌托盘配图',
+        params: z.object({ version: z.enum(['legacy', '2026']), id: z.string().max(60) }),
+        produces: ['image/png'],
+        response: { 200: z.unknown().describe('PNG 配图'), ...errors },
+      },
+    },
+    async (request, reply) =>
+      reply
+        .type('image/png')
+        .send(await innerTrayPicture(roots, request.params.version, request.params.id)),
   )
 
   // ---- Workflow 2: display tasks from uploaded pictures ----

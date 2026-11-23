@@ -102,6 +102,7 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
           contents: slotContents(table, ctx),
           names: true,
           previewModels: true,
+          innerVersion: ctx.innerVersion ?? 'legacy',
           body,
         }),
       )

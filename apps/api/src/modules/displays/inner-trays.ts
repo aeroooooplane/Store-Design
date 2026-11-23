@@ -1,3 +1,4 @@
+import { AppError } from '../../lib/app-error.ts'
 import { readFile } from 'node:fs/promises'
 import type { DisplayEdits, DisplayRules, DisplayTable, SiStyle } from '@store/shared'
 import type { StorageRoots } from '../../lib/storage.ts'
@@ -42,6 +43,20 @@ const MODULES = {
   ]),
 }
 
+export async function innerTrayPicture(
+  roots: StorageRoots,
+  version: keyof typeof MODULES,
+  id: string,
+) {
+  if (!MODULES[version].has(id)) throw new AppError('NOT_FOUND', '暂无对应的内嵌托盘配图')
+  const { file } = await resolveStoredFile(
+    roots,
+    'resource',
+    `${DISPLAY_RESOURCE_DIR}/配件模块/PPT配图20261105/${version}-${id}.png`,
+  )
+  return readFile(file)
+}
+
 /** Select the saved scheme, never the project default or a similarly named module in another SI. */
 export async function loadInnerTrayImages(
   roots: StorageRoots,
@@ -67,12 +82,7 @@ export async function loadInnerTrayImages(
   for (const id of ids) {
     if (!MODULES[version].has(id)) continue
     try {
-      const { file } = await resolveStoredFile(
-        roots,
-        'resource',
-        `${DISPLAY_RESOURCE_DIR}/配件模块/PPT配图20261105/${version}-${id}.png`,
-      )
-      result.images[id] = await deckImage(await readFile(file))
+      result.images[id] = await deckImage(await innerTrayPicture(roots, version, id))
     } catch {
       // Keep the exact id visible with a missing-picture notice; never substitute another version.
     }

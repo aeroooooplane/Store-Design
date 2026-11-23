@@ -9,6 +9,7 @@ import type {
   SiStyle,
 } from '@store/shared'
 import { productTray } from './product-tray.ts'
+import type { InnerVersion } from './inner-trays.ts'
 import { photoOf } from '../photos.ts'
 import { bodyFor } from './bodies.ts'
 import { buildTableScene, pictureRect, slotPoints, stripRect } from './scene.ts'
@@ -16,6 +17,7 @@ import type { SlotContent } from './scene.ts'
 
 /** What the 3D views need besides the table: names and pictures of the units, the SI, the end. */
 export interface TableViewContext {
+  innerVersion?: InnerVersion
   rules: DisplayRules
   photos: DisplayRulesView['photos']
   si: SiStyle
@@ -51,6 +53,7 @@ export const viewKey = (table: DisplayTable, ctx: TableViewContext, names: boole
     table.modules,
     ctx.si,
     ctx.end,
+    ctx.innerVersion,
     names,
     slotContents(table, ctx),
   ])
