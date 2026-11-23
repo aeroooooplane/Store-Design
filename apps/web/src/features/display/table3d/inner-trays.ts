@@ -113,6 +113,8 @@ export async function buildInnerTrays(
   end: 'left' | 'right',
   version: InnerVersion,
   image: (url: string) => Promise<HTMLImageElement | null>,
+  showImages = true,
+  showText = true,
 ) {
   const root = new THREE.Group()
   const frame = new THREE.Group()
@@ -144,9 +146,9 @@ export async function buildInnerTrays(
         block(group, p.span, 0.015, rim, 0, 0.0125, (side * (p.width - rim)) / 2, liner)
         block(group, rim, 0.015, p.width - 2 * rim, (side * (p.span - rim)) / 2, 0.0125, 0, liner)
       }
-      const pic = await image(
-        '/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(p.id),
-      )
+      const pic = showImages
+        ? await image('/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(p.id))
+        : null
       const grooves = p.id.startsWith('C')
       const surface = new THREE.PlaneGeometry(
         p.span - 2 * rim,
@@ -190,6 +192,8 @@ export async function buildInnerTrays(
       const face = new THREE.Mesh(surface, finish)
       face.position.y = 0.0052
       group.add(face)
+      group.name = p.id
+      if (!showText) return group
       const plaque = document.createElement('canvas')
       plaque.width = 128
       plaque.height = 40
@@ -211,7 +215,6 @@ export async function buildInnerTrays(
         badge.position.set(0, 0.0202, (p.width - rim) / 2)
         group.add(badge)
       }
-      group.name = p.id
       return group
     }),
   )

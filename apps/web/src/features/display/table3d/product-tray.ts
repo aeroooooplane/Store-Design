@@ -174,6 +174,7 @@ export function makeProductTray(
   } else {
     buildAdditionalProduct(kind, group)
   }
+  if (!slotLabel) return { group, width, depth }
   const canvas = document.createElement('canvas')
   canvas.width = 512
   canvas.height = 80

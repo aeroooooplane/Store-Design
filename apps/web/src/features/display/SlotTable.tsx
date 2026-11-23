@@ -53,6 +53,8 @@ export function SlotTable({
   const moduleCounts = summarizeDisplayModules(rules, tables)
   const summary = summarizeDisplay(rules, tables)
   const [look, setLook] = useState<'3d' | 'plan'>('3d')
+  const [showText, setShowText] = useState(true)
+  const [showImages, setShowImages] = useState(true)
   const [picking, setPicking] = useState<(PickerTarget & { table: DisplayTable }) | null>(null)
   const pick = (t: DisplayTable, slot: string, at: { x: number; y: number }) => {
     if (disabled) return
@@ -127,15 +129,18 @@ export function SlotTable({
         style={{ gridArea: code }}
         title={`${code}${s.hero ? '（明星位）' : ''}：${name}`}
       >
-        <span className="slot-head">
-          <span className="slot-code">{code}</span>
-          {s.hero && <span className="slot-badge">明星位</span>}
-          {edited && <span className="slot-edited">已改</span>}
-        </span>
+        {showText && (
+          <span className="slot-head">
+            <span className="slot-code">{code}</span>
+            {s.hero && <span className="slot-badge">明星位</span>}
+            {edited && <span className="slot-edited">已改</span>}
+          </span>
+        )}
         <span className="slot-photo">
-          {photo ? <img src={photo.url} alt="" loading="lazy" /> : <span>无照片</span>}
+          {showImages &&
+            (photo ? <img src={photo.url} alt="" loading="lazy" /> : <span>无照片</span>)}
         </span>
-        <span className="slot-name">{name}</span>
+        {showText && <span className="slot-name">{name}</span>}
       </button>
     )
   }
@@ -144,7 +149,8 @@ export function SlotTable({
   function board(t: DisplayTable) {
     const modules = (
       <div className="slot-modules-strip" style={{ gridArea: 'M' }} title="中间配件模块">
-        {t.modules.length ? t.modules.map((m) => <span key={m}>{m}</span>) : <span>—</span>}
+        {showText &&
+          (t.modules.length ? t.modules.map((m) => <span key={m}>{m}</span>) : <span>—</span>)}
       </div>
     )
     if (t.kind === 'side') {
@@ -235,6 +241,22 @@ export function SlotTable({
             {label}
           </button>
         ))}
+        <label>
+          <input
+            type="checkbox"
+            checked={showText}
+            onChange={(e) => setShowText(e.target.checked)}
+          />
+          托盘文字
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            checked={showImages}
+            onChange={(e) => setShowImages(e.target.checked)}
+          />
+          托盘图片
+        </label>
         <span className="hint">
           {look === '3d' ? '拖动可旋转查看，点托盘或立牌即可更换产品' : '点格子即可更换产品'}
         </span>
@@ -264,7 +286,13 @@ export function SlotTable({
                 )}
               </header>
               {look === '3d' ? (
-                <Table3DCard table={t} ctx={ctx} onSlotClick={(slot, at) => pick(t, slot, at)} />
+                <Table3DCard
+                  showText={showText}
+                  showImages={showImages}
+                  table={t}
+                  ctx={ctx}
+                  onSlotClick={(slot, at) => pick(t, slot, at)}
+                />
               ) : (
                 board(t)
               )}
