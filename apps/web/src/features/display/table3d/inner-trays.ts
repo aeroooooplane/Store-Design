@@ -4,24 +4,42 @@ import type { TableShape } from './layout.ts'
 type Strip = NonNullable<TableShape['strip']>
 export type InnerVersion = 'legacy' | '2026'
 
-/** The guide's A, D and C inserts occupy one, two and four length units. */
+// 指引第三节总装图及 A/C/D 单件图，毫米。桌体索引中的 strip 仅用于确定中心与长轴。
+const FRAME = { length: 680, width: 135, height: 30, clearLength: 670, clearWidth: 125 }
+function lengthMm(id: string) {
+  if (/^A\d+$/.test(id)) return 110
+  if (/^C\d+$/.test(id)) return 445
+  if (/^D\d+$/.test(id)) return 225
+  return 0
+}
+
+export function innerFitNote(ids: string[]) {
+  const notes: string[] = []
+  const excess = ids.reduce((n, id) => n + lengthMm(id), 0) - FRAME.clearLength
+  if (excess > 0) notes.push(`内盘合计超过外框净长 ${excess} mm，请核对组合`)
+  const unknown = ids.filter((id) => !lengthMm(id))
+  if (unknown.length) notes.push(`${unknown.join('、')} 缺少尺寸图，未建模`)
+  return notes.join('。')
+}
+
 export function innerPlaces(ids: string[], strip: Strip, end: 'left' | 'right') {
   const horizontal = strip.w > strip.d
-  const length = Math.max(strip.w, strip.d)
-  const width = Math.min(strip.w, strip.d)
-  const weights = ids.map((id) => (/^C\d+$/.test(id) ? 4 : /^D\d+$/.test(id) ? 2 : 1))
-  const sum = weights.reduce((a, b) => a + b, 0)
-  let cursor = -length / 2
-  return ids.map((id, i) => {
-    const span = (length * weights[i]!) / sum
-    const center = cursor + span / 2
-    cursor += span
-    // Order runs from the far end towards E, including mirrored landscape tables.
+  const known = ids.filter((id) => lengthMm(id) > 0)
+  const total = known.reduce((n, id) => n + lengthMm(id), 0)
+  const gap =
+    known.length > 1
+      ? Math.min(1, Math.max(0, (FRAME.clearLength - total) / (known.length - 1)))
+      : 0
+  let cursor = -(total + gap * Math.max(0, known.length - 1)) / 2
+  return known.map((id) => {
+    const span = lengthMm(id)
+    const center = (cursor + span / 2) / 1000
+    cursor += span + gap
     const direction = horizontal && end === 'left' ? -1 : 1
     return {
       id,
-      span,
-      width,
+      span: span / 1000,
+      width: FRAME.clearWidth / 1000,
       x: strip.x + (horizontal ? direction * center : 0),
       z: strip.z + (horizontal ? 0 : center),
       angle: horizontal ? (direction === 1 ? 0 : Math.PI) : -Math.PI / 2,
@@ -29,7 +47,53 @@ export function innerPlaces(ids: string[], strip: Strip, end: 'left' | 'right') 
   })
 }
 
-/** A local +x run of tray frames; pictures and labels stay attached to the tray as the view turns. */
+/** Cut only the local socket in the preview's table. Cached catalog materials stay shared elsewhere. */
+export function openTraySocket(table: THREE.Object3D, strip: Strip, height: number) {
+  const horizontal = strip.w > strip.d
+  const halfX = (horizontal ? FRAME.length : FRAME.width) / 2000
+  const halfZ = (horizontal ? FRAME.width : FRAME.length) / 2000
+  const planes = [
+    new THREE.Plane(new THREE.Vector3(-1, 0, 0), strip.x - halfX),
+    new THREE.Plane(new THREE.Vector3(1, 0, 0), -strip.x - halfX),
+    new THREE.Plane(new THREE.Vector3(0, 0, -1), strip.z - halfZ),
+    new THREE.Plane(new THREE.Vector3(0, 0, 1), -strip.z - halfZ),
+    new THREE.Plane(new THREE.Vector3(0, -1, 0), height - FRAME.height / 1000),
+  ]
+  const copies = new Map<THREE.Material, THREE.Material>()
+  function cut(original: THREE.Material) {
+    let m = copies.get(original)
+    if (!m) {
+      m = original.clone()
+      m.clippingPlanes = planes
+      m.clipIntersection = true
+      copies.set(original, m)
+    }
+    return m
+  }
+  table.traverse((node) => {
+    if (node instanceof THREE.Mesh) {
+      const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.Material | THREE.Material[]>
+      mesh.material = Array.isArray(mesh.material) ? mesh.material.map(cut) : cut(mesh.material)
+    }
+  })
+  return () => copies.forEach((material) => material.dispose())
+}
+
+function block(
+  group: THREE.Group,
+  w: number,
+  h: number,
+  d: number,
+  x: number,
+  y: number,
+  z: number,
+  material: THREE.Material,
+) {
+  const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material)
+  mesh.position.set(x, y, z)
+  group.add(mesh)
+}
+
 export async function buildInnerTrays(
   ids: string[],
   strip: Strip,
@@ -39,61 +103,103 @@ export async function buildInnerTrays(
   image: (url: string) => Promise<HTMLImageElement | null>,
 ) {
   const root = new THREE.Group()
-  const border = Math.min(0.003, strip.w / 16, strip.d / 16)
-  const frame = new THREE.Mesh(
-    new THREE.BoxGeometry(strip.w, 0.006, strip.d),
-    new THREE.MeshStandardMaterial({ color: 0x6c7379, metalness: 0.5, roughness: 0.45 }),
-  )
-  frame.position.set(strip.x, height + 0.003, strip.z)
+  const frame = new THREE.Group()
+  frame.position.set(strip.x, height + 0.0005, strip.z)
+  frame.rotation.y = strip.w > strip.d ? 0 : -Math.PI / 2
   root.add(frame)
-  const interior = { ...strip, w: strip.w - 2 * border, d: strip.d - 2 * border }
+  const metal = new THREE.MeshStandardMaterial({
+    color: 0xaeafb1,
+    metalness: 0.45,
+    roughness: 0.48,
+  })
+  const l = FRAME.length / 1000,
+    w = FRAME.width / 1000,
+    h = FRAME.height / 1000
+  block(frame, l, 0.005, w, 0, -h + 0.0025, 0, metal)
+  for (const side of [-1, 1]) {
+    block(frame, l, h, 0.005, 0, -h / 2, (side * (w - 0.005)) / 2, metal)
+    block(frame, 0.005, h, w - 0.01, (side * (l - 0.005)) / 2, -h / 2, 0, metal)
+  }
   const models = await Promise.all(
-    innerPlaces(ids, interior, end).map(async ({ id, span, width, x, z, angle }) => {
+    innerPlaces(ids, strip, end).map(async (p) => {
       const group = new THREE.Group()
-      group.position.set(x, height + 0.006, z)
-      group.rotation.y = angle
-      const rim = Math.min(0.004, span * 0.08, width * 0.08)
-      const metal = new THREE.MeshStandardMaterial({
-        color: 0xb2b5b8,
-        metalness: 0.46,
-        roughness: 0.38,
-      })
-      function edge(w: number, d: number, px: number, pz: number) {
-        const rail = new THREE.Mesh(new THREE.BoxGeometry(w, 0.008, d), metal)
-        rail.position.set(px, 0.004, pz)
-        group.add(rail)
+      group.position.set(p.x, height + 0.0005 - 0.025, p.z)
+      group.rotation.y = p.angle
+      const liner = new THREE.MeshStandardMaterial({ color: 0xb8b8b7, roughness: 0.96 })
+      block(group, p.span, 0.005, p.width, 0, 0.0025, 0, liner)
+      const rim = 0.01
+      for (const side of [-1, 1]) {
+        block(group, p.span, 0.015, rim, 0, 0.0125, (side * (p.width - rim)) / 2, liner)
+        block(group, rim, 0.015, p.width - 2 * rim, (side * (p.span - rim)) / 2, 0.0125, 0, liner)
       }
-      edge(span, rim, 0, (width - rim) / 2)
-      edge(span, rim, 0, -(width - rim) / 2)
-      edge(rim, width - 2 * rim, (span - rim) / 2, 0)
-      edge(rim, width - 2 * rim, -(span - rim) / 2, 0)
-      const canvas = document.createElement('canvas')
-      canvas.width = Math.max(64, Math.min(1024, Math.round((200 * span) / width)))
-      canvas.height = 200
-      const ctx = canvas.getContext('2d')
-      const pic = /^[ACD]\d{1,2}$/.test(id)
-        ? await image('/api/v1/display-inner-trays/' + version + '/' + id)
-        : null
-      if (ctx) {
-        ctx.fillStyle = '#c9cdd0'
-        ctx.fillRect(0, 0, canvas.width, 200)
-        if (pic) ctx.drawImage(pic, 0, 0, canvas.width, 153)
-        ctx.fillStyle = '#282d31'
-        ctx.fillRect(0, 153, canvas.width, 47)
-        ctx.fillStyle = 'white'
-        ctx.font = 'bold 43px sans-serif'
-        ctx.textAlign = 'center'
-        ctx.fillText(id, canvas.width / 2, 188, canvas.width - 5)
-      }
-      const texture = new THREE.CanvasTexture(canvas)
-      texture.colorSpace = THREE.SRGBColorSpace
-      const floor = new THREE.Mesh(
-        new THREE.PlaneGeometry(span - 2 * rim, width - 2 * rim),
-        new THREE.MeshBasicMaterial({ map: texture, toneMapped: false }),
+      const pic = await image(
+        '/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(p.id),
       )
-      floor.rotation.x = -Math.PI / 2
-      floor.position.y = 0.001
-      group.add(floor)
+      const grooves = p.id.startsWith('C')
+      const surface = new THREE.PlaneGeometry(
+        p.span - 2 * rim,
+        p.width - 2 * rim,
+        1,
+        grooves ? 84 : 1,
+      )
+      surface.rotateX(-Math.PI / 2)
+      if (grooves) {
+        // Section C: two 45 mm longitudinal channels with a 10 mm divider.
+        const pos = surface.getAttribute('position')
+        for (let i = 0; i < pos.count; i++) {
+          const radius = 0.0225
+          const offset = (Math.abs(pos.getZ(i)) - 0.0275) / radius
+          pos.setY(i, 0.015 * (1 - Math.sqrt(Math.max(0, 1 - offset * offset))))
+        }
+        surface.computeVertexNormals()
+      }
+      let finish: THREE.Material = liner
+      if (pic) {
+        // Project the whole source onto the physical footprint, cropping the printed
+        // rim where the actual geometry begins. Both image axes use the same px/mm.
+        const canvas = document.createElement('canvas')
+        canvas.width = Math.round(p.span * 4000)
+        canvas.height = Math.round(p.width * 4000)
+        const ctx = canvas.getContext('2d')
+        if (ctx) {
+          const scale = Math.min(canvas.width / pic.naturalWidth, canvas.height / pic.naturalHeight)
+          const w = pic.naturalWidth * scale,
+            h = pic.naturalHeight * scale
+          ctx.fillStyle = '#bbbcb9'
+          ctx.fillRect(0, 0, canvas.width, canvas.height)
+          ctx.drawImage(pic, (canvas.width - w) / 2, (canvas.height - h) / 2, w, h)
+        }
+        const texture = new THREE.CanvasTexture(canvas)
+        texture.colorSpace = THREE.SRGBColorSpace
+        texture.offset.set(rim / p.span, rim / p.width)
+        texture.repeat.set(1 - (2 * rim) / p.span, 1 - (2 * rim) / p.width)
+        finish = new THREE.MeshBasicMaterial({ map: texture, toneMapped: false })
+      }
+      const face = new THREE.Mesh(surface, finish)
+      face.position.y = 0.0052
+      group.add(face)
+      const plaque = document.createElement('canvas')
+      plaque.width = 128
+      plaque.height = 40
+      const ctx = plaque.getContext('2d')
+      if (ctx) {
+        ctx.fillStyle = '#dadbd9'
+        ctx.fillRect(0, 0, 128, 40)
+        ctx.fillStyle = '#303332'
+        ctx.textAlign = 'center'
+        ctx.font = 'bold 33px sans-serif'
+        ctx.fillText(p.id, 64, 32, 122)
+        const label = new THREE.CanvasTexture(plaque)
+        label.colorSpace = THREE.SRGBColorSpace
+        const badge = new THREE.Mesh(
+          new THREE.PlaneGeometry(0.034, 0.009),
+          new THREE.MeshBasicMaterial({ map: label, toneMapped: false }),
+        )
+        badge.rotation.x = -Math.PI / 2
+        badge.position.set(0, 0.0202, (p.width - rim) / 2)
+        group.add(badge)
+      }
+      group.name = p.id
       return group
     }),
   )

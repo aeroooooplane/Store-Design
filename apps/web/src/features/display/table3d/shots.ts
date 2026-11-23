@@ -87,6 +87,7 @@ function shared(width: number, height: number) {
     antialias: true,
     preserveDrawingBuffer: true,
   })
+  renderer.localClippingEnabled = true
   renderer.setPixelRatio(1)
   const size = renderer.getSize(new THREE.Vector2())
   if (size.x !== width || size.y !== height) renderer.setSize(width, height, false)
