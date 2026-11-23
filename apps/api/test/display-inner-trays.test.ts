@@ -18,7 +18,7 @@ beforeAll(async () => {
   dir = await mkdtemp(path.join(tmpdir(), 'inner-trays-'))
   const manifest = JSON.parse(
     await readFile(
-      new URL('../../../docs/evidence/inner-ppt-release-20261105.json', import.meta.url),
+      new URL('../../../docs/evidence/inner-series-20261123.json', import.meta.url),
       'utf8',
     ),
   ) as { files: { path: string; scheme: string }[] }
@@ -161,7 +161,8 @@ it('缺图和未知编号不跨版本借图；只加载中岛桌实际使用模�
     'draft-2026',
     tables,
   )
-  expect(selected.images).toEqual({}) // A1 exists only in the legacy picture archive.
+  expect(Object.keys(selected.images)).toEqual(['A1'])
+  expect(selected.images.A1?.data).toBe((await deckImage(newImage)).data)
   const legacy = await loadInnerTrayImages(
     { resource: dir, storage: dir },
     rules,
@@ -171,7 +172,7 @@ it('缺图和未知编号不跨版本借图；只加载中岛桌实际使用模�
   )
   expect(Object.keys(legacy.images)).toEqual(['A1'])
   tables[0]!.modules = ['A2']
-  await rm(path.join(dir, '10_产品与陈列/配件模块/PPT配图20261105/2026-A2.png'))
+  await rm(path.join(dir, '10_产品与陈列/配件模块/系列配图20261123/2026-A2.png'))
   expect(
     (
       await loadInnerTrayImages(
@@ -191,4 +192,9 @@ it('预览原图按版本精确匹配，缺失编号不跨方案借图', async (
   expect(await innerTrayPicture(roots, '2026', 'D4')).toEqual(newImage)
   await expect(innerTrayPicture(roots, 'legacy', 'A7')).rejects.toThrow()
   await expect(innerTrayPicture(roots, '2026', '../A2')).rejects.toThrow()
+})
+
+it('新版系列页涵盖此前缺图的七款内嵌模块', async () => {
+  for (const id of ['C2', 'C3', 'D1', 'D2', 'D3', 'D6', 'D8'])
+    expect(await innerTrayPicture({ storage: dir, resource: dir }, '2026', id)).toEqual(newImage)
 })
