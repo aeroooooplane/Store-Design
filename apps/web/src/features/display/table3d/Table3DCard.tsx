@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import type { DisplayTable } from '@store/shared'
+import { innerFitNote } from './inner-trays.ts'
 import { bodyFor } from './bodies.ts'
 import { buildTableScene } from './scene.ts'
 import type { TableScene } from './scene.ts'
@@ -160,33 +161,37 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
 
   if (state === 'failed')
     return <p className="notice">这台电脑的浏览器无法显示三维，请切换到“平面”。</p>
+  const note = table.kind === 'island' ? innerFitNote(table.modules) : ''
   return (
-    <div className="table3d-picture" style={{ aspectRatio: String(aspect) }}>
-      <canvas
-        ref={canvas}
-        className="table3d-canvas"
-        style={{ cursor: hover ? 'pointer' : 'grab' }}
-        aria-label={`${table.label}桌三维：拖动旋转，点托盘或立牌更换产品`}
-        onPointerDown={(event) => {
-          pressed.current = { x: event.clientX, y: event.clientY }
-        }}
-        onPointerUp={(event) => {
-          const from = pressed.current
-          pressed.current = null
-          if (!from || Math.hypot(event.clientX - from.x, event.clientY - from.y) > DRAG) return
-          const slot = slotUnder(event)
-          if (slot) clickRef.current(slot, { x: event.clientX + 8, y: event.clientY + 8 })
-        }}
-        onPointerMove={(event) => {
-          if (event.buttons) return
-          setHover(slotUnder(event) !== null)
-        }}
-        onPointerLeave={() => setHover(false)}
-      />
-      {state === 'loading' && <span className="table3d-wait">正在生成三维…</span>}
-      <button type="button" className="table3d-reset" onClick={resetView}>
-        复位视角
-      </button>
-    </div>
+    <>
+      <div className="table3d-picture" style={{ aspectRatio: String(aspect) }}>
+        <canvas
+          ref={canvas}
+          className="table3d-canvas"
+          style={{ cursor: hover ? 'pointer' : 'grab' }}
+          aria-label={`${table.label}桌三维：拖动旋转，点托盘或立牌更换产品`}
+          onPointerDown={(event) => {
+            pressed.current = { x: event.clientX, y: event.clientY }
+          }}
+          onPointerUp={(event) => {
+            const from = pressed.current
+            pressed.current = null
+            if (!from || Math.hypot(event.clientX - from.x, event.clientY - from.y) > DRAG) return
+            const slot = slotUnder(event)
+            if (slot) clickRef.current(slot, { x: event.clientX + 8, y: event.clientY + 8 })
+          }}
+          onPointerMove={(event) => {
+            if (event.buttons) return
+            setHover(slotUnder(event) !== null)
+          }}
+          onPointerLeave={() => setHover(false)}
+        />
+        {state === 'loading' && <span className="table3d-wait">正在生成三维…</span>}
+        <button type="button" className="table3d-reset" onClick={resetView}>
+          复位视角
+        </button>
+      </div>
+      {note && <small>{note}</small>}
+    </>
   )
 }

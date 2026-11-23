@@ -3,7 +3,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import type { DisplayTable, SiStyle } from '@store/shared'
 import type { SlotPlace } from './layout.ts'
 
-export type ProductTray = 'single' | 'double' | 'scene'
+export type ProductTray = 'single' | 'double' | 'scene' | 'ace' | 'go-ultra' | 'mic-pro'
 
 export function productTray(si: SiStyle, unit: string | null): ProductTray | undefined {
   if (si !== 'SI2.0') return
@@ -14,6 +14,12 @@ export function productTray(si: SiStyle, unit: string | null): ProductTray | und
       return 'single'
     case 'X5+X4 Air':
       return 'double'
+    case 'AP2':
+      return 'ace'
+    case 'GO Ultra':
+      return 'go-ultra'
+    case 'Mic Pro':
+      return 'mic-pro'
     case 'scene-X6':
       return 'scene'
     default:
@@ -123,6 +129,43 @@ export function makeProductTray(
     post(0.025, 0.01, 0, 0.005, -0.025, silver)
     post(0.015, 0.03, 0, 0.015, -0.025, silver)
     camera(0, -0.025, 0.045)
+  } else if (kind === 'ace') {
+    post(0.025, 0.01, 0, 0.005, -0.025, silver)
+    post(0.015, 0.03, 0, 0.015, -0.025, silver)
+    post(0.011, 0.145, 0, 0.045, -0.025, charcoal)
+    box(0.071, 0.05, 0.03, 0, 0.218, -0.025, charcoal, 0.004)
+    box(0.027, 0.026, 0.005, 0.018, 0.22, -0.008, 0x152235, 0.005)
+    box(0.043, 0.031, 0.004, -0.003, 0.259, -0.03, 0x29363a, 0.002)
+  } else if (kind === 'go-ultra') {
+    // SI2.0 plate and 5 mm acrylic display, drawing p.8: 145 mm wide, 86° inclination.
+    box(0.15, 0.01, 0.1, -0.042, 0.01, -0.001, silver, 0.002)
+    const panel = box(0.145, 0.2, 0.005, -0.042, 0.114, -0.051, 0xd8dcdf, 0.002)
+    panel.rotation.x = (-4 * Math.PI) / 180
+    const acrylic = panel.material
+    acrylic.transparent = true
+    acrylic.opacity = 0.47
+    acrylic.depthWrite = false
+    box(0.07, 0.014, 0.03, -0.042, 0.022, 0.018, silver, 0.003)
+    box(0.066, 0.047, 0.026, -0.042, 0.052, 0.013, 0xe3e3df, 0.006)
+    const lens = part(new THREE.SphereGeometry(0.012, 20, 12), 0x192631, -0.025, 0.059, 0.026)
+    lens.scale.z = 0.42
+    box(0.06, 0.034, 0.005, -0.042, 0.092, 0.004, charcoal, 0.002)
+    box(0.034, 0.007, 0.039, 0.095, 0.009, -0.002, charcoal, 0.003)
+    const pendant = post(0.018, 0.008, -0.042, 0.143, -0.045, 0xe6e5df)
+    pendant.rotation.x = Math.PI / 2
+  } else if (kind === 'mic-pro') {
+    // SI2.0 drawing p.9: 265 × 135 × 12 mm accessory plinth on the common base.
+    box(0.265, 0.012, 0.135, 0, 0.011, -0.004, silver, 0.002)
+    box(0.112, 0.047, 0.046, 0, 0.041, -0.042, charcoal, 0.008)
+    const lid = box(0.11, 0.046, 0.008, 0, 0.08, -0.062, charcoal, 0.005)
+    lid.rotation.x = -0.18
+    box(0.046, 0.021, 0.024, -0.075, 0.03, 0.028, 0x26282a, 0.004)
+    for (const x of [0.018, 0.082]) {
+      const mic = post(0.021, 0.015, x, 0.029, 0.028, charcoal)
+      mic.rotation.x = Math.PI / 2
+      const cap = post(0.017, 0.002, x, 0.035, 0.037, 0xe2b420)
+      cap.rotation.x = Math.PI / 2
+    }
   } else if (kind === 'double') {
     box(0.145, 0.01, 0.06, 0, 0.01, -0.012, charcoal)
     box(0.222, 0.01, 0.099, 0, 0.02, -0.012, silver)

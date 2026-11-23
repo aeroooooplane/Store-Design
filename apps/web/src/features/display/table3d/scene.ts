@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { makeProductTray, outwardAngle, placeProductTray } from './product-tray.ts'
-import { buildInnerTrays, type InnerVersion } from './inner-trays.ts'
+import { buildInnerTrays, openTraySocket, socketOnBody, type InnerVersion } from './inner-trays.ts'
 import type { ProductTray } from './product-tray.ts'
 import type { DisplayTable, PictureRect } from '@store/shared'
 import type { BodyMeta } from './bodies.ts'
@@ -281,6 +281,7 @@ function placeBody(
   drawn: TableShape,
   table: DisplayTable,
   end: 'left' | 'right',
+  useSocket: boolean,
 ) {
   const { meta } = body
   const along: [number, number] = meta.long === 'x' ? [1, 0] : [0, 1]
@@ -316,7 +317,7 @@ function placeBody(
     depth,
     height: meta.top,
     slots: drawn.slots.map((p) => ({ ...p, x: p.x * sx, z: p.z * sz })),
-    strip: meta.strip ? rect(meta.strip) : null,
+    strip: meta.strip ? rect(useSocket ? socketOnBody(meta.asset, meta.strip) : meta.strip) : null,
   }
   return { object, shape, trays: meta.recesses.map(rect) }
 }
@@ -335,7 +336,9 @@ export async function buildTableScene(
   dress: SlotDresser = cardDresser,
 ): Promise<TableScene> {
   const drawn = tableShape(input.table, input.end)
-  const real = input.body ? placeBody(input.body, drawn, input.table, input.end) : null
+  const real = input.body
+    ? placeBody(input.body, drawn, input.table, input.end, !!input.innerVersion)
+    : null
   const shape = real?.shape ?? drawn
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(BACKGROUND)
@@ -353,13 +356,23 @@ export async function buildTableScene(
   )
   floor.rotation.x = -Math.PI / 2
   root.add(floor)
-  if (real) root.add(real.object)
-  else {
+  let releaseSocket: (() => void) | undefined
+  const socket = input.innerVersion && input.table.modules.length ? shape.strip : null
+  if (real) {
+    if (socket) releaseSocket = openTraySocket(real.object, socket, shape.height)
+    root.add(real.object)
+  } else {
     const top = new THREE.Mesh(
       new THREE.BoxGeometry(shape.width + 0.02, 0.04, shape.depth + 0.02),
       new THREE.MeshStandardMaterial({ color: '#f6f6f4', roughness: 0.55 }),
     )
     top.position.y = shape.height - 0.02
+    if (socket) {
+      // The fallback top has a private material; replace it with the clipped copy.
+      const original = top.material
+      openTraySocket(top, socket, shape.height)
+      original.dispose()
+    }
     root.add(top)
     const body = new THREE.Mesh(
       new THREE.BoxGeometry(shape.width - 0.06, shape.height - 0.04, shape.depth - 0.06),
@@ -552,7 +565,18 @@ export async function buildTableScene(
     return node ? (node.userData.slot as string) : null
   }
 
-  return { scene, faceCamera, frame, fit, slots, slotAt, dispose: () => disposeTree(scene) }
+  return {
+    scene,
+    faceCamera,
+    frame,
+    fit,
+    slots,
+    slotAt,
+    dispose: () => {
+      releaseSocket?.()
+      disposeTree(scene)
+    },
+  }
 }
 
 /** Bounding rectangle of world points on the camera's picture, 0–1 from the top-left. */
