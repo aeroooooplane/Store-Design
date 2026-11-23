@@ -1,3 +1,4 @@
+import { buildRetroGo } from './retro-go.ts'
 import * as THREE from 'three'
 import { trayParts, silver } from './tray-parts.ts'
 
@@ -160,41 +161,30 @@ function aerial(p: Parts, kind: 'AG' | 'AG Pac Air' | 'AG Pac Neo') {
   }
 }
 
-function themedGo(p: Parts, kitty: boolean) {
-  p.box(kitty ? 230 : 216, kitty ? 10 : 12, kitty ? 100 : 158, 0, 6, -3, silver, 2)
-  if (kitty) {
-    // Die-cut character display (219 × 270 × 5 mm) behind the pink camera dock.
-    p.oval(-22, 88, -39, 119, 151, 5, 0xe74665)
-    p.oval(-22, 186, -39, 189, 146, 5, ivory)
-    for (const side of [-1, 1]) {
-      const ear = p.part(new THREE.ConeGeometry(29, 49, 3), ivory, -22 + side * 64, 244, -39)
-      ear.scale.z = 0.11
-      ear.rotation.z = -side * 0.32
-      p.oval(-22 + side * 38, 185, -35, 9, 15, 2, graphite)
-      for (const offset of [-7, 4, 15])
-        p.rod(
-          [-22 + side * 76, 174 + offset, -34],
-          [-22 + side * 105, 174 + offset * 1.6, -34],
-          1.6,
-          graphite,
-        )
-    }
-    p.oval(-22, 175, -35, 12, 8, 2, 0xdba432)
-    for (const x of [17, 45]) p.oval(x, 234, -34, 32, 25, 7, 0xe3365d)
-    p.oval(31, 234, -28, 16, 17, 5, 0xd8304e)
-    p.cameraFace(-25, 39, 16, 65, 47, 0xf1c9cf)
-    p.box(37, 6, 40, 82, 13, 0, graphite, 4)
-  } else {
-    p.box(145, 200, 5, 0, 112, -63, ivory, 3)
-    for (const [i, c] of [0xe0b641, 0xb72f48, 0x31528f].entries()) {
-      const stripe = p.box(15, 102, 2, -36 + i * 21, 160, -59, c)
-      stripe.rotation.z = 0.48
-    }
-    for (const side of [-1, 1]) {
-      p.box(70, 12, 43, side * 50, 18, 18, gray, 3)
-      p.cameraFace(side * 50, 40, 18, 59, 32, side < 0 ? ivory : 0xbc4e51)
-    }
+function kittyGo(p: Parts) {
+  p.box(230, 10, 100, 0, 6, -3, silver, 2)
+
+  // Die-cut character display (219 × 270 × 5 mm) behind the pink camera dock.
+  p.oval(-22, 88, -39, 119, 151, 5, 0xe74665)
+  p.oval(-22, 186, -39, 189, 146, 5, ivory)
+  for (const side of [-1, 1]) {
+    const ear = p.part(new THREE.ConeGeometry(29, 49, 3), ivory, -22 + side * 64, 244, -39)
+    ear.scale.z = 0.11
+    ear.rotation.z = -side * 0.32
+    p.oval(-22 + side * 38, 185, -35, 9, 15, 2, graphite)
+    for (const offset of [-7, 4, 15])
+      p.rod(
+        [-22 + side * 76, 174 + offset, -34],
+        [-22 + side * 105, 174 + offset * 1.6, -34],
+        1.6,
+        graphite,
+      )
   }
+  p.oval(-22, 175, -35, 12, 8, 2, 0xdba432)
+  for (const x of [17, 45]) p.oval(x, 234, -34, 32, 25, 7, 0xe3365d)
+  p.oval(31, 234, -28, 16, 17, 5, 0xd8304e)
+  p.cameraFace(-25, 39, 16, 65, 47, 0xf1c9cf)
+  p.box(37, 6, 40, 82, 13, 0, graphite, 4)
 }
 
 function aceKit(p: Parts, master: boolean) {
@@ -206,7 +196,11 @@ function aceKit(p: Parts, master: boolean) {
   p.box(22, 53, 32, -43, y, 0, graphite, 5)
   p.post(7, 5, -42, y + 25, 0, 0x55575a)
 }
-export function buildAdditionalProduct(kind: AdditionalProduct, parent: THREE.Group) {
+export function buildAdditionalProduct(
+  kind: AdditionalProduct,
+  parent: THREE.Group,
+  graphic: HTMLImageElement | null = null,
+) {
   const assembly = new THREE.Group()
   assembly.scale.setScalar(0.001)
   assembly.position.y = 0.005
@@ -228,8 +222,10 @@ export function buildAdditionalProduct(kind: AdditionalProduct, parent: THREE.Gr
       aerial(p, kind)
       break
     case 'GO Ultra HK':
+      kittyGo(p)
+      break
     case 'GO 3S 复古':
-      themedGo(p, kind === 'GO Ultra HK')
+      buildRetroGo(assembly, graphic)
       break
     case 'AP2 大师':
     case 'AP2 街拍':

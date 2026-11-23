@@ -172,7 +172,7 @@ export function makeProductTray(
     ring.rotation.x = -Math.PI / 2
     camera(0.115, -0.015, 0.026)
   } else {
-    buildAdditionalProduct(kind, group)
+    buildAdditionalProduct(kind, group, graphic)
   }
   if (!slotLabel) return { group, width, depth }
   const canvas = document.createElement('canvas')
@@ -194,6 +194,10 @@ export function makeProductTray(
     )
     plate.rotation.x = -Math.PI / 2
     plate.position.set(sceneTray ? 0.108 : 0, sceneTray ? 0.0265 : 0.0055, 0.07)
+    if (kind === 'GO 3S 复古') {
+      plate.scale.set(0.46, 0.45, 1)
+      plate.position.z = 0.083
+    }
     group.add(plate)
   }
   return { group, width, depth }
