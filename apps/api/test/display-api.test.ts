@@ -29,7 +29,7 @@ beforeAll(async () => {
   await cp(FIXTURES, RESOURCE, { recursive: true })
   const manifest = JSON.parse(
     await readFile(
-      new URL('../../../docs/evidence/inner-ppt-release-20261105.json', import.meta.url),
+      new URL('../../../docs/evidence/inner-series-20261123.json', import.meta.url),
       'utf8',
     ),
   ) as { files: { path: string }[] }

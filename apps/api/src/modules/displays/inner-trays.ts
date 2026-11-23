@@ -26,16 +26,27 @@ const MODULES = {
     'D8',
   ]),
   '2026': new Set([
+    'A1',
     'A2',
     'A3',
     'A4',
+    'A6',
     'A7',
     'A8',
     'C1',
+    'C2',
+    'C3',
     'C4',
+    'D1',
+    'D2',
+    'D3',
     'D4',
+    'D5',
+    'D6',
     'D7',
+    'D8',
     'D9',
+    'D10',
     'D11',
     'D12',
     'D13',
@@ -49,10 +60,11 @@ export async function innerTrayPicture(
   id: string,
 ) {
   if (!MODULES[version].has(id)) throw new AppError('NOT_FOUND', '暂无对应的内嵌托盘配图')
+  const folder = version === '2026' ? '系列配图20261123' : 'PPT配图20261105'
   const { file } = await resolveStoredFile(
     roots,
     'resource',
-    `${DISPLAY_RESOURCE_DIR}/配件模块/PPT配图20261105/${version}-${id}.png`,
+    `${DISPLAY_RESOURCE_DIR}/配件模块/${folder}/${version}-${id}.png`,
   )
   return readFile(file)
 }
@@ -73,7 +85,8 @@ export async function loadInnerTrayImages(
       : 'legacy'
   const result: InnerTrayImages = {
     title: version === '2026' ? '2026版内嵌托盘' : '既有内嵌托盘方案',
-    source: version === '2026' ? '展陈指引第三节 · rev4130' : '既有指引 · 2026-10-13资源',
+    source:
+      version === '2026' ? '内嵌托盘配件展示方案（2026版）第 2–7 页' : '既有指引 · 2026-10-13资源',
     images: {},
   }
   const ids = new Set(
