@@ -1,9 +1,15 @@
 import * as THREE from 'three'
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
+import { trayParts, silver } from './tray-parts.ts'
+import {
+  additionalProduct,
+  buildAdditionalProduct,
+  type AdditionalProduct,
+} from './four-table-products.ts'
 import type { DisplayTable, SiStyle } from '@store/shared'
 import type { SlotPlace } from './layout.ts'
 
-export type ProductTray = 'single' | 'double' | 'scene' | 'ace' | 'go-ultra' | 'mic-pro'
+export type ProductTray =
+  'single' | 'double' | 'scene' | 'ace' | 'go-ultra' | 'mic-pro' | AdditionalProduct
 
 export function productTray(si: SiStyle, unit: string | null): ProductTray | undefined {
   if (si !== 'SI2.0') return
@@ -23,7 +29,7 @@ export function productTray(si: SiStyle, unit: string | null): ProductTray | und
     case 'scene-X6':
       return 'scene'
     default:
-      return undefined
+      return additionalProduct(unit)
   }
 }
 
@@ -46,7 +52,6 @@ export function outwardAngle(
   }
 }
 
-const silver = 0xb9bfc6
 const charcoal = 0x282a2d
 
 /** All dimensions are metres, with the customer at +z. The single base and socket use
@@ -57,51 +62,7 @@ export function makeProductTray(
   graphic: HTMLImageElement | null,
 ) {
   const group = new THREE.Group()
-  function part(geometry: THREE.BufferGeometry, color: number, x: number, y: number, z: number) {
-    const material = new THREE.MeshStandardMaterial({
-      color,
-      metalness: color === silver ? 0.55 : 0.12,
-      roughness: 0.43,
-    })
-    const mesh = new THREE.Mesh(geometry, material)
-    mesh.position.set(x, y, z)
-    group.add(mesh)
-    return mesh
-  }
-  function box(
-    w: number,
-    h: number,
-    d: number,
-    x: number,
-    y: number,
-    z: number,
-    color: number,
-    radius = 0,
-  ) {
-    return part(
-      radius ? new RoundedBoxGeometry(w, h, d, 3, radius) : new THREE.BoxGeometry(w, h, d),
-      color,
-      x,
-      y,
-      z,
-    )
-  }
-  function post(
-    radius: number,
-    height: number,
-    x: number,
-    bottom: number,
-    z: number,
-    color: number,
-  ) {
-    return part(
-      new THREE.CylinderGeometry(radius, radius, height, 24),
-      color,
-      x,
-      bottom + height / 2,
-      z,
-    )
-  }
+  const { part, box, post } = trayParts(group)
   function camera(x: number, z: number, bottom: number, white = false) {
     const finish = white ? 0xd8d8d4 : charcoal
     const length = 0.183
@@ -174,7 +135,7 @@ export function makeProductTray(
       post(0.016, 0.022, x, 0.034, -0.012, silver)
       camera(x, -0.012, 0.056, x > 0)
     }
-  } else {
+  } else if (kind === 'scene') {
     box(0.422, 0.021, 0.181, 0, 0.0155, 0, charcoal)
     const terrain = new THREE.PlaneGeometry(0.24, 0.175, 36, 24)
     terrain.rotateX(-Math.PI / 2)
@@ -210,6 +171,8 @@ export function makeProductTray(
     const ring = part(new THREE.RingGeometry(0.04, 0.043, 48), 0xffffff, 0.115, 0.0262, -0.015)
     ring.rotation.x = -Math.PI / 2
     camera(0.115, -0.015, 0.026)
+  } else {
+    buildAdditionalProduct(kind, group)
   }
   const canvas = document.createElement('canvas')
   canvas.width = 512
