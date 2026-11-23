@@ -10,6 +10,8 @@ import { drawInto, shotAspect, slotContents, viewKey } from './shots.ts'
 import type { TableViewContext } from './shots.ts'
 
 interface Table3DCardProps {
+  showText: boolean
+  showImages: boolean
   table: DisplayTable
   ctx: TableViewContext
   /** A click on a card (not a drag): which slot, and where on the page. */
@@ -24,7 +26,7 @@ const DRAG = 5
  * the slot holds. Every card faces the viewer. The pictures come from one shared renderer and are
  * copied onto this card's own 2D canvas, so a page of tables uses a single WebGL context.
  */
-export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
+export function Table3DCard({ table, ctx, onSlotClick, showText, showImages }: Table3DCardProps) {
   const canvas = useRef<HTMLCanvasElement>(null)
   const camera = useRef<THREE.PerspectiveCamera | null>(null)
   const aim = useRef<THREE.Vector3 | null>(null)
@@ -101,7 +103,9 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
           table,
           end: ctx.end,
           contents: slotContents(table, ctx),
-          names: true,
+          names: showText,
+          showImages,
+          hideSlotText: !showText,
           previewModels: true,
           innerVersion: ctx.innerVersion ?? 'legacy',
           body,
@@ -134,7 +138,7 @@ export function Table3DCard({ table, ctx, onSlotClick }: Table3DCardProps) {
     }
     // `key` stands for the table's contents and look.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key, showText, showImages])
 
   const slotUnder = (event: { clientX: number; clientY: number }) => {
     const rect = canvas.current?.getBoundingClientRect()

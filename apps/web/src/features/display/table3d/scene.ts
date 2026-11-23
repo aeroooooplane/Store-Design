@@ -22,6 +22,8 @@ export interface SlotContent {
 
 export interface TableSceneInput {
   innerVersion?: InnerVersion
+  showImages?: boolean
+  hideSlotText?: boolean
   previewModels?: boolean
   table: DisplayTable
   end: 'left' | 'right'
@@ -42,6 +44,8 @@ export type SlotDresser = (
   content: SlotContent,
   shape: TableShape,
   names: boolean,
+  showImages?: boolean,
+  hideSlotText?: boolean,
 ) => Promise<{
   object: THREE.Object3D
   card: THREE.Object3D | null
@@ -109,7 +113,12 @@ function fitText(ctx: CanvasRenderingContext2D, text: string, x: number, y: numb
 }
 
 /** The card's face: slot code (and 明星位) on top, the tray picture, the product name below. */
-async function cardTexture(content: SlotContent, names: boolean) {
+async function cardTexture(
+  content: SlotContent,
+  names: boolean,
+  showImages: boolean,
+  hideSlotText: boolean,
+) {
   const canvas = document.createElement('canvas')
   canvas.width = PX
   canvas.height = Math.round((PX * CARD.h) / CARD.w)
@@ -123,8 +132,8 @@ async function cardTexture(content: SlotContent, names: boolean) {
     ctx.textBaseline = 'middle'
     ctx.fillStyle = '#374151'
     ctx.font = 'bold 40px "Microsoft YaHei", sans-serif'
-    ctx.fillText(content.slot, 22, head / 2 + 4)
-    if (content.hero) {
+    if (!hideSlotText) ctx.fillText(content.slot, 22, head / 2 + 4)
+    if (content.hero && !hideSlotText) {
       const x = 30 + ctx.measureText(content.slot).width
       ctx.fillStyle = RED
       ctx.fillRect(x, 12, 132, head - 16)
@@ -133,7 +142,7 @@ async function cardTexture(content: SlotContent, names: boolean) {
       ctx.fillText('明星位', x + 18, head / 2 + 4)
     }
     const box = { x: 14, y: head, w: canvas.width - 28, h: canvas.height - head - foot }
-    const image = content.photo ? await loadImage(content.photo) : null
+    const image = showImages && content.photo ? await loadImage(content.photo) : null
     if (image) {
       // Cover the box, cropping the overflowing side.
       const s = Math.max(box.w / image.width, box.h / image.height)
@@ -150,7 +159,7 @@ async function cardTexture(content: SlotContent, names: boolean) {
         box.w,
         box.h,
       )
-    } else {
+    } else if (showImages && !hideSlotText) {
       ctx.fillStyle = '#f3f4f6'
       ctx.fillRect(box.x, box.y, box.w, box.h)
       ctx.fillStyle = '#9ca3af'
@@ -179,7 +188,14 @@ async function cardTexture(content: SlotContent, names: boolean) {
  * The first dresser: a silver tray with a card standing on it that always turns to face the
  * viewer, so the tray picture reads the same from any side.
  */
-export const cardDresser: SlotDresser = async (place, content, shape, names) => {
+export const cardDresser: SlotDresser = async (
+  place,
+  content,
+  shape,
+  names,
+  showImages = true,
+  hideSlotText = false,
+) => {
   const group = new THREE.Group()
   const tray = new THREE.Mesh(
     new THREE.BoxGeometry(place.w, 0.012, place.d),
@@ -187,12 +203,14 @@ export const cardDresser: SlotDresser = async (place, content, shape, names) => 
   )
   tray.position.set(place.x, shape.height + 0.006, place.z)
   group.add(tray)
+  if (!showImages && hideSlotText)
+    return { object: group, card: null, pick: tray, outline: [], name: [] }
   const pivot = new THREE.Group()
   pivot.position.set(place.x, shape.height + 0.012, place.z)
   const card = new THREE.Mesh(
     new THREE.PlaneGeometry(CARD.w, CARD.h),
     new THREE.MeshBasicMaterial({
-      map: await cardTexture(content, names),
+      map: await cardTexture(content, names, showImages, hideSlotText),
       toneMapped: false,
       side: THREE.DoubleSide,
     }),
@@ -398,6 +416,8 @@ export async function buildTableScene(
         input.end,
         input.innerVersion,
         loadImage,
+        input.showImages,
+        !input.hideSlotText,
       ),
     )
   } else if (shape.strip && input.table.modules.length) {
@@ -433,8 +453,15 @@ export async function buildTableScene(
       }
     }
     if (input.previewModels && content.tray) {
-      const graphic = content.sceneRender ? await loadImage(content.sceneRender) : null
-      const model = makeProductTray(content.tray, place.slot + ' · ' + content.name, graphic)
+      const graphic =
+        input.showImages !== false && content.sceneRender
+          ? await loadImage(content.sceneRender)
+          : null
+      const model = makeProductTray(
+        content.tray,
+        input.hideSlotText ? '' : place.slot + ' · ' + content.name,
+        graphic,
+      )
       placeProductTray(
         model,
         at,
@@ -459,7 +486,14 @@ export async function buildTableScene(
       })
       continue
     }
-    const dressed = await dress(at, content, shape, input.names)
+    const dressed = await dress(
+      at,
+      content,
+      shape,
+      input.names,
+      input.showImages,
+      input.hideSlotText,
+    )
     dressed.pick.userData.slot = place.slot
     root.add(dressed.object)
     slots.push({ slot: place.slot, ...dressed })
