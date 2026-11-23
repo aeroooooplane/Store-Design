@@ -32,8 +32,13 @@ export function slotContents(table: DisplayTable, ctx: TableViewContext): SlotCo
     name: s.unit ? (labelOf.get(s.unit) ?? s.unit) : '待定',
     tray: productTray(ctx.si, s.unit),
     sceneRender:
-      s.unit === 'scene-X6' && ctx.si === 'SI2.0'
-        ? ctx.photos.find((p) => p.unit === s.unit && p.si === ctx.si && p.kind === 'render')?.url
+      (s.unit === 'scene-X6' || s.unit === 'GO 3S 复古') && ctx.si === 'SI2.0'
+        ? ctx.photos.find(
+            (p) =>
+              p.unit === s.unit &&
+              p.si === ctx.si &&
+              p.kind === (s.unit === 'GO 3S 复古' ? 'photo' : 'render'),
+          )?.url
         : undefined,
     empty: !s.unit,
     photo: photoOf(ctx.photos, s.unit, ctx.si)?.url ?? null,
