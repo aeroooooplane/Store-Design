@@ -3,7 +3,8 @@
   "oneDriveFolder": "门店生成工作台/资源库",
   "requiredFiles": {
     "04_模型库/manifest.json": "CF41C66BBF8154ADBD683AAA394F0A7CA28BCC0A0A8C60EA122EBBFF20A94F04",
-    "10_产品与陈列/展陈规则.xlsx": "5AB3B57F92412887A2881EAC87CEC7CD90215A0D2CC774D2A0303B1FA7D09E17",
+    "10_产品与陈列/展陈规则.xlsx": "C034C1E56A6472B3437675E3D2B926972C495EFBDAF141CB521FDB5DC808A37A",
+    "10_产品与陈列/托盘照片/Toast-20261123/SI2.0-Toast-photo.jpg": "B2C9C5C1864CDCA334052C3F89570E4E080DCC791012C02B5F4A1F3F421AC32D",
     "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/model.glb": "947DBA5FA5FAF1FA4CE4B278ABF897AD208F8C9CB31633EF40DDD4B78637BE0D",
     "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/conversion.json": "70225E12C09D878F919F3F36B3A7805A4DB6A93F68671C98BF9405EB8740CECF",
     "04_模型库/非标陈列/产品放大模型_X3相机__asset-1691382/网页模型/white.glb": "4222F8B002D163ADA8AA8F04F86075A04D8D54B4C7B2236F52E90F07BCD57E6F",
@@ -374,7 +375,7 @@
   "sourcePdfCount": 540,
   "releaseVersions": {
     "models": "models-20261118-leica-logo",
-    "display": "display-20261105-rev4130",
+    "display": "display-20261123-toast",
     "sources": "sources-20261104-540",
     "displayIllustrations": "inner-series-20261123"
   },

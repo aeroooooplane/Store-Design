@@ -9,7 +9,14 @@ import type { DisplayTable, SiStyle } from '@store/shared'
 import type { SlotPlace } from './layout.ts'
 
 export type ProductTray =
-  'single' | 'double' | 'scene' | 'ace' | 'go-ultra' | 'mic-pro' | AdditionalProduct
+  | 'single'
+  | 'double'
+  | 'scene-optimized'
+  | 'scene'
+  | 'ace'
+  | 'go-ultra'
+  | 'mic-pro'
+  | AdditionalProduct
 
 export function productTray(si: SiStyle, unit: string | null): ProductTray | undefined {
   if (si !== 'SI2.0') return
@@ -20,12 +27,15 @@ export function productTray(si: SiStyle, unit: string | null): ProductTray | und
       return 'single'
     case 'X5+X4 Air':
       return 'double'
+    case 'AP1':
     case 'AP2':
       return 'ace'
     case 'GO Ultra':
       return 'go-ultra'
     case 'Mic Pro':
       return 'mic-pro'
+    case 'scene-X6-opt':
+      return 'scene-optimized'
     case 'scene-X6':
       return 'scene'
     default:
@@ -82,7 +92,8 @@ export function makeProductTray(
       lens.scale.z = 0.5
     }
   }
-  const sceneTray = kind === 'scene'
+  const x6Scene = kind === 'scene' || kind === 'scene-optimized'
+  const sceneTray = x6Scene || kind === 'scene-AG' || kind === 'scene-Luna Ultra'
   const width = sceneTray ? 0.425 : 0.32
   const depth = sceneTray ? 0.183 : 0.18
   box(width, 0.005, depth, 0, 0.0025, 0, silver)
@@ -135,7 +146,7 @@ export function makeProductTray(
       post(0.016, 0.022, x, 0.034, -0.012, silver)
       camera(x, -0.012, 0.056, x > 0)
     }
-  } else if (kind === 'scene') {
+  } else if (x6Scene) {
     box(0.422, 0.021, 0.181, 0, 0.0155, 0, charcoal)
     const terrain = new THREE.PlaneGeometry(0.24, 0.175, 36, 24)
     terrain.rotateX(-Math.PI / 2)
@@ -150,7 +161,13 @@ export function makeProductTray(
       )
     }
     terrain.computeVertexNormals()
-    part(terrain, 0x343539, -0.084, 0.0261, 0)
+    part(
+      terrain,
+      kind === 'scene-optimized' ? 0xdedbd3 : 0x343539,
+      kind === 'scene-optimized' ? 0.084 : -0.084,
+      0.0261,
+      0,
+    )
     post(0.007, 0.15, -0.093, 0.026, -0.018, charcoal)
     const disk = post(0.115, 0.009, -0.093, 0.24, -0.018, charcoal)
     disk.rotation.x = Math.PI / 2
