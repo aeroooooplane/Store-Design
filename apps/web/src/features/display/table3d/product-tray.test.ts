@@ -11,8 +11,9 @@ describe('SI2.0 产品托盘', () => {
     expect(productTray('SI2.0', 'AP2')).toBe('ace')
     expect(productTray('SI2.0', 'Mic Pro')).toBe('mic-pro')
     expect(productTray('SI2.0', 'GO Ultra')).toBe('go-ultra')
-    for (const unit of ['scene-Luna Ultra', 'Luna C', 'scene-X6-opt', null])
-      expect(productTray('SI2.0', unit)).toBeUndefined()
+    expect(productTray('SI2.0', 'scene-X6-opt')).toBe('scene-optimized')
+    expect(productTray('SI2.0', 'AP1')).toBe('ace')
+    for (const unit of [null, '未知款']) expect(productTray('SI2.0', unit)).toBeUndefined()
     expect(productTray('SI1.0', 'X5')).toBeUndefined()
   })
   it.each([
@@ -41,6 +42,12 @@ describe('SI2.0 产品托盘', () => {
 })
 
 it.each([
+  'Snap',
+  'Toast',
+  'GO3S',
+  'Luna C',
+  'scene-Luna Ultra',
+  'scene-AG',
   'Luna A',
   'Luna B',
   'Flow2',
@@ -60,5 +67,7 @@ it.each([
   const bounds = new Box3().setFromObject(group)
   expect(bounds.max.y).toBeGreaterThan(0.06)
   expect(bounds.max.y).toBeLessThan(0.4)
-  expect(Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x))).toBeLessThan(0.16)
+  expect(Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x))).toBeLessThan(
+    unit.startsWith('scene-') ? 0.213 : 0.16,
+  )
 })

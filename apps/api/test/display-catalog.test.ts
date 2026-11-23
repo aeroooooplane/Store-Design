@@ -61,9 +61,9 @@ function planned(n: number, siStyle?: SiStyle, scheme?: 'standard' | 'draft-2026
 
 describe('权威指引 rev4130 逐行托盘核对', () => {
   it('AG Pac 四行图片依最新指引区分效果图和实景图', () => {
-    expect(rules.version).toBe('2026-11-05')
-    expect(rules.photos).toHaveLength(112)
-    expect(new Set(rules.photos.map((p) => p.file)).size).toBe(100)
+    expect(rules.version).toBe('2026-11-23')
+    expect(rules.photos).toHaveLength(113)
+    expect(new Set(rules.photos.map((p) => p.file)).size).toBe(101)
     for (const si of ['SI1.0', 'SI2.0'] as const) {
       const neo = rules.photos.filter((p) => p.si === si && p.unit === 'AG Pac Neo')
       const air = rules.photos.filter((p) => p.si === si && p.unit === 'AG Pac Air')
@@ -73,14 +73,20 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
       expect(air.every((p) => p.file.includes('核对20261105'))).toBe(true)
     }
   })
-  it('完整保留52行来源规格，每行可选且一选只算一个托盘，不因没有图片被丢弃', () => {
+  it('完整保留53行来源规格，每行可选且一选只算一个托盘，不因没有图片被丢弃', () => {
     expect(checkRules(rules)).toEqual([])
     expect(
       checkRules({ ...rules, catalog: [...rules.catalog!, rules.catalog![0]!] }).some((p) =>
         p.includes('托盘选项编号重复'),
       ),
     ).toBe(true)
-    expect(rules.catalog).toHaveLength(52)
+    expect(rules.catalog).toHaveLength(53)
+    const toast = rules.catalog?.find((row) => row.units.includes('Toast'))
+    expect(toast).toMatchObject({ si: 'SI2.0', row: 25, units: ['Toast'] })
+    expect([...countUnits(rules, ['Toast']).trays.values()]).toEqual([1])
+    expect(rules.photos.filter((p) => p.unit === 'Toast')).toMatchObject([
+      { si: 'SI2.0', kind: 'photo' },
+    ])
     for (const row of audit.catalog) {
       const source = rules.catalog?.find((c) => c.si === row.si && c.row === row.row)
       expect(source?.units, `${row.si} 第${row.row}行`).toEqual(row.units)
@@ -91,7 +97,7 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
     }
     for (const [si, rows, choices] of [
       ['SI1.0', 29, 32],
-      ['SI2.0', 23, 26],
+      ['SI2.0', 24, 27],
     ] as const) {
       expect(rules.catalog?.filter((c) => c.si === si)).toHaveLength(rows)
       const ids = displayChoices(rules, si).map((c) => c.id)

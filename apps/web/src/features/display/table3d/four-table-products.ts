@@ -3,6 +3,12 @@ import * as THREE from 'three'
 import { trayParts, silver } from './tray-parts.ts'
 
 const selections = [
+  'Snap',
+  'Toast',
+  'GO3S',
+  'Luna C',
+  'scene-Luna Ultra',
+  'scene-AG',
   'Luna A',
   'Luna B',
   'Flow2',
@@ -55,7 +61,7 @@ function components(group: THREE.Group) {
 }
 type Parts = ReturnType<typeof components>
 
-function luna(p: Parts, dual: boolean) {
+function luna(p: Parts, kind: 'Luna A' | 'Luna B' | 'Luna C') {
   p.box(265, 12, 134, 0, 6, -5, silver, 2)
   // A has two handheld gimbals; B replaces the second with creator accessories.
   function handheld(x: number, color: number) {
@@ -69,8 +75,13 @@ function luna(p: Parts, dual: boolean) {
     p.oval(x + 5, 132, 17, 15, 15, 6, glass)
   }
   handheld(-67, graphite)
-  if (dual) handheld(67, ivory)
-  else {
+  if (kind === 'Luna A') handheld(67, ivory)
+  else if (kind === 'Luna C') {
+    p.box(86, 45, 38, 59, 35, -20, graphite, 7)
+    p.box(42, 15, 26, 36, 20, 28, graphite, 4)
+    p.oval(87, 27, 22, 31, 31, 22, graphite)
+    p.oval(87, 27, 33, 23, 23, 3, 0xf1bd24)
+  } else {
     p.post(15, 41, 26, 12, 5, graphite)
     p.oval(83, 32, 9, 34, 36, 31, 0x434547)
     p.oval(83, 32, 24, 25, 25, 4, 0xe0b52c)
@@ -196,6 +207,120 @@ function aceKit(p: Parts, master: boolean) {
   p.box(22, 53, 32, -43, y, 0, graphite, 5)
   p.post(7, 5, -42, y + 25, 0, 0x55575a)
 }
+function snap(p: Parts) {
+  p.post(26, 8, 0, 0, -8, silver)
+  p.post(16, 24, 0, 8, -8, silver)
+  p.post(5, 86, 0, 32, -8, graphite)
+  p.box(73, 146, 9, 0, 155, 0, gray, 6)
+  p.box(60, 91, 6, 0, 137, 7, graphite, 4)
+  p.box(54, 80, 1, 0, 138, 10.3, glass, 3)
+  for (const [x, y] of [
+    [-24, 217],
+    [-13, 209],
+    [-24, 201],
+  ] as const)
+    p.oval(x, y, 5, 9, 9, 3, glass)
+  for (const x of [-24, 24]) p.box(6, 12, 17, x, 85, 0, silver, 2)
+  p.rod([0, 83, 3], [13, 8, 7], 1.2, graphite)
+  p.rod([13, 8, 7], [66, 2, 25], 1.2, graphite)
+}
+
+function toast(p: Parts, group: THREE.Group, graphic: HTMLImageElement | null) {
+  p.box(278, 12, 139, 0, 6, -3, silver, 2)
+  p.box(267, 3, 131, 0, 13.5, -3, gray, 2)
+  p.box(127, 155, 5, -65, 92.5, -57, silver, 2)
+  const sleeve = new THREE.Shape()
+  sleeve.moveTo(-50, -26)
+  sleeve.lineTo(-50, 26)
+  sleeve.lineTo(50, 26)
+  sleeve.lineTo(50, -26)
+  sleeve.lineTo(32, -26)
+  sleeve.lineTo(32, -22)
+  sleeve.lineTo(5, -22)
+  sleeve.lineTo(5, -26)
+  sleeve.closePath()
+  const hole = new THREE.Path()
+  hole.absarc(-22, 0, 7, Math.PI / 2, (3 * Math.PI) / 2, false)
+  hole.absarc(22, 0, 7, (3 * Math.PI) / 2, Math.PI / 2, false)
+  hole.closePath()
+  sleeve.holes.push(hole)
+  const pocket = p.part(
+    new THREE.ExtrudeGeometry(sleeve, { depth: 3, bevelEnabled: false }),
+    ivory,
+    -71,
+    15,
+    7,
+  )
+  pocket.rotation.x = -Math.PI / 2
+  p.rod([-21, 18, 7], [15, 17, 14], 1.3, ivory)
+  const ring = p.part(new THREE.TorusGeometry(9, 2, 8, 28), ivory, 24, 17, 14)
+  ring.rotation.x = Math.PI / 2
+  const block = p.box(57, 23, 40, 77, 26.5, -4, 0xc98029, 2)
+  block.material.transparent = true
+  block.material.opacity = 0.78
+  p.box(57, 80, 5, 77, 78, -8, ivory, 2)
+  if (graphic) {
+    const texture = new THREE.Texture(graphic)
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.offset.set(752 / 1280, 1 - 365 / 720)
+    texture.repeat.set(83 / 1280, 123 / 720)
+    texture.needsUpdate = true
+    const print = new THREE.Mesh(
+      new THREE.PlaneGeometry(47, 66),
+      new THREE.MeshBasicMaterial({ map: texture }),
+    )
+    print.position.set(77, 80, -5.4)
+    group.add(print)
+  }
+}
+
+function lunaScene(p: Parts, group: THREE.Group, graphic: HTMLImageElement | null) {
+  p.box(408, 16, 170, 0, 8, 0, 0xa99e8f, 3)
+  function camera(x: number, z: number, scale: number) {
+    const body = new THREE.Group()
+    body.position.set(x, 16, z)
+    body.scale.setScalar(scale)
+    const q = components(body)
+    q.box(36, 97, 29, 0, 53, 0, graphite, 6)
+    const monitor = q.box(57, 39, 7, 12, 87, 17, graphite, 4)
+    monitor.rotation.z = -0.14
+    q.box(49, 30, 2, 12, 87, 21, 0x4f6173, 2).rotation.z = monitor.rotation.z
+    q.post(7, 17, 0, 100, 0, graphite)
+    q.box(54, 26, 26, 0, 129, 0, graphite, 6)
+    for (const dx of [-13, 11]) q.oval(dx, 129, 14, 17, 17, 4, glass)
+    group.add(body)
+  }
+  camera(-84, 0, 1.93)
+  camera(80, 27, 0.78)
+  p.post(5, 125, 80, 16, -44, graphite)
+  const disk = p.post(74, 5, 80, 154, -44, graphite)
+  disk.rotation.x = Math.PI / 2
+  const face = p.part(new THREE.CircleGeometry(71, 64), 0x447899, 80, disk.position.y, -41.4)
+  if (graphic) {
+    const texture = new THREE.Texture(graphic)
+    texture.colorSpace = THREE.SRGBColorSpace
+    texture.repeat.set(239 / 1400, 240 / 871)
+    texture.offset.set(749 / 1400, 1 - 412 / 871)
+    texture.needsUpdate = true
+    face.material.color.set(0xffffff)
+    face.material.map = texture
+  }
+}
+
+function standardGo(p: Parts) {
+  p.box(164, 8, 102, -43, 4, -5, silver, 2)
+  const panel = p.box(145, 170, 5, -43, 93, -49, 0xd3dde0, 2)
+  panel.material.transparent = true
+  panel.material.opacity = 0.42
+  panel.material.depthWrite = false
+  p.oval(-43, 111, -45, 51, 51, 5, ivory)
+  p.cameraFace(-43, 35, 13, 62, 44, ivory)
+  p.box(52, 32, 4, -43, 72, 9, glass, 2)
+  p.post(25, 8, 85, 0, 3, graphite)
+  p.post(8, 16, 85, 8, 3, graphite)
+  p.oval(85, 34, 3, 33, 31, 26, graphite)
+}
+
 export function buildAdditionalProduct(
   kind: AdditionalProduct,
   parent: THREE.Group,
@@ -206,9 +331,36 @@ export function buildAdditionalProduct(
   assembly.position.y = 0.005
   const p = components(assembly)
   switch (kind) {
+    case 'Luna C':
     case 'Luna A':
     case 'Luna B':
-      luna(p, kind === 'Luna A')
+      luna(p, kind)
+      break
+    case 'Snap':
+      snap(p)
+      break
+    case 'Toast':
+      toast(p, assembly, graphic)
+      break
+    case 'GO3S':
+      standardGo(p)
+      break
+    case 'scene-Luna Ultra':
+      lunaScene(p, assembly, graphic)
+      break
+    case 'scene-AG':
+      p.box(405, 14, 166, 0, 7, 0, graphite, 3)
+      for (const [x, z, r] of [
+        [-85, -12, 42],
+        [38, 20, 27],
+        [-54, 30, 20],
+      ] as const) {
+        const rock = p.part(new THREE.DodecahedronGeometry(r), gray, x, 16, z)
+        rock.scale.y = 0.62
+        rock.position.y = 14 + 0.4 * r
+      }
+      p.box(28, 108, 26, 153, 68, -12, 0xff8c21, 3)
+      aerial(p, 'AG')
       break
     case 'Flow2':
       flow(p)

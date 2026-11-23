@@ -289,7 +289,7 @@ describe('新版SI托盘配置的保存与重载', () => {
     expect(report.status).toBe('imported')
     expect(report.missingPhotos.length).toBeGreaterThan(0)
     const view = (await inject('GET', '/display-rules/current')).json<DisplayRulesView>()
-    expect(view.rules.catalog).toHaveLength(52)
+    expect(view.rules.catalog).toHaveLength(53)
     let task = (
       await inject('POST', '/display-tasks', {
         name: '内嵌新版核对店',
@@ -322,12 +322,17 @@ describe('新版SI托盘配置的保存与重载', () => {
             render: null,
             label: null,
           })),
-          edits: { ...task.state.edits, moduleScheme: 'draft-2026' },
+          edits: {
+            ...task.state.edits,
+            moduleScheme: 'draft-2026',
+            slots: { t0: { L1: 'Snap', E: 'Toast' } },
+          },
         },
       },
     })
     expect(response.statusCode).toBe(200)
     const reloaded = (await inject('GET', `/display-tasks/${task.id}`)).json<DisplayTask>()
+    expect(reloaded.state.edits.slots.t0).toEqual({ L1: 'Snap', E: 'Toast' })
     expect(reloaded.siStyle).toBe('SI2.0')
     expect(reloaded.state.edits.moduleScheme).toBe('draft-2026')
     const exported = await inject('POST', `/display-tasks/${task.id}/export`, {
@@ -335,7 +340,7 @@ describe('新版SI托盘配置的保存与重载', () => {
       tables3d: [],
     })
     expect(exported.statusCode).toBe(201)
-    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-11-05')
+    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-11-23')
     const ppt = await download(exported.json<DisplayExport>().pptx)
     const entries = unzipSync(new Uint8Array(ppt.rawPayload))
     const text = Object.entries(entries)
