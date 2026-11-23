@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { makeProductTray, outwardAngle, placeProductTray } from './product-tray.ts'
-import { buildInnerTrays, openTraySocket, type InnerVersion } from './inner-trays.ts'
+import { buildInnerTrays, openTraySocket, socketOnBody, type InnerVersion } from './inner-trays.ts'
 import type { ProductTray } from './product-tray.ts'
 import type { DisplayTable, PictureRect } from '@store/shared'
 import type { BodyMeta } from './bodies.ts'
@@ -281,6 +281,7 @@ function placeBody(
   drawn: TableShape,
   table: DisplayTable,
   end: 'left' | 'right',
+  useSocket: boolean,
 ) {
   const { meta } = body
   const along: [number, number] = meta.long === 'x' ? [1, 0] : [0, 1]
@@ -316,7 +317,7 @@ function placeBody(
     depth,
     height: meta.top,
     slots: drawn.slots.map((p) => ({ ...p, x: p.x * sx, z: p.z * sz })),
-    strip: meta.strip ? rect(meta.strip) : null,
+    strip: meta.strip ? rect(useSocket ? socketOnBody(meta.asset, meta.strip) : meta.strip) : null,
   }
   return { object, shape, trays: meta.recesses.map(rect) }
 }
@@ -335,7 +336,9 @@ export async function buildTableScene(
   dress: SlotDresser = cardDresser,
 ): Promise<TableScene> {
   const drawn = tableShape(input.table, input.end)
-  const real = input.body ? placeBody(input.body, drawn, input.table, input.end) : null
+  const real = input.body
+    ? placeBody(input.body, drawn, input.table, input.end, !!input.innerVersion)
+    : null
   const shape = real?.shape ?? drawn
   const scene = new THREE.Scene()
   scene.background = new THREE.Color(BACKGROUND)

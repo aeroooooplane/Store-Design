@@ -6,6 +6,18 @@ export type InnerVersion = 'legacy' | '2026'
 
 // 指引第三节总装图及 A/C/D 单件图，毫米。桌体索引中的 strip 仅用于确定中心与长轴。
 const FRAME = { length: 680, width: 135, height: 30, clearLength: 670, clearWidth: 125 }
+/** Centers measured on the unrotated SI2.0 meshes at the 27 mm-deep pocket.
+ * The catalog strip also spans unused space between product rows. */
+export function socketOnBody(asset: string, strip: Strip): Strip {
+  switch (asset) {
+    case 'asset-24312623':
+      return { ...strip, x: 0, z: -0.002 }
+    case 'asset-41053706':
+      return { ...strip, x: 0.002, z: 0 }
+    default:
+      return strip
+  }
+}
 function lengthMm(id: string) {
   if (/^A\d+$/.test(id)) return 110
   if (/^C\d+$/.test(id)) return 445
