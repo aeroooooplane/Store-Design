@@ -48,11 +48,11 @@ export function ProjectDrawings({ projectId }: { projectId: string }) {
     setPage(1)
     return run(async () => {
       const contentType = file.type
-      if (file.size > UPLOAD_MAX_BYTES) throw new Error('请选择 20 MB 以内的图纸')
       if (contentType === 'application/pdf' || /\.pdf$/i.test(file.name)) {
         const { openPdf } = await import('../recognition/pdf-extract.ts')
         setPdf({ document: await openPdf(await file.arrayBuffer()), name: file.name })
       } else if (contentType === 'image/png' || contentType === 'image/jpeg') {
+        if (file.size > UPLOAD_MAX_BYTES) throw new Error('请选择 20 MB 以内的图片')
         await upload.mutateAsync({ blob: file, contentType, originalName: file.name })
       } else {
         throw new Error('请选择 PNG、JPG 或 PDF 图纸')
