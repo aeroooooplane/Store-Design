@@ -71,12 +71,12 @@ describe('defaultNodeId', () => {
 })
 
 describe('stages', () => {
-  it('maps kinds to stages, old edit nodes to the plan stage', () => {
+  it('maps old edit and white nodes to the plan stage', () => {
     expect(['space', 'plan', 'edit', 'white', 'render'].map((k) => stageOf(k as never))).toEqual([
       'space',
       'plan',
       'plan',
-      'white',
+      'plan',
       'render',
     ])
   })
@@ -92,9 +92,8 @@ describe('stages', () => {
     ]
     const at = (id: string) => list.find((n) => n.id === id) as NodeSummary
     expect(stageParentId(list, at('pl'))).toBe('sp')
-    expect(stageParentId(list, at('w1'))).toBe('pl')
-    // The old chain white → edit → white: a copy of the inner white goes under the edit (plan level).
-    expect(stageParentId(list, at('w2'))).toBe('ed')
+    expect(stageParentId(list, at('w1'))).toBe('sp')
+    expect(stageParentId(list, at('w2'))).toBe('sp')
     expect(stageParentId(list, at('rd'))).toBe('w2')
   })
 

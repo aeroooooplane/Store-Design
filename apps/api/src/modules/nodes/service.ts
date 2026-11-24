@@ -95,7 +95,8 @@ export async function checkLayout(
     !(allowErrors && kind === 'white') &&
     issues.some((i) => i.severity === 'error')
   ) {
-    throw new AppError('VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题', issues)
+    const action = kind === 'render' ? '开始渲染' : '进入三维效果'
+    throw new AppError('VALIDATION_FAILED', `${action}前须先解决越界、重叠等问题`, issues)
   }
   return issues
 }
@@ -142,8 +143,8 @@ export async function getNode(
 // Keyed by node kind, not stage: new 'edit' nodes are still accepted anywhere (see agent-quirks).
 const STAGE_PARENTS: Partial<Record<NodeKind, { kinds: readonly NodeKind[]; message: string }>> = {
   plan: { kinds: STAGE_PARENT_KINDS.plan ?? [], message: '方案只能建在空间下' },
-  white: { kinds: STAGE_PARENT_KINDS.white ?? [], message: '白模只能建在方案下' },
-  render: { kinds: STAGE_PARENT_KINDS.render ?? [], message: '渲染只能建在白模下' },
+  white: { kinds: ['plan', 'edit'], message: '旧版三维节点只能建在方案下' },
+  render: { kinds: STAGE_PARENT_KINDS.render ?? [], message: '渲染只能建在方案下' },
 }
 
 /** Who made a node and what from; the API leaves this to the defaults (user / generator). */
@@ -174,8 +175,7 @@ export async function createNode(
   }
   const parent = input.parentId ? await findNode(db, input.parentId) : null
   if (parent && parent.projectId !== projectId) throw notFound('父节点')
-  // Stages sit on fixed levels: plans under a space, white models under a plan, renders under a
-  // white model. Copies are siblings, so nothing nests deeper than its stage.
+  // Accept the legacy white node kind for older API callers.
   const allowed = STAGE_PARENTS[input.kind]
   if (allowed && (!parent || !allowed.kinds.includes(parent.kind))) {
     throw new AppError('VALIDATION_FAILED', allowed.message)
@@ -203,7 +203,10 @@ export async function createNode(
   }
 
   const cameras =
-    (input.kind === 'white' || input.kind === 'render') && layoutSpace
+    (input.kind === 'white' ||
+      input.kind === 'render' ||
+      (input.kind === 'plan' && input.sourceNodeId)) &&
+    layoutSpace
       ? await initialCameras(db, input.sourceNodeId ?? input.parentId, layoutSpace)
       : []
 

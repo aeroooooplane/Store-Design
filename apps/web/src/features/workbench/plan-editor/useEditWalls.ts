@@ -1,5 +1,4 @@
 import { useContext, useState } from 'react'
-import type { Dispatch, SetStateAction } from 'react'
 import { freshName, itemFootprint, roundM, spaceAncestor, wallShift } from '@store/shared'
 import type { DesignNode, Layout, NodeSummary, Space } from '@store/shared'
 import type { useCreateNode } from '../api.ts'
@@ -30,8 +29,7 @@ interface EditWallsOptions {
   /** The layout on screen (draft included). */
   layout: Layout
   create: ReturnType<typeof useCreateNode>
-  setPaused: Dispatch<SetStateAction<boolean>>
-  finishDraft: () => Promise<void>
+  flush: () => Promise<boolean>
   onNodeCreated: (nodeId: string) => void
 }
 
@@ -47,8 +45,7 @@ export function useEditWalls({
   space,
   layout,
   create,
-  setPaused,
-  finishDraft,
+  flush,
   onNodeCreated,
 }: EditWallsOptions) {
   const [editing, setEditing] = useState(false)
@@ -65,8 +62,8 @@ export function useEditWalls({
   async function submit(edited: Space, name: string) {
     if (!spaceId) return
     setError(null)
-    setPaused(true)
     try {
+      if (!(await flush())) return
       const newSpace = await create.mutateAsync({
         parentId: siblingParent,
         kind: 'space',
@@ -81,12 +78,10 @@ export function useEditWalls({
       })
       const view = viewMemory?.get(spaceId)
       if (view) viewMemory?.set(newSpace.node.id, view)
-      await finishDraft()
       setEditing(false)
       onNodeCreated(plan.node.id)
     } catch (caught) {
       setError(caught)
-      setPaused(false)
     }
   }
 

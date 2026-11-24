@@ -1,7 +1,6 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { nodeSiStyle, spaceAncestor } from '@store/shared'
 import type {
   Asset,
@@ -16,15 +15,7 @@ import type {
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ProjectNavSlot } from '../../components/AppNav.tsx'
-import {
-  deleteDraft,
-  useCreateNode,
-  useDraft,
-  useNode,
-  useCatalog,
-  useTree,
-  workbenchKeys,
-} from './api.ts'
+import { useCreateNode, useDrafts, useNode, useCatalog, useTree } from './api.ts'
 import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
 import { HistoryTree, HistoryViewProvider } from './HistoryTree.tsx'
@@ -73,7 +64,12 @@ export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string
  */
 export function Workbench({ project }: { project: Project }) {
   const tree = useTree(project.id)
-  const draft = useDraft(project.id)
+  const drafts = useDrafts(project.id)
+  const latestDraft = drafts.data?.[0] ?? null
+  const saveCurrentNode = useRef<(() => Promise<boolean>) | null>(null)
+  const registerSave = useCallback((save: (() => Promise<boolean>) | null) => {
+    saveCurrentNode.current = save
+  }, [])
   const assets = useCatalog()
   const [params, setParams] = useSearchParams()
   const [panel, setPanel] = useState<{ nodeId: string | null; kind: Panel }>({
@@ -96,26 +92,33 @@ export function Workbench({ project }: { project: Project }) {
   // The automatic choice is made once, from the first loaded history, so nodes created later
   // (e.g. three generated plans) never move the selection away from what is on screen.
   const firstChoice = useRef<string | null>(null)
-  if (firstChoice.current === null && nodes.length > 0 && draft.data !== undefined) {
-    firstChoice.current = defaultNodeId(nodes, draft.data)
+  if (firstChoice.current === null && nodes.length > 0 && drafts.data !== undefined) {
+    firstChoice.current = defaultNodeId(nodes, latestDraft)
   }
   const fallback =
     firstChoice.current && nodes.some((n) => n.id === firstChoice.current)
       ? firstChoice.current
-      : defaultNodeId(nodes, draft.data ?? null)
+      : defaultNodeId(nodes, latestDraft)
   const selectedId = requested && nodes.some((n) => n.id === requested) ? requested : fallback
   // Also pin it in the URL, so a reload or a shared link opens the same step.
   useEffect(() => {
-    if (!requested && selectedId) setParams({ node: selectedId }, { replace: true })
-  }, [requested, selectedId, setParams])
+    if (!requested && selectedId && drafts.data !== undefined) {
+      setParams({ node: selectedId }, { replace: true })
+    }
+  }, [requested, selectedId, setParams, drafts.data])
 
-  // A panel opened for one node closes when another node is selected.
+  // Close the old panel only after navigation succeeds, so its editor can finish saving.
+  if (panel.nodeId !== selectedId) setPanel({ nodeId: selectedId, kind: 'view' })
   const activePanel = panel.nodeId === selectedId ? panel.kind : 'view'
   const cardSpace = useNode(selectedId ? spaceAncestor(nodes, selectedId) : null)
 
   function select(nodeId: string) {
     setParams({ node: nodeId })
-    setPanel({ nodeId, kind: 'view' })
+  }
+
+  async function openNewSpace() {
+    if (saveCurrentNode.current && !(await saveCurrentNode.current())) return
+    setPanel({ nodeId: selectedId, kind: 'new-space' })
   }
 
   // The SI style shown is the selected step's own (每个节点各自对应一个 SI); a space shows the
@@ -125,7 +128,7 @@ export function Workbench({ project }: { project: Project }) {
     selected && selected.kind !== 'space' ? nodeSiStyle(selected, project.siStyle) : project.siStyle
   const siLocked =
     selected?.kind === 'render'
-      ? `渲染节点的 SI（${shownSi}）在出图时已定；请回到方案或三维效果节点切换。`
+      ? `渲染节点的 SI（${shownSi}）在出图时已定；请回到方案节点切换。`
       : null
   const updateProject = useUpdateProject()
   const [siBusy, setSiBusy] = useState(false)
@@ -153,9 +156,9 @@ export function Workbench({ project }: { project: Project }) {
     }
   }
 
-  const loadError = tree.error ?? draft.error ?? assets.error
+  const loadError = tree.error ?? (drafts.data === undefined ? drafts.error : null) ?? assets.error
   if (loadError) return <ErrorMessage error={loadError} />
-  if (!tree.data || draft.data === undefined || !assets.data) {
+  if (!tree.data || drafts.data === undefined || !assets.data) {
     return <p className="notice">正在加载工作台…</p>
   }
 
@@ -167,9 +170,9 @@ export function Workbench({ project }: { project: Project }) {
       projectName={project.name}
       nodes={nodes}
       selectedId={selectedId}
-      draftBaseId={draft.data?.baseNodeId ?? null}
+      draftBaseIds={new Set(drafts.data.map((draft) => draft.baseNodeId))}
       onSelect={select}
-      onNewSpace={() => setPanel({ nodeId: selectedId, kind: 'new-space' })}
+      onNewSpace={() => void openNewSpace()}
       newSpaceDisabled={creatingSpace}
     />
   )
@@ -196,7 +199,8 @@ export function Workbench({ project }: { project: Project }) {
       project={project}
       nodeId={selectedId}
       nodes={nodes}
-      draft={draft.data ?? null}
+      draft={drafts.data.find((draft) => draft.baseNodeId === selectedId) ?? null}
+      registerSave={registerSave}
       assets={assets.data}
       panel={activePanel}
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
@@ -303,6 +307,7 @@ interface NodePanelProps {
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
   registerSiSwitch: (swap: SiSwitch | null) => void
+  registerSave: (save: (() => Promise<boolean>) | null) => void
 }
 
 function NodePanel({
@@ -316,6 +321,7 @@ function NodePanel({
   setPanel,
   onSelect,
   registerSiSwitch,
+  registerSave,
 }: NodePanelProps) {
   const node = useNode(nodeId)
   const spaceNode = useNode(spaceAncestor(nodes, nodeId))
@@ -340,29 +346,6 @@ function NodePanel({
     )
   }
 
-  // One shared draft per project: editing another step first needs the draft resolved.
-  if (draft && draft.baseNodeId !== current.id) {
-    return (
-      <StagePreview
-        left={left}
-        node={current}
-        project={project}
-        space={space}
-        assets={assetMap}
-        right={
-          <div className="wb-card">
-            <DraftElsewhere
-              projectId={project.id}
-              draft={draft}
-              nodes={nodes}
-              onSelect={onSelect}
-            />
-          </div>
-        }
-      />
-    )
-  }
-
   const editor = (
     <PlanEditor
       left={left}
@@ -378,6 +361,7 @@ function NodePanel({
       assets={assets}
       onNodeCreated={onSelect}
       onRegisterSiSwitch={registerSiSwitch}
+      onRegisterSave={registerSave}
     />
   )
 
@@ -581,7 +565,7 @@ function StagePreview({
                   assets={assets}
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
-                  look={node.kind === 'white' ? 'material' : 'white'}
+                  look="material"
                   siStyle={nodeSiStyle(node, project.siStyle)}
                   market={project.market}
                   onSelect={() => undefined}
@@ -595,51 +579,5 @@ function StagePreview({
         </section>
       }
     />
-  )
-}
-
-function DraftElsewhere({
-  projectId,
-  draft,
-  nodes,
-  onSelect,
-}: {
-  projectId: string
-  draft: Draft
-  nodes: NodeSummary[]
-  onSelect: (nodeId: string) => void
-}) {
-  const client = useQueryClient()
-  const discard = useMutation({
-    mutationFn: () => deleteDraft(projectId, draft.revision),
-    onSuccess: () => client.setQueryData(workbenchKeys.draft(projectId), null),
-    // A stale revision means someone else changed the draft: show them the latest one.
-    onError: () => client.invalidateQueries({ queryKey: workbenchKeys.draft(projectId) }),
-  })
-  const base = nodes.find((n) => n.id === draft.baseNodeId)
-
-  return (
-    <div className="draft-elsewhere">
-      <h3>当前节点只读</h3>
-      <p>
-        项目里有一份基于「{base?.name ?? '未知节点'}」的草稿还没保存为版本。每个项目只保留一份草稿，
-        处理后才能编辑当前节点。
-      </p>
-      <div className="stage-row">
-        <button type="button" className="primary" onClick={() => onSelect(draft.baseNodeId)}>
-          转到草稿
-        </button>
-        <button
-          type="button"
-          disabled={discard.isPending}
-          onClick={() => {
-            if (window.confirm('丢弃后草稿中的修改无法恢复，确定丢弃吗？')) discard.mutate()
-          }}
-        >
-          丢弃草稿
-        </button>
-      </div>
-      <ErrorMessage error={discard.error} />
-    </div>
   )
 }

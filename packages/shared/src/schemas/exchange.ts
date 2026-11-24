@@ -15,6 +15,8 @@ import { SpaceSchema } from './space.ts'
 
 export const EXPORT_FORMAT = 'store-design-project'
 
+const ExportDraftSchema = z.object({ baseNodeId: z.string().min(1).max(128), layout: LayoutSchema })
+
 /** Portable project file: backup, hand-over between computers, re-import as a new project. */
 export const ProjectExportSchema = z.object({
   format: z.literal(EXPORT_FORMAT),
@@ -44,7 +46,8 @@ export const ProjectExportSchema = z.object({
     )
     .min(1)
     .max(MAX_NODES_PER_PROJECT),
-  draft: z.object({ baseNodeId: z.string().min(1).max(128), layout: LayoutSchema }).nullable(),
+  draft: ExportDraftSchema.nullable(),
+  drafts: z.array(ExportDraftSchema).max(MAX_NODES_PER_PROJECT).optional(),
 })
 export type ProjectExport = z.infer<typeof ProjectExportSchema>
 

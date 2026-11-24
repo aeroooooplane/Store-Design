@@ -1,4 +1,4 @@
-import { and, eq, sql } from 'drizzle-orm'
+import { and, desc, eq, sql } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import type { Draft, DraftPut, DraftSaved } from '@store/shared'
@@ -23,9 +23,25 @@ function toDraft(row: DraftRow): Draft {
   }
 }
 
-async function currentDraft(db: Database, projectId: string): Promise<DraftRow | undefined> {
-  const [row] = await db.select().from(projectDrafts).where(eq(projectDrafts.projectId, projectId))
+const draftKey = (projectId: string, baseNodeId: string) =>
+  and(eq(projectDrafts.projectId, projectId), eq(projectDrafts.baseNodeId, baseNodeId))
+
+export async function draftRows(db: Database, projectId: string) {
+  return db
+    .select()
+    .from(projectDrafts)
+    .where(eq(projectDrafts.projectId, projectId))
+    .orderBy(desc(projectDrafts.updatedAt), projectDrafts.baseNodeId)
+}
+
+export async function currentDraft(db: Database, projectId: string, baseNodeId: string) {
+  const [row] = await db.select().from(projectDrafts).where(draftKey(projectId, baseNodeId))
   return row
+}
+
+export async function listDrafts(db: Database, ctx: RequestContext, projectId: string) {
+  authorize(ctx.actor, 'draft:read', { projectId })
+  return (await draftRows(db, projectId)).map(toDraft)
 }
 
 function conflict(row: DraftRow | undefined): AppError {
@@ -42,13 +58,13 @@ export async function getDraft(
   projectId: string,
 ): Promise<Draft> {
   authorize(ctx.actor, 'draft:read', { projectId })
-  const row = await currentDraft(db, projectId)
+  const [row] = await draftRows(db, projectId)
   if (!row) throw notFound('草稿')
   return toDraft(row)
 }
 
 /**
- * Saves the shared working draft. The first save needs no revision; later saves must name the
+ * Saves the working layout of one history node. The first save needs no revision; later saves must name the
  * revision they started from, so a stale window cannot overwrite newer work.
  */
 export async function saveDraft(
@@ -66,16 +82,16 @@ export async function saveDraft(
     throw new AppError('INVALID_STATE', '渲染节点不能作为编辑起点')
   const issues = await checkLayout(db, await resolveSpace(db, base.id), input.layout, 'draft')
 
-  const values = { baseNodeId: input.baseNodeId, layout: input.layout }
+  const { baseNodeId, layout } = input
   let row: DraftRow | undefined
   if (expectedRevision === null) {
     ;[row] = await db
       .insert(projectDrafts)
-      .values({ projectId, ...values })
-      .onConflictDoNothing({ target: projectDrafts.projectId })
+      .values({ projectId, baseNodeId, layout })
+      .onConflictDoNothing({ target: [projectDrafts.projectId, projectDrafts.baseNodeId] })
       .returning()
     if (!row) {
-      const existing = await currentDraft(db, projectId)
+      const existing = await currentDraft(db, projectId, baseNodeId)
       throw new AppError('REVISION_REQUIRED', '已有草稿，请带上 If-Match 版本号保存', {
         currentRevision: existing?.revision ?? null,
       })
@@ -83,12 +99,10 @@ export async function saveDraft(
   } else {
     ;[row] = await db
       .update(projectDrafts)
-      .set({ ...values, revision: sql`${projectDrafts.revision} + 1`, updatedAt: sql`now()` })
-      .where(
-        and(eq(projectDrafts.projectId, projectId), eq(projectDrafts.revision, expectedRevision)),
-      )
+      .set({ layout, revision: sql`${projectDrafts.revision} + 1`, updatedAt: sql`now()` })
+      .where(and(draftKey(projectId, baseNodeId), eq(projectDrafts.revision, expectedRevision)))
       .returning()
-    if (!row) throw conflict(await currentDraft(db, projectId))
+    if (!row) throw conflict(await currentDraft(db, projectId, baseNodeId))
   }
   return { draft: toDraft(row), issues }
 }
@@ -98,14 +112,21 @@ export async function discardDraft(
   ctx: RequestContext,
   projectId: string,
   expectedRevision: number,
+  requestedNodeId?: string,
 ): Promise<void> {
   authorize(ctx.actor, 'draft:write', { projectId })
   await requireActiveProject(db, projectId)
+  // The older endpoint allowed deletion without a base ID when there was a single draft.
+  let baseNodeId = requestedNodeId
+  if (!baseNodeId) {
+    const rows = await draftRows(db, projectId)
+    if (rows.length > 1) throw new AppError('REVISION_CONFLICT', '请指定要丢弃草稿的节点')
+    baseNodeId = rows[0]?.baseNodeId
+    if (!baseNodeId) throw conflict(undefined)
+  }
   const deleted = await db
     .delete(projectDrafts)
-    .where(
-      and(eq(projectDrafts.projectId, projectId), eq(projectDrafts.revision, expectedRevision)),
-    )
+    .where(and(draftKey(projectId, baseNodeId), eq(projectDrafts.revision, expectedRevision)))
     .returning({ projectId: projectDrafts.projectId })
-  if (!deleted.length) throw conflict(await currentDraft(db, projectId))
+  if (!deleted.length) throw conflict(await currentDraft(db, projectId, baseNodeId))
 }

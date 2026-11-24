@@ -163,7 +163,7 @@ describe('get_state（当前行为）', () => {
     const plan = await planOf(project.id, space.id, [island('a', 2, 2)], '方案 B')
     const white = await whiteOf(project.id, plan.id, [island('a', 2, 2)])
     const onWhite = (await run(project.id, white.id, 'get_state')).result
-    expect(onWhite.currentNode).toMatchObject({ kind: 'white', stage: '三维效果' })
+    expect(onWhite.currentNode).toMatchObject({ kind: 'white', stage: '方案' })
     const edit = await seedLegacyEdit(t, project.id, space.id, '调整', layout())
     const onEdit = (await run(project.id, edit.id, 'get_state')).result
     expect(onEdit.currentNode).toMatchObject({ kind: 'edit', stage: '方案' })
@@ -394,7 +394,7 @@ describe('move_item', () => {
     expect(moved.layout?.items[0]).toMatchObject({ cx: 2.5, cz: 1.75, rotation: 90, w: 1.8, d: 1 })
   })
 
-  it('keeps a moved white model at the white stage, beside the original under its plan', async () => {
+  it('copies edits to a legacy 3D node as a plan under the same space', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
     const plan = await planOf(project.id, space.id, [island('a', 2, 2)])
@@ -402,13 +402,13 @@ describe('move_item', () => {
     const outcome = await run(project.id, white.id, 'move_item', { itemId: 'a', dx_mm: 1000 })
     const moved = await node(outcome.nodeId)
     expect(moved).toMatchObject({
-      kind: 'white',
-      parentId: plan.id,
+      kind: 'plan',
+      parentId: space.id,
       origin: 'agent',
       name: '三维效果 · Agent',
     })
     expect(moved.layout?.items[0]).toMatchObject({ cx: 3, cz: 2 })
-    // A white step gets its views (copied from the source white model).
+    // The copy inherits the legacy views.
     expect(await cameras(moved.id)).toHaveLength(8)
   })
 
@@ -420,7 +420,7 @@ describe('move_item', () => {
     expect(outcome.result).toMatchObject({
       items: 2,
       issues: ['中岛桌 a与中岛桌 b重叠'],
-      warning: '有 1 个问题需要处理，进入三维效果前须解决',
+      warning: '有 1 个问题需要处理，开始渲染前须解决',
     })
     expect((await node(outcome.nodeId)).layout?.items[1]).toMatchObject({ cx: 2.5, cz: 2 })
   })
@@ -444,7 +444,7 @@ describe('move_item', () => {
       run(project.id, render.id, 'move_item', { itemId: 'a', dx_mm: 100 }),
     ).rejects.toMatchObject({
       code: 'INVALID_STATE',
-      message: '渲染节点不能修改，请先回到它的白模',
+      message: '渲染节点不能修改，请先回到它的方案',
     })
   })
 })
@@ -518,54 +518,60 @@ describe('validate（当前行为）', () => {
   })
 })
 
-describe('confirm_white（当前行为）', () => {
-  it('adds a white step under the plan with the same layout and the default views', async () => {
+describe('start_render（当前行为）', () => {
+  it('renders directly from the latest autosaved plan and keeps the source draft', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
-    const plan = await planOf(project.id, space.id, [island('a', 2, 2), island('b', 5, 3)])
-    const outcome = await run(project.id, plan.id, 'confirm_white')
-    expect(outcome.result).toEqual({
-      done: '已进入三维效果',
-      nodeId: outcome.nodeId,
-      nodeName: '三维效果',
+    const plan = await create(project.id, {
+      parentId: space.id,
+      kind: 'plan',
+      name: '方案 A',
+      layout: layout(island('a', 2, 2), island('b', 5, 3)),
+      siStyle: 'SI2.0',
     })
-    const white = await node(outcome.nodeId)
-    expect(white).toMatchObject({
-      kind: 'white',
+    const url = `/api/v1/projects/${project.id}/draft`
+    const saved = await t.app.inject({
+      method: 'PUT',
+      url,
+      payload: { baseNodeId: plan.id, layout: layout(island('a', 3, 2), island('b', 5, 3)) },
+    })
+    expect(saved.statusCode).toBe(200)
+    const outcome = await run(project.id, plan.id, 'start_render')
+    const render = await node(outcome.nodeId)
+    expect(render).toMatchObject({
+      kind: 'render',
       parentId: plan.id,
       origin: 'agent',
-      name: '三维效果',
+      name: '渲染',
+      siStyle: 'SI2.0',
     })
-    expect(white.layout?.items.map((i) => [i.id, i.cx, i.cz, i.rotation])).toEqual([
-      ['a', 2, 2, 0],
+    expect(render.layout?.items.map((i) => [i.id, i.cx, i.cz, i.rotation])).toEqual([
+      ['a', 3, 2, 0],
       ['b', 5, 3, 0],
     ])
-    expect(await cameras(white.id)).toHaveLength(8)
-
-    const again = await run(project.id, plan.id, 'confirm_white')
-    expect(again.result.nodeName).toBe('三维效果（2）')
+    expect(await cameras(render.id)).toHaveLength(8)
+    expect((await t.app.inject({ method: 'GET', url })).json()).toEqual(saved.json().draft)
+    expect((await tree(project.id)).map((n) => n.kind)).toEqual(['space', 'plan', 'render'])
+    expect((await run(project.id, plan.id, 'start_render')).result.nodeName).toBe('渲染（2）')
   })
 
   it('accepts legacy edit nodes, refuses other stages and layouts with errors', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
     const edit = await seedLegacyEdit(t, project.id, space.id, '调整', layout(island('a', 2, 2)))
-    const fromEdit = await run(project.id, edit.id, 'confirm_white')
-    expect(await node(fromEdit.nodeId)).toMatchObject({ kind: 'white', parentId: edit.id })
-
-    await expect(run(project.id, space.id, 'confirm_white')).rejects.toMatchObject({
+    const fromEdit = await run(project.id, edit.id, 'start_render')
+    expect(await node(fromEdit.nodeId)).toMatchObject({ kind: 'render', parentId: edit.id })
+    await expect(run(project.id, space.id, 'start_render')).rejects.toMatchObject({
       code: 'INVALID_STATE',
-      message: '只能从方案节点进入三维效果',
+      message: '只能从方案开始渲染',
     })
     const overlap = await planOf(project.id, space.id, [island('a', 2, 2), island('b', 2.5, 2)])
-    await expect(run(project.id, overlap.id, 'confirm_white')).rejects.toMatchObject({
+    await expect(run(project.id, overlap.id, 'start_render')).rejects.toMatchObject({
       code: 'VALIDATION_FAILED',
-      message: '进入三维效果前须先解决越界、重叠等问题',
+      message: '开始渲染前须先解决越界、重叠等问题',
     })
   })
-})
 
-describe('start_render（当前行为）', () => {
   it('adds a render step under the white model in the project SI style', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
@@ -593,15 +599,11 @@ describe('start_render（当前行为）', () => {
     expect((await cameras(render.id)).map((c) => c.camera.name)).toEqual(whiteViews)
 
     expect((await run(project.id, white.id, 'start_render')).result.nodeName).toBe('渲染（2）')
-    await expect(run(project.id, plan.id, 'start_render')).rejects.toMatchObject({
-      code: 'INVALID_STATE',
-      message: '只能从白模节点开始渲染',
-    })
   })
 })
 
 describe('remove_view（当前行为）', () => {
-  it('soft-deletes a view of the current white or render node and returns it for restoring', async () => {
+  it('soft-deletes a view of the current plan, legacy 3D or render node', async () => {
     const project = await newProject()
     const space = await spaceOf(project.id)
     const plan = await planOf(project.id, space.id, [island('a', 2, 2)])
@@ -641,10 +643,12 @@ describe('remove_view（当前行为）', () => {
     ).rejects.toMatchObject({ code: 'VALIDATION_FAILED' })
     await expect(
       run(project.id, plan.id, 'remove_view', { cameraId: views[1]?.id }),
-    ).rejects.toMatchObject({
-      code: 'INVALID_STATE',
-      message: '只有三维效果或渲染节点有视角，请先进入三维效果',
-    })
+    ).rejects.toMatchObject({ code: 'VALIDATION_FAILED', message: '当前节点没有这个视角' })
+    await t.app.inject({ method: 'POST', url: `/api/v1/nodes/${plan.id}/cameras/initialize` })
+    const [planView] = await cameras(plan.id)
+    expect(planView).toBeDefined()
+    const fromPlan = await run(project.id, plan.id, 'remove_view', { cameraId: planView?.id })
+    expect(fromPlan.result.restoreCameraId).toBe(planView?.id)
   })
 })
 

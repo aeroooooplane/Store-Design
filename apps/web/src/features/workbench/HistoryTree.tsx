@@ -20,7 +20,7 @@ import {
   Plus,
   RotateCcw,
 } from 'lucide-react'
-import { NODE_KIND_LABELS } from '@store/shared'
+import { NODE_KIND_LABELS, stageOf } from '@store/shared'
 import type { NodeSummary } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useNodeVisibility, useRenameNode } from './api.ts'
@@ -84,7 +84,7 @@ interface HistoryTreeProps {
   projectName: string
   nodes: NodeSummary[]
   selectedId: string | null
-  draftBaseId: string | null
+  draftBaseIds: ReadonlySet<string>
   onSelect: (nodeId: string) => void
   onNewSpace: () => void
   newSpaceDisabled: boolean
@@ -133,7 +133,7 @@ export function HistoryTree({
   projectName,
   nodes,
   selectedId,
-  draftBaseId,
+  draftBaseIds,
   onSelect,
   onNewSpace,
   newSpaceDisabled,
@@ -402,7 +402,7 @@ export function HistoryTree({
       {(!collapsed || enlarged) && (
         <>
           <div className="history-legend" aria-label="节点颜色">
-            {(['space', 'plan', 'white', 'render'] as const).map((kind) => (
+            {(['space', 'plan', 'render'] as const).map((kind) => (
               <span key={kind}>
                 <i className={`tree-color-${kind}`} />
                 {NODE_KIND_LABELS[kind]}
@@ -428,7 +428,7 @@ export function HistoryTree({
               {layout.boxes.map((box) => {
                 const current = box.id === selectedId
                 const nodeId = box.id === ROOT_ID ? null : (box.node?.id ?? null)
-                const label = `${box.fullLabel}${box.id === draftBaseId ? '（有草稿）' : ''}${box.hiddenBranch ? '（已隐藏）' : ''}`
+                const label = `${box.fullLabel}${draftBaseIds.has(box.id) ? '（有草稿）' : ''}${box.hiddenBranch ? '（已隐藏）' : ''}`
                 return (
                   <g
                     key={box.id}
@@ -439,7 +439,7 @@ export function HistoryTree({
                     aria-current={current ? 'true' : undefined}
                     className={[
                       nodeId ? 'tree-item' : 'tree-root',
-                      `tree-color-${box.node?.kind ?? 'project'}`,
+                      `tree-color-${box.node ? stageOf(box.node.kind) : 'project'}`,
                       current ? 'current' : '',
                       selected && !related.has(box.id) ? 'unrelated' : '',
                       box.hiddenBranch ? 'hidden-node' : '',
@@ -469,7 +469,7 @@ export function HistoryTree({
                     <circle className="tree-hit" cx={box.x} cy={box.y} r={16} />
                     <circle className="tree-selection" cx={box.x} cy={box.y} r={11} />
                     <circle className="tree-node" cx={box.x} cy={box.y} r={nodeId ? 5 : 7} />
-                    {box.id === draftBaseId && (
+                    {draftBaseIds.has(box.id) && (
                       <circle className="tree-draft" cx={box.x + 7} cy={box.y - 7} r={3} />
                     )}
                   </g>
@@ -497,7 +497,7 @@ export function HistoryTree({
                     ? '项目起点'
                     : `来源：${layout.boxes.find((box) => box.id === hovered.node?.parentId)?.fullLabel ?? projectName}`}
                 </span>
-                {hovered.id === draftBaseId && <span>有草稿</span>}
+                {draftBaseIds.has(hovered.id) && <span>有草稿</span>}
                 {hovered.hiddenBranch && <span>已隐藏</span>}
               </div>,
               document.body,

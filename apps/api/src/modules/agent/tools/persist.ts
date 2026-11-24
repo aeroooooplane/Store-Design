@@ -22,9 +22,7 @@ export async function namesUnder(db: Database, projectId: string, parentId: stri
 }
 
 /**
- * Where a copy of a step goes: the nearest ancestor of its stage's parent kind (a plan under its
- * space, a white model under its plan), the same rule as the workbench's stageParentId. Old
- * projects nested plans under plans; their copies come back up a level instead of being refused.
+ * A copy goes under the nearest ancestor of its stage's parent kind.
  */
 export async function stageParentOf(
   db: Database,
@@ -49,22 +47,15 @@ export async function saveLayout(
   const node = tools.node
   if (!node) throw new AppError('INVALID_STATE', '没有当前节点，无法修改布局')
   if (node.kind === 'render') {
-    throw new AppError('INVALID_STATE', '渲染节点不能修改，请先回到它的白模')
+    throw new AppError('INVALID_STATE', '渲染节点不能修改，请先回到它的方案')
   }
   let parentId: string
-  let kind: 'plan' | 'white'
   let base: string
   if (node.kind === 'space') {
     parentId = node.id
-    kind = 'plan'
     base = '方案 · Agent'
-  } else if (node.kind === 'white') {
-    parentId = await stageParentOf(tools.db, node)
-    kind = 'white'
-    base = `${node.name.replace(/（\d+）$/, '')} · Agent`
   } else {
     parentId = await stageParentOf(tools.db, node)
-    kind = 'plan'
     base = `${node.name.replace(/（\d+）$/, '')} · Agent`
   }
   const name = freshName(base, await namesUnder(tools.db, tools.project.id, parentId))
@@ -72,7 +63,7 @@ export async function saveLayout(
     tools.db,
     tools.ctx,
     tools.project.id,
-    { parentId, kind, name, layout, sourceNodeId: node.id },
+    { parentId, kind: 'plan', name, layout, sourceNodeId: node.id },
     { origin: 'agent' },
   )
   const errors = created.issues.filter((i) => i.severity === 'error')
@@ -84,9 +75,7 @@ export async function saveLayout(
       nodeName: name,
       items: layout.items.length,
       issues: created.issues.map((i) => i.message),
-      ...(errors.length
-        ? { warning: `有 ${errors.length} 个问题需要处理，进入三维效果前须解决` }
-        : {}),
+      ...(errors.length ? { warning: `有 ${errors.length} 个问题需要处理，开始渲染前须解决` } : {}),
     },
   }
 }

@@ -2899,6 +2899,346 @@
                           "type": "null"
                         }
                       ]
+                    },
+                    "drafts": {
+                      "maxItems": 500,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "baseNodeId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 128
+                          },
+                          "layout": {
+                            "type": "object",
+                            "properties": {
+                              "schemaVersion": {
+                                "type": "number",
+                                "enum": [
+                                  3
+                                ]
+                              },
+                              "items": {
+                                "maxItems": 200,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "assetId": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "pattern": "^asset-\\d+$"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    },
+                                    "function": {
+                                      "type": "string",
+                                      "enum": [
+                                        "island_table",
+                                        "unboxing_table",
+                                        "cashier",
+                                        "accessory_cabinet",
+                                        "side_cabinet",
+                                        "display_stand",
+                                        "screen",
+                                        "signage",
+                                        "seating",
+                                        "storage",
+                                        "other"
+                                      ]
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 100
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "rotation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "placeholder": {
+                                      "default": false,
+                                      "type": "boolean"
+                                    },
+                                    "locked": {
+                                      "default": false,
+                                      "type": "boolean"
+                                    },
+                                    "mount": {
+                                      "type": "string",
+                                      "enum": [
+                                        "floor",
+                                        "wall",
+                                        "ceiling",
+                                        "embedded"
+                                      ]
+                                    },
+                                    "elevation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 20
+                                    },
+                                    "scale": {
+                                      "type": "number",
+                                      "minimum": 0.2,
+                                      "maximum": 5
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "assetId",
+                                    "function",
+                                    "name",
+                                    "cx",
+                                    "cz",
+                                    "rotation",
+                                    "w",
+                                    "d",
+                                    "h",
+                                    "placeholder",
+                                    "locked"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "planning": {
+                                "default": null,
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "demand": {
+                                        "maxItems": 100,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string",
+                                              "maxLength": 50
+                                            },
+                                            "label": {
+                                              "type": "string",
+                                              "maxLength": 120
+                                            },
+                                            "required": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placed": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placeholders": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "reason": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "maxLength": 500
+                                                },
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "id",
+                                            "label",
+                                            "required",
+                                            "placed",
+                                            "placeholders",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "strategy": {
+                                        "type": "string",
+                                        "enum": [
+                                          "max",
+                                          "area",
+                                          "min",
+                                          "case"
+                                        ]
+                                      },
+                                      "requested": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "placed": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "relaxations": {
+                                        "default": [],
+                                        "maxItems": 20,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "rule": {
+                                              "type": "string",
+                                              "minLength": 1,
+                                              "maxLength": 64
+                                            },
+                                            "target": {
+                                              "type": "number"
+                                            },
+                                            "actual": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "rule",
+                                            "target",
+                                            "actual"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "note": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "maxLength": 500
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "strategy",
+                                      "requested",
+                                      "placed",
+                                      "relaxations",
+                                      "note"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "fixtures": {
+                                "maxItems": 50,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "hollow_partition"
+                                      ]
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "cx",
+                                    "cz",
+                                    "w",
+                                    "d",
+                                    "h"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "items",
+                              "planning"
+                            ],
+                            "additionalProperties": false
+                          }
+                        },
+                        "required": [
+                          "baseNodeId",
+                          "layout"
+                        ],
+                        "additionalProperties": false
+                      }
                     }
                   },
                   "required": [
@@ -3301,7 +3641,7 @@
         }
       },
       "post": {
-        "summary": "新建历史节点（空间、方案、编辑、白模、渲染）",
+        "summary": "新建历史节点（空间、方案、渲染，兼容旧版三维节点）",
         "tags": [
           "nodes"
         ],
@@ -9183,9 +9523,552 @@
         }
       }
     },
+    "/api/v1/projects/{projectId}/drafts": {
+      "get": {
+        "summary": "读取项目各节点的自动保存草稿",
+        "tags": [
+          "drafts"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "in": "path",
+            "name": "projectId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "drafts": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "projectId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                          },
+                          "baseNodeId": {
+                            "type": "string",
+                            "format": "uuid",
+                            "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                          },
+                          "layout": {
+                            "type": "object",
+                            "properties": {
+                              "schemaVersion": {
+                                "type": "number",
+                                "enum": [
+                                  3
+                                ]
+                              },
+                              "items": {
+                                "maxItems": 200,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "assetId": {
+                                      "anyOf": [
+                                        {
+                                          "type": "string",
+                                          "pattern": "^asset-\\d+$"
+                                        },
+                                        {
+                                          "type": "null"
+                                        }
+                                      ]
+                                    },
+                                    "function": {
+                                      "type": "string",
+                                      "enum": [
+                                        "island_table",
+                                        "unboxing_table",
+                                        "cashier",
+                                        "accessory_cabinet",
+                                        "side_cabinet",
+                                        "display_stand",
+                                        "screen",
+                                        "signage",
+                                        "seating",
+                                        "storage",
+                                        "other"
+                                      ]
+                                    },
+                                    "name": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 100
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "rotation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "placeholder": {
+                                      "default": false,
+                                      "type": "boolean"
+                                    },
+                                    "locked": {
+                                      "default": false,
+                                      "type": "boolean"
+                                    },
+                                    "mount": {
+                                      "type": "string",
+                                      "enum": [
+                                        "floor",
+                                        "wall",
+                                        "ceiling",
+                                        "embedded"
+                                      ]
+                                    },
+                                    "elevation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 20
+                                    },
+                                    "scale": {
+                                      "type": "number",
+                                      "minimum": 0.2,
+                                      "maximum": 5
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "assetId",
+                                    "function",
+                                    "name",
+                                    "cx",
+                                    "cz",
+                                    "rotation",
+                                    "w",
+                                    "d",
+                                    "h",
+                                    "placeholder",
+                                    "locked"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              },
+                              "planning": {
+                                "default": null,
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "demand": {
+                                        "maxItems": 100,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "id": {
+                                              "type": "string",
+                                              "maxLength": 50
+                                            },
+                                            "label": {
+                                              "type": "string",
+                                              "maxLength": 120
+                                            },
+                                            "required": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placed": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "placeholders": {
+                                              "type": "integer",
+                                              "minimum": 0,
+                                              "maximum": 200
+                                            },
+                                            "reason": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "string",
+                                                  "maxLength": 500
+                                                },
+                                                {
+                                                  "type": "null"
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "required": [
+                                            "id",
+                                            "label",
+                                            "required",
+                                            "placed",
+                                            "placeholders",
+                                            "reason"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "strategy": {
+                                        "type": "string",
+                                        "enum": [
+                                          "max",
+                                          "area",
+                                          "min",
+                                          "case"
+                                        ]
+                                      },
+                                      "requested": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "placed": {
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "maximum": 200
+                                      },
+                                      "relaxations": {
+                                        "default": [],
+                                        "maxItems": 20,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "rule": {
+                                              "type": "string",
+                                              "minLength": 1,
+                                              "maxLength": 64
+                                            },
+                                            "target": {
+                                              "type": "number"
+                                            },
+                                            "actual": {
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "rule",
+                                            "target",
+                                            "actual"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      },
+                                      "note": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "maxLength": 500
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "strategy",
+                                      "requested",
+                                      "placed",
+                                      "relaxations",
+                                      "note"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "fixtures": {
+                                "maxItems": 50,
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "id": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 64
+                                    },
+                                    "kind": {
+                                      "type": "string",
+                                      "enum": [
+                                        "hollow_partition"
+                                      ]
+                                    },
+                                    "cx": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "cz": {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    "w": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "d": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    },
+                                    "h": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50
+                                    }
+                                  },
+                                  "required": [
+                                    "id",
+                                    "kind",
+                                    "cx",
+                                    "cz",
+                                    "w",
+                                    "d",
+                                    "h"
+                                  ],
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "required": [
+                              "schemaVersion",
+                              "items",
+                              "planning"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "revision": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 9007199254740991
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                          }
+                        },
+                        "required": [
+                          "projectId",
+                          "baseNodeId",
+                          "layout",
+                          "revision",
+                          "updatedAt"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "drafts"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/projects/{projectId}/draft": {
       "get": {
-        "summary": "读取项目的共享编辑草稿",
+        "summary": "读取项目最近保存的草稿（旧版兼容）",
         "tags": [
           "drafts"
         ],
@@ -10636,11 +11519,21 @@
         }
       },
       "delete": {
-        "summary": "丢弃草稿",
+        "summary": "丢弃指定节点的草稿",
         "tags": [
           "drafts"
         ],
         "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "in": "query",
+            "name": "baseNodeId",
+            "required": false
+          },
           {
             "schema": {
               "type": "string",

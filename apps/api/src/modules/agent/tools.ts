@@ -9,7 +9,7 @@ import {
   removeItemTool,
   rotateItemTool,
 } from './tools/layout.ts'
-import { confirmWhiteTool, setStyleTool, startRenderTool } from './tools/stage.ts'
+import { setStyleTool, startRenderTool } from './tools/stage.ts'
 import { editSpaceTool } from './tools/space.ts'
 import { addViewTool, listViewsTool, removeViewTool } from './tools/views.ts'
 
@@ -27,7 +27,6 @@ export const TOOLS: AgentTool[] = [
   removeItemTool,
   validateTool,
   setStyleTool,
-  confirmWhiteTool,
   startRenderTool,
   editSpaceTool,
   listViewsTool,

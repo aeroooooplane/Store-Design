@@ -9,7 +9,7 @@ import {
   RotateCcw,
   Save,
 } from 'lucide-react'
-import { PlanIcon, RenderIcon, SpaceIcon, WhiteIcon } from '../../components/StoreIcons.tsx'
+import { PlanIcon, RenderIcon, SpaceIcon } from '../../components/StoreIcons.tsx'
 
 type Icon = ComponentType<{ size?: number; 'aria-hidden'?: boolean | 'true' }>
 
@@ -17,7 +17,6 @@ type Icon = ComponentType<{ size?: number; 'aria-hidden'?: boolean | 'true' }>
 const STAGE_ICONS: [string, Icon][] = [
   ['空间阶段', SpaceIcon],
   ['方案阶段', PlanIcon],
-  ['三维效果阶段', WhiteIcon],
   ['渲染阶段', RenderIcon],
 ]
 
@@ -32,7 +31,6 @@ const ACTION_ICONS: Record<string, Icon> = {
   新建副本: Copy,
   丢弃草稿: RotateCcw,
   修改墙体: PencilRuler,
-  进入三维效果: WhiteIcon,
   开始渲染: RenderIcon,
   重新渲染: RefreshCw,
   下载图片: ImageDown,

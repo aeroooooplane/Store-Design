@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { freshName, siSwapName, stageOf, swapLayoutSi } from '@store/shared'
+import { freshName, nodeSiStyle, siSwapName, stageOf, swapLayoutSi } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
 import { createNode } from '../../nodes/service.ts'
 import { updateProject } from '../../projects/service.ts'
@@ -9,7 +9,7 @@ import { EMPTY_LAYOUT, namesUnder, stageParentOf } from './persist.ts'
 export const setStyleTool = tool({
   name: 'set_style',
   description:
-    '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。当前在方案或三维效果阶段时，按映射表把软装道具换成新风格的对应款，另存为新节点，原节点保留。',
+    '切换项目的 SI 风格（SI1.0 / SI2.0）或市场（domestic 国内 / overseas 海外）。当前在方案阶段时，按映射表把软装道具换成新风格的对应款，另存为新节点，原节点保留。',
   schema: z.object({
     siStyle: z.enum(['SI1.0', 'SI2.0']).optional(),
     market: z.enum(['domestic', 'overseas']).optional(),
@@ -30,12 +30,7 @@ export const setStyleTool = tool({
     tools.project = updated
     const node = tools.node
     const stage = node && stageOf(node.kind)
-    if (
-      !input.siStyle ||
-      !node?.layout ||
-      !node.parentId ||
-      (stage !== 'plan' && stage !== 'white')
-    ) {
+    if (!input.siStyle || !node?.layout || !node.parentId || stage !== 'plan') {
       return { result: { siStyle: updated.siStyle, market: updated.market } }
     }
     // Same as the SI switch on the project card: the step is copied with its props swapped.
@@ -55,13 +50,11 @@ export const setStyleTool = tool({
       tools.project.id,
       {
         parentId,
-        kind: stage,
+        kind: 'plan',
         name,
         layout: swap.layout,
         siStyle: input.siStyle,
         sourceNodeId: node.id,
-        // The user's rule: swapping styles ignores collisions and only reports them.
-        allowLayoutErrors: true,
       },
       { origin: 'agent' },
     )
@@ -81,39 +74,14 @@ export const setStyleTool = tool({
   },
 })
 
-export const confirmWhiteTool = tool({
-  name: 'confirm_white',
-  description:
-    '把当前方案推进到三维效果阶段（下一阶段，材质三维，可继续编辑）。布局不能有越界、重叠等错误。',
-  schema: z.object({}),
-  run: async (tools) => {
-    const node = tools.node
-    if (!node || (node.kind !== 'plan' && node.kind !== 'edit')) {
-      throw new AppError('INVALID_STATE', '只能从方案节点进入三维效果')
-    }
-    const name = freshName('三维效果', await namesUnder(tools.db, tools.project.id, node.id))
-    const created = await createNode(
-      tools.db,
-      tools.ctx,
-      tools.project.id,
-      { parentId: node.id, kind: 'white', name, layout: node.layout ?? EMPTY_LAYOUT },
-      { origin: 'agent' },
-    )
-    return {
-      nodeId: created.node.id,
-      result: { done: '已进入三维效果', nodeId: created.node.id, nodeName: name },
-    }
-  },
-})
-
 export const startRenderTool = tool({
   name: 'start_render',
-  description: '从当前三维效果节点创建渲染节点；渲染图在打开该节点时由浏览器生成。',
+  description: '从当前方案创建渲染节点；渲染图在打开该节点时由浏览器生成。',
   schema: z.object({}),
   run: async (tools) => {
     const node = tools.node
-    if (!node || node.kind !== 'white')
-      throw new AppError('INVALID_STATE', '只能从白模节点开始渲染')
+    if (!node || stageOf(node.kind) !== 'plan')
+      throw new AppError('INVALID_STATE', '只能从方案开始渲染')
     const name = freshName('渲染', await namesUnder(tools.db, tools.project.id, node.id))
     const created = await createNode(
       tools.db,
@@ -124,7 +92,7 @@ export const startRenderTool = tool({
         kind: 'render',
         name,
         layout: node.layout ?? EMPTY_LAYOUT,
-        siStyle: tools.project.siStyle,
+        siStyle: nodeSiStyle(node, tools.project.siStyle),
       },
       { origin: 'agent' },
     )
