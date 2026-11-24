@@ -1,6 +1,7 @@
 import { useDeferredValue, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
+import { isProjectPilot } from '../../api/deployment.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ArchiveRestore, Trash2, Upload } from 'lucide-react'
 import { formatDateTime } from '../../lib/format.ts'
@@ -63,30 +64,32 @@ export function ProjectListPage() {
             </button>
           ))}
         </div>
-        <span className="toolbar-end">
-          <input
-            ref={fileInput}
-            type="file"
-            accept=".json,application/json"
-            hidden
-            aria-label="选择项目文件"
-            onChange={(e) => {
-              const file = e.target.files?.[0]
-              if (file) importProject.mutate(file)
-              e.target.value = ''
-            }}
-          />
-          <button
-            type="button"
-            className="with-icon"
-            title="导入本系统导出的项目文件，或旧版工作台的备份"
-            disabled={importProject.isPending}
-            onClick={() => fileInput.current?.click()}
-          >
-            <Upload size={16} aria-hidden="true" />
-            {importProject.isPending ? '正在导入…' : '导入项目'}
-          </button>
-        </span>
+        {!isProjectPilot && (
+          <span className="toolbar-end">
+            <input
+              ref={fileInput}
+              type="file"
+              accept=".json,application/json"
+              hidden
+              aria-label="选择项目文件"
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) importProject.mutate(file)
+                e.target.value = ''
+              }}
+            />
+            <button
+              type="button"
+              className="with-icon"
+              title="导入本系统导出的项目文件，或旧版工作台的备份"
+              disabled={importProject.isPending}
+              onClick={() => fileInput.current?.click()}
+            >
+              <Upload size={16} aria-hidden="true" />
+              {importProject.isPending ? '正在导入…' : '导入项目'}
+            </button>
+          </span>
+        )}
         <input
           type="search"
           aria-label="按名称搜索"
@@ -162,14 +165,16 @@ export function ProjectListPage() {
                         <Link className="button" to={`/projects/${project.id}`}>
                           打开
                         </Link>
-                        <a
-                          className="button"
-                          href={projectExportUrl(project.id)}
-                          download
-                          title="导出为项目文件（含全部节点与草稿），可备份或在其他电脑导入"
-                        >
-                          导出
-                        </a>
+                        {!isProjectPilot && (
+                          <a
+                            className="button"
+                            href={projectExportUrl(project.id)}
+                            download
+                            title="导出为项目文件（含全部节点与草稿），可备份或在其他电脑导入"
+                          >
+                            导出
+                          </a>
+                        )}
                         <button
                           type="button"
                           className="icon-button"

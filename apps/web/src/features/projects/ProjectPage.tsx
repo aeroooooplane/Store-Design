@@ -2,6 +2,8 @@ import { useParams } from 'react-router'
 import { Download } from 'lucide-react'
 import { ProjectNavSlot } from '../../components/AppNav.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { isProjectPilot } from '../../api/deployment.ts'
+import { ProjectPilot } from './ProjectPilot.tsx'
 import { Workbench } from '../workbench/Workbench.tsx'
 import { projectExportUrl, useProject } from './queries.ts'
 
@@ -11,8 +13,8 @@ export function ProjectPage() {
   const project = useProject(projectId)
 
   return (
-    <main className="page page-workbench">
-      {project.data && !project.data.deletedAt && (
+    <main className={isProjectPilot ? 'page page-projects' : 'page page-workbench'}>
+      {!isProjectPilot && project.data && !project.data.deletedAt && (
         <ProjectNavSlot slot="actions">
           <a
             className="with-icon"
@@ -29,7 +31,11 @@ export function ProjectPage() {
       {project.data?.deletedAt ? (
         <p className="notice">项目在回收站中，恢复后才能继续编辑。</p>
       ) : project.data ? (
-        <Workbench project={project.data} />
+        isProjectPilot ? (
+          <ProjectPilot key={projectId} project={project.data} />
+        ) : (
+          <Workbench project={project.data} />
+        )
       ) : null}
     </main>
   )
