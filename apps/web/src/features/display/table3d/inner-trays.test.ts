@@ -27,3 +27,14 @@ it('横桌左右端头镜像，不交换盘体的长宽', () => {
   expect(a[0]!.x).toBe(-b[0]!.x)
   expect(a[0]!.span).toBe(b[0]!.span)
 })
+
+it('C4 在后、D17 在前，两盘占满 670 mm 外框净长', () => {
+  const ids = ['C4', 'D17']
+  expect(innerFitNote(ids)).toBe('')
+  const [back, front] = innerPlaces(ids, { x: 0, z: 0, w: 0.135, d: 0.68 }, 'left')
+  expect(back!.id).toBe('C4')
+  expect(front!.id).toBe('D17')
+  expect(back!.z - back!.span / 2).toBeCloseTo(-0.335)
+  expect(back!.z + back!.span / 2).toBeCloseTo(front!.z - front!.span / 2)
+  expect(front!.z + front!.span / 2).toBeCloseTo(0.335)
+})

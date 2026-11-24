@@ -22,12 +22,12 @@ try {
   if (!response.ok) throw new Error(`读取展陈规则失败：HTTP ${response.status}`)
   const view = DisplayRulesViewSchema.parse(await response.json())
   const rules = view.rules
-  check('规则版本', view.version, '2026-11-05')
+  check('规则版本', view.version, '2026-11-24')
   check('规则一致性', checkRules(rules), [])
-  check('来源规格总行数', rules.catalog?.length ?? 0, 52)
-  check('已登记图片链接数', view.photos.length, 112)
+  check('来源规格总行数', rules.catalog?.length ?? 0, 53)
+  check('已登记图片链接数', view.photos.length, 113)
   const urls = [...new Set(view.photos.map((p) => p.url))]
-  check('不同图片文件数', urls.length, 100)
+  check('不同图片文件数', urls.length, 101)
   check(
     '不同效果图文件数',
     new Set(view.photos.filter((p) => p.kind === 'render').map((p) => p.url)).size,
@@ -36,22 +36,22 @@ try {
   check(
     '不同实景图文件数',
     new Set(view.photos.filter((p) => p.kind === 'photo').map((p) => p.url)).size,
-    50,
+    51,
   )
   const moduleRows: Record<string, string[]> = {
     '2-1': ['A4', 'D13', 'D12', 'A2'],
     '2-2': ['A7', 'C4', 'A8'],
     '3-1': ['D16', 'D13', 'D12'],
-    '3-2': ['A7', 'C4', 'A8'],
+    '3-2': ['C4', 'D17'],
     '3-3': ['A2', 'D4', 'D7', 'A4'],
     '4-1': ['D9', 'D16', 'D13'],
-    '4-2': ['A7', 'C4', 'A8'],
+    '4-2': ['C4', 'D17'],
     '4-3': ['D11', 'D7', 'D12'],
     '4-4': ['A3', 'C1', 'A2'],
   }
   for (const [si, rows, choices] of [
     ['SI1.0', 29, 32],
-    ['SI2.0', 23, 26],
+    ['SI2.0', 24, 27],
   ] as const) {
     check(`${si} 来源规格`, rules.catalog?.filter((c) => c.si === si).length ?? 0, rows)
     check(`${si} 选择项`, displayChoices(rules, si).length, choices)
@@ -101,7 +101,7 @@ try {
       check(
         `${si} ${n}桌新版内盘`,
         counts.innerTotal,
-        si === 'SI2.0' ? { 2: 7, 3: 10, 4: 12 }[n] : { 2: 7, 3: 8, 4: 11 }[n],
+        si === 'SI2.0' ? { 2: 7, 3: 9, 4: 11 }[n] : { 2: 7, 3: 8, 4: 11 }[n],
       )
       check(`${si} ${n}桌外框`, counts.frameTotal, n)
       if (si === 'SI2.0') {
@@ -113,12 +113,14 @@ try {
         check(
           `${si} ${n}桌新版A/C/D`,
           ['A', 'C', 'D'].map((s) => counts.counts.get(s) ?? 0),
-          { 2: [4, 1, 2], 3: [4, 1, 5], 4: [4, 2, 6] }[n],
+          { 2: [4, 1, 2], 3: [2, 1, 6], 4: [2, 2, 7] }[n],
         )
         check(
           `${si} ${n}桌试摆提示`,
           proposed.every((t) =>
-            t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
+            t.modules.includes('D17')
+              ? t.notes.every((note) => !note.includes('试摆'))
+              : t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
           ),
           true,
         )
@@ -146,6 +148,8 @@ try {
       }),
     )
   }
+  const d17 = await fetch(new URL('/api/v1/display-inner-trays/2026/D17', base), { method: 'HEAD' })
+  check('D17 2026版配图', d17.status, 200)
   check('图片实体只读检查', unavailable, [])
   const passed = checks.every((c) => c.ok)
   console.log(
