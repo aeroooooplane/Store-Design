@@ -1,4 +1,5 @@
 export const isBoldSite = import.meta.env.MODE === 'boldsite'
+export const isProjectPilot = isBoldSite && import.meta.env.VITE_BOLDSITE_PROJECT_PILOT === '1'
 
 export function deploymentPath(pathname: string): string {
   return /^\/svc\/[^/]+(?=\/|$)/.exec(pathname)?.[0] ?? ''
