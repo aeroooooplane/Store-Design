@@ -641,6 +641,17 @@
       "height": 300,
       "bytes": 276290,
       "sha256": "a12c7146e1b2a976a8ff707072f11d3ea9e3078c5e7b94f4d6f44f862002cf39"
+    },
+    {
+      "path": "10_产品与陈列/配件模块/系列配图20261123/2026-D17.png",
+      "beforeSha256": null,
+      "sha256": "05d81238c24ca2eae6db914c870bf49450ab278b4d179c3a73275de7ff9790aa",
+      "bytes": 1840508,
+      "width": 1683,
+      "height": 935,
+      "scheme": "2026",
+      "module": "D17",
+      "source": "https://arashivision.feishu.cn/wiki/IDFTw6owmikmqckqxb6cBjUlnXe"
     }
   ]
 }

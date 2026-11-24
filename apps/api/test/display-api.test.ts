@@ -340,14 +340,14 @@ describe('新版SI托盘配置的保存与重载', () => {
       tables3d: [],
     })
     expect(exported.statusCode).toBe(201)
-    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-11-23')
+    expect(exported.json<DisplayExport>().ruleVersion).toBe('2026-11-24')
     const ppt = await download(exported.json<DisplayExport>().pptx)
     const entries = unzipSync(new Uint8Array(ppt.rawPayload))
     const text = Object.entries(entries)
       .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
       .map(([, b]) => new TextDecoder().decode(b))
       .join('')
-    expect(text).toContain('内盘合计：10 个；外框：3 个；含外框合计：13 个')
+    expect(text).toContain('内盘合计：9 个；外框：3 个；含外框合计：12 个')
     expect(text).toContain('未确认实物可放性')
   })
   it('新建SI2.0渲染节点直接导出后仍保留默认2026方案', async () => {

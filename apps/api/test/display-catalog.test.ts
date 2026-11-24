@@ -61,7 +61,7 @@ function planned(n: number, siStyle?: SiStyle, scheme?: 'standard' | 'draft-2026
 
 describe('权威指引 rev4130 逐行托盘核对', () => {
   it('AG Pac 四行图片依最新指引区分效果图和实景图', () => {
-    expect(rules.version).toBe('2026-11-23')
+    expect(rules.version).toBe('2026-11-24')
     expect(rules.photos).toHaveLength(113)
     expect(new Set(rules.photos.map((p) => p.file)).size).toBe(101)
     for (const si of ['SI1.0', 'SI2.0'] as const) {
@@ -116,8 +116,8 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
   it('SI2.0主动选择新版后2/3/4桌数量、模块与状态一致，保存结构可重放', () => {
     for (const [n, expected, sizes] of [
       [2, 7, [4, 1, 2]],
-      [3, 10, [4, 1, 5]],
-      [4, 12, [4, 2, 6]],
+      [3, 9, [2, 1, 6]],
+      [4, 11, [2, 2, 7]],
     ] as const) {
       const tables = planned(n, 'SI2.0', 'draft-2026')
       const summary = summarizeDisplayModules(rules, tables)
@@ -127,14 +127,16 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
       expect(summary.total).toBe(expected + n)
       expect(
         tables.every((t) =>
-          t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
+          t.modules.includes('D17')
+            ? t.notes.every((note) => !note.includes('试摆'))
+            : t.notes.some((note) => note.includes('rev5471') && note.includes('未确认')),
         ),
       ).toBe(true)
       expect(JSON.parse(JSON.stringify(tables))).toEqual(tables)
     }
     expect(planned(3, 'SI2.0', 'draft-2026').map((t) => t.modules)).toEqual([
       ['D16', 'D13', 'D12'],
-      ['A7', 'C4', 'A8'],
+      ['C4', 'D17'],
       ['A2', 'D4', 'D7', 'A4'],
     ])
   })
@@ -144,7 +146,25 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
     const workbook = new ExcelJS.Workbook()
     await workbook.xlsx.load(data as unknown as ArrayBuffer)
     const inner = workbook.getWorksheet('内嵌托盘数量')
-    expect(inner?.getRow(inner.rowCount).values).toEqual([undefined, '含外框合计', 13])
+    expect(inner?.getRow(inner.rowCount).values).toEqual([undefined, '含外框合计', 12])
+    const notes = JSON.stringify(workbook.getWorksheet('方案说明')?.getSheetValues())
+    for (const item of [
+      'X6快充管家',
+      'X6峰能电池',
+      '整机硅胶套',
+      'X6标准保护镜',
+      '2个',
+      'X6镜头保护套',
+      '349',
+      '249',
+      '169',
+      '29',
+      '待确认',
+      'X6充电遥控自拍杆',
+      '快拍脚架自拍杆',
+      '649',
+    ])
+      expect(notes).toContain(item)
     const trays = workbook.getWorksheet('托盘数量')
     expect(trays?.getRow(trays.rowCount).values).toEqual([undefined, '合计', 21])
     const ppt = await buildDisplayDeck({
@@ -169,7 +189,7 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
       .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
       .map(([, bytes]) => strFromU8(bytes))
       .join('')
-    expect(text).toContain('内盘合计：10 个；外框：3 个；含外框合计：13 个')
+    expect(text).toContain('内盘合计：9 个；外框：3 个；含外框合计：12 个')
     expect(text).toContain('未确认实物可放性')
   })
 })

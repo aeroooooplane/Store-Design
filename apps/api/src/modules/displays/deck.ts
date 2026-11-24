@@ -31,6 +31,7 @@ export interface DeckMark {
 }
 
 export interface InnerTrayImages {
+  sourceUrl?: string
   title: string
   source: string
   images: Record<string, DeckImage | undefined>
@@ -778,11 +779,9 @@ function innerTraySlides(pptx: Pptx, input: DisplayDeckInput, table: DisplayTabl
       else text(slide, '暂无对应配图，请核对', { x, y: y + 0.5, w, h }, 16, MUTED, false, 'center')
     })
     const notes = [
-      ...new Set(
-        table.modules.flatMap((id) => input.rules.modules.find((m) => m.id === id)?.note ?? []),
-      ),
+      ...new Set(modules.flatMap((id) => input.rules.modules.find((m) => m.id === id)?.note ?? [])),
     ]
-    text(slide, notes.join('；'), { x: 4.1, y: 6.2, w: 8.7, h: 0.6 }, 13)
+    text(slide, notes.join('；'), { x: 4.1, y: 6.05, w: 8.7, h: 0.85 }, 13)
     text(
       slide,
       `配图来源：${reference.source}；以本页模块编号及当前数量明细为准`,
@@ -791,7 +790,7 @@ function innerTraySlides(pptx: Pptx, input: DisplayDeckInput, table: DisplayTabl
       MUTED,
     )
     slide.addNotes(
-      `${reference.source}\n${reference.source.includes('rev4130') ? 'https://arashivision.feishu.cn/wiki/NwOVw5xTAiFcvGkn8TZcjEO1nNh（第三节内嵌方案配图）' : '归档原图：配件模块/2桌内嵌托盘方案.png、3桌内嵌托盘方案.png、4桌内嵌托盘方案.png'}\n每个图片与本页同位置的模块编号对应；手填编号没有对应图片时保留缺图提示。`,
+      `${reference.source}\n${reference.sourceUrl ?? '归档原图：配件模块/2桌内嵌托盘方案.png、3桌内嵌托盘方案.png、4桌内嵌托盘方案.png'}\n每个图片与本页同位置的模块编号对应；手填编号没有对应图片时保留缺图提示。`,
     )
   }
 }

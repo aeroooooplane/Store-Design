@@ -214,9 +214,9 @@ export function SlotTable({
         </p>
         {edits.moduleScheme === 'draft-2026' && si === 'SI2.0' && (
           <p className="notice">
-            2026版：A7/A8、D13/D16 同盘试摆，D9 遮光罩为建议；数量按图核对，实物可放性尚未确认。
+            各桌模块按从后到前的顺序排列。
             <a
-              href="https://arashivision.feishu.cn/slides/E6LIsKO0XleWqIdpuy9c9tO7nZe"
+              href="https://arashivision.feishu.cn/wiki/IDFTw6owmikmqckqxb6cBjUlnXe"
               target="_blank"
               rel="noreferrer"
             >
@@ -309,6 +309,9 @@ export function SlotTable({
                     }}
                   />
                 </label>
+              )}
+              {t.modules.includes('D17') && showText && (
+                <p className="hint">{rules.modules.find((m) => m.id === 'D17')?.note}</p>
               )}
               {t.notes.length > 0 && <p className="hint">{t.notes.join('；')}</p>}
             </section>

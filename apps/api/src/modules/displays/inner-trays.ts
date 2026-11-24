@@ -51,6 +51,7 @@ const MODULES = {
     'D12',
     'D13',
     'D16',
+    'D17',
   ]),
 }
 
@@ -86,7 +87,10 @@ export async function loadInnerTrayImages(
   const result: InnerTrayImages = {
     title: version === '2026' ? '2026版内嵌托盘' : '既有内嵌托盘方案',
     source:
-      version === '2026' ? '内嵌托盘配件展示方案（2026版）第 2–7 页' : '既有指引 · 2026-10-13资源',
+      version === '2026' ? '内嵌托盘配件展示方案（2026版确认稿）' : '既有指引 · 2026-10-13资源',
+    ...(version === '2026'
+      ? { sourceUrl: 'https://arashivision.feishu.cn/wiki/IDFTw6owmikmqckqxb6cBjUlnXe' }
+      : {}),
     images: {},
   }
   const ids = new Set(

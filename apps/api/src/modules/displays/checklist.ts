@@ -90,6 +90,12 @@ export async function buildDisplayChecklist(input: {
     ['桌', '说明'],
     [
       ...tables.flatMap((t) => t.notes.map((note) => [`${t.label}桌`, note])),
+      ...tables.flatMap((t) =>
+        [...new Set(t.modules)].flatMap((id) => {
+          const note = rules.modules.find((m) => m.id === id)?.note
+          return note ? [[`${t.label}桌`, `${id} · ${note}`]] : []
+        }),
+      ),
       ...(input.pending ?? []).map((note) => ['待确认', note]),
     ],
     [8, 100],
