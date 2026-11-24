@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { apiHref } from '../../api/deployment.ts'
 import {
   AssetListSchema,
   DeliveryListSchema,
@@ -331,7 +332,8 @@ export function withImage(
 }
 
 /** ZIP of the current images, served by the API as a download. */
-export const renderArchiveUrl = (nodeId: string) => `/api/v1/nodes/${nodeId}/renders/archive`
+export const renderArchiveUrl = (nodeId: string) =>
+  apiHref(`/api/v1/nodes/${nodeId}/renders/archive`)
 
 /** Earlier deliveries of a render node, newest first. */
 export function useDeliveries(nodeId: string) {
