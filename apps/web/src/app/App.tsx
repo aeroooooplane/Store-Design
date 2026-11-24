@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
 import { Link, createBrowserRouter, createHashRouter, RouterProvider } from 'react-router'
 import type { RouteObject } from 'react-router'
-import { isBoldSite } from '../api/deployment.ts'
+import { isBoldSite, isProjectPilot } from '../api/deployment.ts'
 import { AppLayout } from '../components/AppNav.tsx'
 import { DisplayTaskPage } from '../features/display/DisplayTaskPage.tsx'
 import { DisplayTasksPage } from '../features/display/DisplayTasksPage.tsx'
@@ -21,12 +21,25 @@ function NotFoundPage() {
   )
 }
 
+function PilotUnavailablePage() {
+  return (
+    <main className="page">
+      <p className="notice">
+        本轮试点开放项目和图纸。<Link to="/">返回项目列表</Link>
+      </p>
+    </main>
+  )
+}
+
 const pages: RouteObject[] = [
   { path: '/', element: <ProjectListPage /> },
   { path: '/projects/:projectId', element: <ProjectPage /> },
-  { path: '/settings', element: <SettingsPage /> },
-  { path: '/display', element: <DisplayTasksPage /> },
-  { path: '/display/:taskId', element: <DisplayTaskPage /> },
+  { path: '/settings', element: isProjectPilot ? <PilotUnavailablePage /> : <SettingsPage /> },
+  { path: '/display', element: isProjectPilot ? <PilotUnavailablePage /> : <DisplayTasksPage /> },
+  {
+    path: '/display/:taskId',
+    element: isProjectPilot ? <PilotUnavailablePage /> : <DisplayTaskPage />,
+  },
   { path: '*', element: <NotFoundPage /> },
 ]
 const routes: RouteObject[] = [
