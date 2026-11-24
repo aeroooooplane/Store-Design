@@ -1,6 +1,7 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Project, ProjectCreate, ProjectUpdate } from '@store/shared'
 import { api, ifMatch, unwrap } from '../../api/client.ts'
+import { apiHref } from '../../api/deployment.ts'
 
 export interface ProjectListParams {
   q: string
@@ -105,4 +106,5 @@ export function useImportProject() {
   })
 }
 
-export const projectExportUrl = (projectId: string) => `/api/v1/projects/${projectId}/export`
+export const projectExportUrl = (projectId: string) =>
+  apiHref(`/api/v1/projects/${projectId}/export`)

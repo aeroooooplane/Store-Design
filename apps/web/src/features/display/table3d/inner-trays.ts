@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { apiHref } from '../../../api/deployment.ts'
 import type { TableShape } from './layout.ts'
 
 type Strip = NonNullable<TableShape['strip']>
@@ -147,7 +148,7 @@ export async function buildInnerTrays(
         block(group, rim, 0.015, p.width - 2 * rim, (side * (p.span - rim)) / 2, 0.0125, 0, liner)
       }
       const pic = showImages
-        ? await image('/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(p.id))
+        ? await image(apiHref(`/api/v1/display-inner-trays/${version}/${encodeURIComponent(p.id)}`))
         : null
       const grooves = p.id.startsWith('C')
       const surface = new THREE.PlaneGeometry(

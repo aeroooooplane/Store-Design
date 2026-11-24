@@ -1,15 +1,37 @@
 import createClient from 'openapi-fetch'
 import { ApiErrorSchema } from '@store/shared'
 import type { paths } from './schema'
+import { apiPrefix, prefixFileLinks } from './deployment'
 
 /**
  * Typed client generated from apps/api/openapi.json (`pnpm api:openapi`). This is the only way
  * the browser reaches data; there is no direct database access and no secret in the bundle.
  */
 export const api = createClient<paths>({
-  baseUrl: window.location.origin,
+  baseUrl: window.location.origin + apiPrefix,
   // Resolve fetch per call so tests can stub it.
-  fetch: (request) => globalThis.fetch(request),
+  fetch: async (request) => {
+    const response = await globalThis.fetch(request)
+    if (
+      !apiPrefix ||
+      !response.ok ||
+      !response.headers.get('content-type')?.includes('application/json')
+    )
+      return response
+    const data: unknown = await response
+      .clone()
+      .json()
+      .catch(() => undefined)
+    if (data === undefined) return response
+    const headers = new Headers(response.headers)
+    headers.delete('content-length')
+    headers.delete('content-encoding')
+    return new Response(JSON.stringify(prefixFileLinks(data, apiPrefix)), {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    })
+  },
 })
 
 export class ApiRequestError extends Error {
