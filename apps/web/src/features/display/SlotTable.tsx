@@ -216,20 +216,14 @@ export function SlotTable({
               </select>
             </label>
           )}
-        <p>
-          主机托盘位 {summary.trayTotal} 个；
-          {si === 'SI1.0' ? (
-            '中岛桌中央为亚克力板。'
-          ) : (
-            <>
-              内嵌托盘 {moduleCounts.innerTotal} 个（
-              {[...moduleCounts.counts]
-                .map(([size, count]) => `${size} 模块 ${count}`)
-                .join('、') || '暂无模块'}
-              ）；外框 {moduleCounts.frameTotal} 个；内嵌含外框合计 {moduleCounts.total} 个。
-            </>
-          )}
-        </p>
+        {si === 'SI2.0' && (
+          <p>
+            主机托盘位 {summary.trayTotal} 个；内嵌托盘 {moduleCounts.innerTotal} 个（
+            {[...moduleCounts.counts].map(([size, count]) => `${size} 模块 ${count}`).join('、') ||
+              '暂无模块'}
+            ）；外框 {moduleCounts.frameTotal} 个；内嵌含外框合计 {moduleCounts.total} 个。
+          </p>
+        )}
         {edits.moduleScheme === 'draft-2026' && si === 'SI2.0' && (
           <p className="notice">
             各桌模块按从后到前的顺序排列。
