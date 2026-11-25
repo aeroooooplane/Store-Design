@@ -61,8 +61,8 @@ function newDocument(title: string, fonts: DeliveryFonts): PDFKit.PDFDocument {
     font: fonts.regular as string,
     info: { Title: title, Author: '影石Insta360 门店空间设计', Creator: 'store-design' },
   })
-  doc.registerFont('regular', fonts.regular as string | Buffer)
-  doc.registerFont('bold', fonts.bold as string | Buffer)
+  doc.registerFont('regular', fonts.regular)
+  doc.registerFont('bold', fonts.bold)
   return doc
 }
 
