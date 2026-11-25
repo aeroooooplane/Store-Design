@@ -413,26 +413,31 @@ export async function buildTableScene(
     wall.position.set(0, 0.75, -shape.depth / 2 - 0.05)
     root.add(wall)
   }
-  if (input.table.center === 'acrylic' && drawn.strip) {
-    const sx = shape.width / drawn.width
-    const sz = shape.depth / drawn.depth
-    const { x, z, w, d } = shape.strip ?? {
-      x: drawn.strip.x * sx,
-      z: drawn.strip.z * sz,
-      w: drawn.strip.w * sx,
-      d: drawn.strip.d * sz,
-    }
-    const plate = new THREE.Mesh(
-      new THREE.BoxGeometry(w, 0.004, d),
-      new THREE.MeshPhysicalMaterial({
-        color: '#dce8e9',
-        roughness: 0.24,
-        clearcoat: 0.65,
-        transparent: true,
-        opacity: 0.88,
-      }),
-    )
-    plate.position.set(x, shape.height + 0.002, z)
+  if (input.table.center === 'acrylic') {
+    // Measured from the SI1.0 1800 mm island (asset-408124), in metres.
+    const height = 0.25
+    const thickness = 0.015
+    const face = new THREE.MeshPhysicalMaterial({
+      color: '#ffffff',
+      roughness: 0.56,
+      transmission: 0.6,
+      transparent: true,
+      opacity: 0.78,
+      depthWrite: false,
+      thickness,
+      ior: 1.49,
+    })
+    const edge = new THREE.MeshStandardMaterial({ color: '#e1e5e5', roughness: 0.48 })
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(1.1, height, thickness), [
+      edge,
+      edge,
+      edge,
+      edge,
+      face,
+      face,
+    ])
+    if (input.table.orientation === 'portrait') plate.rotation.y = Math.PI / 2
+    plate.position.y = shape.height + height / 2
     root.add(plate)
   } else if (shape.strip && input.table.modules.length && input.innerVersion) {
     root.add(
