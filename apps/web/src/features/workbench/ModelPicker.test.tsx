@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { Asset, AssetCategory } from '@store/shared'
+import type { Asset, AssetCategory, Market, SiStyle } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import { ModelPicker, pickableSections } from './ModelPicker.tsx'
 
@@ -51,7 +51,7 @@ const catalog = [
     placeable: false,
     footprint: { w: 1.69, d: 0.05, h: 0.958 },
   }),
-  asset('asset-5', '墙面LOGO', '品牌标识', {
+  asset('asset-20533337', '墙面LOGO', '品牌标识', {
     siFamily: '通用',
     function: 'signage',
     placeable: false,
@@ -73,7 +73,7 @@ it('allows the current Leica wall combinations under SI1.0 signage', () => {
   expect(
     pickableSections([leica, ordinary], 'SI1.0').find((section) => section.key === 'signage')
       ?.assets,
-  ).toEqual([leica])
+  ).toEqual([{ ...leica, name: '徕卡墙组合 1200' }])
 })
 
 it('shows one advertising machine per size with no separate portrait entry', () => {
@@ -93,6 +93,40 @@ it('shows one advertising machine per size with no separate portrait entry', () 
 afterEach(cleanup)
 
 describe('pickableSections', () => {
+  it.each([
+    ['SI1.0', 'domestic'],
+    ['SI1.0', 'overseas'],
+    ['SI2.0', 'domestic'],
+    ['SI2.0', 'overseas'],
+  ] as [SiStyle, Market][])('在 %s / %s 仅提供审核的六款标识', (si, market) => {
+    const selected = [
+      ['asset-90000111', '徕卡墙组合 1200', '徕卡墙组合 1200'],
+      ['asset-90000112', '徕卡墙组合 1990', '徕卡墙组合 1990'],
+      ['asset-90000113', '徕卡墙组合 3000', '徕卡墙组合 3000'],
+      ['asset-20533337', '影石 Insta360', 'Insta360'],
+      ['asset-33868330', '影石 Insta360 始于敢想', 'Insta360 Think Bold'],
+      ['asset-11483499', '影翎 ANTIGRAVITY', 'ANTIGRAVITY'],
+    ] as const
+    const source = [
+      ...selected.map(([id]) =>
+        asset(id, id.startsWith('asset-900001') ? '徕卡墙画面组合' : '墙面LOGO', '软装道具', {
+          siFamily: 'SI2.0',
+          category: id.startsWith('asset-900001') ? '软装道具' : '品牌标识',
+          function: 'signage',
+        }),
+      ),
+      ...['asset-90000101', 'asset-36929204', 'asset-33917980', 'asset-40910342'].map((id) =>
+        asset(id, '徕卡墙或旧标识', '品牌标识', { function: 'signage' }),
+      ),
+    ]
+    const before = structuredClone(source)
+    const signs = pickableSections(source, si, market).find((s) => s.key === 'signage')?.assets
+    expect(signs?.map(({ id, name }) => [id, name])).toEqual(
+      selected.map(([id, domestic, overseas]) => [id, market === 'domestic' ? domestic : overseas]),
+    )
+    expect(source).toEqual(before)
+  })
+
   it('按精确编号隐藏LED和审核停用款，保留在用水牌及其他名称含LED的物料', () => {
     const reviewed = [
       ...['asset-11525629', 'asset-11511980', 'asset-2463847'].map((id) =>
@@ -116,7 +150,7 @@ describe('pickableSections', () => {
       ['坐凳', ['asset-6']],
       ['屏幕', ['asset-4']],
       ['灯箱', ['asset-8']],
-      ['标识', ['asset-5']],
+      ['标识', ['asset-20533337']],
     ])
     const si2 = pickableSections(catalog, 'SI2.0')
     expect(si2.find((s) => s.label === '中岛桌')?.assets.map((a) => a.id)).toEqual(['asset-3'])
@@ -124,6 +158,31 @@ describe('pickableSections', () => {
 })
 
 describe('ModelPicker', () => {
+  it('切换市场时同时更新名称与实际模型缩略图，添加时保留原市场模型引用', () => {
+    const logo = asset('asset-33868330', '墙面LOGO', '品牌标识', {
+      function: 'signage',
+      market: 'domestic',
+      glb: file('domestic-model'),
+      otherMarketGlb: file('overseas-model'),
+    })
+    const onPick = vi.fn()
+    const { rerender } = render(
+      <ModelPicker assets={[logo]} siStyle="SI1.0" market="domestic" onPick={onPick} />,
+    )
+    const domestic = screen.getByRole('button', { name: '添加 影石 Insta360 始于敢想' })
+    expect(within(domestic).getByRole('presentation').getAttribute('src')).toContain(
+      'asset-33868330-domestic.webp',
+    )
+    rerender(<ModelPicker assets={[logo]} siStyle="SI1.0" market="overseas" onPick={onPick} />)
+    expect(screen.queryByRole('button', { name: '添加 影石 Insta360 始于敢想' })).toBeNull()
+    const overseas = screen.getByRole('button', { name: '添加 Insta360 Think Bold' })
+    expect(within(overseas).getByRole('presentation').getAttribute('src')).toContain(
+      'asset-33868330-overseas.webp',
+    )
+    fireEvent.click(overseas)
+    expect(onPick).toHaveBeenCalledWith({ ...logo, name: 'Insta360 Think Bold' })
+  })
+
   it('shows pictures and labels, searches, and keeps picking', () => {
     const onPick = vi.fn()
     render(<ModelPicker assets={catalog} siStyle="SI2.0" onPick={onPick} />)
@@ -140,10 +199,10 @@ describe('ModelPicker', () => {
     expect(within(screenCard).getByText('占位')).toBeTruthy()
     expect(within(screenCard).getByText(/1690 × 50 × 958 mm/)).toBeTruthy()
 
-    fireEvent.change(screen.getByLabelText('搜索模型'), { target: { value: 'LOGO' } })
+    fireEvent.change(screen.getByLabelText('搜索模型'), { target: { value: 'Insta360' } })
     expect(screen.queryByRole('button', { name: '添加 广告机 · 变体' })).toBeNull()
-    fireEvent.click(screen.getByRole('button', { name: '添加 墙面LOGO · 变体' }))
-    expect(onPick).toHaveBeenCalledWith(catalog[4])
+    fireEvent.click(screen.getByRole('button', { name: '添加 影石 Insta360' }))
+    expect(onPick).toHaveBeenCalledWith({ ...catalog[4], name: '影石 Insta360' })
     expect(screen.getByText('已添加')).toBeTruthy()
   })
 

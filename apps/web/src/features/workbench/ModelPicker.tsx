@@ -5,8 +5,9 @@ import {
   LEGACY_PORTRAIT_SCREENS,
   mToMm,
 } from '@store/shared'
-import type { Asset, ItemFunction, SiStyle } from '@store/shared'
+import type { Asset, ItemFunction, Market, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
+import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
 
 /**
  * The picker lists one section per prop category, in this order (用户 2026-11-18). The jump
@@ -65,7 +66,11 @@ const PLACEABLE_CATEGORIES = new Set(['软装道具', '信息化物料', '品牌
  * The models a project may use: furniture of its own SI style, plus every model that is not tied
  * to a style. Retired models (模型选用表 删除) are left out. One section per category, in UI order.
  */
-export function pickableSections(assets: readonly Asset[], si: SiStyle): PickableSection[] {
+export function pickableSections(
+  assets: readonly Asset[],
+  si: SiStyle,
+  market: Market = 'domestic',
+): PickableSection[] {
   return SECTIONS.map(({ key, fn, label, match }) => ({
     key,
     fn,
@@ -77,15 +82,20 @@ export function pickableSections(assets: readonly Asset[], si: SiStyle): Pickabl
           !LEGACY_PORTRAIT_SCREENS.has(a.id) &&
           PLACEABLE_CATEGORIES.has(a.category) &&
           match(a) &&
+          (key !== 'signage' || Boolean(SIGNAGE_OPTIONS[a.id])) &&
           (a.category !== '软装道具' ||
             a.siFamily === si ||
             (a.function === 'signage' && a.standardName.startsWith('徕卡墙'))),
       )
       .map((asset) => {
-        const name = advertisingScreenName(asset.id)
+        const name = SIGNAGE_OPTIONS[asset.id]?.[market] ?? advertisingScreenName(asset.id)
         return name ? { ...asset, name } : asset
       })
-      .sort((a, b) => a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id)),
+      .sort((a, b) =>
+        key === 'signage'
+          ? SIGNAGE_ORDER.indexOf(a.id) - SIGNAGE_ORDER.indexOf(b.id)
+          : a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
+      ),
   })).filter((section) => section.assets.length > 0)
 }
 
@@ -106,6 +116,7 @@ const thumbnailUrl = (url: string) => `${url}${url.includes('?') ? '&' : '?'}w=1
 interface ModelPickerProps {
   assets: readonly Asset[]
   siStyle: SiStyle
+  market?: Market | undefined
   onPick: (asset: Asset) => void
   isPointPlaced?: ((asset: Asset) => boolean) | undefined
   pendingAssetId?: string | null | undefined
@@ -115,6 +126,7 @@ interface ModelPickerProps {
 export function ModelPicker({
   assets,
   siStyle,
+  market = 'domestic',
   onPick,
   isPointPlaced,
   pendingAssetId,
@@ -123,7 +135,7 @@ export function ModelPicker({
   const [lastPicked, setLastPicked] = useState<string | null>(null)
   const query = useDeferredValue(search.trim())
   const sections = useMemo(() => {
-    const all = pickableSections(assets, siStyle)
+    const all = pickableSections(assets, siStyle, market)
     if (!query) return all
     return all
       .map((s) => ({
@@ -133,7 +145,7 @@ export function ModelPicker({
         ),
       }))
       .filter((s) => s.assets.length > 0)
-  }, [assets, siStyle, query])
+  }, [assets, siStyle, market, query])
   const listRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState<string | null>(null)
   const current =
@@ -265,7 +277,9 @@ export function ModelPicker({
               <ul>
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
-                  const imageUrl = image && thumbnailUrl(image.url)
+                  const imageUrl =
+                    SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
+                    (image && thumbnailUrl(image.url))
                   const pointPlaced = isPointPlaced?.(asset) ?? false
                   return (
                     <li key={asset.id}>
