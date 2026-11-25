@@ -4,7 +4,8 @@ from hashlib import sha256
 from pathlib import Path
 from types import SimpleNamespace
 
-from catalog import Catalog, list_assets
+from app import Catalog
+from catalog import list_assets
 
 
 class CatalogTests(unittest.TestCase):
