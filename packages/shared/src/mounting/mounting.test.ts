@@ -181,9 +181,9 @@ describe('wallMountSnap', () => {
     const piece = logo({ w: 0.6, d: 0.1, h: 0.5, elevation: 1 })
     expect(wallMountSnap(piece, 4, 6.23, room, '+Z')).toBeNull()
     expect(displayPanelSnap(piece, 4, 6.23, room, '+Z')).toBeNull()
-    const partial = {
+    const partial: Space = {
       ...room,
-      entrances: [{ a: [2, 6] as const, b: [4, 6] as const, kind: 'main' as const }],
+      entrances: [{ a: [2, 6], b: [4, 6], kind: 'main' }],
     }
     expect(wallMountSnap(piece, 3, 6.23, partial, '+Z')).toBeNull()
     expect(displayPanelSnap(piece, 3, 6.23, partial, '+Z')).toBeNull()
