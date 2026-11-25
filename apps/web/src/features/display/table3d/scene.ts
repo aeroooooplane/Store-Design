@@ -416,16 +416,19 @@ export async function buildTableScene(
   if (input.table.center === 'acrylic') {
     // Measured from the SI1.0 1800 mm island (asset-408124), in metres.
     const height = 0.25
+    const thickness = 0.015
     const face = new THREE.MeshPhysicalMaterial({
-      color: '#f5f6f4',
-      roughness: 0.38,
-      clearcoat: 0.5,
+      color: '#ffffff',
+      roughness: 0.56,
+      transmission: 0.6,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.78,
       depthWrite: false,
+      thickness,
+      ior: 1.49,
     })
-    const edge = new THREE.MeshStandardMaterial({ color: '#a9b8bb', roughness: 0.28 })
-    const plate = new THREE.Mesh(new THREE.BoxGeometry(1.1, height, 0.015), [
+    const edge = new THREE.MeshStandardMaterial({ color: '#e1e5e5', roughness: 0.48 })
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(1.1, height, thickness), [
       edge,
       edge,
       edge,
