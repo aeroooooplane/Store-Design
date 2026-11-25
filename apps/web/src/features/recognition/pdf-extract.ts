@@ -1,6 +1,6 @@
-import * as pdfjs from 'pdfjs-dist'
+import * as pdfjs from 'pdfjs-dist/legacy/build/pdf.mjs'
 import type { PDFDocumentProxy, PDFPageProxy } from 'pdfjs-dist'
-import workerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url'
+import workerUrl from 'pdfjs-dist/legacy/build/pdf.worker.mjs?url'
 import type { VectorContent } from '@store/shared'
 import { extractPageVector } from './pdf-vector.ts'
 
