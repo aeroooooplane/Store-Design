@@ -1326,6 +1326,17 @@ ul.issues li.hint::before {
   overflow: hidden;
   background: var(--plan-paper);
 }
+.placement-controls {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  max-width: calc(100% - 16px);
+  z-index: 3;
+  pointer-events: none;
+}
+.placement-controls button {
+  pointer-events: auto;
+}
 .view-main svg.plan {
   max-height: calc(100vh - 170px);
 }

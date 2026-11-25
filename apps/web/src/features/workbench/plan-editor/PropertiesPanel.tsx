@@ -26,6 +26,7 @@ interface PropertiesPanelProps {
   space: Space
   dispatch: Dispatch<EditorAction>
   onRotate: (by: 90 | -90) => void
+  onDuplicate?: (() => void) | undefined
 }
 
 const ELEVATION_LABELS: Record<Installation, string> = {
@@ -143,6 +144,7 @@ export function PropertiesPanel({
   space,
   dispatch,
   onRotate,
+  onDuplicate,
 }: PropertiesPanelProps) {
   const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
   const screenName = advertisingScreenName(asset?.id)
@@ -181,6 +183,11 @@ export function PropertiesPanel({
               <Trash2 size={16} aria-hidden="true" />
             </button>
           </div>
+          {onDuplicate && (
+            <button type="button" onClick={onDuplicate}>
+              复制同款
+            </button>
+          )}
           {screenName && asset && ['embedded', 'wall', 'ceiling'].includes(itemMount(selected)) && (
             <div className="field-row">
               屏幕方向

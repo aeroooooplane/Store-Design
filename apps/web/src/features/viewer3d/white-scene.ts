@@ -25,6 +25,7 @@ import type {
   LayoutItem,
   Market,
   ModelSize,
+  Point,
   RenderBackground,
   ShopType,
   SiStyle,
@@ -61,6 +62,7 @@ type ShotView = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
 export interface SceneHandlers {
   onSelect: (itemId: string | null) => void
+  onFloorPlace?: ((point: Point | null) => void) | undefined
   /**
    * `group` is the same for every move of one drag; `snap` is off while Alt is held. Without
    * it the props cannot be dragged (read-only views).
@@ -240,6 +242,9 @@ export class WhiteScene {
   }
 
   setHandlers(handlers: SceneHandlers | null) {
+    if (Boolean(this.handlers?.onFloorPlace) !== Boolean(handlers?.onFloorPlace)) {
+      this.canvas.style.cursor = handlers?.onFloorPlace ? 'crosshair' : ''
+    }
     this.handlers = handlers
   }
 
@@ -986,6 +991,11 @@ export class WhiteScene {
 
   private readonly onPointerDown = (event: PointerEvent) => {
     if (event.button !== 0) return
+    if (this.handlers?.onFloorPlace) {
+      event.stopImmediatePropagation()
+      this.handlers.onFloorPlace(this.floorPoint(event))
+      return
+    }
     if (this.startResize(event)) return
     if (this.startTurn(event)) return
     const placed = this.pick(event)
@@ -1004,6 +1014,7 @@ export class WhiteScene {
   }
 
   private readonly onPointerMove = (event: PointerEvent) => {
+    if (this.handlers?.onFloorPlace) return
     if (this.turnDrag) {
       const { id, centre, group } = this.turnDrag
       const rotation = rotationOnFloor(this.ray(event).ray, centre)

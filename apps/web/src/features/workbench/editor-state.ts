@@ -42,6 +42,7 @@ import type {
   ScreenOrientation,
   Space,
 } from '@store/shared'
+import { floorPlacementProblem } from './plan-editor/floor-placement.ts'
 import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
@@ -140,6 +141,7 @@ export type EditorAction =
     }
   /** A wall or ceiling piece added with `space` goes onto the nearest wall at a default height. */
   | { type: 'add'; asset: Asset; cx: number; cz: number; space?: Space | undefined }
+  | { type: 'placeFurniture'; item: LayoutItem; space: Space }
   /** 贴墙 ⇄ 内嵌 from the properties panel: the piece moves onto or into the nearest wall. */
   | {
       type: 'setMount'
@@ -382,6 +384,31 @@ function limitDrag(position: ModelPosition, boundary: Polygon | undefined): Mode
   return distance([atLimit.cx, atLimit.cz], closest) <= MAX_DRAG_OUTSIDE_M
     ? atLimit
     : atDistance(MAX_DRAG_OUTSIDE_M - EPSILON_M)
+}
+
+export function catalogItem(layout: Layout, asset: Asset, cx: number, cz: number): LayoutItem {
+  const size = rotatedFootprint(asset, 0)
+  return {
+    id: nextItemId(layout, asset.function),
+    assetId: asset.id,
+    function: asset.function,
+    name: (advertisingScreenName(asset.id) ?? asset.name).slice(0, 100),
+    cx: snap(cx),
+    cz: snap(cz),
+    rotation: 0,
+    w: roundM(size.w),
+    d: roundM(size.d),
+    h: roundM(size.h),
+    // Without a web model the item is a true-size placeholder (see assetFitProblem).
+    placeholder: !asset.placeable,
+    locked: false,
+  }
+}
+
+function appendItem(state: EditorState, item: LayoutItem): EditorState {
+  return commit(state, { ...state.layout, items: [...state.layout.items, item] }, null, {
+    selectedId: item.id,
+  })
 }
 
 export function editorReducer(state: EditorState, action: EditorAction): EditorState {
@@ -695,23 +722,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         `fixture:${action.id}`,
       )
     case 'add': {
-      const id = nextItemId(state.layout, action.asset.function)
-      const size = rotatedFootprint(action.asset, 0)
-      const item: LayoutItem = {
-        id,
-        assetId: action.asset.id,
-        function: action.asset.function,
-        name: (advertisingScreenName(action.asset.id) ?? action.asset.name).slice(0, 100),
-        cx: snap(action.cx),
-        cz: snap(action.cz),
-        rotation: 0,
-        w: roundM(size.w),
-        d: roundM(size.d),
-        h: roundM(size.h),
-        // Without a web model the item is a true-size placeholder (see assetFitProblem).
-        placeholder: !action.asset.placeable,
-        locked: false,
-      }
+      const item = catalogItem(state.layout, action.asset, action.cx, action.cz)
       const space = action.space
       let added = item
       if (space && isDisplayPanel(item)) {
@@ -737,9 +748,12 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           state.layout.fixtures,
         )
       }
-      return commit(state, { ...state.layout, items: [...state.layout.items, added] }, null, {
-        selectedId: id,
-      })
+      return appendItem(state, added)
+    }
+    case 'placeFurniture': {
+      const item = { ...action.item, id: nextItemId(state.layout, action.item.function) }
+      if (floorPlacementProblem(state.layout, action.space, item)) return state
+      return appendItem(state, item)
     }
     case 'undo': {
       const previous = state.past[state.past.length - 1]

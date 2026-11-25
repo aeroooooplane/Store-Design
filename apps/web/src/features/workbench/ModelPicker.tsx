@@ -107,10 +107,18 @@ interface ModelPickerProps {
   assets: readonly Asset[]
   siStyle: SiStyle
   onPick: (asset: Asset) => void
+  isPointPlaced?: ((asset: Asset) => boolean) | undefined
+  pendingAssetId?: string | null | undefined
 }
 
 /** "添加模型": product pictures in one section per category, with jump icons on top. */
-export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
+export function ModelPicker({
+  assets,
+  siStyle,
+  onPick,
+  isPointPlaced,
+  pendingAssetId,
+}: ModelPickerProps) {
   const [search, setSearch] = useState('')
   const [lastPicked, setLastPicked] = useState<string | null>(null)
   const query = useDeferredValue(search.trim())
@@ -258,16 +266,17 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
                   const imageUrl = image && thumbnailUrl(image.url)
+                  const pointPlaced = isPointPlaced?.(asset) ?? false
                   return (
                     <li key={asset.id}>
                       <button
                         type="button"
                         className="model-row"
                         aria-label={`添加 ${asset.name}`}
-                        title="点击放到空间中央"
+                        title={pointPlaced ? '选款后在画布上点击放置' : '点击添加模型'}
                         onClick={() => {
                           onPick(asset)
-                          setLastPicked(asset.id)
+                          setLastPicked(pointPlaced ? null : asset.id)
                         }}
                       >
                         {imageUrl ? (
@@ -290,6 +299,7 @@ export function ModelPicker({ assets, siStyle, onPick }: ModelPickerProps) {
                             {asset.productImageMatch === 'approximate' && (
                               <span className="tag">同类参考图</span>
                             )}
+                            {pendingAssetId === asset.id && <span className="tag">待放置</span>}
                             {lastPicked === asset.id && <span className="tag done">已添加</span>}
                           </span>
                         </span>

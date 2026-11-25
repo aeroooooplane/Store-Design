@@ -14,6 +14,7 @@ import {
   checkAssetFit,
   WALL_ART_ID,
   fitBodyFootprints,
+  itemMount,
   snapRotation,
   spaceAncestor,
   stageOf,
@@ -25,7 +26,9 @@ import type {
   NodeCamera,
   DesignNode,
   Draft,
+  LayoutItem,
   NodeSummary,
+  Point,
   ShopType,
   SiStyle,
   Space,
@@ -42,11 +45,22 @@ import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { useViewMemory } from './view-memory.ts'
 import type { Market, Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
-import { editorReducer, initialEditorState, newItemPoint } from './editor-state.ts'
+import {
+  catalogItem,
+  editorReducer,
+  initialEditorState,
+  newItemPoint,
+  snap,
+} from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
 import { SpaceEditor } from './SpaceEditor.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
+import {
+  floorPlacementProblem,
+  nearbyFurniture,
+  pointPlacedAsset,
+} from './plan-editor/floor-placement.ts'
 import { IssuesPanel } from './plan-editor/IssuesPanel.tsx'
 import { PropertiesPanel } from './plan-editor/PropertiesPanel.tsx'
 import { useDraftAutosave } from './plan-editor/useDraftAutosave.ts'
@@ -54,7 +68,7 @@ import { useEditWalls } from './plan-editor/useEditWalls.ts'
 import { useSpacingPreference } from './plan-editor/useSpacingPreference.ts'
 import { useEditorKeys } from './plan-editor/useEditorKeys.ts'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
-import { usePlanDrag } from './plan-editor/usePlanDrag.ts'
+import { toWorld, usePlanDrag } from './plan-editor/usePlanDrag.ts'
 import { useUndoRedoKeys } from './plan-editor/useUndoRedoKeys.ts'
 
 // Three.js is only downloaded when a 3D view is first opened.
@@ -135,6 +149,8 @@ export function PlanEditor({
   const [showSpacing, setShowSpacing] = useSpacingPreference()
   // 画空心隔板: the next drag on the plan draws a partition.
   const [drawingFixture, setDrawingFixture] = useState(false)
+  const [placement, setPlacement] = useState<{ item: LayoutItem; error?: string } | null>(null)
+  const canvasRef = useRef<HTMLDivElement>(null)
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
   const pendingCamera = useRef<Camera | null>(null)
@@ -327,9 +343,46 @@ export function PlanEditor({
   const selectedFixture = state.layout.fixtures?.find((f) => f.id === state.selectedId) ?? null
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
+  function preparePlacement(item: LayoutItem) {
+    setDrawingFixture(false)
+    setPlacement({ item })
+    canvasRef.current?.focus({ preventScroll: true })
+  }
+
   function addAsset(asset: Asset) {
+    if (pointPlacedAsset(asset)) {
+      preparePlacement(catalogItem(state.layout, asset, 0, 0))
+      return
+    }
+    setPlacement(null)
     const [cx, cz] = newItemPoint(space)
     dispatch({ type: 'add', asset, cx, cz, space })
+  }
+
+  function placeFurniture(point: Point | null) {
+    if (!placement) return
+    if (!point) {
+      setPlacement({ item: placement.item, error: '请在门店地面上选择位置。' })
+      return
+    }
+    const item = { ...placement.item, cx: snap(point[0]), cz: snap(point[1]) }
+    const error = floorPlacementProblem(state.layout, space, item)
+    if (error) {
+      setPlacement({ item: placement.item, error })
+      return
+    }
+    dispatch({ type: 'placeFurniture', item, space })
+    setPlacement(null)
+  }
+
+  function duplicateFurniture() {
+    if (!selected) return
+    const copy = { ...selected, locked: false }
+    const nearby = nearbyFurniture(state.layout, space, copy)
+    if (nearby) {
+      dispatch({ type: 'placeFurniture', item: nearby, space })
+      canvasRef.current?.focus({ preventScroll: true })
+    } else preparePlacement(copy)
   }
 
   function switchView(next: 'plan' | '3d') {
@@ -350,7 +403,13 @@ export function PlanEditor({
       models={
         // No props are added while the walls are being edited.
         editWalls.editing ? undefined : (
-          <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
+          <ModelPicker
+            assets={assets}
+            siStyle={siStyle}
+            onPick={addAsset}
+            isPointPlaced={pointPlacedAsset}
+            pendingAssetId={placement?.item.assetId}
+          />
         )
       }
       defaultTab="models"
@@ -396,7 +455,10 @@ export function PlanEditor({
               spacing={showSpacing}
               onToggleSpacing={() => setShowSpacing(!showSpacing)}
               drawingFixture={drawingFixture}
-              onToggleDrawFixture={() => setDrawingFixture((on) => !on)}
+              onToggleDrawFixture={() => {
+                setPlacement(null)
+                setDrawingFixture((on) => !on)
+              }}
             />
 
             {saveState === 'conflict' && (
@@ -416,6 +478,7 @@ export function PlanEditor({
 
             <div
               className="plan-canvas"
+              ref={canvasRef}
               tabIndex={0}
               aria-label={
                 planMain
@@ -426,12 +489,26 @@ export function PlanEditor({
               onPointerUp={endDrag}
               onPointerCancel={endDrag}
               onKeyDown={(event) => {
+                if (placement) {
+                  if (event.key === 'Escape') setPlacement(null)
+                  return
+                }
                 if (event.key === 'Escape' && drawingFixture) setDrawingFixture(false)
                 else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
                   dispatch({ type: 'remove', id: selectedFixture.id })
                 else onKeyDown(event)
               }}
             >
+              {placement && (
+                <div className="toolbar notice placement-controls">
+                  <p className="hint" role="status">
+                    {placement.error ?? `在画布上点击空位放置「${placement.item.name}」。`}
+                  </p>
+                  <button type="button" onClick={() => setPlacement(null)}>
+                    取消放置
+                  </button>
+                </div>
+              )}
               <div className={planMain ? 'view-mini' : 'view-main'}>
                 <Suspense fallback={<p className="notice">正在载入三维…</p>}>
                   <Viewer3D
@@ -446,6 +523,7 @@ export function PlanEditor({
                     onMove={move}
                     onResize={resize}
                     onRotate={rotate}
+                    onFloorPlace={!planMain && placement ? placeFurniture : undefined}
                     onReady={onViewerReady}
                     look="material"
                     siStyle={siStyle}
@@ -467,7 +545,17 @@ export function PlanEditor({
               </div>
               <div
                 className={planMain ? 'view-main' : 'view-mini'}
-                onPointerDownCapture={planMain ? onDrawPointerDown : undefined}
+                style={planMain && placement ? { cursor: 'crosshair' } : undefined}
+                onPointerDownCapture={
+                  planMain
+                    ? (event) => {
+                        if (!placement) return onDrawPointerDown(event)
+                        if (event.button !== 0) return
+                        event.stopPropagation()
+                        placeFurniture(toWorld(svgRef.current, event))
+                      }
+                    : undefined
+                }
               >
                 <PlanView
                   svgRef={svgRef}
@@ -532,7 +620,10 @@ export function PlanEditor({
                   ? {
                       label: '修改墙体',
                       title: '改边界、入口、柱子或层高，另存为新的空间和方案',
-                      onClick: editWalls.start,
+                      onClick: () => {
+                        setPlacement(null)
+                        editWalls.start()
+                      },
                       disabled: busy || create.isPending || editWalls.editing,
                     }
                   : undefined
@@ -563,6 +654,11 @@ export function PlanEditor({
             space={space}
             dispatch={dispatch}
             onRotate={rotateSelected}
+            onDuplicate={
+              selected && itemMount(selected) === 'floor' && !placement && !editWalls.editing
+                ? duplicateFurniture
+                : undefined
+            }
           />
 
           <IssuesPanel issues={issues} errorCount={errors.length} />
