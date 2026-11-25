@@ -28,6 +28,7 @@ for (const file of [
   'drawings.py',
   'projects.py',
   'storage.py',
+  'storage_gate.py',
   'requirements.txt',
   'boldsite.json',
 ]) {

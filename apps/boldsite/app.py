@@ -21,6 +21,7 @@ from contract import ApiError, ServicePrefix, error_response, invalid, missing
 from drawings import router as drawings
 from projects import router as projects
 from storage import configured_database
+from storage_gate import StorageBusy
 
 ROOT_ASSETS = {
     "favicon.ico",
@@ -51,6 +52,14 @@ async def handle_api_error(request: Request, error: ApiError):
     return error_response(request, error)
 
 
+@app.exception_handler(StorageBusy)
+async def handle_storage_busy(request: Request, error: StorageBusy):
+    response = error_response(request, ApiError(503, "STORAGE_BUSY", str(error)))
+    response.headers["Retry-After"] = "1"
+    return response
+
+
+
 @app.exception_handler(RequestValidationError)
 async def handle_validation(request: Request, error: RequestValidationError):
     return error_response(request, invalid("请求参数或内容无效"))
@@ -73,7 +82,7 @@ def health(request: Request):
     try:
         with request.app.state.db.connect() as db:
             db.execute("SELECT revision FROM projects LIMIT 1").fetchone()
-    except sqlite3.Error:
+    except (sqlite3.Error, StorageBusy):
         logging.getLogger(__name__).exception("SQLite health check failed")
         status, database = "degraded", "unavailable"
     return {"status": status, "version": "0.1.0", "database": database}
