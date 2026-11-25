@@ -62,6 +62,7 @@ export const viewKey = (table: DisplayTable, ctx: TableViewContext, names: boole
     table.orientation,
     table.slots,
     table.modules,
+    table.center,
     ctx.si,
     ctx.end,
     ctx.innerVersion,

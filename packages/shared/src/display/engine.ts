@@ -55,6 +55,7 @@ export const DisplayTableSchema = z.object({
   /** 3-1, 3-2 … or 边桌; null when the store has more tables than the guide covers. */
   seat: z.string().nullable(),
   slots: z.array(DisplaySlotSchema),
+  center: z.literal('acrylic').optional(),
   modules: z.array(z.string()),
   /** Plan direction (unit vector) of the table end E, for drawing; null for side tables. */
   endToward: z.tuple([z.number(), z.number()]).nullable(),
@@ -229,7 +230,10 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
     const seat = i < ruleTables ? `${ruleTables}-${i + 1}` : null
     const layout = seat ? layouts.find((l) => l.seat === seat) : undefined
     const notes: string[] = []
-    const candidates = rules.seatModules.filter((m) => m.tables === ruleTables && m.seat === seat)
+    const acrylic = input.siStyle === 'SI1.0'
+    const candidates = acrylic
+      ? []
+      : rules.seatModules.filter((m) => m.tables === ruleTables && m.seat === seat)
     const moduleRule =
       candidates.find(
         (m) =>
@@ -245,6 +249,7 @@ export function planDisplay(rules: DisplayRules, input: PlanDisplayInput): Displ
     return {
       label: letter(i),
       kind: 'island',
+      ...(acrylic ? { center: 'acrylic' as const } : {}),
       sourceId: t.id,
       assetId: t.assetId ?? null,
       plan: { cx: t.cx, cz: t.cz, w: t.w, d: t.d },
@@ -296,12 +301,12 @@ export interface DisplaySummaryLine {
 /** One inner tray per module, one outer frame per island. Never count the products inside again. */
 export function summarizeDisplayModules(
   rules: DisplayRules,
-  tables: readonly Pick<DisplayTable, 'kind' | 'modules'>[],
+  tables: readonly Pick<DisplayTable, 'kind' | 'modules' | 'center'>[],
 ) {
   const counts = new Map<string, number>()
   const sizes = new Map(rules.modules.map((m) => [m.id, m.size]))
   const unknown: string[] = []
-  for (const table of tables.filter((t) => t.kind === 'island'))
+  for (const table of tables.filter((t) => t.kind === 'island' && t.center !== 'acrylic'))
     for (const id of table.modules) {
       const size = sizes.get(id)
       if (!size) unknown.push(id)
@@ -309,7 +314,7 @@ export function summarizeDisplayModules(
       counts.set(key, (counts.get(key) ?? 0) + 1)
     }
   const innerTotal = [...counts.values()].reduce((sum, n) => sum + n, 0)
-  const frameTotal = tables.filter((t) => t.kind === 'island').length
+  const frameTotal = tables.filter((t) => t.kind === 'island' && t.center !== 'acrylic').length
   return { counts, innerTotal, frameTotal, total: innerTotal + frameTotal, unknown }
 }
 

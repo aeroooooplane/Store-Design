@@ -355,7 +355,13 @@ export async function buildTableScene(
 ): Promise<TableScene> {
   const drawn = tableShape(input.table, input.end)
   const real = input.body
-    ? placeBody(input.body, drawn, input.table, input.end, !!input.innerVersion)
+    ? placeBody(
+        input.body,
+        drawn,
+        input.table,
+        input.end,
+        !!input.innerVersion && input.table.center !== 'acrylic',
+      )
     : null
   const shape = real?.shape ?? drawn
   const scene = new THREE.Scene()
@@ -407,7 +413,28 @@ export async function buildTableScene(
     wall.position.set(0, 0.75, -shape.depth / 2 - 0.05)
     root.add(wall)
   }
-  if (shape.strip && input.table.modules.length && input.innerVersion) {
+  if (input.table.center === 'acrylic' && drawn.strip) {
+    const sx = shape.width / drawn.width
+    const sz = shape.depth / drawn.depth
+    const { x, z, w, d } = shape.strip ?? {
+      x: drawn.strip.x * sx,
+      z: drawn.strip.z * sz,
+      w: drawn.strip.w * sx,
+      d: drawn.strip.d * sz,
+    }
+    const plate = new THREE.Mesh(
+      new THREE.BoxGeometry(w, 0.004, d),
+      new THREE.MeshPhysicalMaterial({
+        color: '#dce8e9',
+        roughness: 0.24,
+        clearcoat: 0.65,
+        transparent: true,
+        opacity: 0.88,
+      }),
+    )
+    plate.position.set(x, shape.height + 0.002, z)
+    root.add(plate)
+  } else if (shape.strip && input.table.modules.length && input.innerVersion) {
     root.add(
       await buildInnerTrays(
         input.table.modules,
