@@ -363,7 +363,7 @@ export function PlanEditor({
       return
     }
     const item = { ...placement.item, cx: snap(point[0]), cz: snap(point[1]) }
-    const error = floorPlacementProblem(state.layout, space, item)
+    const error = floorPlacementProblem(state.layout, space, item, 'point')
     if (error) {
       setPlacement({ item: placement.item, error })
       return
@@ -511,7 +511,7 @@ export function PlanEditor({
               {placement && (
                 <div className="toolbar notice placement-controls">
                   <p className="hint" role="status">
-                    {placement.error ?? `在画布上点击空位放置「${placement.item.name}」。`}
+                    {placement.error ?? `在画布上点击放置「${placement.item.name}」。`}
                   </p>
                   <button type="button" onClick={() => setPlacement(null)}>
                     取消放置

@@ -1,5 +1,6 @@
 import {
   MAX_LAYOUT_ITEMS,
+  PointSchema,
   advertisingScreenName,
   isDisplayPanel,
   itemsCollide,
@@ -21,18 +22,27 @@ export function pointPlacedAsset(asset: Asset): boolean {
   )
 }
 
-/** Check only the new piece; an unrelated existing layout issue must not block placing it. */
+/** Point placement allows temporary geometry conflicts; suggested positions must be clear. */
 export function floorPlacementProblem(
   layout: Layout,
   space: Space,
   item: LayoutItem,
+  mode: 'point' | 'nearby',
 ): string | null {
   if (layout.items.length >= MAX_LAYOUT_ITEMS)
     return `本方案已达到 ${MAX_LAYOUT_ITEMS} 件道具上限。`
+  if (!PointSchema.safeParse([item.cx, item.cz]).success) return '请在门店附近选择位置。'
   const issue = validateLayout(space, { ...layout, items: [item] }).find(
-    (issue) => issue.severity === 'error' && issue.itemIds.includes(item.id),
+    ({ severity, itemIds, code }) =>
+      severity === 'error' &&
+      itemIds.includes(item.id) &&
+      (mode === 'nearby' ||
+        (code !== 'item_outside_boundary' &&
+          code !== 'item_overlaps_obstacle' &&
+          code !== 'item_blocks_entrance')),
   )
-  if (issue) return `${issue.message}，请换个位置。`
+  if (issue) return issue.message
+  if (mode === 'point') return null
   const clash = layout.items.find((other) => itemsCollide(item, other))
   return clash ? `此位置与「${clash.name}」重叠，请换个位置。` : null
 }
@@ -49,7 +59,7 @@ export function nearbyFurniture(layout: Layout, space: Space, item: LayoutItem):
     [0, -dz],
   ] as const) {
     const candidate = { ...item, cx: roundM(item.cx + x), cz: roundM(item.cz + z) }
-    if (!floorPlacementProblem(layout, space, candidate)) return candidate
+    if (!floorPlacementProblem(layout, space, candidate, 'nearby')) return candidate
   }
   return null
 }
