@@ -15,7 +15,7 @@ export const SIGNAGE_OPTIONS: Record<string, Record<Market, string>> = {
 
 export const SIGNAGE_ORDER = Object.keys(SIGNAGE_OPTIONS)
 
-/** 正面缩略图取自对应市场的实际 GLB，随网页构建发布。 */
+/** 白底正面缩略图取自对应市场实际 GLB；仅缩略图字标以深灰显示，模型材质不变。 */
 export const SIGNAGE_THUMBNAILS = import.meta.glob<string>('./signage-thumbnails/*.webp', {
   eager: true,
   query: '?url',
