@@ -1,4 +1,4 @@
-import { edges, locatePoint } from '../geometry/polygon.ts'
+import { locatePoint } from '../geometry/polygon.ts'
 import { nearestQuarter, obbsOverlap, placedBox } from '../geometry/obb.ts'
 import { rectFromCenter, rectsOverlap } from '../geometry/rect.ts'
 import type { Point } from '../geometry/types.ts'
@@ -6,7 +6,7 @@ import { rotationFacing } from '../planner/orientation.ts'
 import type { PlanDirection } from '../planner/orientation.ts'
 import type { FrontAxis, Installation } from '../schemas/asset.ts'
 import type { Fixture, LayoutItem, Rotation } from '../schemas/layout.ts'
-import { openingPieces } from '../schemas/space.ts'
+import { wallLines } from '../rotation/index.ts'
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
 import { WALL_THICKNESS_M } from '../scene/walls.ts'
@@ -102,26 +102,20 @@ const coord = (p: Point, axis: 'x' | 'z') => (axis === 'x' ? p[0] : p[1])
 
 /** Both faces of perimeter walls and partitions, with openings marked. */
 export function wallFaces(
-  space: Pick<Space, 'boundary' | 'openEdges'>,
+  space: Pick<Space, 'boundary' | 'openEdges'> & Partial<Pick<Space, 'entrances'>>,
   fixtures: readonly Fixture[] = [],
   items: readonly FaceItem[] = [],
 ): WallFace[] {
   const tan = Math.tan((STRAIGHT_WALL_DEG * Math.PI) / 180)
-  const open = new Map<number, [Point, Point][]>()
-  for (const opening of space.openEdges) {
-    for (const piece of openingPieces(space, opening) ?? []) {
-      open.set(piece.edge, [...(open.get(piece.edge) ?? []), [piece.a, piece.b]])
-    }
-  }
   const faces: WallFace[] = []
-  edges(space.boundary).forEach(([a, b], edge) => {
+  for (const { a, b, edge } of wallLines({ ...space, entrances: space.entrances ?? [] })) {
     const dx = Math.abs(b[0] - a[0])
     const dz = Math.abs(b[1] - a[1])
-    if (Math.hypot(dx, dz) < EPSILON_M) return
+    if (Math.hypot(dx, dz) < EPSILON_M) continue
     let along: 'x' | 'z'
     if (dz <= dx * tan) along = 'x'
     else if (dx <= dz * tan) along = 'z'
-    else return
+    else continue
     const mid: Point = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
     const normal: PlanDirection = along === 'x' ? [0, 1] : [1, 0]
     const probe: Point = [mid[0] + normal[0] * 0.01, mid[1] + normal[1] * 0.01]
@@ -133,10 +127,7 @@ export function wallFaces(
       b,
       along,
       inward,
-      open: (open.get(edge) ?? []).map(([p, q]) => {
-        const [s, t] = [coord(p, along), coord(q, along)]
-        return [Math.min(s, t), Math.max(s, t)]
-      }),
+      open: [],
     }
     faces.push(face, {
       ...face,
@@ -144,7 +135,7 @@ export function wallFaces(
       b: [b[0] - inward[0] * WALL_THICKNESS_M, b[1] - inward[1] * WALL_THICKNESS_M],
       inward: [-inward[0] + 0, -inward[1] + 0],
     })
-  })
+  }
   for (const f of fixtures) {
     const l = f.cx - f.w / 2
     const r = f.cx + f.w / 2
@@ -192,16 +183,15 @@ export function supportsPiece(
   bottom: number,
   height: number,
 ): boolean {
-  if (!face.fixtureId) return true
   const low = at - length / 2
   const high = at + length / 2
   if (
     low < Math.min(coord(face.a, face.along), coord(face.b, face.along)) - EPSILON_M ||
-    high > Math.max(coord(face.a, face.along), coord(face.b, face.along)) + EPSILON_M ||
-    bottom < -EPSILON_M ||
-    bottom + height > (face.height ?? Infinity) + EPSILON_M
+    high > Math.max(coord(face.a, face.along), coord(face.b, face.along)) + EPSILON_M
   )
     return false
+  if (!face.fixtureId) return true
+  if (bottom < -EPSILON_M || bottom + height > (face.height ?? Infinity) + EPSILON_M) return false
   return !(face.cutouts ?? []).some(
     (cut) =>
       low < cut.to - EPSILON_M && high > cut.from + EPSILON_M && bottom < cut.top - EPSILON_M,

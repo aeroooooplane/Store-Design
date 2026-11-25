@@ -1,4 +1,4 @@
-import { edges, itemTilt, roundM, wallFlushSnap } from '@store/shared'
+import { itemTilt, roundM, wallFlushSnap, wallLines } from '@store/shared'
 import type { Fixture, LayoutItem, Space } from '@store/shared'
 
 /** Dragged props stick to walls and neighbours within this distance (metres). */
@@ -70,7 +70,7 @@ export function magnetSnap(
   const hd = item.d / 2
   const xLines: Line[] = []
   const zLines: Line[] = []
-  for (const [a, b] of edges(space.boundary)) {
+  for (const { a, b } of wallLines(space)) {
     if (Math.abs(a[0] - b[0]) < EPS) {
       xLines.push({
         at: a[0],

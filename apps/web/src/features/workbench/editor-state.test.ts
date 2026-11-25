@@ -502,6 +502,24 @@ describe('undo / redo', () => {
 })
 
 describe('模型拖动在门店边界外一米处截止', () => {
+  it('没有实体墙的入口不被挂墙吸附或通用磁吸兜底拉回', () => {
+    const opening = rectangleSpace(8, 6, 3)
+    const sign = item({ function: 'signage', mount: 'wall', w: 1, d: 0.1, h: 0.5, elevation: 1 })
+    const next = editorReducer(state([sign]), {
+      type: 'move',
+      id: sign.id,
+      cx: 4,
+      cz: 6.08,
+      snapTo: opening,
+      dragBoundary: opening.boundary,
+      front: '+Z',
+    })
+    expect(next.layout.items[0]).toMatchObject({ cx: 4, cz: 6.08 })
+    expect(validateLayout(opening, next.layout).map((issue) => issue.code)).toEqual([
+      'item_not_on_wall',
+    ])
+  })
+
   const space = rectangleSpace(8, 6, 3)
   const start = state([item()])
   const drag = {
