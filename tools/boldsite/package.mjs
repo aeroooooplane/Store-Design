@@ -22,6 +22,10 @@ if (result.status !== 0) process.exit(result.status ?? 1)
 
 await mkdir(output)
 await cp(path.join(repository, 'apps/web/dist'), output, { recursive: true })
+await cp(
+  path.join(repository, 'apps/api/assets/fonts/OFL.txt'),
+  path.join(output, 'static', 'NotoSansSC-OFL.txt'),
+)
 for (const file of [
   'app.py',
   'catalog.py',
