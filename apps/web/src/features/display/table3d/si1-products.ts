@@ -50,6 +50,7 @@ const choices = new Set<string>([...Object.keys(shared), ...dedicated])
 export function si1Selection(unit: string | null): Si1Selection | undefined {
   if (unit && choices.has(unit))
     return { si: 'SI1.0', unit: unit as Unit, scene: unit.startsWith('scene-') }
+  return undefined
 }
 
 const ink = 0x212327,
