@@ -25,6 +25,22 @@ class StorageProbeTests(unittest.TestCase):
         })
         self.assertEqual(result["sqliteLock"], "skipped")
 
+    def test_creates_configured_missing_directory_only_on_writable_nfs(self):
+        for read_only in (True, False):
+            directory = self.directory / str(read_only)
+            mount = {"type": "nfs", "readOnly": read_only, "atDataDir": False}
+            with patch.dict(os.environ, {"DATA_DIR": str(directory)}):
+                with patch.dict(check_persistence.__globals__, {"filesystem_for": lambda _: mount}):
+                    fixture, result = check_persistence()
+            if read_only:
+                self.assertFalse(directory.exists())
+                self.assertEqual(result["fixtureError"]["errno"], "ENOENT")
+            else:
+                self.assertTrue(directory.is_dir())
+                self.assertIsNotNone(fixture)
+                self.assertEqual(result["sqliteBackup"], "restored")
+
+
     def test_failed_link_still_verifies_sqlite_lock_and_backup(self):
         with patch("os.link", side_effect=OSError(errno.EOPNOTSUPP, "synthetic unsupported link")):
             fixture, result = check_persistence()

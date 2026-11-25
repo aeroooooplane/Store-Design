@@ -106,6 +106,25 @@ def check_sqlite(directory):
             return lock, backup
 
 
+def data_directory_mode(directory, filesystem):
+    try:
+        return step("stat-data-dir", directory.stat).st_mode
+    except ProbeFailure as error:
+        if not (
+            error.result["errno"] == "ENOENT"
+            and directory.is_absolute()
+            and filesystem is not None
+            and filesystem["type"] in {"nfs", "nfs4"}
+            and not filesystem["readOnly"]
+        ):
+            raise
+
+    # Bold Site can provide a per-app path before creating it under the NFS mount.
+    step("create-data-dir", directory.mkdir, parents=True, exist_ok=True)
+    return step("stat-created-data-dir", directory.stat).st_mode
+
+
+
 def check_persistence():
     result = {
         "persistence": "data-dir-missing",
@@ -120,7 +139,7 @@ def check_persistence():
     directory = Path(configured)
     result["filesystem"] = filesystem_for(directory)
     try:
-        mode = step("stat-data-dir", directory.stat).st_mode
+        mode = data_directory_mode(directory, result["filesystem"])
         if not stat.S_ISDIR(mode):
             raise ProbeFailure("stat-data-dir", NotADirectoryError(errno.ENOTDIR, "not a directory"))
     except ProbeFailure as error:
