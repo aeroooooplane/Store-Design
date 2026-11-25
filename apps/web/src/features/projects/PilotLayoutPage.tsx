@@ -1,20 +1,24 @@
 import { useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
 import {
+  MARKET_LABELS,
   PLAN_STRATEGY_LABELS,
   RENDER_SIZE,
   SHOP_TYPE_LABELS,
+  deliveryFileNames,
   deliveryLegend,
   mToMm,
   planLayout,
+  polygonArea,
   rectangleSpace,
   safeFileName,
+  storeTitle,
 } from '@store/shared'
 import type { Asset, GeneratedStrategy, PlannerCatalog, Project } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { Viewer3D } from '../viewer3d/Viewer3D.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
-import { standaloneSvg } from '../workbench/plan-export.ts'
+import { exportPlan, standaloneSvg } from '../workbench/plan-export.ts'
 import { PlanView } from '../workbench/PlanView.tsx'
 import { plannerCatalog } from '../../../../api/src/modules/layouts/selection.ts'
 import { ModelPicker } from '../workbench/ModelPicker.tsx'
@@ -107,6 +111,7 @@ function PilotLayout({ project }: { project: Project }) {
   const [view, setView] = useState<'plan' | '3d'>('plan')
   const [ready, setReady] = useState(false)
   const [rendering, setRendering] = useState(false)
+  const [pdfs, setPdfs] = useState<{ full: Blob; show: Blob } | null>(null)
   const [renderError, setRenderError] = useState<unknown>(null)
   const plan = useRef<SVGSVGElement>(null)
   const viewer = useRef<Viewer3DHandle>(null)
@@ -126,6 +131,52 @@ function PilotLayout({ project }: { project: Project }) {
   const legend = deliveryLegend(candidate.layout.items, assets)
   const flagged = new Set(candidate.issues.flatMap((issue) => issue.itemIds ?? []))
   const filename = safeFileName(project.name + ' 试排 ' + PLAN_STRATEGY_LABELS[strategy])
+
+  const names = deliveryFileNames(project.name)
+
+  async function generatePdfs() {
+    const scene = viewer.current
+    const drawing = plan.current
+    if (!scene || !drawing) return
+    setRenderError(null)
+    setPdfs(null)
+    setRendering(true)
+    try {
+      const { width, height } = RENDER_SIZE
+      const [{ png }, renders, { exportDeliveryPdfs }] = await Promise.all([
+        exportPlan(drawing),
+        scene.renderViews([scene.currentView()], width, height, 'material'),
+        import('./pilot-delivery.ts'),
+      ])
+      const prefix = 'data:image/png;base64,'
+      const render = renders[0]
+      if (!render?.startsWith(prefix)) throw new Error('三维视图暂时无法导出。')
+      const decode = (value: string) => Uint8Array.from(atob(value), (byte) => byte.charCodeAt(0))
+      const generated = await exportDeliveryPdfs({
+        title: storeTitle(project.name),
+        subtitle: [
+          SHOP_TYPE_LABELS[project.shopType],
+          MARKET_LABELS[project.market],
+          project.siStyle,
+        ].join(' · '),
+        date: new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' }).format(),
+        plan: decode(png),
+        legend: legend.entries,
+        facts: [
+          '套内面积 ' + polygonArea(space.boundary).toFixed(2) + ' ㎡',
+          '层高 ' + space.height.toFixed(2) + ' m',
+          '排布策略 ' + PLAN_STRATEGY_LABELS[strategy],
+        ],
+        notes: candidate.notes,
+        views: [{ no: 1, name: '当前材质视角', material: decode(render.slice(prefix.length)) }],
+      })
+      setPdfs(generated)
+    } catch (error) {
+      setRenderError(error)
+    } finally {
+      setRendering(false)
+    }
+  }
 
   async function renderCurrentView() {
     if (!viewer.current) return
@@ -208,6 +259,7 @@ function PilotLayout({ project }: { project: Project }) {
         aria-label="矩形铺位尺寸"
         onSubmit={(event) => {
           event.preventDefault()
+          setPdfs(null)
           setSpace(rectangleSpace(dimensions.width, dimensions.depth, dimensions.height))
         }}
       >
@@ -243,7 +295,10 @@ function PilotLayout({ project }: { project: Project }) {
           排布策略
           <select
             value={strategy}
-            onChange={(event) => setStrategy(event.target.value as GeneratedStrategy)}
+            onChange={(event) => {
+              setPdfs(null)
+              setStrategy(event.target.value as GeneratedStrategy)
+            }}
           >
             {strategies.map((option) => (
               <option key={option} value={option}>
@@ -290,11 +345,40 @@ function PilotLayout({ project }: { project: Project }) {
             {rendering ? '正在出图…' : '下载当前三维图'}
           </button>
         )}
+        {view === '3d' && (
+          <button type="button" disabled={!ready || rendering} onClick={() => void generatePdfs()}>
+            生成双 PDF
+          </button>
+        )}
         <button type="button" disabled={!legend.entries.length} onClick={downloadMaterials}>
           下载物料清单
         </button>
       </div>
+      {pdfs && (
+        <div className="pilot-layout-tools" role="group" aria-label="下载交付 PDF">
+          <button type="button" onClick={() => downloadFile(pdfs.full, names.full)}>
+            下载完整版 PDF
+          </button>
+          <button type="button" onClick={() => downloadFile(pdfs.show, names.show)}>
+            下载展示版 PDF
+          </button>
+        </div>
+      )}
       <ErrorMessage error={renderError} />
+      {view === '3d' && (
+        <div aria-hidden="true" style={{ position: 'fixed', top: 0, left: -10000, width: 960 }}>
+          <PlanView
+            svgRef={plan}
+            title="交付平面图"
+            space={space}
+            shopType={project.shopType}
+            layout={candidate.layout}
+            issues={candidate.issues}
+            assets={assets}
+            numbers={legend.numbers}
+          />
+        </div>
+      )}
 
       <section className="pilot-layout-drawing" aria-label="方案图">
         {view === 'plan' ? (
