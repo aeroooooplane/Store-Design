@@ -10,7 +10,7 @@ import {
 import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
-function toWorld(
+export function toWorld(
   svg: SVGSVGElement | null,
   event: { clientX: number; clientY: number },
 ): [number, number] | null {

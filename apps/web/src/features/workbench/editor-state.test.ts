@@ -9,6 +9,7 @@ import {
 import type { Asset, Layout, LayoutItem } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import {
+  catalogItem,
   editorReducer,
   initialEditorState,
   newItemPoint,
@@ -16,6 +17,7 @@ import {
   snap,
 } from './editor-state.ts'
 import type { EditorState } from './editor-state.ts'
+import { nearbyFurniture, pointPlacedAsset } from './plan-editor/floor-placement.ts'
 
 function item(overrides: Partial<LayoutItem> = {}): LayoutItem {
   return {
@@ -93,6 +95,67 @@ it('rolls an advertising screen about its centre and keeps portrait size during 
   ).toMatchObject({ w: 0.116, d: 0.846, h: 1.465 })
   const low = state([{ ...landscape, elevation: 0 }])
   expect(editorReducer(low, action).layout).toEqual(low.layout)
+})
+
+describe('家具点位放置', () => {
+  const space = rectangleSpace(8, 6, 3)
+  const furniture = makeAsset({
+    name: '中岛桌',
+    function: 'island_table',
+    installation: 'floor',
+    footprint: { w: 1.8, d: 0.9, h: 0.9 },
+    placeable: true,
+  })
+
+  it('使用目录尺寸和点击位置，放置后选中新家具且可撤销', () => {
+    expect(pointPlacedAsset(furniture)).toBe(true)
+    expect(pointPlacedAsset({ ...furniture, installation: 'wall' })).toBe(false)
+    expect(pointPlacedAsset({ ...furniture, name: '广告机', function: 'screen' })).toBe(false)
+    const start = state([])
+    const candidate = catalogItem(start.layout, furniture, 2.236, 3.197)
+    const next = editorReducer(start, { type: 'placeFurniture', item: candidate, space })
+    expect(next.layout.items).toEqual([candidate])
+    expect(next.layout.items[0]).toMatchObject({ cx: 2.24, cz: 3.2, w: 1.8, d: 0.9 })
+    expect(next.selectedId).toBe(candidate.id)
+    expect(next.dirty).toBe(true)
+    expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
+  })
+
+  it('拒绝重叠和超出边界，并保留现有草稿', () => {
+    const start = state([item()])
+    for (const [cx, cz] of [
+      [2, 2],
+      [0.5, 3],
+    ] as const) {
+      const candidate = catalogItem(start.layout, furniture, cx, cz)
+      expect(editorReducer(start, { type: 'placeFurniture', item: candidate, space })).toBe(start)
+    }
+  })
+
+  it('在相邻空位复制尺寸、款式和转角，找不到位置时保留原布局', () => {
+    const original = item({ rotation: 35 })
+    const elsewhere = item({ id: 'island_table-2', cx: 4, cz: 2 })
+    const start = state([original, elsewhere])
+    const nearby = nearbyFurniture(start.layout, space, original)
+    expect(nearby).not.toBeNull()
+    const next = editorReducer(start, { type: 'placeFurniture', item: nearby!, space })
+    const copy = next.layout.items[2]
+    expect(copy).toMatchObject({
+      id: 'island_table-3',
+      assetId: original.assetId,
+      w: original.w,
+      d: original.d,
+      rotation: 35,
+    })
+    expect(copy).not.toMatchObject({ cx: original.cx, cz: original.cz })
+    expect(next.layout.items.slice(0, 2)).toEqual(start.layout.items)
+    expect(validateLayout(space, next.layout)).toEqual([])
+    expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
+
+    const compact = rectangleSpace(2, 1.2, 3)
+    const centred = item({ cx: 1, cz: 0.6 })
+    expect(nearbyFurniture(state([centred]).layout, compact, centred)).toBeNull()
+  })
 })
 
 describe('隔板吸附接线', () => {

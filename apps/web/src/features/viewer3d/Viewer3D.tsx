@@ -56,6 +56,7 @@ interface Viewer3DProps {
   onResize?: SceneHandlers['onResize'] | undefined
   /** Turns the selected prop by its ring; leave out for no ring. */
   onRotate?: SceneHandlers['onRotate'] | undefined
+  onFloorPlace?: SceneHandlers['onFloorPlace'] | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   /** Where the camera starts instead of the default front view (e.g. the view last used). */
@@ -86,6 +87,7 @@ export function Viewer3D({
   onMove,
   onResize,
   onRotate,
+  onFloorPlace,
   onReady,
   initialView,
   onViewChange,
@@ -135,8 +137,8 @@ export function Viewer3D({
 
   // Latest callbacks without re-creating the scene.
   useEffect(() => {
-    sceneRef.current?.setHandlers({ onSelect, onMove, onResize, onRotate })
-  }, [onSelect, onMove, onResize, onRotate])
+    sceneRef.current?.setHandlers({ onSelect, onMove, onResize, onRotate, onFloorPlace })
+  }, [onSelect, onMove, onResize, onRotate, onFloorPlace])
 
   useEffect(() => {
     // The view resets only when a different space is shown, not after every edit; the first
