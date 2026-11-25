@@ -9,9 +9,8 @@ from unittest.mock import patch
 from urllib.parse import urlsplit
 from uuid import uuid4
 
-from PIL import Image
-
 from app import app
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = json.loads((ROOT / "apps/api/openapi.json").read_text(encoding="utf-8"))["paths"]
@@ -81,13 +80,17 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_proxy_paths_and_health(self):
         health = "/api/v1/health"
-        for path, root in [(health, ""), (PREFIX + health, ""), (PREFIX + health, PREFIX), (health, PREFIX)]:
+        for alias in (health, "/workbench/v1/health"):
+            await self.assert_health_routes(alias, health)
+        status, headers, _ = await self.request("GET", PREFIX + "?sample=1")
+        self.assertEqual((status, headers["location"]), (307, PREFIX + "/?sample=1"))
+
+    async def assert_health_routes(self, alias, health):
+        for path, root in [(alias, ""), (PREFIX + alias, ""), (PREFIX + alias, PREFIX), (alias, PREFIX)]:
             status, _, value = await self.request("GET", path, root=root)
             self.assertEqual(status, 200)
             self.assertEqual((value["status"], value["database"]), ("ok", "ok"))
             self.response_keys(health, "get", 200, value)
-        status, headers, _ = await self.request("GET", PREFIX + "?sample=1")
-        self.assertEqual((status, headers["location"]), (307, PREFIX + "/?sample=1"))
 
     async def test_project_search_revisions_and_recycle_bin(self):
         road, project = await self.create()
@@ -128,7 +131,7 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_upload_and_file_contract(self):
         road, project = await self.create()
-        route = PREFIX + road + "/uploads"
+        route = PREFIX + road.replace("/api/v1/", "/workbench/v1/", 1) + "/uploads"
         png = BytesIO()
         Image.new("RGB", (640, 80), "white").save(png, format="PNG")
         data = png.getvalue()
@@ -144,7 +147,7 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((await self.request("POST", route, headers=headers, body=b"bad PNG"))[0], 400)
         self.assertEqual((await self.request("POST", route, headers=headers, body=b"x" * (20 * 1024 * 1024 + 1)))[0],
                          413)
-        address = PREFIX + upload["url"]
+        address = PREFIX + upload["url"].replace("/api/v1/", "/workbench/v1/", 1)
         status, response, downloaded = await self.request("GET", address)
         self.assertEqual((status, response["content-type"], downloaded), (200, "image/png", data))
         self.assertTrue(response["content-disposition"].endswith(".png"))

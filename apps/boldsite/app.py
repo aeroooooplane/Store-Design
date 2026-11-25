@@ -1,8 +1,14 @@
 import logging
 import os
 import sqlite3
+import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+vendor = ROOT / "vendor"
+if vendor.is_dir():
+    sys.path.insert(0, str(vendor))
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -16,7 +22,6 @@ from drawings import router as drawings
 from projects import router as projects
 from storage import configured_database
 
-ROOT = Path(__file__).resolve().parent
 ROOT_ASSETS = {
     "favicon.ico",
     "favicon.svg",
