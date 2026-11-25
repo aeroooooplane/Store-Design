@@ -1,10 +1,14 @@
-import { readFile, rename, writeFile } from 'node:fs/promises'
+import { copyFile, readFile, rename, writeFile } from 'node:fs/promises'
 import path from 'node:path'
+import { randomUUID } from 'node:crypto'
 import { inArray } from 'drizzle-orm'
 import sharp from 'sharp'
 import { createDatabase, schema } from '@store/database'
 import { DisplayRulesViewSchema } from '@store/shared'
+import { AppError } from '../lib/app-error.ts'
 import { resolveStoredFile, sha256File } from '../lib/storage.ts'
+import { listDisplayBodies } from '../modules/displays/bodies.ts'
+import { innerTrayPicture } from '../modules/displays/inner-trays.ts'
 import { rulesView } from '../modules/displays/common.ts'
 import { importDisplayRules } from '../modules/displays/importer.ts'
 import { DISPLAY_RESOURCE_DIR, DISPLAY_WORKBOOK } from '../modules/displays/workbook.ts'
@@ -47,30 +51,70 @@ try {
   const view = DisplayRulesViewSchema.parse(await rulesView(db.db))
   const table = schema.storedFiles
   const ids = view.rules.photos.flatMap((photo) => (photo.fileId ? [photo.fileId] : []))
-  const files = await db.db.select().from(table).where(inArray(table.id, ids))
+  const bodies = await listDisplayBodies(db.db, roots)
+  const bodyIds = bodies.bodies.map((body) => body.url.split('/').at(-1) ?? '')
+  const files = await db.db
+    .select()
+    .from(table)
+    .where(inArray(table.id, [...ids, ...bodyIds]))
   for (const f of files) {
     if (f.root !== 'resource' || !f.storageKey.startsWith(DISPLAY_RESOURCE_DIR + '/')) {
       throw new Error('图像不在正式展陈目录')
     }
     const { file } = await resolveStoredFile(roots, 'resource', f.storageKey)
     if ((await sha256File(file)) !== f.sha256) throw new Error('展陈图像与入库字节不一致')
-    const name = f.id + '.webp'
+    const model = f.kind === 'display-body'
+    const name = f.id + (model ? '.glb' : '.webp')
     const output = path.join(catalog, 'files', name)
     if (index.files[f.id]) throw new Error('模型目录中已经存在此展陈图像')
-    await sharp(file)
-      .rotate()
-      .resize({ width: 900, height: 900, fit: 'inside', withoutEnlargement: true })
-      .webp({ quality: 85 })
-      .toFile(output)
-    index.files[f.id] = { name, contentType: 'image/webp', sha256: await sha256File(output) }
+    if (model) await copyFile(file, output)
+    else {
+      await sharp(file)
+        .rotate()
+        .resize({ width: 900, height: 900, fit: 'inside', withoutEnlargement: true })
+        .webp({ quality: 85 })
+        .toFile(output)
+    }
+    index.files[f.id] = {
+      name,
+      contentType: model ? 'model/gltf-binary' : 'image/webp',
+      sha256: await sha256File(output),
+    }
+  }
+  const trays: Record<string, string> = {}
+  for (const version of ['legacy', '2026'] as const) {
+    for (const module of view.rules.modules) {
+      try {
+        const data = await innerTrayPicture(roots, version, module.id)
+        const id = randomUUID()
+        const name = id + '.png'
+        const destination = path.join(catalog, 'files', name)
+        await writeFile(destination, data, { flag: 'wx' })
+        index.files[id] = { name, contentType: 'image/png', sha256: await sha256File(destination) }
+        trays[version + '/' + module.id] = id
+      } catch (error) {
+        // The shared selector rejects IDs that do not have a picture for this guide edition.
+        if (!(error instanceof AppError) || error.code !== 'NOT_FOUND') throw error
+      }
+    }
   }
   if ((await sha256File(workbook)) !== version) throw new Error('导出期间展陈规则工作簿发生变化')
   const pending = path.join(catalog, 'display-index.next')
   await writeFile(pending, JSON.stringify(index) + '\n', { flag: 'wx' })
   await rename(pending, indexFile)
-  await writeFile(path.join(catalog, 'display.json'), JSON.stringify(view) + '\n', { flag: 'wx' })
+  await writeFile(
+    path.join(catalog, 'display.json'),
+    JSON.stringify({ rules: view, bodies, trays }) + '\n',
+    { flag: 'wx' },
+  )
   console.log(
-    JSON.stringify({ displayVersion: view.version, photos: files.length, source: version }),
+    JSON.stringify({
+      displayVersion: view.version,
+      photos: ids.length,
+      bodies: bodyIds.length,
+      trayPictures: Object.keys(trays).length,
+      source: version,
+    }),
   )
 } finally {
   await db.close()

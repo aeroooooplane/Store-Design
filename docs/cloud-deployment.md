@@ -102,6 +102,17 @@ node tools/boldsite/package.mjs /path/to/new-release /path/to/new-catalog
 
 从项目试排的三维视图选择“生成双 PDF”。浏览器将当前材质视角、平面图和物料组成双 PDF，沿用本机交付的 A3 双版模板和 Noto Sans SC 字体。完整版包含平面方案、总览和视角页，展示版包含平面图例及视角页。两份分别供用户下载。历史节点、草稿和服务端归档未用于这一浏览器出图入口。
 
+## 展陈及 PPTX
+
+先创建新的正式模型快照，再用以下命令附加展陈数据。
+
+```sh
+node apps/api/src/scripts/export-boldsite-display.ts ./资源库 /path/to/new-catalog
+node tools/boldsite/package.mjs /path/to/new-release /path/to/new-catalog
+```
+
+快照复用本机展陈入库器，按版本锁校验正式工作簿，只发布校核通过的规则、产品图、桌体和托盘配图。试排项目通过“展开展陈方案”从当前桌位按市场、SI 和正式规则生成展陈，可调整槽位后导出可编辑 PPTX。沿用原展陈幻灯片模板，保留设施标注和明细。当前入口在浏览器生成文件，展陈任务和服务端归档不参与试排。
+
 ## 后续迁移
 
 | 批次 | 接口与依赖 |

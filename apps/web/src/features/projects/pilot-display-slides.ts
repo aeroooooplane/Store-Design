@@ -1,7 +1,8 @@
 import { buildDisplayPresentation } from '../../../../api/src/modules/displays/deck-template.ts'
 import type { DeckImage } from '../../../../api/src/modules/displays/deck-template.ts'
-import type { DisplayRulesView, DisplayTable, Market, SiStyle } from '@store/shared'
+import type { DisplayEdits, DisplayRulesView, DisplayTable, Market, SiStyle } from '@store/shared'
 import { photoOf } from '../display/photos.ts'
+import { apiHref } from '../../api/deployment.ts'
 import type { DisplayPlan } from './PilotDisplay.tsx'
 
 interface SlideInput {
@@ -14,6 +15,7 @@ interface SlideInput {
   drawing: DisplayPlan
   tables: DisplayTable[]
   end: 'left' | 'right'
+  moduleScheme: DisplayEdits['moduleScheme']
 }
 
 async function photo(url: string): Promise<DeckImage> {
@@ -50,6 +52,33 @@ export async function exportDisplaySlides(input: SlideInput) {
       .filter((slot) => !slot.unit)
       .map((slot) => table.label + '桌 ' + slot.slot + ' 待分配'),
   ])
+  const version =
+    input.si === 'SI2.0' &&
+    input.moduleScheme === 'draft-2026' &&
+    input.rules.rules.seatModules.some(
+      (table) => table.si === input.si && table.scheme === input.moduleScheme,
+    )
+      ? '2026'
+      : 'legacy'
+  const modules = new Set(
+    input.tables.flatMap((table) => (table.kind === 'island' ? table.modules : [])),
+  )
+  const pictures = await Promise.allSettled(
+    [...modules].map(async (id) => {
+      const image = await photo(
+        apiHref('/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(id)),
+      )
+      return [id, image] as const
+    }),
+  )
+  const innerTrays = {
+    title: version === '2026' ? '2026版内嵌托盘' : '既有内嵌托盘方案',
+    source:
+      version === '2026' ? '内嵌托盘配件展示方案（2026版确认稿）' : '既有指引 · 2026-10-13资源',
+    images: Object.fromEntries(
+      pictures.flatMap((picture) => (picture.status === 'fulfilled' ? [picture.value] : [])),
+    ),
+  }
   const pptx = buildDisplayPresentation({
     title: input.title,
     date: new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' }).format(),
@@ -67,6 +96,7 @@ export async function exportDisplaySlides(input: SlideInput) {
     overview: null,
     tableViews: {},
     photos,
+    innerTrays,
     landscapeEnd: input.end,
     views: 'plan',
     tables3d: {},

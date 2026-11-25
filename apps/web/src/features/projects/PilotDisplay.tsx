@@ -108,6 +108,7 @@ export function PilotDisplay({
         drawing,
         tables,
         end: edits.landscapeEnd,
+        moduleScheme: edits.moduleScheme,
       })
       download(data, safeFileName(title) + '展陈方案.pptx')
     } catch (failure) {
