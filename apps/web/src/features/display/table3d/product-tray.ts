@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import { si1Selection, makeSi1Tray, type Si1Selection } from './si1-products.ts'
 import { trayParts, silver } from './tray-parts.ts'
 import {
   additionalProduct,
@@ -8,7 +9,7 @@ import {
 import type { DisplayTable, SiStyle } from '@store/shared'
 import type { SlotPlace } from './layout.ts'
 
-export type ProductTray =
+export type ProductAssembly =
   | 'single'
   | 'double'
   | 'scene-optimized'
@@ -18,8 +19,10 @@ export type ProductTray =
   | 'mic-pro'
   | AdditionalProduct
 
+export type ProductTray = ProductAssembly | Si1Selection
+
 export function productTray(si: SiStyle, unit: string | null): ProductTray | undefined {
-  if (si !== 'SI2.0') return
+  if (si === 'SI1.0') return si1Selection(unit)
   switch (unit) {
     case 'X4 Air':
     case 'X5':
@@ -71,6 +74,15 @@ export function makeProductTray(
   slotLabel: string,
   graphic: HTMLImageElement | null,
 ) {
+  const model =
+    typeof kind === 'string'
+      ? buildAssembly(kind, graphic, true)
+      : makeSi1Tray(kind, graphic, buildAssembly)
+  if (slotLabel) addSlotLabel(model.group, slotLabel, kind)
+  return model
+}
+
+function buildAssembly(kind: ProductAssembly, graphic: HTMLImageElement | null, base: boolean) {
   const group = new THREE.Group()
   const { part, box, post } = trayParts(group)
   function camera(x: number, z: number, bottom: number, white = false) {
@@ -96,7 +108,7 @@ export function makeProductTray(
   const sceneTray = x6Scene || kind === 'scene-AG' || kind === 'scene-Luna Ultra'
   const width = sceneTray ? 0.425 : 0.32
   const depth = sceneTray ? 0.183 : 0.18
-  box(width, 0.005, depth, 0, 0.0025, 0, silver)
+  if (base) box(width, 0.005, depth, 0, 0.0025, 0, silver)
   if (kind === 'single') {
     post(0.025, 0.01, 0, 0.005, -0.025, silver)
     post(0.015, 0.03, 0, 0.015, -0.025, silver)
@@ -191,7 +203,11 @@ export function makeProductTray(
   } else {
     buildAdditionalProduct(kind, group, graphic)
   }
-  if (!slotLabel) return { group, width, depth }
+  return { group, width, depth }
+}
+
+function addSlotLabel(group: THREE.Group, slotLabel: string, kind: ProductTray) {
+  const sceneTray = typeof kind === 'string' && (kind === 'scene' || kind.startsWith('scene-'))
   const canvas = document.createElement('canvas')
   canvas.width = 512
   canvas.height = 80
@@ -215,9 +231,17 @@ export function makeProductTray(
       plate.scale.set(0.46, 0.45, 1)
       plate.position.z = 0.083
     }
+    if (typeof kind !== 'string') {
+      const x = kind.unit === 'Snap' ? 0 : kind.scene ? 0.13 : 0.112
+      plate.scale.setScalar(kind.scene ? 0.7 : 0.55)
+      plate.position.set(
+        x,
+        kind.unit === 'Snap' ? 0.012 : 0.0066,
+        kind.unit === 'Snap' ? 0.055 : 0.05,
+      )
+    }
     group.add(plate)
   }
-  return { group, width, depth }
 }
 
 export function placeProductTray(
