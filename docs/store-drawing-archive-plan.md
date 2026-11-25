@@ -225,7 +225,7 @@
 - **进 Git**：脚本（`tools/store-archive/`）、`09_门店档案` 下的 JSON / CSV / MD。估计总量 < 50 MB。
 - **不进 Git**：原图纸、所有 PDF / PNG / JPG / SVG 派生物、缓存。用 `.gitignore` 规则排除，规则要在任何派生物写入主工作区之前合进 main，免得另一个窗口误提交。
 - **派生物位置**：写到 `D:\text demo\资源库\09_门店档案\` 同一目录下，估计 5–10 GB（D 盘剩余 495 GB）；元数据在独立工作区提交，合并后两部分在同一目录汇合。
-- **提交方式**：所有提交都在独立工作区 `D:\text demo-worktrees\drawing-archive-plan`（或每阶段一个新分支）里做，用 `bash "$LOCALAPPDATA/store-design-push.sh" <分支>` 推送，不在 `D:\text demo` 里切分支。
+- **提交方式**：所有提交都在独立工作区 `D:\Store-Design-worktrees\drawing-archive-plan`（或每阶段一个新分支）里做，用 `bash "$LOCALAPPDATA/store-design-push.sh" <分支>` 推送，不在 `D:\Store-Design` 里切分支。
 - **本机独有缓存的备份**：`全量续跑-02` 复制到 `D:\门店图纸备份\全量续跑-02-20261009\`。C、D 两个盘在同一块 SSD 上，这份只能防误删、防覆盖；异地备份已按 10-13 答复上传到 release `cleaning-full-run-02-20261009`（整个目录打包 60.7 MB，附逐文件哈希清单；3.8 GB 渲染缓存可重建，不上传）。
 - **原图纸**：2026-10-13 起 513 份 PDF 和飞书台账全部进 Git（PDF 走 LFS）。
 
@@ -482,7 +482,7 @@
 - 不修改、移动、删除原始图纸和任何旧成果目录。
 - 不用 AI 补画、去字、生成“干净版”图片冒充真实样本。
 - 不做消防规范分析；不编造品牌标准阈值。
-- 不在 `D:\text demo` 里切分支或提交；不提交缓存和补充 PDF；不改写已推送的历史。
+- 不在 `D:\Store-Design` 里切分支或提交；不提交缓存和补充 PDF；不改写已推送的历史。
 - 不在本次修改工作台的功能界面；只有 Q31 的回归脚本小改动例外。
 
 ## 附录 A：盘点证据路径
