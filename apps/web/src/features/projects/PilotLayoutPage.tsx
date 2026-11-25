@@ -62,16 +62,12 @@ const catalog: PlannerCatalog = {
   ],
 }
 
-function download(url: string, name: string) {
+function downloadFile(file: Blob, name: string) {
+  const url = URL.createObjectURL(file)
   const link = document.createElement('a')
   link.href = url
   link.download = name
   link.click()
-}
-
-function downloadFile(content: string, type: string, name: string) {
-  const url = URL.createObjectURL(new Blob([content], { type }))
-  download(url, name)
   setTimeout(() => URL.revokeObjectURL(url), 1_000)
 }
 
@@ -125,8 +121,10 @@ function PilotLayout({ project }: { project: Project }) {
         height,
         'material',
       )
-      if (!url) throw new Error('三维视图暂时无法导出。')
-      download(url, filename + '.png')
+      const prefix = 'data:image/png;base64,'
+      if (!url?.startsWith(prefix)) throw new Error('三维视图暂时无法导出。')
+      const png = Uint8Array.from(atob(url.slice(prefix.length)), (byte) => byte.charCodeAt(0))
+      downloadFile(new Blob([png], { type: 'image/png' }), filename + '.png')
     } catch (error) {
       setRenderError(error)
     } finally {
@@ -139,8 +137,9 @@ function PilotLayout({ project }: { project: Project }) {
       [no, name, mToMm(size.w), mToMm(size.d), mToMm(size.h), count].join(','),
     )
     downloadFile(
-      '\ufeff' + ['编号,示例道具,宽(mm),深(mm),高(mm),数量', ...rows].join('\r\n'),
-      'text/csv;charset=utf-8',
+      new Blob(['\ufeff' + ['编号,示例道具,宽(mm),深(mm),高(mm),数量', ...rows].join('\r\n')], {
+        type: 'text/csv;charset=utf-8',
+      }),
       filename + ' 物料.csv',
     )
   }
@@ -229,7 +228,10 @@ function PilotLayout({ project }: { project: Project }) {
             type="button"
             onClick={() => {
               if (plan.current)
-                downloadFile(standaloneSvg(plan.current, 1800), 'image/svg+xml', filename + '.svg')
+                downloadFile(
+                  new Blob([standaloneSvg(plan.current, 1800)], { type: 'image/svg+xml' }),
+                  filename + '.svg',
+                )
             }}
           >
             下载平面图
