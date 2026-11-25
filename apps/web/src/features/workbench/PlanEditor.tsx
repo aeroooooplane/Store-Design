@@ -185,6 +185,7 @@ export function PlanEditor({
         cz,
         group: gesture.group,
         snapTo: gesture.snap ? space : null,
+        dragBoundary: space.boundary,
         front: frontOf(id),
       }),
     [space, frontOf],

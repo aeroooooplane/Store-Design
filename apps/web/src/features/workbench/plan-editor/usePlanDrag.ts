@@ -195,6 +195,7 @@ export function usePlanDrag(
       cz,
       group,
       snapTo,
+      dragBoundary: space.boundary,
       front: drag.current.front,
     })
   }

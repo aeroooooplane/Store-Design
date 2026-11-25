@@ -1,5 +1,6 @@
 export type { Point, Polygon, Rect } from './types.ts'
 export {
+  closestPointOnSegment,
   cross,
   distance,
   distanceToBoundary,

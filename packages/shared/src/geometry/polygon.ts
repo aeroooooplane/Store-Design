@@ -42,13 +42,17 @@ export function toClockwise(polygon: Polygon): Point[] {
   return isClockwise(polygon) ? [...polygon] : [...polygon].reverse()
 }
 
-export function distanceToSegment(p: Point, a: Point, b: Point): number {
+export function closestPointOnSegment(p: Point, a: Point, b: Point): Point {
   const dx = b[0] - a[0]
   const dz = b[1] - a[1]
   const lengthSq = dx * dx + dz * dz
-  if (lengthSq === 0) return distance(p, a)
+  if (lengthSq === 0) return a
   const t = Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / lengthSq))
-  return distance(p, [a[0] + t * dx, a[1] + t * dz])
+  return [a[0] + t * dx, a[1] + t * dz]
+}
+
+export function distanceToSegment(p: Point, a: Point, b: Point): number {
+  return distance(p, closestPointOnSegment(p, a, b))
 }
 
 export function distanceToBoundary(p: Point, polygon: Polygon): number {
