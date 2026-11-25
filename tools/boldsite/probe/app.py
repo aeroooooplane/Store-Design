@@ -21,10 +21,10 @@ def prepare_fixture(directory):
         # Publish a complete file atomically even if deployment starts two processes.
         with tempfile.TemporaryDirectory(dir=directory) as scratch:
             source = Path(scratch) / "fixture.txt"
-            with source.open("wb") as file:
-                file.write(("synthetic-boldsite-probe " + uuid4().hex + "\n").encode())
-                file.flush()
+            source.write_bytes(("synthetic-boldsite-probe " + uuid4().hex + "\n").encode())
+            with source.open("rb") as file:
                 os.fsync(file.fileno())
+
             try:
                 os.link(source, target)
             except FileExistsError:

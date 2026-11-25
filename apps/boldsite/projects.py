@@ -7,7 +7,7 @@ from pydantic import AfterValidator, BaseModel, ConfigDict, model_validator
 from contract import ApiError, ResourceId, current_revision, project_row, with_revision
 from storage import timestamp
 
-router = APIRouter(prefix="/api/v1")
+router = APIRouter(prefix="/workbench/v1")
 
 ShopType = Literal["side_hall", "island", "zone"]
 Market = Literal["domestic", "overseas"]

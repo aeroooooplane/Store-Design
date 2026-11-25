@@ -35,6 +35,9 @@ describe('BoldSite deployment URLs', () => {
 
   it('maps health checks outside a service mount and preserves pre-mapped links', () => {
     expect(mapGatewayPath('/api/v1/health', '')).toBe('/workbench/v1/health')
+    expect(mapGatewayPath('/workbench/v1/files/ABC', '/svc/alpha')).toBe(
+      '/svc/alpha/workbench/v1/files/ABC',
+    )
     expect(mapGatewayPath('/svc/alpha/workbench/v1/files/ABC', '/svc/alpha')).toBe(
       '/svc/alpha/workbench/v1/files/ABC',
     )

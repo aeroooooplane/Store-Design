@@ -10,6 +10,7 @@ export function deploymentPath(pathname: string): string {
 
 /** Preserve the contract path in callers and translate it at the Bold Site boundary. */
 export function mapGatewayPath(url: string, prefix: string): string {
+  if (url.startsWith(gatewayPath)) return prefix + url
   const contractUrl = url.startsWith(prefix + contractPath) ? url.slice(prefix.length) : url
   return contractUrl.startsWith(contractPath)
     ? prefix + gatewayPath + contractUrl.slice(contractPath.length)
@@ -34,7 +35,7 @@ export const servicePrefix = isBoldSite ? deploymentPath(window.location.pathnam
 export const apiHref = (url: string): string =>
   isBoldSite ? mapGatewayPath(url, servicePrefix) : url
 
-/** File and model URLs are returned in the original API contract. */
+/** Fastify returns contract links; FastAPI returns links under the gateway path. */
 export function mapFileLinks(value: unknown, prefix: string): unknown {
   if (Array.isArray(value)) return value.map((item: unknown) => mapFileLinks(item, prefix))
   if (!value || typeof value !== 'object') return value

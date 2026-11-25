@@ -67,7 +67,7 @@ async def handle_unexpected(request: Request, error: Exception):
     return error_response(request, ApiError(500, "INTERNAL", "服务暂时无法处理该请求"))
 
 
-@app.get("/api/v1/health")
+@app.get("/workbench/v1/health")
 def health(request: Request):
     status, database = "ok", "ok"
     try:

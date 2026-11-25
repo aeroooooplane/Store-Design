@@ -16,7 +16,7 @@ FastAPI 实现 `apps/api/openapi.json` 中的以下接口。前端继续使用�
 
 ## 网关路径
 
-平台保留 `/api`、`/view`、`/svc`。Bold Site 页面在应用挂载点下统一使用 `./workbench/v1/`。例如健康检查是 `/svc/{appId}/workbench/v1/health`，图纸下载是 `/svc/{appId}/workbench/v1/files/{fileId}`。FastAPI 在入口映射回原路径，适配网关剥前缀、透传和 ASGI `root_path`。本地 Fastify、OpenAPI 和生成的客户端类型继续使用 `/api/v1/`。
+平台保留 `/api`、`/view`、`/svc`。Bold Site 页面在应用挂载点下统一使用 `./workbench/v1/`。例如健康检查是 `/svc/{appId}/workbench/v1/health`，图纸下载是 `/svc/{appId}/workbench/v1/files/{fileId}`。FastAPI 直接注册工作台路径，入口兼容网关剥前缀、透传和 ASGI `root_path`。本地 Fastify、OpenAPI 和生成的客户端类型继续使用 `/api/v1/`。
 
 ## 打包与运行
 
@@ -46,10 +46,10 @@ uv pip install --python-version 3.12 --python-platform x86_64-manylinux_2_28 \
 
 ## 真实平台验收
 
-CLI 指南需要公司账号登录，当前会话未取得可用的部署身份。真实平台发布和验证待执行。参见 [站内 CLI 指南](https://ai.insta360.cn/sites/cli-guide)和[飞书使用手册](https://arashivision.feishu.cn/wiki/VYdWwwZ84iBmrtkyWtHcyK6kngc)。
+使用官方 CLI 的飞书设备授权获取部署身份。真实平台以诊断包实测为准。CLI 1.0.5 已确认可用 `--dir` 指定发布目录，`--dry-run` 校验，部署成功在发布目录回写 `appId`。保存绑定后的清单供同应用更新，勿上传到代码仓库。参见 [站内 CLI 指南](https://ai.insta360.cn/sites/cli-guide)和[飞书使用手册](https://arashivision.feishu.cn/wiki/VYdWwwZ84iBmrtkyWtHcyK6kngc)。
 
-1. 用指定部署所有者在站内指南完成 CLI 登录。创建单独的诊断应用，设为仅所有者或指定成员可见，关闭应用广场上架。记录创建时的应用 ID、所有者和访问设置。
-2. 将 `tools/boldsite/probe/` 的内容作为最小发布目录。用站内指南给出的目录上传命令部署，打开 `/svc/{appId}/`，核对相对探针和测试文件下载。探针只写随机虚构标记并用临时 SQLite 比较两个写连接。记录运行时、实例标识、文件哈希、锁结果及回显版本。
+1. 用指定部署所有者在站内指南完成 CLI 登录。创建单独的诊断应用，设为仅所有者或指定成员可见，关闭应用广场上架。CLI 新应用默认仅个人可见且未上架，发布后用 `boldsite status --app <应用名>` 核对 `visibility`、`listed` 和所有者角色。
+2. 将 `tools/boldsite/probe/` 的内容作为最小发布目录。先运行 `boldsite deploy --dir <探针目录> --dry-run`，通过后使用 `boldsite deploy --dir <探针目录>` 部署，打开 `/svc/{appId}/`，核对相对探针和测试文件下载。探针只写随机虚构标记并用临时 SQLite 比较两个写连接。记录运行时、实例标识、文件哈希、锁结果及回显版本。
 3. 用相同应用 ID 发布另一个带不同 `release.txt` 的版本。分开验证重启和换包，确认版本切换、实例 ID、持久文件哈希、访问设置。用未授权登录会话和未登录会话分别直测网页、探针 API 和文件 URL，记录拒绝结果。再让平台确认实例上限、滚动发布是否会重叠、`DATA_DIR` 的挂载类型、配额和恢复方法。探针的锁结果只覆盖同实例上的两个连接。
 4. 若证据支持私有访问和单实例 SQLite，发布打包后的工作台试点，用虚构项目和假图纸验证保存、详情刷新、上传下载、未授权 API 和文件访问拦截。使用 SQLite backup 在线备份，恢复到独立目录后核对项目版本和图纸哈希。分别核对平台重启及重新部署后的数据。
 5. 核实 PostgreSQL、私有对象存储和项目级授权。真实门店资料需按看板 QBS-01、QBS-02 另行确认。
