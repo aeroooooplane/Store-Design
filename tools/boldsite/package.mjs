@@ -24,6 +24,7 @@ await mkdir(output)
 await cp(path.join(repository, 'apps/web/dist'), output, { recursive: true })
 for (const file of [
   'app.py',
+  'catalog.py',
   'contract.py',
   'drawings.py',
   'projects.py',
@@ -33,6 +34,16 @@ for (const file of [
   'boldsite.json',
 ]) {
   await cp(path.join(repository, 'apps/boldsite', file), path.join(output, file), {
+    force: false,
+    errorOnExist: true,
+  })
+}
+const catalog = process.argv[3]
+if (catalog) {
+  const source = path.resolve(catalog)
+  await cp(path.join(source, 'index.json'), path.join(output, 'catalog', 'index.json'))
+  await cp(path.join(source, 'files'), path.join(output, 'catalog', 'files'), {
+    recursive: true,
     force: false,
     errorOnExist: true,
   })

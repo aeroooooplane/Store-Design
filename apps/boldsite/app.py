@@ -17,6 +17,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException
 
+from catalog import Catalog, router as catalog
 from contract import ApiError, ServicePrefix, error_response, invalid, missing
 from drawings import router as drawings
 from projects import router as projects
@@ -38,6 +39,7 @@ ROOT_ASSETS = {
 async def lifespan(app):
     app.state.db = configured_database()
     app.state.db.initialize()
+    app.state.catalog = Catalog(ROOT / "catalog")
     yield
 
 
@@ -45,6 +47,7 @@ app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None
 app.add_middleware(ServicePrefix)
 app.include_router(projects)
 app.include_router(drawings)
+app.include_router(catalog)
 
 
 @app.exception_handler(ApiError)
