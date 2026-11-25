@@ -69,7 +69,7 @@ import { useSpacingPreference } from './plan-editor/useSpacingPreference.ts'
 import { useEditorKeys } from './plan-editor/useEditorKeys.ts'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
 import { toWorld, usePlanDrag } from './plan-editor/usePlanDrag.ts'
-import { useUndoRedoKeys } from './plan-editor/useUndoRedoKeys.ts'
+import { useEditorShortcuts } from './plan-editor/useEditorShortcuts.ts'
 
 // Three.js is only downloaded when a 3D view is first opened.
 const Viewer3D = lazy(() =>
@@ -150,6 +150,7 @@ export function PlanEditor({
   // 画空心隔板: the next drag on the plan draws a partition.
   const [drawingFixture, setDrawingFixture] = useState(false)
   const [placement, setPlacement] = useState<{ item: LayoutItem; error?: string } | null>(null)
+  const [copiedFurniture, setCopiedFurniture] = useState<LayoutItem | null>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
@@ -258,10 +259,6 @@ export function PlanEditor({
     [space],
   )
   const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
-
-  // Effects are registered in the same order as before: agent selection, undo / redo keys,
-  // 3D prefetch, autosave, SI switch registration.
-  useUndoRedoKeys(dispatch)
 
   // Fetch the 3D code while the user is still on the plan, so switching to 3D is quick.
   useEffect(() => {
@@ -375,15 +372,25 @@ export function PlanEditor({
     setPlacement(null)
   }
 
-  function duplicateFurniture() {
-    if (!selected) return
-    const copy = { ...selected, locked: false }
+  function pasteFurniture(item: LayoutItem) {
+    const copy = { ...item, locked: false }
     const nearby = nearbyFurniture(state.layout, space, copy)
     if (nearby) {
       dispatch({ type: 'placeFurniture', item: nearby, space })
       canvasRef.current?.focus({ preventScroll: true })
     } else preparePlacement(copy)
   }
+
+  const furnitureKeysActive = !placement && !drawingFixture && !editWalls.editing
+  const selection =
+    furnitureKeysActive && selected && itemMount(selected) === 'floor' ? selected : null
+  const duplicateFurniture = selection ? () => pasteFurniture(selection) : undefined
+  useEditorShortcuts(dispatch, {
+    copy: selection ? () => setCopiedFurniture({ ...selection }) : undefined,
+    paste:
+      furnitureKeysActive && copiedFurniture ? () => pasteFurniture(copiedFurniture) : undefined,
+    duplicate: duplicateFurniture,
+  })
 
   function switchView(next: 'plan' | '3d') {
     setView(next)
@@ -489,6 +496,8 @@ export function PlanEditor({
               onPointerUp={endDrag}
               onPointerCancel={endDrag}
               onKeyDown={(event) => {
+                if (event.ctrlKey || event.metaKey || event.altKey || event.nativeEvent.isComposing)
+                  return
                 if (placement) {
                   if (event.key === 'Escape') setPlacement(null)
                   return
@@ -654,11 +663,8 @@ export function PlanEditor({
             space={space}
             dispatch={dispatch}
             onRotate={rotateSelected}
-            onDuplicate={
-              selected && itemMount(selected) === 'floor' && !placement && !editWalls.editing
-                ? duplicateFurniture
-                : undefined
-            }
+            onDuplicate={duplicateFurniture}
+            copiedFurnitureName={copiedFurniture?.name}
           />
 
           <IssuesPanel issues={issues} errorCount={errors.length} />
