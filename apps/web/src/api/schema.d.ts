@@ -10680,6 +10680,8 @@ export interface paths {
                                     unit: string | null;
                                     hero: boolean;
                                 }[];
+                                /** @enum {string} */
+                                center?: "acrylic";
                                 modules: string[];
                                 endToward: [
                                     number,
@@ -10867,6 +10869,8 @@ export interface paths {
                                     unit: string | null;
                                     hero: boolean;
                                 }[];
+                                /** @enum {string} */
+                                center?: "acrylic";
                                 modules: string[];
                                 endToward: [
                                     number,

@@ -36889,6 +36889,12 @@
                               "additionalProperties": false
                             }
                           },
+                          "center": {
+                            "type": "string",
+                            "enum": [
+                              "acrylic"
+                            ]
+                          },
                           "modules": {
                             "type": "array",
                             "items": {
@@ -37574,6 +37580,12 @@
                               ],
                               "additionalProperties": false
                             }
+                          },
+                          "center": {
+                            "type": "string",
+                            "enum": [
+                              "acrylic"
+                            ]
                           },
                           "modules": {
                             "type": "array",
