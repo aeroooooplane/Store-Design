@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import type { Project } from '@store/shared'
 import { ProjectForm } from './ProjectForm.tsx'
 import { ProjectDrawings } from './ProjectDrawings.tsx'
@@ -14,6 +15,7 @@ export function ProjectPilot({ project }: { project: Project }) {
       <header className="page-header">
         <h1>{project.name}</h1>
         <p>试点仅使用虚构项目及假图纸。</p>
+        <Link to={'/projects/' + project.id + '/design'}>方案试排</Link>
       </header>
       <ProjectForm
         key={base.revision}
