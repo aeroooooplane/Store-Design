@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom'
 import { Boxes, ChevronDown, FolderKanban, Settings } from 'lucide-react'
 import { Link, NavLink, Outlet, useMatch } from 'react-router'
 
+import { isProjectPilot } from '../api/deployment.ts'
+
 const LINKS = [
   { to: '/display', label: '展陈方案', icon: Boxes },
   { to: '/settings', label: '设置', icon: Settings },
@@ -98,12 +100,13 @@ export function AppLayout() {
               <span className="app-nav-label">项目</span>
             </NavLink>
           )}
-          {LINKS.map(({ to, label, icon: Icon }) => (
-            <NavLink key={to} to={to} aria-label={label} className="app-nav-link">
-              <Icon size={15} aria-hidden="true" />
-              <span className="app-nav-label">{label}</span>
-            </NavLink>
-          ))}
+          {!isProjectPilot &&
+            LINKS.map(({ to, label, icon: Icon }) => (
+              <NavLink key={to} to={to} aria-label={label} className="app-nav-link">
+                <Icon size={15} aria-hidden="true" />
+                <span className="app-nav-label">{label}</span>
+              </NavLink>
+            ))}
         </div>
         {project && <div className="app-project-info" ref={setInfo} />}
       </nav>
