@@ -26,6 +26,8 @@ class Catalog:
         self.items = snapshot.get("items", [])
         self.by_id = {record["id"]: record for record in self.items}
         self.files = snapshot.get("files", {})
+        rules = self.directory / "display.json"
+        self.display_rules = json.loads(rules.read_text(encoding="utf-8")) if rules.is_file() else None
 
     def file_response(self, file_id, version, width, if_none_match):
         record = self.files.get(file_id)
@@ -89,3 +91,11 @@ def asset_detail(request: Request, assetId: Annotated[str, ApiPath(pattern=r"^as
     if item is None:
         raise missing("资产")
     return item
+
+
+@router.get("/display-rules/current")
+def current_display_rules(request: Request):
+    rules = request.app.state.catalog.display_rules
+    if rules is None:
+        raise missing("展陈规则")
+    return rules
