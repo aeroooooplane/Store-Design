@@ -1,7 +1,13 @@
 import createClient from 'openapi-fetch'
 import { ApiErrorSchema } from '@store/shared'
 import type { paths } from './schema'
-import { gatewayRequest, isBoldSite, mapFileLinks, servicePrefix } from './deployment'
+import {
+  gatewayRequest,
+  isBoldSite,
+  isProjectPilot,
+  mapFileLinks,
+  servicePrefix,
+} from './deployment'
 
 /**
  * Typed client generated from apps/api/openapi.json (`pnpm api:openapi`). This is the only way
@@ -9,7 +15,7 @@ import { gatewayRequest, isBoldSite, mapFileLinks, servicePrefix } from './deplo
  */
 export const api = createClient<paths>({
   baseUrl: window.location.origin,
-  Request: isBoldSite ? gatewayRequest(servicePrefix) : Request,
+  Request: isBoldSite ? gatewayRequest(servicePrefix, isProjectPilot) : Request,
   // Resolve fetch per call so tests can stub it.
   fetch: async (request) => {
     const response = await globalThis.fetch(request)

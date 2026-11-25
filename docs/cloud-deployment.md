@@ -50,6 +50,8 @@ uv pip install --python-version 3.11 --python-platform x86_64-manylinux_2_28 \
 
 通过官方干跑确认第三方依赖是唯一告警来源，并核对实际调用路径。仅当告警均来自已审阅的依赖通用实现或示例时，使用官方 CLI 提供的误报处理选项。应用先由所有者验证，再在「我的应用 → 更多 → 权限管理」设为指定成员可见，保持应用广场未上架。按名单精确匹配公司账号，授予访问权限。源码更新继续走 GitHub PR，发布时保留本机已绑定的 appId。
 
+线上试用部署 15285 验证了虚构项目新建和图纸上传下载，但网关对项目保存请求返回通用 HTTP 500。15305 在同一应用更新了试用的保存、回收站和恢复传输，改用工作台路径下的 POST 写入端点，版本值与原合同的 If-Match 语义一致。真实平台已复核资料保存、刷新后的风格、旧图纸留存以及白名单模式。普通 Fastify 继续使用原 OpenAPI 的 PATCH、DELETE 和 POST。
+
 ## 真实平台验收
 
 使用官方 CLI 的飞书设备授权获取部署身份。真实平台以诊断包实测为准。CLI 1.0.5 已确认可用 `--dir` 指定发布目录，`--dry-run` 校验，部署成功在发布目录回写 `appId`。保存绑定后的清单供同应用更新，勿上传到代码仓库。参见 [站内 CLI 指南](https://ai.insta360.cn/sites/cli-guide)和[飞书使用手册](https://arashivision.feishu.cn/wiki/VYdWwwZ84iBmrtkyWtHcyK6kngc)。

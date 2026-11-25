@@ -59,4 +59,24 @@ describe('BoldSite deployment URLs', () => {
     expect(mapped.headers.get('if-match')).toBe('"7"')
     expect(new Uint8Array(await mapped.arrayBuffer())).toEqual(body)
   })
+
+  it('carries project edits through the pilot POST routes without losing the version', async () => {
+    const PilotRequest = gatewayRequest('/svc/alpha', true)
+    const base = 'https://pilot.invalid/api/v1/projects/abc'
+    const headers = { 'content-type': 'application/json', 'if-match': '"7"' }
+    const body = '{"siStyle":"SI2.0"}'
+    const save = new PilotRequest(base, { method: 'PATCH', headers, body })
+    expect(save.method).toBe('POST')
+    expect(save.url).toBe(
+      'https://pilot.invalid/svc/alpha/workbench/v1/projects/abc/save?ifMatch=%227%22',
+    )
+    expect(save.headers.get('if-match')).toBeNull()
+    expect(await save.text()).toBe(body)
+    expect(new PilotRequest(base, { method: 'DELETE', headers }).url).toContain(
+      '/abc/trash?ifMatch=%227%22',
+    )
+    expect(new PilotRequest(base + '/restore', { method: 'POST', headers }).url).toContain(
+      '/abc/restore?ifMatch=%227%22',
+    )
+  })
 })

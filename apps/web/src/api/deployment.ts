@@ -17,7 +17,7 @@ export function mapGatewayPath(url: string, prefix: string): string {
     : url
 }
 
-export function gatewayRequest(prefix: string): typeof Request {
+export function gatewayRequest(prefix: string, projectPilot = false): typeof Request {
   return class extends Request {
     constructor(input: RequestInfo | URL, init?: RequestInit) {
       if (typeof input !== 'string') {
@@ -25,8 +25,23 @@ export function gatewayRequest(prefix: string): typeof Request {
         return
       }
       const url = new URL(input)
+      const project = /^\/api\/v1\/projects\/[^/]+(\/restore)?$/.exec(url.pathname)
+      let options = init
+      if (projectPilot && project) {
+        const method = init?.method?.toUpperCase()
+        const action = !project[1] && method === 'PATCH' ? '/save' : ''
+        const trash = !project[1] && method === 'DELETE'
+        if (action || trash || (project[1] && method === 'POST')) {
+          const headers = new Headers(init?.headers)
+          const revision = headers.get('if-match')
+          if (revision !== null) url.searchParams.set('ifMatch', revision)
+          headers.delete('if-match')
+          url.pathname += trash ? '/trash' : action
+          options = { ...init, method: 'POST', headers }
+        }
+      }
       url.pathname = mapGatewayPath(url.pathname, prefix)
-      super(url, init)
+      super(url, options)
     }
   }
 }

@@ -115,6 +115,23 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual((status, revived["revision"], revived["deletedAt"]), (200, 4, None))
         self.assertEqual(revived["id"], project["id"])
 
+    async def test_pilot_gateway_post_preserves_revision_guard(self):
+        road, _ = await self.create()
+        payload = {"siStyle": "SI2.0"}
+        missing, _, _ = await self.request("POST", road + "/save", payload=payload)
+        self.assertEqual(missing, 428)
+        ok, headers, saved = await self.request("POST", road + "/save?ifMatch=%221%22", payload=payload)
+        self.assertEqual((ok, headers["etag"], saved["revision"], saved["siStyle"]), (200, '"2"', 2, "SI2.0"))
+        conflict, _, _ = await self.request("POST", road + "/save?ifMatch=1", payload=payload)
+        self.assertEqual(conflict, 409)
+        status, _, project = await self.request("POST", road + "/trash?ifMatch=2")
+        self.assertEqual(status, 200)
+        self.assertIsNotNone(project["deletedAt"])
+        status, _, project = await self.request("POST", road + "/restore?ifMatch=3")
+        self.assertEqual(status, 200)
+        self.assertIsNone(project["deletedAt"])
+
+
     async def test_validation(self):
         project = {"name": " ", "shopType": "zone"}
         self.assertEqual((await self.request("POST", "/workbench/v1/projects", payload=project))[0], 400)
