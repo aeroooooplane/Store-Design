@@ -112,6 +112,9 @@ def download(
     w: Literal["160", "480"] | None = None,
     if_none_match: Annotated[str | None, Header()] = None,
 ):
+    catalog_file = request.app.state.catalog.file_response(fileId, v, w, if_none_match)
+    if catalog_file is not None:
+        return catalog_file
     with request.app.state.db.connect() as db:
         file = db.execute("""
             SELECT sha256, contentType, originalName FROM drawing_files WHERE id = ?
