@@ -16,14 +16,18 @@ import { Viewer3D } from '../viewer3d/Viewer3D.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
 import { standaloneSvg } from '../workbench/plan-export.ts'
 import { PlanView } from '../workbench/PlanView.tsx'
+import { plannerCatalog } from '../../../../api/src/modules/layouts/selection.ts'
+import { ModelPicker } from '../workbench/ModelPicker.tsx'
+import { useCatalog } from '../workbench/api.ts'
+import { PilotAssetPreview } from './PilotAssetPreview.tsx'
 import { useProject } from './queries.ts'
 import './pilot-layout.css'
 
 const strategies = ['max', 'area', 'min'] as const
-const assets = new Map<string, Asset>()
+const emptyAssets: Asset[] = []
 
 // Simple solid geometry for the trial. These entries refer to no resource-library file.
-const catalog: PlannerCatalog = {
+const sampleCatalog: PlannerCatalog = {
   island: [
     {
       id: 'asset-1',
@@ -60,6 +64,11 @@ const catalog: PlannerCatalog = {
       front: '+Z',
     },
   ],
+}
+
+function csvText(value: string) {
+  const safe = /^[=+\-@\t\r]/.test(value) ? "'" + value : value
+  return '"' + safe.replaceAll('"', '""') + '"'
 }
 
 function downloadFile(file: Blob, name: string) {
@@ -101,9 +110,18 @@ function PilotLayout({ project }: { project: Project }) {
   const [renderError, setRenderError] = useState<unknown>(null)
   const plan = useRef<SVGSVGElement>(null)
   const viewer = useRef<Viewer3DHandle>(null)
+  const library = useCatalog()
+  const models = library.data ?? emptyAssets
+  const assets = useMemo(() => new Map(models.map((a) => [a.id, a])), [models])
+  const catalog = useMemo(
+    () => (models.length ? plannerCatalog(models, project.siStyle) : sampleCatalog),
+    [models, project.siStyle],
+  )
+  const [showLibrary, setShowLibrary] = useState(false)
+  const [preview, setPreview] = useState<Asset | null>(null)
   const candidate = useMemo(
     () => planLayout({ space, shopType: project.shopType, strategy, catalog }),
-    [space, project.shopType, strategy],
+    [space, project.shopType, strategy, catalog],
   )
   const legend = deliveryLegend(candidate.layout.items, assets)
   const flagged = new Set(candidate.issues.flatMap((issue) => issue.itemIds ?? []))
@@ -134,10 +152,10 @@ function PilotLayout({ project }: { project: Project }) {
 
   function downloadMaterials() {
     const rows = legend.entries.map(({ no, name, size, count }) =>
-      [no, name, mToMm(size.w), mToMm(size.d), mToMm(size.h), count].join(','),
+      [no, csvText(name), mToMm(size.w), mToMm(size.d), mToMm(size.h), count].join(','),
     )
     downloadFile(
-      new Blob(['\ufeff' + ['编号,示例道具,宽(mm),深(mm),高(mm),数量', ...rows].join('\r\n')], {
+      new Blob(['\ufeff' + ['编号,道具,宽(mm),深(mm),高(mm),数量', ...rows].join('\r\n')], {
         type: 'text/csv;charset=utf-8',
       }),
       filename + ' 物料.csv',
@@ -156,8 +174,35 @@ function PilotLayout({ project }: { project: Project }) {
         <Link to={'/projects/' + project.id}>返回项目</Link>
       </header>
       <p className="notice">
-        仅使用虚构空间和示例道具。试排在浏览器内运行，离开前可下载平面图、三维图和物料清单。
+        仅使用虚构铺位验收。试排在浏览器内运行，离开前可下载平面图、三维图和物料清单。
       </p>
+      <ErrorMessage error={library.error} />
+      {models.length > 0 && (
+        <section aria-label="正式模型库" className="wb-card">
+          <button
+            type="button"
+            aria-expanded={showLibrary}
+            onClick={() => {
+              setShowLibrary(!showLibrary)
+              setPreview(null)
+            }}
+          >
+            {showLibrary ? '收起正式模型库' : '浏览正式模型库'}
+          </button>
+          {showLibrary && (
+            <>
+              <p className="hint">按项目市场和 SI 查看可摆放模型，选择一款打开三维预览。</p>
+              <ModelPicker
+                assets={models}
+                siStyle={project.siStyle}
+                market={project.market}
+                onPick={setPreview}
+              />
+              {preview && <PilotAssetPreview asset={preview} project={project} />}
+            </>
+          )}
+        </section>
+      )}
       <form
         className="create-form pilot-layout-form"
         aria-label="矩形铺位尺寸"
@@ -288,14 +333,14 @@ function PilotLayout({ project }: { project: Project }) {
         </ul>
       )}
       {!legend.entries.length && (
-        <p className="notice">当前尺寸下没有可摆放的示例道具，可调整尺寸或更换策略。</p>
+        <p className="notice">当前尺寸下没有可摆放的道具，可调整尺寸或更换策略。</p>
       )}
       {legend.entries.length > 0 && (
-        <table className="projects" aria-label="示例物料清单">
+        <table className="projects" aria-label="物料清单">
           <thead>
             <tr>
               <th>编号</th>
-              <th>示例道具</th>
+              <th>道具</th>
               <th>数量</th>
             </tr>
           </thead>

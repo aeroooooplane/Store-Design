@@ -81,6 +81,17 @@ uv pip install --python-version 3.11 --python-platform x86_64-manylinux_2_28 \
 
 2026-11-25 本地复验。模拟代理按平台保留路由拒绝旧路径。Chrome 在新路径通过两种转发、详情刷新、项目保存与版本冲突、PNG 与 PDF 页下载、静态预览与 502 提示。两版标准库探针验证 Windows 本机路径、SQLite 第二写连接被阻塞和换包留存。业务试点的 SQLite backup 副本通过完整性校验，恢复出一个虚构项目和两份哈希匹配的图纸。已构建 CPython 3.12、Linux x86_64 的候选依赖，并核对 Pillow 和 pydantic-core 扩展标签。候选包的运行时匹配及权限、留存、锁和恢复仍待在真实平台单独核验。
 
+## 正式模型库
+
+```sh
+node apps/api/src/scripts/export-boldsite-catalog.ts ./资源库 /path/to/new-catalog
+node tools/boldsite/package.mjs /path/to/new-release /path/to/new-catalog
+```
+
+导出器根据 `resources.lock.json` 核对正式模型清单，通过隔离的内存 PGlite 复用本机导入器与模型筛选规则。发布包仅包含已登记网页模型、平面符号、产品图和预览，不包含原图纸、SketchUp 源文件、项目数据库和凭据。产品图与预览生成独立的 WebP 版本。材质与白模优先使用官方轻量网页版本，含市场差异的模型保留两端版本。
+
+正式模型包继续使用现有 `GET /api/v1/assets`、`GET /api/v1/assets/{assetId}` 和 `GET /api/v1/files/{fileId}` 客户端契约。Bold Site 内经同一应用的 `workbench/v1` 路径提供，所有文件以登记 ID 读取并沿用项目入口白名单。本地 Fastify 与生成类型沿用原契约。项目的方案试排页面可浏览正式库和三维预览，同一排布算法选择正式模型。没有附带正式目录的独立预览包仍使用原示例模型。
+
 ## 方案试排与浏览器出图
 
 项目详情中的“方案试排”使用工作台已有的排布算法、平面图、三维查看器与交付编号。支持输入矩形铺位尺寸，按尽量多放、面积推荐和尽量少放查看候选，从当前三维视角导出 PNG，并下载平面 SVG 与物料 CSV。道具为虚构尺寸的程序几何，发布包不读取 OneDrive 内容。试排只保留在当前页面，下载制品后可另存；FastAPI 继续保存项目资料与假图纸，OpenAPI 无变动。
