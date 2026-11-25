@@ -9,9 +9,8 @@ from unittest.mock import patch
 from urllib.parse import urlsplit
 from uuid import uuid4
 
-from PIL import Image
-
 from app import app
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = json.loads((ROOT / "apps/api/openapi.json").read_text(encoding="utf-8"))["paths"]
@@ -61,14 +60,14 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         return response["status"], found, value
 
     def response_keys(self, path, method, status, actual):
-        response = SPEC[path][method]["responses"][str(status)]
+        response = SPEC[path.replace("/workbench/v1/", "/api/v1/", 1)][method]["responses"][str(status)]
         schema = response["content"]["application/json"]["schema"]
         if schema.get("type") == "array":
             schema = schema["items"]
         self.assertEqual(set(actual), set(schema["properties"]))
 
     async def create(self):
-        road = "/api/v1/projects"
+        road = "/workbench/v1/projects"
         code, headers, project = await self.request(
             "POST", PREFIX + road, payload={"name": "  虚构 100%_ 店  ", "shopType": "zone"}
         )
@@ -77,10 +76,10 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(project["name"], "虚构 100%_ 店")
         self.assertEqual((project["market"], project["siStyle"]), ("domestic", "SI1.0"))
         self.response_keys(road, "post", 201, project)
-        return "/api/v1/projects/" + project["id"], project
+        return "/workbench/v1/projects/" + project["id"], project
 
     async def test_proxy_paths_and_health(self):
-        health = "/api/v1/health"
+        health = "/workbench/v1/health"
         for path, root in [(health, ""), (PREFIX + health, ""), (PREFIX + health, PREFIX), (health, PREFIX)]:
             status, _, value = await self.request("GET", path, root=root)
             self.assertEqual(status, 200)
@@ -92,9 +91,9 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
     async def test_project_search_revisions_and_recycle_bin(self):
         road, project = await self.create()
         for query, total in [("?q=100%25_", 1), ("?q=_店", 0), ("?status=deleted", 0)]:
-            status, _, result = await self.request("GET", "/api/v1/projects" + query)
+            status, _, result = await self.request("GET", "/workbench/v1/projects" + query)
             self.assertEqual((status, result["total"]), (200, total))
-            self.response_keys("/api/v1/projects", "get", 200, result)
+            self.response_keys("/workbench/v1/projects", "get", 200, result)
         for value, expected in [(None, 428), ('"0"', 400), ('"2"', 409)]:
             status, _, result = await self.request(
                 "PATCH", road, payload={"name": "旧页面"}, headers={"if-match": value} if value else {}
@@ -118,10 +117,10 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
 
     async def test_validation(self):
         project = {"name": " ", "shopType": "zone"}
-        self.assertEqual((await self.request("POST", "/api/v1/projects", payload=project))[0], 400)
-        self.assertEqual((await self.request("GET", "/api/v1/projects?pageSize=0"))[0], 400)
-        self.assertEqual((await self.request("GET", "/api/v1/projects/invalid"))[0], 400)
-        self.assertEqual((await self.request("GET", "/api/v1/projects/" + str(uuid4())))[0], 404)
+        self.assertEqual((await self.request("POST", "/workbench/v1/projects", payload=project))[0], 400)
+        self.assertEqual((await self.request("GET", "/workbench/v1/projects?pageSize=0"))[0], 400)
+        self.assertEqual((await self.request("GET", "/workbench/v1/projects/invalid"))[0], 400)
+        self.assertEqual((await self.request("GET", "/workbench/v1/projects/" + str(uuid4())))[0], 404)
         road, _ = await self.create()
         for fields in ({}, {"name": None}, {"unknown": 1}):
             self.assertEqual((await self.request("PATCH", road, payload=fields, headers={"if-match": "1"}))[0], 400)
@@ -139,7 +138,7 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(status, 201)
         self.assertEqual((upload["projectId"], upload["page"], upload["width"], upload["height"]),
                          (project["id"], 2, 640, 80))
-        self.response_keys("/api/v1/projects/{projectId}/uploads", "post", 201, upload)
+        self.response_keys("/workbench/v1/projects/{projectId}/uploads", "post", 201, upload)
         self.assertEqual((await self.request("GET", route))[2], [upload])
         self.assertEqual((await self.request("POST", route, headers=headers, body=b"bad PNG"))[0], 400)
         self.assertEqual((await self.request("POST", route, headers=headers, body=b"x" * (20 * 1024 * 1024 + 1)))[0],

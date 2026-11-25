@@ -1,19 +1,20 @@
 import createClient from 'openapi-fetch'
 import { ApiErrorSchema } from '@store/shared'
 import type { paths } from './schema'
-import { apiPrefix, prefixFileLinks } from './deployment'
+import { gatewayRequest, isBoldSite, mapFileLinks, servicePrefix } from './deployment'
 
 /**
  * Typed client generated from apps/api/openapi.json (`pnpm api:openapi`). This is the only way
  * the browser reaches data; there is no direct database access and no secret in the bundle.
  */
 export const api = createClient<paths>({
-  baseUrl: window.location.origin + apiPrefix,
+  baseUrl: window.location.origin,
+  Request: isBoldSite ? gatewayRequest(servicePrefix) : Request,
   // Resolve fetch per call so tests can stub it.
   fetch: async (request) => {
     const response = await globalThis.fetch(request)
     if (
-      !apiPrefix ||
+      !isBoldSite ||
       !response.ok ||
       !response.headers.get('content-type')?.includes('application/json')
     )
@@ -26,7 +27,7 @@ export const api = createClient<paths>({
     const headers = new Headers(response.headers)
     headers.delete('content-length')
     headers.delete('content-encoding')
-    return new Response(JSON.stringify(prefixFileLinks(data, apiPrefix)), {
+    return new Response(JSON.stringify(mapFileLinks(data, servicePrefix)), {
       status: response.status,
       statusText: response.statusText,
       headers,

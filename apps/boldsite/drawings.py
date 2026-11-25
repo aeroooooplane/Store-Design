@@ -12,14 +12,14 @@ from starlette.concurrency import run_in_threadpool
 from contract import ApiError, ResourceId, invalid, missing, project_row
 from storage import timestamp
 
-router = APIRouter(prefix="/api/v1")
+router = APIRouter(prefix="/workbench/v1")
 MAX_BYTES = 20 * 1024 * 1024
 MAX_SIDE = 8192
 IMAGE_TYPES = {"image/png": "PNG", "image/jpeg": "JPEG"}
 
 
 def to_upload(row):
-    return {**dict(row), "url": f'/api/v1/files/{row["fileId"]}'}
+    return {**dict(row), "url": f'/workbench/v1/files/{row["fileId"]}'}
 
 
 @router.get("/projects/{projectId}/uploads")

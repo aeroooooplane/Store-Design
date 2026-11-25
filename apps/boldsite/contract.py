@@ -99,5 +99,6 @@ class ServicePrefix:
             await send(message)
 
         path = scope.get("path", "")
-        uncached = path.startswith("/api/v1/") and not path.startswith("/api/v1/files/")
+        uncached = path.startswith("/workbench/v1/") and not path.startswith("/workbench/v1/files/")
+
         await self.app(scope, receive, send_uncached_metadata if uncached else send)

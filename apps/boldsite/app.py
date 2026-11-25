@@ -1,8 +1,14 @@
 import logging
 import os
 import sqlite3
+import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+vendor = ROOT / "vendor"
+if vendor.is_dir():
+    sys.path.insert(0, str(vendor))
 
 import uvicorn
 from fastapi import FastAPI, Request
@@ -16,7 +22,6 @@ from drawings import router as drawings
 from projects import router as projects
 from storage import configured_database
 
-ROOT = Path(__file__).resolve().parent
 ROOT_ASSETS = {
     "favicon.ico",
     "favicon.svg",
@@ -62,7 +67,7 @@ async def handle_unexpected(request: Request, error: Exception):
     return error_response(request, ApiError(500, "INTERNAL", "服务暂时无法处理该请求"))
 
 
-@app.get("/api/v1/health")
+@app.get("/workbench/v1/health")
 def health(request: Request):
     status, database = "ok", "ok"
     try:

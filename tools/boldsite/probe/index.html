@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-CN">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>门店工作台网关诊断</title>
+  <h1>门店工作台网关诊断</h1>
+  <p><a href="./workbench/v1/fixture" download>下载持久盘测试文件</a></p>
+  <pre id="result" role="status">正在检测…</pre>
+  <script>
+    const result = document.querySelector('#result')
+    fetch('./workbench/v1/probe', { cache: 'no-store' })
+      .then((response) => {
+        if (!response.ok) throw new Error('HTTP ' + response.status)
+        return response.json()
+      })
+      .then((data) => { result.textContent = JSON.stringify(data, null, 2) })
+      .catch((error) => { result.textContent = '网关检测失败：' + error.message })
+  </script>
+</html>

@@ -14,6 +14,10 @@ FastAPI 实现 `apps/api/openapi.json` 中的以下接口。前端继续使用�
 
 上传契约为 PNG/JPEG 原始字节，单张 20 MB 内，最长边 8192 像素。PDF 由浏览器将所选页渲染为 PNG，上传记录保留原文件名及页码，下载内容为渲染后的 PNG。试点界面读取每个项目最新 20 条上传记录。
 
+## 网关路径
+
+平台保留 `/api`、`/view`、`/svc`。Bold Site 页面在应用挂载点下统一使用 `./workbench/v1/`。例如健康检查是 `/svc/{appId}/workbench/v1/health`，图纸下载是 `/svc/{appId}/workbench/v1/files/{fileId}`。FastAPI 直接注册工作台路径，入口兼容网关剥前缀、透传和 ASGI `root_path`。本地 Fastify、OpenAPI 和生成的客户端类型继续使用 `/api/v1/`。
+
 ## 打包与运行
 
 ```sh
@@ -24,19 +28,32 @@ python -m unittest discover -s apps/boldsite -v
 
 运行测试前，使用 Python 3.12 执行 `python -m pip install -r apps/boldsite/requirements.txt`。打包命令启用 `VITE_BOLDSITE_PROJECT_PILOT=1`，生成同时包含 `index.html`、`static/`、根目录图标、Python 服务和 `boldsite.json` 的发布目录。压缩发布目录的内容，使 `index.html` 和 `boldsite.json` 位于压缩包根目录。平台自有的 `assets/` 目录与 `static/` 分开。发布包只包含代码和前端构建产物。
 
-运行入口是发布目录中的 `python3 app.py`，监听 `0.0.0.0`，端口读 `CAPort`，默认 9000。启动时必须提供 `DATA_DIR`，其目录独立于发布目录。两次部署应挂载同一位置。前端入口使用 `/svc/{appId}/`，项目详情使用 `/svc/{appId}/#/projects/{id}`。服务支持代理剥前缀、透传，或通过 ASGI `root_path` 提供前缀。透传无尾斜杠入口时，服务重定向到带斜杠入口。代理剥前缀时，网关负责该跳转。图纸下载链接由现有客户端补服务前缀。
+运行入口是发布目录中的 `python3 app.py`，监听 `0.0.0.0`，端口读 `CAPort`，默认 9000。启动时必须提供 `DATA_DIR`，其目录独立于发布目录。两次部署应挂载同一位置。前端入口使用 `/svc/{appId}/`，项目详情使用 `/svc/{appId}/#/projects/{id}`。服务支持代理剥前缀、透传，或通过 ASGI `root_path` 提供前缀。透传无尾斜杠入口时，服务重定向到带斜杠入口。代理剥前缀时，网关负责该跳转。图纸下载链接由客户端映射到应用内的工作台路径。
 
 SQLite 试点固定一个实例和一个 Uvicorn worker。SQLite 使用 DELETE 日志与 FULL 同步。图纸字节及元数据原子写入同一个数据库文件，同项目相同内容复用文件实体。若 `DATA_DIR` 为 NFS，需核验锁、同步语义、配额和恢复能力，服务滚动发布也须避免双实例共写。正式多实例优先采用 PostgreSQL 和私有对象存储。试点服务当前依赖平台网关做访问控制，未实现项目级授权。
 
+### Linux 依赖
+
+先用标准库探针确认平台 Python 小版本、实现、CPU 架构和 libc。按实测选择匹配的 Wheel。以下为 CPython 3.12、Linux x86_64、glibc 2.28 及以上的打包示例：
+
+```sh
+uv pip install --python-version 3.12 --python-platform x86_64-manylinux_2_28 \
+  --only-binary :all: --target /path/to/new-release/vendor \
+  -r /path/to/new-release/requirements.txt
+```
+
+`app.py` 会优先加载发布目录中的 `vendor/`。原生 Linux CI 也用二进制 Wheel 安装到这个位置并运行契约测试。发布前核对 `pydantic_core` 和 Pillow 的原生扩展与探针一致。 CLI 1.0.5 干跑会扫描 `vendor/`，此次仅依赖目录触发路径、写盘及端口启发式告警。按真实运行时重打包后重新扫描，并向平台核对依赖目录的处理方式。重新选择运行时后，用一个新发布目录重新安装依赖。
+
 ## 真实平台验收
 
-当前资料中没有可用的 BoldSite 测试入口，平台验证待执行。测试与部署使用虚构项目和假图纸。
+使用官方 CLI 的飞书设备授权获取部署身份。真实平台以诊断包实测为准。CLI 1.0.5 已确认可用 `--dir` 指定发布目录，`--dry-run` 校验，部署成功在发布目录回写 `appId`。保存绑定后的清单供同应用更新，勿上传到代码仓库。参见 [站内 CLI 指南](https://ai.insta360.cn/sites/cli-guide)和[飞书使用手册](https://arashivision.feishu.cn/wiki/VYdWwwZ84iBmrtkyWtHcyK6kngc)。
 
-1. 确认独立试点应用、成员白名单、应用广场可见性，以及绕过网页直接访问 API 和文件 URL 时的拒绝行为。
-2. 部署独立的 FastAPI 诊断示例，核对平台实际入口、代理转发、Python 版本及依赖安装、上传下载、实例标识和重新部署后的留存。
-3. 确认 `DATA_DIR` 的挂载类型、容量、备份恢复和重新部署保留规则，确认实例数上限、滚动发布是否重叠、是否提供 PostgreSQL 和私有对象存储。
-4. 用本轮发布包复测入口与详情刷新、项目保存后重开、版本冲突、图片与 PDF 页下载。切到平台静态预览，核对导航和「预览模式，部署后数据可用」提示。
-5. 通过实际平台重启及重新部署分别核对项目版本和图纸哈希。权限、存储方案和备份恢复确认后，再另行决定接入真实门店图纸。
+1. 用指定部署所有者在站内指南完成 CLI 登录。创建单独的诊断应用，设为仅所有者或指定成员可见，关闭应用广场上架。CLI 新应用默认仅个人可见且未上架，发布后用 `boldsite status --app <应用名>` 核对 `visibility`、`listed` 和所有者角色。
+2. 将 `tools/boldsite/probe/` 的内容作为最小发布目录。先运行 `boldsite deploy --dir <探针目录> --dry-run`，通过后使用 `boldsite deploy --dir <探针目录>` 部署，打开 `/svc/{appId}/`，核对相对探针和测试文件下载。探针只写随机虚构标记并用临时 SQLite 比较两个写连接。记录运行时、实例标识、文件哈希、锁结果及回显版本。
+3. 用相同应用 ID 发布另一个带不同 `release.txt` 的版本。分开验证重启和换包，确认版本切换、实例 ID、持久文件哈希、访问设置。用未授权登录会话和未登录会话分别直测网页、探针 API 和文件 URL，记录拒绝结果。再让平台确认实例上限、滚动发布是否会重叠、`DATA_DIR` 的挂载类型、配额和恢复方法。探针的锁结果只覆盖同实例上的两个连接。
+4. 若证据支持私有访问和单实例 SQLite，发布打包后的工作台试点，用虚构项目和假图纸验证保存、详情刷新、上传下载、未授权 API 和文件访问拦截。使用 SQLite backup 在线备份，恢复到独立目录后核对项目版本和图纸哈希。分别核对平台重启及重新部署后的数据。
+5. 核实 PostgreSQL、私有对象存储和项目级授权。真实门店资料需按看板 QBS-01、QBS-02 另行确认。
+
 
 ## 本地验收（2026-11-24）
 
@@ -48,6 +65,9 @@ SQLite 试点固定一个实例和一个 Uvicorn worker。SQLite 使用 DELETE �
 | 图纸 | PNG 下载字节与上传相同；PDF 浏览器选页上传，保留原名页码，下载为 PNG。契约测试覆盖内容校验、20 MB 上限、ETag 304 和缩略图 | 待验证上传配额与私有访问 |
 | 预览 | 静态代理返回 404 显示预览提示，502 显示服务断开提示；保留导航，无业务请求 | 待验证平台预览区 |
 | 数据留存 | 停启进程和从另一发布目录启动均连接同一本机 `DATA_DIR`，项目版本和两份下载字节一致 | 待验证持久盘、实例限制、重启及重新部署 |
+
+
+2026-11-25 本地复验。模拟代理按平台保留路由拒绝旧路径。Chrome 在新路径通过两种转发、详情刷新、项目保存与版本冲突、PNG 与 PDF 页下载、静态预览与 502 提示。两版标准库探针验证 Windows 本机路径、SQLite 第二写连接被阻塞和换包留存。业务试点的 SQLite backup 副本通过完整性校验，恢复出一个虚构项目和两份哈希匹配的图纸。已构建 CPython 3.12、Linux x86_64 的候选依赖，并核对 Pillow 和 pydantic-core 扩展标签。候选包的运行时匹配及权限、留存、锁和恢复仍待在真实平台单独核验。
 
 ## 后续迁移
 

@@ -1,27 +1,50 @@
 export const isBoldSite = import.meta.env.MODE === 'boldsite'
 export const isProjectPilot = isBoldSite && import.meta.env.VITE_BOLDSITE_PROJECT_PILOT === '1'
 
+const contractPath = '/api/v1/'
+const gatewayPath = '/workbench/v1/'
+
 export function deploymentPath(pathname: string): string {
   return /^\/svc\/[^/]+(?=\/|$)/.exec(pathname)?.[0] ?? ''
 }
 
-export function prefixApiPath(url: string, prefix: string): string {
-  return url.startsWith('/api/v1/') ? prefix + url : url
+/** Preserve the contract path in callers and translate it at the Bold Site boundary. */
+export function mapGatewayPath(url: string, prefix: string): string {
+  if (url.startsWith(gatewayPath)) return prefix + url
+  const contractUrl = url.startsWith(prefix + contractPath) ? url.slice(prefix.length) : url
+  return contractUrl.startsWith(contractPath)
+    ? prefix + gatewayPath + contractUrl.slice(contractPath.length)
+    : url
 }
 
-export const apiPrefix = isBoldSite ? deploymentPath(window.location.pathname) : ''
-export const apiHref = (url: string): string => prefixApiPath(url, apiPrefix)
+export function gatewayRequest(prefix: string): typeof Request {
+  return class extends Request {
+    constructor(input: RequestInfo | URL, init?: RequestInit) {
+      if (typeof input !== 'string') {
+        super(input, init)
+        return
+      }
+      const url = new URL(input)
+      url.pathname = mapGatewayPath(url.pathname, prefix)
+      super(url, init)
+    }
+  }
+}
 
-/** Older API implementations return root-relative download and model URLs. */
-export function prefixFileLinks(value: unknown, prefix: string): unknown {
-  if (Array.isArray(value)) return value.map((item: unknown) => prefixFileLinks(item, prefix))
+export const servicePrefix = isBoldSite ? deploymentPath(window.location.pathname) : ''
+export const apiHref = (url: string): string =>
+  isBoldSite ? mapGatewayPath(url, servicePrefix) : url
+
+/** Fastify returns contract links; FastAPI returns links under the gateway path. */
+export function mapFileLinks(value: unknown, prefix: string): unknown {
+  if (Array.isArray(value)) return value.map((item: unknown) => mapFileLinks(item, prefix))
   if (!value || typeof value !== 'object') return value
   return Object.fromEntries(
     Object.entries(value).map(([key, item]) => [
       key,
       typeof item === 'string' && (key === 'url' || key.endsWith('Url'))
-        ? prefixApiPath(item, prefix)
-        : prefixFileLinks(item, prefix),
+        ? mapGatewayPath(item, prefix)
+        : mapFileLinks(item, prefix),
     ]),
   )
 }
