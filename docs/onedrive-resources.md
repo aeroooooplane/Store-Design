@@ -46,7 +46,7 @@
 
 `资源库` 是指向同一个 OneDrive 文件夹的本机目录连接。不同 worktree 的连接并不提供写入隔离：任何一个窗口修改资源，其他窗口会立即看到。因此普通开发、测试和识别应把生成的 DAE、GLB、PDF、缓存、截图及临时清单写到各自 worktree 外的独立输出目录；不得把共享目录当作转换临时目录。需要修改资源时，将变更和哈希清单交给资源发布负责人统一发布。
 
-使用 `tools/store-archive` 时，显式指定当前代码仓库 `--repo`（或 `STORE_ARCHIVE_REPO`）及独立的 `--out`；不要依赖其 `D:/text demo` 默认路径，也不要把输出设为共享 `资源库`。读取 OneDrive 中的原始 PDF、SKP、展陈规则与模型清单可以通过目录连接完成。
+使用 `tools/store-archive` 时，显式指定当前代码仓库 `--repo`（或 `STORE_ARCHIVE_REPO`）及独立的 `--out`；不要依赖其 `D:/Store-Design` 默认路径，也不要把输出设为共享 `资源库`。读取 OneDrive 中的原始 PDF、SKP、展陈规则与模型清单可以通过目录连接完成。
 
 ## 回退与恢复
 

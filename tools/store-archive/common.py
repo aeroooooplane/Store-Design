@@ -16,7 +16,7 @@ from pathlib import Path
 
 SCRIPT_VERSION = "0.1.0"
 THIS_REPO = Path(__file__).resolve().parents[2]
-DEFAULT_REPO = Path(os.environ.get("STORE_ARCHIVE_REPO", "D:/text demo"))
+DEFAULT_REPO = Path(os.environ.get("STORE_ARCHIVE_REPO", "D:/Store-Design"))
 ARCHIVE_DIR = "资源库/09_门店档案"
 SOURCE_DIR = "资源库/01_各门店原图纸"
 
