@@ -121,14 +121,32 @@ describe('家具点位放置', () => {
     expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
   })
 
-  it('拒绝重叠和超出边界，并保留现有草稿', () => {
-    const start = state([item()])
-    for (const [cx, cz] of [
-      [2, 2],
-      [0.5, 3],
+  it('先落下重叠或越界的家具，保留检查、选中和撤回', () => {
+    const original = item()
+    const start = state([original])
+    for (const [cx, cz, code] of [
+      [2, 2, 'item_overlap'],
+      [0.5, 3, 'item_outside_boundary'],
+      [-0.25, 3, 'item_outside_boundary'],
     ] as const) {
       const candidate = catalogItem(start.layout, furniture, cx, cz)
-      expect(editorReducer(start, { type: 'placeFurniture', item: candidate, space })).toBe(start)
+      const next = editorReducer(start, { type: 'placeFurniture', item: candidate, space })
+      expect(next.layout.items).toEqual([original, candidate])
+      expect(next.selectedId).toBe(candidate.id)
+      expect(next.dirty).toBe(true)
+      expect(validateLayout(space, next.layout)).toContainEqual(expect.objectContaining({ code }))
+      expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
+    }
+  })
+
+  it('保留可保存坐标与层高限制', () => {
+    const start = state([])
+    const candidate = catalogItem(start.layout, furniture, 2, 2)
+    for (const invalid of [
+      { ...candidate, cx: 1000.01 },
+      { ...candidate, h: 3.1 },
+    ]) {
+      expect(editorReducer(start, { type: 'placeFurniture', item: invalid, space })).toBe(start)
     }
   })
 

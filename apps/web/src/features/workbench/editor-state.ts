@@ -752,7 +752,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
     }
     case 'placeFurniture': {
       const item = { ...action.item, id: nextItemId(state.layout, action.item.function) }
-      if (floorPlacementProblem(state.layout, action.space, item)) return state
+      if (floorPlacementProblem(state.layout, action.space, item, 'point')) return state
       return appendItem(state, item)
     }
     case 'undo': {
