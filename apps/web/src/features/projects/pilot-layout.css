@@ -1,0 +1,45 @@
+.pilot-layout {
+  display: grid;
+  gap: 1rem;
+}
+.pilot-layout > .page-header,
+.pilot-layout > .notice,
+.pilot-layout > .create-form {
+  margin-block: 0;
+}
+.pilot-layout-form {
+  flex-wrap: wrap;
+}
+.pilot-layout-form input {
+  width: 8rem;
+}
+.pilot-layout-tools,
+.pilot-layout-tools fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.5rem;
+}
+.pilot-layout-tools fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.pilot-layout-tools label {
+  display: grid;
+  gap: 0.25rem;
+}
+.pilot-layout-tools button[aria-pressed='true'] {
+  border-color: currentColor;
+  font-weight: 650;
+}
+.pilot-layout-drawing {
+  min-width: 0;
+  margin-inline: auto;
+  width: min(100%, 68rem);
+}
+.pilot-layout-drawing > svg {
+  display: block;
+  width: 100%;
+  max-height: 36rem;
+}

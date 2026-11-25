@@ -25,7 +25,7 @@ function PilotUnavailablePage() {
   return (
     <main className="page">
       <p className="notice">
-        本轮试点开放项目和图纸。<Link to="/">返回项目列表</Link>
+        此入口暂未开放。<Link to="/">返回项目列表</Link>
       </p>
     </main>
   )
@@ -34,6 +34,16 @@ function PilotUnavailablePage() {
 const pages: RouteObject[] = [
   { path: '/', element: <ProjectListPage /> },
   { path: '/projects/:projectId', element: <ProjectPage /> },
+  ...(isProjectPilot
+    ? [
+        {
+          path: '/projects/:projectId/design',
+          lazy: async () => ({
+            Component: (await import('../features/projects/PilotLayoutPage.tsx')).PilotLayoutPage,
+          }),
+        },
+      ]
+    : []),
   { path: '/settings', element: isProjectPilot ? <PilotUnavailablePage /> : <SettingsPage /> },
   { path: '/display', element: isProjectPilot ? <PilotUnavailablePage /> : <DisplayTasksPage /> },
   {
