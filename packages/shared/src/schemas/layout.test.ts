@@ -106,6 +106,23 @@ describe('LayoutSchema', () => {
 })
 
 describe('validateLayout', () => {
+  it.each(['floor', 'wall', 'embedded', 'ceiling'] as const)(
+    '所有安装方式 %s 统一适用一米外扩范围',
+    (mount) => {
+      const room = rectangleSpace(6, 4, 3)
+      const check = (cx: number) =>
+        validateLayout(
+          room,
+          LayoutSchema.parse({
+            schemaVersion: 3,
+            items: [{ ...item('a', cx, 2, 1, 0.2), mount }],
+          }),
+        ).some((issue) => issue.code === 'item_outside_boundary')
+      expect(check(6.5)).toBe(false)
+      expect(check(6.51)).toBe(true)
+    },
+  )
+
   it('accepts props flush with walls and with each other', () => {
     expect(codes(layout([item('a', 0.9, 0.25), item('b', 2.7, 0.25)]))).toEqual([])
   })
@@ -114,16 +131,13 @@ describe('validateLayout', () => {
     expect(codes(layout([item('a', 0.9, 0.25), item('b', 2, 0.25)]))).toEqual(['item_overlap'])
   })
 
-  it('reports a prop bridging the concave slot as outside the boundary', () => {
-    expect(codes(layout([item('a', 3, 2.5, 3, 0.5)]))).toEqual(['item_outside_boundary'])
+  it('allows a prop bridging a recess whose middle is within one metre of the boundary', () => {
+    expect(codes(layout([item('a', 3, 2.5, 3, 0.5)]))).toEqual([])
   })
 
   it('reports props on columns, on entrances and taller than the ceiling', () => {
     expect(codes(layout([item('a', 5.2, 2.2, 0.6, 0.6)]))).toEqual(['item_overlaps_obstacle'])
-    expect(codes(layout([item('a', 1, 3.9, 1, 0.5)]))).toEqual([
-      'item_outside_boundary',
-      'item_blocks_entrance',
-    ])
+    expect(codes(layout([item('a', 1, 3.9, 1, 0.5)]))).toEqual(['item_blocks_entrance'])
     expect(codes(layout([item('a', 1, 0.25, 1.8, 0.5, 3.2)]))).toEqual(['item_too_tall'])
   })
 
@@ -138,10 +152,7 @@ describe('validateLayout', () => {
     // Across the chord z = 7 but inside the arc: fine.
     expect(check(layout([item('a', 5, 7.2, 1.8, 0.5)]))).toEqual([])
     // Across the arc itself: outside the shop and over the entrance.
-    expect(check(layout([item('a', 5, 7.9, 1, 0.5)]))).toEqual([
-      'item_outside_boundary',
-      'item_blocks_entrance',
-    ])
+    expect(check(layout([item('a', 5, 7.9, 1, 0.5)]))).toEqual(['item_blocks_entrance'])
   })
 
   it('allows a prop standing against the entrance edge from inside', () => {
@@ -325,9 +336,10 @@ describe('props at any angle', () => {
   const check = (items: object[]) => codes({ schemaVersion: 3, items } as LayoutInput)
 
   it('checks walls by the turned outline, not its bounds', () => {
-    // A 0.4 × 3 board in the 2 m wide left arm: fits at 30°, its far corner leaves at 40°.
+    // Both original positions fit the new allowance. Moving further out still rejects the corner.
     expect(check([at('a', 1, 2.2, 0.4, 3, 30)])).toEqual([])
-    expect(check([at('a', 1, 2.2, 0.4, 3, 40)])).toEqual(['item_outside_boundary'])
+    expect(check([at('a', 1, 2.2, 0.4, 3, 40)])).toEqual([])
+    expect(check([at('a', -0.8, 2.2, 0.4, 3, 40)])).toEqual(['item_outside_boundary'])
   })
 
   it('lets tilted boards stand side by side where their bounds overlap', () => {
@@ -341,10 +353,7 @@ describe('props at any angle', () => {
 
   it('finds a tilted prop over the entrance', () => {
     expect(check([at('a', 1, 3.5, 1.8, 0.2, 20)])).toEqual([])
-    expect(check([at('a', 1, 3.5, 1.8, 0.2, 30)])).toEqual([
-      'item_outside_boundary',
-      'item_blocks_entrance',
-    ])
+    expect(check([at('a', 1, 3.5, 1.8, 0.2, 30)])).toEqual(['item_blocks_entrance'])
   })
 
   it('stores the size of the nearest quarter turn and turns the corners by the rest', () => {

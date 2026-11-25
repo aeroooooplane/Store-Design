@@ -490,7 +490,7 @@ describe('validate（当前行为）', () => {
     const plan = await planOf(project.id, space.id, [
       island('a', 2, 2),
       island('b', 2.5, 2),
-      island('c', 7.9, 3),
+      island('c', 8.6, 3),
     ])
     const outcome = await run(project.id, plan.id, 'validate')
     expect(outcome.nodeId).toBeUndefined()
@@ -500,7 +500,7 @@ describe('validate（当前行为）', () => {
       itemIds: string[]
     }[]
     expect(issues).toEqual([
-      { severity: 'error', message: '中岛桌 c超出空间边界', itemIds: ['c'] },
+      { severity: 'error', message: '中岛桌 c超出空间边界外扩1米的允许范围', itemIds: ['c'] },
       { severity: 'error', message: '中岛桌 a与中岛桌 b重叠', itemIds: ['a', 'b'] },
     ])
     expect(await tree(project.id)).toHaveLength(2)

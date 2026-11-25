@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { SpaceSchema, rectangleSpace } from '@store/shared'
+import type { Space } from '@store/shared'
 import { magnetSnap } from './snap.ts'
 
 const room = rectangleSpace(6, 4, 3)
@@ -36,6 +37,17 @@ describe('空心隔板外表面吸附', () => {
 })
 
 describe('magnetSnap at any angle', () => {
+  it('通用磁吸不把整边或局部入口重新当作墙，真实墙段仍可吸附', () => {
+    const prop = { id: 'a', w: 1, d: 0.5 }
+    expect(magnetSnap(prop, 3, 4.3, [], room).snappedZ).toBe(false)
+    const partial: Space = {
+      ...room,
+      entrances: [{ a: [2, 4], b: [4, 4], kind: 'main' }],
+    }
+    expect(magnetSnap(prop, 3, 4.3, [], partial).snappedZ).toBe(false)
+    expect(magnetSnap(prop, 1, 4.3, [], partial)).toMatchObject({ cz: 4.25, snappedZ: true })
+  })
+
   it('still sticks an upright prop to the wall and its neighbours', () => {
     const prop = { id: 'a', w: 1, d: 0.5 }
     expect(magnetSnap(prop, 2, 0.3, [], room)).toEqual({

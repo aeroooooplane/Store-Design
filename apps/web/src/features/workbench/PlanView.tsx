@@ -2,6 +2,7 @@ import { useId, useMemo, useState } from 'react'
 import { createPortal } from 'react-dom'
 import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
+  MODEL_BOUNDARY_MARGIN_M,
   WALL_THICKNESS_M,
   advertisingScreenName,
   isWallArt,
@@ -12,8 +13,11 @@ import {
   itemTilt,
   mToMm,
   mainEntrance,
+  modelBox,
   mountedWall,
   embeddedWall,
+  obbCorners,
+  placedBox,
   polygonArea,
   rotationHandle,
   sceneFrame,
@@ -380,7 +384,22 @@ export function PlanView({
       radii: marks,
     }
   }, [compact, space, dimOffset, fontSize])
-  const pad = compact ? WALL_THICKNESS_M + 0.15 : dimOffset + fontSize * 2.2
+  // Editing reserves the whole legal area before adding the first prop, so crossing a wall
+  // cannot move the pointer's world coordinates. Static plans only expand for exterior props.
+  const exteriorModels = layout?.items.some((item) =>
+    obbCorners(
+      placedBox({
+        ...item,
+        ...modelBox(
+          item,
+          !item.placeholder && item.assetId ? assets?.get(item.assetId) : undefined,
+        ),
+      }),
+    ).some(([x, z]) => x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ),
+  )
+  const modelPad =
+    onItemPointerDown || exteriorModels ? MODEL_BOUNDARY_MARGIN_M + fontSize * 2.2 : 0
+  const pad = Math.max(compact ? WALL_THICKNESS_M + 0.15 : dimOffset + fontSize * 2.2, modelPad)
   const bottomPad = compact ? pad : pad + fontSize * 2
   // Room beyond `pad` for chains farther out than a straight edge's (overall sizes, arcs).
   const extra = useMemo(() => {

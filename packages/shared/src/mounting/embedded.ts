@@ -25,7 +25,7 @@ function facing(front: FrontAxis | null, rotation: LayoutItem['rotation']) {
 }
 
 /**
- * Dragging a built-in piece: like a wall piece it turns its front into the shop, but it sinks
+ * Dragging a built-in piece: its front faces the chosen side of the wall, and the body sinks
  * into the wall so its front is flush with the wall face. Null when no wall is near.
  */
 export function embeddedSnap(

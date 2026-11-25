@@ -135,6 +135,48 @@ describe('PlanView props at any angle', () => {
     return container.querySelector('svg') as SVGSVGElement
   }
 
+  it.each([false, true])('keeps the full legal exterior area visible (compact: %s)', (compact) => {
+    // A small prop at any of the four limits must remain visible, including when rotated.
+    for (const [cx, cz, rotation] of [
+      [-0.8, 2, 0],
+      [6.8, 2, 0],
+      [3, -0.7, 45],
+      [3, 4.7, 45],
+    ]) {
+      const svg = draw(prop({ cx, cz, rotation, w: 0.4, d: 0.4 }), { compact })
+      const [x = 0, z = 0, w = 0, d = 0] = (svg.getAttribute('viewBox') ?? '')
+        .split(' ')
+        .map(Number)
+      expect(x).toBeLessThan(-1)
+      expect(z).toBeLessThan(-1)
+      expect(x + w).toBeGreaterThan(7)
+      expect(z + d).toBeGreaterThan(5)
+      expect(svg.querySelector('[data-item-id="a"]')).not.toBeNull()
+      cleanup()
+    }
+  })
+
+  it('keeps the editor viewport stable when adding and moving a prop beyond the wall', () => {
+    const space = rectangleSpace(6, 4, 3)
+    const layout: Layout = { schemaVersion: 3, items: [], planning: null }
+    const onItemPointerDown = vi.fn()
+    const { container, rerender } = render(
+      <PlanView space={space} layout={layout} title="平面" onItemPointerDown={onItemPointerDown} />,
+    )
+    const before = container.querySelector('svg')?.getAttribute('viewBox')
+    for (const cx of [3, 6.8]) {
+      rerender(
+        <PlanView
+          space={space}
+          layout={{ ...layout, items: [prop({ cx, w: 0.4, d: 0.4 })] }}
+          title="平面"
+          onItemPointerDown={onItemPointerDown}
+        />,
+      )
+      expect(container.querySelector('svg')?.getAttribute('viewBox')).toBe(before)
+    }
+  })
+
   it('turns the block and its frame by the tilt off the nearest quarter turn', () => {
     const tilted = draw(prop({ rotation: 100, w: 1.8, d: 1 }))
     const frame = tilted.querySelector('.plan-item-frame')
