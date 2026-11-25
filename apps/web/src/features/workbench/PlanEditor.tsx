@@ -184,7 +184,7 @@ export function PlanEditor({
   const select = useCallback((id: string | null) => dispatch({ type: 'select', id }), [])
   const itemsRef = useRef(state.layout.items)
   itemsRef.current = state.layout.items
-  /** The model's front for an item id (a wall piece turns it into the shop). */
+  /** The model's native front for an item id. */
   const frontOf = useCallback(
     (id: string) => {
       const assetId = itemsRef.current.find((i) => i.id === id)?.assetId
@@ -194,7 +194,8 @@ export function PlanEditor({
   )
   // 3D drags: one undo step per drag, magnetic snapping unless Alt is held.
   const move = useCallback(
-    (id: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) =>
+    (id: string, cx: number, cz: number, gesture: { group: string; snap: boolean }) => {
+      const assetId = itemsRef.current.find((item) => item.id === id)?.assetId
       dispatch({
         type: 'move',
         id,
@@ -204,8 +205,10 @@ export function PlanEditor({
         snapTo: gesture.snap ? space : null,
         dragBoundary: space.boundary,
         front: frontOf(id),
-      }),
-    [space, frontOf],
+        asset: assetId ? assetMap.get(assetId) : undefined,
+      })
+    },
+    [space, frontOf, assetMap],
   )
   // 3D corner drags of a LOGO: one undo step per drag, the scale and place worked out there.
   const resize = useCallback(
@@ -363,20 +366,22 @@ export function PlanEditor({
       return
     }
     const item = { ...placement.item, cx: snap(point[0]), cz: snap(point[1]) }
-    const error = floorPlacementProblem(state.layout, space, item, 'point')
+    const asset = item.assetId ? assetMap.get(item.assetId) : undefined
+    const error = floorPlacementProblem(state.layout, space, item, 'point', asset)
     if (error) {
       setPlacement({ item: placement.item, error })
       return
     }
-    dispatch({ type: 'placeFurniture', item, space })
+    dispatch({ type: 'placeFurniture', item, space, asset })
     setPlacement(null)
   }
 
   function pasteFurniture(item: LayoutItem) {
     const copy = { ...item, locked: false }
-    const nearby = nearbyFurniture(state.layout, space, copy)
+    const asset = item.assetId ? assetMap.get(item.assetId) : undefined
+    const nearby = nearbyFurniture(state.layout, space, copy, asset)
     if (nearby) {
-      dispatch({ type: 'placeFurniture', item: nearby, space })
+      dispatch({ type: 'placeFurniture', item: nearby, space, asset })
       canvasRef.current?.focus({ preventScroll: true })
     } else preparePlacement(copy)
   }

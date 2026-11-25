@@ -5,7 +5,8 @@ import {
   closestPointOnSegment,
   distance,
   edges,
-  locatePoint,
+  modelWithinBoundary,
+  modelBox,
   itemElevation,
   portraitScreenFootprint,
   isWallArt,
@@ -47,7 +48,6 @@ import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
 export const SNAP_M = 0.01
-const MAX_DRAG_OUTSIDE_M = 1
 /** Undo steps kept per editing session. */
 export const HISTORY_LIMIT = 100
 
@@ -94,7 +94,7 @@ export type EditorAction =
   /**
    * `group` joins the moves of one drag into one undo step; `snapTo` turns on magnetic
    * snapping to the walls of this space and to other props. A wall piece snaps onto the wall
-   * instead, turning its `front` (the model's) into the shop. Pointer drags supply the
+   * instead, turning its `front` (the model's) away from the chosen wall face. Pointer drags supply the
    * store outline separately so Alt only disables magnetic snapping.
    */
   | {
@@ -106,6 +106,7 @@ export type EditorAction =
       snapTo?: Space | null | undefined
       dragBoundary?: Polygon | undefined
       front?: FrontAxis | null | undefined
+      asset?: Asset | undefined
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
   | { type: 'rotate'; id: string; asset?: Asset | undefined; by?: 90 | -90 | undefined }
@@ -141,7 +142,7 @@ export type EditorAction =
     }
   /** A wall or ceiling piece added with `space` goes onto the nearest wall at a default height. */
   | { type: 'add'; asset: Asset; cx: number; cz: number; space?: Space | undefined }
-  | { type: 'placeFurniture'; item: LayoutItem; space: Space }
+  | { type: 'placeFurniture'; item: LayoutItem; space: Space; asset?: Asset | undefined }
   /** 贴墙 ⇄ 内嵌 from the properties panel: the piece moves onto or into the nearest wall. */
   | {
       type: 'setMount'
@@ -356,13 +357,27 @@ export function nextItemId(layout: Layout, fn: string): string {
 
 type ModelPosition = Pick<LayoutItem, 'cx' | 'cz'>
 
-/** Keep a model centre within one metre of the actual shop outline. */
-function limitDrag(position: ModelPosition, boundary: Polygon | undefined): ModelPosition {
+/** Dragging and validation share the whole-footprint, one-metre allowance. */
+function limitDrag<T extends ModelPosition>(
+  position: T,
+  item: LayoutItem,
+  boundary: Polygon | undefined,
+  asset: Asset | undefined,
+): T {
   const first = boundary?.[0]
   if (!boundary || !first) return position
+  const within = (point: ModelPosition) => {
+    const candidate = { ...item, ...position, ...point }
+    return modelWithinBoundary(
+      {
+        ...candidate,
+        ...modelBox(candidate, item.placeholder ? undefined : asset),
+      },
+      boundary,
+    )
+  }
+  if (within(position)) return position
   const point: Point = [position.cx, position.cz]
-  if (locatePoint(point, boundary) !== 'outside') return position
-
   let closest = first
   let shortest = distance(point, first)
   for (const [a, b] of edges(boundary)) {
@@ -373,17 +388,34 @@ function limitDrag(position: ModelPosition, boundary: Polygon | undefined): Mode
       shortest = gap
     }
   }
-  if (shortest <= MAX_DRAG_OUTSIDE_M) return position
-
-  const atDistance = (limit: number): ModelPosition => ({
-    cx: roundM(closest[0] + ((point[0] - closest[0]) / shortest) * limit),
-    cz: roundM(closest[1] + ((point[1] - closest[1]) / shortest) * limit),
+  let start = { cx: closest[0], cz: closest[1] }
+  if (!within(start)) start = { cx: item.cx, cz: item.cz }
+  if (!within(start)) {
+    // Old layouts may already be outside; use an interior anchor when one fits the model.
+    const [cx, cz] = interiorPoint(boundary, { prefer: point })
+    start = { cx, cz }
+    if (!within(start)) return { ...position, cx: item.cx, cz: item.cz }
+  }
+  const dx = position.cx - start.cx
+  const dz = position.cz - start.cz
+  const at = (t: number): ModelPosition => ({
+    cx: start.cx + dx * t,
+    cz: start.cz + dz * t,
   })
-  const atLimit = atDistance(MAX_DRAG_OUTSIDE_M)
-  // On oblique edges and corners, rounding to millimetres can round out of the range.
-  return distance([atLimit.cx, atLimit.cz], closest) <= MAX_DRAG_OUTSIDE_M
-    ? atLimit
-    : atDistance(MAX_DRAG_OUTSIDE_M - EPSILON_M)
+  let low = 0
+  let high = 1
+  for (let step = 0; step < 24; step++) {
+    const middle = (low + high) / 2
+    if (within(at(middle))) low = middle
+    else high = middle
+  }
+  const rounded = (t: number) => {
+    const p = at(t)
+    return { cx: roundM(p.cx), cz: roundM(p.cz) }
+  }
+  let end = rounded(low)
+  if (!within(end)) end = rounded(Math.max(0, low - EPSILON_M / Math.hypot(dx, dz)))
+  return { ...position, ...(within(end) ? end : start) }
 }
 
 export function catalogItem(layout: Layout, asset: Asset, cx: number, cz: number): LayoutItem {
@@ -426,7 +458,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           let { cx, cz } = action
           if (action.dragBoundary && (!Number.isFinite(cx) || !Number.isFinite(cz))) return item
           const limitPosition = (position: ModelPosition) =>
-            limitDrag(position, action.dragBoundary)
+            limitDrag(position, item, action.dragBoundary, action.asset)
           if (isDisplayPanel(item)) {
             if (cx === item.cx && cz === item.cz) return item
             const placed =
@@ -752,7 +784,8 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
     }
     case 'placeFurniture': {
       const item = { ...action.item, id: nextItemId(state.layout, action.item.function) }
-      if (floorPlacementProblem(state.layout, action.space, item, 'point')) return state
+      if (floorPlacementProblem(state.layout, action.space, item, 'point', action.asset))
+        return state
       return appendItem(state, item)
     }
     case 'undo': {

@@ -3,6 +3,9 @@ import {
   distanceToBoundary,
   LayoutSchema,
   locatePoint,
+  modelWithinBoundary,
+  obbCorners,
+  placedBox,
   rectangleSpace,
   validateLayout,
 } from '@store/shared'
@@ -121,22 +124,31 @@ describe('家具点位放置', () => {
     expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
   })
 
-  it('先落下重叠或越界的家具，保留检查、选中和撤回', () => {
+  it('允许先落下重叠家具及一米内场外家具，超过一米则拦截', () => {
     const original = item()
     const start = state([original])
     for (const [cx, cz, code] of [
       [2, 2, 'item_overlap'],
-      [0.5, 3, 'item_outside_boundary'],
-      [-0.25, 3, 'item_outside_boundary'],
+      [0.5, 3, null],
+      [-0.1, 3, null],
     ] as const) {
       const candidate = catalogItem(start.layout, furniture, cx, cz)
       const next = editorReducer(start, { type: 'placeFurniture', item: candidate, space })
       expect(next.layout.items).toEqual([original, candidate])
       expect(next.selectedId).toBe(candidate.id)
       expect(next.dirty).toBe(true)
-      expect(validateLayout(space, next.layout)).toContainEqual(expect.objectContaining({ code }))
+      expect(validateLayout(space, next.layout).some((issue) => issue.code === code)).toBe(
+        Boolean(code),
+      )
       expect(editorReducer(next, { type: 'undo' }).layout).toEqual(start.layout)
     }
+    expect(
+      editorReducer(start, {
+        type: 'placeFurniture',
+        item: catalogItem(start.layout, furniture, -0.25, 3),
+        space,
+      }),
+    ).toBe(start)
   })
 
   it('保留可保存坐标与层高限制', () => {
@@ -172,7 +184,10 @@ describe('家具点位放置', () => {
 
     const compact = rectangleSpace(2, 1.2, 3)
     const centred = item({ cx: 1, cz: 0.6 })
-    expect(nearbyFurniture(state([centred]).layout, compact, centred)).toBeNull()
+    expect(nearbyFurniture(state([centred]).layout, compact, centred)).toMatchObject({
+      cx: 1,
+      cz: 1.7,
+    })
   })
 })
 
@@ -496,22 +511,37 @@ describe('模型拖动在门店边界外一米处截止', () => {
     dragBoundary: space.boundary,
   }
 
+  it('真实模型包含偏移凳子时，拖动按完整模型而非桌体截止', () => {
+    const fullModel = makeAsset({ extent: { w: 2.8, d: 1, cx: 0.4, cz: 0 } })
+    const next = editorReducer(start, { ...drag, cx: 8.5, cz: 3, asset: fullModel })
+    expect(next.layout.items[0]!.cx).toBeCloseTo(7.2, 2)
+    expect(
+      validateLayout(space, next.layout, new Map([[fullModel.id, fullModel]])).some(
+        (issue) => issue.code === 'item_outside_boundary',
+      ),
+    ).toBe(false)
+  })
+
   it.each([space, null])('磁吸开启或按住 Alt 都限制拖动，整次拖动只撤销一步', (snapTo) => {
-    const insideMargin = editorReducer(start, { ...drag, snapTo, cx: 8.5, cz: 3 })
-    expect(insideMargin.layout.items[0]).toMatchObject({ cx: 8.5, cz: 3 })
+    const insideMargin = editorReducer(start, { ...drag, snapTo, cx: 8.05, cz: 3 })
+    expect(insideMargin.layout.items[0]).toMatchObject({ cx: 8.05, cz: 3 })
     const atLimit = editorReducer(insideMargin, { ...drag, snapTo, cx: 40, cz: 3 })
-    expect(atLimit.layout.items[0]).toMatchObject({ cx: 9, cz: 3 })
+    expect(atLimit.layout.items[0]).toMatchObject({ cx: 8.1, cz: 3 })
     expect(editorReducer(atLimit, { ...drag, snapTo, cx: 100, cz: 3 })).toBe(atLimit)
     expect(editorReducer(atLimit, { type: 'undo' }).layout).toEqual(start.layout)
   })
 
   it('斜向拖过角点时限制直线距离，毫米取整后仍在范围内', () => {
-    const next = editorReducer(start, { ...drag, cx: 100, cz: 44 })
+    const next = editorReducer(state([item({ w: 0.2, d: 0.2 })]), { ...drag, cx: 100, cz: 44 })
     const { cx, cz } = next.layout.items[0]!
     expect(cx).toBeGreaterThan(8)
     expect(cz).toBeGreaterThan(6)
-    const gap = distanceToBoundary([cx, cz], space.boundary)
-    expect(gap).toBeLessThanOrEqual(1)
+    const gap = Math.max(
+      ...obbCorners(placedBox(next.layout.items[0]!)).map((p) =>
+        distanceToBoundary(p, space.boundary),
+      ),
+    )
+    expect(gap).toBeLessThanOrEqual(1.001)
     expect(gap).toBeGreaterThan(0.998)
   })
 
@@ -531,7 +561,8 @@ describe('模型拖动在门店边界外一米处截止', () => {
       cx: 4.25,
       cz: 6,
     })
-    expect(next.layout.items[0]).toMatchObject({ cx: 4, cz: 6 })
+    expect(next.layout.items[0]).toMatchObject({ cx: 3.1, cz: 6 })
+    expect(modelWithinBoundary(next.layout.items[0]!, drag.dragBoundary)).toBe(true)
   })
 
   it('保留旧项目的场外摆放及属性面板的坐标编辑', () => {

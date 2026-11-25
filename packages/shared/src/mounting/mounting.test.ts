@@ -7,6 +7,7 @@ import {
   DEFAULT_WALL_ELEVATION_M,
   defaultElevation,
   itemsCollide,
+  displayPanelSnap,
   mountedWall,
   wallFaces,
   wallMountSnap,
@@ -133,13 +134,17 @@ describe('itemsCollide', () => {
 })
 
 describe('wallFaces', () => {
-  it('finds the four walls of a rectangle with their inward directions', () => {
+  it('finds both faces of all four walls, with normals away from the solid wall', () => {
     const faces = wallFaces(space)
     expect(faces.map((f) => [f.along, f.inward[0], f.inward[1]])).toEqual([
       ['x', 0, 1],
-      ['z', -1, 0],
       ['x', 0, -1],
+      ['z', -1, 0],
       ['z', 1, 0],
+      ['x', 0, -1],
+      ['x', 0, 1],
+      ['z', 1, 0],
+      ['z', -1, 0],
     ])
   })
 
@@ -153,11 +158,35 @@ describe('wallFaces', () => {
       [5, 4],
       [0, 4],
     ]
-    expect(wallFaces(slanted)).toHaveLength(3)
+    expect(wallFaces(slanted)).toHaveLength(6)
   })
 })
 
 describe('wallMountSnap', () => {
+  it('外墙的背部贴在实际外表面，正面朝店外，校验认可', () => {
+    const placed = wallMountSnap(logo(), 3, -0.25, space, '+Z')!
+    expect(placed).toEqual({ cx: 3, cz: -0.185, rotation: 180, w: 3.453, d: 0.05 })
+    const piece = logo({ ...placed, elevation: 1.2 })
+    expect(mountedWall(piece, space)?.inward).toEqual([0, -1])
+    expect(validateLayout(space, LayoutSchema.parse({ schemaVersion: 3, items: [piece] }))).toEqual(
+      [],
+    )
+  })
+
+  it.each([
+    [0.08, 0.025, 0, 'wall'],
+    [-0.02, -0.025, 0, 'embedded'],
+    [-0.24, -0.185, 180, 'wall'],
+    [-0.14, -0.135, 180, 'embedded'],
+  ])('屏幕在 z=%s 时吸附到对应侧，内嵌时机身朝墙内', (z, target, rotation, mount) => {
+    const panel = logo({ function: 'screen', w: 1.69, d: 0.05, elevation: 1.2 })
+    expect(displayPanelSnap(panel, 3, z, space, '+Z')).toMatchObject({
+      cz: target,
+      rotation,
+      mount,
+    })
+  })
+
   it('puts the back of a piece onto the back wall, front into the shop', () => {
     const placed = wallMountSnap(logo(), 3, 0.2, space, '+Z')
     expect(placed).toEqual({ cx: 3, cz: 0.025, rotation: 0, w: 3.453, d: 0.05 })

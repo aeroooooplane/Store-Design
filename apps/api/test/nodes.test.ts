@@ -35,6 +35,40 @@ const post = (projectId: string, payload: object) => postNode(t, projectId, payl
 const spaceNode = (projectId: string) => createSpace(t, projectId)
 
 describe('history nodes', () => {
+  it('边缘外扩一米内可开始渲染，超过一米的完整模型继续拦截', async () => {
+    const project = await newProject()
+    const root = await spaceNode(project.id)
+    const placed = layout(island('a', 8.5, 2))
+    const plan = await post(project.id, {
+      parentId: root.id,
+      kind: 'plan',
+      name: '场外一米方案',
+      layout: placed,
+    })
+    expect(plan.statusCode).toBe(201)
+    expect(plan.json<NodeCreated>().issues).toEqual([])
+    const parentId = plan.json<NodeCreated>().node.id
+    const render = await post(project.id, {
+      parentId,
+      kind: 'render',
+      name: '允许出图',
+      siStyle: 'SI1.0',
+      layout: placed,
+    })
+    expect(render.statusCode).toBe(201)
+    const refused = await post(project.id, {
+      parentId,
+      kind: 'render',
+      name: '超限出图',
+      siStyle: 'SI1.0',
+      layout: layout(island('a', 8.51, 2)),
+    })
+    expect(refused.statusCode).toBe(400)
+    expect(refused.json().error.details).toContainEqual(
+      expect.objectContaining({ code: 'item_outside_boundary' }),
+    )
+  })
+
   it('builds a tree of space and layout nodes and serves full nodes on demand', async () => {
     const project = await newProject()
     const root = await spaceNode(project.id)
@@ -316,7 +350,7 @@ describe('drafts', () => {
     const outside = await t.app.inject({
       method: 'PUT',
       url: `/api/v1/projects/${project.id}/draft`,
-      payload: { baseNodeId: root.id, layout: layout(island('a', 7.9, 2)) },
+      payload: { baseNodeId: root.id, layout: layout(island('a', 8.6, 2)) },
     })
     expect(outside.json().issues.map((i: { code: string }) => i.code)).toEqual([
       'item_outside_boundary',

@@ -26,6 +26,7 @@ import { fixtureIssues } from '../fixtures/index.ts'
 import { embeddedWall } from '../mounting/embedded.ts'
 import { itemMount, itemsCollide, mountedWall, verticalRange } from '../mounting/index.ts'
 import { InstallationSchema } from './asset.ts'
+import { modelWithinBoundary } from '../placement/index.ts'
 import type { AssetExtent } from './asset.ts'
 import { CoordinateSchema, NameSchema, SizeSchema } from './common.ts'
 import { openingPieces } from './space.ts'
@@ -384,7 +385,7 @@ export function checkAssetFit(
 }
 
 /**
- * Hard constraints: inside the boundary, clear of obstacles, entrances and each other, and below
+ * Hard constraints: within one metre of the boundary, clear of obstacles, entrances and each other, and below
  * the ceiling; a wall piece off the wall is only a warning. Wall and ceiling pieces hang above
  * the floor, so they do not block entrances or clash with floor props (see itemsCollide).
  * Aisle widths and spacing are soft rules handled by the planner.
@@ -402,11 +403,12 @@ export function validateLayout(
     const mount = itemMount(item)
     // A built-in piece's body is inside the wall, beyond the boundary, clear of the floor.
     const builtIn = mount === 'embedded'
-    if (!builtIn && !obbInsidePolygon(box, space.boundary)) {
+    const asset = item.assetId && !item.placeholder ? assets?.get(item.assetId) : undefined
+    if (!modelWithinBoundary({ ...item, ...modelBox(item, asset) }, space.boundary)) {
       issues.push({
         code: 'item_outside_boundary',
         severity: 'error',
-        message: `${item.name}超出空间边界`,
+        message: `${item.name}超出空间边界外扩1米的允许范围`,
         itemIds: [item.id],
       })
     }

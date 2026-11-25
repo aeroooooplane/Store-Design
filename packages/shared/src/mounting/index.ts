@@ -9,6 +9,7 @@ import type { Fixture, LayoutItem, Rotation } from '../schemas/layout.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { EPSILON_M, roundM } from '../units.ts'
+import { WALL_THICKNESS_M } from '../scene/walls.ts'
 
 /**
  * Wall and ceiling pieces (墙面 LOGO, 画面, 吊挂 LOGO). They are placed like props, by footprint
@@ -78,7 +79,7 @@ export function itemsCollide(a: Colliding, b: Colliding): boolean {
 
 /**
  * A straight stretch of wall a piece can hang on: a boundary edge within STRAIGHT_WALL_DEG of
- * an axis. `along` is the axis it runs along; `inward` points into the shop.
+ * an axis. `along` is the axis it runs along; `inward` points away from the wall's solid body.
  */
 export interface WallFace {
   edge: number
@@ -99,7 +100,7 @@ type FaceItem = Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h'> &
 
 const coord = (p: Point, axis: 'x' | 'z') => (axis === 'x' ? p[0] : p[1])
 
-/** The straight wall faces of a space, open edges marked. */
+/** Both faces of perimeter walls and partitions, with openings marked. */
 export function wallFaces(
   space: Pick<Space, 'boundary' | 'openEdges'>,
   fixtures: readonly Fixture[] = [],
@@ -126,7 +127,7 @@ export function wallFaces(
     const probe: Point = [mid[0] + normal[0] * 0.01, mid[1] + normal[1] * 0.01]
     const inward: PlanDirection =
       locatePoint(probe, space.boundary) === 'inside' ? normal : [-normal[0] + 0, -normal[1] + 0]
-    faces.push({
+    const face: WallFace = {
       edge,
       a,
       b,
@@ -136,6 +137,12 @@ export function wallFaces(
         const [s, t] = [coord(p, along), coord(q, along)]
         return [Math.min(s, t), Math.max(s, t)]
       }),
+    }
+    faces.push(face, {
+      ...face,
+      a: [a[0] - inward[0] * WALL_THICKNESS_M, a[1] - inward[1] * WALL_THICKNESS_M],
+      b: [b[0] - inward[0] * WALL_THICKNESS_M, b[1] - inward[1] * WALL_THICKNESS_M],
+      inward: [-inward[0] + 0, -inward[1] + 0],
     })
   })
   for (const f of fixtures) {
@@ -332,7 +339,7 @@ export function displayPanelSnap(
 
 /**
  * Dragging a wall piece: when the dragged centre comes within `reach` of a wall face, the piece
- * turns its front (the model's `front`, +Z when unknown) into the shop and its back lands on
+ * turns its front (the model's `front`, +Z when unknown) away from the solid wall and its back lands on
  * the wall. Null when no wall is near.
  */
 export function wallMountSnap(

@@ -29,7 +29,7 @@ const rectOf = (a: Point, b: Point): Rect => ({
 
 /**
  * Dragging props and partitions on the plan: one undo step per drag, magnetic snapping unless
- * Alt is held. `frontOf` gives a model's front, which a wall piece turns into the shop. With
+ * Alt is held. `frontOf` gives a model's front, which turns away from the chosen wall face. With
  * `drawing` on (画空心隔板), a drag draws a partition instead; `onDrawn` ends the mode. A LOGO's
  * end grip resizes it uniformly, the other end staying put (`assetOf` gives its model).
  */
@@ -49,6 +49,7 @@ export function usePlanDrag(
     dz: number
     group: string
     front: FrontAxis | null
+    asset: Asset | undefined
   } | null>(null)
   /** An end grip being dragged: the LOGO as it was when the drag began, so its other end stays. */
   const resize = useRef<{
@@ -77,6 +78,7 @@ export function usePlanDrag(
       dz: world[1] - item.cz,
       group: `drag:${item.id}:${event.timeStamp}`,
       front: frontOf(item),
+      asset: assetOf?.(item),
     }
     svgRef.current?.setPointerCapture(event.pointerId)
   }
@@ -93,6 +95,7 @@ export function usePlanDrag(
       dz: world[1] - fixture.cz,
       group: `drag:${fixture.id}:${event.timeStamp}`,
       front: null,
+      asset: undefined,
     }
     svgRef.current?.setPointerCapture(event.pointerId)
   }
@@ -197,6 +200,7 @@ export function usePlanDrag(
       snapTo,
       dragBoundary: space.boundary,
       front: drag.current.front,
+      asset: drag.current.asset,
     })
   }
 

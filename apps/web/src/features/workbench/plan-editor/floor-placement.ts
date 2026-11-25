@@ -28,18 +28,20 @@ export function floorPlacementProblem(
   space: Space,
   item: LayoutItem,
   mode: 'point' | 'nearby',
+  asset?: Asset,
 ): string | null {
   if (layout.items.length >= MAX_LAYOUT_ITEMS)
     return `本方案已达到 ${MAX_LAYOUT_ITEMS} 件道具上限。`
   if (!PointSchema.safeParse([item.cx, item.cz]).success) return '请在门店附近选择位置。'
-  const issue = validateLayout(space, { ...layout, items: [item] }).find(
+  const issue = validateLayout(
+    space,
+    { ...layout, items: [item] },
+    asset ? new Map([[asset.id, asset]]) : undefined,
+  ).find(
     ({ severity, itemIds, code }) =>
       severity === 'error' &&
       itemIds.includes(item.id) &&
-      (mode === 'nearby' ||
-        (code !== 'item_outside_boundary' &&
-          code !== 'item_overlaps_obstacle' &&
-          code !== 'item_blocks_entrance')),
+      (mode === 'nearby' || (code !== 'item_overlaps_obstacle' && code !== 'item_blocks_entrance')),
   )
   if (issue) return issue.message
   if (mode === 'point') return null
@@ -48,7 +50,12 @@ export function floorPlacementProblem(
 }
 
 /** Try the nearest sides of the original with a small gap for the two silhouettes. */
-export function nearbyFurniture(layout: Layout, space: Space, item: LayoutItem): LayoutItem | null {
+export function nearbyFurniture(
+  layout: Layout,
+  space: Space,
+  item: LayoutItem,
+  asset?: Asset,
+): LayoutItem | null {
   const { minX, maxX, minZ, maxZ } = obbBounds(placedBox(item))
   const dx = maxX - minX + 0.2
   const dz = maxZ - minZ + 0.2
@@ -59,7 +66,7 @@ export function nearbyFurniture(layout: Layout, space: Space, item: LayoutItem):
     [0, -dz],
   ] as const) {
     const candidate = { ...item, cx: roundM(item.cx + x), cz: roundM(item.cz + z) }
-    if (!floorPlacementProblem(layout, space, candidate, 'nearby')) return candidate
+    if (!floorPlacementProblem(layout, space, candidate, 'nearby', asset)) return candidate
   }
   return null
 }
