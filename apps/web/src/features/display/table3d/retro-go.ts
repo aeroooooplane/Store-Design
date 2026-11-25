@@ -25,7 +25,12 @@ function roundedOutline(w: number, h: number, r: number, cx = 0) {
 
 // Coordinates on the SI2.0 shop photo (1280 × 960). Only the printed panel
 // is sampled. Its four corners taper in perspective towards the bottom.
-function printedFace(geometry: THREE.BufferGeometry, image: HTMLImageElement, pendant: boolean) {
+function printedFace(
+  geometry: THREE.BufferGeometry,
+  image: HTMLImageElement,
+  pendant: boolean,
+  si1: boolean,
+) {
   const pos = geometry.getAttribute('position')
   const uv = geometry.getAttribute('uv')
   for (let i = 0; i < pos.count; i++) {
@@ -34,7 +39,14 @@ function printedFace(geometry: THREE.BufferGeometry, image: HTMLImageElement, pe
     const t = v / (0.86 + 0.14 * v)
     const x = THREE.MathUtils.lerp(446 + 331 * u, 459 + 280 * u, t)
     const y = THREE.MathUtils.lerp(109 + 12 * u, 514 + 7 * u, t)
-    uv.setXY(i, x / 1280, 1 - y / 960)
+    if (si1) {
+      // Corners of the printed panel on the archived SI1.0 shop photo (400 × 225 reference).
+      uv.setXY(
+        i,
+        THREE.MathUtils.lerp(160 + 87 * u, 167 + 69 * u, t) / 400,
+        1 - THREE.MathUtils.lerp(12 - 7 * u, 122 - 14 * u, t) / 225,
+      )
+    } else uv.setXY(i, x / 1280, 1 - y / 960)
   }
   const map = new THREE.Texture(image)
   map.colorSpace = THREE.SRGBColorSpace
@@ -42,7 +54,7 @@ function printedFace(geometry: THREE.BufferGeometry, image: HTMLImageElement, pe
   return new THREE.MeshBasicMaterial({ map, toneMapped: false, side: THREE.DoubleSide })
 }
 
-function displayBoard(parent: THREE.Group, image: HTMLImageElement | null) {
+function displayBoard(parent: THREE.Group, image: HTMLImageElement | null, si1: boolean) {
   const board = new THREE.Group()
   board.position.set(0, 12, -56)
   board.rotation.x = -THREE.MathUtils.degToRad(4)
@@ -68,7 +80,7 @@ function displayBoard(parent: THREE.Group, image: HTMLImageElement | null) {
   if (image) {
     for (const z of [-2.55, 2.55]) {
       const geometry = new TessellateModifier(16, 8).modify(new THREE.ShapeGeometry(outline))
-      const face = new THREE.Mesh(geometry, printedFace(geometry, image, false))
+      const face = new THREE.Mesh(geometry, printedFace(geometry, image, false, si1))
       face.position.z = z
       board.add(face)
     }
@@ -78,7 +90,7 @@ function displayBoard(parent: THREE.Group, image: HTMLImageElement | null) {
   disc.position.set(0, 126, 4.5)
   if (image) {
     const geo = new THREE.CircleGeometry(27, 48)
-    const face = new THREE.Mesh(geo, printedFace(geo, image, true))
+    const face = new THREE.Mesh(geo, printedFace(geo, image, true, si1))
     face.position.set(0, 126, 6.55)
     board.add(face)
     return // The photo includes the two cords and their ferrules.
@@ -148,9 +160,9 @@ function sample(parent: THREE.Group, retro: boolean) {
   }
 }
 
-export function buildRetroGo(parent: THREE.Group, image: HTMLImageElement | null) {
+export function buildRetroGo(parent: THREE.Group, image: HTMLImageElement | null, si1 = false) {
   trayParts(parent).box(216, 12, 158, 0, 6, -3, silver, 2)
-  displayBoard(parent, image)
+  displayBoard(parent, image, si1)
   sample(parent, false)
   sample(parent, true)
 }

@@ -24,6 +24,20 @@ export interface TableViewContext {
   end: 'left' | 'right'
 }
 
+function productGraphic(unit: string | null, ctx: TableViewContext) {
+  if (!unit) return
+  const photo = unit === 'GO 3S 复古' || (ctx.si === 'SI2.0' && unit === 'Toast')
+  const render =
+    ctx.si === 'SI1.0'
+      ? ['hero-X5', 'scene-X5', 'scene-GO Ultra', 'scene-GO Ultra HK', 'GO Ultra HK'].includes(unit)
+      : ['scene-Luna Ultra', 'scene-X6', 'scene-X6-opt'].includes(unit)
+  if (!photo && !render) return
+  const source = unit === 'scene-X6-opt' ? 'scene-X6' : unit
+  return ctx.photos.find(
+    (p) => p.si === ctx.si && p.unit === source && p.kind === (photo ? 'photo' : 'render'),
+  )?.url
+}
+
 export function slotContents(table: DisplayTable, ctx: TableViewContext): SlotContent[] {
   const labelOf = new Map(ctx.rules.units.map((u) => [u.id, u.label]))
   return table.slots.map((s) => ({
@@ -31,20 +45,7 @@ export function slotContents(table: DisplayTable, ctx: TableViewContext): SlotCo
     hero: s.hero,
     name: s.unit ? (labelOf.get(s.unit) ?? s.unit) : '待定',
     tray: productTray(ctx.si, s.unit),
-    sceneRender:
-      (s.unit === 'scene-Luna Ultra' ||
-        s.unit === 'scene-X6' ||
-        s.unit === 'scene-X6-opt' ||
-        s.unit === 'Toast' ||
-        s.unit === 'GO 3S 复古') &&
-      ctx.si === 'SI2.0'
-        ? ctx.photos.find(
-            (p) =>
-              p.unit === (s.unit === 'scene-X6-opt' ? 'scene-X6' : s.unit) &&
-              p.si === ctx.si &&
-              p.kind === (s.unit === 'GO 3S 复古' || s.unit === 'Toast' ? 'photo' : 'render'),
-          )?.url
-        : undefined,
+    sceneRender: productGraphic(s.unit, ctx),
     empty: !s.unit,
     photo: photoOf(ctx.photos, s.unit, ctx.si)?.url ?? null,
   }))
