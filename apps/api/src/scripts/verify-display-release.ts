@@ -89,21 +89,21 @@ try {
       check(
         `${si} ${n}桌既有内盘`,
         summarizeDisplayModules(rules, existing).innerTotal,
-        { 2: 7, 3: 8, 4: 11 }[n],
+        si === 'SI1.0' ? 0 : { 2: 7, 3: 8, 4: 11 }[n],
       )
       check(
         `${si} ${n}桌缺SI兼容`,
         plan().map((t) => t.modules),
-        existing.map((t) => t.modules),
+        plan('SI2.0').map((t) => t.modules),
       )
       const proposed = plan(si, 'draft-2026')
       const counts = summarizeDisplayModules(rules, proposed)
       check(
         `${si} ${n}桌新版内盘`,
         counts.innerTotal,
-        si === 'SI2.0' ? { 2: 7, 3: 9, 4: 11 }[n] : { 2: 7, 3: 8, 4: 11 }[n],
+        si === 'SI2.0' ? { 2: 7, 3: 9, 4: 11 }[n] : 0,
       )
-      check(`${si} ${n}桌外框`, counts.frameTotal, n)
+      check(`${si} ${n}桌外框`, counts.frameTotal, si === 'SI1.0' ? 0 : n)
       if (si === 'SI2.0') {
         check(
           `${si} ${n}桌逐桌模块`,

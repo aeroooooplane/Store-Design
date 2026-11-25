@@ -65,26 +65,31 @@ export async function buildDisplayChecklist(input: {
   )
   trayRows.addRow(['合计', summary.trayTotal]).font = { bold: true }
   sheet(
-    '配件模块',
+    tables.some((t) => t.center === 'acrylic') ? '桌面中央' : '配件模块',
     ['桌', '桌号', '模块'],
     tables
       .filter((t) => t.kind === 'island')
-      .map((t) => [`${t.label}桌`, t.seat ?? '加桌', t.modules.join('、')]),
+      .map((t) => [
+        `${t.label}桌`,
+        t.seat ?? '加桌',
+        t.center === 'acrylic' ? '亚克力板' : t.modules.join('、'),
+      ]),
     [8, 8, 30],
   )
   workbook.title = `${input.title}展陈清单`
   const inner = summarizeDisplayModules(rules, tables)
-  sheet(
-    '内嵌托盘数量',
-    ['种类', '数量'],
-    [
-      ...[...inner.counts].map(([size, n]): (string | number)[] => [`${size} 模块`, n]),
-      ['内盘合计', inner.innerTotal],
-      ['外框', inner.frameTotal],
-      ['含外框合计', inner.total],
-    ],
-    [30, 12],
-  )
+  if (inner.frameTotal)
+    sheet(
+      '内嵌托盘数量',
+      ['种类', '数量'],
+      [
+        ...[...inner.counts].map(([size, n]): (string | number)[] => [`${size} 模块`, n]),
+        ['内盘合计', inner.innerTotal],
+        ['外框', inner.frameTotal],
+        ['含外框合计', inner.total],
+      ],
+      [30, 12],
+    )
   sheet(
     '方案说明',
     ['桌', '说明'],

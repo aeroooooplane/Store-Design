@@ -10,7 +10,7 @@ export const EDITED_NOTE = '已按人工修改调整'
 export function applyDisplayEdits(tables: DisplayTable[], edits: DisplayEdits): DisplayTable[] {
   return tables.map((t) => {
     const slots = edits.slots[t.sourceId]
-    const modules = edits.modules[t.sourceId]
+    const modules = t.center === 'acrylic' ? undefined : edits.modules[t.sourceId]
     if (!slots && !modules) return t
     return {
       ...t,

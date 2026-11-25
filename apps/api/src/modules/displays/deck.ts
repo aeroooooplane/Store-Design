@@ -240,11 +240,12 @@ function tableDiagram(
     fill: { color: GREY },
     line: { color: '5B7DBA', width: 1 },
   })
-  if (g.strip && table.modules.length) {
+  const centerLabels = table.center === 'acrylic' ? ['亚克力板'] : table.modules
+  if (g.strip && centerLabels.length) {
     const strip = at(g.strip)
     const vertical = strip.h > strip.w
-    const n = table.modules.length
-    table.modules.forEach((m, i) => {
+    const n = centerLabels.length
+    centerLabels.forEach((m, i) => {
       const cell = vertical
         ? { x: strip.x, y: strip.y + (strip.h / n) * i, w: strip.w, h: strip.h / n }
         : { x: strip.x + (strip.w / n) * i, y: strip.y, w: strip.w / n, h: strip.h }
@@ -522,7 +523,11 @@ function table3dSlide(
     })
   }
   const footer = [
-    t.kind === 'island' && t.modules.length ? `中间配件模块：${t.modules.join('、')}` : '',
+    t.center === 'acrylic'
+      ? '桌面中央：亚克力板'
+      : t.kind === 'island' && t.modules.length
+        ? `中间配件模块：${t.modules.join('、')}`
+        : '',
     '视角：从入口方向看',
   ]
     .filter(Boolean)

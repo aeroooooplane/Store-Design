@@ -148,9 +148,19 @@ export function SlotTable({
   /** The table top: slots placed by grid areas, the modules strip in the middle. */
   function board(t: DisplayTable) {
     const modules = (
-      <div className="slot-modules-strip" style={{ gridArea: 'M' }} title="中间配件模块">
+      <div
+        className="slot-modules-strip"
+        style={{ gridArea: 'M' }}
+        title={t.center === 'acrylic' ? '亚克力板' : '中间配件模块'}
+      >
         {showText &&
-          (t.modules.length ? t.modules.map((m) => <span key={m}>{m}</span>) : <span>—</span>)}
+          (t.center === 'acrylic' ? (
+            '亚克力板'
+          ) : t.modules.length ? (
+            t.modules.map((m) => <span key={m}>{m}</span>)
+          ) : (
+            <span>—</span>
+          ))}
       </div>
     )
     if (t.kind === 'side') {
@@ -207,10 +217,18 @@ export function SlotTable({
             </label>
           )}
         <p>
-          主机托盘位 {summary.trayTotal} 个；内嵌托盘 {moduleCounts.innerTotal} 个（
-          {[...moduleCounts.counts].map(([size, count]) => `${size} 模块 ${count}`).join('、') ||
-            '暂无模块'}
-          ）；外框 {moduleCounts.frameTotal} 个；内嵌含外框合计 {moduleCounts.total} 个。
+          主机托盘位 {summary.trayTotal} 个；
+          {si === 'SI1.0' ? (
+            '中岛桌中央为亚克力板。'
+          ) : (
+            <>
+              内嵌托盘 {moduleCounts.innerTotal} 个（
+              {[...moduleCounts.counts]
+                .map(([size, count]) => `${size} 模块 ${count}`)
+                .join('、') || '暂无模块'}
+              ）；外框 {moduleCounts.frameTotal} 个；内嵌含外框合计 {moduleCounts.total} 个。
+            </>
+          )}
         </p>
         {edits.moduleScheme === 'draft-2026' && si === 'SI2.0' && (
           <p className="notice">
@@ -264,7 +282,8 @@ export function SlotTable({
       <div className="slot-tables">
         {tables.map((t) => {
           const changed =
-            Object.keys(edits.slots[t.sourceId] ?? {}).length + (edits.modules[t.sourceId] ? 1 : 0)
+            Object.keys(edits.slots[t.sourceId] ?? {}).length +
+            (t.center !== 'acrylic' && edits.modules[t.sourceId] ? 1 : 0)
           return (
             <section key={t.sourceId} className="slot-table" aria-label={`${t.label}桌陈列`}>
               <header>
@@ -296,7 +315,7 @@ export function SlotTable({
               ) : (
                 board(t)
               )}
-              {t.kind === 'island' && (
+              {t.kind === 'island' && t.center !== 'acrylic' && (
                 <label className="slot-modules">
                   <span>中间配件模块（用顿号分隔）</span>
                   <input

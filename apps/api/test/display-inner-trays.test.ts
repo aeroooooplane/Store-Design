@@ -135,7 +135,7 @@ it('按SI与保存的方案选图，覆盖2/3/4桌全部实际模块并嵌入PPT
         .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
         .map(([, bytes]) => strFromU8(bytes))
         .filter((xml) => xml.includes('内嵌托盘配图'))
-      expect(slides).toHaveLength(n)
+      expect(slides).toHaveLength(si === 'SI1.0' ? 0 : n)
       for (const [i, xml] of slides.entries()) {
         // The native labels and actual embedded images must be on the same table's page.
         const label = tables.find((t) => xml.includes(`${t.label}桌`))!

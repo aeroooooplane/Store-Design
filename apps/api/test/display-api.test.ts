@@ -234,7 +234,8 @@ describe('display of a render node', () => {
     const exported = await inject('POST', `/nodes/${render.id}/display/export`, exportBody)
     expect(exported.statusCode).toBe(201)
     const ppt = await download(exported.json<DisplayExport>().pptx)
-    expect(innerPictureCounts(new Uint8Array(ppt.rawPayload))).toEqual([4])
+    expect(display.tables[0]?.center).toBe('acrylic')
+    expectAcrylicDeck(new Uint8Array(ppt.rawPayload))
     display = (await inject('GET', `/nodes/${render.id}/display`)).json<NodeDisplay>()
     expect(display.exports).toHaveLength(1)
   })
@@ -258,13 +259,23 @@ describe('display of a render node', () => {
       `${delivery.folderName}/影石展陈交付店展陈方案.pptx`
     ]
     expect(ppt).toBeDefined()
-    expect(innerPictureCounts(ppt!)).toEqual([4])
+    expectAcrylicDeck(ppt!)
     const root = `${delivery.folderName}/`
     expect(entries).toContain(`${root}影石展陈交付店展陈方案.pptx`)
     expect(entries).toContain(`${root}04_展陈方案/影石展陈交付店展陈清单.xlsx`)
     expect(entries).toContain(`${root}04_展陈方案/展陈平面.png`)
   })
 })
+
+function expectAcrylicDeck(data: Uint8Array) {
+  const slides = Object.entries(unzipSync(data))
+    .filter(([name]) => /^ppt\/slides\/slide\d+\.xml$/.test(name))
+    .map(([, bytes]) => new TextDecoder().decode(bytes))
+    .join('')
+  expect(slides).toContain('亚克力板')
+  expect(slides).not.toContain('内嵌托盘数量明细')
+  expect(innerPictureCounts(data)).toEqual([])
+}
 
 function innerPictureCounts(data: Uint8Array) {
   return Object.entries(unzipSync(data))

@@ -3,6 +3,7 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import ExcelJS from 'exceljs'
 import { unzipSync, strFromU8 } from 'fflate'
 import {
+  applyDisplayEdits,
   checkRules,
   countUnits,
   displayChoices,
@@ -108,9 +109,19 @@ describe('权威指引 rev4130 逐行托盘核对', () => {
   it('旧规则、缺SI和SI1.0不会静默套用SI2.0讨论稿', () => {
     const old = planned(3)
     expect(old[0]?.modules).toEqual(['C3', 'D8'])
-    expect(planned(3, 'SI1.0', 'draft-2026').map((t) => t.modules)).toEqual(
-      old.map((t) => t.modules),
-    )
+    const acrylic = planned(3, 'SI1.0', 'draft-2026')
+    expect(acrylic.every((t) => t.center === 'acrylic' && !t.modules.length)).toBe(true)
+    expect(summarizeDisplayModules(rules, acrylic).total).toBe(0)
+    const first = acrylic[0]!
+    const slot = first.slots[0]!.slot
+    const [edited] = applyDisplayEdits(acrylic, {
+      orientation: 'portrait',
+      landscapeEnd: 'left',
+      modules: { [first.sourceId]: ['C4', 'D17'] },
+      slots: { [first.sourceId]: { [slot]: null } },
+    })
+    expect(edited?.modules).toEqual([])
+    expect(edited?.slots.find((s) => s.slot === slot)?.unit).toBeNull()
     expect(planned(3, 'SI2.0').map((t) => t.modules)).toEqual(old.map((t) => t.modules))
   })
   it('SI2.0主动选择新版后2/3/4桌数量、模块与状态一致，保存结构可重放', () => {
