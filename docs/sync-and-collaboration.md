@@ -21,7 +21,7 @@ git status
 
 分支、worktree、提交与合并的规则以 [协作看板](collab-board.md) 第 5 节为准，开工前先读看板并登记：
 
-- 每个任务一个 worktree 和带 `claude/` 或 `codex/` 前缀的分支，建好后在该 worktree 运行接入脚本；不在主工作区 `D:\text demo` 切分支或提交。
+- 每个任务一个 worktree 和带 `claude/` 或 `codex/` 前缀的分支，建好后在该 worktree 运行接入脚本；不在主工作区 `D:\Store-Design` 切分支或提交。
 - 完成后审查 `git diff`、新增文件及相关验证结果，只提交本任务的文件，推送该分支，通过 Pull Request 合入 main。
 
 PDF、PPTX、SKP 等二进制资源由一人负责同一文件的一轮编辑，避免两台电脑同时修改同一个文件。相关代码 PR 记录资源版本及校验值，资源同步完成后再合并。另一台电脑拉取代码后先运行接入脚本核对 `resources.lock.json`。
