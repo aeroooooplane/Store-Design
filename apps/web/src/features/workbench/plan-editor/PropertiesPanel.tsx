@@ -27,6 +27,7 @@ interface PropertiesPanelProps {
   dispatch: Dispatch<EditorAction>
   onRotate: (by: 90 | -90) => void
   onDuplicate?: (() => void) | undefined
+  copiedFurnitureName?: string | undefined
 }
 
 const ELEVATION_LABELS: Record<Installation, string> = {
@@ -145,6 +146,7 @@ export function PropertiesPanel({
   dispatch,
   onRotate,
   onDuplicate,
+  copiedFurnitureName,
 }: PropertiesPanelProps) {
   const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
   const screenName = advertisingScreenName(asset?.id)
@@ -184,10 +186,16 @@ export function PropertiesPanel({
             </button>
           </div>
           {onDuplicate && (
-            <button type="button" onClick={onDuplicate}>
+            <button
+              type="button"
+              title="复制同款（Ctrl+D）"
+              aria-keyshortcuts="Control+D Meta+D"
+              onClick={onDuplicate}
+            >
               复制同款
             </button>
           )}
+          {onDuplicate && <p className="hint">Ctrl+C 复制 · Ctrl+V 粘贴 · Ctrl+D 复制同款</p>}
           {screenName && asset && ['embedded', 'wall', 'ceiling'].includes(itemMount(selected)) && (
             <div className="field-row">
               屏幕方向
@@ -413,6 +421,11 @@ export function PropertiesPanel({
             关闭），Delete 删除。墙面 LOGO、画面拖到墙边会自动贴墙并朝向店内。
           </p>
         </>
+      )}
+      {copiedFurnitureName && (
+        <p className="hint" role="status">
+          已复制「{copiedFurnitureName}」，按 Ctrl+V 粘贴。
+        </p>
       )}
     </div>
   )

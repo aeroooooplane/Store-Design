@@ -185,6 +185,42 @@ afterEach(() => {
 })
 
 describe('Workbench', () => {
+  it('copies a furniture snapshot, pastes or duplicates it, and keeps text shortcuts native', async () => {
+    server = fakeApi([designNode(S1, null), designNode(P1, S1)], null)
+    const { container } = renderWorkbench(`?node=${P1}`)
+    await screen.findByRole('button', { name: '撤回' })
+    fireEvent.click(screen.getByRole('button', { name: '平面' }))
+    const count = () => container.querySelectorAll('.view-main .plan-item').length
+    const canvas = screen.getByLabelText(/平面画布/)
+    const tableShape = container.querySelector('.view-main [data-item-id="island_table-1"]')!
+    expect(fireEvent.keyDown(canvas, { key: 'v', ctrlKey: true })).toBe(true)
+    fireEvent.pointerDown(tableShape)
+    const position = screen.getByRole('spinbutton', { name: '水平位置' })
+    expect(fireEvent.keyDown(position, { key: 'c', ctrlKey: true })).toBe(true)
+    expect(screen.queryByText(/已复制「中岛桌」/)).toBeNull()
+    expect(fireEvent.keyDown(canvas, { key: 'c', ctrlKey: true })).toBe(false)
+    expect(screen.getByText(/已复制「中岛桌」/)).toBeTruthy()
+    expect(count()).toBe(1)
+    expect(fireEvent.keyDown(position, { key: 'v', ctrlKey: true })).toBe(true)
+    expect(count()).toBe(1)
+    fireEvent.click(screen.getByRole('button', { name: '顺时针旋转 90°' }))
+    expect(fireEvent.keyDown(canvas, { key: 'v', metaKey: true })).toBe(false)
+    expect(count()).toBe(2)
+    expect(fireEvent.keyDown(canvas, { key: 'd', ctrlKey: true, repeat: true })).toBe(false)
+    expect(count()).toBe(2)
+    fireEvent.keyDown(canvas, { key: 'd', ctrlKey: true })
+    expect(count()).toBe(3)
+    fireEvent.keyDown(canvas, { key: 'z', ctrlKey: true })
+    expect(count()).toBe(2)
+    fireEvent.keyDown(canvas, { key: 'z', ctrlKey: true, shiftKey: true })
+    expect(count()).toBe(3)
+    await waitFor(() => {
+      expect(server.state.drafts.get(P1)?.layout.items.map((item) => item.rotation)).toEqual([
+        90, 0, 0,
+      ])
+    })
+  })
+
   it('starts an empty project with the space editor and opens the saved space', async () => {
     server = fakeApi([], null)
     renderWorkbench()
