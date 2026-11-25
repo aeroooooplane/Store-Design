@@ -1,9 +1,11 @@
+import errno
 import hashlib
 import json
 import os
 import platform
 import re
 import sqlite3
+import stat
 import tempfile
 from contextlib import closing
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -15,21 +17,64 @@ ROOT = Path(__file__).resolve().parent
 INSTANCE_ID = uuid4().hex
 
 
+class ProbeFailure(Exception):
+    def __init__(self, stage, error):
+        self.result = {"stage": stage, "type": type(error).__name__, "errno": errno.errorcode.get(error.errno)}
+
+
+def step(stage, action, *args, **kwargs):
+    try:
+        return action(*args, **kwargs)
+    except OSError as error:
+        raise ProbeFailure(stage, error) from error
+
+
+def filesystem_for(directory):
+    # Report only filesystem metadata, never environment values or host paths.
+    try:
+        mounts = Path("/proc/self/mountinfo").read_text(encoding="utf-8").splitlines()
+        resolved = directory.resolve()
+    except OSError:
+        return None
+
+    candidates = []
+    for line in mounts:
+        left, separator, right = line.partition(" - ")
+        if not separator:
+            continue
+        fields, detail = left.split(), right.split()
+        mount = Path(re.sub(r"\\([0-7]{3})", lambda match: chr(int(match[1], 8)), fields[4]))
+        if resolved.is_relative_to(mount):
+            read_only = "ro" in fields[5].split(",") or "ro" in detail[2].split(",")
+            candidates.append((len(mount.parts), {
+                "type": detail[0], "readOnly": read_only, "atDataDir": resolved == mount,
+            }))
+    return max(candidates, key=lambda match: match[0])[1] if candidates else None
+
+
 def prepare_fixture(directory):
     target = directory / "boldsite-probe.txt"
-    if not target.exists():
-        # Publish a complete file atomically even if deployment starts two processes.
-        with tempfile.TemporaryDirectory(dir=directory) as scratch:
-            source = Path(scratch) / "fixture.txt"
-            source.write_bytes(("synthetic-boldsite-probe " + uuid4().hex + "\n").encode())
-            with source.open("r+b") as file:
-                os.fsync(file.fileno())
+    try:
+        return target.read_bytes()
+    except FileNotFoundError:
+        pass
+    except OSError as error:
+        raise ProbeFailure("read-existing-fixture", error) from error
 
-            try:
-                os.link(source, target)
-            except FileExistsError:
-                pass
-    return target.read_bytes()
+    # Publish a complete file atomically even if deployment starts two processes.
+    with step("create-fixture-scratch", tempfile.TemporaryDirectory, dir=directory) as scratch:
+        source = Path(scratch) / "fixture.txt"
+        contents = ("synthetic-boldsite-probe " + uuid4().hex + "\n").encode()
+        step("write-fixture", source.write_bytes, contents)
+        with step("open-fixture-for-sync", source.open, "r+b") as file:
+            step("sync-fixture", os.fsync, file.fileno())
+        try:
+            os.link(source, target)
+        except FileExistsError:
+            pass
+        except OSError as error:
+            raise ProbeFailure("publish-fixture-link", error) from error
+    return step("read-published-fixture", target.read_bytes)
 
 
 def check_sqlite(directory):
@@ -37,33 +82,93 @@ def check_sqlite(directory):
         path = Path(scratch) / "probe.sqlite3"
         with closing(sqlite3.connect(path, timeout=0)) as writer:
             if writer.execute("PRAGMA journal_mode=DELETE").fetchone()[0] != "delete":
-                return "journal-unavailable"
+                return "journal-unavailable", "skipped"
+            writer.execute("CREATE TABLE sample (value TEXT NOT NULL)")
+            writer.execute("INSERT INTO sample VALUES ('synthetic')")
+            writer.commit()
             writer.execute("BEGIN IMMEDIATE")
             with closing(sqlite3.connect(path, timeout=0)) as second:
                 try:
                     second.execute("BEGIN IMMEDIATE")
                 except sqlite3.OperationalError as error:
-                    if getattr(error, "sqlite_errorcode", None) == getattr(sqlite3, "SQLITE_BUSY", 5):
-                        return "second-writer-blocked"
-                    if str(error) == "database is locked":
-                        return "second-writer-blocked"
-                    raise
-            return "second-writer-acquired"
+                    if getattr(error, "sqlite_errorcode", None) != getattr(sqlite3, "SQLITE_BUSY", 5):
+                        if str(error) != "database is locked":
+                            raise
+                    lock = "second-writer-blocked"
+                else:
+                    lock = "second-writer-acquired"
+            writer.rollback()
+            with closing(sqlite3.connect(Path(scratch) / "restored.sqlite3")) as restored:
+                writer.backup(restored)
+                result = restored.execute("SELECT value FROM sample").fetchone()
+                integrity = restored.execute("PRAGMA integrity_check").fetchone()
+                backup = "restored" if result == ("synthetic",) and integrity == ("ok",) else "invalid"
+            return lock, backup
+
+
+def data_directory_mode(directory, filesystem):
+    try:
+        return step("stat-data-dir", directory.stat).st_mode
+    except ProbeFailure as error:
+        if not (
+            error.result["errno"] == "ENOENT"
+            and directory.is_absolute()
+            and filesystem is not None
+            and filesystem["type"] in {"nfs", "nfs4"}
+            and not filesystem["readOnly"]
+        ):
+            raise
+
+    # Bold Site can provide a per-app path before creating it under the NFS mount.
+    step("create-data-dir", directory.mkdir, parents=True, exist_ok=True)
+    return step("stat-created-data-dir", directory.stat).st_mode
+
 
 
 def check_persistence():
+    result = {
+        "persistence": "data-dir-missing",
+        "fixtureSha256": None,
+        "sqliteLock": "skipped",
+        "sqliteBackup": "skipped",
+    }
     configured = os.environ.get("DATA_DIR", "").strip()
     if not configured:
-        return None, "data-dir-missing", "skipped"
+        return None, result
+
     directory = Path(configured)
+    result["filesystem"] = filesystem_for(directory)
+    try:
+        mode = data_directory_mode(directory, result["filesystem"])
+        if not stat.S_ISDIR(mode):
+            raise ProbeFailure("stat-data-dir", NotADirectoryError(errno.ENOTDIR, "not a directory"))
+    except ProbeFailure as error:
+        result["persistence"] = "data-dir-unavailable"
+        result["fixtureError"] = error.result
+        return None, result
+
+    fixture = None
     try:
         fixture = prepare_fixture(directory)
-    except OSError:
-        return None, "fixture-unavailable", "skipped"
+        result["persistence"] = "fixture-ready"
+        result["fixtureSha256"] = hashlib.sha256(fixture).hexdigest()
+    except ProbeFailure as error:
+        result["persistence"] = "fixture-unavailable"
+        result["fixtureError"] = error.result
+    except OSError as error:
+        result["persistence"] = "fixture-unavailable"
+        result["fixtureError"] = ProbeFailure("clean-fixture-scratch", error).result
+
     try:
-        return fixture, "fixture-ready", check_sqlite(directory)
-    except (OSError, sqlite3.Error):
-        return fixture, "fixture-ready", "sqlite-check-failed"
+        result["sqliteLock"], result["sqliteBackup"] = check_sqlite(directory)
+    except (OSError, sqlite3.Error) as error:
+        result["sqliteLock"] = "sqlite-check-failed"
+        result["sqliteError"] = {
+            "type": type(error).__name__,
+            "code": getattr(error, "sqlite_errorname", None) or errno.errorcode.get(getattr(error, "errno", None)),
+        }
+    return fixture, result
+
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -95,9 +200,7 @@ class Handler(BaseHTTPRequestHandler):
                 "architecture": platform.machine(),
                 "libc": platform.libc_ver(),
                 "sqlite": sqlite3.sqlite_version,
-                "persistence": persistence,
-                "fixtureSha256": hashlib.sha256(fixture).hexdigest() if fixture else None,
-                "sqliteLock": sqlite_lock,
+                **storage_status,
             }
             self.respond(200, json.dumps(result).encode(), "application/json")
         elif path == "/workbench/v1/fixture" and fixture:
@@ -112,6 +215,6 @@ class Handler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    fixture, persistence, sqlite_lock = check_persistence()
+    fixture, storage_status = check_persistence()
     with ThreadingHTTPServer(("0.0.0.0", int(os.environ.get("CAPort", "9000"))), Handler) as server:
         server.serve_forever()
