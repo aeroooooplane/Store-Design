@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useState } from 'react'
+import type { RecognitionDraft } from '@store/shared'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
 import { PlanUploadSchema, UPLOAD_MAX_BYTES } from '@store/shared'
 import { api, unwrap } from '../../api/client.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { recognitionKeys, useUploadPlan } from '../recognition/queries.ts'
+
+const PdfVectorResult = lazy(async () => ({
+  default: (await import('./PdfVectorResult.tsx')).PdfVectorResult,
+}))
 
 export function ProjectDrawings({ projectId }: { projectId: string }) {
   const upload = useUploadPlan(projectId)
@@ -21,6 +26,7 @@ export function ProjectDrawings({ projectId }: { projectId: string }) {
   })
   const [pdf, setPdf] = useState<{ document: PDFDocumentProxy; name: string } | null>(null)
   const [page, setPage] = useState(1)
+  const [result, setResult] = useState<RecognitionDraft | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<unknown>(null)
 
@@ -45,6 +51,7 @@ export function ProjectDrawings({ projectId }: { projectId: string }) {
 
   function choose(file: File) {
     setPdf(null)
+    setResult(null)
     setPage(1)
     return run(async () => {
       const contentType = file.type
@@ -105,14 +112,36 @@ export function ProjectDrawings({ projectId }: { projectId: string }) {
               max={pdf.document.numPages}
               required
               value={page || ''}
-              onChange={(event) => setPage(event.target.valueAsNumber)}
+              onChange={(event) => {
+                setPage(event.target.valueAsNumber)
+                setResult(null)
+                setError(null)
+              }}
               disabled={busy}
             />
           </label>
           <button type="submit" disabled={busy}>
             上传本页
           </button>
+          <button
+            type="button"
+            disabled={busy || !Number.isInteger(page) || page < 1 || page > pdf.document.numPages}
+            onClick={() => {
+              setResult(null)
+              void run(async () => {
+                const { recognizePdfPage } = await import('./PdfVectorResult.tsx')
+                setResult(await recognizePdfPage(pdf.document, page))
+              })
+            }}
+          >
+            识别本页矢量
+          </button>
         </form>
+      )}
+      {result && (
+        <Suspense fallback={<p role="status">正在加载识别结果…</p>}>
+          <PdfVectorResult result={result} />
+        </Suspense>
       )}
       <ErrorMessage error={error ?? drawings.error} />
       {drawings.isPending && <p role="status">正在读取图纸…</p>}

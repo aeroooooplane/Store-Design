@@ -14,6 +14,8 @@ FastAPI 实现 `apps/api/openapi.json` 中的以下接口。前端继续使用�
 
 上传契约为 PNG/JPEG 原始字节，单张 20 MB 内，最长边 8192 像素。PDF 由浏览器将所选页渲染为 PNG，上传记录保留原文件名及页码，下载内容为渲染后的 PNG。试点界面读取每个项目最新 20 条上传记录。
 
+选择虚构矢量 PDF 后，可在上传所选页前使用“识别本页矢量”。浏览器复用现有本机矢量算法，回显轮廓面积、比例依据、道具标注及待复核项。识别处理不发网络请求，结果仅供页面核对。扫描图、外部模型识别及识别结果转正式空间仍待相应服务方案。
+
 ## 网关路径
 
 平台保留 `/api`、`/view`、`/svc`。Bold Site 页面在应用挂载点下统一使用 `./workbench/v1/`。例如健康检查是 `/svc/{appId}/workbench/v1/health`，图纸下载是 `/svc/{appId}/workbench/v1/files/{fileId}`。FastAPI 直接注册工作台路径，入口兼容网关剥前缀、透传和 ASGI `root_path`。本地 Fastify、OpenAPI 和生成的客户端类型继续使用 `/api/v1/`。
