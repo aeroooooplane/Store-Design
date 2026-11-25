@@ -6,6 +6,7 @@ import type { AppConfig } from '../../../config/env.ts'
 import type { RequestContext } from '../../../context/actor.ts'
 import { AppError } from '../../../lib/app-error.ts'
 import { catalogAssets } from '../../assets/service.ts'
+import { currentDraft } from '../../drafts/service.ts'
 import { getNode, resolveSpace } from '../../nodes/service.ts'
 import { eq } from 'drizzle-orm'
 
@@ -76,6 +77,7 @@ export async function buildToolContext(
   const node = nodeId ? await getNode(db, ctx, nodeId) : null
   if (node && node.projectId !== project.id)
     throw new AppError('VALIDATION_FAILED', '节点不属于这个项目')
+  const draft = node && (await currentDraft(db, project.id, node.id))
   const spaceNodeId = node ? await spaceNodeOf(db, node.id) : null
   const space = spaceNodeId ? await resolveSpace(db, spaceNodeId) : null
   return {
@@ -83,7 +85,7 @@ export async function buildToolContext(
     ctx,
     config,
     project,
-    node,
+    node: node && draft ? { ...node, layout: draft.layout } : node,
     space,
     spaceNodeId,
     selectedItemIds,

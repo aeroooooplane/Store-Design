@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { RouterProvider, createMemoryRouter } from 'react-router'
 import { rectangleSpace } from '@store/shared'
 import type { Asset, DesignNode, Draft, Layout, LayoutItem, Project } from '@store/shared'
 import { makeAsset, makeCamera, makeNode, makeProject } from '../../test-utils/factories.ts'
@@ -69,7 +70,11 @@ function fakeApi(
   assets: Asset[] = [],
   options: { failCreate?: boolean } = {},
 ) {
-  const state = { nodes: [...nodes], draft, project }
+  const state = {
+    nodes: [...nodes],
+    drafts: new Map(draft ? [[draft.baseNodeId, draft]] : []),
+    project,
+  }
   const fail = (status: number, code: string, message = code) =>
     json(status, { error: { code, message, requestId: 'r' } })
 
@@ -78,27 +83,29 @@ function fakeApi(
       const summaries = state.nodes.map(({ projectId: _p, space: _s, layout: _l, ...s }) => s)
       return json(200, { projectId: PID, nodes: summaries })
     }
-    if (route === `GET /api/v1/projects/${PID}/draft`) {
-      return state.draft ? json(200, state.draft) : fail(404, 'NOT_FOUND')
+    if (route === `GET /api/v1/projects/${PID}/drafts`) {
+      return json(200, { drafts: [...state.drafts.values()] })
     }
     if (route === `PUT /api/v1/projects/${PID}/draft`) {
-      const current = state.draft
-      if (current && ifMatch === null) return fail(428, 'REVISION_REQUIRED')
-      if (current && ifMatch !== `"${current.revision}"`) return fail(409, 'REVISION_CONFLICT')
       const put = body as Pick<Draft, 'baseNodeId' | 'layout'>
-      state.draft = {
+      const current = state.drafts.get(put.baseNodeId)
+      if (current && ifMatch === null) return fail(428, 'REVISION_REQUIRED')
+      if (ifMatch !== (current ? `"${current.revision}"` : null))
+        return fail(409, 'REVISION_CONFLICT')
+      const saved = {
         projectId: PID,
         ...put,
         revision: (current?.revision ?? 0) + 1,
         updatedAt: '2026-10-09T04:00:00.000Z',
       }
-      return json(200, { draft: state.draft, issues: [] })
+      state.drafts.set(put.baseNodeId, saved)
+      return json(200, { draft: saved, issues: [] })
     }
     if (route === `DELETE /api/v1/projects/${PID}/draft`) {
-      if (!state.draft || ifMatch !== `"${state.draft.revision}"`) {
-        return fail(409, 'REVISION_CONFLICT')
-      }
-      state.draft = null
+      const baseNodeId = url.searchParams.get('baseNodeId') ?? ''
+      const current = state.drafts.get(baseNodeId)
+      if (!current || ifMatch !== `"${current.revision}"`) return fail(409, 'REVISION_CONFLICT')
+      state.drafts.delete(baseNodeId)
       return new Response(null, { status: 204 })
     }
     if (route === `POST /api/v1/projects/${PID}/nodes`) {
@@ -150,9 +157,11 @@ function fakeApi(
 }
 
 function renderWorkbench(search = '') {
-  return renderWithClient(<Workbench project={project} />, {
-    router: { initialEntries: [`/projects/${PID}${search}`] },
-  })
+  const router = createMemoryRouter(
+    [{ path: '/projects/:projectId', element: <Workbench project={project} /> }],
+    { initialEntries: [`/projects/${PID}${search}`] },
+  )
+  return renderWithClient(<RouterProvider router={router} />)
 }
 
 let server: ReturnType<typeof fakeApi>
@@ -225,7 +234,7 @@ describe('Workbench', () => {
     expect(screen.getByRole('region', { name: '方案阶段' })).toBeTruthy()
   })
 
-  it('keeps other nodes read-only while the shared draft belongs to another step', async () => {
+  it('keeps another node editable and saves into its own draft', async () => {
     const draft: Draft = {
       projectId: PID,
       baseNodeId: P1,
@@ -241,15 +250,23 @@ describe('Workbench', () => {
       ],
       draft,
     )
-    renderWorkbench(`?node=${P2}`)
-
-    expect(await screen.findByText(/基于「方案 A」的草稿/)).toBeTruthy()
-    expect(screen.queryByRole('button', { name: '撤回' })).toBeNull()
-
+    const { container } = renderWorkbench(`?node=${P2}`)
+    await screen.findByRole('button', { name: '撤回' })
+    expect(screen.queryByRole('heading', { name: '当前节点只读' })).toBeNull()
+    fireEvent.click(
+      within(screen.getByRole('group', { name: '视图' })).getByRole('button', { name: '平面' }),
+    )
+    const item = container.querySelector('[data-item-id="island_table-1"]') as Element
+    fireEvent.pointerDown(item)
+    fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'ArrowRight', shiftKey: true })
+    fireEvent.click(screen.getByRole('tab', { name: '历史' }))
+    fireEvent.keyDown(screen.getByRole('button', { name: '方案 A（有草稿）' }), { key: 'Enter' })
+    await screen.findByRole('heading', { name: '方案 A' })
+    expect(server.state.drafts.get(P1)).toEqual(draft)
+    expect(server.state.drafts.get(P2)?.layout.items[0]?.cx).toBe(4.1)
     fireEvent.click(screen.getByRole('button', { name: '丢弃草稿' }))
-    expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
-    expect(confirm).toHaveBeenCalledOnce()
-    expect(server.calls.find((c) => c.method === 'DELETE')?.ifMatch).toBe('"3"')
+    await waitFor(() => expect(server.state.drafts.has(P1)).toBe(false))
+    expect(server.state.drafts.get(P2)?.layout.items[0]?.cx).toBe(4.1)
   })
 
   it('switching SI saves a copy of the plan with its props swapped and keeps the original', async () => {
@@ -419,9 +436,10 @@ describe('Workbench', () => {
       expect(created.layout.items[0]).toMatchObject({ cx: 3 })
       // …and the edits stay on the original step as its draft (not dropped, not lost).
       expect(server.calls.some((c) => c.method === 'DELETE')).toBe(false)
-      expect(server.state.draft?.baseNodeId).toBe(P1)
+      expect(server.state.drafts.get(P1)?.layout).toEqual(draft.layout)
 
       // The original step is marked as carrying the draft; clicking it opens the edits again.
+      fireEvent.click(screen.getByRole('tab', { name: '历史' }))
       fireEvent.keyDown(screen.getByRole('button', { name: '方案 A（有草稿）' }), { key: 'Enter' })
       await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
       expect(await screen.findByRole('button', { name: '撤回' })).toBeTruthy()
@@ -446,7 +464,7 @@ describe('Workbench', () => {
       expect(screen.queryByRole('heading', { name: '方案 A · SI2.0' })).toBeNull()
     })
 
-    it('lets a white model take the swapped layout even when the new sizes overlap', async () => {
+    it('copies a legacy 3D node into the plan stage when switching SI', async () => {
       const W = '66666666-6666-4666-8666-666666666666'
       server = fakeApi(
         [
@@ -468,7 +486,7 @@ describe('Workbench', () => {
       fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
       await waitFor(() => expect(posts()).toHaveLength(1))
       const created = posts()[0]?.body as { kind: string; allowLayoutErrors?: boolean }
-      expect(created).toMatchObject({ kind: 'white', allowLayoutErrors: true })
+      expect(created).toMatchObject({ kind: 'plan', parentId: S1, sourceNodeId: W })
       expect(screen.queryByText(/切换失败/)).toBeNull()
     })
   })
@@ -504,7 +522,6 @@ describe('Workbench', () => {
     await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
     const tab = (name: string) => screen.getByRole('tab', { name })
     expect(tab('添加模型').getAttribute('aria-selected')).toBe('true')
-    // The white stage starts on the history tab instead.
     expect(screen.getByRole('tab', { name: '历史' })).toBeTruthy()
     // The history tab is hidden, not unmounted.
     expect(screen.queryByRole('button', { name: '方案 A' })).toBeNull()
@@ -515,7 +532,7 @@ describe('Workbench', () => {
     expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
   })
 
-  it('keeps white-stage views hidden beside space info until selected, without duplicating or remounting them', async () => {
+  it('keeps legacy 3D views available in the plan editor', async () => {
     server = fakeApi(
       [
         designNode(S1, null),
@@ -532,7 +549,7 @@ describe('Workbench', () => {
       '空间信息',
       '视角',
     ])
-    expect(screen.getByRole('tab', { name: '历史' }).getAttribute('aria-selected')).toBe('true')
+    expect(screen.getByRole('tab', { name: '添加模型' }).getAttribute('aria-selected')).toBe('true')
     expect(screen.queryByRole('region', { name: '视角' })).toBeNull()
     expect(container.querySelectorAll('.camera-panel')).toHaveLength(1)
     expect(container.querySelector('.wb-right .camera-panel')).toBeNull()
@@ -551,32 +568,32 @@ describe('Workbench', () => {
     expect(screen.getByRole('tab', { name: '视角' })).toBeTruthy()
   })
 
-  it('autosaves edits to the draft, then saves a version and clears the draft', async () => {
+  it('renders directly from a plan, persisting a pending edit on the source first', async () => {
     server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
     const { container } = renderWorkbench(`?node=${P1}`)
 
     await screen.findByRole('button', { name: '撤回' })
+    const views = screen.getByRole('group', { name: '视图' })
+    expect(within(views).getByRole('button', { name: '三维' }).getAttribute('aria-pressed')).toBe(
+      'true',
+    )
+    expect(screen.queryByRole('button', { name: '白模' })).toBeNull()
+    fireEvent.click(within(views).getByRole('button', { name: '平面' }))
     const item = container.querySelector('[data-item-id="island_table-1"]') as Element
     fireEvent.pointerDown(item)
     fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'ArrowRight', shiftKey: true })
+    fireEvent.click(screen.getByRole('button', { name: '开始渲染' }))
 
-    expect(await screen.findByText('草稿已保存', {}, { timeout: 3000 })).toBeTruthy()
-    const put = server.calls.find((c) => c.method === 'PUT')
-    expect(put).toMatchObject({ ifMatch: null, body: { baseNodeId: P1 } })
-    expect((put?.body as { layout: Layout }).layout.items[0]?.cx).toBe(4.1)
-
-    // 新建副本: a sibling plan under the same space, carrying the edited layout.
-    fireEvent.click(screen.getByRole('button', { name: '新建副本' }))
-    expect(await screen.findByRole('heading', { name: '方案 A 副本2' })).toBeTruthy()
-    const copy = server.calls.find((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
-    expect(copy?.body).toMatchObject({
-      parentId: S1,
-      kind: 'plan',
-      name: '方案 A 副本2',
-      sourceNodeId: P1,
-    })
-    expect((copy?.body as { layout: Layout }).layout.items[0]?.cx).toBe(4.1)
-    expect(server.calls.find((c) => c.method === 'DELETE')?.ifMatch).toBe('"1"')
-    expect(server.state.draft).toBeNull()
+    await waitFor(() =>
+      expect(server.state.nodes.some((node) => node.kind === 'render')).toBe(true),
+    )
+    const saves = server.calls.filter((c) => c.method === 'PUT' || c.method === 'POST')
+    expect(saves[0]).toMatchObject({ method: 'PUT', body: { baseNodeId: P1 } })
+    expect(saves[1]).toMatchObject({ method: 'POST', body: { parentId: P1, kind: 'render' } })
+    expect(server.state.nodes.find((node) => node.kind === 'render')?.layout?.items[0]?.cx).toBe(
+      4.1,
+    )
+    expect(server.state.drafts.get(P1)?.layout.items[0]?.cx).toBe(4.1)
+    expect(server.calls.some((c) => c.method === 'DELETE')).toBe(false)
   })
 })

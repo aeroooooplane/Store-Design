@@ -962,6 +962,67 @@ export interface paths {
                                     }[];
                                 };
                             } | null;
+                            drafts?: {
+                                baseNodeId: string;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
+                                };
+                            }[];
                         };
                     };
                 };
@@ -1124,7 +1185,7 @@ export interface paths {
         };
         put?: never;
         /**
-         * 新建历史节点（空间、方案、编辑、白模、渲染）
+         * 新建历史节点（空间、方案、渲染，兼容旧版三维节点）
          * @description 布局中的模型必须存在且保持真实尺寸，否则 400。越界、重叠等问题随结果返回；白模与渲染节点不允许有错误级问题。
          */
         post: {
@@ -2482,6 +2543,176 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/projects/{projectId}/drafts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** 读取项目各节点的自动保存草稿 */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    projectId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            drafts: {
+                                /** Format: uuid */
+                                projectId: string;
+                                /** Format: uuid */
+                                baseNodeId: string;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
+                                };
+                                revision: number;
+                                /** Format: date-time */
+                                updatedAt: string;
+                            }[];
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                428: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/projects/{projectId}/draft": {
         parameters: {
             query?: never;
@@ -2489,7 +2720,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** 读取项目的共享编辑草稿 */
+        /** 读取项目最近保存的草稿（旧版兼容） */
         get: {
             parameters: {
                 query?: never;
@@ -2874,10 +3105,12 @@ export interface paths {
             };
         };
         post?: never;
-        /** 丢弃草稿 */
+        /** 丢弃指定节点的草稿 */
         delete: {
             parameters: {
-                query?: never;
+                query?: {
+                    baseNodeId?: string;
+                };
                 header?: {
                     /** @description 草稿版本号；首次保存可省略 */
                     "if-match"?: string;

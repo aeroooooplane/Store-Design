@@ -130,7 +130,7 @@ describe('history nodes', () => {
     expect(white.json().error.message).toContain('进入三维效果前')
   })
 
-  it('keeps every stage on its level: plans under a space, white under a plan, render under white', async () => {
+  it('renders from plans directly and still accepts legacy 3D nodes', async () => {
     const project = await newProject()
     const root = await spaceNode(project.id)
     const body = (parentId: string | null, kind: string) => ({
@@ -144,14 +144,16 @@ describe('history nodes', () => {
     const planId = plan.json<NodeCreated>().node.id
     const refused = [
       [planId, 'plan', '方案只能建在空间下'],
-      [root.id, 'white', '白模只能建在方案下'],
-      [planId, 'render', '渲染只能建在白模下'],
+      [root.id, 'white', '旧版三维节点只能建在方案下'],
+      [root.id, 'render', '渲染只能建在方案下'],
     ] as const
     for (const [parentId, kind, message] of refused) {
       const response = await post(project.id, body(parentId, kind))
       expect(response.statusCode).toBe(400)
       expect(response.json().error.message).toBe(message)
     }
+    const direct = await post(project.id, body(planId, 'render'))
+    expect(direct.statusCode).toBe(201)
     const white = await post(project.id, body(planId, 'white'))
     expect(white.statusCode).toBe(201)
     // A copy of the white model is its sibling, still under the plan.
@@ -254,6 +256,58 @@ describe('drafts', () => {
     const discarded = await t.app.inject({ method: 'DELETE', url, headers: { 'if-match': '"2"' } })
     expect(discarded.statusCode).toBe(204)
     expect((await t.app.inject({ method: 'GET', url })).statusCode).toBe(404)
+  })
+
+  it('isolates revisions, deletion and export round trips for two node drafts', async () => {
+    const project = await newProject()
+    const root = await spaceNode(project.id)
+    const plan = (
+      await post(project.id, {
+        parentId: root.id,
+        kind: 'plan',
+        name: '方案',
+        layout: layout(),
+      })
+    ).json<NodeCreated>().node
+    const url = `/api/v1/projects/${project.id}`
+    const store = (baseNodeId: string, cx: number, revision?: string) =>
+      t.app.inject({
+        method: 'PUT',
+        url: `${url}/draft`,
+        headers: revision ? { 'if-match': revision } : {},
+        payload: { baseNodeId, layout: layout(island('a', cx, 2)) },
+      })
+    const [first, second] = await Promise.all([store(root.id, 2), store(plan.id, 3)])
+    expect([first.statusCode, second.statusCode]).toEqual([200, 200])
+    expect((await store(plan.id, 4, '"1"')).statusCode).toBe(200)
+    expect((await store(plan.id, 5, '"1"')).statusCode).toBe(409)
+
+    const getDrafts = async (id: string) =>
+      (await t.app.inject({ method: 'GET', url: `/api/v1/projects/${id}/drafts` })).json<{
+        drafts: Draft[]
+      }>().drafts
+    const drafts = await getDrafts(project.id)
+    expect(drafts.map((d) => [d.baseNodeId, d.revision, d.layout.items[0]?.cx])).toEqual([
+      [plan.id, 2, 4],
+      [root.id, 1, 2],
+    ])
+    const file = (await t.app.inject({ method: 'GET', url: `${url}/export` })).json<ProjectExport>()
+    const imported = await t.app.inject({
+      method: 'POST',
+      url: '/api/v1/projects/import',
+      payload: { data: file },
+    })
+    expect(imported.statusCode).toBe(201)
+    const restored = await getDrafts(imported.json<ProjectImported>().project.id)
+    expect(restored.map((d) => d.layout.items[0]?.cx).sort()).toEqual([2, 4])
+
+    const removed = await t.app.inject({
+      method: 'DELETE',
+      url: `${url}/draft?baseNodeId=${root.id}`,
+      headers: { 'if-match': '"1"' },
+    })
+    expect(removed.statusCode).toBe(204)
+    expect(await getDrafts(project.id)).toEqual([drafts[0]])
   })
 
   it('reports design issues and refuses render nodes as an editing base', async () => {

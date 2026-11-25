@@ -1,19 +1,13 @@
 import type { Dispatch } from 'react'
-import type { Look } from '../../viewer3d/white-scene.ts'
 import type { EditorAction } from '../editor-state.ts'
-import { Box, Redo2, Rotate3d, Undo2 } from 'lucide-react'
-import {
-  MaterialIcon,
-  PartitionIcon,
-  PlanViewIcon,
-  SpacingIcon,
-} from '../../../components/StoreIcons.tsx'
+import { Redo2, Rotate3d, Undo2 } from 'lucide-react'
+import { PartitionIcon, PlanViewIcon, SpacingIcon } from '../../../components/StoreIcons.tsx'
 import type { SaveState } from './useDraftAutosave.ts'
 
 const SAVE_LABELS = {
   idle: '未修改',
-  saving: '正在保存草稿…',
-  saved: '草稿已保存',
+  saving: '正在自动保存…',
+  saved: '已自动保存',
   conflict: '草稿已被其他窗口修改',
   error: '草稿保存失败',
 }
@@ -21,10 +15,6 @@ const SAVE_LABELS = {
 interface EditorToolbarProps {
   view: 'plan' | '3d'
   onSwitchView: (next: 'plan' | '3d') => void
-  /** The material / white model choice is only offered in the 3D effect stage. */
-  isWhite: boolean
-  look: Look
-  onSwitchLook: (next: Look) => void
   canUndo: boolean
   canRedo: boolean
   dispatch: Dispatch<EditorAction>
@@ -37,13 +27,10 @@ interface EditorToolbarProps {
   onToggleDrawFixture: () => void
 }
 
-/** View and look tabs, undo / redo and the draft's save state. */
+/** View tabs, undo / redo and the draft's save state. */
 export function EditorToolbar({
   view,
   onSwitchView,
-  isWhite,
-  look,
-  onSwitchLook,
   canUndo,
   canRedo,
   dispatch,
@@ -75,28 +62,6 @@ export function EditorToolbar({
           三维
         </button>
       </div>
-      {isWhite && (
-        <div className="tabs" role="group" aria-label="外观">
-          <button
-            type="button"
-            className="with-icon"
-            aria-pressed={look === 'material'}
-            onClick={() => onSwitchLook('material')}
-          >
-            <MaterialIcon size={16} aria-hidden="true" />
-            材质
-          </button>
-          <button
-            type="button"
-            className="with-icon"
-            aria-pressed={look === 'white'}
-            onClick={() => onSwitchLook('white')}
-          >
-            <Box size={16} aria-hidden="true" />
-            白模
-          </button>
-        </div>
-      )}
       {view === 'plan' && (
         <button
           type="button"

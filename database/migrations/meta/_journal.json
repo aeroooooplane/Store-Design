@@ -120,6 +120,13 @@
       "when": 1792062835384,
       "tag": "0016_asset_market_versions",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1795515254894,
+      "tag": "0017_history_node_drafts",
+      "breakpoints": true
     }
   ]
 }

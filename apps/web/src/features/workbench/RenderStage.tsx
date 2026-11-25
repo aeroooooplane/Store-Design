@@ -549,7 +549,7 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
                 <>
                   已渲染 {Math.max(current, 0)}/{all.length} 张：每个视角一张材质图（
                   {RENDER_SIZE.width}×{RENDER_SIZE.height}
-                  ），与三维查看同一场景。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到它的白模。
+                  ），与三维查看同一场景。渲染节点保存了确认时的布局，不能直接编辑；如需修改，请回到来源方案。
                 </>
               }
             />

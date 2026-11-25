@@ -7,6 +7,7 @@ import {
   integer,
   jsonb,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   unique,
@@ -87,12 +88,12 @@ export const designNodes = pgTable(
   ],
 )
 
-/** One shared working draft per project, saved with optimistic locking. */
+/** An autosaved working layout per history node, with optimistic locking. */
 export const projectDrafts = pgTable(
   'project_drafts',
   {
     projectId: uuid('project_id')
-      .primaryKey()
+      .notNull()
       .references(() => projects.id),
     baseNodeId: uuid('base_node_id').notNull(),
     layout: jsonb('layout').$type<Layout>().notNull(),
@@ -100,6 +101,7 @@ export const projectDrafts = pgTable(
     updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (t) => [
+    primaryKey({ columns: [t.projectId, t.baseNodeId] }),
     foreignKey({
       name: 'project_drafts_base_node_same_project_fk',
       columns: [t.projectId, t.baseNodeId],

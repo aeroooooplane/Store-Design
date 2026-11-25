@@ -8,16 +8,15 @@ import type { ToolContext } from './context.ts'
 import { describeCamera } from './describe.ts'
 
 function requireViewNode(tools: ToolContext): DesignNode {
-  const node = tools.node
-  if (!node || (node.kind !== 'white' && node.kind !== 'render')) {
-    throw new AppError('INVALID_STATE', '只有三维效果或渲染节点有视角，请先进入三维效果')
+  if (!tools.node || tools.node.kind === 'space') {
+    throw new AppError('INVALID_STATE', '请先打开需要管理视角的方案或渲染节点')
   }
-  return node
+  return tools.node
 }
 
 export const listViewsTool = tool({
   name: 'list_views',
-  description: '列出当前白模或渲染节点的视角（相机位置与目标，毫米；默认 8 个）。',
+  description: '列出当前节点的视角（相机位置与目标，毫米；默认 8 个）。',
   schema: z.object({}),
   run: async (tools) => {
     const node = requireViewNode(tools)
@@ -29,7 +28,7 @@ export const listViewsTool = tool({
 export const addViewTool = tool({
   name: 'add_view',
   description:
-    '给当前白模或渲染节点增加一个视角：across 0–1 从左到右，along 0–1 从后墙到入口（大于 1 在店外），height 为相机高度占平面长边的倍数（俯瞰约 1，平视约 0.3）；相机看向店中心。可撤销。',
+    '给当前节点增加一个视角：across 0–1 从左到右，along 0–1 从后墙到入口（大于 1 在店外），height 为相机高度占平面长边的倍数（俯瞰约 1，平视约 0.3）；相机看向店中心。可撤销。',
   schema: z.object({
     name: z.string().trim().min(1).max(40),
     across: z.number().min(-1).max(2),
@@ -66,7 +65,7 @@ export const addViewTool = tool({
 
 export const removeViewTool = tool({
   name: 'remove_view',
-  description: '删除当前白模或渲染节点的一个视角（可撤销恢复）。',
+  description: '删除当前节点的一个视角（可撤销恢复）。',
   schema: z.object({ cameraId: z.string() }),
   run: async (tools, input) => {
     const node = requireViewNode(tools)

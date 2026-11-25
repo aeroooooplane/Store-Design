@@ -66,7 +66,7 @@ export function ProjectCard({
             disabled={siBusy || !!siLocked}
             title={
               siLocked ??
-              '当前节点的 SI 风格。在方案或三维效果节点上切换时，另存一个换成该风格道具的兄弟节点，原节点保留；换款后没改过再切回，直接回到原节点'
+              '当前节点的 SI 风格。在方案节点上切换时，另存一个换成该风格道具的兄弟节点，原节点保留；换款后没改过再切回，直接回到原节点'
             }
             onClick={() => {
               if (siStyle !== style) onSiSwitch?.(style)

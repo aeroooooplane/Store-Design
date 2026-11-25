@@ -20,11 +20,26 @@ const autosaveLimit = { rateLimit: { max: 240, timeWindow: '1 minute' } }
 
 export const draftRoutes: FastifyPluginAsyncZod<{ db: Database }> = async (app, { db }) => {
   app.get(
+    '/projects/:projectId/drafts',
+    {
+      schema: {
+        tags: ['drafts'],
+        summary: '读取项目各节点的自动保存草稿',
+        params: Params,
+        response: { 200: z.object({ drafts: z.array(DraftSchema) }), ...errors },
+      },
+    },
+    async (request) => ({
+      drafts: await service.listDrafts(db, request.ctx, request.params.projectId),
+    }),
+  )
+
+  app.get(
     '/projects/:projectId/draft',
     {
       schema: {
         tags: ['drafts'],
-        summary: '读取项目的共享编辑草稿',
+        summary: '读取项目最近保存的草稿（旧版兼容）',
         params: Params,
         response: { 200: DraftSchema, ...errors },
       },
@@ -68,8 +83,9 @@ export const draftRoutes: FastifyPluginAsyncZod<{ db: Database }> = async (app, 
       config: autosaveLimit,
       schema: {
         tags: ['drafts'],
-        summary: '丢弃草稿',
+        summary: '丢弃指定节点的草稿',
         params: Params,
+        querystring: z.object({ baseNodeId: z.uuid().optional() }),
         headers: Headers,
         response: { 204: z.null().describe('已丢弃'), ...errors },
       },
@@ -80,6 +96,7 @@ export const draftRoutes: FastifyPluginAsyncZod<{ db: Database }> = async (app, 
         request.ctx,
         request.params.projectId,
         requireRevision(request.headers['if-match']),
+        request.query.baseNodeId,
       )
       return reply.code(204).send(null)
     },

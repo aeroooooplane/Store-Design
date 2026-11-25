@@ -36,6 +36,7 @@ export interface PlannedProject {
   /** Parents always precede their children. */
   nodes: PlannedNode[]
   draft: { baseRef: string; layout: Layout } | null
+  additionalDrafts?: { baseRef: string; layout: Layout }[]
   warnings: string[]
 }
 

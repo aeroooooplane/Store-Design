@@ -47,22 +47,37 @@ export function convertNative(
       hidden: node.hidden,
     })),
   )
-  let draft: PlannedProject['draft'] = null
-  if (file.draft) {
-    const baseRef = file.draft.baseNodeId
-    if (!nodes.some((n) => n.ref === baseRef)) warnings.push('草稿所基于的节点不存在，已略去')
-    else
-      draft = {
+  const seen = new Set<string>()
+  const drafts = (file.drafts ?? (file.draft ? [file.draft] : [])).flatMap((entry) => {
+    const baseRef = entry.baseNodeId
+    if (seen.has(baseRef)) throw new AppError('VALIDATION_FAILED', '同一节点不能包含多份草稿')
+    seen.add(baseRef)
+    const base = nodes.find((n) => n.ref === baseRef)
+    if (!base || base.kind === 'render') {
+      warnings.push('草稿所基于的可编辑节点不存在，已略去')
+      return []
+    }
+    return [
+      {
         baseRef,
         layout: parseImported(
           LayoutSchema,
           {
-            ...file.draft.layout,
-            items: reconcileAssets(file.draft.layout.items, assets, '草稿', warnings),
+            ...entry.layout,
+            items: reconcileAssets(entry.layout.items, assets, '草稿', warnings),
           },
           '草稿的布局',
         ),
-      }
+      },
+    ]
+  })
+  const [draft = null, ...additionalDrafts] = drafts
+  return {
+    ...file.project,
+    name: name ?? file.project.name,
+    nodes,
+    draft,
+    additionalDrafts,
+    warnings,
   }
-  return { ...file.project, name: name ?? file.project.name, nodes, draft, warnings }
 }

@@ -12,31 +12,29 @@ export interface HistoryNode {
 export const NODE_KIND_LABELS: Record<NodeKind, string> = {
   space: '空间',
   plan: '方案',
-  edit: '编辑',
-  white: '三维效果',
+  edit: '方案',
+  white: '方案',
   render: '渲染',
 }
 
-/** Stages in history order; 'edit' nodes are the plan-level variants of earlier versions. */
-export type Stage = 'space' | 'plan' | 'white' | 'render'
+/** Legacy edit and white nodes are displayed in the plan stage. */
+export type Stage = 'space' | 'plan' | 'render'
 
 export const STAGE_LABELS: Record<Stage, string> = {
   space: '空间',
   plan: '方案',
-  white: '三维效果',
   render: '渲染',
 }
 
 export function stageOf(kind: NodeKind): Stage {
-  return kind === 'edit' ? 'plan' : kind
+  return kind === 'edit' || kind === 'white' ? 'plan' : kind
 }
 
-/** Which node kinds each stage sits under: plans under a space, white models under a plan, … */
+/** Parent kinds for new nodes in each stage. */
 export const STAGE_PARENT_KINDS: Record<Stage, readonly NodeKind[] | null> = {
   space: null,
   plan: ['space'],
-  white: ['plan', 'edit'],
-  render: ['white'],
+  render: ['plan', 'edit', 'white'],
 }
 
 /** The nearest `space` node at or above `nodeId` (layouts live in it). */
@@ -51,8 +49,7 @@ export function spaceAncestor(nodes: readonly HistoryNode[], nodeId: string): st
 }
 
 /**
- * Where a copy of this node goes: next to it, under its stage's parent (a plan under its space,
- * a white model under its plan). Old projects nested deeper; their copies come back up a level.
+ * A copy belongs under its stage's parent. Copies of legacy design nodes go under their space.
  */
 export function stageParentId(nodes: readonly HistoryNode[], node: HistoryNode): string | null {
   const kinds = STAGE_PARENT_KINDS[stageOf(node.kind)]

@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react'
 import type { ReactNode } from 'react'
+import { useBlocker } from 'react-router'
 import {
   checkAssetFit,
   WALL_ART_ID,
@@ -31,7 +32,7 @@ import type {
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import type { Viewer3DHandle } from '../viewer3d/Viewer3D.tsx'
-import type { Look, ViewPose } from '../viewer3d/white-scene.ts'
+import type { ViewPose } from '../viewer3d/white-scene.ts'
 import { useCreateNode } from './api.ts'
 import { useAgentSelection } from '../agent/selection.ts'
 import { CameraPanel } from './CameraPanel.tsx'
@@ -64,7 +65,6 @@ const Viewer3D = lazy(() =>
 const STAGE_TITLES: Record<Stage, string> = {
   space: '空间阶段 · 手动排布',
   plan: '方案阶段',
-  white: '三维效果阶段',
   render: '渲染阶段',
 }
 
@@ -83,17 +83,17 @@ interface PlanEditorProps {
   projectSi: SiStyle
   /** The project's market (LOGO versions in 3D). */
   market?: Market | undefined
-  /** The shared draft, if it continues this node. */
+  /** The node's autosaved working layout. */
   draft: Draft | null
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
+  onRegisterSave: (save: (() => Promise<boolean>) | null) => void
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: (swap: SiSwitch | null) => void
 }
 
 /**
- * Edits a layout on the plan or in the 3D white model (one layout, two views). Changes autosave to the shared draft (with optimistic locking);
- * saving a version or confirming the white model creates a new history node.
+ * Edits one layout in plan or 3D. Changes are automatically saved on the current node.
  */
 export function PlanEditor({
   projectId,
@@ -108,6 +108,7 @@ export function PlanEditor({
   draft,
   assets,
   onNodeCreated,
+  onRegisterSave,
   onRegisterSiSwitch,
 }: PlanEditorProps) {
   const create = useCreateNode(projectId)
@@ -123,20 +124,17 @@ export function PlanEditor({
     setAgentSelection(state.selectedId ? [state.selectedId] : [])
   }, [state.selectedId, setAgentSelection])
   const viewerRef = useRef<Viewer3DHandle>(null)
-  const isWhite = baseNode.kind === 'white'
   const stage = stageOf(baseNode.kind)
   // The same space keeps its 3D view and plan/3D choice from step to step.
   const memory = useViewMemory(spaceAncestor(nodes, baseNode.id))
   const remembered = useRef(memory.get())
   const [view, setView] = useState<'plan' | '3d'>(
-    () => remembered.current.view[stage] ?? (isWhite ? '3d' : 'plan'),
+    () => remembered.current.view[stage] ?? (stage === 'plan' ? '3d' : 'plan'),
   )
-  // The 3D effect stage shows materials by default; the white model stays one click away.
   // 显示间距: on by default; the choice carries over from step to step (10-16).
   const [showSpacing, setShowSpacing] = useSpacingPreference()
   // 画空心隔板: the next drag on the plan draws a partition.
   const [drawingFixture, setDrawingFixture] = useState(false)
-  const [look, setLook] = useState<Look>(() => remembered.current.look ?? 'material')
   // The 3D view is always mounted: it is the mini view while the plan is the main one.
   const [viewerReady, setViewerReady] = useState(false)
   const pendingCamera = useRef<Camera | null>(null)
@@ -255,14 +253,36 @@ export function PlanEditor({
     return () => window.cancelIdleCallback(id)
   }, [])
 
-  const { saveState, saveError, setPaused, finishDraft, discard, reloadDraft } = useDraftAutosave({
+  const { saveState, saveError, hasUnsaved, flush, discard, reloadDraft } = useDraftAutosave({
     projectId,
     baseNode,
     draft,
     state,
     dispatch,
   })
-  const { copyNode, advance } = useNodeActions({
+  const blocker = useBlocker(hasUnsaved)
+  useEffect(() => {
+    if (blocker.state !== 'blocked') return
+    let active = true
+    void flush().then((saved) => {
+      if (!active) return
+      if (saved) blocker.proceed()
+      else blocker.reset()
+    })
+    return () => {
+      active = false
+    }
+  }, [blocker, flush])
+  useEffect(() => {
+    onRegisterSave(flush)
+    return () => onRegisterSave(null)
+  }, [flush, onRegisterSave])
+  const {
+    copyNode,
+    advance,
+    busy,
+    error: actionError,
+  } = useNodeActions({
     baseNode,
     nodes,
     stage,
@@ -270,10 +290,8 @@ export function PlanEditor({
     assetMap,
     siStyle,
     projectSi,
-    draftOnThisStep: draft?.baseNodeId === baseNode.id,
     create,
-    setPaused,
-    finishDraft,
+    flush,
     onNodeCreated,
     onRegisterSiSwitch,
   })
@@ -283,8 +301,7 @@ export function PlanEditor({
     space,
     layout: state.layout,
     create,
-    setPaused,
-    finishDraft,
+    flush,
     onNodeCreated,
   })
   const {
@@ -319,11 +336,6 @@ export function PlanEditor({
     memory.update({ view: { [stage]: next } })
   }
 
-  function switchLook(next: Look) {
-    setLook(next)
-    memory.update({ look: next })
-  }
-
   function showCamera(camera: NodeCamera) {
     switchView('3d')
     if (viewerRef.current) viewerRef.current.showView(camera.camera)
@@ -340,7 +352,7 @@ export function PlanEditor({
           <ModelPicker assets={assets} siStyle={siStyle} onPick={addAsset} />
         )
       }
-      defaultTab={isWhite ? 'history' : 'models'}
+      defaultTab="models"
       cameras={
         !editWalls.editing ? (
           <CameraPanel
@@ -376,9 +388,6 @@ export function PlanEditor({
             <EditorToolbar
               view={view}
               onSwitchView={switchView}
-              isWhite={isWhite}
-              look={look}
-              onSwitchLook={switchLook}
               canUndo={state.past.length > 0}
               canRedo={state.future.length > 0}
               dispatch={dispatch}
@@ -397,7 +406,12 @@ export function PlanEditor({
                 </button>
               </div>
             )}
-            {saveState === 'error' && <ErrorMessage error={saveError} />}
+            {saveError !== null && <ErrorMessage error={saveError} />}
+            {saveState === 'error' && hasUnsaved() && (
+              <button type="button" onClick={() => void flush()}>
+                重试保存
+              </button>
+            )}
 
             <div
               className="plan-canvas"
@@ -432,12 +446,12 @@ export function PlanEditor({
                     onResize={resize}
                     onRotate={rotate}
                     onReady={onViewerReady}
-                    look={isWhite ? look : 'white'}
+                    look="material"
                     siStyle={siStyle}
                     market={market}
                     initialView={remembered.current.pose}
                     onViewChange={rememberPose}
-                    title={`${baseNode.name} 三维${isWhite && look === 'material' ? '效果' : '白模'}`}
+                    title={`${baseNode.name} 三维效果`}
                   />
                 </Suspense>
                 {planMain && (
@@ -492,24 +506,19 @@ export function PlanEditor({
           <div className="wb-card">
             <StagePanel
               title={STAGE_TITLES[stage]}
-              status={
-                saveState !== 'idle' || state.dirty ? (
-                  <span className="tag">有未保存修改</span>
-                ) : null
-              }
               first={[
                 stage === 'space'
                   ? {
                       label: '保存为方案',
                       onClick: advance,
-                      disabled: create.isPending,
+                      disabled: busy || create.isPending,
                       primary: true,
                     }
                   : {
                       label: '新建副本',
                       title: '在同一层另存一份，原来的保留，之后在副本上修改',
                       onClick: copyNode,
-                      disabled: create.isPending,
+                      disabled: busy || create.isPending,
                     },
                 {
                   label: '丢弃草稿',
@@ -523,27 +532,27 @@ export function PlanEditor({
                       label: '修改墙体',
                       title: '改边界、入口、柱子或层高，另存为新的空间和方案',
                       onClick: editWalls.start,
-                      disabled: create.isPending || editWalls.editing,
+                      disabled: busy || create.isPending || editWalls.editing,
                     }
                   : undefined
               }
               second={
-                stage === 'plan' || stage === 'white'
+                stage === 'plan'
                   ? {
-                      label: stage === 'plan' ? '进入三维效果' : '开始渲染',
+                      label: '开始渲染',
                       onClick: advance,
                       primary: true,
-                      disabled: create.isPending || errors.length > 0,
+                      disabled: busy || create.isPending || errors.length > 0,
                     }
                   : undefined
               }
               hint={
                 errors.length > 0 && stage !== 'space'
-                  ? `解决检查中的问题后才能${stage === 'plan' ? '进入三维效果' : '开始渲染'}。`
+                  ? '解决检查中的问题后才能开始渲染。'
                   : undefined
               }
             />
-            <ErrorMessage error={create.error} />
+            <ErrorMessage error={actionError} />
           </div>
 
           <PropertiesPanel

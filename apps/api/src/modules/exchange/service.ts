@@ -8,6 +8,7 @@ import { authorize } from '../../context/policy.ts'
 import { AppError, notFound } from '../../lib/app-error.ts'
 import { catalogAssets } from '../assets/service.ts'
 import { recordAudit } from '../audit/record.ts'
+import { draftRows } from '../drafts/service.ts'
 import { checkSpace } from '../nodes/service.ts'
 import { toProject } from '../projects/service.ts'
 import { convertLegacy } from './legacy.ts'
@@ -73,12 +74,13 @@ export async function importProject(
     }
 
     let draftImported = false
-    if (planned.draft) {
-      const baseNodeId = ids.get(planned.draft.baseRef)
+    for (const draft of [planned.draft, ...(planned.additionalDrafts ?? [])]) {
+      if (!draft) continue
+      const baseNodeId = ids.get(draft.baseRef)
       if (baseNodeId) {
         await tx
           .insert(projectDrafts)
-          .values({ projectId: project.id, baseNodeId, layout: planned.draft.layout })
+          .values({ projectId: project.id, baseNodeId, layout: draft.layout })
         draftImported = true
       }
     }
@@ -116,10 +118,10 @@ export async function exportProject(
     .where(eq(designNodes.projectId, projectId))
     .orderBy(asc(designNodes.seq))
   if (!nodes.length) throw new AppError('INVALID_STATE', '项目还没有任何节点，无需导出')
-  const [draft] = await db
-    .select()
-    .from(projectDrafts)
-    .where(eq(projectDrafts.projectId, projectId))
+  const drafts = (await draftRows(db, projectId)).map(({ baseNodeId, layout }) => ({
+    baseNodeId,
+    layout,
+  }))
   return {
     format: EXPORT_FORMAT,
     schemaVersion: 1,
@@ -143,6 +145,7 @@ export async function exportProject(
       importedFrom: n.importedFrom,
       hidden: n.hiddenAt !== null,
     })),
-    draft: draft ? { baseNodeId: draft.baseNodeId, layout: draft.layout } : null,
+    draft: drafts[0] ?? null,
+    ...(drafts.length > 1 ? { drafts } : {}),
   }
 }

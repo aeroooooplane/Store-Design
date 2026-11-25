@@ -42,7 +42,7 @@ export function ProjectListPage() {
         <p>
           {list.data
             ? `共 ${total} 个${status === 'active' ? '项目' : '已删除项目'}`
-            : 'SI1.0 / SI2.0 · 平面 · 白模 · 效果'}
+            : 'SI1.0 / SI2.0 · 空间 · 方案 · 渲染'}
         </p>
       </header>
 

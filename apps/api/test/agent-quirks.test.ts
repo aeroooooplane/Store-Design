@@ -229,7 +229,7 @@ const deepLegacy = {
 }
 
 describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
-  it('导入保留“方案下挂方案/调整、白模下挂白模”；在这些节点上修改布局时，副本回到所属阶段的层级', async () => {
+  it('导入保留“方案下挂方案/调整、白模下挂白模”；在这些节点上修改布局时，副本归到所属空间的方案阶段', async () => {
     const imported = await t.app.inject({
       method: 'POST',
       url: '/api/v1/projects/import',
@@ -264,16 +264,15 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
       ['白模 再调', 'white', white1.id],
     ])
 
-    // On a node at its proper level the change works as usual.
+    // A legacy model can still be copied as a plan.
     const fine = await run(project.id, white1.id, 'move_item', { itemId: 'real', dx_mm: 1000 })
     expect(await node(fine.nodeId)).toMatchObject({
-      kind: 'white',
-      parentId: plan1.id,
+      kind: 'plan',
+      parentId: root.id,
       name: '白模 · Agent',
     })
 
-    // Copies go to the stage's own level, like the workbench's stageParentId: a plan nested under a
-    // plan (or an old edit step) back under the space, a nested white model under its plan.
+    // The editor and assistant both create copies at the plan stage under the owning space.
     const nested = await run(project.id, plan2.id, 'move_item', { itemId: 'real', dx_mm: 1000 })
     expect(await node(nested.nodeId)).toMatchObject({
       kind: 'plan',
@@ -291,8 +290,8 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
       along: 'back',
     })
     expect(await node(deepWhite.nodeId)).toMatchObject({
-      kind: 'white',
-      parentId: plan1.id,
+      kind: 'plan',
+      parentId: root.id,
       name: '白模 再调 · Agent',
     })
     // The SI switch files its copy the same way.

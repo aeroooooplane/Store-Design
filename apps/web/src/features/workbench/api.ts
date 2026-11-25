@@ -30,14 +30,14 @@ import type {
   RenderImage,
   RenderedMode,
 } from '@store/shared'
-import { ApiRequestError, api, ifMatch, unwrap } from '../../api/client.ts'
+import { api, ifMatch, unwrap } from '../../api/client.ts'
 import { displayKeys } from '../display/queries.ts'
 
 /** Every response is parsed with the shared schemas, so runtime data matches the types. */
 export const workbenchKeys = {
   tree: (projectId: string) => ['workbench', projectId, 'tree'] as const,
   node: (nodeId: string) => ['workbench', 'node', nodeId] as const,
-  draft: (projectId: string) => ['workbench', projectId, 'draft'] as const,
+  drafts: (projectId: string) => ['workbench', projectId, 'drafts'] as const,
   assets: ['workbench', 'assets'] as const,
   cameras: (nodeId: string) => ['workbench', 'cameras', nodeId] as const,
   cameraActions: (nodeId: string) => ['workbench', 'camera-actions', nodeId] as const,
@@ -82,24 +82,15 @@ export function useCatalog() {
   })
 }
 
-/** The shared draft, or null when there is none (404). */
-export function useDraft(projectId: string) {
+export function useDrafts(projectId: string) {
   return useQuery({
-    queryKey: workbenchKeys.draft(projectId),
-    queryFn: async (): Promise<Draft | null> => {
-      try {
-        return DraftSchema.parse(
-          unwrap(
-            await api.GET('/api/v1/projects/{projectId}/draft', {
-              params: { path: { projectId } },
-            }),
-          ),
-        )
-      } catch (error) {
-        if (error instanceof ApiRequestError && error.status === 404) return null
-        throw error
-      }
-    },
+    queryKey: workbenchKeys.drafts(projectId),
+    queryFn: async (): Promise<Draft[]> =>
+      unwrap(
+        await api.GET('/api/v1/projects/{projectId}/drafts', {
+          params: { path: { projectId } },
+        }),
+      ).drafts.map((draft) => DraftSchema.parse(draft)),
   })
 }
 
@@ -119,9 +110,13 @@ export async function putDraft(
   )
 }
 
-export async function deleteDraft(projectId: string, revision: number): Promise<void> {
+export async function deleteDraft(
+  projectId: string,
+  baseNodeId: string,
+  revision: number,
+): Promise<void> {
   const result = await api.DELETE('/api/v1/projects/{projectId}/draft', {
-    params: { path: { projectId }, header: ifMatch(revision) },
+    params: { path: { projectId }, query: { baseNodeId }, header: ifMatch(revision) },
   })
   if (result.error !== undefined) unwrap(result)
 }
