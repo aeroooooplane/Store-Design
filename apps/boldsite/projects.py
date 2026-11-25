@@ -114,11 +114,30 @@ def update_project(
     return write_project(request, projectId, if_match, payload.model_dump(exclude_unset=True))
 
 
+@router.post("/projects/{projectId}/save")
+def save_project(
+    request: Request, projectId: ResourceId, payload: ProjectUpdate, if_match: Annotated[str | None, Query(alias="ifMatch")] = None
+):
+    return write_project(request, projectId, if_match, payload.model_dump(exclude_unset=True))
+
+
+@router.post("/projects/{projectId}/trash")
+def trash_project(request: Request, projectId: ResourceId, if_match: Annotated[str | None, Query(alias="ifMatch")] = None):
+    return write_project(request, projectId, if_match, {"deletedAt": timestamp()})
+
+
+
 @router.delete("/projects/{projectId}")
 def delete_project(request: Request, projectId: ResourceId, if_match: Annotated[str | None, Header()] = None):
     return write_project(request, projectId, if_match, {"deletedAt": timestamp()})
 
 
 @router.post("/projects/{projectId}/restore")
-def restore_project(request: Request, projectId: ResourceId, if_match: Annotated[str | None, Header()] = None):
-    return write_project(request, projectId, if_match, {"deletedAt": None}, restoring=True)
+def restore_project(
+    request: Request,
+    projectId: ResourceId,
+    if_match: Annotated[str | None, Header()] = None,
+    gateway_revision: Annotated[str | None, Query(alias="ifMatch")] = None,
+):
+    revision = if_match if if_match is not None else gateway_revision
+    return write_project(request, projectId, revision, {"deletedAt": None}, restoring=True)
