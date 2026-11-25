@@ -93,6 +93,44 @@ it('shows one advertising machine per size with no separate portrait entry', () 
 afterEach(cleanup)
 
 describe('pickableSections', () => {
+  it.each(['domestic', 'overseas'] as const)('在 SI2.0 / %s 仅保留指定四款配件柜', (market) => {
+    const cabinets = [
+      ['asset-34327615', '1.2米配件柜'],
+      ['asset-24482600', '1.2米配件柜(AVBU)'],
+      ['asset-36890994', '2.4米配件柜(场景)'],
+      ['asset-6799167', '2.4米配件柜(场景)'],
+      ['asset-36887885', '2.4米配件柜(AVBU)'],
+      ['asset-36929122', '2.4米配件柜(AVBU+影石Insta360)'],
+      ['asset-15903179', '3.6米配件柜'],
+      ['asset-36857093', '3.6米配件柜(AVBU)'],
+    ].map(([id, name]) =>
+      asset(id!, name!, '软装道具', { function: 'accessory_cabinet', siFamily: 'SI2.0' }),
+    )
+    const before = structuredClone(cabinets)
+    const section = pickableSections(cabinets, 'SI2.0', market).find(
+      (s) => s.key === 'accessory_cabinet',
+    )
+    expect(section?.assets.map(({ id, name }) => [id, name])).toEqual([
+      ['asset-34327615', '1.2米配件柜'],
+      ['asset-36890994', '2.4米配件柜（场景）'],
+      ['asset-36887885', '2.4米配件柜（AVBU）'],
+      ['asset-15903179', '3.6米配件柜'],
+    ])
+    expect(cabinets).toEqual(before)
+  })
+
+  it('只在 SI2.0 隐藏中岛陈列柜组合，保留 SI1.0 清单与其他中岛桌', () => {
+    const combo = asset('asset-28034994', '中岛陈列柜组合', '非标陈列', {
+      function: 'island_table',
+      siFamily: '非标',
+    })
+    const ordinary = catalog.find((a) => a.id === 'asset-3')!
+    const si1Cabinet = catalog[0]!
+    const source = [combo, ordinary, si1Cabinet]
+    expect(pickableSections(source, 'SI2.0').flatMap((s) => s.assets)).toEqual([ordinary])
+    expect(pickableSections(source, 'SI1.0').flatMap((s) => s.assets)).toEqual([combo, si1Cabinet])
+  })
+
   it.each([
     ['SI1.0', 'domestic'],
     ['SI1.0', 'overseas'],
@@ -158,6 +196,24 @@ describe('pickableSections', () => {
 })
 
 describe('ModelPicker', () => {
+  it('以无托盘名称选取原配件边柜，保留真实尺寸和模型引用', () => {
+    const cabinet = asset('asset-28192911', '1.8米配件边柜（高1.3米）', '软装道具', {
+      name: '1.8米配件边柜（高1.3米）',
+      function: 'side_cabinet',
+      siFamily: 'SI2.0',
+      footprint: { w: 1.8, d: 0.721, h: 1.3 },
+      glb: file('cabinet-model'),
+    })
+    const onPick = vi.fn()
+    render(<ModelPicker assets={[cabinet]} siStyle="SI2.0" onPick={onPick} />)
+    const option = screen.getByRole('button', { name: '添加 1.8米配件边柜（无托盘）' })
+    expect(within(option).getByText('1800 × 721 × 1300 mm')).toBeTruthy()
+    expect(screen.queryByText('1.8米配件边柜（高1.3米）')).toBeNull()
+    fireEvent.click(option)
+    expect(onPick).toHaveBeenCalledWith({ ...cabinet, name: '1.8米配件边柜（无托盘）' })
+    expect(cabinet.name).toBe('1.8米配件边柜（高1.3米）')
+  })
+
   it('切换市场时同时更新名称与实际模型缩略图，添加时保留原市场模型引用', () => {
     const logo = asset('asset-33868330', '墙面LOGO', '品牌标识', {
       function: 'signage',

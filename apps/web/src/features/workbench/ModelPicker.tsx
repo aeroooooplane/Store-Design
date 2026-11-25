@@ -62,6 +62,16 @@ export interface PickableSection {
 /** 环境设施 (fire boxes, spotlights) are part of the store, not props placed by hand. */
 const PLACEABLE_CATEGORIES = new Set(['软装道具', '信息化物料', '品牌标识', '非标陈列'])
 
+/** SI2.0 添加模型清单；目录记录和旧方案的型号引用继续保留。 */
+const SI2_ACCESSORY_ORDER = ['asset-34327615', 'asset-36890994', 'asset-36887885', 'asset-15903179']
+const SI2_OPTION_NAMES: Record<string, string> = {
+  'asset-34327615': '1.2米配件柜',
+  'asset-36890994': '2.4米配件柜（场景）',
+  'asset-36887885': '2.4米配件柜（AVBU）',
+  'asset-15903179': '3.6米配件柜',
+  'asset-28192911': '1.8米配件边柜（无托盘）',
+}
+
 /**
  * The models a project may use: furniture of its own SI style, plus every model that is not tied
  * to a style. Retired models (模型选用表 删除) are left out. One section per category, in UI order.
@@ -82,19 +92,27 @@ export function pickableSections(
           !LEGACY_PORTRAIT_SCREENS.has(a.id) &&
           PLACEABLE_CATEGORIES.has(a.category) &&
           match(a) &&
+          (si !== 'SI2.0' ||
+            (a.id !== 'asset-28034994' &&
+              (key !== 'accessory_cabinet' || SI2_ACCESSORY_ORDER.includes(a.id)))) &&
           (key !== 'signage' || Boolean(SIGNAGE_OPTIONS[a.id])) &&
           (a.category !== '软装道具' ||
             a.siFamily === si ||
             (a.function === 'signage' && a.standardName.startsWith('徕卡墙'))),
       )
       .map((asset) => {
-        const name = SIGNAGE_OPTIONS[asset.id]?.[market] ?? advertisingScreenName(asset.id)
+        const name =
+          SIGNAGE_OPTIONS[asset.id]?.[market] ??
+          (si === 'SI2.0' ? SI2_OPTION_NAMES[asset.id] : undefined) ??
+          advertisingScreenName(asset.id)
         return name ? { ...asset, name } : asset
       })
       .sort((a, b) =>
         key === 'signage'
           ? SIGNAGE_ORDER.indexOf(a.id) - SIGNAGE_ORDER.indexOf(b.id)
-          : a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
+          : si === 'SI2.0' && key === 'accessory_cabinet'
+            ? SI2_ACCESSORY_ORDER.indexOf(a.id) - SI2_ACCESSORY_ORDER.indexOf(b.id)
+            : a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
       ),
   })).filter((section) => section.assets.length > 0)
 }
