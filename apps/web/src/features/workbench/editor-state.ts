@@ -1,6 +1,11 @@
 import {
+  EPSILON_M,
   MIN_FIXTURE_M,
   advertisingScreenName,
+  closestPointOnSegment,
+  distance,
+  edges,
+  locatePoint,
   itemElevation,
   portraitScreenFootprint,
   isWallArt,
@@ -32,6 +37,7 @@ import type {
   Layout,
   LayoutItem,
   Point,
+  Polygon,
   Rect,
   ScreenOrientation,
   Space,
@@ -40,6 +46,7 @@ import { magnetSnap } from './snap.ts'
 
 /** Drag and keyboard moves snap to 10 mm. */
 export const SNAP_M = 0.01
+const MAX_DRAG_OUTSIDE_M = 1
 /** Undo steps kept per editing session. */
 export const HISTORY_LIMIT = 100
 
@@ -86,7 +93,8 @@ export type EditorAction =
   /**
    * `group` joins the moves of one drag into one undo step; `snapTo` turns on magnetic
    * snapping to the walls of this space and to other props. A wall piece snaps onto the wall
-   * instead, turning its `front` (the model's) into the shop.
+   * instead, turning its `front` (the model's) into the shop. Pointer drags supply the
+   * store outline separately so Alt only disables magnetic snapping.
    */
   | {
       type: 'move'
@@ -95,6 +103,7 @@ export type EditorAction =
       cz: number
       group?: string | undefined
       snapTo?: Space | null | undefined
+      dragBoundary?: Polygon | undefined
       front?: FrontAxis | null | undefined
     }
   | { type: 'nudge'; id: string; dx: number; dz: number }
@@ -343,6 +352,38 @@ export function nextItemId(layout: Layout, fn: string): string {
   return `${fn}-${n}`
 }
 
+type ModelPosition = Pick<LayoutItem, 'cx' | 'cz'>
+
+/** Keep a model centre within one metre of the actual shop outline. */
+function limitDrag(position: ModelPosition, boundary: Polygon | undefined): ModelPosition {
+  const first = boundary?.[0]
+  if (!boundary || !first) return position
+  const point: Point = [position.cx, position.cz]
+  if (locatePoint(point, boundary) !== 'outside') return position
+
+  let closest = first
+  let shortest = distance(point, first)
+  for (const [a, b] of edges(boundary)) {
+    const candidate = closestPointOnSegment(point, a, b)
+    const gap = distance(point, candidate)
+    if (gap < shortest) {
+      closest = candidate
+      shortest = gap
+    }
+  }
+  if (shortest <= MAX_DRAG_OUTSIDE_M) return position
+
+  const atDistance = (limit: number): ModelPosition => ({
+    cx: roundM(closest[0] + ((point[0] - closest[0]) / shortest) * limit),
+    cz: roundM(closest[1] + ((point[1] - closest[1]) / shortest) * limit),
+  })
+  const atLimit = atDistance(MAX_DRAG_OUTSIDE_M)
+  // On oblique edges and corners, rounding to millimetres can round out of the range.
+  return distance([atLimit.cx, atLimit.cz], closest) <= MAX_DRAG_OUTSIDE_M
+    ? atLimit
+    : atDistance(MAX_DRAG_OUTSIDE_M - EPSILON_M)
+}
+
 export function editorReducer(state: EditorState, action: EditorAction): EditorState {
   switch (action.type) {
     case 'load':
@@ -356,6 +397,9 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         (item) => {
           if (item.locked) return item
           let { cx, cz } = action
+          if (action.dragBoundary && (!Number.isFinite(cx) || !Number.isFinite(cz))) return item
+          const limitPosition = (position: ModelPosition) =>
+            limitDrag(position, action.dragBoundary)
           if (isDisplayPanel(item)) {
             if (cx === item.cx && cz === item.cz) return item
             const placed =
@@ -369,15 +413,17 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                 state.layout.fixtures,
                 state.layout.items,
               )
-            return placed
-              ? { ...item, ...placed }
-              : {
-                  ...item,
-                  cx: snap(cx),
-                  cz: snap(cz),
-                  mount: 'ceiling',
-                  elevation: itemElevation(item),
-                }
+            if (placed && limitPosition(placed) === placed) return { ...item, ...placed }
+            const position = limitPosition({ cx: snap(cx), cz: snap(cz) })
+            const elevation = itemElevation(item)
+            if (
+              position.cx === item.cx &&
+              position.cz === item.cz &&
+              item.mount === 'ceiling' &&
+              item.elevation === elevation
+            )
+              return item
+            return { ...item, ...position, mount: 'ceiling', elevation }
           }
           let exactX = false
           let exactZ = false
@@ -394,7 +440,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
               state.layout.fixtures,
               state.layout.items,
             )
-            if (placed)
+            if (placed && limitPosition(placed) === placed)
               return relocate(
                 item,
                 placed,
@@ -417,7 +463,10 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
             exactZ = snapped.snappedZ
           }
           // A snapped axis keeps millimetres so the prop sits exactly against the wall.
-          const next = { cx: exactX ? roundM(cx) : snap(cx), cz: exactZ ? roundM(cz) : snap(cz) }
+          const next = limitPosition({
+            cx: exactX ? roundM(cx) : snap(cx),
+            cz: exactZ ? roundM(cz) : snap(cz),
+          })
           if (action.snapTo && itemMount(item) !== 'floor')
             return relocate(item, next, state.layout.items, action.snapTo, state.layout.fixtures)
           return next.cx === item.cx && next.cz === item.cz ? item : { ...item, ...next }

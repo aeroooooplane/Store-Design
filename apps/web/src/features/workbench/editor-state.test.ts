@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest'
-import { LayoutSchema, locatePoint, rectangleSpace, validateLayout } from '@store/shared'
+import {
+  distanceToBoundary,
+  LayoutSchema,
+  locatePoint,
+  rectangleSpace,
+  validateLayout,
+} from '@store/shared'
 import type { Asset, Layout, LayoutItem } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import {
@@ -396,6 +402,62 @@ describe('undo / redo', () => {
       s = editorReducer(s, { type: 'move', id: 'island_table-1', cx: 1 + i * 0.01, cz: 2 })
     }
     expect(s.past).toHaveLength(100)
+  })
+})
+
+describe('模型拖动在门店边界外一米处截止', () => {
+  const space = rectangleSpace(8, 6, 3)
+  const start = state([item()])
+  const drag = {
+    type: 'move' as const,
+    id: 'island_table-1',
+    group: 'drag-limit',
+    dragBoundary: space.boundary,
+  }
+
+  it.each([space, null])('磁吸开启或按住 Alt 都限制拖动，整次拖动只撤销一步', (snapTo) => {
+    const insideMargin = editorReducer(start, { ...drag, snapTo, cx: 8.5, cz: 3 })
+    expect(insideMargin.layout.items[0]).toMatchObject({ cx: 8.5, cz: 3 })
+    const atLimit = editorReducer(insideMargin, { ...drag, snapTo, cx: 40, cz: 3 })
+    expect(atLimit.layout.items[0]).toMatchObject({ cx: 9, cz: 3 })
+    expect(editorReducer(atLimit, { ...drag, snapTo, cx: 100, cz: 3 })).toBe(atLimit)
+    expect(editorReducer(atLimit, { type: 'undo' }).layout).toEqual(start.layout)
+  })
+
+  it('斜向拖过角点时限制直线距离，毫米取整后仍在范围内', () => {
+    const next = editorReducer(start, { ...drag, cx: 100, cz: 44 })
+    const { cx, cz } = next.layout.items[0]!
+    expect(cx).toBeGreaterThan(8)
+    expect(cz).toBeGreaterThan(6)
+    const gap = distanceToBoundary([cx, cz], space.boundary)
+    expect(gap).toBeLessThanOrEqual(1)
+    expect(gap).toBeGreaterThan(0.998)
+  })
+
+  it('按凹形店铺的实际轮廓限制拖动', () => {
+    const next = editorReducer(start, {
+      ...drag,
+      dragBoundary: [
+        [0, 0],
+        [10, 0],
+        [10, 8],
+        [7, 8],
+        [7, 2],
+        [3, 2],
+        [3, 8],
+        [0, 8],
+      ],
+      cx: 4.25,
+      cz: 6,
+    })
+    expect(next.layout.items[0]).toMatchObject({ cx: 4, cz: 6 })
+  })
+
+  it('保留旧项目的场外摆放及属性面板的坐标编辑', () => {
+    const loaded = state([item({ cx: 20, cz: 2 })])
+    expect(loaded.layout.items[0]).toMatchObject({ cx: 20, cz: 2 })
+    const next = editorReducer(loaded, { type: 'move', id: drag.id, cx: 21, cz: 2 })
+    expect(next.layout.items[0]).toMatchObject({ cx: 21, cz: 2 })
   })
 })
 
