@@ -413,6 +413,7 @@ export function PlanEditor({
           <ModelPicker
             assets={assets}
             siStyle={siStyle}
+            market={market}
             onPick={addAsset}
             isPointPlaced={pointPlacedAsset}
             pendingAssetId={placement?.item.assetId}
