@@ -6,6 +6,8 @@
 
 ## 1. 当前快照（每次收工时更新）
 
+开发工作区根目录为 `D:\Store-Design-worktrees`。旧根目录联接继续供现有依赖和历史记录访问。
+
 主仓库已迁至 `D:\Store-Design`。工作台、现用档案脚本和日常文档使用新路径。引用旧路径的历史资料继续保留。
 
 历史树（2026-11-24）：方案默认带材质三维，直接进入渲染。编辑按节点自动保存，切换、另存和进入渲染均保留来源修改。迁移 0017 保留原草稿，旧三维节点和视角可继续打开。普通版和 BoldSite 本地模拟的切换、刷新、重开、模型图片及下载通过。生产更新需应用迁移 0017。CI 与合并见 [PR #246](https://github.com/aeroooooplane/Store-Design/pull/246)。
@@ -155,7 +157,7 @@ UI #145：圆点径向历史图已完成实现与验收（专项 21 项、全仓
 ## 5. 协作规则
 
 1. **开工与收工。** 开工前 `git fetch`，读本文件和未关闭的 Issue，在第 3 节登记任务；登记后才动共用文件。收工前推送分支、更新第 1、3 节、清掉自己的未提交改动，并在第 8 节记一行。
-2. **分支与工作区。** 新分支加 AI 前缀：`claude/<主题>`、`codex/<主题>`（已有分支名不改）。每个任务一个 worktree：`git worktree add "D:/text demo-worktrees/<名>" -b <分支> origin/main`，随后在该 worktree 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/connect-onedrive-resources.ps1`。不在主工作区切分支或提交；合并后可用 `git merge --ff-only origin/main` 同步主工作区。
+2. **分支与工作区。** 新分支加 AI 前缀：`claude/<主题>`、`codex/<主题>`（已有分支名不改）。每个任务一个 worktree：`git worktree add "D:/Store-Design-worktrees/<名>" -b <分支> origin/main`，随后在该 worktree 运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/connect-onedrive-resources.ps1`。不在主工作区切分支或提交；合并后可用 `git merge --ff-only origin/main` 同步主工作区。
 3. **提交与 PR。** 遵守 AGENTS.md：标题“类型(范围)：具体改动”，标题、正文、合并说明用简体中文。提交 PR 前本地跑 `pnpm check` 和 `pnpm format:check`（与 CI 一致）。一个功能一个分支一个 PR，不顺带提交别人的改动或无关文件。
 4. **合并。** 各自合并自己的 PR。条件：CI 通过；改动只在认领目录或已登记的共用文件内；正文写清改动、原因、验证方法和已知限制。草稿 PR 不合并。冲突由后合并者把最新 main 合入自己的分支后解决并重跑 CI，不 rebase、不强推已推送分支。生成文件冲突时合并 main 后运行 `pnpm api:openapi` 重新生成，不手工合并。合并后更新第 1 节。
 5. **数据库迁移编号。** 需要迁移的任务在第 3 节登记“占用 00NN”，生成迁移时使用该编号。两个 PR 撞号时，后合并者重新生成为下一个编号（含 `meta/_journal.json` 和 snapshot）。
@@ -244,6 +246,8 @@ QWS-source405已由第三轮审核包答复并落实为利旧中岛桌，来源�
 - 2026-10-19 及之前的业务与规则决定见 [交接说明第 6 节](handover-codex-20261019.md)（云端识别默认关闭、柱与管井扣可用面积而后加构件只避让、坐凳按单件、后场只出平面与避让等）。
 
 ## 8. 变更记录
+
+- 2026-11-25，Codex 统一开发工作区根目录，逐个验证 38 个工作区的分支、提交和本地改动。
 
 - 2026-11-25，Codex 更新主仓库路径与门店档案工具默认入口。历史取证路径按原样保留。
 
