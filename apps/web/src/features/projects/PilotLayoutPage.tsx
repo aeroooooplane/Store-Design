@@ -24,6 +24,7 @@ import { plannerCatalog } from '../../../../api/src/modules/layouts/selection.ts
 import { ModelPicker } from '../workbench/ModelPicker.tsx'
 import { useCatalog } from '../workbench/api.ts'
 import { PilotAssetPreview } from './PilotAssetPreview.tsx'
+import { PilotDisplay } from './PilotDisplay.tsx'
 import { useProject } from './queries.ts'
 import './pilot-layout.css'
 
@@ -123,6 +124,7 @@ function PilotLayout({ project }: { project: Project }) {
     [models, project.siStyle],
   )
   const [showLibrary, setShowLibrary] = useState(false)
+  const [showDisplay, setShowDisplay] = useState(false)
   const [preview, setPreview] = useState<Asset | null>(null)
   const candidate = useMemo(
     () => planLayout({ space, shopType: project.shopType, strategy, catalog }),
@@ -133,6 +135,21 @@ function PilotLayout({ project }: { project: Project }) {
   const filename = safeFileName(project.name + ' 试排 ' + PLAN_STRATEGY_LABELS[strategy])
 
   const names = deliveryFileNames(project.name)
+
+  async function displayPlan() {
+    const drawing = plan.current
+    if (!drawing) throw new Error('平面图暂时无法导出。')
+    const { x, y, width, height } = drawing.viewBox.baseVal
+    const { png } = await exportPlan(drawing, 1800)
+    return {
+      image: {
+        data: 'data:image/png;base64,' + png,
+        width: 1800,
+        height: Math.round((1800 * height) / width),
+      },
+      box: { x, y, width, height },
+    }
+  }
 
   async function generatePdfs() {
     const scene = viewer.current
@@ -350,6 +367,15 @@ function PilotLayout({ project }: { project: Project }) {
             生成双 PDF
           </button>
         )}
+        {models.length > 0 && (
+          <button
+            type="button"
+            aria-expanded={showDisplay}
+            onClick={() => setShowDisplay(!showDisplay)}
+          >
+            {showDisplay ? '收起展陈方案' : '展开展陈方案'}
+          </button>
+        )}
         <button type="button" disabled={!legend.entries.length} onClick={downloadMaterials}>
           下载物料清单
         </button>
@@ -409,6 +435,18 @@ function PilotLayout({ project }: { project: Project }) {
           />
         )}
       </section>
+      {showDisplay && (
+        <PilotDisplay
+          key={space.boundary.flat().join(',') + ':' + strategy}
+          project={project}
+          space={space}
+          layout={candidate.layout}
+          catalog={assets}
+          plan={displayPlan}
+          strategy={strategy}
+          download={downloadFile}
+        />
+      )}
       {candidate.issues.length > 0 && (
         <ul className="notice" aria-label="排布检查">
           {candidate.issues.map((issue, index) => (

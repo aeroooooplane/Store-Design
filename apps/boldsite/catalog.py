@@ -26,6 +26,11 @@ class Catalog:
         self.items = snapshot.get("items", [])
         self.by_id = {record["id"]: record for record in self.items}
         self.files = snapshot.get("files", {})
+        rules = self.directory / "display.json"
+        display = json.loads(rules.read_text(encoding="utf-8")) if rules.is_file() else {}
+        self.display_rules = display.get("rules")
+        self.display_bodies = display.get("bodies", {"bodies": []})
+        self.inner_trays = display.get("trays", {})
 
     def file_response(self, file_id, version, width, if_none_match):
         record = self.files.get(file_id)
@@ -89,3 +94,25 @@ def asset_detail(request: Request, assetId: Annotated[str, ApiPath(pattern=r"^as
     if item is None:
         raise missing("资产")
     return item
+
+
+@router.get("/display-rules/current")
+def current_display_rules(request: Request):
+    rules = request.app.state.catalog.display_rules
+    if rules is None:
+        raise missing("展陈规则")
+    return rules
+
+@router.get("/display-bodies")
+def display_bodies(request: Request):
+    return request.app.state.catalog.display_bodies
+
+
+@router.get("/display-inner-trays/{version}/{module_id}")
+def display_module(request: Request, version: Literal["legacy", "2026"], module_id: str):
+    catalog = request.app.state.catalog
+    file_id = catalog.inner_trays.get(f"{version}/{module_id}")
+    response = catalog.file_response(file_id, None, None, None)
+    if response is None:
+        raise missing("内嵌托盘配图")
+    return response

@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { cp, mkdir } from 'node:fs/promises'
 import path from 'node:path'
@@ -46,6 +47,8 @@ const catalog = process.argv[3]
 if (catalog) {
   const source = path.resolve(catalog)
   await cp(path.join(source, 'index.json'), path.join(output, 'catalog', 'index.json'))
+  const display = path.join(source, 'display.json')
+  if (existsSync(display)) await cp(display, path.join(output, 'catalog', 'display.json'))
   await cp(path.join(source, 'files'), path.join(output, 'catalog', 'files'), {
     recursive: true,
     force: false,
