@@ -42,7 +42,7 @@ uv pip install --python-version 3.12 --python-platform x86_64-manylinux_2_28 \
   -r /path/to/new-release/requirements.txt
 ```
 
-`app.py` 会优先加载发布目录中的 `vendor/`。原生 Linux CI 也用二进制 Wheel 安装到这个位置并运行契约测试。发布前核对 `pydantic_core` 和 Pillow 的原生扩展与探针一致。重新选择运行时后，用一个新发布目录重新安装依赖。
+`app.py` 会优先加载发布目录中的 `vendor/`。原生 Linux CI 也用二进制 Wheel 安装到这个位置并运行契约测试。发布前核对 `pydantic_core` 和 Pillow 的原生扩展与探针一致。 CLI 1.0.5 干跑会扫描 `vendor/`，此次仅依赖目录触发路径、写盘及端口启发式告警。按真实运行时重打包后重新扫描，并向平台核对依赖目录的处理方式。重新选择运行时后，用一个新发布目录重新安装依赖。
 
 ## 真实平台验收
 

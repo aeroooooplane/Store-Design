@@ -22,7 +22,7 @@ def prepare_fixture(directory):
         with tempfile.TemporaryDirectory(dir=directory) as scratch:
             source = Path(scratch) / "fixture.txt"
             source.write_bytes(("synthetic-boldsite-probe " + uuid4().hex + "\n").encode())
-            with source.open("rb") as file:
+            with source.open("r+b") as file:
                 os.fsync(file.fileno())
 
             try:
