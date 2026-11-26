@@ -143,6 +143,20 @@ class Database:
                     id TEXT PRIMARY KEY, nodeId TEXT NOT NULL REFERENCES workbench_nodes(id),
                     kind TEXT NOT NULL, value TEXT NOT NULL, createdAt TEXT NOT NULL)""",
             )
+            statements += (
+                """CREATE TABLE IF NOT EXISTS display_tasks (
+                    id TEXT PRIMARY KEY, name TEXT NOT NULL, market TEXT NOT NULL, siStyle TEXT NOT NULL,
+                    revision INTEGER NOT NULL DEFAULT 1, state TEXT NOT NULL, plan TEXT, render TEXT,
+                    createdAt TEXT NOT NULL, updatedAt TEXT NOT NULL, deletedAt TEXT)""",
+                """CREATE TABLE IF NOT EXISTS display_task_files (
+                    id TEXT PRIMARY KEY, taskId TEXT NOT NULL REFERENCES display_tasks(id),
+                    name TEXT NOT NULL, mime TEXT NOT NULL, sha TEXT NOT NULL, data BLOB NOT NULL,
+                    UNIQUE(taskId,name,mime,sha))""",
+                """CREATE TABLE IF NOT EXISTS display_task_exports (
+                    id TEXT PRIMARY KEY, taskId TEXT NOT NULL REFERENCES display_tasks(id),
+                    payload TEXT NOT NULL, createdAt TEXT NOT NULL)""",
+                "CREATE INDEX IF NOT EXISTS display_task_exports_owner ON display_task_exports(taskId,createdAt)",
+            )
             for statement in statements:
                 db.execute(statement)
 

@@ -1,12 +1,12 @@
 import { buildDisplayPresentation } from '../../../../api/src/modules/displays/deck-template.ts'
-import type { DeckImage } from '../../../../api/src/modules/displays/deck-template.ts'
+import type { DeckImage, DeckMark } from '../../../../api/src/modules/displays/deck-template.ts'
 import type {
   DisplayEdits,
   DisplayRulesView,
   DisplayTable,
   Market,
   NodeDisplay,
-  NodeDisplayExportRequest,
+  DisplayPptOptions,
   SiStyle,
 } from '@store/shared'
 import { photoOf } from '../display/photos.ts'
@@ -24,22 +24,24 @@ interface SlideInput {
   tables: DisplayTable[]
   end: 'left' | 'right'
   moduleScheme: DisplayEdits['moduleScheme']
-  rendered?: NodeDisplay
-  options?: NodeDisplayExportRequest
+  rendered?: Pick<NodeDisplay, 'views' | 'overviewCameraId' | 'tableViews'>
+  options?: DisplayPptOptions
+  planMarks?: Record<string, DeckMark>
 }
 
-async function photo(url: string): Promise<DeckImage> {
+export async function displaySlideImage(url: string, maxSide = Infinity): Promise<DeckImage> {
   const image = new Image()
   image.src = url
   await image.decode()
   const canvas = document.createElement('canvas')
-  canvas.width = image.naturalWidth
-  canvas.height = image.naturalHeight
+  const scale = Math.min(1, maxSide / Math.max(image.naturalWidth, image.naturalHeight))
+  canvas.width = Math.max(1, Math.round(image.naturalWidth * scale))
+  canvas.height = Math.max(1, Math.round(image.naturalHeight * scale))
   const context = canvas.getContext('2d')
   if (!context) throw new Error('浏览器无法读取展陈照片')
   context.fillStyle = '#ffffff'
   context.fillRect(0, 0, canvas.width, canvas.height)
-  context.drawImage(image, 0, 0)
+  context.drawImage(image, 0, 0, canvas.width, canvas.height)
   return { data: canvas.toDataURL('image/jpeg', 0.85), width: canvas.width, height: canvas.height }
 }
 
@@ -52,7 +54,7 @@ export async function exportDisplaySlides(input: SlideInput) {
     await Promise.all(
       [...units].map(async (unit) => {
         const source = photoOf(input.rules.photos, unit, input.si)
-        return [unit, source ? await photo(source.url) : undefined] as const
+        return [unit, source ? await displaySlideImage(source.url) : undefined] as const
       }),
     ),
   )
@@ -75,7 +77,7 @@ export async function exportDisplaySlides(input: SlideInput) {
   )
   const pictures = await Promise.allSettled(
     [...modules].map(async (id) => {
-      const image = await photo(
+      const image = await displaySlideImage(
         apiHref('/api/v1/display-inner-trays/' + version + '/' + encodeURIComponent(id)),
       )
       return [id, image] as const
@@ -95,7 +97,10 @@ export async function exportDisplaySlides(input: SlideInput) {
         .filter((v) => v.imageUrl)
         .map(
           async (view) =>
-            [view.cameraId, { image: await photo(view.imageUrl!), marks: view.marks }] as const,
+            [
+              view.cameraId,
+              { image: await displaySlideImage(view.imageUrl!), marks: view.marks },
+            ] as const,
         ),
     ),
   )
@@ -114,7 +119,10 @@ export async function exportDisplaySlides(input: SlideInput) {
         const mime = shot.image.startsWith('iVBOR') ? 'image/png' : 'image/jpeg'
         return [
           table.label,
-          { image: await photo('data:' + mime + ';base64,' + shot.image), names: shot.names },
+          {
+            image: await displaySlideImage('data:' + mime + ';base64,' + shot.image),
+            names: shot.names,
+          },
         ] as const
       }),
     ),
@@ -127,12 +135,14 @@ export async function exportDisplaySlides(input: SlideInput) {
     rules: input.rules.rules,
     tables: input.tables,
     plan: image,
-    planMarks: Object.fromEntries(
-      input.tables.map((table) => [
-        table.label,
-        { x: (table.plan.cx - box.x) / box.width, y: (table.plan.cz - box.y) / box.height },
-      ]),
-    ),
+    planMarks:
+      input.planMarks ??
+      Object.fromEntries(
+        input.tables.map((table) => [
+          table.label,
+          { x: (table.plan.cx - box.x) / box.width, y: (table.plan.cz - box.y) / box.height },
+        ]),
+      ),
     overview: views.get(input.rendered?.overviewCameraId ?? '') ?? null,
     tableViews,
     photos,

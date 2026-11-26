@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useParams } from 'react-router'
+import { useQueryClient } from '@tanstack/react-query'
 import type { PDFDocumentProxy } from 'pdfjs-dist'
 import {
   DISPLAY_ORIENTATION_LABELS,
@@ -12,12 +13,15 @@ import {
 } from '@store/shared'
 import type {
   DisplayEdits,
+  DisplayRulesView,
   DisplayTask,
   DisplayTaskState,
   TaskTable,
   VectorContent,
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { isFullWorkbench } from '../../api/deployment.ts'
+
 import {
   canvasToPng,
   extractVector,
@@ -32,6 +36,7 @@ import { tableShots } from './table3d/shots.ts'
 import type { PictureMark } from './MarkedPicture.tsx'
 import { SlotTable } from './SlotTable.tsx'
 import {
+  displayKeys,
   useDetectTables,
   useDisplayRules,
   useDisplayTask,
@@ -80,25 +85,17 @@ export function DisplayTaskPage() {
       </main>
     )
   }
-  return (
-    <TaskEditor
-      key={task.data.id}
-      task={task.data}
-      rules={rules.data.rules}
-      photos={rules.data.photos}
-      ruleVersion={rules.data.version}
-    />
-  )
+  return <TaskEditor key={task.data.id} task={task.data} rulesView={rules.data} />
 }
 
 interface TaskEditorProps {
   task: DisplayTask
-  rules: NonNullable<ReturnType<typeof useDisplayRules>['data']>['rules']
-  photos: NonNullable<ReturnType<typeof useDisplayRules>['data']>['photos']
-  ruleVersion: string
+  rulesView: DisplayRulesView
 }
 
-function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
+function TaskEditor({ task, rulesView }: TaskEditorProps) {
+  const { rules, photos, version: ruleVersion } = rulesView
+  const client = useQueryClient()
   const update = useUpdateDisplayTask(task.id)
   const upload = useUploadTaskPicture(task.id)
   const detect = useDetectTables(task.id)
@@ -146,9 +143,10 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
     setTables(draft.tables.map((t) => (t.id === id ? { ...t, ...patch } : t)))
 
   async function saveDraft() {
-    if (!dirty) return
-    await update.mutateAsync({ state: draft })
+    if (!dirty) return task
+    const savedTask = await update.mutateAsync({ state: draft })
     setDirty(false)
+    return savedTask
   }
 
   async function choose(files: FileList | null) {
@@ -181,27 +179,35 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
     }
   }
 
-  /** Uploads the chosen plan and render, then finds the tables. */
+  /** Uploads the chosen pages and runs detection when the backend supports it. */
   async function recognise() {
     setError(null)
     try {
+      const uploadPicture = async (input: Parameters<typeof upload.mutateAsync>[0]) => {
+        const updated = await upload.mutateAsync(input)
+        if (isFullWorkbench) {
+          setDraft(updated.state)
+          setDirty(false)
+        }
+      }
       let vector: VectorContent | undefined
       if (pdf) {
         if (!pdf.plan) throw new Error('请在缩略图中选出平面图页')
         setBusy('正在上传平面图…')
         const planCanvas = await renderPage(pdf.doc, pdf.plan)
-        vector = await extractVector(pdf.doc, pdf.plan)
-        await upload.mutateAsync({
+        if (!isFullWorkbench) vector = await extractVector(pdf.doc, pdf.plan)
+        await uploadPicture({
           which: 'plan',
           blob: await canvasToPng(planCanvas),
           contentType: 'image/png',
           originalName: pdf.name,
           page: pdf.plan,
         })
+
         if (pdf.render) {
           setBusy('正在上传效果图…')
           const renderCanvas = await renderPage(pdf.doc, pdf.render, 2000)
-          await upload.mutateAsync({
+          await uploadPicture({
             which: 'render',
             blob: await canvasToPng(renderCanvas),
             contentType: 'image/png',
@@ -215,7 +221,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
           const type = file ? pictureType(file) : null
           if (!file || !type) continue
           setBusy(which === 'plan' ? '正在上传平面图…' : '正在上传效果图…')
-          await upload.mutateAsync({
+          await uploadPicture({
             which,
             blob: file,
             contentType: type,
@@ -224,6 +230,13 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
         }
       } else if (!task.plan) {
         throw new Error('请先选择门店图纸 PDF，或平面图与效果图')
+      }
+      if (isFullWorkbench) {
+        setPdf(null)
+        setImages(null)
+        setSelected(null)
+        setTool(null)
+        return
       }
       setBusy('正在识别中岛桌与边桌…')
       const next = await detect.mutateAsync({ ...(vector ? { vector } : {}), useModel: true })
@@ -239,7 +252,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
   async function makePpt() {
     setError(null)
     try {
-      await saveDraft()
+      const savedTask = await saveDraft()
       setDrawing(true)
       const tables3d =
         pptViews === 'plan'
@@ -250,8 +263,18 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
               si: task.siStyle,
               end: draft.edits.landscapeEnd,
             })
-      setDrawing(false)
-      await exporting.mutateAsync({ views: pptViews, tables3d })
+      const options = { views: pptViews, tables3d }
+      if (isFullWorkbench) {
+        const { archiveDisplayTask } = await import('./boldsite-task-export.ts')
+        await archiveDisplayTask(savedTask, rulesView, options)
+        await Promise.all([
+          client.invalidateQueries({ queryKey: displayKeys.task(task.id) }),
+          client.invalidateQueries({ queryKey: displayKeys.tasks }),
+        ])
+      } else {
+        setDrawing(false)
+        await exporting.mutateAsync(options)
+      }
     } catch (caught) {
       setError(caught)
     } finally {
@@ -281,7 +304,12 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
       <header className="page-header">
         <h1>门店中岛桌展陈方案</h1>
         <span className="page-header-end">
-          <p>先识别图纸，再校准平面图和效果图上的桌子编号，最后生成 PPT · 展陈规则 {ruleVersion}</p>
+          <p>
+            {isFullWorkbench
+              ? '上传图纸，标注桌位并生成 PPT'
+              : '先识别图纸，再校准平面图和效果图上的桌子编号，最后生成 PPT'}{' '}
+            · 展陈规则 {ruleVersion}
+          </p>
           <Link to="/display">展陈方案列表</Link>
         </span>
       </header>
@@ -359,9 +387,9 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
                 type="button"
                 className="primary"
                 onClick={() => void recognise()}
-                disabled={working || (!pdf && !images && !task.plan)}
+                disabled={working || (!pdf && !images && (isFullWorkbench || !task.plan))}
               >
-                {busy ?? '识别并校准'}
+                {busy ?? (isFullWorkbench ? '上传图纸' : '识别并校准')}
               </button>
               <input
                 ref={fileInput}
@@ -390,6 +418,11 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
               可以上传整套门店图纸
               PDF（自动挑出平面图页和效果图页，可在缩略图中改选），也可以上传平面图和效果图两张图片。平面图质量需与施工图相当。
             </p>
+            {isFullWorkbench && (
+              <p className="hint">
+                上传后可在平面图上手动添加和调整桌位。更换平面图会清除已标注的桌位。
+              </p>
+            )}
             {pdf && (
               <>
                 <p className="hint">
@@ -461,7 +494,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
                 {task.render
                   ? `，效果图 ${task.render.originalName ?? ''}${task.render.page ? ` 第 ${task.render.page} 页` : ''}`
                   : '，未上传效果图'}
-                。可重新选择文件后再次识别。
+                {isFullWorkbench ? '。' : '。可重新选择文件后再次识别。'}
               </p>
             )}
           </section>
@@ -657,7 +690,7 @@ function TaskEditor({ task, rules, photos, ruleVersion }: TaskEditorProps) {
                 onClick={() => void makePpt()}
                 disabled={drawing || exporting.isPending || working || !draft.tables.length}
               >
-                {drawing ? '正在画三维…' : exporting.isPending ? '正在生成…' : '生成 PPT'}
+                {drawing || exporting.isPending ? '正在生成…' : '生成 PPT'}
               </button>
             </div>
             {task.exports.length === 0 ? (
