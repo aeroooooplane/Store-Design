@@ -69,6 +69,10 @@ export const RENDER_LOOK = {
     /** SI2.0 p.39–42: 星空灰 aluminium composite panels. */
     'SI2.0': { color: '#48443f', roughness: 0.55, metalness: 0.2 },
   },
+  /** SI1.0 PDF p.113–114: matte silver-grey metal, specified by physical sample (no HEX code).
+   * A light neutral silver approximation; structural micro-cement walls keep their own finish.
+   */
+  partition: { color: '#d4d6d7', roughness: 0.48, metalness: 0.45 },
   /** 中岛店 edge: 80 mm matte silver-grey stainless (SI2.0 raises the floor 30 mm). */
   edging: { color: '#b3b3b3', metalness: 0.6, roughness: 0.45, width: 0.08, height: 0.03 },
   /** Props keep their own colours and textures; material names adjust the finish. */
@@ -86,7 +90,7 @@ export const RENDER_LOOK = {
   [key: string]: unknown
 }
 
-export type RoomSurface = 'floor' | 'wall' | 'edging'
+export type RoomSurface = 'floor' | 'wall' | 'partition' | 'edging'
 
 /** Island shops have their own floor whatever the SI style. */
 export function floorKind(siStyle: SiStyle, shopType: ShopType): FloorKind {
@@ -219,6 +223,7 @@ export function roomMaterials(
 ): Record<RoomSurface, THREE.MeshStandardMaterial> {
   const floor = RENDER_LOOK.floors[floorKind(siStyle, shopType)]
   const wall = RENDER_LOOK.walls[siStyle]
+  const partition = siStyle === 'SI1.0' ? RENDER_LOOK.partition : wall
   const map = floorTexture(floor, floorLayout(space, shopType))
   return {
     floor: new THREE.MeshStandardMaterial({
@@ -232,6 +237,7 @@ export function roomMaterials(
       roughness: wall.roughness,
       metalness: wall.metalness,
     }),
+    partition: new THREE.MeshStandardMaterial(partition),
     edging: new THREE.MeshStandardMaterial({
       color: RENDER_LOOK.edging.color,
       roughness: RENDER_LOOK.edging.roughness,
