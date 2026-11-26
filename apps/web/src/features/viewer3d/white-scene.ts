@@ -315,7 +315,7 @@ export class WhiteScene {
           this.space &&
           mesh.userData['edgingStyle'] !== this.siStyle
         ) {
-          mesh.geometry.dispose()
+          disposeGeometry(mesh)
           mesh.geometry = islandEdgingGeometry(this.space.boundary, this.siStyle)
           mesh.userData['edgingStyle'] = this.siStyle
         }
