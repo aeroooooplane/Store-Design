@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
-import { nodeSiStyle, spaceAncestor } from '@store/shared'
+import { nodeSiStyle } from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -18,7 +18,14 @@ import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ProjectNavSlot } from '../../components/AppNav.tsx'
 import { isFullWorkbench } from '../../api/deployment.ts'
 import { ProjectDrawings } from '../projects/ProjectDrawings.tsx'
-import { useCreateNode, useDrafts, useNode, useCatalog, useTree } from './api.ts'
+import {
+  useCreateNode,
+  useDrafts,
+  useNode,
+  useCatalog,
+  useTree,
+  useUpdateNodeSpace,
+} from './api.ts'
 import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
 import { HistoryTree, HistoryViewProvider } from './HistoryTree.tsx'
@@ -121,7 +128,8 @@ export function Workbench({ project }: { project: Project }) {
     currentPanel === 'view' && requested === selectedId && params.get('mode') === 'placement'
       ? 'manual'
       : currentPanel
-  const cardSpace = useNode(selectedId ? spaceAncestor(nodes, selectedId) : null)
+  const [openingSpace, setOpeningSpace] = useState(false)
+  const [spaceOpenError, setSpaceOpenError] = useState(false)
 
   function select(nodeId: string) {
     setParams({ node: nodeId })
@@ -134,6 +142,22 @@ export function Workbench({ project }: { project: Project }) {
   async function openNewSpace() {
     if (saveCurrentNode.current && !(await saveCurrentNode.current())) return
     setPanel({ nodeId: selectedId, kind: 'new-space' })
+  }
+
+  async function openEditSpace() {
+    setOpeningSpace(true)
+    setSpaceOpenError(false)
+    try {
+      if (saveCurrentNode.current && !(await saveCurrentNode.current())) {
+        setSpaceOpenError(true)
+        return
+      }
+      setPanel({ nodeId: selectedId, kind: 'edit-space' })
+    } catch {
+      setSpaceOpenError(true)
+    } finally {
+      setOpeningSpace(false)
+    }
   }
 
   // The SI style shown is the selected step's own (每个节点各自对应一个 SI); a space shows the
@@ -178,7 +202,7 @@ export function Workbench({ project }: { project: Project }) {
   }
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
-  const cardSpaceData = cardSpace.data?.space ?? null
+  const cardSpaceData = selected?.space ?? null
   const left = (
     <HistoryTree
       projectId={project.id}
@@ -223,7 +247,6 @@ export function Workbench({ project }: { project: Project }) {
       panel={activePanel}
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
       onSelect={select}
-      onSpaceConfirmed={openPlacement}
       registerSiSwitch={registerSiSwitch}
     />
   ) : null
@@ -245,6 +268,16 @@ export function Workbench({ project }: { project: Project }) {
         value={
           <>
             <ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />
+            {!creatingSpace && cardSpaceData && (
+              <button
+                type="button"
+                disabled={openingSpace || activePanel === 'edit-space'}
+                onClick={() => void openEditSpace()}
+              >
+                修改空间
+              </button>
+            )}
+            {spaceOpenError && <p role="alert">请先完成当前节点的保存或渲染，再修改空间。</p>}
             {isFullWorkbench && <ProjectDrawings projectId={project.id} />}
           </>
         }
@@ -342,7 +375,6 @@ interface NodePanelProps {
   panel: Panel
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
-  onSpaceConfirmed: (nodeId: string) => void
   registerSiSwitch: (swap: SiSwitch | null) => void
   registerSave: (save: (() => Promise<boolean>) | null) => void
 }
@@ -357,30 +389,70 @@ function NodePanel({
   panel,
   setPanel,
   onSelect,
-  onSpaceConfirmed,
   registerSiSwitch,
   registerSave,
 }: NodePanelProps) {
   const node = useNode(nodeId)
-  const spaceNode = useNode(spaceAncestor(nodes, nodeId))
-  const create = useCreateNode(project.id)
+  const updateSpace = useUpdateNodeSpace(project.id, nodeId)
   const assetMap = useMemo(() => new Map(assets.map((a) => [a.id, a])), [assets])
 
-  const error = node.error ?? spaceNode.error
-  const space = spaceNode.data?.space
+  const error = node.error
+  const space = node.data?.space
   if (error || !node.data || !space) {
     return (
       <WorkbenchLayout
         left={left}
-        center={error ? <ErrorMessage error={error} /> : <p className="notice">正在加载节点…</p>}
+        center={
+          error ? (
+            <ErrorMessage error={error} />
+          ) : (
+            <p className="notice">{node.data ? '节点缺少所属空间' : '正在加载节点…'}</p>
+          )
+        }
       />
     )
   }
   const current = node.data
 
+  if (panel === 'edit-space') {
+    return (
+      <WorkbenchLayout
+        left={left}
+        center={
+          <div className="wb-card">
+            <h2>修改空间</h2>
+            <p className="hint">保存后直接更新当前节点的空间。</p>
+            <ErrorMessage error={updateSpace.error} />
+            <SpaceCaptureEditor
+              shop={project.shopType}
+              initial={space}
+              hideName
+              submitLabel="保存到当前节点"
+              onCancel={() => {
+                updateSpace.reset()
+                setPanel('view')
+              }}
+              onSubmit={async (edited) => {
+                await updateSpace.mutateAsync({ space: edited, previousSpace: space })
+                setPanel('view')
+              }}
+            />
+          </div>
+        }
+      />
+    )
+  }
+
   if (current.kind === 'render') {
     return (
-      <RenderStage left={left} project={project} node={current} space={space} assets={assetMap} />
+      <RenderStage
+        left={left}
+        project={project}
+        node={current}
+        space={space}
+        assets={assetMap}
+        onRegisterSave={registerSave}
+      />
     )
   }
 
@@ -404,36 +476,6 @@ function NodePanel({
   )
 
   if (current.kind !== 'space') return editor
-
-  if (panel === 'edit-space') {
-    return (
-      <WorkbenchLayout
-        left={left}
-        center={
-          <div className="wb-card">
-            <h2>修改空间</h2>
-            <p className="hint">修改会保存为新的空间节点，原空间及其方案保持不变。</p>
-            <ErrorMessage error={create.error} />
-            <SpaceCaptureEditor
-              shop={project.shopType}
-              initial={space}
-              initialName={`${current.name}（修改）`}
-              onCancel={() => setPanel('view')}
-              onSubmit={async (edited, name) => {
-                const created = await create.mutateAsync({
-                  parentId: current.parentId,
-                  kind: 'space',
-                  name,
-                  space: edited,
-                })
-                onSpaceConfirmed(created.node.id)
-              }}
-            />
-          </div>
-        }
-      />
-    )
-  }
 
   if (panel === 'manual' || draft) return editor
 
@@ -486,10 +528,7 @@ function SpaceStage({
         <div className="wb-card">
           <StagePanel
             title="空间阶段"
-            first={[
-              { label: '修改空间', onClick: () => setPanel('edit-space') },
-              { label: '手动排布', onClick: () => setPanel('manual') },
-            ]}
+            first={[{ label: '手动排布', onClick: () => setPanel('manual') }]}
             second={{
               label: generation.busy ? '正在生成…' : generation.label,
               onClick: generation.run,

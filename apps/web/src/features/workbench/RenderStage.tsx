@@ -75,6 +75,7 @@ interface RenderStageProps {
   node: DesignNode
   space: Space
   assets: ReadonlyMap<string, Asset>
+  onRegisterSave?: (save: (() => Promise<boolean>) | null) => void
 }
 
 /**
@@ -83,7 +84,14 @@ interface RenderStageProps {
  * are no longer made). Missing images render on opening; images made before the models or
  * views changed are marked stale.
  */
-export function RenderStage({ left, project, node, space, assets }: RenderStageProps) {
+export function RenderStage({
+  left,
+  project,
+  node,
+  space,
+  assets,
+  onRegisterSave,
+}: RenderStageProps) {
   const cameras = useCameras(node.id)
   const renders = useRenders(node.id)
   const client = useQueryClient()
@@ -140,6 +148,31 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
   // Same numbering as the PDF legend (the server runs deliveryLegend too).
   const numbers = useMemo(() => deliveryLegend(layout.items, assets).numbers, [layout, assets])
   const deliverable = all.length > 0 && missing.length === 0 && stale.length === 0
+
+  useEffect(() => {
+    if (!onRegisterSave) return
+    onRegisterSave(async () => {
+      if (progress || exporting || cameraBusy || backgroundEditor.uploading.size) return false
+      try {
+        await backgroundEditor.drafts.flushAll(
+          views.filter((c) => backgroundEditor.drafts.get(c.id)).map((c) => c.id),
+        )
+        return true
+      } catch (caught) {
+        setError(caught)
+        return false
+      }
+    })
+    return () => onRegisterSave(null)
+  }, [
+    onRegisterSave,
+    progress,
+    exporting,
+    cameraBusy,
+    backgroundEditor.drafts,
+    backgroundEditor.uploading,
+    views,
+  ])
 
   async function render(targets: Target[]) {
     if (

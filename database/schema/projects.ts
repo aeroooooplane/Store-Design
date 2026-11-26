@@ -44,7 +44,7 @@ export const projects = pgTable(
 /**
  * History tree. Rows are immutable except `name` and `hidden_at`.
  * A `space` node holds the store space (optionally carrying a layout over from its parent);
- * every other node holds a layout and inherits the space of its nearest `space` ancestor.
+ * every other node holds a layout and may save its own space. Otherwise it inherits the nearest saved space.
  */
 export const designNodes = pgTable(
   'design_nodes',
@@ -81,7 +81,7 @@ export const designNodes = pgTable(
     check(
       'design_nodes_payload_matches_kind',
       sql`(${t.kind} = 'space' AND ${t.space} IS NOT NULL)
-        OR (${t.kind} <> 'space' AND ${t.space} IS NULL AND ${t.layout} IS NOT NULL AND ${t.parentId} IS NOT NULL)`,
+        OR (${t.kind} <> 'space' AND ${t.layout} IS NOT NULL AND ${t.parentId} IS NOT NULL)`,
     ),
     check('design_nodes_strategy_only_on_plan', sql`${t.strategy} IS NULL OR ${t.kind} = 'plan'`),
     check('design_nodes_name_not_blank', sql`length(trim(${t.name})) > 0`),

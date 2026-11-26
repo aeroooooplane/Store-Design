@@ -224,7 +224,7 @@ export async function saveRender(
     (revision > 0 || input.backgroundRevision !== undefined) &&
     input.backgroundRevision !== revision
   ) {
-    throw new AppError('REVISION_CONFLICT', '背景已更新，请重新渲染')
+    throw new AppError('REVISION_CONFLICT', '空间、视角或背景已更新，请重新渲染')
   }
   const { width, height } = pngSize(input.png)
 
@@ -249,7 +249,7 @@ export async function saveRender(
       (latest.camera.backgroundRevision ?? 0) !== revision ||
       cameraSignature(latest.camera) !== view.signature
     ) {
-      throw new AppError('REVISION_CONFLICT', '视角或背景已更新，请重新渲染')
+      throw new AppError('REVISION_CONFLICT', '空间、视角或背景已更新，请重新渲染')
     }
     // The same picture uploaded twice is one file.
     const storedId = await registerStoredFile(tx, {

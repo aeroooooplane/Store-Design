@@ -18,11 +18,16 @@ export async function findNode(db: Database, nodeId: string): Promise<NodeRow> {
 }
 
 /** Projects in the recycle bin are read-only. */
-export async function requireActiveProject(db: Database, projectId: string): Promise<void> {
-  const [project] = await db
+export async function requireActiveProject(
+  db: Database,
+  projectId: string,
+  lock = false,
+): Promise<void> {
+  const lookup = db
     .select({ deletedAt: projects.deletedAt })
     .from(projects)
     .where(eq(projects.id, projectId))
+  const [project] = await (lock ? lookup.for('update') : lookup)
   if (!project) throw notFound('项目')
   if (project.deletedAt) throw new AppError('INVALID_STATE', '项目在回收站中，请先恢复')
 }

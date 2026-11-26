@@ -1,11 +1,14 @@
+import { isDeepStrictEqual } from 'node:util'
 import { and, asc, count, eq, isNull, sql } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
 import {
   MAX_NODES_PER_PROJECT,
   STAGE_PARENT_KINDS,
+  SpaceSchema,
   checkAssetFit,
   emptyDisplayEdits,
+  followSpaceWalls,
   normalizeSpace,
   validateLayout,
   validateSpace,
@@ -19,6 +22,7 @@ import type {
   NodeKind,
   NodeOrigin,
   NodeSummary,
+  NodeSpaceUpdate,
   NodeTree,
   Space,
 } from '@store/shared'
@@ -33,7 +37,7 @@ import type { NodeRow } from './repository.ts'
 // Other modules import the guard from here.
 export { requireActiveProject }
 
-const { designNodes, projects } = schema
+const { designNodes, nodeCameras, projectDrafts, projects } = schema
 
 export function toSummary(row: NodeRow): NodeSummary {
   return {
@@ -59,15 +63,20 @@ export function toNode(row: NodeRow): DesignNode {
   }
 }
 
-/** The space a layout lives in: the nearest `space` node at or above `nodeId`. */
-export async function resolveSpace(db: Database, nodeId: string): Promise<Space> {
-  let current: string | null = nodeId
-  for (let depth = 0; current && depth <= MAX_NODES_PER_PROJECT; depth++) {
-    const row = await findNode(db, current)
-    if (row.kind === 'space' && row.space) return row.space
-    current = row.parentId
+/** A saved node can use its own space or inherit one from the nearest ancestor. */
+async function effectiveSpace(db: Database, node: NodeRow): Promise<Space | null> {
+  let row = node
+  for (let depth = 0; depth <= MAX_NODES_PER_PROJECT; depth++) {
+    if (row.space || !row.parentId) return row.space
+    row = await findNode(db, row.parentId)
   }
-  throw new AppError('INVALID_STATE', '节点缺少所属空间')
+  return null
+}
+
+export async function resolveSpace(db: Database, nodeId: string): Promise<Space> {
+  const space = await effectiveSpace(db, await findNode(db, nodeId))
+  if (!space) throw new AppError('INVALID_STATE', '节点缺少所属空间')
+  return space
 }
 
 const asIssues = (
@@ -137,7 +146,7 @@ export async function getNode(
 ): Promise<DesignNode> {
   const row = await findNode(db, nodeId)
   authorize(ctx.actor, 'node:read', { projectId: row.projectId })
-  return toNode(row)
+  return { ...toNode(row), space: await effectiveSpace(db, row) }
 }
 
 // Keyed by node kind, not stage: new 'edit' nodes are still accepted anywhere (see agent-quirks).
@@ -162,55 +171,58 @@ export async function createNode(
   meta: NodeMeta = {},
 ): Promise<NodeCreated> {
   authorize(ctx.actor, 'node:create', { projectId })
-  await requireActiveProject(db, projectId)
-  const [{ total } = { total: 0 }] = await db
-    .select({ total: count() })
-    .from(designNodes)
-    .where(eq(designNodes.projectId, projectId))
-  if (total >= MAX_NODES_PER_PROJECT) {
-    throw new AppError(
-      'INVALID_STATE',
-      `项目节点已达上限 ${MAX_NODES_PER_PROJECT}，请导出备份后新建项目`,
-    )
-  }
-  const parent = input.parentId ? await findNode(db, input.parentId) : null
-  if (parent && parent.projectId !== projectId) throw notFound('父节点')
-  // Accept the legacy white node kind for older API callers.
-  const allowed = STAGE_PARENTS[input.kind]
-  if (allowed && (!parent || !allowed.kinds.includes(parent.kind))) {
-    throw new AppError('VALIDATION_FAILED', allowed.message)
-  }
-  const source = input.sourceNodeId ? await findNode(db, input.sourceNodeId) : null
-  if (source && source.projectId !== projectId) throw notFound('复制来源节点')
+  return db.transaction(async (tx) => {
+    await requireActiveProject(tx, projectId, true)
+    const [{ total } = { total: 0 }] = await tx
+      .select({ total: count() })
+      .from(designNodes)
+      .where(eq(designNodes.projectId, projectId))
+    if (total >= MAX_NODES_PER_PROJECT) {
+      throw new AppError(
+        'INVALID_STATE',
+        `项目节点已达上限 ${MAX_NODES_PER_PROJECT}，请导出备份后新建项目`,
+      )
+    }
+    const parent = input.parentId ? await findNode(tx, input.parentId) : null
+    if (parent && parent.projectId !== projectId) throw notFound('父节点')
+    // Accept the legacy white node kind for older API callers.
+    const allowed = STAGE_PARENTS[input.kind]
+    if (allowed && (!parent || !allowed.kinds.includes(parent.kind))) {
+      throw new AppError('VALIDATION_FAILED', allowed.message)
+    }
+    const source = input.sourceNodeId ? await findNode(tx, input.sourceNodeId) : null
+    if (source && source.projectId !== projectId) throw notFound('复制来源节点')
 
-  let space: Space | null = null
-  /** The space the layout lives in (the node's own, or inherited). */
-  let layoutSpace: Space | null = null
-  let issues: Issue[] = []
-  if (input.kind === 'space') {
-    if (!input.space) throw new AppError('VALIDATION_FAILED', '空间节点必须包含空间')
-    const checked = checkSpace(input.space)
-    space = checked.space
-    issues = checked.warnings
-  }
-  if (input.layout) {
-    layoutSpace = space ?? (input.parentId ? await resolveSpace(db, input.parentId) : null)
-    if (!layoutSpace) throw new AppError('VALIDATION_FAILED', '布局缺少所属空间')
-    issues = [
-      ...issues,
-      ...(await checkLayout(db, layoutSpace, input.layout, input.kind, input.allowLayoutErrors)),
-    ]
-  }
+    let space: Space | null = null
+    /** The space the layout lives in (the node's own, or inherited). */
+    let layoutSpace: Space | null = null
+    let issues: Issue[] = []
+    if (input.kind === 'space') {
+      if (!input.space) throw new AppError('VALIDATION_FAILED', '空间节点必须包含空间')
+      const checked = checkSpace(input.space)
+      space = checked.space
+      issues = checked.warnings
+    }
+    if (input.kind !== 'space' && source && source.parentId === input.parentId) {
+      space = source.space
+    }
+    if (input.layout) {
+      layoutSpace = space ?? (parent ? await effectiveSpace(tx, parent) : null)
+      if (!layoutSpace) throw new AppError('VALIDATION_FAILED', '布局缺少所属空间')
+      issues = [
+        ...issues,
+        ...(await checkLayout(tx, layoutSpace, input.layout, input.kind, input.allowLayoutErrors)),
+      ]
+    }
 
-  const cameras =
-    (input.kind === 'white' ||
-      input.kind === 'render' ||
-      (input.kind === 'plan' && input.sourceNodeId)) &&
-    layoutSpace
-      ? await initialCameras(db, input.sourceNodeId ?? input.parentId, layoutSpace)
-      : []
+    const cameras =
+      (input.kind === 'white' ||
+        input.kind === 'render' ||
+        (input.kind === 'plan' && input.sourceNodeId)) &&
+      layoutSpace
+        ? await initialCameras(tx, input.sourceNodeId ?? input.parentId, layoutSpace)
+        : []
 
-  const row = await db.transaction(async (tx) => {
     const [inserted] = await tx
       .insert(designNodes)
       .values({
@@ -248,9 +260,75 @@ export async function createNode(
       .update(projects)
       .set({ updatedAt: sql`now()` })
       .where(eq(projects.id, projectId))
-    return inserted
+    return { node: { ...toNode(inserted), space: space ?? layoutSpace }, issues }
   })
-  return { node: toNode(row), issues }
+}
+
+export async function updateNodeSpace(
+  db: Database,
+  ctx: RequestContext,
+  nodeId: string,
+  input: NodeSpaceUpdate,
+): Promise<NodeCreated> {
+  const reference = await findNode(db, nodeId)
+  authorize(ctx.actor, 'node:update', { projectId: reference.projectId })
+  const { space, warnings } = checkSpace(input.space)
+  return db.transaction(async (tx) => {
+    // Serialize edits with node creation so existing and newly created children have a clear boundary.
+    await requireActiveProject(tx, reference.projectId, true)
+    const row = await findNode(tx, nodeId)
+    const stored = await effectiveSpace(tx, row)
+    if (!stored) throw new AppError('INVALID_STATE', '节点缺少所属空间')
+    const previous = SpaceSchema.parse(stored)
+    if (isDeepStrictEqual(previous, space))
+      return { node: { ...toNode(row), space }, issues: warnings }
+    if (!isDeepStrictEqual(previous, input.previousSpace)) {
+      throw new AppError('REVISION_CONFLICT', '空间已在其他窗口修改，请重新打开后再编辑')
+    }
+
+    // Old direct children keep the geometry they already used. Their descendants inherit it.
+    await tx
+      .update(designNodes)
+      .set({ space: previous })
+      .where(and(eq(designNodes.parentId, nodeId), isNull(designNodes.space)))
+    const [updated] = await tx
+      .update(designNodes)
+      .set({ space, layout: row.layout && followSpaceWalls(row.layout, previous, space) })
+      .where(eq(designNodes.id, nodeId))
+      .returning()
+    if (!updated) throw notFound('节点')
+
+    if (row.kind === 'render') {
+      // The capture revision also protects uploads from a window still showing the previous geometry.
+      await tx
+        .update(nodeCameras)
+        .set({
+          camera: sql`jsonb_set(${nodeCameras.camera}, '{backgroundRevision}',
+          to_jsonb(coalesce((${nodeCameras.camera}->>'backgroundRevision')::int, 0) + 1))`,
+        })
+        .where(eq(nodeCameras.nodeId, nodeId))
+    }
+    const [draft] = await tx
+      .select()
+      .from(projectDrafts)
+      .where(eq(projectDrafts.baseNodeId, nodeId))
+      .for('update')
+    if (draft) {
+      await tx
+        .update(projectDrafts)
+        .set({
+          layout: followSpaceWalls(draft.layout, previous, space),
+          revision: draft.revision + 1,
+          updatedAt: sql`now()`,
+        })
+        .where(eq(projectDrafts.baseNodeId, nodeId))
+    }
+    await tx
+      .update(projects)
+      .set({ updatedAt: sql`now()` })
+      .where(eq(projects.id, row.projectId))
+    return { node: toNode(updated), issues: warnings }
+  })
 }
 
 export async function renameNode(

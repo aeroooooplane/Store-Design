@@ -46,8 +46,8 @@ export interface StageAction {
 
 interface StagePanelProps {
   title: string
-  /** Two actions side by side, then (optionally) one across the full width. */
-  first: readonly [StageAction, StageAction]
+  /** One full-width action or two side by side. */
+  first: readonly [StageAction] | readonly [StageAction, StageAction]
   /** Another plain action across the full width, between the two rows. */
   extra?: StageAction | undefined
   second?: StageAction | undefined
@@ -85,9 +85,10 @@ export function StagePanel({ title, first, extra, second, status, hint }: StageP
         </h3>
         {status}
       </div>
-      <div className="stage-row">
-        <ActionButton action={first[0]} />
-        <ActionButton action={first[1]} />
+      <div className={first.length === 1 ? 'stage-row single' : 'stage-row'}>
+        {first.map((action) => (
+          <ActionButton key={action.label} action={action} />
+        ))}
       </div>
       {extra && (
         <div className="stage-row single">

@@ -27,6 +27,7 @@ import type {
   LayoutGenerate,
   NodeCreateInput,
   NodeRenderList,
+  NodeSpaceUpdate,
   RenderImage,
   RenderedMode,
 } from '@store/shared'
@@ -59,10 +60,10 @@ export function useTree(projectId: string) {
   })
 }
 
-/** A node's full data; nodes never change after creation (except name/hidden, in the tree). */
+/** A node’s saved layout and effective space, including any edit made on that node. */
 export const nodeQuery = (nodeId: string) => ({
   queryKey: workbenchKeys.node(nodeId),
-  staleTime: Infinity,
+  staleTime: 30_000,
   queryFn: async () =>
     NodeSchema.parse(
       unwrap(await api.GET('/api/v1/nodes/{nodeId}', { params: { path: { nodeId } } })),
@@ -137,6 +138,30 @@ export function useCreateNode(projectId: string) {
     onSuccess: (created) => {
       client.setQueryData(workbenchKeys.node(created.node.id), created.node)
       return client.invalidateQueries({ queryKey: workbenchKeys.tree(projectId) })
+    },
+  })
+}
+
+export function useUpdateNodeSpace(projectId: string, nodeId: string) {
+  const client = useQueryClient()
+  return useMutation({
+    mutationFn: async (body: NodeSpaceUpdate) =>
+      NodeCreatedSchema.parse(
+        unwrap(
+          await api.PATCH('/api/v1/nodes/{nodeId}/space', {
+            params: { path: { nodeId } },
+            body,
+          }),
+        ),
+      ),
+    onSuccess: async ({ node }) => {
+      client.setQueryData(workbenchKeys.node(nodeId), node)
+      await Promise.all([
+        client.invalidateQueries({ queryKey: workbenchKeys.drafts(projectId) }),
+        client.invalidateQueries({ queryKey: workbenchKeys.cameras(nodeId) }),
+        client.invalidateQueries({ queryKey: workbenchKeys.renders(nodeId) }),
+        client.invalidateQueries({ queryKey: displayKeys.node(nodeId) }),
+      ])
     },
   })
 }

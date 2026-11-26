@@ -18,6 +18,9 @@ import {
   LayoutValidateSchema,
   NodeCreateSchema,
   NodeRenameSchema,
+  NodeSpaceUpdateSchema,
+  LayoutSchema,
+  followSpaceWalls,
   checkAssetFit,
   generateRequired,
   normalizeSpace,
@@ -92,6 +95,21 @@ Object.assign(globalThis, {
     if (command === 'rename') {
       const parsed = NodeRenameSchema.safeParse(data)
       return respond(parsed.success ? parsed.data : failure('请求参数或内容无效', parsed.error.issues))
+    }
+    if (command === 'node-space') {
+      const input = data as { update: unknown; stored: unknown }
+      const parsed = NodeSpaceUpdateSchema.safeParse(input.update)
+      if (!parsed.success) return respond(failure('请求参数或内容无效', parsed.error.issues))
+      const checked = spaceCheck(parsed.data.space)
+      return respond('error' in checked ? checked : {
+        ...checked,
+        previous: SpaceSchema.parse(input.stored),
+        expected: parsed.data.previousSpace,
+      })
+    }
+    if (command === 'space-layout') {
+      const { layout, before, after } = data as { layout: unknown; before: unknown; after: unknown }
+      return respond({ layout: followSpaceWalls(LayoutSchema.parse(layout), SpaceSchema.parse(before), SpaceSchema.parse(after)) })
     }
     if (command === 'node') {
       const parsed = NodeCreateSchema.safeParse(data)
