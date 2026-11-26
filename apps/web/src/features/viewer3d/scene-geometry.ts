@@ -34,6 +34,13 @@ export function surface(): THREE.MeshStandardMaterial {
 export function disposeGeometry(root: THREE.Object3D) {
   root.traverse((node) => {
     if (isDrawable(node)) node.geometry.dispose()
+    if (isDrawable(node) && node.userData['ownsMaterial']) {
+      const materials = Array.isArray(node.material) ? node.material : [node.material]
+      for (const material of materials) {
+        if (material instanceof THREE.MeshStandardMaterial) material.alphaMap?.dispose()
+        material.dispose()
+      }
+    }
   })
 }
 

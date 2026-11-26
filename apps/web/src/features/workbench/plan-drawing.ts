@@ -6,9 +6,8 @@ import {
   isClockwise,
   openingPieces,
   polygonArea,
-  wallSegments,
 } from '@store/shared'
-import type { FrontAxis, Point, ShopType, Space, WallSegment } from '@store/shared'
+import type { FrontAxis, Point, Space } from '@store/shared'
 
 /** Drawing geometry for the plan, in metres (x right, z down), independent of SVG. */
 
@@ -17,13 +16,6 @@ const same = (p: Point, q: Point) => distance(p, q) < 1e-6
 const direction = (a: Point, b: Point): Point => {
   const length = distance(a, b) || 1
   return [(b[0] - a[0]) / length, (b[1] - a[1]) / length]
-}
-
-function lineIntersection(p: Point, r: Point, q: Point, s: Point): Point | null {
-  const denom = r[0] * s[1] - r[1] * s[0]
-  if (Math.abs(denom) < 1e-9) return null
-  const t = ((q[0] - p[0]) * s[1] - (q[1] - p[1]) * s[0]) / denom
-  return add(p, r, t)
 }
 
 /**
@@ -37,53 +29,8 @@ export function openingLines(space: Space, opening: { a: Point; b: Point }): [Po
   return pieces.map((piece): [Point, Point] => [piece.a, piece.b])
 }
 
-export interface WallBand {
-  /** Filled area of one wall run: inner face a→b, outer face mitred against its neighbours. */
-  polygon: Point[]
-  /** Lines to stroke: inner and outer faces, plus end caps where the wall stops at an opening. */
-  outline: [Point, Point][]
-}
-
-/**
- * Walls as hatched bands outside the boundary (the same walls as the 3D model). Neighbouring
- * runs meet in a mitre, so the outline is continuous and overlapping fills show no seam.
- */
-export function wallBands(
-  space: Space,
-  shopType: ShopType,
-  thickness = WALL_THICKNESS_M,
-): WallBand[] {
-  const walls = wallSegments(space, shopType)
-  const outerLine = (w: WallSegment) => ({
-    p: add(w.a, w.outward, thickness),
-    r: direction(w.a, w.b),
-  })
-  return walls.map((wall, i) => {
-    const prev = walls[(i - 1 + walls.length) % walls.length]
-    const next = walls[(i + 1) % walls.length]
-    const own = outerLine(wall)
-    const plainA = add(wall.a, wall.outward, thickness)
-    const plainB = add(wall.b, wall.outward, thickness)
-    const mitre = (other: WallSegment | undefined, at: Point, fallback: Point) => {
-      if (!other || other === wall) return null
-      const line = outerLine(other)
-      const point = lineIntersection(own.p, own.r, line.p, line.r)
-      // Very sharp corners would spike; they get a plain (bevelled) end instead.
-      return point && distance(point, at) < thickness * 4 ? point : fallback
-    }
-    const joinsPrev = prev !== undefined && prev !== wall && same(prev.b, wall.a)
-    const joinsNext = next !== undefined && next !== wall && same(wall.b, next.a)
-    const outerA = (joinsPrev ? mitre(prev, wall.a, plainA) : null) ?? plainA
-    const outerB = (joinsNext ? mitre(next, wall.b, plainB) : null) ?? plainB
-    const outline: [Point, Point][] = [
-      [wall.a, wall.b],
-      [outerA, outerB],
-    ]
-    if (!joinsPrev) outline.push([wall.a, outerA])
-    if (!joinsNext) outline.push([wall.b, outerB])
-    return { polygon: [wall.a, wall.b, outerB, outerA], outline }
-  })
-}
+export { wallBands } from '@store/shared'
+export type { WallBand } from '@store/shared'
 
 /** Angle of a direction in degrees, folded into (−90°, 90°] so text stays readable. */
 export function readableAngle(dir: Point): number {

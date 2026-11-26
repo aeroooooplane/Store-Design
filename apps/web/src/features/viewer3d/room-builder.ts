@@ -1,7 +1,8 @@
 import * as THREE from 'three'
-import { WALL_THICKNESS_M, wallSegments } from '@store/shared'
 import type { Point, ShopType, Space } from '@store/shared'
 import { prism } from './scene-geometry.ts'
+import { boundaryWallGeometry } from './boundary-wall.ts'
+import { contextFloor } from './context-floor.ts'
 import { islandEdgingGeometry, ISLAND_PLATFORM_HEIGHT_M } from './island-platform.ts'
 
 /** Legacy white-mode look (demo/src/scene.js in tag archive/pre-cleanup-20261013). */
@@ -19,22 +20,16 @@ export function buildRoom(
   floor.receiveShadow = true
   floor.userData['surface'] = 'floor'
   room.add(floor)
+  const outside = contextFloor(space, shopType)
+  if (outside) room.add(outside)
   if (shopType === 'island') addEdging(room, space.boundary, material)
 
-  for (const wall of wallSegments(space, shopType)) {
-    const length = Math.hypot(wall.b[0] - wall.a[0], wall.b[1] - wall.a[1])
-    const geometry = new THREE.BoxGeometry(length, space.height, WALL_THICKNESS_M)
+  const geometry = boundaryWallGeometry(space, shopType)
+  if (geometry) {
     const mesh = new THREE.Mesh(geometry, material)
     mesh.userData['surface'] = 'wall'
     mesh.userData['boundaryWall'] = true
     mesh.renderOrder = 1
-    const half = WALL_THICKNESS_M / 2
-    mesh.position.set(
-      (wall.a[0] + wall.b[0]) / 2 + wall.outward[0] * half,
-      space.height / 2,
-      (wall.a[1] + wall.b[1]) / 2 + wall.outward[1] * half,
-    )
-    mesh.rotation.y = -Math.atan2(wall.b[1] - wall.a[1], wall.b[0] - wall.a[0])
     // 透明墙只提供空间轮廓，不投射原先实心墙的全黑遮挡。
     mesh.castShadow = false
     mesh.receiveShadow = false

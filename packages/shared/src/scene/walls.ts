@@ -3,11 +3,10 @@ import type { Point } from '../geometry/index.ts'
 import type { ShopType } from '../enums.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
-import { roundM } from '../units.ts'
 import { sceneFrame } from './frame.ts'
 
 /** Walls are drawn outside the boundary so the floor area stays exactly as planned. */
-export const WALL_THICKNESS_M = 0.16
+export const WALL_THICKNESS_M = 0.2
 /** Side and front walls are cut down so the default views can look in (as in the legacy viewer). */
 export const CUTAWAY_WALL_HEIGHT_M = 0.7
 
@@ -65,9 +64,13 @@ export function wallSegments(space: Space, shopType: ShopType): WallSegment[] {
         return [Math.min(s, t), Math.max(s, t)]
       })
     const back = outward[0] * front[0] + outward[1] * front[1] < -0.5
+    // Keep the source outline's precision. Rounding each run independently can create
+    // slivers at oblique corners, especially when the shop floor uses the original points.
+    const pointAt = (t: number): Point =>
+      t === 0 ? a : t === length ? b : [a[0] + dir[0] * t, a[1] + dir[1] * t]
     return remaining(length, gaps).map(([s, e]): WallSegment => ({
-      a: [roundM(a[0] + dir[0] * s), roundM(a[1] + dir[1] * s)],
-      b: [roundM(a[0] + dir[0] * e), roundM(a[1] + dir[1] * e)],
+      a: pointAt(s),
+      b: pointAt(e),
       outward,
       height: back ? space.height : Math.min(CUTAWAY_WALL_HEIGHT_M, space.height),
       kind: back ? 'full' : 'cutaway',
