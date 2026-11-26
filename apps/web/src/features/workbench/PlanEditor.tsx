@@ -53,7 +53,7 @@ import {
   snap,
 } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
-import { SpaceEditor } from './SpaceEditor.tsx'
+import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import {
@@ -316,6 +316,7 @@ export function PlanEditor({
     baseNode,
     nodes,
     space,
+    siStyle,
     layout: state.layout,
     create,
     flush,
@@ -447,10 +448,11 @@ export function PlanEditor({
               保存为新的空间和方案，原来的方案及之后的三维效果、渲染都保留。靠墙的道具跟着墙移动，其余道具不动；改墙后越界或压住柱子、入口的道具会在检查中标出。
             </p>
             <ErrorMessage error={editWalls.error} />
-            <SpaceEditor
+            <SpaceCaptureEditor
+              shop={shopType}
               initial={space}
               initialName={editWalls.initialName}
-              submitting={editWalls.submitting}
+              submitLabel="保存墙体并进入新方案"
               onCancel={editWalls.cancel}
               onSubmit={editWalls.submit}
             />

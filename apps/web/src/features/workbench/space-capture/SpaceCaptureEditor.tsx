@@ -10,6 +10,7 @@ interface SpaceCaptureEditorProps {
   shop: ShopType
   initial?: Space
   initialName?: string
+  submitLabel?: string
   onSubmit: (space: Space, name: string) => Promise<void>
   onCancel?: (() => void) | undefined
 }
@@ -19,6 +20,7 @@ export function SpaceCaptureEditor({
   shop,
   initial,
   initialName,
+  submitLabel,
   onSubmit,
   onCancel,
 }: SpaceCaptureEditorProps) {
@@ -65,7 +67,7 @@ export function SpaceCaptureEditor({
       void onSubmit(parsed.data, name.trim())
         .then(
           () => sendResult(port1),
-          () => sendResult(port1, '空间保存失败，请检查工作台提示后重试'),
+          () => sendResult(port1, '保存失败，请检查工作台提示后重试'),
         )
         .finally(() => {
           saving = false
@@ -75,6 +77,7 @@ export function SpaceCaptureEditor({
     targetWindow.postMessage(
       {
         type: 'store-space-capture',
+        submitLabel,
         state: { ...source.sketch, shopLabel: SHOP_TYPE_LABELS[shop], ortho: false },
         fixedObstacles: source.fixedObstacles.map(({ obstacle }) =>
           obstacle.polygon.map(([x, z]) => [x * 1000, z * 1000]),

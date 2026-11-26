@@ -69,7 +69,7 @@ function fakeApi(
   nodes: DesignNode[],
   draft: Draft | null,
   assets: Asset[] = [],
-  options: { failCreate?: boolean } = {},
+  options: { failCreate?: boolean; failFirstPlan?: boolean } = {},
 ) {
   const state = {
     nodes: [...nodes],
@@ -79,6 +79,7 @@ function fakeApi(
   const fail = (status: number, code: string, message = code) =>
     json(status, { error: { code, message, requestId: 'r' } })
 
+  let failedPlan = false
   const { calls, fetchMock } = stubFetch(({ request, url, route, body, ifMatch }) => {
     if (route === `GET /api/v1/projects/${PID}/nodes`) {
       const summaries = state.nodes.map(({ projectId: _p, space: _s, layout: _l, ...s }) => s)
@@ -114,6 +115,10 @@ function fakeApi(
         return fail(400, 'VALIDATION_FAILED', '进入三维效果前须先解决越界、重叠等问题')
       }
       const input = body as Partial<DesignNode> & Pick<DesignNode, 'kind' | 'name' | 'parentId'>
+      if (input.kind === 'plan' && options.failFirstPlan && !failedPlan) {
+        failedPlan = true
+        return fail(500, 'INTERNAL_ERROR', '新方案暂时保存失败')
+      }
       const created = designNode(crypto.randomUUID(), input.parentId, {
         ...input,
         space: input.space ?? null,
@@ -177,9 +182,10 @@ async function connectSpaceCanvas() {
   )
   const connect = vi.spyOn(frame.contentWindow!, 'postMessage').mockImplementation(() => {})
   fireEvent.load(frame)
-  const state = (connect.mock.calls[0]?.[0] as { state: SpaceSketch }).state
+  const initial = connect.mock.calls[0]?.[0] as { state: SpaceSketch; submitLabel?: string }
   return {
-    state,
+    ...initial,
+    result: port.postMessage,
     confirm: (draft: SpaceSketch) =>
       port.onmessage(new MessageEvent('message', { data: { type: 'submit', state: draft } })),
   }
@@ -304,6 +310,68 @@ describe('Workbench', () => {
       name: '原空间（修改）',
       parentId: null,
       space: { ...existing.space, height: 3.5 },
+    })
+  })
+
+  it('edits plan walls on the space canvas and retries the plan without duplicating the space', async () => {
+    const originalSpace = designNode(S1, null, { name: '原空间' })
+    const originalPlan = designNode(P1, S1, {
+      name: '原方案',
+      siStyle: 'SI2.0',
+      layout: layout([{ ...table, cx: 7.1 }]),
+    })
+    server = fakeApi([originalSpace, originalPlan], null, [], { failFirstPlan: true })
+    renderWorkbench(`?node=${P1}`)
+
+    fireEvent.click(await screen.findByRole('button', { name: '修改墙体' }))
+    const canvas = await connectSpaceCanvas()
+    expect(canvas.submitLabel).toBe('保存墙体并进入新方案')
+    expect(canvas.state.points[1]).toEqual([8000, 0])
+    const edited: SpaceSketch = {
+      ...canvas.state,
+      points: [
+        [0, 0],
+        [9000, 0],
+        [9000, 6000],
+        [0, 6000],
+      ],
+    }
+    canvas.confirm(edited)
+
+    expect(await screen.findByText('新方案暂时保存失败')).toBeTruthy()
+    await waitFor(() =>
+      expect(canvas.result).toHaveBeenCalledWith(
+        expect.objectContaining({
+          type: 'submission-finished',
+          error: expect.any(String),
+        }),
+      ),
+    )
+    expect(server.state.nodes).toHaveLength(3)
+    canvas.confirm(edited)
+
+    expect(await screen.findByRole('region', { name: '平面编辑' })).toBeTruthy()
+    expect(server.state.nodes.slice(0, 2)).toEqual([originalSpace, originalPlan])
+    expect(server.state.nodes).toHaveLength(4)
+    const [, , newSpace, newPlan] = server.state.nodes
+    expect(newSpace).toMatchObject({
+      kind: 'space',
+      name: '原空间 · 改墙',
+      space: {
+        boundary: [
+          [0, 0],
+          [9, 0],
+          [9, 6],
+          [0, 6],
+        ],
+      },
+    })
+    expect(newPlan).toMatchObject({
+      parentId: newSpace?.id,
+      kind: 'plan',
+      name: '原方案',
+      siStyle: 'SI2.0',
+      layout: { items: [{ id: table.id, cx: 8.1 }] },
     })
   })
 

@@ -661,6 +661,7 @@
         }
         let state = copy(initial)
         let session = null
+        let submitLabel = '确认轮廓并进入方案'
         let fixedObstacles = []
         let submitting = false
         let drag = null
@@ -2020,7 +2021,7 @@
           controls('next').textContent = submitting
             ? '正在保存…'
             : state.closed
-              ? '确认轮廓并进入方案'
+              ? submitLabel
               : '闭合轮廓'
           controls('undo').disabled = !memory.length
           controls('redo').disabled = !redo.length
@@ -2965,6 +2966,7 @@
             render()
           }
           state = incoming
+          if (typeof event.data.submitLabel === 'string') submitLabel = event.data.submitLabel
           fixedObstacles = event.data.fixedObstacles
           projection = undefined
           render()
