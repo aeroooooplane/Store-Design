@@ -39,5 +39,5 @@ const paths = font.layout('LOGO').glyphs.map(g => {
   return svg
 })
 fs.writeFileSync(root + '/apps/web/src/features/workbench/signage-thumbnails/custom-logo.svg',
-  `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300"><rect width="480" height="300" fill="white"/><g fill="#333333" transform="translate(55 200) scale(.125 -.125)">${paths.join('')}</g></svg>\n`)
+  `<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300"><rect width="480" height="300" fill="white"/><g fill="#333333" transform="translate(89 189) scale(.105 -.105)">${paths.join('')}</g></svg>\n`)
 console.log(`已生成 ${Object.keys(glyphs).length} 个离线字形，请格式化 logo-metrics.json。`)
