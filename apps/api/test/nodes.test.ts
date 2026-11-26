@@ -99,7 +99,7 @@ describe('history nodes', () => {
   it('updates only the chosen space, plan or render and rebases its draft', async () => {
     const project = await newProject()
     const root = await spaceNode(project.id)
-    const planLayout = layout(island('a', 7.1, 2))
+    const planLayout = layout(island('a', 7.5, 2))
     const createPlan = async (name: string, sourceNodeId?: string) =>
       (
         await post(project.id, {
@@ -132,7 +132,7 @@ describe('history nodes', () => {
     const draft = await t.app.inject({
       method: 'PUT',
       url: `/api/v1/projects/${project.id}/draft`,
-      payload: { baseNodeId: plan.id, layout: layout(island('a', 7.1, 3)) },
+      payload: { baseNodeId: plan.id, layout: layout(island('a', 7.5, 3)) },
     })
     expect(draft.statusCode).toBe(200)
 
@@ -150,7 +150,7 @@ describe('history nodes', () => {
       parentId: root.id,
       space: wider,
     })
-    expect((await node(plan.id)).layout?.items[0]?.cx).toBe(8.1)
+    expect((await node(plan.id)).layout?.items[0]?.cx).toBe(8.5)
     expect((await node(sibling.id)).space).toEqual(initial)
     expect((await node(render.id)).space).toEqual(initial)
     expect((await createPlan('复制改墙方案', plan.id)).space).toEqual(wider)
@@ -159,7 +159,7 @@ describe('history nodes', () => {
       url: `/api/v1/projects/${project.id}/drafts`,
     })
     expect(drafts.json<{ drafts: Draft[] }>().drafts).toMatchObject([
-      { revision: 2, layout: { items: [{ cx: 8.1, cz: 3 }] } },
+      { revision: 2, layout: { items: [{ cx: 8.5, cz: 3 }] } },
     ])
     expect((await save(plan.id, wider, initial)).statusCode).toBe(200)
     expect((await save(plan.id, { ...wider, height: 3.6 }, initial)).statusCode).toBe(409)

@@ -126,7 +126,7 @@ function fakeApi(
         siStyle: input.siStyle ?? null,
       })
       state.nodes.push(created)
-      return json(201, { node: created, issues: [] })
+      return json(201, { node: { ...created, space: effectiveSpace(created) }, issues: [] })
     }
     if (route === 'GET /api/v1/assets') return json(200, { items: assets, total: assets.length })
     if (route === `PATCH /api/v1/projects/${PID}`) {
