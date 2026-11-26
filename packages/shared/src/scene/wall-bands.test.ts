@@ -17,6 +17,37 @@ const contains = (rings: Point[][], p: Point) =>
     0,
   ) > 0
 describe('连续200mm边界墙', () => {
+  it('平移和斜转后的凹形墙仍闭合，面积等于200mm轮廓带且不侵占室内', () => {
+    const base: [number, number][] = [
+      [0, 0],
+      [8, 0],
+      [8, 4],
+      [5, 4],
+      [5, 6],
+      [0, 6],
+    ]
+    for (let i = 1; i <= 20; i++) {
+      const angle = i * 0.131,
+        c = Math.cos(angle),
+        s = Math.sin(angle)
+      const boundary = base.map(([x, z]): [number, number] => [
+        x * c - z * s + 12.3456789,
+        x * s + z * c - 23.456789,
+      ])
+      const rings = wallContours(
+        { ...rectangleSpace(8, 6, 3), boundary, entrances: [] },
+        'side_hall',
+      )
+      expect(rings.every((r) => isSimplePolygon(r, 1e-8))).toBe(true)
+      expect(rings.reduce((n, r) => n + signedArea(r), 0)).toBeCloseTo(5.76, 5)
+      expect(
+        rings.reduce(
+          (n, r) => n + Math.sign(signedArea(r)) * polygonIntersectionArea(r, boundary),
+          0,
+        ),
+      ).toBeCloseTo(0, 5)
+    }
+  })
   it('封闭矩形只有内外两圈，厚度200mm且不占用租赁面积', () => {
     const space = { ...rectangleSpace(8, 6, 3), entrances: [] }
     const rings = wallContours(space, 'side_hall')

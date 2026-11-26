@@ -204,8 +204,13 @@ describe('standaloneSvg of a numbered delivery plan', () => {
 
   it('exports at 4000 px wide with the plan’s aspect', () => {
     const { svg, text } = exported()
-    expect(svg.getAttribute('viewBox')).toBe('-0.666 -0.666 7.332 5.5520000000000005')
-    expect(text).toContain(' width="4000" height="3029"')
+    expect(svg.getAttribute('viewBox')?.split(' ').map(Number)).toEqual([
+      expect.closeTo(-0.706, 8),
+      expect.closeTo(-0.706, 8),
+      expect.closeTo(7.412, 8),
+      expect.closeTo(5.632, 8),
+    ])
+    expect(text).toContain(' width="4000" height="3039"')
   })
 
   it('draws yellow numbered badges in layout order instead of names', () => {

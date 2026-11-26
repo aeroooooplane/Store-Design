@@ -88,6 +88,21 @@ export function wallUnion(
         locatePoint(p, r.ring, EPS / 10) !== 'outside',
     )
   const boundary = new Map<string, { a: Point; b: Point }>()
+  // Intersections computed from two different edges can straddle a quantisation cell.
+  // Snap nearby vertices to one representative before assigning boundary edge ids.
+  const buckets = new Map<string, Point[]>()
+  const canonical = (p: Point): Point => {
+    const x = Math.floor(p[0] / EPS),
+      z = Math.floor(p[1] / EPS)
+    for (let dx = -1; dx <= 1; dx++)
+      for (let dz = -1; dz <= 1; dz++) {
+        const found = buckets.get(`${x + dx},${z + dz}`)?.find((q) => distance(p, q) < EPS)
+        if (found) return found
+      }
+    const id = `${x},${z}`
+    buckets.set(id, [...(buckets.get(id) ?? []), p])
+    return p
+  }
   for (const e of segments) {
     const cuts = [...new Set(e.cuts.map((t) => Math.round(t * 1e10) / 1e10))].sort((a, b) => a - b)
     for (let i = 1; i < cuts.length; i++) {
@@ -102,6 +117,9 @@ export function wallUnion(
         right = inside([mid[0] - n[0], mid[1] - n[1]])
       if (left === right) continue
       if (right) [a, b] = [b, a]
+      a = canonical(a)
+      b = canonical(b)
+      if (key(a) === key(b)) continue
       boundary.set(key(a) + '|' + key(b), { a, b })
     }
   }

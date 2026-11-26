@@ -165,8 +165,8 @@ describe('wallSegments', () => {
     const arcWalls = wallSegments(partial, 'side_hall').filter(onArc)
     expect(arcWalls.map((w) => [w.a, w.b])).toEqual([
       [ARC[0], ARC[1]],
-      [ARC[1], mid(1).map((v) => Math.round(v * 1000) / 1000)],
-      [mid(4).map((v) => Math.round(v * 1000) / 1000), ARC[5]],
+      [ARC[1], mid(1).map((v) => expect.closeTo(v, 8) as unknown)],
+      [mid(4).map((v) => expect.closeTo(v, 8) as unknown), ARC[5]],
       [ARC[5], ARC[6]],
       [ARC[6], ARC[7]],
       [ARC[7], ARC[8]],
