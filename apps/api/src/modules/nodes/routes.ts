@@ -7,6 +7,7 @@ import {
   NodeCreatedSchema,
   NodeRenameSchema,
   NodeSchema,
+  NodeSpaceUpdateSchema,
   NodeTreeSchema,
 } from '@store/shared'
 import * as service from './service.ts'
@@ -76,13 +77,28 @@ export const nodeRoutes: FastifyPluginAsyncZod<{ db: Database }> = async (app, {
       config: writeLimit,
       schema: {
         tags: ['nodes'],
-        summary: '重命名节点（节点内容不可修改）',
+        summary: '重命名节点',
         params: NodeParams,
         body: NodeRenameSchema,
         response: { 200: NodeSchema, ...errors },
       },
     },
     (request) => service.renameNode(db, request.ctx, request.params.nodeId, request.body.name),
+  )
+
+  app.patch(
+    '/nodes/:nodeId/space',
+    {
+      config: writeLimit,
+      schema: {
+        tags: ['nodes'],
+        summary: '修改当前节点的空间，保留已有下游节点所用的空间',
+        params: NodeParams,
+        body: NodeSpaceUpdateSchema,
+        response: { 200: NodeCreatedSchema, ...errors },
+      },
+    },
+    (request) => service.updateNodeSpace(db, request.ctx, request.params.nodeId, request.body),
   )
 
   for (const [action, hidden] of [

@@ -127,6 +127,13 @@
       "when": 1795515254894,
       "tag": "0017_history_node_drafts",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1795682264091,
+      "tag": "0018_node_space_overrides",
+      "breakpoints": true
     }
   ]
 }

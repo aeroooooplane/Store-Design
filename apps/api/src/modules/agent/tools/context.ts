@@ -7,7 +7,7 @@ import type { RequestContext } from '../../../context/actor.ts'
 import { AppError } from '../../../lib/app-error.ts'
 import { catalogAssets } from '../../assets/service.ts'
 import { currentDraft } from '../../drafts/service.ts'
-import { getNode, resolveSpace } from '../../nodes/service.ts'
+import { getNode } from '../../nodes/service.ts'
 import { eq } from 'drizzle-orm'
 
 const { designNodes } = schema
@@ -79,7 +79,7 @@ export async function buildToolContext(
     throw new AppError('VALIDATION_FAILED', '节点不属于这个项目')
   const draft = node && (await currentDraft(db, project.id, node.id))
   const spaceNodeId = node ? await spaceNodeOf(db, node.id) : null
-  const space = spaceNodeId ? await resolveSpace(db, spaceNodeId) : null
+  const space = node?.space ?? null
   return {
     db,
     ctx,
@@ -97,5 +97,5 @@ export async function buildToolContext(
 export async function refreshNode(tools: ToolContext, nodeId: string): Promise<void> {
   tools.node = await getNode(tools.db, tools.ctx, nodeId)
   tools.spaceNodeId = await spaceNodeOf(tools.db, nodeId)
-  tools.space = tools.spaceNodeId ? await resolveSpace(tools.db, tools.spaceNodeId) : null
+  tools.space = tools.node.space
 }

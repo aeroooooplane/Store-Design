@@ -11,6 +11,7 @@ interface SpaceCaptureEditorProps {
   initial?: Space
   initialName?: string
   submitLabel?: string
+  hideName?: boolean
   onSubmit: (space: Space, name: string) => Promise<void>
   onCancel?: (() => void) | undefined
 }
@@ -21,6 +22,7 @@ export function SpaceCaptureEditor({
   initial,
   initialName,
   submitLabel,
+  hideName = false,
   onSubmit,
   onCancel,
 }: SpaceCaptureEditorProps) {
@@ -91,15 +93,17 @@ export function SpaceCaptureEditor({
   return (
     <section className="space-capture" aria-label="空间编辑">
       <div className="row">
-        <label className="field">
-          空间名称
-          <input
-            maxLength={100}
-            value={name}
-            disabled={pending}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
+        {!hideName && (
+          <label className="field">
+            空间名称
+            <input
+              maxLength={100}
+              value={name}
+              disabled={pending}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+        )}
         {onCancel && (
           <button type="button" disabled={pending} onClick={onCancel}>
             取消

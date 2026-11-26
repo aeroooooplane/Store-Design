@@ -53,7 +53,6 @@ import {
   snap,
 } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
-import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import {
@@ -64,7 +63,6 @@ import {
 import { IssuesPanel } from './plan-editor/IssuesPanel.tsx'
 import { PropertiesPanel } from './plan-editor/PropertiesPanel.tsx'
 import { useDraftAutosave } from './plan-editor/useDraftAutosave.ts'
-import { useEditWalls } from './plan-editor/useEditWalls.ts'
 import { useSpacingPreference } from './plan-editor/useSpacingPreference.ts'
 import { useEditorKeys } from './plan-editor/useEditorKeys.ts'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
@@ -312,16 +310,6 @@ export function PlanEditor({
     onNodeCreated,
     onRegisterSiSwitch,
   })
-  const editWalls = useEditWalls({
-    baseNode,
-    nodes,
-    space,
-    siStyle,
-    layout: state.layout,
-    create,
-    flush,
-    onNodeCreated,
-  })
   const {
     svgRef,
     onItemPointerDown,
@@ -387,7 +375,7 @@ export function PlanEditor({
     } else preparePlacement(copy)
   }
 
-  const furnitureKeysActive = !placement && !drawingFixture && !editWalls.editing
+  const furnitureKeysActive = !placement && !drawingFixture
   const selection =
     furnitureKeysActive && selected && itemMount(selected) === 'floor' ? selected : null
   const duplicateFurniture = selection ? () => pasteFurniture(selection) : undefined
@@ -414,198 +402,175 @@ export function PlanEditor({
     <WorkbenchLayout
       left={left}
       models={
-        // No props are added while the walls are being edited.
-        editWalls.editing ? undefined : (
-          <ModelPicker
-            assets={assets}
-            siStyle={siStyle}
-            market={market}
-            onPick={addAsset}
-            isPointPlaced={pointPlacedAsset}
-            pendingAssetId={placement?.item.assetId}
-          />
-        )
+        <ModelPicker
+          assets={assets}
+          siStyle={siStyle}
+          market={market}
+          onPick={addAsset}
+          isPointPlaced={pointPlacedAsset}
+          pendingAssetId={placement?.item.assetId}
+        />
       }
       defaultTab="models"
       cameras={
-        !editWalls.editing ? (
-          <CameraPanel
-            nodeId={baseNode.id}
-            viewer={viewerRef}
-            viewerReady={viewerReady}
-            layout={state.layout}
-            onShow={showCamera}
-            canCapture={!planMain}
-            onOpenViewer={() => switchView('3d')}
-          />
-        ) : undefined
+        <CameraPanel
+          nodeId={baseNode.id}
+          viewer={viewerRef}
+          viewerReady={viewerReady}
+          layout={state.layout}
+          onShow={showCamera}
+          canCapture={!planMain}
+          onOpenViewer={() => switchView('3d')}
+        />
       }
       center={
-        editWalls.editing ? (
-          <div className="wb-card">
-            <h2>修改墙体</h2>
-            <p className="hint">
-              保存为新的空间和方案，原来的方案及之后的三维效果、渲染都保留。靠墙的道具跟着墙移动，其余道具不动；改墙后越界或压住柱子、入口的道具会在检查中标出。
-            </p>
-            <ErrorMessage error={editWalls.error} />
-            <SpaceCaptureEditor
-              shop={shopType}
-              initial={space}
-              initialName={editWalls.initialName}
-              submitLabel="保存墙体并进入新方案"
-              onCancel={editWalls.cancel}
-              onSubmit={editWalls.submit}
-            />
-          </div>
-        ) : (
-          <section className="plan-editor wb-card" aria-label="平面编辑">
-            <h2 className="node-heading">{baseNode.name}</h2>
-            <EditorToolbar
-              view={view}
-              onSwitchView={switchView}
-              canUndo={state.past.length > 0}
-              canRedo={state.future.length > 0}
-              dispatch={dispatch}
-              saveState={saveState}
-              spacing={showSpacing}
-              onToggleSpacing={() => setShowSpacing(!showSpacing)}
-              drawingFixture={drawingFixture}
-              onToggleDrawFixture={() => {
-                setPlacement(null)
-                setDrawingFixture((on) => !on)
-              }}
-            />
+        <section className="plan-editor wb-card" aria-label="平面编辑">
+          <h2 className="node-heading">{baseNode.name}</h2>
+          <EditorToolbar
+            view={view}
+            onSwitchView={switchView}
+            canUndo={state.past.length > 0}
+            canRedo={state.future.length > 0}
+            dispatch={dispatch}
+            saveState={saveState}
+            spacing={showSpacing}
+            onToggleSpacing={() => setShowSpacing(!showSpacing)}
+            drawingFixture={drawingFixture}
+            onToggleDrawFixture={() => {
+              setPlacement(null)
+              setDrawingFixture((on) => !on)
+            }}
+          />
 
-            {saveState === 'conflict' && (
-              <div className="error" role="alert">
-                草稿已在其他窗口被修改，本窗口已停止自动保存。
-                <button type="button" onClick={() => void reloadDraft()}>
-                  载入最新草稿（放弃本窗口未保存的修改）
+          {saveState === 'conflict' && (
+            <div className="error" role="alert">
+              草稿已在其他窗口被修改，本窗口已停止自动保存。
+              <button type="button" onClick={() => void reloadDraft()}>
+                载入最新草稿（放弃本窗口未保存的修改）
+              </button>
+            </div>
+          )}
+          {saveError !== null && <ErrorMessage error={saveError} />}
+          {saveState === 'error' && hasUnsaved() && (
+            <button type="button" onClick={() => void flush()}>
+              重试保存
+            </button>
+          )}
+
+          <div
+            className="plan-canvas"
+            ref={canvasRef}
+            tabIndex={0}
+            aria-label={
+              planMain
+                ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
+                : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+            }
+            onPointerMove={onPointerMove}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onKeyDown={(event) => {
+              if (event.ctrlKey || event.metaKey || event.altKey || event.nativeEvent.isComposing)
+                return
+              if (placement) {
+                if (event.key === 'Escape') setPlacement(null)
+                return
+              }
+              if (event.key === 'Escape' && drawingFixture) setDrawingFixture(false)
+              else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
+                dispatch({ type: 'remove', id: selectedFixture.id })
+              else onKeyDown(event)
+            }}
+          >
+            {placement && (
+              <div className="toolbar notice placement-controls">
+                <p className="hint" role="status">
+                  {placement.error ?? `在画布上点击放置「${placement.item.name}」。`}
+                </p>
+                <button type="button" onClick={() => setPlacement(null)}>
+                  取消放置
                 </button>
               </div>
             )}
-            {saveError !== null && <ErrorMessage error={saveError} />}
-            {saveState === 'error' && hasUnsaved() && (
-              <button type="button" onClick={() => void flush()}>
-                重试保存
-              </button>
-            )}
-
-            <div
-              className="plan-canvas"
-              ref={canvasRef}
-              tabIndex={0}
-              aria-label={
-                planMain
-                  ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-                  : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
-              }
-              onPointerMove={onPointerMove}
-              onPointerUp={endDrag}
-              onPointerCancel={endDrag}
-              onKeyDown={(event) => {
-                if (event.ctrlKey || event.metaKey || event.altKey || event.nativeEvent.isComposing)
-                  return
-                if (placement) {
-                  if (event.key === 'Escape') setPlacement(null)
-                  return
-                }
-                if (event.key === 'Escape' && drawingFixture) setDrawingFixture(false)
-                else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
-                  dispatch({ type: 'remove', id: selectedFixture.id })
-                else onKeyDown(event)
-              }}
-            >
-              {placement && (
-                <div className="toolbar notice placement-controls">
-                  <p className="hint" role="status">
-                    {placement.error ?? `在画布上点击放置「${placement.item.name}」。`}
-                  </p>
-                  <button type="button" onClick={() => setPlacement(null)}>
-                    取消放置
-                  </button>
-                </div>
-              )}
-              <div className={planMain ? 'view-mini' : 'view-main'}>
-                <Suspense fallback={<p className="notice">正在载入三维…</p>}>
-                  <Viewer3D
-                    ref={viewerRef}
-                    space={space}
-                    shopType={shopType}
-                    layout={state.layout}
-                    assets={assetMap}
-                    selectedId={state.selectedId}
-                    flaggedIds={flaggedIds}
-                    onSelect={select}
-                    onMove={move}
-                    onResize={resize}
-                    onRotate={rotate}
-                    onFloorPlace={!planMain && placement ? placeFurniture : undefined}
-                    onReady={onViewerReady}
-                    look="material"
-                    siStyle={siStyle}
-                    market={market}
-                    initialView={remembered.current.pose}
-                    onViewChange={rememberPose}
-                    title={`${baseNode.name} 三维效果`}
-                  />
-                </Suspense>
-                {planMain && (
-                  <button
-                    type="button"
-                    className="view-switch"
-                    aria-label="切换到三维"
-                    title="点击切换到三维"
-                    onClick={() => switchView('3d')}
-                  />
-                )}
-              </div>
-              <div
-                className={planMain ? 'view-main' : 'view-mini'}
-                style={planMain && placement ? { cursor: 'crosshair' } : undefined}
-                onPointerDownCapture={
-                  planMain
-                    ? (event) => {
-                        if (!placement) return onDrawPointerDown(event)
-                        if (event.button !== 0) return
-                        event.stopPropagation()
-                        placeFurniture(toWorld(svgRef.current, event))
-                      }
-                    : undefined
-                }
-              >
-                <PlanView
-                  svgRef={svgRef}
+            <div className={planMain ? 'view-mini' : 'view-main'}>
+              <Suspense fallback={<p className="notice">正在载入三维…</p>}>
+                <Viewer3D
+                  ref={viewerRef}
                   space={space}
                   shopType={shopType}
                   layout={state.layout}
-                  issues={issues}
                   assets={assetMap}
                   selectedId={state.selectedId}
-                  onItemPointerDown={onItemPointerDown}
-                  onFixturePointerDown={onFixturePointerDown}
-                  onResizeHandlePointerDown={onResizeHandlePointerDown}
-                  onRotateHandlePointerDown={onRotateHandlePointerDown}
-                  guide={rotationGuide}
-                  drawingRect={drawnRect}
-                  onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
-                  compact={!planMain}
-                  spacing={showSpacing}
-                  title={`${baseNode.name} 平面`}
+                  flaggedIds={flaggedIds}
+                  onSelect={select}
+                  onMove={move}
+                  onResize={resize}
+                  onRotate={rotate}
+                  onFloorPlace={!planMain && placement ? placeFurniture : undefined}
+                  onReady={onViewerReady}
+                  look="material"
+                  siStyle={siStyle}
+                  market={market}
+                  initialView={remembered.current.pose}
+                  onViewChange={rememberPose}
+                  title={`${baseNode.name} 三维效果`}
                 />
-                {!planMain && (
-                  <button
-                    type="button"
-                    className="view-switch"
-                    aria-label="切换到平面"
-                    title="点击切换到平面"
-                    onClick={() => switchView('plan')}
-                  />
-                )}
-              </div>
+              </Suspense>
+              {planMain && (
+                <button
+                  type="button"
+                  className="view-switch"
+                  aria-label="切换到三维"
+                  title="点击切换到三维"
+                  onClick={() => switchView('3d')}
+                />
+              )}
             </div>
-          </section>
-        )
+            <div
+              className={planMain ? 'view-main' : 'view-mini'}
+              style={planMain && placement ? { cursor: 'crosshair' } : undefined}
+              onPointerDownCapture={
+                planMain
+                  ? (event) => {
+                      if (!placement) return onDrawPointerDown(event)
+                      if (event.button !== 0) return
+                      event.stopPropagation()
+                      placeFurniture(toWorld(svgRef.current, event))
+                    }
+                  : undefined
+              }
+            >
+              <PlanView
+                svgRef={svgRef}
+                space={space}
+                shopType={shopType}
+                layout={state.layout}
+                issues={issues}
+                assets={assetMap}
+                selectedId={state.selectedId}
+                onItemPointerDown={onItemPointerDown}
+                onFixturePointerDown={onFixturePointerDown}
+                onResizeHandlePointerDown={onResizeHandlePointerDown}
+                onRotateHandlePointerDown={onRotateHandlePointerDown}
+                guide={rotationGuide}
+                drawingRect={drawnRect}
+                onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
+                compact={!planMain}
+                spacing={showSpacing}
+                title={`${baseNode.name} 平面`}
+              />
+              {!planMain && (
+                <button
+                  type="button"
+                  className="view-switch"
+                  aria-label="切换到平面"
+                  title="点击切换到平面"
+                  onClick={() => switchView('plan')}
+                />
+              )}
+            </div>
+          </div>
+        </section>
       }
       right={
         <>
@@ -632,19 +597,6 @@ export function PlanEditor({
                   disabled: saveState === 'idle' && !state.dirty,
                 },
               ]}
-              extra={
-                stage === 'plan'
-                  ? {
-                      label: '修改墙体',
-                      title: '改边界、入口、柱子或层高，另存为新的空间和方案',
-                      onClick: () => {
-                        setPlacement(null)
-                        editWalls.start()
-                      },
-                      disabled: busy || create.isPending || editWalls.editing,
-                    }
-                  : undefined
-              }
               second={
                 stage === 'plan'
                   ? {

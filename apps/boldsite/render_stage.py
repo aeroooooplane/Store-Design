@@ -273,7 +273,7 @@ def save_render(request, node_id, camera_id, mode, revision, data):
             raise missing("视角")
         info = json.loads(camera["camera"])
         if (revision is not None or info.get("backgroundRevision",0)) and revision != info.get("backgroundRevision",0):
-            raise ApiError(409,"REVISION_CONFLICT","背景已更新，请重新渲染")
+            raise ApiError(409,"REVISION_CONFLICT","空间、视角或背景已更新，请重新渲染")
         layout_sig, camera_sig = layout_signature(request,db,node), camera_signature(camera)
         file = put_file(db,node["projectId"],"render",info["name"]+"-材质.png","image/png",data,width,height)
         row = db.execute("""INSERT INTO stage_renders

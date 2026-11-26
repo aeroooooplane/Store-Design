@@ -113,6 +113,23 @@ describe('renders', () => {
     expect((await images(render.id))[0]?.stale).toBe(false)
   })
 
+  it('keeps existing render images current when their parent changes and marks them stale on their own edit', async () => {
+    const { space, plan, render, cameras } = await renderNode()
+    const [front] = cameras
+    if (!front || !space.space) throw new Error('render fixture is missing')
+    expect((await upload(render.id, front.id, 'material', png(96, 64))).statusCode).toBe(201)
+    const previousSpace = space.space
+    const editedSpace = { ...previousSpace, height: 3.8 }
+    const change = { previousSpace, space: editedSpace }
+
+    expect((await inject('PATCH', `/nodes/${plan.id}/space`, change)).statusCode).toBe(200)
+    expect((await images(render.id))[0]?.stale).toBe(false)
+    expect((await inject('PATCH', `/nodes/${render.id}/space`, change)).statusCode).toBe(200)
+    expect((await images(render.id))[0]?.stale).toBe(true)
+    expect((await upload(render.id, front.id, 'material', png(96, 64), 0)).statusCode).toBe(409)
+    expect((await upload(render.id, front.id, 'material', png(96, 64), 1)).statusCode).toBe(201)
+  })
+
   it('refuses non-PNG bodies, unknown views and nodes that are not renders', async () => {
     const { white, render, cameras } = await renderNode()
     const [front] = cameras

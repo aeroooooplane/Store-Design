@@ -6536,7 +6536,7 @@
         }
       },
       "patch": {
-        "summary": "重命名节点（节点内容不可修改）",
+        "summary": "重命名节点",
         "tags": [
           "nodes"
         ],
@@ -7451,6 +7451,1899 @@
                     "projectId",
                     "space",
                     "layout"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        },
+                        "details": {},
+                        "requestId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "message",
+                        "requestId"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/nodes/{nodeId}/space": {
+      "patch": {
+        "summary": "修改当前节点的空间，保留已有下游节点所用的空间",
+        "tags": [
+          "nodes"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "space": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
+                        ]
+                      },
+                      "boundary": {
+                        "minItems": 3,
+                        "maxItems": 200,
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "prefixItems": [
+                            {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            }
+                          ],
+                          "items": false,
+                          "minItems": 2,
+                          "maxItems": 2
+                        }
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 1.5,
+                        "maximum": 20
+                      },
+                      "entrances": {
+                        "default": [],
+                        "maxItems": 20,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "a": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "b": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "main",
+                                "side"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b",
+                            "kind"
+                          ]
+                        }
+                      },
+                      "openEdges": {
+                        "default": [],
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "a": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "b": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b"
+                          ]
+                        }
+                      },
+                      "obstacles": {
+                        "default": [],
+                        "maxItems": 100,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "column",
+                                "shaft",
+                                "stair",
+                                "fixed",
+                                "other"
+                              ]
+                            },
+                            "polygon": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "prefixItems": [
+                                  {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  }
+                                ],
+                                "items": false,
+                                "minItems": 2,
+                                "maxItems": 2
+                              }
+                            },
+                            "height": {
+                              "default": null,
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 50
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "label": {
+                              "default": null,
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "addedLater": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "polygon"
+                          ]
+                        }
+                      },
+                      "calibration": {
+                        "default": null,
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "manual",
+                                  "dimension",
+                                  "item_label",
+                                  "area",
+                                  "llm"
+                                ]
+                              },
+                              "reference": {
+                                "type": "string",
+                                "maxLength": 500
+                              },
+                              "verified": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "reference",
+                              "verified"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "boundary",
+                      "height"
+                    ]
+                  },
+                  "previousSpace": {
+                    "type": "object",
+                    "properties": {
+                      "schemaVersion": {
+                        "type": "number",
+                        "enum": [
+                          1
+                        ]
+                      },
+                      "demand": {
+                        "type": "object",
+                        "properties": {
+                          "schemaVersion": {
+                            "type": "number",
+                            "enum": [
+                              1
+                            ]
+                          },
+                          "sourceStoreId": {
+                            "type": "string",
+                            "maxLength": 100
+                          },
+                          "entities": {
+                            "maxItems": 100,
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 50
+                                },
+                                "label": {
+                                  "type": "string",
+                                  "minLength": 1,
+                                  "maxLength": 120
+                                },
+                                "roles": {
+                                  "minItems": 1,
+                                  "maxItems": 8,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string",
+                                    "enum": [
+                                      "island_table",
+                                      "unboxing_table",
+                                      "cashier",
+                                      "accessory_cabinet",
+                                      "side_cabinet",
+                                      "display_stand",
+                                      "screen",
+                                      "signage",
+                                      "seating",
+                                      "storage",
+                                      "other"
+                                    ]
+                                  }
+                                },
+                                "quantity": {
+                                  "type": "integer",
+                                  "minimum": 0,
+                                  "maximum": 200
+                                },
+                                "dimensions": {
+                                  "default": {},
+                                  "type": "object",
+                                  "properties": {
+                                    "length": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "width": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "depth": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "height": {
+                                      "type": "number",
+                                      "exclusiveMinimum": 0,
+                                      "maximum": 50000
+                                    },
+                                    "attachedSeats": {
+                                      "type": "integer",
+                                      "minimum": 0,
+                                      "maximum": 100
+                                    }
+                                  }
+                                },
+                                "placeholderFootprint": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "w": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "d": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        },
+                                        "h": {
+                                          "type": "number",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 50
+                                        }
+                                      },
+                                      "required": [
+                                        "w",
+                                        "d",
+                                        "h"
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "origin": {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                "sourceAnnotationHash": {
+                                  "type": "string",
+                                  "pattern": "^[a-f0-9]{64}$"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "label",
+                                "roles",
+                                "quantity"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "schemaVersion",
+                          "entities"
+                        ]
+                      },
+                      "boundary": {
+                        "minItems": 3,
+                        "maxItems": 200,
+                        "type": "array",
+                        "items": {
+                          "type": "array",
+                          "prefixItems": [
+                            {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            },
+                            {
+                              "type": "number",
+                              "minimum": -1000,
+                              "maximum": 1000
+                            }
+                          ],
+                          "items": false,
+                          "minItems": 2,
+                          "maxItems": 2
+                        }
+                      },
+                      "height": {
+                        "type": "number",
+                        "minimum": 1.5,
+                        "maximum": 20
+                      },
+                      "entrances": {
+                        "default": [],
+                        "maxItems": 20,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "a": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "b": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "main",
+                                "side"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b",
+                            "kind"
+                          ]
+                        }
+                      },
+                      "openEdges": {
+                        "default": [],
+                        "maxItems": 50,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "a": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "b": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b"
+                          ]
+                        }
+                      },
+                      "obstacles": {
+                        "default": [],
+                        "maxItems": 100,
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "type": "string",
+                              "enum": [
+                                "column",
+                                "shaft",
+                                "stair",
+                                "fixed",
+                                "other"
+                              ]
+                            },
+                            "polygon": {
+                              "minItems": 3,
+                              "maxItems": 100,
+                              "type": "array",
+                              "items": {
+                                "type": "array",
+                                "prefixItems": [
+                                  {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  },
+                                  {
+                                    "type": "number",
+                                    "minimum": -1000,
+                                    "maximum": 1000
+                                  }
+                                ],
+                                "items": false,
+                                "minItems": 2,
+                                "maxItems": 2
+                              }
+                            },
+                            "height": {
+                              "default": null,
+                              "anyOf": [
+                                {
+                                  "type": "number",
+                                  "exclusiveMinimum": 0,
+                                  "maximum": 50
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "label": {
+                              "default": null,
+                              "anyOf": [
+                                {
+                                  "type": "string",
+                                  "maxLength": 100
+                                },
+                                {
+                                  "type": "null"
+                                }
+                              ]
+                            },
+                            "addedLater": {
+                              "type": "boolean"
+                            }
+                          },
+                          "required": [
+                            "kind",
+                            "polygon"
+                          ]
+                        }
+                      },
+                      "calibration": {
+                        "default": null,
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "method": {
+                                "type": "string",
+                                "enum": [
+                                  "manual",
+                                  "dimension",
+                                  "item_label",
+                                  "area",
+                                  "llm"
+                                ]
+                              },
+                              "reference": {
+                                "type": "string",
+                                "maxLength": 500
+                              },
+                              "verified": {
+                                "type": "boolean"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "reference",
+                              "verified"
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "schemaVersion",
+                      "boundary",
+                      "height"
+                    ]
+                  }
+                },
+                "required": [
+                  "space",
+                  "previousSpace"
+                ],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+            },
+            "in": "path",
+            "name": "nodeId",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Default Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "node": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "parentId": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "format": "uuid",
+                              "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "kind": {
+                          "type": "string",
+                          "enum": [
+                            "space",
+                            "plan",
+                            "edit",
+                            "white",
+                            "render"
+                          ]
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "strategy": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "max",
+                                "area",
+                                "min",
+                                "case"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "siStyle": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "enum": [
+                                "SI1.0",
+                                "SI2.0"
+                              ]
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "origin": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generator",
+                            "agent",
+                            "import",
+                            "recognition"
+                          ]
+                        },
+                        "importedFrom": {
+                          "type": [
+                            "string",
+                            "null"
+                          ]
+                        },
+                        "sourceNodeId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "hidden": {
+                          "type": "boolean"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "format": "date-time",
+                          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z|([+-](?:[01]\\d|2[0-3]):[0-5]\\d)))$"
+                        },
+                        "projectId": {
+                          "type": "string",
+                          "format": "uuid",
+                          "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                        },
+                        "space": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    1
+                                  ]
+                                },
+                                "demand": {
+                                  "type": "object",
+                                  "properties": {
+                                    "schemaVersion": {
+                                      "type": "number",
+                                      "enum": [
+                                        1
+                                      ]
+                                    },
+                                    "sourceStoreId": {
+                                      "type": "string",
+                                      "maxLength": 100
+                                    },
+                                    "entities": {
+                                      "maxItems": 100,
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "id": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 50
+                                          },
+                                          "label": {
+                                            "type": "string",
+                                            "minLength": 1,
+                                            "maxLength": 120
+                                          },
+                                          "roles": {
+                                            "minItems": 1,
+                                            "maxItems": 8,
+                                            "type": "array",
+                                            "items": {
+                                              "type": "string",
+                                              "enum": [
+                                                "island_table",
+                                                "unboxing_table",
+                                                "cashier",
+                                                "accessory_cabinet",
+                                                "side_cabinet",
+                                                "display_stand",
+                                                "screen",
+                                                "signage",
+                                                "seating",
+                                                "storage",
+                                                "other"
+                                              ]
+                                            }
+                                          },
+                                          "quantity": {
+                                            "type": "integer",
+                                            "minimum": 0,
+                                            "maximum": 200
+                                          },
+                                          "dimensions": {
+                                            "default": {},
+                                            "type": "object",
+                                            "properties": {
+                                              "length": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "width": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "depth": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "height": {
+                                                "type": "number",
+                                                "exclusiveMinimum": 0,
+                                                "maximum": 50000
+                                              },
+                                              "attachedSeats": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 100
+                                              }
+                                            },
+                                            "additionalProperties": false
+                                          },
+                                          "placeholderFootprint": {
+                                            "default": null,
+                                            "anyOf": [
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "w": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "d": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  },
+                                                  "h": {
+                                                    "type": "number",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 50
+                                                  }
+                                                },
+                                                "required": [
+                                                  "w",
+                                                  "d",
+                                                  "h"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
+                                          "origin": {
+                                            "type": "string",
+                                            "maxLength": 100
+                                          },
+                                          "sourceAnnotationHash": {
+                                            "type": "string",
+                                            "pattern": "^[a-f0-9]{64}$"
+                                          }
+                                        },
+                                        "required": [
+                                          "id",
+                                          "label",
+                                          "roles",
+                                          "quantity",
+                                          "dimensions",
+                                          "placeholderFootprint"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  },
+                                  "required": [
+                                    "schemaVersion",
+                                    "entities"
+                                  ],
+                                  "additionalProperties": false
+                                },
+                                "boundary": {
+                                  "minItems": 3,
+                                  "maxItems": 200,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "array",
+                                    "prefixItems": [
+                                      {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      }
+                                    ],
+                                    "items": false,
+                                    "minItems": 2,
+                                    "maxItems": 2
+                                  }
+                                },
+                                "height": {
+                                  "type": "number",
+                                  "minimum": 1.5,
+                                  "maximum": 20
+                                },
+                                "entrances": {
+                                  "default": [],
+                                  "maxItems": 20,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "a": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      },
+                                      "b": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "main",
+                                          "side"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "a",
+                                      "b",
+                                      "kind"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "openEdges": {
+                                  "default": [],
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "a": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      },
+                                      "b": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      }
+                                    },
+                                    "required": [
+                                      "a",
+                                      "b"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "obstacles": {
+                                  "default": [],
+                                  "maxItems": 100,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "column",
+                                          "shaft",
+                                          "stair",
+                                          "fixed",
+                                          "other"
+                                        ]
+                                      },
+                                      "polygon": {
+                                        "minItems": 3,
+                                        "maxItems": 100,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "array",
+                                          "prefixItems": [
+                                            {
+                                              "type": "number",
+                                              "minimum": -1000,
+                                              "maximum": 1000
+                                            },
+                                            {
+                                              "type": "number",
+                                              "minimum": -1000,
+                                              "maximum": 1000
+                                            }
+                                          ],
+                                          "items": false,
+                                          "minItems": 2,
+                                          "maxItems": 2
+                                        }
+                                      },
+                                      "height": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "number",
+                                            "exclusiveMinimum": 0,
+                                            "maximum": 50
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "label": {
+                                        "default": null,
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "maxLength": 100
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "addedLater": {
+                                        "type": "boolean"
+                                      }
+                                    },
+                                    "required": [
+                                      "kind",
+                                      "polygon",
+                                      "height",
+                                      "label"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "calibration": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "method": {
+                                          "type": "string",
+                                          "enum": [
+                                            "manual",
+                                            "dimension",
+                                            "item_label",
+                                            "area",
+                                            "llm"
+                                          ]
+                                        },
+                                        "reference": {
+                                          "type": "string",
+                                          "maxLength": 500
+                                        },
+                                        "verified": {
+                                          "type": "boolean"
+                                        }
+                                      },
+                                      "required": [
+                                        "method",
+                                        "reference",
+                                        "verified"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "boundary",
+                                "height",
+                                "entrances",
+                                "openEdges",
+                                "obstacles",
+                                "calibration"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "layout": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "schemaVersion": {
+                                  "type": "number",
+                                  "enum": [
+                                    3
+                                  ]
+                                },
+                                "items": {
+                                  "maxItems": 200,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "assetId": {
+                                        "anyOf": [
+                                          {
+                                            "type": "string",
+                                            "pattern": "^asset-\\d+$"
+                                          },
+                                          {
+                                            "type": "null"
+                                          }
+                                        ]
+                                      },
+                                      "function": {
+                                        "type": "string",
+                                        "enum": [
+                                          "island_table",
+                                          "unboxing_table",
+                                          "cashier",
+                                          "accessory_cabinet",
+                                          "side_cabinet",
+                                          "display_stand",
+                                          "screen",
+                                          "signage",
+                                          "seating",
+                                          "storage",
+                                          "other"
+                                        ]
+                                      },
+                                      "name": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 100
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "rotation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "placeholder": {
+                                        "default": false,
+                                        "type": "boolean"
+                                      },
+                                      "locked": {
+                                        "default": false,
+                                        "type": "boolean"
+                                      },
+                                      "mount": {
+                                        "type": "string",
+                                        "enum": [
+                                          "floor",
+                                          "wall",
+                                          "ceiling",
+                                          "embedded"
+                                        ]
+                                      },
+                                      "elevation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 20
+                                      },
+                                      "scale": {
+                                        "type": "number",
+                                        "minimum": 0.2,
+                                        "maximum": 5
+                                      },
+                                      "logoText": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 40
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "assetId",
+                                      "function",
+                                      "name",
+                                      "cx",
+                                      "cz",
+                                      "rotation",
+                                      "w",
+                                      "d",
+                                      "h",
+                                      "placeholder",
+                                      "locked"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                },
+                                "planning": {
+                                  "default": null,
+                                  "anyOf": [
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "demand": {
+                                          "maxItems": 100,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "id": {
+                                                "type": "string",
+                                                "maxLength": 50
+                                              },
+                                              "label": {
+                                                "type": "string",
+                                                "maxLength": 120
+                                              },
+                                              "required": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placed": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "placeholders": {
+                                                "type": "integer",
+                                                "minimum": 0,
+                                                "maximum": 200
+                                              },
+                                              "reason": {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "string",
+                                                    "maxLength": 500
+                                                  },
+                                                  {
+                                                    "type": "null"
+                                                  }
+                                                ]
+                                              }
+                                            },
+                                            "required": [
+                                              "id",
+                                              "label",
+                                              "required",
+                                              "placed",
+                                              "placeholders",
+                                              "reason"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        },
+                                        "strategy": {
+                                          "type": "string",
+                                          "enum": [
+                                            "max",
+                                            "area",
+                                            "min",
+                                            "case"
+                                          ]
+                                        },
+                                        "requested": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 200
+                                        },
+                                        "placed": {
+                                          "type": "integer",
+                                          "minimum": 0,
+                                          "maximum": 200
+                                        },
+                                        "relaxations": {
+                                          "default": [],
+                                          "maxItems": 20,
+                                          "type": "array",
+                                          "items": {
+                                            "type": "object",
+                                            "properties": {
+                                              "rule": {
+                                                "type": "string",
+                                                "minLength": 1,
+                                                "maxLength": 64
+                                              },
+                                              "target": {
+                                                "type": "number"
+                                              },
+                                              "actual": {
+                                                "type": "number"
+                                              }
+                                            },
+                                            "required": [
+                                              "rule",
+                                              "target",
+                                              "actual"
+                                            ],
+                                            "additionalProperties": false
+                                          }
+                                        },
+                                        "note": {
+                                          "default": null,
+                                          "anyOf": [
+                                            {
+                                              "type": "string",
+                                              "maxLength": 500
+                                            },
+                                            {
+                                              "type": "null"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "required": [
+                                        "strategy",
+                                        "requested",
+                                        "placed",
+                                        "relaxations",
+                                        "note"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "fixtures": {
+                                  "maxItems": 50,
+                                  "type": "array",
+                                  "items": {
+                                    "type": "object",
+                                    "properties": {
+                                      "id": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 64
+                                      },
+                                      "kind": {
+                                        "type": "string",
+                                        "enum": [
+                                          "hollow_partition"
+                                        ]
+                                      },
+                                      "cx": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "cz": {
+                                        "type": "number",
+                                        "minimum": -1000,
+                                        "maximum": 1000
+                                      },
+                                      "w": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "d": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      },
+                                      "h": {
+                                        "type": "number",
+                                        "exclusiveMinimum": 0,
+                                        "maximum": 50
+                                      }
+                                    },
+                                    "required": [
+                                      "id",
+                                      "kind",
+                                      "cx",
+                                      "cz",
+                                      "w",
+                                      "d",
+                                      "h"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                }
+                              },
+                              "required": [
+                                "schemaVersion",
+                                "items",
+                                "planning"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "parentId",
+                        "kind",
+                        "name",
+                        "strategy",
+                        "siStyle",
+                        "origin",
+                        "importedFrom",
+                        "hidden",
+                        "createdAt",
+                        "projectId",
+                        "space",
+                        "layout"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "issues": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "enum": [
+                              "error",
+                              "warning"
+                            ]
+                          },
+                          "message": {
+                            "type": "string"
+                          },
+                          "itemIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "path": {
+                            "type": "array",
+                            "items": {
+                              "type": [
+                                "string",
+                                "number"
+                              ]
+                            }
+                          }
+                        },
+                        "required": [
+                          "code",
+                          "severity",
+                          "message"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "node",
+                    "issues"
                   ],
                   "additionalProperties": false
                 }
