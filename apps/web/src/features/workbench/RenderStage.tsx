@@ -18,6 +18,7 @@ import type {
   Space,
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
+import { isFullWorkbench } from '../../api/deployment.ts'
 import { DisplayPanel } from '../display/DisplayPanel.tsx'
 import { storedPptViews } from '../display/pptViews.ts'
 import { displayKeys, useDisplayRules, useNodeDisplay } from '../display/queries.ts'
@@ -255,6 +256,19 @@ export function RenderStage({ left, project, node, space, assets }: RenderStageP
       )
         throw new Error('背景已修改，请重新渲染后生成交付')
       const plan = await exportPlan(svg)
+      if (isFullWorkbench && latest.data) {
+        const { archiveDelivery } = await import('./boldsite-delivery.ts')
+        const exhibit =
+          hasDisplay && withDisplay && display.data && displayRules.data
+            ? { data: display.data, rules: displayRules.data, options: await displayExport() }
+            : undefined
+        await archiveDelivery(
+          { project, node, images: latest.data.images, cameras: views },
+          { ...plan, space, assets, ...(exhibit ? { exhibit } : {}) },
+        )
+        await client.invalidateQueries({ queryKey: workbenchKeys.deliveries(node.id) })
+        return
+      }
       await createDelivery.mutateAsync({
         planPng: plan.png,
         planSvg: plan.svg,

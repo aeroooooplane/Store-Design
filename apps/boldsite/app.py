@@ -24,6 +24,8 @@ from drawings import router as drawings
 from projects import router as projects
 from rules import Rules
 from workbench import router as workbench
+from render_stage import router as render_stage
+from stage_delivery import router as stage_delivery
 
 FULL_WORKBENCH = (ROOT / "workbench-mode.txt").is_file()
 from storage import configured_database
@@ -56,6 +58,8 @@ if FULL_WORKBENCH:
     app.state.workbench_write_token = token_urlsafe(32)
     app.add_middleware(FullWorkbenchTransport, token=app.state.workbench_write_token)
     app.include_router(workbench)
+    app.include_router(render_stage)
+    app.include_router(stage_delivery)
 app.add_middleware(ServicePrefix)
 app.include_router(projects)
 app.include_router(drawings)

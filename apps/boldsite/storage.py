@@ -121,6 +121,32 @@ class Database:
 
 
 
+            statements = (
+                """CREATE TABLE IF NOT EXISTS stage_cameras (
+                    id TEXT PRIMARY KEY, nodeId TEXT NOT NULL REFERENCES workbench_nodes(id),
+                    camera TEXT NOT NULL, sort INTEGER NOT NULL, deletedAt TEXT,
+                    UNIQUE(nodeId, sort))""",
+                """CREATE TABLE IF NOT EXISTS stage_files (
+                    id TEXT PRIMARY KEY, projectId TEXT NOT NULL REFERENCES projects(id),
+                    kind TEXT NOT NULL, name TEXT NOT NULL, mime TEXT NOT NULL, sha TEXT NOT NULL,
+                    data BLOB NOT NULL, width INTEGER, height INTEGER, UNIQUE(projectId, kind, sha, name))""",
+                """CREATE TABLE IF NOT EXISTS stage_renders (
+                    id TEXT PRIMARY KEY, nodeId TEXT NOT NULL REFERENCES workbench_nodes(id),
+                    cameraId TEXT NOT NULL REFERENCES stage_cameras(id), mode TEXT NOT NULL,
+                    fileId TEXT NOT NULL REFERENCES stage_files(id), width INTEGER NOT NULL, height INTEGER NOT NULL,
+                    layoutSignature TEXT NOT NULL, cameraSignature TEXT NOT NULL, createdAt TEXT NOT NULL,
+                    UNIQUE(nodeId,cameraId,mode,layoutSignature,cameraSignature))""",
+                """CREATE TABLE IF NOT EXISTS stage_displays (
+                    nodeId TEXT PRIMARY KEY REFERENCES workbench_nodes(id),
+                    revision INTEGER NOT NULL, edits TEXT NOT NULL)""",
+                """CREATE TABLE IF NOT EXISTS stage_exports (
+                    id TEXT PRIMARY KEY, nodeId TEXT NOT NULL REFERENCES workbench_nodes(id),
+                    kind TEXT NOT NULL, value TEXT NOT NULL, createdAt TEXT NOT NULL)""",
+            )
+            for statement in statements:
+                db.execute(statement)
+
+
 def configured_database():
     # An explicit path prevents a successful deploy silently writing into the release directory.
     return Database(Path(os.environ["DATA_DIR"]).resolve())

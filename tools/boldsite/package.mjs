@@ -44,6 +44,8 @@ for (const file of [
   'storage.py',
   'storage_gate.py',
   'workbench.py',
+  'render_stage.py',
+  'stage_delivery.py',
   'rules.py',
   'requirements.txt',
   'boldsite.json',

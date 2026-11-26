@@ -16,5 +16,6 @@ export async function exportDeliveryPdfs(content: DeliveryContent) {
   return {
     full: new Blob([full.data], { type: 'application/pdf' }),
     show: new Blob([show.data], { type: 'application/pdf' }),
+    pages: { full: full.pages.length, show: show.pages.length },
   }
 }

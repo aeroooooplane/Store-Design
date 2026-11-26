@@ -1,6 +1,14 @@
 import { buildDisplayPresentation } from '../../../../api/src/modules/displays/deck-template.ts'
 import type { DeckImage } from '../../../../api/src/modules/displays/deck-template.ts'
-import type { DisplayEdits, DisplayRulesView, DisplayTable, Market, SiStyle } from '@store/shared'
+import type {
+  DisplayEdits,
+  DisplayRulesView,
+  DisplayTable,
+  Market,
+  NodeDisplay,
+  NodeDisplayExportRequest,
+  SiStyle,
+} from '@store/shared'
 import { photoOf } from '../display/photos.ts'
 import { apiHref } from '../../api/deployment.ts'
 import type { DisplayPlan } from './PilotDisplay.tsx'
@@ -16,6 +24,8 @@ interface SlideInput {
   tables: DisplayTable[]
   end: 'left' | 'right'
   moduleScheme: DisplayEdits['moduleScheme']
+  rendered?: NodeDisplay
+  options?: NodeDisplayExportRequest
 }
 
 async function photo(url: string): Promise<DeckImage> {
@@ -79,6 +89,36 @@ export async function exportDisplaySlides(input: SlideInput) {
       pictures.flatMap((picture) => (picture.status === 'fulfilled' ? [picture.value] : [])),
     ),
   }
+  const views = new Map(
+    await Promise.all(
+      (input.rendered?.views ?? [])
+        .filter((v) => v.imageUrl)
+        .map(
+          async (view) =>
+            [view.cameraId, { image: await photo(view.imageUrl!), marks: view.marks }] as const,
+        ),
+    ),
+  )
+  const tableViews = Object.fromEntries(
+    input.tables.map((table) => {
+      const view = views.get(input.rendered?.tableViews[table.label] ?? '')
+      const mark = view?.marks[table.label]
+      return [table.label, view && mark ? { image: view.image, mark } : undefined]
+    }),
+  )
+  const tables3d = Object.fromEntries(
+    await Promise.all(
+      (input.options?.tables3d ?? []).map(async (shot) => {
+        const table = input.tables.find((t) => t.sourceId === shot.table)
+        if (!table) throw new Error('展陈桌位已更新，请重新生成')
+        const mime = shot.image.startsWith('iVBOR') ? 'image/png' : 'image/jpeg'
+        return [
+          table.label,
+          { image: await photo('data:' + mime + ';base64,' + shot.image), names: shot.names },
+        ] as const
+      }),
+    ),
+  )
   const pptx = buildDisplayPresentation({
     title: input.title,
     date: new Intl.DateTimeFormat('sv-SE', { timeZone: 'Asia/Shanghai' }).format(),
@@ -93,13 +133,13 @@ export async function exportDisplaySlides(input: SlideInput) {
         { x: (table.plan.cx - box.x) / box.width, y: (table.plan.cz - box.y) / box.height },
       ]),
     ),
-    overview: null,
-    tableViews: {},
+    overview: views.get(input.rendered?.overviewCameraId ?? '') ?? null,
+    tableViews,
     photos,
     innerTrays,
     landscapeEnd: input.end,
-    views: 'plan',
-    tables3d: {},
+    views: input.options?.views ?? 'plan',
+    tables3d,
     pending,
   })
   const output = await pptx.write({ outputType: 'blob' })
