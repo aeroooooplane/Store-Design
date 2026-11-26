@@ -12,9 +12,16 @@ function logoFont() {
     pendingFont = (async () => {
       const response = await fetch(fontUrl)
       if (!response.ok || !response.body) throw new Error('LOGO 字体加载失败')
-      const json: unknown = await new Response(
-        response.body.pipeThrough(new DecompressionStream('gzip')),
-      ).json()
+      // Vite serves .json.gz with Content-Encoding, whereas static hosting may serve raw gzip.
+      // Fetch has already decoded Content-Encoding; inspect the actual bytes before unpacking.
+      const buffer = await response.arrayBuffer()
+      const bytes = new Uint8Array(buffer)
+      const source = new Response(buffer)
+      const decoded =
+        bytes[0] === 0x1f && bytes[1] === 0x8b
+          ? new Response(source.body!.pipeThrough(new DecompressionStream('gzip')))
+          : source
+      const json: unknown = await decoded.json()
       return new FontLoader().parse(json as FontData)
     })().catch((error: unknown) => {
       pendingFont = null

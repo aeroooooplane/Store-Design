@@ -70,7 +70,7 @@ export function deliveryLegend(
     const custom = isCustomLogo(item)
     const artSize = isWallArt(item) || custom ? wallArtSize(item) : null
     const key = asset
-      ? `asset:${item.assetId}:${item.placeholder ? 'box' : 'model'}${artSize ? `:${mm(artSize.w)}x${mm(artSize.h)}` : ''}${custom ? `:${item.logoText ?? DEFAULT_LOGO_TEXT}:${mm(item.d)}` : ''}`
+      ? `asset:${item.assetId}:${item.placeholder ? 'box' : 'model'}${artSize ? `:${mm(artSize.w)}x${mm(artSize.h)}` : ''}${custom ? `:${item.logoText ?? DEFAULT_LOGO_TEXT}:${mm(artSize!.d)}` : ''}`
       : // A box without a model, long side first: turned a quarter it is still the same box.
         `box:${item.name}:${mm(Math.max(item.w, item.d))}x${mm(Math.min(item.w, item.d))}x${mm(item.h)}`
     let group = groups.get(key)

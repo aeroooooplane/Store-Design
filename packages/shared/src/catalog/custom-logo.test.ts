@@ -7,6 +7,7 @@ import {
   logoTextBounds,
 } from './custom-logo.ts'
 import { LayoutItemSchema, LayoutSchema, assetFitProblem, scaleItem } from '../schemas/layout.ts'
+import { deliveryLegend } from '../delivery/index.ts'
 
 const asset = customLogoAsset()
 const item = () =>
@@ -25,6 +26,17 @@ const item = () =>
   })
 
 describe('自定义 LOGO', () => {
+  it('交付图例按实际文字和尺寸分组，旋转不改变型号', () => {
+    const a = changeLogoText(item(), '门店'),
+      b = changeLogoText(item(), '影石')
+    const rotated = { ...a, id: 'turned', rotation: 90, ...customLogoSize('门店', 1, 90) }
+    const legend = deliveryLegend([a, { ...b, id: 'b' }, rotated], new Map([[asset.id, asset]]))
+    expect(legend.entries).toHaveLength(2)
+    expect(legend.entries.find((e) => e.name === '自定义LOGO：门店')?.count).toBe(2)
+    expect(legend.entries.find((e) => e.name === '自定义LOGO：门店')?.size).toEqual(
+      customLogoSize('门店'),
+    )
+  })
   it('支持常用中英文，拒绝空白、未收录字符和超长文字', () => {
     expect(CustomLogoTextSchema.parse('  门店 Insta360  ')).toBe('门店 Insta360')
     for (const text of ['', '   ', '😀', '\n', '\u200b', '字'.repeat(41)])
