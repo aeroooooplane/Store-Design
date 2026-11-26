@@ -365,6 +365,39 @@ function NewSpace({
   )
 }
 
+function CurrentNodeSpaceEditor({
+  project,
+  nodeId,
+  space,
+  onClose,
+}: {
+  project: Project
+  nodeId: string
+  space: Space
+  onClose: () => void
+}) {
+  const [initialSpace] = useState(space)
+  const updateSpace = useUpdateNodeSpace(project.id, nodeId)
+  return (
+    <div className="wb-card">
+      <h2>修改空间</h2>
+      <p className="hint">保存后直接更新当前节点的空间。</p>
+      <ErrorMessage error={updateSpace.error} />
+      <SpaceCaptureEditor
+        shop={project.shopType}
+        initial={initialSpace}
+        hideName
+        submitLabel="保存到当前节点"
+        onCancel={onClose}
+        onSubmit={async (edited) => {
+          await updateSpace.mutateAsync({ space: edited, previousSpace: initialSpace })
+          onClose()
+        }}
+      />
+    </div>
+  )
+}
+
 interface NodePanelProps {
   left: ReactNode
   project: Project
@@ -393,7 +426,6 @@ function NodePanel({
   registerSave,
 }: NodePanelProps) {
   const node = useNode(nodeId)
-  const updateSpace = useUpdateNodeSpace(project.id, nodeId)
   const assetMap = useMemo(() => new Map(assets.map((a) => [a.id, a])), [assets])
 
   const error = node.error
@@ -419,25 +451,12 @@ function NodePanel({
       <WorkbenchLayout
         left={left}
         center={
-          <div className="wb-card">
-            <h2>修改空间</h2>
-            <p className="hint">保存后直接更新当前节点的空间。</p>
-            <ErrorMessage error={updateSpace.error} />
-            <SpaceCaptureEditor
-              shop={project.shopType}
-              initial={space}
-              hideName
-              submitLabel="保存到当前节点"
-              onCancel={() => {
-                updateSpace.reset()
-                setPanel('view')
-              }}
-              onSubmit={async (edited) => {
-                await updateSpace.mutateAsync({ space: edited, previousSpace: space })
-                setPanel('view')
-              }}
-            />
-          </div>
+          <CurrentNodeSpaceEditor
+            project={project}
+            nodeId={nodeId}
+            space={space}
+            onClose={() => setPanel('view')}
+          />
         }
       />
     )
