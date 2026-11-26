@@ -241,7 +241,7 @@ describe('GET /assets', () => {
     const response = await t.app.inject({ method: 'GET', url: '/api/v1/assets' })
     expect(response.statusCode).toBe(200)
     const { items, total } = response.json<{ items: Asset[]; total: number }>()
-    expect(total).toBe(5)
+    expect(total).toBe(6)
     const island = items.find((a) => a.id === 'asset-1')
     expect(island).toMatchObject({
       name: '1.8米普通中岛桌',
@@ -304,6 +304,7 @@ describe('GET /assets', () => {
       'asset-1',
       'asset-2',
       'asset-90000003',
+      'asset-90000004',
     ])
     const search = await t.app.inject({
       method: 'GET',

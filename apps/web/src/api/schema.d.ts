@@ -859,6 +859,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -926,6 +927,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -987,6 +989,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -1308,6 +1311,7 @@ export interface paths {
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                                 scale?: number;
+                                logoText?: string;
                             }[];
                             /** @default null */
                             planning?: {
@@ -1482,6 +1486,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -1731,6 +1736,7 @@ export interface paths {
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                     scale?: number;
+                                    logoText?: string;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -1969,6 +1975,7 @@ export interface paths {
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                     scale?: number;
+                                    logoText?: string;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2207,6 +2214,7 @@ export interface paths {
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                     scale?: number;
+                                    logoText?: string;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2449,6 +2457,7 @@ export interface paths {
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                     scale?: number;
+                                    logoText?: string;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2597,6 +2606,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -2766,6 +2776,7 @@ export interface paths {
                                     mount?: "floor" | "wall" | "ceiling" | "embedded";
                                     elevation?: number;
                                     scale?: number;
+                                    logoText?: string;
                                 }[];
                                 /** @default null */
                                 planning: {
@@ -2914,6 +2925,7 @@ export interface paths {
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                                 scale?: number;
+                                logoText?: string;
                             }[];
                             /** @default null */
                             planning?: {
@@ -2988,6 +3000,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -5095,6 +5108,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {
@@ -5291,6 +5305,7 @@ export interface paths {
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                                 scale?: number;
+                                logoText?: string;
                             }[];
                             /** @default null */
                             planning?: {
@@ -6949,6 +6964,7 @@ export interface paths {
                                 mount?: "floor" | "wall" | "ceiling" | "embedded";
                                 elevation?: number;
                                 scale?: number;
+                                logoText?: string;
                             }[];
                             /** @default null */
                             planning?: {
@@ -7116,6 +7132,7 @@ export interface paths {
                                         mount?: "floor" | "wall" | "ceiling" | "embedded";
                                         elevation?: number;
                                         scale?: number;
+                                        logoText?: string;
                                     }[];
                                     /** @default null */
                                     planning: {

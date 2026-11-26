@@ -2268,6 +2268,11 @@
                                           "type": "number",
                                           "minimum": 0.2,
                                           "maximum": 5
+                                        },
+                                        "logoText": {
+                                          "type": "string",
+                                          "minLength": 1,
+                                          "maxLength": 40
                                         }
                                       },
                                       "required": [
@@ -2675,6 +2680,11 @@
                                         "type": "number",
                                         "minimum": 0.2,
                                         "maximum": 5
+                                      },
+                                      "logoText": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 40
                                       }
                                     },
                                     "required": [
@@ -3019,6 +3029,11 @@
                                       "type": "number",
                                       "minimum": 0.2,
                                       "maximum": 5
+                                    },
+                                    "logoText": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 40
                                     }
                                   },
                                   "required": [
@@ -4191,6 +4206,11 @@
                               "type": "number",
                               "minimum": 0.2,
                               "maximum": 5
+                            },
+                            "logoText": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 40
                             }
                           },
                           "required": [
@@ -5078,6 +5098,11 @@
                                         "type": "number",
                                         "minimum": 0.2,
                                         "maximum": 5
+                                      },
+                                      "logoText": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 40
                                       }
                                     },
                                     "required": [
@@ -6133,6 +6158,11 @@
                                     "type": "number",
                                     "minimum": 0.2,
                                     "maximum": 5
+                                  },
+                                  "logoText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 40
                                   }
                                 },
                                 "required": [
@@ -7158,6 +7188,11 @@
                                     "type": "number",
                                     "minimum": 0.2,
                                     "maximum": 5
+                                  },
+                                  "logoText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 40
                                   }
                                 },
                                 "required": [
@@ -8164,6 +8199,11 @@
                                     "type": "number",
                                     "minimum": 0.2,
                                     "maximum": 5
+                                  },
+                                  "logoText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 40
                                   }
                                 },
                                 "required": [
@@ -9170,6 +9210,11 @@
                                     "type": "number",
                                     "minimum": 0.2,
                                     "maximum": 5
+                                  },
+                                  "logoText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 40
                                   }
                                 },
                                 "required": [
@@ -9672,6 +9717,11 @@
                                       "type": "number",
                                       "minimum": 0.2,
                                       "maximum": 5
+                                    },
+                                    "logoText": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 40
                                     }
                                   },
                                   "required": [
@@ -10210,6 +10260,11 @@
                                 "type": "number",
                                 "minimum": 0.2,
                                 "maximum": 5
+                              },
+                              "logoText": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 40
                               }
                             },
                             "required": [
@@ -10721,6 +10776,11 @@
                               "type": "number",
                               "minimum": 0.2,
                               "maximum": 5
+                            },
+                            "logoText": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 40
                             }
                           },
                           "required": [
@@ -11083,6 +11143,11 @@
                                     "type": "number",
                                     "minimum": 0.2,
                                     "maximum": 5
+                                  },
+                                  "logoText": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "maxLength": 40
                                   }
                                 },
                                 "required": [
@@ -17587,6 +17652,11 @@
                                       "type": "number",
                                       "minimum": 0.2,
                                       "maximum": 5
+                                    },
+                                    "logoText": {
+                                      "type": "string",
+                                      "minLength": 1,
+                                      "maxLength": 40
                                     }
                                   },
                                   "required": [
@@ -18433,6 +18503,11 @@
                               "type": "number",
                               "minimum": 0.2,
                               "maximum": 5
+                            },
+                            "logoText": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 40
                             }
                           },
                           "required": [
@@ -24208,6 +24283,11 @@
                               "type": "number",
                               "minimum": 0.2,
                               "maximum": 5
+                            },
+                            "logoText": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 40
                             }
                           },
                           "required": [
@@ -25070,6 +25150,11 @@
                                         "type": "number",
                                         "minimum": 0.2,
                                         "maximum": 5
+                                      },
+                                      "logoText": {
+                                        "type": "string",
+                                        "minLength": 1,
+                                        "maxLength": 40
                                       }
                                     },
                                     "required": [

@@ -5,6 +5,9 @@ import {
   wallArtFromEnd,
   rotationTowards,
   scaleFromEnd,
+  isCustomLogo,
+  customLogoFootprint,
+  DEFAULT_LOGO_TEXT,
   snapRotation,
 } from '@store/shared'
 import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
@@ -168,7 +171,14 @@ export function usePlanDrag(
         })
         return
       }
-      const placed = scaleFromEnd(start, asset.footprint, end, world)
+      const placed = scaleFromEnd(
+        start,
+        isCustomLogo(start)
+          ? customLogoFootprint(start.logoText ?? DEFAULT_LOGO_TEXT)
+          : asset.footprint,
+        end,
+        world,
+      )
       dispatch({
         type: 'scale',
         id: start.id,

@@ -4,10 +4,12 @@ import {
   canSelectCatalogAsset,
   LEGACY_PORTRAIT_SCREENS,
   mToMm,
+  isCustomLogo,
 } from '@store/shared'
 import type { Asset, ItemFunction, Market, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
+import customLogoThumbnail from './signage-thumbnails/custom-logo.svg?url'
 
 /**
  * The picker lists one section per prop category, in this order (用户 2026-11-18). The jump
@@ -295,9 +297,10 @@ export function ModelPicker({
               <ul>
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
-                  const imageUrl =
-                    SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
-                    (image && thumbnailUrl(image.url))
+                  const imageUrl = isCustomLogo({ assetId: asset.id })
+                    ? customLogoThumbnail
+                    : (SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
+                      (image && thumbnailUrl(image.url)))
                   const pointPlaced = isPointPlaced?.(asset) ?? false
                   return (
                     <li key={asset.id}>
