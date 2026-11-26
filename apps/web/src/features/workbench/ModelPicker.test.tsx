@@ -1,5 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { CUSTOM_LOGO_ID, customLogoAsset } from '@store/shared'
 import type { Asset, AssetCategory, Market, SiStyle } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import { ModelPicker, pickableSections } from './ModelPicker.tsx'
@@ -136,7 +137,7 @@ describe('pickableSections', () => {
     ['SI1.0', 'overseas'],
     ['SI2.0', 'domestic'],
     ['SI2.0', 'overseas'],
-  ] as [SiStyle, Market][])('在 %s / %s 仅提供审核的六款标识', (si, market) => {
+  ] as [SiStyle, Market][])('在 %s / %s 将自定义 LOGO 排在影翎下方', (si, market) => {
     const selected = [
       ['asset-90000111', '徕卡墙组合 1200', '徕卡墙组合 1200'],
       ['asset-90000112', '徕卡墙组合 1990', '徕卡墙组合 1990'],
@@ -144,14 +145,17 @@ describe('pickableSections', () => {
       ['asset-20533337', '影石 Insta360', 'Insta360'],
       ['asset-33868330', '影石 Insta360 始于敢想', 'Insta360 Think Bold'],
       ['asset-11483499', '影翎 ANTIGRAVITY', 'ANTIGRAVITY'],
+      [CUSTOM_LOGO_ID, '自定义LOGO', '自定义LOGO'],
     ] as const
     const source = [
-      ...selected.map(([id]) =>
-        asset(id, id.startsWith('asset-900001') ? '徕卡墙画面组合' : '墙面LOGO', '软装道具', {
-          siFamily: 'SI2.0',
-          category: id.startsWith('asset-900001') ? '软装道具' : '品牌标识',
-          function: 'signage',
-        }),
+      ...[...selected].reverse().map(([id]) =>
+        id === CUSTOM_LOGO_ID
+          ? customLogoAsset()
+          : asset(id, id.startsWith('asset-900001') ? '徕卡墙画面组合' : '墙面LOGO', '软装道具', {
+              siFamily: 'SI2.0',
+              category: id.startsWith('asset-900001') ? '软装道具' : '品牌标识',
+              function: 'signage',
+            }),
       ),
       ...['asset-90000101', 'asset-36929204', 'asset-33917980', 'asset-40910342'].map((id) =>
         asset(id, '徕卡墙或旧标识', '品牌标识', { function: 'signage' }),
