@@ -7,8 +7,11 @@ import { offsetOutline } from './outline-offset.ts'
 /** Model floor stays at y=0; public ground is 30 mm lower, preserving prop elevations. */
 export const ISLAND_PLATFORM_HEIGHT_M = RENDER_LOOK.edging.height
 
-/** SI2 PDF p.142: 30 mm rise over 50 mm run; SI1 p.145 has no slope dimension, so use 45°. */
-export const ISLAND_MANUAL_SLOPE_RUN_M: Partial<Record<SiStyle, number>> = { 'SI2.0': 0.05 }
+/** SI2 PDF p.142: 30 mm rise over 50 mm run; user also applies this profile to SI1. */
+export const ISLAND_MANUAL_SLOPE_RUN_M: Partial<Record<SiStyle, number>> = {
+  'SI1.0': 0.05,
+  'SI2.0': 0.05,
+}
 
 export function islandEdgingGeometry(
   boundary: readonly Point[],
