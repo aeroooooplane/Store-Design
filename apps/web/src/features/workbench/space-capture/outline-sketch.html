@@ -160,6 +160,7 @@
                 </div>
                 <div class="column-fields" data-columns hidden>
                   <span>柱子</span>
+                  <small>靠近墙面自动吸附，按住 Alt 自由摆放</small>
                   <div class="button-row" role="group" aria-label="柱子">
                     <button type="button" data-column-kind="square" aria-pressed="false">
                       放方柱
@@ -450,6 +451,12 @@
         stroke: var(--entry-entry);
         stroke-width: 1.5;
       }
+      #space-entry-proposal .column-wall-snap {
+        stroke: var(--entry-accent);
+        stroke-width: 5;
+        stroke-linecap: round;
+        pointer-events: none;
+      }
       #space-entry-proposal .column-preview.invalid {
         fill: var(--entry-error);
         stroke: var(--entry-error);
@@ -638,6 +645,7 @@
         const memory = []
         const redo = []
         const EDGE_STEP = 50
+        const COLUMN_SNAP_MM = 100
         const MAX_VERTICES = 200
         const MAX_OBSTACLES = 100
         const openingLabels = { wall: '封闭', full: '整边开放', partial: '局部开放' }
@@ -1660,14 +1668,80 @@
             )
           }
         }
+        function wallParts(a, b, opening) {
+          if (!opening) return { walls: [[a, b]] }
+          if (opening.mode === 'full') return { walls: [], gap: [a, b] }
+
+          const size = length(a, b)
+          const direction = unit(subtract(b, a))
+          const start = moveAlong(a, direction, Math.min(size, opening.start))
+          const end = moveAlong(a, direction, Math.min(size, opening.start + opening.width))
+          return {
+            walls: [
+              [a, start],
+              [end, b],
+            ],
+            gap: [start, end],
+          }
+        }
+        function snapColumnToWall(column, free, except = -1) {
+          const original = { column }
+          if (free) return original
+
+          const center = [column.x, column.y]
+          let best = original
+          let nearest = COLUMN_SNAP_MM + 1e-7
+          state.points.forEach((start, index) => {
+            const end = state.points[(index + 1) % state.points.length]
+            const { walls } = wallParts(start, end, state.openings[index])
+            for (const wall of walls) {
+              const [a, b] = wall
+              const size = length(a, b)
+              if (size < 1e-7) continue
+              const direction = unit(subtract(b, a))
+              const normal = [-direction[1], direction[0]]
+              const signedGap = dot(subtract(center, a), normal)
+              const side = signedGap < 0 ? -1 : 1
+              // 圆柱取切点。方柱取迎墙的边中点，遇斜墙则取最靠墙的角点。
+              const contactOffset =
+                column.kind === 'circle'
+                  ? normal.map((axis) => (-side * axis * column.width) / 2)
+                  : normal.map((axis, i) =>
+                      Math.abs(axis) < 1e-7
+                        ? 0
+                        : (-side * Math.sign(axis) * (i === 0 ? column.width : column.depth)) / 2,
+                    )
+              const move = -dot(contactOffset, normal) - signedGap
+              const distance = Math.abs(move)
+              if (distance >= nearest) continue
+
+              const contactAlong =
+                dot(subtract(center, a), direction) + dot(contactOffset, direction)
+              if (contactAlong < -1e-7 || contactAlong > size + 1e-7) continue
+              const [x, y] = moveAlong(center, normal, move)
+              const snapped = { ...column, x, y }
+              if (!columnFits(snapped, except)) continue
+              best = { column: snapped, wall }
+              nearest = distance
+            }
+          })
+          return best
+        }
+        function positionColumn(cursor) {
+          const [x, y] = cursor.point
+          return snapColumnToWall({ ...placingColumn, x, y }, cursor.free)
+        }
+        function paintWallSnap(wall, parent) {
+          if (wall) line(toScreen(wall[0]), toScreen(wall[1]), 'column-wall-snap', {}, parent)
+        }
         function paintColumnPlacement() {
           columnPlacement.replaceChildren()
           const active = Boolean(placingColumn && columnCursor)
           svg.dataset.columnPreview = String(active)
           if (!active) return
-          const [x, y] = columnCursor,
-            column = { ...placingColumn, x, y }
+          const { column, wall } = positionColumn(columnCursor)
           const valid = columnFits(column)
+          paintWallSnap(wall, columnPlacement)
           if (valid) paintColumnDimensions(column, columnPlacement, [columnLabelBox(column)])
           drawColumn(
             column,
@@ -1730,18 +1804,12 @@
               const opening = state.openings[i]
               const main = i === state.mainEdge
               if (selected) line(a, b, 'chosen-edge')
-              if (!opening) line(a, b, 'wall-mark')
-              else {
-                let start = a,
-                  end = b
+              const [worldA, worldB] = [state.points[i], state.points[(i + 1) % points.length]]
+              const { walls, gap } = wallParts(worldA, worldB, opening)
+              for (const [start, end] of walls) line(toScreen(start), toScreen(end), 'wall-mark')
+              if (gap) {
+                const [start, end] = gap.map(toScreen)
                 if (opening.mode === 'partial') {
-                  const size = length(a, b) / projection.scale
-                  const along = (distance) =>
-                    a.map((v, axis) => v + ((b[axis] - v) * distance) / size)
-                  start = along(opening.start)
-                  end = along(opening.start + opening.width)
-                  line(a, start, 'wall-mark')
-                  line(end, b, 'wall-mark')
                   if (!addingNode && !placingColumn && selected) {
                     openingHandles = {
                       locations: [start, end],
@@ -1848,6 +1916,7 @@
             })
           if (!placingColumn) columnCursor = null
           paintColumnPlacement()
+          if (drag?.key === 'column') paintWallSnap(drag.wall, columnPlacement)
         }
         function renderColumnControls() {
           const active = placingColumn ?? state.columns[selectedColumn]
@@ -2589,8 +2658,7 @@
             return
           }
           if (placingColumn) {
-            const [x, y] = fromScreen(event, 1)
-            const column = { ...placingColumn, x, y }
+            const { column } = positionColumn({ point: fromScreen(event, 1), free: event.altKey })
             if (!columnFits(column)) {
               error = '请选择未被占用的位置'
               render()
@@ -2715,9 +2783,36 @@
         })
         function previewColumnAt(event) {
           if (!placingColumn || event.pointerType === 'touch') return
-          columnCursor = fromScreen(event, 1)
+          columnCursor = { point: fromScreen(event, 1), free: event.altKey }
           paintColumnPlacement()
         }
+        function updateDraggedColumn(point, free) {
+          const original = drag.before.columns[drag.index]
+          const [dx, dy] = subtract(point, drag.start).map(
+            (value) => Math.round(value / EDGE_STEP) * EDGE_STEP,
+          )
+          const raw = { ...original, x: original.x + dx, y: original.y + dy }
+          const { column, wall } = snapColumnToWall(raw, free || (!dx && !dy), drag.index)
+          if (!inCanvas(toScreen([column.x, column.y])) || !columnFits(column, drag.index)) return
+          drag.wall = wall
+          state.columns[drag.index] = column
+          drag.moved = original.x !== column.x || original.y !== column.y
+          paint()
+        }
+        function setColumnSnapBypass(free) {
+          if (placingColumn && columnCursor && columnCursor.free !== free) {
+            columnCursor.free = free
+            paintColumnPlacement()
+          }
+          if (drag?.key === 'column' && drag.point) updateDraggedColumn(drag.point, free)
+        }
+        for (const type of ['keydown', 'keyup']) {
+          window.addEventListener(type, (event) => {
+            if (event.key === 'Alt') setColumnSnapBypass(event.altKey)
+          })
+        }
+        window.addEventListener('blur', () => setColumnSnapBypass(false))
+
         svg.addEventListener('pointerenter', previewColumnAt)
         svg.addEventListener('pointermove', (event) => {
           if (placingColumn) {
@@ -2759,19 +2854,8 @@
             return
           }
           if (drag.key === 'column') {
-            const original = drag.before.columns[drag.index]
-            const [dx, dy] = subtract(fromScreen(event, 0), drag.start).map(
-              (v) => Math.round(v / EDGE_STEP) * EDGE_STEP,
-            )
-            const candidate = { ...original, x: original.x + dx, y: original.y + dy }
-            if (
-              !inCanvas(toScreen([candidate.x, candidate.y])) ||
-              !columnFits(candidate, drag.index)
-            )
-              return
-            state.columns[drag.index] = candidate
-            drag.moved = dx !== 0 || dy !== 0
-            paint()
+            drag.point = fromScreen(event, 0)
+            updateDraggedColumn(drag.point, event.altKey)
             return
           }
           if (drag.key === 'edge') {
