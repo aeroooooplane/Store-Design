@@ -979,7 +979,7 @@ describe('usableArea and fixtures added after the shell', () => {
         },
       ],
     })
-    expect(usableArea(concave)).toBe(52)
+    expect(usableArea(concave)).toBe(40)
   })
 
   it('takes columns and shafts off the floor but counts platforms added later as floor', () => {

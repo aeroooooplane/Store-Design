@@ -90,6 +90,10 @@ export function Workbench({ project }: { project: Project }) {
 
   const nodes = useMemo(() => tree.data?.nodes ?? [], [tree.data])
   const requested = params.get('node')
+  const startedWithHistory = useRef<boolean | null>(null)
+  if (tree.data && startedWithHistory.current === null) {
+    startedWithHistory.current = nodes.length > 0
+  }
   // The automatic choice is made once, from the first loaded history, so nodes created later
   // (e.g. three generated plans) never move the selection away from what is on screen.
   const firstChoice = useRef<string | null>(null)
@@ -103,7 +107,7 @@ export function Workbench({ project }: { project: Project }) {
   const selectedId = requested && nodes.some((n) => n.id === requested) ? requested : fallback
   // Also pin it in the URL, so a reload or a shared link opens the same step.
   useEffect(() => {
-    if (!requested && selectedId && drafts.data !== undefined) {
+    if (startedWithHistory.current && !requested && selectedId && drafts.data !== undefined) {
       setParams({ node: selectedId }, { replace: true })
     }
   }, [requested, selectedId, setParams, drafts.data])
