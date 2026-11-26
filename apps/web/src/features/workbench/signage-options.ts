@@ -1,8 +1,7 @@
 import type { Market } from '@store/shared'
 
-/** 用户确认的六款标识，同一型号按项目市场显示对应字标。 */
+/** 用户确认的标识顺序，同一型号按项目市场显示对应字标。 */
 export const SIGNAGE_OPTIONS: Record<string, Record<Market, string>> = {
-  'asset-90000004': { domestic: '自定义LOGO', overseas: '自定义LOGO' },
   'asset-90000111': { domestic: '徕卡墙组合 1200', overseas: '徕卡墙组合 1200' },
   'asset-90000112': { domestic: '徕卡墙组合 1990', overseas: '徕卡墙组合 1990' },
   'asset-90000113': { domestic: '徕卡墙组合 3000', overseas: '徕卡墙组合 3000' },
@@ -12,6 +11,7 @@ export const SIGNAGE_OPTIONS: Record<string, Record<Market, string>> = {
     overseas: 'Insta360 Think Bold',
   },
   'asset-11483499': { domestic: '影翎 ANTIGRAVITY', overseas: 'ANTIGRAVITY' },
+  'asset-90000004': { domestic: '自定义LOGO', overseas: '自定义LOGO' },
 }
 
 export const SIGNAGE_ORDER = Object.keys(SIGNAGE_OPTIONS)
