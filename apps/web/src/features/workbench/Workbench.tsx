@@ -15,6 +15,8 @@ import type {
 } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ProjectNavSlot } from '../../components/AppNav.tsx'
+import { isFullWorkbench } from '../../api/deployment.ts'
+import { ProjectDrawings } from '../projects/ProjectDrawings.tsx'
 import { useCreateNode, useDrafts, useNode, useCatalog, useTree } from './api.ts'
 import { CandidateGallery, usePlanGeneration } from './CandidateGallery.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
@@ -187,6 +189,7 @@ export function Workbench({ project }: { project: Project }) {
             assets={assets.data}
             first={nodes.length === 0}
             onCreated={select}
+            onOpenDrawings={() => setLeftTab('info')}
             onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
           />
         </div>
@@ -223,7 +226,12 @@ export function Workbench({ project }: { project: Project }) {
         />
       </ProjectNavSlot>
       <WorkbenchInfoContext.Provider
-        value={<ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />}
+        value={
+          <>
+            <ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />
+            {isFullWorkbench && <ProjectDrawings projectId={project.id} />}
+          </>
+        }
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
           <ViewMemoryContext.Provider value={viewMemory.current}>
@@ -246,12 +254,14 @@ function NewSpace({
   assets,
   first,
   onCreated,
+  onOpenDrawings,
   onCancel,
 }: {
   projectId: string
   assets: Asset[]
   first: boolean
   onCreated: (nodeId: string) => void
+  onOpenDrawings: () => void
   onCancel?: (() => void) | undefined
 }) {
   const create = useCreateNode(projectId)
@@ -263,11 +273,17 @@ function NewSpace({
         <button type="button" aria-pressed={way === 'manual'} onClick={() => setWay('manual')}>
           手动录入
         </button>
-        <button type="button" aria-pressed={way === 'upload'} onClick={() => setWay('upload')}>
-          上传简图识别
-        </button>
+        {isFullWorkbench ? (
+          <button type="button" onClick={onOpenDrawings}>
+            项目图纸
+          </button>
+        ) : (
+          <button type="button" aria-pressed={way === 'upload'} onClick={() => setWay('upload')}>
+            上传简图识别
+          </button>
+        )}
       </div>
-      {way === 'upload' ? (
+      {!isFullWorkbench && way === 'upload' ? (
         <RecognitionPanel
           projectId={projectId}
           assets={assets}
