@@ -73,7 +73,7 @@ export const RENDER_LOOK = {
    * A light neutral silver approximation; structural micro-cement walls keep their own finish.
    */
   partition: { color: '#d4d6d7', roughness: 0.48, metalness: 0.45 },
-  /** 中岛店 edge: 80 mm matte silver-grey stainless (SI2.0 raises the floor 30 mm). */
+  /** Both island styles: 30 mm platform, 80 mm matte silver stainless cap (SI2 PDF p.142). */
   edging: { color: '#b3b3b3', metalness: 0.6, roughness: 0.45, width: 0.08, height: 0.03 },
   /** Props keep their own colours and textures; material names adjust the finish. */
   props: {
