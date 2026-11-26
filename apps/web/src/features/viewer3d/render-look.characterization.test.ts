@@ -64,7 +64,7 @@ describe('RENDER_LOOK', () => {
         tile: [0.8, 0.8],
         color: '#bfbbb8',
         shade: 0.02,
-        joint: '#a6a29f',
+        joint: '#777571',
         jointM: 0.004,
         bond: 'stack',
         chips: false,
@@ -74,7 +74,7 @@ describe('RENDER_LOOK', () => {
         tile: [1.2, 0.6],
         color: '#e6e6e3',
         shade: 0.012,
-        joint: '#cbcbc7',
+        joint: '#92928b',
         jointM: 0.004,
         bond: 'stack',
         chips: true,
@@ -84,7 +84,7 @@ describe('RENDER_LOOK', () => {
         tile: [0.6, 0.3],
         color: '#c8c6c3',
         shade: 0.025,
-        joint: '#adaba8',
+        joint: '#85827d',
         jointM: 0.003,
         bond: 'running',
         chips: false,
@@ -180,6 +180,8 @@ describe('roomMaterials without a 2D canvas', () => {
     expect(si1.floor.metalness).toBe(0)
     expect(si1.wall.color.getHexString()).toBe('e4dfd3')
     expect([si1.wall.roughness, si1.wall.metalness]).toEqual([0.85, 0])
+    expect(si1.partition.color.getHexString()).toBe('d4d6d7')
+    expect(si1.partition.metalness).toBeGreaterThan(si1.wall.metalness)
     expect(si1.edging.color.getHexString()).toBe('b3b3b3')
     expect([si1.edging.roughness, si1.edging.metalness]).toEqual([0.45, 0.6])
 
@@ -188,6 +190,8 @@ describe('roomMaterials without a 2D canvas', () => {
     expect(si2.floor.roughness).toBe(0.4)
     expect(si2.wall.color.getHexString()).toBe('48443f')
     expect([si2.wall.roughness, si2.wall.metalness]).toEqual([0.55, 0.2])
+    expect(si2.partition.color.equals(si2.wall.color)).toBe(true)
+    expect(si2.partition.metalness).toBe(si2.wall.metalness)
   })
 
   it('gives island shops the island floor but the SI style’s walls', () => {
@@ -204,7 +208,9 @@ describe('roomMaterials without a 2D canvas', () => {
     const disposed = [
       vi.spyOn(texture, 'dispose'),
       vi.spyOn(materials.floor, 'dispose'),
+      vi.spyOn(materials.floorWhite, 'dispose'),
       vi.spyOn(materials.wall, 'dispose'),
+      vi.spyOn(materials.partition, 'dispose'),
       vi.spyOn(materials.edging, 'dispose'),
     ]
     disposeRoomMaterials(materials)
@@ -248,10 +254,10 @@ describe('floor texture (drawn on a recording 2D context)', () => {
 
     // Joint colour fills the canvas first, then 16 tiles inset by half a joint (1.2 px minimum).
     expect(recorder.calls.slice(0, 2)).toEqual([
-      { op: 'fillStyle=', args: ['#a6a29f'] },
+      { op: 'fillStyle=', args: ['#777571'] },
       { op: 'fillRect', args: [0, 0, 1280, 1280] },
     ])
-    expect(tiles()).toHaveLength(16)
+    expect(tiles()).toHaveLength(16 * 2 + 1)
     expect(tiles().slice(0, 5)).toEqual([
       [0.8, 0.8, 318.4, 318.4],
       [320.8, 0.8, 318.4, 318.4],
@@ -265,7 +271,7 @@ describe('floor texture (drawn on a recording 2D context)', () => {
       .slice(1, 6)
       .map((c) => c.args[0])
     expect(shades).toEqual(['#bdb9b6', '#c0bcb9', '#bebab7', '#bebab7', '#c0bcb9'])
-    expect(recorder.calls).toHaveLength(34)
+    expect(recorder.calls).toHaveLength(68)
   })
 
   it('SI2.0: 1200 × 600 tiles with the long side along an x entrance, plus terrazzo chips', () => {
@@ -277,7 +283,7 @@ describe('floor texture (drawn on a recording 2D context)', () => {
     // round(1600 × 800 × 0.004) chips, each drawn as fillStyle, beginPath, arc, fill.
     const arcs = recorder.calls.filter((c) => c.op === 'arc')
     expect(arcs).toHaveLength(5120)
-    expect(recorder.calls).toHaveLength(2 + 16 * 2 + 5120 * 4)
+    expect(recorder.calls).toHaveLength(2 * (2 + 16 * 2) + 5120 * 4)
   })
 
   it('SI2.0: the long side turns with an entrance along z', () => {
@@ -295,7 +301,7 @@ describe('floor texture (drawn on a recording 2D context)', () => {
     expect(round(map.offset.toArray())).toEqual([-1.5417, 2.625])
     const rows = tiles()
     // Rows of 4 and 5 tiles; the half tiles at the edges wrap around.
-    expect(rows).toHaveLength(4 + 5 + 4 + 5)
+    expect(rows).toHaveLength(2 * (4 + 5 + 4 + 5) + 1)
     expect(rows.slice(0, 9).map((r) => r[0])).toEqual([
       0.6, 240.6, 480.6, 720.6, -119.4, 120.6, 360.6, 600.6, 840.6,
     ])
@@ -309,6 +315,20 @@ describe('floor texture (drawn on a recording 2D context)', () => {
     recorder.calls.length = 0
     roomMaterials('SI1.0', 'side_hall', sideHall())
     expect(JSON.stringify(recorder.calls)).toBe(first)
+  })
+  it('keeps identical tile scale and entrance alignment in white and material looks', () => {
+    for (const si of ['SI1.0', 'SI2.0'] as const) {
+      for (const type of ['side_hall', 'island'] as const) {
+        const materials = roomMaterials(si, type, leftEntrance())
+        const white = texture(materials.floorWhite).map
+        const finish = texture(materials.floor).map
+        expect(white.repeat.toArray()).toEqual(finish.repeat.toArray())
+        expect(white.offset.toArray()).toEqual(finish.offset.toArray())
+        expect(white.rotation).toEqual(finish.rotation)
+        expect(materials.floorWhite.color.getHexString()).toBe('ffffff')
+        disposeRoomMaterials(materials)
+      }
+    }
   })
 })
 

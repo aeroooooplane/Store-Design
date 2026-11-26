@@ -299,7 +299,7 @@ export class WhiteScene {
 
   private paintRoom() {
     let materials: Record<RoomSurface, THREE.MeshStandardMaterial> | undefined
-    if (this.look === 'material' && this.space) {
+    if (this.space) {
       materials = this.roomLooks.get(this.siStyle)
       if (!materials) {
         materials = roomMaterials(this.siStyle, this.shopType, this.space)
@@ -311,9 +311,11 @@ export class WhiteScene {
       if (mesh instanceof THREE.Mesh && surfaceName) {
         mesh.material = mesh.userData['boundaryWall']
           ? this.boundaryMaterial
-          : materials
-            ? materials[surfaceName]
-            : this.roomWhite
+          : materials && this.look === 'white' && surfaceName === 'floor'
+            ? materials.floorWhite
+            : materials && this.look === 'material'
+              ? materials[surfaceName]
+              : this.roomWhite
       }
     }
   }
@@ -472,7 +474,7 @@ export class WhiteScene {
   }
 
   /**
-   * 空心隔板 finished like the walls (white, or the wall material), with niches where the
+   * 空心隔板 in SI1 silver metal or SI2 wall finish, with niches where the
    * accessory cabinets stand (fixtureSolids).
    */
   setFixtures(fixtures: readonly Fixture[], items: readonly LayoutItem[]) {
@@ -485,7 +487,7 @@ export class WhiteScene {
       const box = new THREE.Mesh(geometry, this.roomWhite)
       box.castShadow = true
       box.receiveShadow = true
-      box.userData['surface'] = 'wall' satisfies RoomSurface
+      box.userData['surface'] = 'partition' satisfies RoomSurface
       this.fixtures.add(box)
     }
     this.paintRoom()

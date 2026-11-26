@@ -34,7 +34,7 @@ export const RENDER_LOOK = {
       tile: [0.8, 0.8],
       color: '#bfbbb8',
       shade: 0.02,
-      joint: '#a6a29f',
+      joint: '#777571',
       jointM: 0.004,
       bond: 'stack',
       chips: false,
@@ -45,7 +45,7 @@ export const RENDER_LOOK = {
       tile: [1.2, 0.6],
       color: '#e6e6e3',
       shade: 0.012,
-      joint: '#cbcbc7',
+      joint: '#92928b',
       jointM: 0.004,
       bond: 'stack',
       chips: true,
@@ -56,7 +56,7 @@ export const RENDER_LOOK = {
       tile: [0.6, 0.3],
       color: '#c8c6c3',
       shade: 0.025,
-      joint: '#adaba8',
+      joint: '#85827d',
       jointM: 0.003,
       bond: 'running',
       chips: false,
@@ -69,6 +69,10 @@ export const RENDER_LOOK = {
     /** SI2.0 p.39–42: 星空灰 aluminium composite panels. */
     'SI2.0': { color: '#48443f', roughness: 0.55, metalness: 0.2 },
   },
+  /** SI1.0 PDF p.113–114: matte silver-grey metal, specified by physical sample (no HEX code).
+   * A light neutral silver approximation; structural micro-cement walls keep their own finish.
+   */
+  partition: { color: '#d4d6d7', roughness: 0.48, metalness: 0.45 },
   /** 中岛店 edge: 80 mm matte silver-grey stainless (SI2.0 raises the floor 30 mm). */
   edging: { color: '#b3b3b3', metalness: 0.6, roughness: 0.45, width: 0.08, height: 0.03 },
   /** Props keep their own colours and textures; material names adjust the finish. */
@@ -86,7 +90,7 @@ export const RENDER_LOOK = {
   [key: string]: unknown
 }
 
-export type RoomSurface = 'floor' | 'wall' | 'edging'
+export type RoomSurface = 'floor' | 'floorWhite' | 'wall' | 'partition' | 'edging'
 
 /** Island shops have their own floor whatever the SI style. */
 export function floorKind(siStyle: SiStyle, shopType: ShopType): FloorKind {
@@ -219,8 +223,18 @@ export function roomMaterials(
 ): Record<RoomSurface, THREE.MeshStandardMaterial> {
   const floor = RENDER_LOOK.floors[floorKind(siStyle, shopType)]
   const wall = RENDER_LOOK.walls[siStyle]
+  const partition = siStyle === 'SI1.0' ? RENDER_LOOK.partition : wall
   const map = floorTexture(floor, floorLayout(space, shopType))
+  const whiteMap = floorTexture(
+    { ...floor, color: '#f7f7f5', shade: 0, chips: false, joint: '#a3a39e' },
+    floorLayout(space, shopType),
+  )
   return {
+    floorWhite: new THREE.MeshStandardMaterial({
+      color: whiteMap ? '#ffffff' : '#f7f7f5',
+      map: whiteMap,
+      roughness: 0.8,
+    }),
     floor: new THREE.MeshStandardMaterial({
       color: map ? '#ffffff' : floor.color,
       map,
@@ -232,6 +246,7 @@ export function roomMaterials(
       roughness: wall.roughness,
       metalness: wall.metalness,
     }),
+    partition: new THREE.MeshStandardMaterial(partition),
     edging: new THREE.MeshStandardMaterial({
       color: RENDER_LOOK.edging.color,
       roughness: RENDER_LOOK.edging.roughness,
