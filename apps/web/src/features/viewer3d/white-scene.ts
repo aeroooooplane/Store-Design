@@ -311,11 +311,13 @@ export class WhiteScene {
       if (mesh instanceof THREE.Mesh && surfaceName) {
         mesh.material = mesh.userData['boundaryWall']
           ? this.boundaryMaterial
-          : materials && this.look === 'white' && surfaceName === 'floor'
-            ? materials.floorWhite
-            : materials && this.look === 'material'
-              ? materials[surfaceName]
-              : this.roomWhite
+          : materials && surfaceName === 'edging'
+            ? materials.edging
+            : materials && this.look === 'white' && surfaceName === 'floor'
+              ? materials.floorWhite
+              : materials && this.look === 'material'
+                ? materials[surfaceName]
+                : this.roomWhite
       }
     }
   }
