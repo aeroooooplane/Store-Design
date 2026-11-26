@@ -242,6 +242,56 @@ describe('wallMountSnap', () => {
   })
 })
 
+describe('灯箱与广告机的墙面选择和矮墙高度', () => {
+  const room = { ...rectangleSpace(8, 6, 3), entrances: [] }
+  const panel = logo({ function: 'screen', w: 2.19, d: 0.2, h: 1.3, elevation: 1.2 })
+  const low = { ...partition, cz: 2.5, d: 0.3, h: 1.4 }
+
+  it.each([
+    [4, -0.17, 180],
+    [4, 6.17, 0],
+    [-0.17, 3, 90],
+    [8.17, 3, 270],
+  ])('厚广告机在外墙 (%s,%s) 仍以背部靠墙', (cx, cz, rotation) => {
+    expect(displayPanelSnap(panel, cx, cz, room, '+Z')).toMatchObject({ rotation, mount: 'wall' })
+  })
+
+  it('隔板贴着外围墙时跳过被另一实体遮住的面，画面朝向可见的外侧', () => {
+    const adjacent = { ...partition, cx: 4, cz: 0.15, w: 7.6, d: 0.3, h: 3 }
+    const lightbox = logo({ w: 1.7, d: 0.08, h: 0.98, elevation: 1.2 })
+    expect(displayPanelSnap(lightbox, 4, -0.05, room, '+Z', [adjacent])).toMatchObject({
+      rotation: 180,
+      mount: 'embedded',
+      cz: -0.12,
+    })
+  })
+
+  it.each([
+    [2.25, 180, 'wall'],
+    [2.37, 180, 'embedded'],
+    [2.75, 0, 'wall'],
+    [2.63, 0, 'embedded'],
+  ])('在矮墙两侧 z=%s 安装前先降高并居中', (cz, rotation, mount) => {
+    const screen = logo({ w: 1.69, d: 0.05, h: 0.958, elevation: 1.4 })
+    expect(displayPanelSnap(screen, 3, cz, room, '+Z', [low])).toMatchObject({
+      rotation,
+      mount,
+      elevation: 0.221,
+    })
+  })
+
+  it('严格低于1.6米才自动居中；放不下完整画面的墙不吸附', () => {
+    const lightbox = logo({ w: 1.7, d: 0.08, h: 0.98, elevation: 0.2 })
+    expect(displayPanelSnap(lightbox, 3, 2.25, room, '+Z', [{ ...low, h: 1.599 }])?.elevation).toBe(
+      0.31,
+    )
+    expect(
+      displayPanelSnap(lightbox, 3, 2.25, room, '+Z', [{ ...low, h: 1.6 }])?.elevation,
+    ).toBeUndefined()
+    expect(displayPanelSnap(lightbox, 3, 2.25, room, '+Z', [{ ...low, h: 0.8 }])).toBeNull()
+  })
+})
+
 describe('mountedWall', () => {
   it('is the wall the back touches, within 10 mm', () => {
     expect(mountedWall(logo(), space)?.along).toBe('x')

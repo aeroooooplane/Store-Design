@@ -25,6 +25,8 @@ export const ON_WALL_M = 0.01
 export const STRAIGHT_WALL_DEG = 3
 /** Default bottom height of a wall piece with nothing standing below it. */
 export const DEFAULT_WALL_ELEVATION_M = 1.8
+/** Panels on a wall strictly below this height initially align with its vertical centre. */
+export const LOW_WALL_HEIGHT_M = 1.6
 /** Clearance above the tallest prop standing below a wall piece. */
 export const ABOVE_PROP_GAP_M = 0.1
 /** Floor props this far from the wall (or nearer) count as standing below a wall piece. */
@@ -102,7 +104,7 @@ const coord = (p: Point, axis: 'x' | 'z') => (axis === 'x' ? p[0] : p[1])
 
 /** Both faces of perimeter walls and partitions, with openings marked. */
 export function wallFaces(
-  space: Pick<Space, 'boundary' | 'openEdges'> & Partial<Pick<Space, 'entrances'>>,
+  space: Pick<Space, 'boundary' | 'openEdges'> & Partial<Pick<Space, 'entrances' | 'height'>>,
   fixtures: readonly Fixture[] = [],
   items: readonly FaceItem[] = [],
 ): WallFace[] {
@@ -128,6 +130,7 @@ export function wallFaces(
       along,
       inward,
       open: [],
+      ...(space.height === undefined ? {} : { height: space.height }),
     }
     faces.push(face, {
       ...face,
@@ -260,21 +263,88 @@ export interface WallPlacement {
   elevation?: number
 }
 
-/** Screens use the side of the wall under the dragged body to distinguish inset from surface-mounted. */
+type PanelForSnap = Pick<LayoutItem, 'w' | 'd' | 'h' | 'rotation' | 'elevation'> &
+  Partial<Pick<LayoutItem, 'cx' | 'cz' | 'mount'>>
+
+/** A typed, supported height stays while sliding along the same face. A new low face centres it. */
+function panelElevation(item: PanelForSnap, face: WallFace, rotation: Rotation, adding: boolean) {
+  if (face.height === undefined || face.height >= LOW_WALL_HEIGHT_M) return undefined
+  if (
+    !adding &&
+    item.cx !== undefined &&
+    item.cz !== undefined &&
+    (item.mount === 'wall' || item.mount === 'embedded') &&
+    nearestQuarter(item.rotation) === rotation
+  ) {
+    const alongX = face.along === 'x'
+    const at = alongX ? item.cx : item.cz
+    const across = alongX ? item.cz : item.cx
+    const inward = alongX ? face.inward[1] : face.inward[0]
+    const depth = alongX ? item.d : item.w
+    const target = faceLineAt(face, at) + inward * depth * (item.mount === 'wall' ? 0.5 : -0.5)
+    if (
+      Math.abs(across - target) <= ON_WALL_M + EPSILON_M &&
+      supportsPiece(face, at, alongX ? item.w : item.d, item.elevation ?? 0, item.h)
+    )
+      return item.elevation
+  }
+  return roundM(Math.max(0, (face.height - item.h) / 2))
+}
+
+/** Adjacent/overlapping walls must not offer a face buried in the other wall's solid body. */
+function buriedPanelFace(
+  face: WallFace,
+  at: number,
+  length: number,
+  bottom: number,
+  height: number,
+  faces: readonly WallFace[],
+  fixtures: readonly Fixture[],
+): boolean {
+  return faces.some((other) => {
+    if (
+      face.fixtureId
+        ? face.fixtureId === other.fixtureId
+        : !other.fixtureId && face.edge === other.edge
+    )
+      return false
+    const fixture = fixtures.find((f) => f.id === other.fixtureId)
+    const thickness = fixture ? (other.along === 'x' ? fixture.d : fixture.w) : WALL_THICKNESS_M
+    return [at - length / 2 + EPSILON_M, at, at + length / 2 - EPSILON_M].some((s) => {
+      const line = faceLineAt(face, s)
+      const x = (face.along === 'x' ? s : line) + face.inward[0] * EPSILON_M * 2
+      const z = (face.along === 'x' ? line : s) + face.inward[1] * EPSILON_M * 2
+      const run = other.along === 'x' ? x : z
+      const signed =
+        ((other.along === 'x' ? z : x) - faceLineAt(other, run)) *
+        (other.along === 'x' ? other.inward[1] : other.inward[0])
+      if (signed >= -EPSILON_M || signed <= -thickness + EPSILON_M) return false
+      return [bottom + EPSILON_M, bottom + height / 2, bottom + height - EPSILON_M].some(
+        (y) => y <= (other.height ?? Infinity) + EPSILON_M && supportsPiece(other, run, 0, y, 0),
+      )
+    })
+  })
+}
+
+/** Choose the nearest exposed wall face before deciding inset/surface placement of its body. */
 export function displayPanelSnap(
-  item: Pick<LayoutItem, 'w' | 'd' | 'h' | 'rotation' | 'elevation'>,
+  item: PanelForSnap,
   cx: number,
   cz: number,
-  space: Pick<Space, 'boundary' | 'openEdges'>,
+  space: Pick<Space, 'boundary' | 'openEdges'> & Partial<Pick<Space, 'height' | 'entrances'>>,
   front: FrontAxis | null,
   fixtures: readonly Fixture[] = [],
   items: readonly FaceItem[] = [],
   adding = false,
 ): (WallPlacement & { mount: 'embedded' | 'wall' }) | null {
   const facing = front && front !== 'any' ? front : '+Z'
-  let best: { placement: WallPlacement & { mount: 'embedded' | 'wall' }; score: number } | null =
-    null
-  for (const face of wallFaces(space, fixtures, items)) {
+  let best: {
+    placement: WallPlacement & { mount: 'embedded' | 'wall' }
+    score: number
+    side: number
+  } | null = null
+  const faces = wallFaces(space, fixtures, items)
+  for (const face of faces) {
     const rotation = rotationFacing(facing, face.inward)
     if (rotation === null) continue
     const alongX = face.along === 'x'
@@ -300,7 +370,6 @@ export function displayPanelSnap(
     for (const [lo, hi] of solid) {
       if (hi - lo + EPSILON_M < length) continue
       const centre = Math.max(lo + length / 2, Math.min(hi - length / 2, at))
-      if (!supportsPiece(face, centre, length, item.elevation ?? 0, item.h)) continue
       const line = faceLineAt(face, centre)
       const signed = (across - line) * inward
       const fixture = fixtures.find((f) => f.id === face.fixtureId)
@@ -309,17 +378,29 @@ export function displayPanelSnap(
       const target = line + inward * depth * (mount === 'embedded' ? -0.5 : 0.5)
       const distance = Math.hypot(centre - at, target - across)
       if (!adding && distance > WALL_SNAP_M) continue
+      const elevation = panelElevation(item, face, rotation, adding)
+      const bottom = elevation ?? item.elevation ?? 0
+      if (!supportsPiece(face, centre, length, bottom, item.h)) continue
+      if (buriedPanelFace(face, centre, length, bottom, item.h, faces, fixtures)) continue
       // On add a usable partition outranks any perimeter wall. The nearest eligible face wins.
-      const score = adding && !fixture ? 1000 + distance : distance
-      if (best && best.score <= score) continue
+      const score = (adding && !fixture ? 1000 : 0) + Math.hypot(centre - at, line - across)
+      const side = signed >= 0 ? 0 : 1
+      if (
+        best &&
+        (best.score < score - EPSILON_M ||
+          (Math.abs(best.score - score) <= EPSILON_M && best.side <= side))
+      )
+        continue
       best = {
         score,
+        side,
         placement: {
           ...size,
           rotation,
           mount,
           cx: roundM(alongX ? centre : target),
           cz: roundM(alongX ? target : centre),
+          ...(elevation === undefined ? {} : { elevation }),
         },
       }
     }
