@@ -262,7 +262,12 @@ export async function createNode(
         revision: 0,
       })
     }
-    if (input.kind === 'space' && source?.kind === 'space') {
+    if (
+      input.kind === 'space' &&
+      input.layout &&
+      source?.kind === 'space' &&
+      source.parentId === input.parentId
+    ) {
       const sourceCameras = await tx
         .select()
         .from(nodeCameras)

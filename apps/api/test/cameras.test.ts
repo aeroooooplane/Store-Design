@@ -57,6 +57,26 @@ describe('cameras', () => {
     expect(await list(deletedCopy.id, true)).toHaveLength(1)
   })
 
+  it('does not inherit space views for revisions or space capture without a layout', async () => {
+    const { project, space } = await whiteModel()
+    await inject('POST', `/nodes/${space.id}/cameras`, view)
+    for (const input of [
+      { parentId: space.id },
+      { parentId: space.id, layout },
+      { parentId: null },
+    ]) {
+      const response = await inject('POST', `/projects/${project.id}/nodes`, {
+        ...input,
+        kind: 'space',
+        name: '空间修订',
+        sourceNodeId: space.id,
+        space: space.space,
+      })
+      expect(response.statusCode).toBe(201)
+      expect(await list(response.json<NodeCreated>().node.id)).toEqual([])
+    }
+  })
+
   it('initializes and edits saved views on an imported legacy edit node', async () => {
     const { project, plan } = await whiteModel()
     const legacy = await seedLegacyEdit(t, project.id, plan.id, '旧版调整', layout)

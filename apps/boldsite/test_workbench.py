@@ -118,7 +118,7 @@ class SpaceCopyTests(unittest.TestCase):
                 conn.execute("INSERT INTO projects (id,name,shopType,market,siStyle,createdAt,updatedAt) VALUES ('p','项目','side_hall','domestic','SI2.0',?,?)", (now, now))
                 conn.execute("INSERT INTO workbench_nodes (id,projectId,parentId,kind,name,origin,space,createdAt) VALUES ('s','p',NULL,'space','空间','user',?,?)", (json.dumps(space), now))
                 conn.execute("INSERT INTO stage_cameras (id,nodeId,camera,sort,deletedAt) VALUES ('c','s',?,0,NULL),('d','s',?,1,?)", (json.dumps({"name": "保留"}), json.dumps({"name": "已删除"}), now))
-            payload = {"parentId": None, "kind": "space", "name": "空间副本", "space": space, "sourceNodeId": "s", "siStyle": "SI2.0"}
+            payload = {"parentId": None, "kind": "space", "name": "空间副本", "space": space, "layout": {"schemaVersion": 3, "items": [], "planning": None}, "sourceNodeId": "s", "siStyle": "SI2.0"}
             request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(db=db, rules=Mock(run=Mock(return_value={"node": payload, "issues": []})))))
             copied = create_node(request, 'p', payload)['node']
             self.assertEqual(copied['sourceNodeId'], 's')
@@ -131,3 +131,11 @@ class SpaceCopyTests(unittest.TestCase):
                 self.assertEqual(rows[1]['deletedAt'], now)
                 conn.execute("UPDATE stage_cameras SET camera='{}' WHERE nodeId=?", (copied['id'],))
                 self.assertEqual(json.loads(conn.execute("SELECT camera FROM stage_cameras WHERE id='c'").fetchone()[0]), {"name": "保留"})
+            for parent_id, with_layout in [('s', False), ('s', True), (None, False)]:
+                revision = {**payload, "parentId": parent_id}
+                if not with_layout:
+                    revision.pop('layout')
+                request.app.state.rules.run.return_value = {"node": revision, "issues": []}
+                revised = create_node(request, 'p', revision)['node']
+                with db.connect() as conn:
+                    self.assertEqual(conn.execute("SELECT count(*) FROM stage_cameras WHERE nodeId=?", (revised['id'],)).fetchone()[0], 0)

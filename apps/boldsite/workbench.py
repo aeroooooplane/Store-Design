@@ -124,7 +124,7 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
         )).fetchone()
         if node["kind"] in {"white", "render"} or (node["kind"] == "plan" and source):
             initialize_views(db, row, rules, source or parent)
-        if node["kind"] == "space" and source and source["kind"] == "space":
+        if node["kind"] == "space" and layout is not None and source and source["kind"] == "space" and source["parentId"] == parent_id:
             for camera in db.execute("SELECT * FROM stage_cameras WHERE nodeId = ?", (source["id"],)).fetchall():
                 db.execute("INSERT INTO stage_cameras (id,nodeId,camera,sort,deletedAt) VALUES (?,?,?,?,?)",
                            (str(uuid4()), row["id"], camera["camera"], camera["sort"], camera["deletedAt"]))
