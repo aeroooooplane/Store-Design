@@ -187,7 +187,7 @@ describe('wallMountSnap', () => {
     }
     expect(wallMountSnap(piece, 3, 6.23, partial, '+Z')).toBeNull()
     expect(displayPanelSnap(piece, 3, 6.23, partial, '+Z')).toBeNull()
-    expect(wallMountSnap(piece, 1, 6.23, partial, '+Z')).toMatchObject({ cx: 1, cz: 6.21 })
+    expect(wallMountSnap(piece, 1, 6.23, partial, '+Z')).toMatchObject({ cx: 1, cz: 6.25 })
     expect(wallMountSnap({ ...piece, w: 3 }, 1, 6.23, partial, '+Z')).toBeNull()
     const support = { ...partition, cx: 4, cz: 5.8, d: 0.4 }
     const onFixture = wallMountSnap(piece, 4, 6.2, room, '+Z', undefined, [support])!
@@ -197,7 +197,7 @@ describe('wallMountSnap', () => {
 
   it('外墙的背部贴在实际外表面，正面朝店外，校验认可', () => {
     const placed = wallMountSnap(logo(), 3, -0.25, space, '+Z')!
-    expect(placed).toEqual({ cx: 3, cz: -0.185, rotation: 180, w: 3.453, d: 0.05 })
+    expect(placed).toEqual({ cx: 3, cz: -0.225, rotation: 180, w: 3.453, d: 0.05 })
     const piece = logo({ ...placed, elevation: 1.2 })
     expect(mountedWall(piece, space)?.inward).toEqual([0, -1])
     expect(validateLayout(space, LayoutSchema.parse({ schemaVersion: 3, items: [piece] }))).toEqual(
@@ -208,8 +208,8 @@ describe('wallMountSnap', () => {
   it.each([
     [0.08, 0.025, 0, 'wall'],
     [-0.02, -0.025, 0, 'embedded'],
-    [-0.24, -0.185, 180, 'wall'],
-    [-0.14, -0.135, 180, 'embedded'],
+    [-0.28, -0.225, 180, 'wall'],
+    [-0.18, -0.175, 180, 'embedded'],
   ])('屏幕在 z=%s 时吸附到对应侧，内嵌时机身朝墙内', (z, target, rotation, mount) => {
     const panel = logo({ function: 'screen', w: 1.69, d: 0.05, elevation: 1.2 })
     expect(displayPanelSnap(panel, 3, z, space, '+Z')).toMatchObject({
@@ -248,10 +248,10 @@ describe('灯箱与广告机的墙面选择和矮墙高度', () => {
   const low = { ...partition, cz: 2.5, d: 0.3, h: 1.4 }
 
   it.each([
-    [4, -0.17, 180],
-    [4, 6.17, 0],
-    [-0.17, 3, 90],
-    [8.17, 3, 270],
+    [4, -0.21, 180],
+    [4, 6.21, 0],
+    [-0.21, 3, 90],
+    [8.21, 3, 270],
   ])('厚广告机在外墙 (%s,%s) 仍以背部靠墙', (cx, cz, rotation) => {
     expect(displayPanelSnap(panel, cx, cz, room, '+Z')).toMatchObject({ rotation, mount: 'wall' })
   })
@@ -262,7 +262,7 @@ describe('灯箱与广告机的墙面选择和矮墙高度', () => {
     expect(displayPanelSnap(lightbox, 4, -0.05, room, '+Z', [adjacent])).toMatchObject({
       rotation: 180,
       mount: 'embedded',
-      cz: -0.12,
+      cz: -0.16,
     })
   })
 

@@ -7,7 +7,7 @@ import { roundM } from '../units.ts'
 import { sceneFrame } from './frame.ts'
 
 /** Walls are drawn outside the boundary so the floor area stays exactly as planned. */
-export const WALL_THICKNESS_M = 0.16
+export const WALL_THICKNESS_M = 0.2
 /** Side and front walls are cut down so the default views can look in (as in the legacy viewer). */
 export const CUTAWAY_WALL_HEIGHT_M = 0.7
 

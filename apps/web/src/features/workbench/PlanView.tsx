@@ -4,6 +4,7 @@ import type { PointerEvent as ReactPointerEvent, Ref } from 'react'
 import {
   MODEL_BOUNDARY_MARGIN_M,
   WALL_THICKNESS_M,
+  wallContours,
   advertisingScreenName,
   isWallArt,
   wallArtSize,
@@ -47,7 +48,6 @@ import {
   radiusMarks,
   symbolBaseRotation,
   tickHalf,
-  wallBands,
 } from './plan-drawing.ts'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import type { RadiusMark, TextBox } from './plan-drawing.ts'
@@ -57,7 +57,7 @@ import type { PlanSymbol } from './plan-symbols.ts'
 
 export interface PlanViewProps {
   space: Space
-  /** Island shops have no walls; the others are drawn with hatched walls. */
+  /** Island shops have no perimeter walls; other walls have outline-only bands. */
   shopType?: ShopType | undefined
   layout?: Layout | null | undefined
   issues?: Issue[] | undefined
@@ -322,7 +322,7 @@ function RotateHandle({
 }
 
 /**
- * The plan as a store drawing: hatched walls outside the boundary (none for island shops), a
+ * The plan as a store drawing: unfilled walls outside the boundary (none for island shops), a
  * red lease line, columns, the entrance, every prop as its true-size plan symbol (or a block),
  * names with heights, dimension chains along every edge (a radius for arcs) and the area.
  * Units are metres with SVG y = plan z (both point down); line widths do not scale with zoom.
@@ -358,7 +358,7 @@ export function PlanView({
       maxZ: Math.max(...zs),
     }
   }, [space])
-  const walls = useMemo(() => wallBands(space, shopType), [space, shopType])
+  const walls = useMemo(() => wallContours(space, shopType), [space, shopType])
   const width = bounds.maxX - bounds.minX
   const depth = bounds.maxZ - bounds.minZ
   const span = Math.max(width, depth, 1)
@@ -471,13 +471,7 @@ export function PlanView({
     >
       <title>{title}</title>
       <defs>
-        <pattern
-          id={hatch}
-          patternUnits="userSpaceOnUse"
-          width={0.08}
-          height={0.08}
-          patternTransform="rotate(45)"
-        >
+        <pattern id={hatch} patternUnits="userSpaceOnUse" width={0.08} height={0.08}>
           <path d="M0 0V0.08M0 0H0.08" className="plan-hatch-line" />
         </pattern>
       </defs>
@@ -490,33 +484,16 @@ export function PlanView({
       {walls.map((wall, i) => (
         <polygon
           key={`wf${i}`}
-          className="plan-wall"
-          fill={`url(#${hatch})`}
-          points={points(wall.polygon)}
+          className="plan-wall plan-wall-line"
+          fill="none"
+          points={points(wall)}
         />
       ))}
-      {walls.flatMap((wall, i) =>
-        wall.outline.map(([a, b], k) => (
-          <line
-            key={`wl${i}-${k}`}
-            className="plan-wall-line"
-            x1={a[0]}
-            y1={a[1]}
-            x2={b[0]}
-            y2={b[1]}
-          />
-        )),
-      )}
       <polygon className="plan-lease" points={points(space.boundary)}>
         <title>租赁线</title>
       </polygon>
       {space.obstacles.map((o, i) => (
-        <polygon
-          key={`o${i}`}
-          className="plan-obstacle"
-          fill={`url(#${hatch})`}
-          points={points(o.polygon)}
-        >
+        <polygon key={`o${i}`} className="plan-obstacle" fill="none" points={points(o.polygon)}>
           <title>{o.label ?? '障碍物'}</title>
         </polygon>
       ))}
