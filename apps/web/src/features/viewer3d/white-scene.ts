@@ -37,6 +37,7 @@ import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
+import { islandEdgingGeometry } from './island-platform.ts'
 import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { displayPanelBody } from './display-panel-body.ts'
@@ -310,6 +311,15 @@ export class WhiteScene {
       if (mesh.userData['contextFloor']) continue
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
+        if (
+          surfaceName === 'edging' &&
+          this.space &&
+          mesh.userData['edgingStyle'] !== this.siStyle
+        ) {
+          disposeGeometry(mesh)
+          mesh.geometry = islandEdgingGeometry(this.space.boundary, this.siStyle)
+          mesh.userData['edgingStyle'] = this.siStyle
+        }
         mesh.material = mesh.userData['boundaryWall']
           ? this.boundaryMaterial
           : materials && surfaceName === 'edging'
