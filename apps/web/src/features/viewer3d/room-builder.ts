@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import type { Point, ShopType, Space } from '@store/shared'
-import { RENDER_LOOK } from './render-look.ts'
-import { prism, signedArea } from './scene-geometry.ts'
+import { prism } from './scene-geometry.ts'
 import { boundaryWallGeometry } from './boundary-wall.ts'
 import { contextFloor } from './context-floor.ts'
+import { islandEdgingGeometry, ISLAND_PLATFORM_HEIGHT_M } from './island-platform.ts'
 
 /** Legacy white-mode look (demo/src/scene.js in tag archive/pre-cleanup-20261013). */
 const FLOOR_THICKNESS_M = 0.16
@@ -15,10 +15,8 @@ export function buildRoom(
   shopType: ShopType,
   material: THREE.Material,
 ) {
-  const floor = new THREE.Mesh(
-    prism(space.boundary, -FLOOR_THICKNESS_M, FLOOR_THICKNESS_M),
-    material,
-  )
+  const thickness = shopType === 'island' ? ISLAND_PLATFORM_HEIGHT_M : FLOOR_THICKNESS_M
+  const floor = new THREE.Mesh(prism(space.boundary, -thickness, thickness), material)
   floor.receiveShadow = true
   floor.userData['surface'] = 'floor'
   room.add(floor)
@@ -50,30 +48,14 @@ export function buildRoom(
 
 /**
  * 中岛店: continuous stainless edging around the raised floor, following the real outline
- * (in the white model it is white like everything else).
+ * 30 mm rise and an outward 45° silver slope, in either SI style.
  */
 export function addEdging(room: THREE.Group, boundary: readonly Point[], material: THREE.Material) {
-  const { width, height } = RENDER_LOOK.edging
-  const sign = signedArea(boundary) > 0 ? 1 : -1
-  boundary.forEach((a, i) => {
-    const b = boundary[(i + 1) % boundary.length] ?? a
-    const length = Math.hypot(b[0] - a[0], b[1] - a[1])
-    if (length < 1e-6) return
-    const out: Point = [(sign * (b[1] - a[1])) / length, (-sign * (b[0] - a[0])) / length]
-    const total = FLOOR_THICKNESS_M + height
-    // Lengthened by the strip width at both ends so the corners close.
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(length + 2 * width, total, width), material)
-    mesh.position.set(
-      (a[0] + b[0]) / 2 + (out[0] * width) / 2,
-      height - total / 2,
-      (a[1] + b[1]) / 2 + (out[1] * width) / 2,
-    )
-    mesh.rotation.y = -Math.atan2(b[1] - a[1], b[0] - a[0])
-    mesh.castShadow = true
-    mesh.receiveShadow = true
-    mesh.userData['surface'] = 'edging'
-    room.add(mesh)
-  })
+  const mesh = new THREE.Mesh(islandEdgingGeometry(boundary), material)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.userData['surface'] = 'edging'
+  room.add(mesh)
 }
 
 /** Re-aims the sun and its shadow camera at the room. */
