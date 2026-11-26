@@ -1,7 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import type { NodeSummary } from '@store/shared'
 import { makeNodeSummary } from '../../test-utils/factories.ts'
-import { copyName, freshName, spaceAncestor, stageOf, stageParentId } from '@store/shared'
+import {
+  freshName,
+  nextHistoryName,
+  nextRenderName,
+  nextSpaceRevisionName,
+  spaceAncestor,
+  stageOf,
+  stageParentId,
+} from '@store/shared'
 import { flattenTree } from './tree.ts'
 import { defaultNodeId } from './Workbench.tsx'
 
@@ -97,9 +105,21 @@ describe('stages', () => {
     expect(stageParentId(list, at('rd'))).toBe('w2')
   })
 
+  it('continues the highest space version and cleans only old default suffixes', () => {
+    expect(nextSpaceRevisionName('空间 A（修改）（修改）', ['空间 A · v5', '空间 B · v9'])).toBe(
+      '空间 A · v6',
+    )
+    expect(nextSpaceRevisionName('旗舰店（东区） · v2', ['旗舰店（东区） · 改墙（2）'])).toBe(
+      '旗舰店（东区） · v4',
+    )
+    expect(nextSpaceRevisionName('空间 A（修改）（修改）', [])).toBe('空间 A · v4')
+  })
+
   it('numbers copies and fresh names without clashing', () => {
-    expect(copyName('方案 A', [])).toBe('方案 A 副本2')
-    expect(copyName('方案 A 副本2', ['方案 A 副本2'])).toBe('方案 A 副本3')
+    expect(nextHistoryName('plan', ['方案 A', '方案 C · SI2.0'])).toBe('方案 D')
+    expect(nextHistoryName('plan', ['方案 Z'], '尽量少放')).toBe('方案 AA · 尽量少放')
+    expect(nextHistoryName('space', ['空间 A · v2', '空间 B（修改）'])).toBe('空间 C')
+    expect(nextRenderName(['渲染', '渲染（4）', '客户提案渲染'])).toBe('渲染 5')
     expect(freshName('白模', [])).toBe('白模')
     expect(freshName('白模', ['白模', '白模（2）'])).toBe('白模（3）')
   })

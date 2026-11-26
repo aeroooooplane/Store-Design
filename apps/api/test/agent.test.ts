@@ -231,7 +231,7 @@ describe('agent with DeepSeek', () => {
       kind: 'plan',
       parentId: spaceNode.id,
       origin: 'agent',
-      name: '方案 · Agent',
+      name: '方案 A',
     })
     expect(node.layout?.items).toHaveLength(1)
     const item = node.layout?.items[0]
@@ -364,7 +364,8 @@ describe('agent with DeepSeek', () => {
       kind: 'space',
       parentId: spaceNode.id,
       origin: 'agent',
-      name: '空间 · Agent',
+      name: '空间 · v2',
+      sourceNodeId: spaceNode.id,
     })
     expect(node.space?.height).toBe(3.5)
     expect(node.space?.entrances).toEqual([{ kind: 'main', a: [8, 2], b: [8, 4] }])

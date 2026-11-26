@@ -196,7 +196,33 @@ describe('history nodes', () => {
       name: '白模 副本2',
       sourceNodeId: white.json<NodeCreated>().node.id,
     })
-    expect(copy.json<NodeCreated>().node.parentId).toBe(planId)
+    const sourceId = white.json<NodeCreated>().node.id
+    expect(copy.json<NodeCreated>().node).toMatchObject({
+      parentId: planId,
+      sourceNodeId: sourceId,
+    })
+    const baseUrl = `/api/v1/projects/${project.id}`
+    const exported = (
+      await t.app.inject({ method: 'GET', url: `${baseUrl}/export` })
+    ).json<ProjectExport>()
+    const imported = (
+      await t.app.inject({
+        method: 'POST',
+        url: '/api/v1/projects/import',
+        payload: { data: exported },
+      })
+    ).json<ProjectImported>()
+    const importedTree = (
+      await t.app.inject({
+        method: 'GET',
+        url: `/api/v1/projects/${imported.project.id}/nodes`,
+      })
+    ).json<NodeTree>()
+    const restoredSource = importedTree.nodes.find((node) => node.importedFrom === sourceId)
+    expect(restoredSource).toBeDefined()
+    expect(importedTree.nodes.find((node) => node.name === '白模 副本2')?.sourceNodeId).toBe(
+      restoredSource?.id,
+    )
     const render = await post(project.id, body(copy.json<NodeCreated>().node.id, 'render'))
     expect(render.statusCode).toBe(201)
   })

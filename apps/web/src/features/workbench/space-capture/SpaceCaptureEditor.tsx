@@ -26,7 +26,7 @@ export function SpaceCaptureEditor({
 }: SpaceCaptureEditorProps) {
   const frame = useRef<HTMLIFrameElement>(null)
   const channel = useRef<MessagePort | null>(null)
-  const [name, setName] = useState(initialName ?? (initial ? '空间（修改）' : '空间'))
+  const [name, setName] = useState(initialName ?? (initial ? '空间 · v2' : '空间 A'))
   const [pending, setPending] = useState(false)
   const settings = useRef({ name, onSubmit })
   const source = useMemo(() => spaceToSketch(shop, initial), [shop, initial])

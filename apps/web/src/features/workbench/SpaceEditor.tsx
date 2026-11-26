@@ -247,7 +247,7 @@ export function SpaceEditor({
     return { from: row?.edge ?? 0, to: row?.toEdge ?? 0, startMm: 0, endMm: null }
   })
   const [message, setMessage] = useState<string | null>(null)
-  const [name, setName] = useState(initialName ?? (initial ? '空间（修改）' : '空间'))
+  const [name, setName] = useState(initialName ?? (initial ? '空间 · v2' : '空间 A'))
   const lost = useMemo(() => (initial ? unmappedOpenings(initial) : 0), [initial])
 
   const { form, edges } = shape

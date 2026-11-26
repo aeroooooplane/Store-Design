@@ -900,6 +900,7 @@ export interface paths {
                                 /** @enum {string} */
                                 origin: "user" | "generator" | "agent" | "import" | "recognition";
                                 importedFrom: string | null;
+                                sourceNodeId?: string;
                                 hidden: boolean;
                             }[];
                             draft: {
@@ -1129,6 +1130,8 @@ export interface paths {
                                 /** @enum {string} */
                                 origin: "user" | "generator" | "agent" | "import" | "recognition";
                                 importedFrom: string | null;
+                                /** Format: uuid */
+                                sourceNodeId?: string;
                                 hidden: boolean;
                                 /** Format: date-time */
                                 createdAt: string;
@@ -1377,6 +1380,8 @@ export interface paths {
                                 /** @enum {string} */
                                 origin: "user" | "generator" | "agent" | "import" | "recognition";
                                 importedFrom: string | null;
+                                /** Format: uuid */
+                                sourceNodeId?: string;
                                 hidden: boolean;
                                 /** Format: date-time */
                                 createdAt: string;
@@ -1627,6 +1632,8 @@ export interface paths {
                             /** @enum {string} */
                             origin: "user" | "generator" | "agent" | "import" | "recognition";
                             importedFrom: string | null;
+                            /** Format: uuid */
+                            sourceNodeId?: string;
                             hidden: boolean;
                             /** Format: date-time */
                             createdAt: string;
@@ -1866,6 +1873,8 @@ export interface paths {
                             /** @enum {string} */
                             origin: "user" | "generator" | "agent" | "import" | "recognition";
                             importedFrom: string | null;
+                            /** Format: uuid */
+                            sourceNodeId?: string;
                             hidden: boolean;
                             /** Format: date-time */
                             createdAt: string;
@@ -2105,6 +2114,8 @@ export interface paths {
                             /** @enum {string} */
                             origin: "user" | "generator" | "agent" | "import" | "recognition";
                             importedFrom: string | null;
+                            /** Format: uuid */
+                            sourceNodeId?: string;
                             hidden: boolean;
                             /** Format: date-time */
                             createdAt: string;
@@ -2348,6 +2359,8 @@ export interface paths {
                             /** @enum {string} */
                             origin: "user" | "generator" | "agent" | "import" | "recognition";
                             importedFrom: string | null;
+                            /** Format: uuid */
+                            sourceNodeId?: string;
                             hidden: boolean;
                             /** Format: date-time */
                             createdAt: string;
@@ -7023,6 +7036,8 @@ export interface paths {
                                 /** @enum {string} */
                                 origin: "user" | "generator" | "agent" | "import" | "recognition";
                                 importedFrom: string | null;
+                                /** Format: uuid */
+                                sourceNodeId?: string;
                                 hidden: boolean;
                                 /** Format: date-time */
                                 createdAt: string;

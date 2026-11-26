@@ -1,5 +1,12 @@
 import { z } from 'zod'
-import { freshName, nodeSiStyle, siSwapName, stageOf, swapLayoutSi } from '@store/shared'
+import {
+  freshName,
+  nextRenderName,
+  nodeSiStyle,
+  siSwapName,
+  stageOf,
+  swapLayoutSi,
+} from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
 import { createNode } from '../../nodes/service.ts'
 import { updateProject } from '../../projects/service.ts'
@@ -82,7 +89,7 @@ export const startRenderTool = tool({
     const node = tools.node
     if (!node || stageOf(node.kind) !== 'plan')
       throw new AppError('INVALID_STATE', '只能从方案开始渲染')
-    const name = freshName('渲染', await namesUnder(tools.db, tools.project.id, node.id))
+    const name = nextRenderName(await namesUnder(tools.db, tools.project.id, node.id))
     const created = await createNode(
       tools.db,
       tools.ctx,
