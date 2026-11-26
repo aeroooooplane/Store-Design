@@ -1166,11 +1166,12 @@ ul.issues li.hint::before {
 .space-info-card {
   min-width: 0;
   padding: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
   border-radius: 10px;
+  background: var(--paper);
 }
 .current-space-card {
-  background: color-mix(in srgb, var(--paper), var(--border) 20%);
+  background: var(--surface);
 }
 .space-info-heading,
 .space-fixture-list button {
@@ -1203,18 +1204,50 @@ ul.issues li.hint::before {
   margin: 0;
 }
 .space-info-metrics div {
-  padding: 5px 7px;
-  border: 1px solid var(--border);
+  padding: 6px 8px;
+  border: 1px solid var(--line);
   border-radius: 7px;
   background: var(--paper);
 }
 .space-info-metrics dd {
   margin: 2px 0 0;
+  font-size: var(--fs-xs);
   font-variant-numeric: tabular-nums;
 }
-.space-info-card summary {
+details.space-info-card {
+  padding: 0;
+}
+.space-info-card > summary {
+  padding: 9px 10px;
   cursor: pointer;
+  font-size: var(--fs-sm);
   font-weight: 600;
+}
+.space-info-card[open] > summary {
+  border-bottom: 1px solid var(--line-soft);
+}
+.space-info-card > .project-details {
+  gap: 6px;
+  padding: 9px 10px 10px;
+  font-size: var(--fs-xs);
+}
+.space-info-card > .project-details dd {
+  text-align: right;
+}
+.space-info-card > .wb-card {
+  border: 0;
+  box-shadow: none;
+}
+.space-info-card > .wb-card > h2 {
+  display: none;
+}
+.space-info-card > p.hint {
+  margin: 8px 0 0;
+  padding: 8px;
+  border: 1px dashed var(--line);
+  border-radius: 7px;
+  background: var(--surface);
+  text-align: center;
 }
 .space-fixture-list {
   display: grid;

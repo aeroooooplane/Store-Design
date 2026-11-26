@@ -75,6 +75,7 @@ function LeftTabs({
   ]
   const sharedTab = useContext(LeftTabContext)
   const [localTab, setLocalTab] = useState<LeftTab | null>(null)
+  const [drawingsOpened, setDrawingsOpened] = useState(false)
   const { tab, setTab } = tabState ?? sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const current = tab && tabs.includes(tab) ? tab : fallback
@@ -94,9 +95,14 @@ function LeftTabs({
           </details>
         )}
         {info?.drawings && (
-          <details className="space-info-card">
+          <details
+            className="space-info-card"
+            onToggle={(event) => {
+              if (event.currentTarget.open) setDrawingsOpened(true)
+            }}
+          >
             <summary>项目图纸</summary>
-            {info.drawings}
+            {drawingsOpened && info.drawings}
           </details>
         )}
       </div>

@@ -290,7 +290,7 @@ export function Workbench({ project }: { project: Project }) {
             />
           ),
           details: <ProjectDetails project={project} siStyle={shownSi} />,
-          drawings: isFullWorkbench ? <ProjectDrawings projectId={project.id} /> : null,
+          drawings: <ProjectDrawings projectId={project.id} />,
         }}
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
