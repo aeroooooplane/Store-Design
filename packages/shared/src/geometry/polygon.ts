@@ -34,6 +34,62 @@ export function polygonArea(polygon: Polygon): number {
   return Math.abs(signedArea(polygon))
 }
 
+/** Area common to two simple rings, including concave rings. */
+export function polygonIntersectionArea(first: Polygon, second: Polygon): number {
+  const left = Math.max(Math.min(...first.map(([x]) => x)), Math.min(...second.map(([x]) => x)))
+  const right = Math.min(Math.max(...first.map(([x]) => x)), Math.max(...second.map(([x]) => x)))
+  if (left >= right) return 0
+
+  const cuts = new Set([left, right])
+  const addCut = (x: number) => {
+    if (x > left && x < right) cuts.add(x)
+  }
+  first.forEach(([x]) => addCut(x))
+  second.forEach(([x]) => addCut(x))
+  const firstEdges = edges(first),
+    secondEdges = edges(second)
+  for (const [a, b] of firstEdges) {
+    for (const [c, d] of secondEdges) {
+      if (!segmentsProperlyCross(a, b, c, d)) continue
+      const atA = cross(c, d, a),
+        atB = cross(c, d, b)
+      addCut(a[0] + ((b[0] - a[0]) * atA) / (atA - atB))
+    }
+  }
+
+  // Between cuts, all vertical intersection endpoints vary linearly without crossing.
+  // The overlap length at the midpoint therefore gives the exact area for that strip.
+  function intervals(ring: [Point, Point][], x: number): [number, number][] {
+    const zs = ring
+      .flatMap(([a, b]) => {
+        if (x <= Math.min(a[0], b[0]) || x >= Math.max(a[0], b[0])) return []
+        return a[1] + ((b[1] - a[1]) * (x - a[0])) / (b[0] - a[0])
+      })
+      .sort((a, b) => a - b)
+    const spans: [number, number][] = []
+    for (let i = 0; i < zs.length; i += 2) {
+      const start = zs[i],
+        end = zs[i + 1]
+      if (start !== undefined && end !== undefined) spans.push([start, end])
+    }
+    return spans
+  }
+
+  let area = 0,
+    start = left
+  for (const end of [...cuts].sort((a, b) => a - b).slice(1)) {
+    const x = (start + end) / 2
+    const secondSpans = intervals(secondEdges, x)
+    for (const [a, b] of intervals(firstEdges, x)) {
+      for (const [c, d] of secondSpans) {
+        area += (end - start) * Math.max(0, Math.min(b, d) - Math.max(a, c))
+      }
+    }
+    start = end
+  }
+  return area
+}
+
 export function isClockwise(polygon: Polygon): boolean {
   return signedArea(polygon) > 0
 }

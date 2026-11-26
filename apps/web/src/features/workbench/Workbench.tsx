@@ -10,6 +10,7 @@ import type {
   NodeCamera,
   NodeSummary,
   Project,
+  ShopType,
   SiStyle,
   Space,
 } from '@store/shared'
@@ -25,7 +26,7 @@ import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
 import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
-import { SpaceEditor } from './SpaceEditor.tsx'
+import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
 import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
@@ -89,6 +90,10 @@ export function Workbench({ project }: { project: Project }) {
 
   const nodes = useMemo(() => tree.data?.nodes ?? [], [tree.data])
   const requested = params.get('node')
+  const startedWithHistory = useRef<boolean | null>(null)
+  if (tree.data && startedWithHistory.current === null) {
+    startedWithHistory.current = nodes.length > 0
+  }
   // The automatic choice is made once, from the first loaded history, so nodes created later
   // (e.g. three generated plans) never move the selection away from what is on screen.
   const firstChoice = useRef<string | null>(null)
@@ -102,18 +107,26 @@ export function Workbench({ project }: { project: Project }) {
   const selectedId = requested && nodes.some((n) => n.id === requested) ? requested : fallback
   // Also pin it in the URL, so a reload or a shared link opens the same step.
   useEffect(() => {
-    if (!requested && selectedId && drafts.data !== undefined) {
+    if (startedWithHistory.current && !requested && selectedId && drafts.data !== undefined) {
       setParams({ node: selectedId }, { replace: true })
     }
   }, [requested, selectedId, setParams, drafts.data])
 
   // Close the old panel only after navigation succeeds, so its editor can finish saving.
   if (panel.nodeId !== selectedId) setPanel({ nodeId: selectedId, kind: 'view' })
-  const activePanel = panel.nodeId === selectedId ? panel.kind : 'view'
+  const currentPanel = panel.nodeId === selectedId ? panel.kind : 'view'
+  const activePanel =
+    currentPanel === 'view' && requested === selectedId && params.get('mode') === 'placement'
+      ? 'manual'
+      : currentPanel
   const cardSpace = useNode(selectedId ? spaceAncestor(nodes, selectedId) : null)
 
   function select(nodeId: string) {
     setParams({ node: nodeId })
+  }
+
+  function openPlacement(nodeId: string) {
+    setParams({ node: nodeId, mode: 'placement' })
   }
 
   async function openNewSpace() {
@@ -185,6 +198,8 @@ export function Workbench({ project }: { project: Project }) {
           <NewSpace
             projectId={project.id}
             assets={assets.data}
+            shop={project.shopType}
+            onConfirmed={openPlacement}
             first={nodes.length === 0}
             onCreated={select}
             onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
@@ -205,6 +220,7 @@ export function Workbench({ project }: { project: Project }) {
       panel={activePanel}
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
       onSelect={select}
+      onSpaceConfirmed={openPlacement}
       registerSiSwitch={registerSiSwitch}
     />
   ) : null
@@ -244,14 +260,18 @@ export function Workbench({ project }: { project: Project }) {
 function NewSpace({
   projectId,
   assets,
+  shop,
   first,
   onCreated,
+  onConfirmed,
   onCancel,
 }: {
   projectId: string
   assets: Asset[]
+  shop: ShopType
   first: boolean
   onCreated: (nodeId: string) => void
+  onConfirmed: (nodeId: string) => void
   onCancel?: (() => void) | undefined
 }) {
   const create = useCreateNode(projectId)
@@ -276,19 +296,19 @@ function NewSpace({
         />
       ) : (
         <>
-          <p className="hint">
-            按平面图录入尺寸（毫米）。保存后可以自动生成排布方案，也可以手动摆放。
-          </p>
           <ErrorMessage error={create.error} />
-          <SpaceEditor
-            submitting={create.isPending}
+          <SpaceCaptureEditor
+            shop={shop}
             onCancel={onCancel}
-            onSubmit={(space, name) =>
-              create.mutate(
-                { parentId: null, kind: 'space', name, space },
-                { onSuccess: (created) => onCreated(created.node.id) },
-              )
-            }
+            onSubmit={async (space, name) => {
+              const created = await create.mutateAsync({
+                parentId: null,
+                kind: 'space',
+                name,
+                space,
+              })
+              onConfirmed(created.node.id)
+            }}
           />
         </>
       )}
@@ -306,6 +326,7 @@ interface NodePanelProps {
   panel: Panel
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
+  onSpaceConfirmed: (nodeId: string) => void
   registerSiSwitch: (swap: SiSwitch | null) => void
   registerSave: (save: (() => Promise<boolean>) | null) => void
 }
@@ -320,6 +341,7 @@ function NodePanel({
   panel,
   setPanel,
   onSelect,
+  onSpaceConfirmed,
   registerSiSwitch,
   registerSave,
 }: NodePanelProps) {
@@ -376,17 +398,20 @@ function NodePanel({
             <h2>修改空间</h2>
             <p className="hint">修改会保存为新的空间节点，原空间及其方案保持不变。</p>
             <ErrorMessage error={create.error} />
-            <SpaceEditor
+            <SpaceCaptureEditor
+              shop={project.shopType}
               initial={space}
-              submitting={create.isPending}
+              initialName={`${current.name}（修改）`}
               onCancel={() => setPanel('view')}
-              onSubmit={(edited, name) =>
-                create.mutate(
-                  // A sibling of the space it was edited from, under the same parent (10-16).
-                  { parentId: current.parentId, kind: 'space', name, space: edited },
-                  { onSuccess: (created) => onSelect(created.node.id) },
-                )
-              }
+              onSubmit={async (edited, name) => {
+                const created = await create.mutateAsync({
+                  parentId: current.parentId,
+                  kind: 'space',
+                  name,
+                  space: edited,
+                })
+                onSpaceConfirmed(created.node.id)
+              }}
             />
           </div>
         }

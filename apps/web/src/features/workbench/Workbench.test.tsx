@@ -7,6 +7,7 @@ import { makeAsset, makeCamera, makeNode, makeProject } from '../../test-utils/f
 import { json, stubFetch } from '../../test-utils/fake-api.ts'
 import { renderWithClient } from '../../test-utils/render.tsx'
 import { Workbench } from './Workbench.tsx'
+import type { SpaceSketch } from './space-capture/space-sketch.ts'
 
 const PID = '11111111-1111-4111-8111-111111111111'
 const S1 = '22222222-2222-4222-8222-222222222222'
@@ -164,6 +165,26 @@ function renderWorkbench(search = '') {
   return renderWithClient(<RouterProvider router={router} />)
 }
 
+async function connectSpaceCanvas() {
+  const frame = await screen.findByTitle<HTMLIFrameElement>('空间画布')
+  const port = { close: vi.fn(), postMessage: vi.fn(), onmessage: (_event: MessageEvent) => {} }
+  vi.stubGlobal(
+    'MessageChannel',
+    class {
+      port1 = port
+      port2 = {}
+    },
+  )
+  const connect = vi.spyOn(frame.contentWindow!, 'postMessage').mockImplementation(() => {})
+  fireEvent.load(frame)
+  const state = (connect.mock.calls[0]?.[0] as { state: SpaceSketch }).state
+  return {
+    state,
+    confirm: (draft: SpaceSketch) =>
+      port.onmessage(new MessageEvent('message', { data: { type: 'submit', state: draft } })),
+  }
+}
+
 let server: ReturnType<typeof fakeApi>
 const confirm = vi.fn(() => true)
 
@@ -221,15 +242,27 @@ describe('Workbench', () => {
     })
   })
 
-  it('starts an empty project with the space editor and opens the saved space', async () => {
+  it('starts with a blank space canvas and opens placement on confirmation', async () => {
     server = fakeApi([], null)
     renderWorkbench()
 
     expect(await screen.findByText('第一步：录入空间')).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: '保存空间' }))
+    const canvas = await connectSpaceCanvas()
+    expect(canvas.state.points).toEqual([])
+    canvas.confirm({
+      ...canvas.state,
+      closed: true,
+      points: [
+        [0, 0],
+        [8000, 0],
+        [8000, 6000],
+        [0, 6000],
+      ],
+      mainEdge: 2,
+      openings: [null, null, { mode: 'full' }, null],
+    })
 
-    expect(await screen.findByRole('button', { name: '修改空间' })).toBeTruthy()
-    expect(screen.getByRole('button', { name: '生成三个方案' })).toBeTruthy()
+    expect(await screen.findByRole('region', { name: '平面编辑' })).toBeTruthy()
     const post = server.calls.find((c) => c.method === 'POST')
     expect(post?.body).toMatchObject({
       parentId: null,
@@ -245,6 +278,32 @@ describe('Workbench', () => {
         height: 3.2,
         entrances: [{ a: [8, 6], b: [0, 6], kind: 'main' }],
       },
+    })
+  })
+
+  it('reopens an existing contour and saves its revision into a separate placement', async () => {
+    const existing = designNode(S1, null, { name: '原空间' })
+    server = fakeApi([existing, designNode(P1, S1)], null)
+    renderWorkbench(`?node=${S1}`)
+
+    fireEvent.click(await screen.findByRole('button', { name: '修改空间' }))
+    const canvas = await connectSpaceCanvas()
+    expect(canvas.state.points).toEqual([
+      [0, 0],
+      [8000, 0],
+      [8000, 6000],
+      [0, 6000],
+    ])
+    canvas.confirm({ ...canvas.state, height: 3500 })
+
+    expect(await screen.findByRole('region', { name: '平面编辑' })).toBeTruthy()
+    expect(server.state.nodes).toHaveLength(3)
+    expect(server.state.nodes[0]).toEqual(existing)
+    expect(server.state.nodes[1]?.parentId).toBe(S1)
+    expect(server.state.nodes[2]).toMatchObject({
+      name: '原空间（修改）',
+      parentId: null,
+      space: { ...existing.space, height: 3.5 },
     })
   })
 

@@ -1,0 +1,9 @@
+.space-capture {
+  min-width: 0;
+}
+.space-capture iframe {
+  border: none;
+  display: block;
+  width: 100%;
+  height: clamp(485px, calc(100dvh - 230px), 820px);
+}
