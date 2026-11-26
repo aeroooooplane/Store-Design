@@ -8,6 +8,8 @@ import {
   locatePoint,
   pathMidpoint,
   polygonArea,
+  polygonInsidePolygon,
+  polygonIntersectionArea,
   polygonOverlapsRect,
   rectCorners,
   rectGap,
@@ -1112,7 +1114,14 @@ function narrowArea(space: Space, width: number): number {
 export function usableArea(space: Space, minWidth = 0): number {
   const free =
     polygonArea(space.boundary) -
-    space.obstacles.reduce((sum, o) => sum + (o.addedLater ? 0 : polygonArea(o.polygon)), 0)
+    space.obstacles.reduce((sum, obstacle) => {
+      if (obstacle.addedLater) return sum
+      const insideArea =
+        obstacle.kind !== 'column' || polygonInsidePolygon(obstacle.polygon, space.boundary)
+          ? polygonArea(obstacle.polygon)
+          : polygonIntersectionArea(obstacle.polygon, space.boundary)
+      return sum + insideArea
+    }, 0)
   return minWidth > 0 ? Math.max(0, free - narrowArea(space, minWidth)) : free
 }
 

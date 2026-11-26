@@ -39,7 +39,8 @@ export const CalibrationSchema = z.object({
 
 /**
  * A store space: polygon boundary, entrances and open edges lying on the boundary (each given
- * by its two ends; it may run along several edges, see `openingPieces`), obstacles inside it.
+ * by its two ends; it may run along several edges, see `openingPieces`) and obstacles.
+ * Columns can cross or stand outside the boundary.
  * Units are metres; x right, z down, y up.
  */
 export const SpaceSchema = z.object({
@@ -131,7 +132,7 @@ export function validateSpace(space: Space): SpaceIssue[] {
     } else if (boundaryOk && !polygonInsidePolygon(obstacle.polygon, space.boundary)) {
       issues.push({
         code: 'obstacle_outside_boundary',
-        severity: 'error',
+        severity: obstacle.kind === 'column' ? 'warning' : 'error',
         message: `${name}超出空间边界`,
         path: ['obstacles', index, 'polygon'],
       })

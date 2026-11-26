@@ -11,6 +11,7 @@ export {
   locatePoint,
   polygonArea,
   polygonInsidePolygon,
+  polygonIntersectionArea,
   segmentsIntersect,
   segmentsProperlyCross,
   signedArea,
