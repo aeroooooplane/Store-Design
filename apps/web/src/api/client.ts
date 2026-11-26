@@ -2,12 +2,70 @@ import createClient from 'openapi-fetch'
 import { ApiErrorSchema } from '@store/shared'
 import type { paths } from './schema'
 import {
+  apiHref,
   gatewayRequest,
   isBoldSite,
+  isFullWorkbench,
   isProjectPilot,
   mapFileLinks,
   servicePrefix,
 } from './deployment'
+
+let writeToken: Promise<string> | undefined
+
+function workbenchWriteToken() {
+  writeToken ??= (async () => {
+    const response = await fetch(apiHref('/api/v1/write-token'), { cache: 'no-store' })
+    if (!response.ok) throw new Error('无法取得工作台写入令牌')
+    const value: unknown = await response.json()
+    if (
+      !value ||
+      typeof value !== 'object' ||
+      !('token' in value) ||
+      typeof value.token !== 'string'
+    ) {
+      throw new Error('工作台写入令牌无效')
+    }
+    if (!/^[A-Za-z0-9_-]{43}$/.test(value.token)) throw new Error('工作台写入令牌无效')
+    return value.token
+  })().catch((error: unknown) => {
+    writeToken = undefined
+    throw error
+  })
+  return writeToken
+}
+
+async function fetchWorkbench(request: Request) {
+  if (!isFullWorkbench || request.method !== 'POST') return globalThis.fetch(request)
+
+  // The site retains Content-Type parameters but may omit original browser headers.
+  const send = async (attempt: Request, token: string) => {
+    const headers = new Headers(attempt.headers)
+    const mediaType = headers.get('content-type') ?? 'application/octet-stream'
+    headers.set('content-type', mediaType + '; workbench-token=' + token)
+    return globalThis.fetch(new Request(attempt, { headers }))
+  }
+
+  const initial = workbenchWriteToken()
+  const response = await send(request.clone(), await initial)
+  if (response.status !== 403) return response
+  const data: unknown = await response
+    .clone()
+    .json()
+    .catch(() => undefined)
+  const parsed = ApiErrorSchema.safeParse(data)
+  const details = parsed.success ? parsed.data.error.details : null
+  if (
+    !details ||
+    typeof details !== 'object' ||
+    !('writeToken' in details) ||
+    details.writeToken !== 'refresh'
+  ) {
+    return response
+  }
+  if (writeToken === initial) writeToken = undefined
+  return send(request, await workbenchWriteToken())
+}
 
 /**
  * Typed client generated from apps/api/openapi.json (`pnpm api:openapi`). This is the only way
@@ -15,10 +73,15 @@ import {
  */
 export const api = createClient<paths>({
   baseUrl: window.location.origin,
-  Request: isBoldSite ? gatewayRequest(servicePrefix, isProjectPilot) : Request,
+  Request: isBoldSite
+    ? gatewayRequest(
+        servicePrefix,
+        isProjectPilot ? 'pilot' : isFullWorkbench ? 'workbench' : 'standard',
+      )
+    : Request,
   // Resolve fetch per call so tests can stub it.
   fetch: async (request) => {
-    const response = await globalThis.fetch(request)
+    const response = await fetchWorkbench(request)
     if (
       !isBoldSite ||
       !response.ok ||

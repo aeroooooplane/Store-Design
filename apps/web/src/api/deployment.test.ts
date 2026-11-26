@@ -60,8 +60,35 @@ describe('BoldSite deployment URLs', () => {
     expect(new Uint8Array(await mapped.arrayBuffer())).toEqual(body)
   })
 
+  it('tunnels full workbench writes without changing query values or upload bytes', async () => {
+    const WorkbenchRequest = gatewayRequest('/svc/alpha', 'workbench')
+    const upload = new Uint8Array([137, 80, 78, 71])
+    const create = new WorkbenchRequest(
+      'https://pilot.invalid/api/v1/display-tasks/abc/uploads?role=plan',
+      {
+        method: 'POST',
+        headers: { 'if-match': '"7"', 'content-type': 'image/png' },
+        body: upload,
+      },
+    )
+    expect(create.method).toBe('POST')
+    expect(new URL(create.url).searchParams.get('role')).toBe('plan')
+    expect(new URL(create.url).searchParams.get('__workbench_if_match')).toBe('"7"')
+    expect(create.headers.get('if-match')).toBeNull()
+    expect(new Uint8Array(await create.arrayBuffer())).toEqual(upload)
+
+    const save = new WorkbenchRequest('https://pilot.invalid/api/v1/nodes/abc/draft', {
+      method: 'PUT',
+      headers: { 'if-match': '"10"' },
+      body: '{"name":"draft"}',
+    })
+    expect(save.method).toBe('POST')
+    expect(new URL(save.url).pathname).toBe('/svc/alpha/workbench/v1/_write/put/nodes/abc/draft')
+    expect(await save.text()).toBe('{"name":"draft"}')
+  })
+
   it('carries project edits through the pilot POST routes without losing the version', async () => {
-    const PilotRequest = gatewayRequest('/svc/alpha', true)
+    const PilotRequest = gatewayRequest('/svc/alpha', 'pilot')
     const base = 'https://pilot.invalid/api/v1/projects/abc'
     const headers = { 'content-type': 'application/json', 'if-match': '"7"' }
     const body = '{"siStyle":"SI2.0"}'

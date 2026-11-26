@@ -1,17 +1,25 @@
 import { existsSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
-import { cp, mkdir } from 'node:fs/promises'
+import { cp, mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const argument = process.argv[2]
-if (!argument) throw new Error('用法：node tools/boldsite/package.mjs <新建发布目录>')
+const [argument, ...options] = process.argv.slice(2)
+const fullWorkbench = options.includes('--workbench')
+const catalogs = options.filter((value) => value !== '--workbench')
+if (!argument || options.length > 2 || catalogs.length > 1 || catalogs[0]?.startsWith('--')) {
+  throw new Error('用法：node tools/boldsite/package.mjs <新建发布目录> [正式库目录] [--workbench]')
+}
 const output = path.resolve(argument)
 const repository = fileURLToPath(new URL('../../', import.meta.url))
 
 const buildOptions = {
   cwd: repository,
-  env: { ...process.env, VITE_BOLDSITE_PROJECT_PILOT: '1' },
+  env: {
+    ...process.env,
+    VITE_BOLDSITE_PROJECT_PILOT: fullWorkbench ? '0' : '1',
+    VITE_BOLDSITE_FULL_WORKBENCH: fullWorkbench ? '1' : '0',
+  },
   stdio: 'inherit',
 }
 const result =
@@ -35,6 +43,8 @@ for (const file of [
   'projects.py',
   'storage.py',
   'storage_gate.py',
+  'workbench.py',
+  'rules.py',
   'requirements.txt',
   'boldsite.json',
 ]) {
@@ -43,7 +53,24 @@ for (const file of [
     errorOnExist: true,
   })
 }
-const catalog = process.argv[3]
+if (fullWorkbench) {
+  const args = [
+    path.join(repository, 'apps/web/node_modules/vite/bin/vite.js'), 'build',
+    '--config', '../../tools/boldsite/rules.vite.config.mts',
+    '--outDir', output,
+    '--emptyOutDir=false',
+  ]
+  const rules = spawnSync(process.execPath, args, {
+    ...buildOptions,
+    cwd: path.join(repository, 'apps/web'),
+  })
+  if (rules.error) throw rules.error
+  if (rules.status !== 0) process.exit(rules.status ?? 1)
+  await writeFile(path.join(output, 'workbench-mode.txt'), 'workbench\n')
+  await cp(path.join(repository, 'apps/boldsite/requirements-workbench.txt'), path.join(output, 'requirements-workbench.txt'))
+}
+
+const [catalog] = catalogs
 if (catalog) {
   const source = path.resolve(catalog)
   await cp(path.join(source, 'index.json'), path.join(output, 'catalog', 'index.json'))

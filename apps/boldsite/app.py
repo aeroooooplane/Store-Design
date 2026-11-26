@@ -4,6 +4,7 @@ import sqlite3
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
+from secrets import token_urlsafe
 
 ROOT = Path(__file__).resolve().parent
 vendor = ROOT / "vendor"
@@ -18,9 +19,13 @@ from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException
 
 from catalog import Catalog, router as catalog
-from contract import ApiError, ServicePrefix, error_response, invalid, missing
+from contract import ApiError, FullWorkbenchTransport, ServicePrefix, error_response, invalid, missing
 from drawings import router as drawings
 from projects import router as projects
+from rules import Rules
+from workbench import router as workbench
+
+FULL_WORKBENCH = (ROOT / "workbench-mode.txt").is_file()
 from storage import configured_database
 from storage_gate import StorageBusy
 
@@ -40,10 +45,17 @@ async def lifespan(app):
     app.state.db = configured_database()
     app.state.db.initialize()
     app.state.catalog = Catalog(ROOT / "catalog")
+    if FULL_WORKBENCH:
+        app.state.db.initialize_workbench()
+        app.state.rules = Rules(ROOT / "workbench-rules.js", app.state.catalog.items)
     yield
 
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None, redirect_slashes=False)
+if FULL_WORKBENCH:
+    app.state.workbench_write_token = token_urlsafe(32)
+    app.add_middleware(FullWorkbenchTransport, token=app.state.workbench_write_token)
+    app.include_router(workbench)
 app.add_middleware(ServicePrefix)
 app.include_router(projects)
 app.include_router(drawings)
