@@ -67,11 +67,14 @@ async function upload(
     query.set('show', String(pages.show))
   }
   const response = await fetchWorkbench(
-    new Request(apiHref('/api/v1/nodes/' + scene.node.id + '/compiled/' + kind + '?' + query), {
-      method: 'POST',
-      headers: { 'content-type': 'application/zip' },
-      body: zipSync(files, { level: 0 }),
-    }),
+    new Request(
+      apiHref('/api/v1/nodes/' + scene.node.id + '/compiled/' + kind + '?' + query.toString()),
+      {
+        method: 'POST',
+        headers: { 'content-type': 'application/zip' },
+        body: zipSync(files, { level: 0 }),
+      },
+    ),
   )
   const data: unknown = await response.json().catch(() => undefined)
   if (!response.ok) {
