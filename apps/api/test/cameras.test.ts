@@ -28,6 +28,55 @@ const list = async (nodeId: string, includeDeleted = false) =>
 const view = { name: '收银台近景', position: [6, 1.6, 5], target: [7, 1, 1], fovDeg: 55 }
 
 describe('cameras', () => {
+  it('copies space views independently and preserves deleted views without reinitializing them', async () => {
+    const { project, space } = await whiteModel()
+    const original = (await inject('POST', `/nodes/${space.id}/cameras`, view)).json<NodeCamera>()
+    const copySpace = async () => {
+      const response = await inject('POST', `/projects/${project.id}/nodes`, {
+        parentId: null,
+        kind: 'space',
+        name: '空间副本',
+        sourceNodeId: space.id,
+        space: space.space,
+        layout,
+        siStyle: 'SI2.0',
+      })
+      expect(response.statusCode).toBe(201)
+      return response.json<NodeCreated>().node
+    }
+    const copy = await copySpace()
+    const [copied] = await list(copy.id)
+    expect(copied?.id).not.toBe(original.id)
+    expect(copied?.camera).toEqual(original.camera)
+    await inject('PATCH', `/cameras/${copied?.id}`, { name: '副本视角' })
+    expect((await list(space.id))[0]?.camera.name).toBe(view.name)
+    await inject('DELETE', `/cameras/${original.id}`)
+    const deletedCopy = await copySpace()
+    await inject('POST', `/nodes/${deletedCopy.id}/cameras/initialize`)
+    expect(await list(deletedCopy.id)).toEqual([])
+    expect(await list(deletedCopy.id, true)).toHaveLength(1)
+  })
+
+  it('does not inherit space views for revisions or space capture without a layout', async () => {
+    const { project, space } = await whiteModel()
+    await inject('POST', `/nodes/${space.id}/cameras`, view)
+    for (const input of [
+      { parentId: space.id },
+      { parentId: space.id, layout },
+      { parentId: null },
+    ]) {
+      const response = await inject('POST', `/projects/${project.id}/nodes`, {
+        ...input,
+        kind: 'space',
+        name: '空间修订',
+        sourceNodeId: space.id,
+        space: space.space,
+      })
+      expect(response.statusCode).toBe(201)
+      expect(await list(response.json<NodeCreated>().node.id)).toEqual([])
+    }
+  })
+
   it('initializes and edits saved views on an imported legacy edit node', async () => {
     const { project, plan } = await whiteModel()
     const legacy = await seedLegacyEdit(t, project.id, plan.id, '旧版调整', layout)

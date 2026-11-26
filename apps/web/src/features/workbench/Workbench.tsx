@@ -31,6 +31,7 @@ import { CameraPanel } from './CameraPanel.tsx'
 import { HistoryTree, HistoryViewProvider } from './HistoryTree.tsx'
 import { PlanEditor } from './PlanEditor.tsx'
 import { PlanView } from './PlanView.tsx'
+import { useNodeActions } from './plan-editor/useNodeActions.ts'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
 import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
@@ -251,6 +252,7 @@ export function Workbench({ project }: { project: Project }) {
       panel={activePanel}
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
       onSelect={select}
+      onSpaceCopied={openPlacement}
       registerSiSwitch={registerSiSwitch}
     />
   ) : null
@@ -416,6 +418,7 @@ interface NodePanelProps {
   panel: Panel
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
+  onSpaceCopied: (nodeId: string) => void
   registerSiSwitch: (swap: SiSwitch | null) => void
   registerSave: (save: (() => Promise<boolean>) | null) => void
 }
@@ -430,6 +433,7 @@ function NodePanel({
   panel,
   setPanel,
   onSelect,
+  onSpaceCopied,
   registerSiSwitch,
   registerSave,
 }: NodePanelProps) {
@@ -497,6 +501,7 @@ function NodePanel({
       draft={draft}
       assets={assets}
       onNodeCreated={onSelect}
+      onSpaceCopied={onSpaceCopied}
       onRegisterSiSwitch={registerSiSwitch}
       onRegisterSave={registerSave}
     />
@@ -513,6 +518,8 @@ function NodePanel({
       project={project}
       spaceNode={{ ...current, space }}
       assets={assetMap}
+      nodes={nodes}
+      onSpaceCopied={onSpaceCopied}
       existingSpaceNames={existingSpaceNames}
       existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
       setPanel={setPanel}
@@ -529,6 +536,8 @@ function SpaceStage({
   assets,
   existingNames,
   existingSpaceNames,
+  nodes,
+  onSpaceCopied,
   setPanel,
   onSelect,
 }: {
@@ -538,9 +547,26 @@ function SpaceStage({
   assets: ReadonlyMap<string, Asset>
   existingNames: readonly string[]
   existingSpaceNames: readonly string[]
+  nodes: NodeSummary[]
+  onSpaceCopied: (nodeId: string) => void
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
 }) {
+  const create = useCreateNode(project.id)
+  const copy = useNodeActions({
+    baseNode: spaceNode,
+    space: spaceNode.space,
+    nodes,
+    stage: 'space',
+    layout: spaceNode.layout ?? EMPTY_LAYOUT,
+    assetMap: new Map(assets),
+    siStyle: nodeSiStyle(spaceNode, project.siStyle),
+    projectSi: project.siStyle,
+    create,
+    flush: async () => true,
+    onNodeCreated: onSelect,
+    onSpaceCopied,
+  })
   const generation = usePlanGeneration({
     projectId: project.id,
     spaceNode,
@@ -560,15 +586,23 @@ function SpaceStage({
         <div className="wb-card">
           <StagePanel
             title="空间阶段"
-            first={[{ label: '手动排布', onClick: () => setPanel('manual') }]}
+            first={[
+              { label: '新建副本', onClick: copy.copyNode, disabled: copy.busy || generation.busy },
+              {
+                label: '手动排布',
+                onClick: () => setPanel('manual'),
+                disabled: copy.busy || generation.busy,
+              },
+            ]}
             second={{
               label: generation.busy ? '正在生成…' : generation.label,
               onClick: generation.run,
-              disabled: generation.busy,
+              disabled: generation.busy || copy.busy,
               primary: true,
             }}
             hint="三个方案（尽量多放、按面积推荐、尽量少放）都会保存到方案层。"
           />
+          <ErrorMessage error={copy.error} />
         </div>
       }
     >

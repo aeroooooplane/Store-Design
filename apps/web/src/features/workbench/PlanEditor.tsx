@@ -99,6 +99,7 @@ interface PlanEditorProps {
   draft: Draft | null
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
+  onSpaceCopied?: ((nodeId: string) => void) | undefined
   onRegisterSave: (save: (() => Promise<boolean>) | null) => void
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: (swap: SiSwitch | null) => void
@@ -120,6 +121,7 @@ export function PlanEditor({
   draft,
   assets,
   onNodeCreated,
+  onSpaceCopied,
   onRegisterSave,
   onRegisterSiSwitch,
 }: PlanEditorProps) {
@@ -298,6 +300,7 @@ export function PlanEditor({
     busy,
     error: actionError,
   } = useNodeActions({
+    space,
     baseNode,
     nodes,
     stage,
@@ -308,6 +311,7 @@ export function PlanEditor({
     create,
     flush,
     onNodeCreated,
+    onSpaceCopied,
     onRegisterSiSwitch,
   })
   const {
@@ -578,19 +582,12 @@ export function PlanEditor({
             <StagePanel
               title={STAGE_TITLES[stage]}
               first={[
-                stage === 'space'
-                  ? {
-                      label: '保存为方案',
-                      onClick: advance,
-                      disabled: busy || create.isPending,
-                      primary: true,
-                    }
-                  : {
-                      label: '新建副本',
-                      title: '在同一层另存一份，原来的保留，之后在副本上修改',
-                      onClick: copyNode,
-                      disabled: busy || create.isPending,
-                    },
+                {
+                  label: '新建副本',
+                  title: '在同一层另存一份，原来的保留，之后在副本上修改',
+                  onClick: copyNode,
+                  disabled: busy || create.isPending,
+                },
                 {
                   label: '丢弃草稿',
                   onClick: () => void discard(),
@@ -598,12 +595,13 @@ export function PlanEditor({
                 },
               ]}
               second={
-                stage === 'plan'
+                stage === 'plan' || stage === 'space'
                   ? {
-                      label: '开始渲染',
+                      label: stage === 'space' ? '保存为方案' : '开始渲染',
                       onClick: advance,
                       primary: true,
-                      disabled: busy || create.isPending || errors.length > 0,
+                      disabled:
+                        busy || create.isPending || (stage !== 'space' && errors.length > 0),
                     }
                   : undefined
               }
