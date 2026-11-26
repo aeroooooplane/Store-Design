@@ -10,6 +10,11 @@ import {
   itemMount,
   mmToM,
   mToMm,
+  isCustomLogo,
+  customLogoAsset,
+  customLogoProblem,
+  DEFAULT_LOGO_TEXT,
+  MAX_LOGO_CHARACTERS,
 } from '@store/shared'
 import type { Asset, Fixture, Installation, LayoutItem, Space } from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
@@ -148,7 +153,12 @@ export function PropertiesPanel({
   onDuplicate,
   copiedFurnitureName,
 }: PropertiesPanelProps) {
-  const asset = selected?.assetId ? assetMap.get(selected.assetId) : undefined
+  const asset =
+    selected && isCustomLogo(selected)
+      ? customLogoAsset(selected.logoText ?? DEFAULT_LOGO_TEXT)
+      : selected?.assetId
+        ? assetMap.get(selected.assetId)
+        : undefined
   const screenName = advertisingScreenName(asset?.id)
   const name = screenName ?? asset?.name ?? selected?.name
   const automaticMount = selected && isDisplayPanel(selected)
@@ -240,6 +250,31 @@ export function PropertiesPanel({
           </div>
           {resizable && isWallArt(selected) && (
             <WallArtFields item={selected} space={space} dispatch={dispatch} />
+          )}
+          {isCustomLogo(selected) && (
+            <label className="field-row">
+              LOGO文字
+              <input
+                key={`${selected.id}:${selected.logoText}`}
+                type="text"
+                maxLength={MAX_LOGO_CHARACTERS}
+                defaultValue={selected.logoText ?? DEFAULT_LOGO_TEXT}
+                disabled={selected.locked}
+                onInput={(e) => e.currentTarget.setCustomValidity('')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') e.currentTarget.blur()
+                }}
+                onBlur={(e) => {
+                  const problem = customLogoProblem(e.currentTarget.value)
+                  e.currentTarget.setCustomValidity(problem ?? '')
+                  if (problem) {
+                    e.currentTarget.reportValidity()
+                    return
+                  }
+                  dispatch({ type: 'setLogoText', id: selected.id, text: e.currentTarget.value })
+                }}
+              />
+            </label>
           )}
           {resizable && !isWallArt(selected) && asset && (
             <>

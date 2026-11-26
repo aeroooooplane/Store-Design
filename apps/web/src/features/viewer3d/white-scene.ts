@@ -41,6 +41,8 @@ import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from '.
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { displayPanelBody } from './display-panel-body.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
+import { customLogoMesh } from './custom-logo.ts'
+import { isCustomLogo, customLogoFootprint, DEFAULT_LOGO_TEXT } from '@store/shared'
 import {
   SCENE_BACKGROUND,
   drawBackgroundComposition,
@@ -334,12 +336,13 @@ export class WhiteScene {
       seen.add(item.id)
       const catalogued = item.assetId ? assets.get(item.assetId) : undefined
       const art = isWallArt(item)
+      const custom = isCustomLogo(item)
       const mount = itemMount(item)
       const panel = isDisplayPanel(item)
       const adjustableScreen = item.function === 'screen' && advertisingScreenName(catalogued?.id)
       // A built-in screen or light box is only its picture on the wall face (wall-picture.ts).
       const picture =
-        panel || mount === 'embedded'
+        !custom && (panel || mount === 'embedded')
           ? {
               url: art
                 ? (catalogued?.productImage?.url ?? null)
@@ -361,11 +364,13 @@ export class WhiteScene {
       // The light material copy when there is one (see pnpm catalog:finish).
       const finishUrl = marketUrl ?? asset?.finishGlb?.url ?? asset?.glb?.url ?? null
       const suspension = mount === 'ceiling' ? `:${item.elevation}:${this.space?.height}` : ''
-      const signature = picture
-        ? `picture:${picture.url}:${picture.front}:${picture.screenModelUrl}:${item.w}:${item.d}:${item.h}:${item.rotation}:${mount}${suspension}`
-        : url
-          ? `${url}|${finishUrl}`
-          : `box:${item.w}:${item.d}:${item.h}`
+      const signature = custom
+        ? `logo:${item.logoText ?? DEFAULT_LOGO_TEXT}:${item.w}:${item.d}:${item.h}:${item.rotation}`
+        : picture
+          ? `picture:${picture.url}:${picture.front}:${picture.screenModelUrl}:${item.w}:${item.d}:${item.h}:${item.rotation}:${mount}${suspension}`
+          : url
+            ? `${url}|${finishUrl}`
+            : `box:${item.w}:${item.d}:${item.h}`
       let placed = this.items.get(item.id)
       if (!placed || placed.signature !== signature) {
         if (placed) this.removeItem(item.id)
@@ -387,7 +392,29 @@ export class WhiteScene {
         placed.group.add(placed.white)
         this.props.add(placed.group)
         this.items.set(item.id, placed)
-        if (picture) {
+        if (custom) {
+          const target = placed
+          const load = customLogoMesh(item)
+            .then((mesh) => {
+              if (this.items.get(item.id) !== target || this.disposed) {
+                disposeTree(mesh)
+                return
+              }
+              target.white.add(mesh)
+            })
+            .catch(() => {
+              if (this.items.get(item.id) !== target || this.disposed) return
+              this.failed.add(item.id)
+              target.white.add(placeholderBox(item))
+            })
+            .finally(() => {
+              this.pending.delete(load)
+              this.emitStatus()
+              this.sceneChanged()
+            })
+          this.pending.add(load)
+          this.emitStatus()
+        } else if (picture) {
           const { plane, loaded } = wallPicture(
             item,
             picture.front,
@@ -414,11 +441,13 @@ export class WhiteScene {
         if (this.look === 'material') this.loadFinish(placed)
       }
       placed.item = item
-      placed.model = art
-        ? wallArtSize(item)
-        : item.function === 'signage' && catalogued
-          ? catalogued.footprint
-          : null
+      placed.model = custom
+        ? customLogoFootprint(item.logoText ?? DEFAULT_LOGO_TEXT)
+        : art
+          ? wallArtSize(item)
+          : item.function === 'signage' && catalogued
+            ? catalogued.footprint
+            : null
       const group = placed.group
       // Wall and ceiling pieces hang at their height above the floor.
       const elevation = itemElevation(item)
@@ -428,7 +457,7 @@ export class WhiteScene {
       group.position.set(model.cx, elevation, model.cz)
       // A box already has the footprint at its nearest quarter turn and turns only by the tilt
       // beyond it; a model turns by the whole rotation (legacy: +Z front → −X at 90°).
-      group.rotation.y = ((url ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
+      group.rotation.y = ((url || custom ? -item.rotation : -itemTilt(item)) * Math.PI) / 180
       // A LOGO resized in the properties panel (scale) shows at that size, like its plan symbol;
       // a placeholder box is drawn at the item's size already.
       group.scale.setScalar(url ? (item.scale ?? 1) : 1)
@@ -880,6 +909,7 @@ export class WhiteScene {
       if (
         node.userData['placeholder'] ||
         node.userData['wallPicture'] ||
+        node.userData['customLogo'] ||
         node.userData['displayPanelBody']
       )
         disposeTree(node)
