@@ -1,5 +1,13 @@
 import {
   AssetListSchema,
+  CameraCreateSchema,
+  CameraUpdateSchema,
+  SpaceSchema,
+  defaultCameras,
+  deliveryFileNames,
+  deliveryFolderName,
+  polygonArea,
+  safeFileName,
   DraftPutSchema,
   LayoutGenerateSchema,
   LayoutValidateSchema,
@@ -14,6 +22,7 @@ import {
 } from '../../packages/shared/src/index.ts'
 import type { Asset, Layout, Space } from '../../packages/shared/src/index.ts'
 import { plannerCatalog } from '../../apps/api/src/modules/layouts/selection.ts'
+import { checkDisplayUpdate, computeStageDisplay } from './stage-display.ts'
 
 function failure(message: string, details: unknown, status = 400) {
   return { error: { status, message, details } }
@@ -39,6 +48,30 @@ Object.assign(globalThis, {
   workbenchRules(command: string, input: string, source: string) {
     const respond = (value: unknown) => JSON.stringify(value)
     const data: unknown = JSON.parse(input)
+    if (command === 'delivery-names') {
+      const { name, shopType, space, date, revision } = data as {
+        name: string; shopType: Parameters<typeof deliveryFolderName>[1]; space: Space; date: string; revision: number
+      }
+      return respond({ ...deliveryFileNames(name), folder: deliveryFolderName(name, shopType, polygonArea(space.boundary), date, revision) })
+    }
+    if (command === 'safe-file') {
+      return respond({ name: safeFileName(String(data)) })
+    }
+    if (command === 'stage-display') {
+      return respond(computeStageDisplay(data as Parameters<typeof computeStageDisplay>[0],
+        AssetListSchema.parse(JSON.parse(source)).items))
+    }
+    if (command === 'display-update') {
+      const parsed = checkDisplayUpdate(data)
+      return respond(parsed.success ? parsed.data : failure('请求参数或内容无效', parsed.error.issues))
+    }
+    if (command === 'default-cameras') {
+      return respond({ cameras: defaultCameras(SpaceSchema.parse(data)) })
+    }
+    if (command === 'camera-create' || command === 'camera-update') {
+      const parsed = (command === 'camera-create' ? CameraCreateSchema : CameraUpdateSchema).safeParse(data)
+      return respond(parsed.success ? parsed.data : failure('请求参数或内容无效', parsed.error.issues))
+    }
     if (command === 'rename') {
       const parsed = NodeRenameSchema.safeParse(data)
       return respond(parsed.success ? parsed.data : failure('请求参数或内容无效', parsed.error.issues))

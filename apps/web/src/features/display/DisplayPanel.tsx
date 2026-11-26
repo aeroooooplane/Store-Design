@@ -14,7 +14,11 @@ import { PlanView } from '../workbench/PlanView.tsx'
 import { MarkedPicture } from './MarkedPicture.tsx'
 import { PptViewsSelect } from './PptViewsSelect.tsx'
 import { usePptViews } from './pptViews.ts'
+import { useQueryClient } from '@tanstack/react-query'
+import { isFullWorkbench } from '../../api/deployment.ts'
+import { useCameras, useRenders } from '../workbench/api.ts'
 import { tableShots } from './table3d/shots.ts'
+import { displayKeys } from './queries.ts'
 import { SlotTable } from './SlotTable.tsx'
 import {
   useDisplayRules,
@@ -55,6 +59,9 @@ export function DisplayPanel({
   const rules = useDisplayRules()
   const save = useSaveNodeDisplay(node.id)
   const exporting = useExportNodeDisplay(node.id)
+  const client = useQueryClient()
+  const cameras = useCameras(node.id, isFullWorkbench)
+  const renders = useRenders(node.id)
   const [viewId, setViewId] = useState<string | null>(null)
   const [pptViews, setPptViews] = usePptViews()
   const [drawing, setDrawing] = useState(false)
@@ -125,8 +132,18 @@ export function DisplayPanel({
               si: node.siStyle ?? project.siStyle,
               end: data.edits.landscapeEnd,
             })
-      setDrawing(false)
-      await exporting.mutateAsync({ ...plan, views: pptViews, tables3d })
+      const options = { ...plan, views: pptViews, tables3d }
+      if (isFullWorkbench) {
+        const { archiveDisplay } = await import('../workbench/boldsite-delivery.ts')
+        await archiveDisplay(
+          { project, node, cameras: cameras.data ?? [], images: renders.data?.images ?? [] },
+          { data, rules: rules.data, options },
+        )
+        await client.invalidateQueries({ queryKey: displayKeys.node(node.id) })
+      } else {
+        setDrawing(false)
+        await exporting.mutateAsync(options)
+      }
     } catch (caught) {
       setError(caught)
     } finally {

@@ -35,7 +35,7 @@ function workbenchWriteToken() {
   return writeToken
 }
 
-async function fetchWorkbench(request: Request) {
+export async function fetchWorkbench(request: Request) {
   if (!isFullWorkbench || request.method !== 'POST') return globalThis.fetch(request)
 
   // The site retains Content-Type parameters but may omit original browser headers.

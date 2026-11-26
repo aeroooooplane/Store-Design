@@ -75,8 +75,7 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
     rules = request.app.state.rules
     checked = rules.run("node", payload)
     node = checked["node"]
-    if node["kind"] in {"white", "render"} or "sourceNodeId" in node:
-        raise ApiError(501, "INTERNAL", "完整三维和复制流程仍待接入")
+    from render_stage import initialize_views
     parent_id = node["parentId"]
     space, layout = node.get("space"), node.get("layout")
     issues = checked["issues"]
@@ -90,9 +89,20 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
             raise missing("父节点")
         if node["kind"] == "plan" and (not parent or parent["kind"] != "space"):
             raise invalid("方案只能建在空间下")
+        if node["kind"] in {"white", "render"}:
+            allowed = {"plan", "edit", "white"} if node["kind"] == "render" else {"plan", "edit"}
+            if not parent or parent["kind"] not in allowed:
+                raise invalid("渲染只能建在方案下")
+        source = node_row(db, node["sourceNodeId"]) if node.get("sourceNodeId") else None
+        if source and source["projectId"] != projectId:
+            raise missing("复制来源节点")
         if layout is not None:
             layout_space = space if space is not None else resolve_space(db, parent)
             issues += rules.run("layout", {"space": layout_space, "layout": layout})["issues"]
+        if node["kind"] in {"white", "render"} and not (
+            node["kind"] == "white" and node.get("allowLayoutErrors")
+        ) and any(issue["severity"] == "error" for issue in issues):
+            raise ApiError(400, "VALIDATION_FAILED", "开始渲染前须先解决越界、重叠等问题", issues)
         now = timestamp()
         row = db.execute("""
             INSERT INTO workbench_nodes (id, projectId, parentId, kind, name, strategy, siStyle, origin,
@@ -104,6 +114,8 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
             json.dumps(space, ensure_ascii=False) if space is not None else None,
             json.dumps(layout, ensure_ascii=False) if layout is not None else None, now,
         )).fetchone()
+        if node["kind"] in {"white", "render"} or (node["kind"] == "plan" and source):
+            initialize_views(db, row, rules, source or parent)
         db.execute("UPDATE projects SET updatedAt = ? WHERE id = ?", (now, projectId))
     return {"node": node_detail(row), "issues": issues}
 
@@ -186,6 +198,8 @@ def save_draft(request: Request, projectId: ResourceId, payload: Annotated[dict,
         base = node_row(db, base_id)
         if base["projectId"] != projectId:
             raise missing("草稿所基于的节点")
+        if base["kind"] == "render":
+            raise ApiError(409, "INVALID_STATE", "渲染节点不能作为编辑起点")
         prior = db.execute(
             "SELECT * FROM workbench_drafts WHERE projectId = ? AND baseNodeId = ?", (projectId, base_id),
         ).fetchone()

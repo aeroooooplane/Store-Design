@@ -10,12 +10,17 @@ import type { DisplayRules, DisplayTable } from '@store/shared'
  * 展陈清单.xlsx for the store team and suppliers: every slot of every table, the product and tray
  * counts (the same numbers as the PPT, from summarizeDisplay) and the accessory modules.
  */
-export async function buildDisplayChecklist(input: {
+type ChecklistInput = {
   title: string
   rules: DisplayRules
   tables: DisplayTable[]
   pending?: string[]
-}): Promise<Buffer> {
+}
+export async function buildDisplayChecklist(input: ChecklistInput): Promise<Buffer> {
+  return Buffer.from(await buildDisplayChecklistBytes(input))
+}
+
+export async function buildDisplayChecklistBytes(input: ChecklistInput): Promise<Uint8Array> {
   const { rules, tables } = input
   const units = new Map(rules.units.map((u) => [u.id, u]))
   const trays = new Map(rules.trays.map((t) => [t.id, t.name]))
@@ -105,5 +110,5 @@ export async function buildDisplayChecklist(input: {
     ],
     [8, 100],
   )
-  return Buffer.from(await workbook.xlsx.writeBuffer())
+  return new Uint8Array(await workbook.xlsx.writeBuffer())
 }
