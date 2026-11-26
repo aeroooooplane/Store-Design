@@ -6,12 +6,11 @@ import { islandEdgingGeometry } from './island-platform.ts'
 import { buildRoom } from './room-builder.ts'
 
 describe('中岛30mm台地', () => {
-  it('SI2按手册30mm高/50mm坡段建模，SI1未标注时采用45度', () => {
+  it('两版SI都采用30mm高/50mm坡段建模', () => {
     for (const style of ['SI1.0', 'SI2.0'] as const) {
       const geometry = islandEdgingGeometry(rectangleSpace(8, 6, 3).boundary, style)
       const normals = geometry.attributes['normal']!,
-        expected =
-          (style === 'SI2.0' ? 0.05 : 0.03) / Math.hypot(style === 'SI2.0' ? 0.05 : 0.03, 0.03)
+        expected = 0.05 / Math.hypot(0.05, 0.03)
       let found = false
       for (let i = 0; i < normals.count; i++) {
         const y = normals.getY(i)
@@ -37,7 +36,7 @@ describe('中岛30mm台地', () => {
       )
     }
   })
-  it('矩形和L形收口所有外坡均为45度，顺逆时针都封闭，角上无断缝', () => {
+  it('矩形和L形收口外坡按30/50建模，顺逆时针都封闭，角上无断缝', () => {
     const shapes: Point[][] = [
       rectangleSpace(8, 6, 3).boundary,
       [
@@ -69,7 +68,7 @@ describe('中岛30mm台地', () => {
           const up = n.getY(i)
           if (up > 0.01 && up < 0.99) {
             slopes++
-            expect(up).toBeCloseTo(Math.SQRT1_2, 5)
+            expect(up).toBeCloseTo(0.05 / Math.hypot(0.05, 0.03), 5)
           }
         }
         expect(slopes).toBe(ring.length * 2)
