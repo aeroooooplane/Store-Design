@@ -7,6 +7,9 @@ import {
   advertisingScreenName,
   isWallArt,
   wallArtSize,
+  isCustomLogo,
+  customLogoFootprint,
+  DEFAULT_LOGO_TEXT,
   facingAfter,
   itemElevation,
   itemMount,
@@ -704,22 +707,27 @@ export function PlanView({
           if (item.function !== 'signage' || item.locked || !asset) return null
           const [ux, uz] = widthAxis(item)
           const grip = fontSize * 0.45
-          return widthEnds(item, isWallArt(item) ? wallArtSize(item) : asset.footprint).map(
-            ([x, z], k) => (
-              <g
-                key={`resize-${item.id}-${k}`}
-                className={
-                  item.id === selectedId ? 'plan-resize-handle selected' : 'plan-resize-handle'
-                }
-                data-resize-handle={`${item.id}:${k ? 1 : -1}`}
-                style={{ cursor: Math.abs(ux) >= Math.abs(uz) ? 'ew-resize' : 'ns-resize' }}
-                onPointerDown={(event) => onResizeHandlePointerDown(item, k ? 1 : -1, event)}
-              >
-                <circle className="plan-resize-hit" cx={x} cy={z} r={grip * 1.3} />
-                <rect x={x - grip / 2} y={z - grip / 2} width={grip} height={grip} />
-              </g>
-            ),
-          )
+          return widthEnds(
+            item,
+            isCustomLogo(item)
+              ? customLogoFootprint(item.logoText ?? DEFAULT_LOGO_TEXT)
+              : isWallArt(item)
+                ? wallArtSize(item)
+                : asset.footprint,
+          ).map(([x, z], k) => (
+            <g
+              key={`resize-${item.id}-${k}`}
+              className={
+                item.id === selectedId ? 'plan-resize-handle selected' : 'plan-resize-handle'
+              }
+              data-resize-handle={`${item.id}:${k ? 1 : -1}`}
+              style={{ cursor: Math.abs(ux) >= Math.abs(uz) ? 'ew-resize' : 'ns-resize' }}
+              onPointerDown={(event) => onResizeHandlePointerDown(item, k ? 1 : -1, event)}
+            >
+              <circle className="plan-resize-hit" cx={x} cy={z} r={grip * 1.3} />
+              <rect x={x - grip / 2} y={z - grip / 2} width={grip} height={grip} />
+            </g>
+          ))
         })}
 
       {guide && (

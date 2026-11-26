@@ -2,7 +2,13 @@ import { aliasedTable, and, asc, eq, ilike, ne, or } from 'drizzle-orm'
 import type { SQL } from 'drizzle-orm'
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { isCatalogAssetRetired, wallArtAsset, WALL_ART_ID } from '@store/shared'
+import {
+  isCatalogAssetRetired,
+  wallArtAsset,
+  WALL_ART_ID,
+  customLogoAsset,
+  CUSTOM_LOGO_ID,
+} from '@store/shared'
 import type { Asset, AssetList, AssetListQuery, FileRef, FrontAxis } from '@store/shared'
 import type { RequestContext } from '../../context/actor.ts'
 import { authorize } from '../../context/policy.ts'
@@ -138,19 +144,20 @@ export async function listAssets(
   }
   const rows = await selectAssets(db, filters.length ? and(...filters) : undefined)
   const items = rows.map((r) => toAsset(r.asset, r))
-  const art = wallArtAsset()
-  if (
-    !items.some((a) => a.id === art.id) &&
-    (!query.function || query.function === art.function) &&
-    (query.placeable === undefined || query.placeable === art.placeable) &&
-    (!query.category || query.category === art.category) &&
-    (!query.siFamily || query.siFamily === art.siFamily) &&
-    (!query.q ||
-      [art.id, art.name, art.standardName, art.variant].some((v) =>
-        v.toLowerCase().includes(query.q!.toLowerCase()),
-      ))
-  )
-    items.push(art)
+  for (const art of [wallArtAsset(), customLogoAsset()]) {
+    if (
+      !items.some((a) => a.id === art.id) &&
+      (!query.function || query.function === art.function) &&
+      (query.placeable === undefined || query.placeable === art.placeable) &&
+      (!query.category || query.category === art.category) &&
+      (!query.siFamily || query.siFamily === art.siFamily) &&
+      (!query.q ||
+        [art.id, art.name, art.standardName, art.variant].some((v) =>
+          v.toLowerCase().includes(query.q!.toLowerCase()),
+        ))
+    )
+      items.push(art)
+  }
   return { items, total: items.length }
 }
 
@@ -158,6 +165,7 @@ export async function getAsset(db: Database, ctx: RequestContext, id: string): P
   authorize(ctx.actor, 'asset:read')
   const [row] = await selectAssets(db, eq(assets.id, id))
   if (!row && id === WALL_ART_ID) return wallArtAsset()
+  if (id === CUSTOM_LOGO_ID) return customLogoAsset()
   if (!row) throw notFound('资产')
   return toAsset(row.asset, row)
 }
@@ -168,6 +176,7 @@ export async function catalogAssets(db: Database): Promise<Map<string, Asset>> {
   const rows = await selectAssets(db, undefined)
   const result = new Map(rows.map((r) => [r.asset.id, toAsset(r.asset, r)]))
   if (!result.has(WALL_ART_ID)) result.set(WALL_ART_ID, wallArtAsset())
+  result.set(CUSTOM_LOGO_ID, customLogoAsset())
   return result
 }
 
