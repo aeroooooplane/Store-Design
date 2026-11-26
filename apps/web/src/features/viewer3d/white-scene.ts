@@ -308,6 +308,7 @@ export class WhiteScene {
       }
     }
     for (const mesh of [...this.room.children, ...this.fixtures.children]) {
+      if (mesh.userData['contextFloor']) continue
       const surfaceName = mesh.userData['surface'] as RoomSurface | undefined
       if (mesh instanceof THREE.Mesh && surfaceName) {
         if (

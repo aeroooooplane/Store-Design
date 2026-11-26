@@ -312,10 +312,11 @@ svg.plan pattern * {
   fill: none;
 }
 .plan-floor {
-  fill: var(--paper);
+  fill: none;
+  pointer-events: all;
 }
 .plan-wall {
-  stroke: none;
+  fill: none;
 }
 .plan-wall-line {
   stroke: var(--ink);
@@ -362,7 +363,7 @@ svg.plan pattern * {
   stroke: var(--line-strong);
   stroke-dasharray: 4 3;
 }
-/* 空心隔板: hatched like the walls, outlined; dashed while being drawn. */
+/* 仅空心隔板填充正交井格；结构墙、柱子和地面无填充。 */
 .plan-fixture rect {
   stroke: var(--ink);
   stroke-width: 1px;

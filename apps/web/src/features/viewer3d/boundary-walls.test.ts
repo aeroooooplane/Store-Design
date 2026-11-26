@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { expect, it } from 'vitest'
-import { rectangleSpace, wallSegments } from '@store/shared'
+import { rectangleSpace } from '@store/shared'
 import { buildRoom } from './room-builder.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
 
@@ -29,21 +29,22 @@ it('所有实际边界段按层高展示，保留入口、开边及平面范围�
   const room = new THREE.Group()
   buildRoom(room, space, 'side_hall', new THREE.MeshStandardMaterial())
   const walls = room.children.filter((mesh) => mesh.userData['boundaryWall']) as THREE.Mesh[]
-  const segments = wallSegments(space, 'side_hall')
-  expect(walls).toHaveLength(segments.length)
-  for (const [index, mesh] of walls.entries()) {
-    const wall = segments[index]!
-    expect(mesh.geometry).toMatchObject({
-      parameters: {
-        height: 3.2,
-        width: Math.hypot(wall.b[0] - wall.a[0], wall.b[1] - wall.a[1]),
-      },
-    })
+  expect(walls).toHaveLength(1)
+  for (const mesh of walls) {
     mesh.geometry.computeBoundingBox()
     expect(mesh.geometry.boundingBox!.max.y + mesh.position.y).toBeCloseTo(3.2)
     expect(mesh.geometry.boundingBox!.min.y + mesh.position.y).toBeCloseTo(0)
-    expect(mesh.position.x).toBeCloseTo((wall.a[0] + wall.b[0]) / 2 + wall.outward[0] * 0.08)
-    expect(mesh.position.z).toBeCloseTo((wall.a[1] + wall.b[1]) / 2 + wall.outward[1] * 0.08)
+    expect(mesh.geometry.boundingBox!.min.x).toBeCloseTo(-0.2)
+    expect(mesh.geometry.boundingBox!.max.x).toBeCloseTo(8.2)
+    const ray = (origin: THREE.Vector3, direction: THREE.Vector3) =>
+      new THREE.Raycaster(origin, direction).intersectObject(mesh)
+    mesh.updateMatrixWorld(true)
+    expect(
+      ray(new THREE.Vector3(4, 1, 7), new THREE.Vector3(0, 0, -1))[0]?.distance,
+    ).toBeGreaterThan(6)
+    expect(
+      ray(new THREE.Vector3(9, 1, 1.5), new THREE.Vector3(-1, 0, 0))[0]?.distance,
+    ).toBeGreaterThan(8)
     expect(mesh.castShadow).toBe(false)
   }
   const obstacle = room.children.find(
