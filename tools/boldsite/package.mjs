@@ -46,6 +46,7 @@ for (const file of [
   'workbench.py',
   'render_stage.py',
   'stage_delivery.py',
+  'display_tasks.py',
   'rules.py',
   'requirements.txt',
   'boldsite.json',

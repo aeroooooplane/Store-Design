@@ -4,10 +4,15 @@ import {
   CameraUpdateSchema,
   SpaceSchema,
   defaultCameras,
+  DisplayTaskCreateSchema,
+  DisplayTaskUpdateSchema,
+  DisplayTaskStateSchema,
+  emptyDisplayEdits,
   deliveryFileNames,
   deliveryFolderName,
   polygonArea,
   safeFileName,
+  storeTitle,
   DraftPutSchema,
   LayoutGenerateSchema,
   LayoutValidateSchema,
@@ -56,6 +61,18 @@ Object.assign(globalThis, {
     }
     if (command === 'safe-file') {
       return respond({ name: safeFileName(String(data)) })
+    }
+    if (command === 'display-task-export-name') {
+      return respond({ name: safeFileName(storeTitle(String(data))) })
+    }
+    if (command === 'display-task-create') {
+      const parsed = DisplayTaskCreateSchema.safeParse(data)
+      if (!parsed.success) return respond(failure('请求参数或内容无效', parsed.error.issues))
+      return respond({ ...parsed.data, state: DisplayTaskStateSchema.parse({ edits: emptyDisplayEdits(parsed.data.siStyle) }) })
+    }
+    if (command === 'display-task-update') {
+      const parsed = DisplayTaskUpdateSchema.safeParse(data)
+      return respond(parsed.success ? parsed.data : failure('请求参数或内容无效', parsed.error.issues))
     }
     if (command === 'stage-display') {
       return respond(computeStageDisplay(data as Parameters<typeof computeStageDisplay>[0],
