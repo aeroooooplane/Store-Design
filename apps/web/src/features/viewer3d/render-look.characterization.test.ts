@@ -180,6 +180,8 @@ describe('roomMaterials without a 2D canvas', () => {
     expect(si1.floor.metalness).toBe(0)
     expect(si1.wall.color.getHexString()).toBe('e4dfd3')
     expect([si1.wall.roughness, si1.wall.metalness]).toEqual([0.85, 0])
+    expect(si1.partition.color.getHexString()).toBe('d4d6d7')
+    expect(si1.partition.metalness).toBeGreaterThan(si1.wall.metalness)
     expect(si1.edging.color.getHexString()).toBe('b3b3b3')
     expect([si1.edging.roughness, si1.edging.metalness]).toEqual([0.45, 0.6])
 
@@ -188,6 +190,8 @@ describe('roomMaterials without a 2D canvas', () => {
     expect(si2.floor.roughness).toBe(0.4)
     expect(si2.wall.color.getHexString()).toBe('48443f')
     expect([si2.wall.roughness, si2.wall.metalness]).toEqual([0.55, 0.2])
+    expect(si2.partition.color.equals(si2.wall.color)).toBe(true)
+    expect(si2.partition.metalness).toBe(si2.wall.metalness)
   })
 
   it('gives island shops the island floor but the SI style’s walls', () => {
@@ -205,6 +209,7 @@ describe('roomMaterials without a 2D canvas', () => {
       vi.spyOn(texture, 'dispose'),
       vi.spyOn(materials.floor, 'dispose'),
       vi.spyOn(materials.wall, 'dispose'),
+      vi.spyOn(materials.partition, 'dispose'),
       vi.spyOn(materials.edging, 'dispose'),
     ]
     disposeRoomMaterials(materials)
