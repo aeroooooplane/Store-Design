@@ -1,5 +1,7 @@
 import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
+import { Raycaster, Vector2 } from 'three'
+import type { Object3D } from 'three'
 import { VIEW_ASPECT } from '@store/shared'
 import type {
   Asset,
@@ -13,8 +15,38 @@ import type {
 } from '@store/shared'
 import { WhiteScene } from './white-scene.ts'
 import type { LoadStatus, Look, SceneHandlers, ViewPose } from './white-scene.ts'
+import type { ModelPlacementClick } from '../workbench/editor-state.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
+
+function visibleWallAt(
+  scene: WhiteScene,
+  canvas: HTMLCanvasElement,
+  clientX: number,
+  clientY: number,
+): ModelPlacementClick | null {
+  const rect = canvas.getBoundingClientRect()
+  if (!rect.width || !rect.height) return null
+  const ray = new Raycaster()
+  const screen = new Vector2(
+    ((clientX - rect.left) / rect.width) * 2 - 1,
+    1 - ((clientY - rect.top) / rect.height) * 2,
+  )
+  ray.setFromCamera(screen, scene.camera)
+  const surfaces: Object3D[] = []
+  scene.scene.traverseVisible((object) => {
+    const surface: unknown = object.userData['surface']
+    if (object.userData['boundaryWall'] || surface === 'partition' || surface === 'floor')
+      surfaces.push(object)
+  })
+  const hit = ray.intersectObjects(surfaces, false)[0]
+  if (!hit?.face || hit.object.userData['surface'] === 'floor') return null
+  const normal = hit.face.normal.clone().transformDirection(hit.object.matrixWorld)
+  if (Math.hypot(normal.x, normal.z) < 0.5) normal.copy(ray.ray.direction).negate()
+  normal.y = 0
+  normal.normalize()
+  return { point: [hit.point.x, hit.point.z], normal: [normal.x, normal.z] }
+}
 
 export interface Viewer3DHandle {
   currentView: () => ViewPose
@@ -57,6 +89,7 @@ interface Viewer3DProps {
   /** Turns the selected prop by its ring; leave out for no ring. */
   onRotate?: SceneHandlers['onRotate'] | undefined
   onFloorPlace?: SceneHandlers['onFloorPlace'] | undefined
+  onWallPlace?: ((click: ModelPlacementClick | null) => void) | undefined
   /** Called once the scene exists, so callers can start using the handle. */
   onReady?: (() => void) | undefined
   /** Where the camera starts instead of the default front view (e.g. the view last used). */
@@ -88,6 +121,7 @@ export function Viewer3D({
   onResize,
   onRotate,
   onFloorPlace,
+  onWallPlace,
   onReady,
   initialView,
   onViewChange,
@@ -195,7 +229,21 @@ export function Viewer3D({
   if (error) return <p className="error">{error}</p>
   return (
     <div className="viewer3d">
-      <canvas ref={canvasRef} style={{ aspectRatio: String(VIEW_ASPECT) }} aria-label={title} />
+      <canvas
+        ref={canvasRef}
+        style={{
+          aspectRatio: String(VIEW_ASPECT),
+          ...(onWallPlace ? { cursor: 'crosshair' } : {}),
+        }}
+        aria-label={title}
+        onPointerDownCapture={(event) => {
+          if (!onWallPlace || event.button !== 0 || !sceneRef.current) return
+          event.stopPropagation()
+          onWallPlace(
+            visibleWallAt(sceneRef.current, event.currentTarget, event.clientX, event.clientY),
+          )
+        }}
+      />
       <canvas
         ref={compositionRef}
         aria-hidden="true"

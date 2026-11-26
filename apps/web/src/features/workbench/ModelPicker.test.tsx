@@ -200,6 +200,39 @@ describe('pickableSections', () => {
 })
 
 describe('ModelPicker', () => {
+  it('只高亮当前待放置的型号，更换型号时清除上一项', () => {
+    const logo = customLogoAsset()
+    const models = [logo, catalog[1]!]
+    const onPick = vi.fn()
+    const { rerender } = render(
+      <ModelPicker
+        assets={models}
+        siStyle="SI1.0"
+        onPick={onPick}
+        isPointPlaced={() => true}
+        pendingAssetId={logo.id}
+      />,
+    )
+    const logoButton = screen.getByRole('button', { name: '添加 自定义LOGO' })
+    const furnitureButton = screen.getByRole('button', { name: '添加 1.8米中岛桌 · 变体' })
+    expect(logoButton.getAttribute('aria-pressed')).toBe('true')
+    expect(within(logoButton).getByText('待放置')).toBeTruthy()
+    fireEvent.click(furnitureButton)
+    expect(onPick).toHaveBeenCalledWith(catalog[1])
+    rerender(
+      <ModelPicker
+        assets={models}
+        siStyle="SI1.0"
+        onPick={onPick}
+        isPointPlaced={() => true}
+        pendingAssetId={models[1]!.id}
+      />,
+    )
+    expect(logoButton.getAttribute('aria-pressed')).toBe('false')
+    expect(furnitureButton.getAttribute('aria-pressed')).toBe('true')
+    expect(within(furnitureButton).getByText('待放置')).toBeTruthy()
+  })
+
   it('以无托盘名称选取原配件边柜，保留真实尺寸和模型引用', () => {
     const cabinet = asset('asset-28192911', '1.8米配件边柜（高1.3米）', '软装道具', {
       name: '1.8米配件边柜（高1.3米）',
