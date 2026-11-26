@@ -1,11 +1,11 @@
 import { schema } from '@store/database'
 import type { Database } from '@store/database'
-import { MAX_NODES_PER_PROJECT, STAGE_PARENT_KINDS, freshName, stageOf } from '@store/shared'
+import { MAX_NODES_PER_PROJECT, STAGE_PARENT_KINDS, nextHistoryName, stageOf } from '@store/shared'
 import type { Layout, NodeKind } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
 import { findNode } from '../../nodes/repository.ts'
 import { createNode } from '../../nodes/service.ts'
-import { asc, eq } from 'drizzle-orm'
+import { and, asc, eq } from 'drizzle-orm'
 import type { ToolContext, ToolOutcome } from './context.ts'
 
 const { designNodes } = schema
@@ -19,6 +19,14 @@ export async function namesUnder(db: Database, projectId: string, parentId: stri
     .where(eq(designNodes.projectId, projectId))
     .orderBy(asc(designNodes.seq))
   return rows.filter((r) => r.parentId === parentId).map((r) => r.name)
+}
+
+export async function projectSpaceNames(db: Database, projectId: string) {
+  const rows = await db
+    .select({ name: designNodes.name })
+    .from(designNodes)
+    .where(and(eq(designNodes.projectId, projectId), eq(designNodes.kind, 'space')))
+  return rows.map((row) => row.name)
 }
 
 /**
@@ -49,16 +57,8 @@ export async function saveLayout(
   if (node.kind === 'render') {
     throw new AppError('INVALID_STATE', '渲染节点不能修改，请先回到它的方案')
   }
-  let parentId: string
-  let base: string
-  if (node.kind === 'space') {
-    parentId = node.id
-    base = '方案 · Agent'
-  } else {
-    parentId = await stageParentOf(tools.db, node)
-    base = `${node.name.replace(/（\d+）$/, '')} · Agent`
-  }
-  const name = freshName(base, await namesUnder(tools.db, tools.project.id, parentId))
+  const parentId = node.kind === 'space' ? node.id : await stageParentOf(tools.db, node)
+  const name = nextHistoryName('plan', await namesUnder(tools.db, tools.project.id, parentId))
   const created = await createNode(
     tools.db,
     tools.ctx,

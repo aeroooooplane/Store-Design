@@ -1,5 +1,11 @@
 import { useContext, useRef, useState } from 'react'
-import { freshName, itemFootprint, roundM, spaceAncestor, wallShift } from '@store/shared'
+import {
+  itemFootprint,
+  nextSpaceRevisionName,
+  roundM,
+  spaceAncestor,
+  wallShift,
+} from '@store/shared'
 import type { DesignNode, Layout, NodeSummary, SiStyle, Space } from '@store/shared'
 import type { useCreateNode } from '../api.ts'
 import { ViewMemoryContext } from '../view-memory.ts'
@@ -59,8 +65,7 @@ export function useEditWalls({
   const spaceName = spaceNode?.name ?? '空间'
   // The new space is a sibling of the old one, under the same parent (10-16).
   const siblingParent = spaceNode?.parentId ?? null
-  const namesUnder = (parentId: string | null) =>
-    nodes.filter((n) => n.parentId === parentId).map((n) => n.name)
+  const spaceNames = nodes.filter((node) => node.kind === 'space').map((node) => node.name)
 
   async function submit(edited: Space, name: string) {
     setError(null)
@@ -77,6 +82,7 @@ export function useEditWalls({
               await create.mutateAsync({
                 parentId: siblingParent,
                 kind: 'space',
+                sourceNodeId: spaceId,
                 name,
                 space: edited,
               })
@@ -108,7 +114,7 @@ export function useEditWalls({
     },
     cancel: () => setEditing(false),
     submit,
-    initialName: freshName(`${spaceName} · 改墙`, namesUnder(siblingParent)),
+    initialName: nextSpaceRevisionName(spaceName, spaceNames),
     error,
   }
 }

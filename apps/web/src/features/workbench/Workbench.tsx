@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
-import { nodeSiStyle, spaceAncestor } from '@store/shared'
+import { nextHistoryName, nextSpaceRevisionName, nodeSiStyle, spaceAncestor } from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -203,6 +203,10 @@ export function Workbench({ project }: { project: Project }) {
             shop={project.shopType}
             onConfirmed={openPlacement}
             first={nodes.length === 0}
+            spaceName={nextHistoryName(
+              'space',
+              nodes.filter((node) => node.kind === 'space').map((node) => node.name),
+            )}
             onCreated={select}
             onOpenDrawings={() => setLeftTab('info')}
             onCancel={nodes.length ? () => setPanel({ nodeId: null, kind: 'view' }) : undefined}
@@ -270,6 +274,7 @@ function NewSpace({
   assets,
   shop,
   first,
+  spaceName,
   onCreated,
   onOpenDrawings,
   onConfirmed,
@@ -279,6 +284,7 @@ function NewSpace({
   assets: Asset[]
   shop: ShopType
   first: boolean
+  spaceName: string
   onCreated: (nodeId: string) => void
   onOpenDrawings: () => void
   onConfirmed: (nodeId: string) => void
@@ -307,6 +313,7 @@ function NewSpace({
         <RecognitionPanel
           projectId={projectId}
           assets={assets}
+          spaceName={spaceName}
           onCreated={onCreated}
           onCancel={onCancel}
         />
@@ -315,6 +322,7 @@ function NewSpace({
           <ErrorMessage error={create.error} />
           <SpaceCaptureEditor
             shop={shop}
+            initialName={spaceName}
             onCancel={onCancel}
             onSubmit={async (space, name) => {
               const created = await create.mutateAsync({
@@ -404,6 +412,7 @@ function NodePanel({
   )
 
   if (current.kind !== 'space') return editor
+  const existingSpaceNames = nodes.filter((node) => node.kind === 'space').map((node) => node.name)
 
   if (panel === 'edit-space') {
     return (
@@ -417,12 +426,13 @@ function NodePanel({
             <SpaceCaptureEditor
               shop={project.shopType}
               initial={space}
-              initialName={`${current.name}（修改）`}
+              initialName={nextSpaceRevisionName(current.name, existingSpaceNames)}
               onCancel={() => setPanel('view')}
               onSubmit={async (edited, name) => {
                 const created = await create.mutateAsync({
                   parentId: current.parentId,
                   kind: 'space',
+                  sourceNodeId: current.id,
                   name,
                   space: edited,
                 })
@@ -443,6 +453,7 @@ function NodePanel({
       project={project}
       spaceNode={{ ...current, space }}
       assets={assetMap}
+      existingSpaceNames={existingSpaceNames}
       existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
       setPanel={setPanel}
       onSelect={onSelect}
@@ -457,6 +468,7 @@ function SpaceStage({
   spaceNode,
   assets,
   existingNames,
+  existingSpaceNames,
   setPanel,
   onSelect,
 }: {
@@ -465,6 +477,7 @@ function SpaceStage({
   spaceNode: DesignNode & { space: Space }
   assets: ReadonlyMap<string, Asset>
   existingNames: readonly string[]
+  existingSpaceNames: readonly string[]
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
 }) {
@@ -474,6 +487,7 @@ function SpaceStage({
     shopType: project.shopType,
     siStyle: project.siStyle,
     existingNames,
+    existingSpaceNames,
   })
   return (
     <StagePreview

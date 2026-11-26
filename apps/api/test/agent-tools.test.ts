@@ -186,9 +186,9 @@ describe('generate_plans（当前行为）', () => {
       notes: unknown
     }[]
     expect(plans.map((p) => p.name)).toEqual([
-      '方案 · 尽量多放',
-      '方案 · 按面积推荐',
-      '方案 · 尽量少放',
+      '方案 A · 尽量多放',
+      '方案 B · 按面积推荐',
+      '方案 C · 尽量少放',
     ])
     expect(outcome.result.nodeIds).toEqual(plans.map((p) => p.nodeId))
     expect(outcome.nodeId).toBe(plans[2]?.nodeId)
@@ -254,9 +254,9 @@ describe('generate_plans（当前行为）', () => {
     const again = await run(project.id, plan.id, 'generate_plans')
     const plans = again.result.plans as { nodeId: string; name: string }[]
     expect(plans.map((p) => p.name)).toEqual([
-      '方案 · 尽量多放（2）',
-      '方案 · 按面积推荐（2）',
-      '方案 · 尽量少放（2）',
+      '方案 D · 尽量多放',
+      '方案 E · 按面积推荐',
+      '方案 F · 尽量少放',
     ])
     for (const p of plans) expect((await node(p.nodeId)).parentId).toBe(space.id)
 
@@ -276,7 +276,7 @@ describe('move_item', () => {
     expect(outcome.result).toMatchObject({
       done: '已移动「中岛桌 a」',
       nodeId: outcome.nodeId,
-      nodeName: '方案 A · Agent',
+      nodeName: '方案 B',
       items: 2,
       issues: [],
       item: { id: 'a', cx_mm: 4000, cz_mm: 800, width_mm: 1800, depth_mm: 1000, rotation: 90 },
@@ -360,14 +360,14 @@ describe('move_item', () => {
     // Every move started from the same plan, so the names keep counting up.
     const names = (await tree(project.id)).filter((n) => n.origin === 'agent').map((n) => n.name)
     expect(names).toEqual([
-      '方案 A · Agent',
-      '方案 A · Agent（2）',
-      '方案 A · Agent（3）',
-      '方案 A · Agent（4）',
-      '方案 A · Agent（5）',
-      '方案 A · Agent（6）',
-      '方案 A · Agent（7）',
-      '方案 A · Agent（8）',
+      '方案 B',
+      '方案 C',
+      '方案 D',
+      '方案 E',
+      '方案 F',
+      '方案 G',
+      '方案 H',
+      '方案 I',
     ])
   })
 
@@ -385,9 +385,9 @@ describe('move_item', () => {
       dx_mm: 500,
       dz_mm: -250,
     })
-    // The "（3）" suffix of the source name is dropped before " · Agent".
+    // The source uses plan A even with a legacy collision suffix.
     expect(outcome.result).toMatchObject({
-      nodeName: '方案 A · Agent',
+      nodeName: '方案 B',
       item: { cx_mm: 2500, cz_mm: 1750, width_mm: 1800, depth_mm: 1000, rotation: 90 },
     })
     const moved = await node(outcome.nodeId)
@@ -405,7 +405,7 @@ describe('move_item', () => {
       kind: 'plan',
       parentId: space.id,
       origin: 'agent',
-      name: '三维效果 · Agent',
+      name: '方案 B',
     })
     expect(moved.layout?.items[0]).toMatchObject({ cx: 3, cz: 2 })
     // The copy inherits the legacy views.
@@ -458,7 +458,7 @@ describe('remove_item（当前行为）', () => {
     expect(outcome.result).toEqual({
       done: '已删除「中岛桌 a」',
       nodeId: outcome.nodeId,
-      nodeName: '方案 A · Agent',
+      nodeName: '方案 B',
       items: 1,
       issues: [],
     })
@@ -469,7 +469,7 @@ describe('remove_item（当前行为）', () => {
 
     // Removing the last prop leaves an empty plan.
     const empty = await run(project.id, outcome.nodeId ?? null, 'remove_item', { itemId: 'b' })
-    expect(empty.result).toMatchObject({ nodeName: '方案 A · Agent · Agent', items: 0 })
+    expect(empty.result).toMatchObject({ nodeName: '方案 C', items: 0 })
     expect((await node(empty.nodeId)).layout?.items).toEqual([])
   })
 
@@ -552,7 +552,7 @@ describe('start_render（当前行为）', () => {
     expect(await cameras(render.id)).toHaveLength(8)
     expect((await t.app.inject({ method: 'GET', url })).json()).toEqual(saved.json().draft)
     expect((await tree(project.id)).map((n) => n.kind)).toEqual(['space', 'plan', 'render'])
-    expect((await run(project.id, plan.id, 'start_render')).result.nodeName).toBe('渲染（2）')
+    expect((await run(project.id, plan.id, 'start_render')).result.nodeName).toBe('渲染 2')
   })
 
   it('accepts legacy edit nodes, refuses other stages and layouts with errors', async () => {
@@ -598,7 +598,7 @@ describe('start_render（当前行为）', () => {
     const whiteViews = (await cameras(white.id)).map((c) => c.camera.name)
     expect((await cameras(render.id)).map((c) => c.camera.name)).toEqual(whiteViews)
 
-    expect((await run(project.id, white.id, 'start_render')).result.nodeName).toBe('渲染（2）')
+    expect((await run(project.id, white.id, 'start_render')).result.nodeName).toBe('渲染 2')
   })
 })
 

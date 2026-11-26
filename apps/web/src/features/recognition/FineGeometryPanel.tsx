@@ -9,9 +9,11 @@ import { resizeFine } from './fine-model.ts'
 import './fine-geometry.css'
 export function FineGeometryPanel({
   upload,
+  spaceName = '空间 A',
   onCreated,
 }: {
   upload: PlanUpload
+  spaceName?: string
   onCreated: (id: string) => void
 }) {
   const client = useQueryClient()
@@ -759,7 +761,7 @@ export function FineGeometryPanel({
                                 body: {
                                   revision: record.revision,
                                   draft,
-                                  name: '原图精细识别空间',
+                                  name: spaceName,
                                   acknowledgedOmissions: omissions.map((o) => o.id),
                                 },
                               }),

@@ -41,6 +41,7 @@ export const ProjectExportSchema = z.object({
         siStyle: SiStyleSchema.nullable(),
         origin: NodeOriginSchema,
         importedFrom: z.string().max(128).nullable(),
+        sourceNodeId: z.string().min(1).max(128).optional(),
         hidden: z.boolean(),
       }),
     )

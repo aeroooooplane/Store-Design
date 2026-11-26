@@ -44,6 +44,7 @@ export function convertNative(
       siStyle: node.siStyle,
       origin: node.origin,
       importedFrom: node.importedFrom ?? node.id,
+      sourceRef: node.sourceNodeId,
       hidden: node.hidden,
     })),
   )

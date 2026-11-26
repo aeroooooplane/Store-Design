@@ -35,7 +35,13 @@ export { requireActiveProject }
 
 const { designNodes, projects } = schema
 
+/** Recognition uses origin_ref for a recognition run. Other nodes use it for their source. */
+export function sourceNodeId(row: Pick<NodeRow, 'origin' | 'originRef'>): string | null {
+  return row.origin === 'recognition' ? null : row.originRef
+}
+
 export function toSummary(row: NodeRow): NodeSummary {
+  const sourceId = sourceNodeId(row)
   return {
     id: row.id,
     parentId: row.parentId,
@@ -45,6 +51,7 @@ export function toSummary(row: NodeRow): NodeSummary {
     siStyle: row.siStyle,
     origin: row.origin,
     importedFrom: row.importedFrom,
+    ...(sourceId ? { sourceNodeId: sourceId } : {}),
     hidden: row.hiddenAt !== null,
     createdAt: row.createdAt.toISOString(),
   }
@@ -223,7 +230,7 @@ export async function createNode(
         strategy: input.strategy ?? null,
         siStyle: input.siStyle ?? null,
         origin: meta.origin ?? (input.kind === 'plan' ? 'generator' : 'user'),
-        originRef: meta.originRef ?? null,
+        originRef: meta.originRef ?? source?.id ?? null,
       })
       .returning()
     if (!inserted) throw new Error('Node insert returned no row')

@@ -269,7 +269,7 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
     expect(await node(fine.nodeId)).toMatchObject({
       kind: 'plan',
       parentId: root.id,
-      name: '白模 · Agent',
+      name: '方案 B',
     })
 
     // The editor and assistant both create copies at the plan stage under the owning space.
@@ -277,13 +277,13 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
     expect(await node(nested.nodeId)).toMatchObject({
       kind: 'plan',
       parentId: root.id,
-      name: '方案 A 再调 · Agent',
+      name: '方案 C',
     })
     const fromEdit = await run(project.id, edit1.id, 'remove_item', { itemId: 'real' })
     expect(await node(fromEdit.nodeId)).toMatchObject({
       kind: 'plan',
       parentId: root.id,
-      name: '调整 · Agent',
+      name: '方案 D',
     })
     const deepWhite = await run(project.id, white2.id, 'move_item', {
       itemId: 'real',
@@ -292,7 +292,7 @@ describe('b. 旧项目深层级上的设计助理修改（已修正）', () => {
     expect(await node(deepWhite.nodeId)).toMatchObject({
       kind: 'plan',
       parentId: root.id,
-      name: '白模 再调 · Agent',
+      name: '方案 E',
     })
     // The SI switch files its copy the same way.
     const swapped = await run(project.id, plan2.id, 'set_style', { siStyle: 'SI2.0' })

@@ -5,7 +5,7 @@ import {
   defaultElevation,
   defaultEmbeddedElevation,
   facingAfter,
-  freshName,
+  nextHistoryName,
   roundM,
   turnItem,
 } from '@store/shared'
@@ -36,7 +36,7 @@ export const generatePlansTool = tool({
     const plans: Record<string, unknown>[] = []
     let last: string | undefined
     for (const candidate of result.candidates) {
-      const name = freshName(`方案 · ${PLAN_STRATEGY_LABELS[candidate.strategy]}`, taken)
+      const name = nextHistoryName('plan', taken, PLAN_STRATEGY_LABELS[candidate.strategy])
       taken.push(name)
       const created = await createNode(
         tools.db,

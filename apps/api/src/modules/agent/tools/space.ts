@@ -1,11 +1,12 @@
 import { z } from 'zod'
-import { freshName, rectangleSpace, roundM, validateSpace } from '@store/shared'
+import { nextSpaceRevisionName, rectangleSpace, roundM, validateSpace } from '@store/shared'
 import type { Entrance, Point, Space } from '@store/shared'
 import { AppError } from '../../../lib/app-error.ts'
+import { findNode } from '../../nodes/repository.ts'
 import { createNode } from '../../nodes/service.ts'
 import { requireSpace, tool } from './context.ts'
 import { describeSpace } from './describe.ts'
-import { namesUnder } from './persist.ts'
+import { projectSpaceNames } from './persist.ts'
 import { SIDES } from './walls.ts'
 import type { Side } from './walls.ts'
 
@@ -197,15 +198,16 @@ export const editSpaceTool = tool({
         errors,
       )
     }
-    const name = freshName(
-      '空间 · Agent',
-      await namesUnder(tools.db, tools.project.id, tools.spaceNodeId),
+    const source = await findNode(tools.db, tools.spaceNodeId)
+    const name = nextSpaceRevisionName(
+      source.name,
+      await projectSpaceNames(tools.db, tools.project.id),
     )
     const created = await createNode(
       tools.db,
       tools.ctx,
       tools.project.id,
-      { parentId: tools.spaceNodeId, kind: 'space', name, space },
+      { parentId: source.id, kind: 'space', name, space, sourceNodeId: source.id },
       { origin: 'agent' },
     )
     return {

@@ -101,12 +101,15 @@ class Database:
                     siStyle TEXT,
                     origin TEXT NOT NULL,
                     importedFrom TEXT,
+                    sourceNodeId TEXT REFERENCES workbench_nodes(id),
                     space TEXT,
                     layout TEXT,
                     hiddenAt TEXT,
                     createdAt TEXT NOT NULL
                 )
             """)
+            if "sourceNodeId" not in {column["name"] for column in db.execute("PRAGMA table_info(workbench_nodes)")}:
+                db.execute("ALTER TABLE workbench_nodes ADD COLUMN sourceNodeId TEXT REFERENCES workbench_nodes(id)")
             db.execute("CREATE INDEX IF NOT EXISTS workbench_nodes_project ON workbench_nodes(projectId, seq)")
             db.execute("""
                 CREATE TABLE IF NOT EXISTS workbench_drafts (
