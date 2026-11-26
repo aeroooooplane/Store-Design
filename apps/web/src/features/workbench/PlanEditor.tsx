@@ -97,6 +97,7 @@ interface PlanEditorProps {
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
   onSpaceCopied?: ((nodeId: string) => void) | undefined
+  onSpaceSiSwitched?: ((nodeId: string) => void) | undefined
   onRegisterSave: (save: (() => Promise<boolean>) | null) => void
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: (swap: SiSwitch | null) => void
@@ -119,6 +120,7 @@ export function PlanEditor({
   assets,
   onNodeCreated,
   onSpaceCopied,
+  onSpaceSiSwitched,
   onRegisterSave,
   onRegisterSiSwitch,
 }: PlanEditorProps) {
@@ -312,6 +314,7 @@ export function PlanEditor({
     flush,
     onNodeCreated,
     onSpaceCopied,
+    onSpaceSiSwitched,
     onRegisterSiSwitch,
   })
   const {

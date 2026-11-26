@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   freshName,
+  LayoutSchema,
+  SpaceSchema,
   nextHistoryName,
   nextRenderName,
   nextSpaceRevisionName,
@@ -25,6 +27,11 @@ import type {
 import { nodeQuery, workbenchKeys } from '../api.ts'
 import type { useCreateNode } from '../api.ts'
 import type { SiSwitch, SwitchResult } from '../si-switch.ts'
+import { EMPTY_LAYOUT } from './empty-layout.ts'
+
+function spaceLayoutSnapshot(layout: Layout): string {
+  return JSON.stringify(LayoutSchema.parse({ ...layout, fixtures: layout.fixtures ?? [] }))
+}
 
 interface NodeActionsOptions {
   space: Space
@@ -43,6 +50,7 @@ interface NodeActionsOptions {
   flush: () => Promise<boolean>
   onNodeCreated: (nodeId: string) => void
   onSpaceCopied?: ((nodeId: string) => void) | undefined
+  onSpaceSiSwitched?: ((nodeId: string) => void) | undefined
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: ((swap: SiSwitch | null) => void) | undefined
 }
@@ -61,6 +69,7 @@ export function useNodeActions({
   flush,
   onNodeCreated,
   onSpaceCopied,
+  onSpaceSiSwitched,
   onRegisterSiSwitch,
 }: NodeActionsOptions) {
   const [busy, setBusy] = useState(false)
@@ -77,6 +86,7 @@ export function useNodeActions({
     },
     layout: Layout = currentLayout,
     style: SiStyle = siStyle,
+    onCreated = onNodeCreated,
   ): Promise<{ ok: true; nodeId: string } | { ok: false; message: string }> {
     if (creating.current) return { ok: false, message: '请等待当前操作完成' }
     creating.current = true
@@ -85,8 +95,7 @@ export function useNodeActions({
     try {
       if (!(await flush())) return { ok: false, message: '当前节点的修改尚未保存' }
       const created = await create.mutateAsync({ ...input, layout, siStyle: style })
-      if (input.kind === 'space' && onSpaceCopied) onSpaceCopied(created.node.id)
-      else onNodeCreated(created.node.id)
+      onCreated(created.node.id)
       return { ok: true, nodeId: created.node.id }
     } catch (caught) {
       setError(caught)
@@ -107,16 +116,7 @@ export function useNodeActions({
   function copyNode() {
     const parentId = stageParentId(nodes, baseNode)
     if (stage === 'space') {
-      void createFromLayout({
-        kind: 'space',
-        parentId: baseNode.parentId,
-        name: nextSpaceRevisionName(
-          baseNode.name,
-          nodes.filter((node) => node.kind === 'space').map((node) => node.name),
-        ),
-        sourceNodeId: baseNode.id,
-        space,
-      })
+      void createFromLayout(spaceSibling(), currentLayout, siStyle, onSpaceCopied ?? onNodeCreated)
       return
     }
     if (!parentId || stage !== 'plan') return
@@ -128,7 +128,58 @@ export function useNodeActions({
     })
   }
 
+  function spaceSibling() {
+    return {
+      kind: 'space' as const,
+      parentId: baseNode.parentId,
+      name: nextSpaceRevisionName(
+        baseNode.name,
+        nodes.filter((node) => node.kind === 'space').map((node) => node.name),
+      ),
+      sourceNodeId: baseNode.id,
+      space,
+    }
+  }
+
   const client = useQueryClient()
+
+  async function switchSpaceSi(style: SiStyle): Promise<SwitchResult> {
+    if (!(await flush())) return { ok: false, message: '当前节点的修改尚未保存' }
+    const open = onSpaceSiSwitched ?? onNodeCreated
+    const related = nodes.filter(
+      (node) =>
+        node.kind === 'space' &&
+        !node.hidden &&
+        node.parentId === baseNode.parentId &&
+        (node.id === baseNode.sourceNodeId || node.sourceNodeId === baseNode.id),
+    )
+    const candidates = await Promise.all(
+      related.map(({ id }) => client.fetchQuery({ ...nodeQuery(id), staleTime: 0 })),
+    )
+    if (candidates.length)
+      await client.refetchQueries({ queryKey: workbenchKeys.drafts(baseNode.projectId) })
+    const drafts = client.getQueryData<Draft[]>(workbenchKeys.drafts(baseNode.projectId)) ?? []
+    const outline = JSON.stringify(SpaceSchema.parse(space))
+    const layout = spaceLayoutSnapshot(currentLayout)
+    const match = candidates.find((node) => {
+      const current = drafts.find(({ baseNodeId }) => baseNodeId === node.id)?.layout
+      return (
+        nodeSiStyle(node, projectSi) === style &&
+        node.space !== null &&
+        JSON.stringify(SpaceSchema.parse(node.space)) === outline &&
+        spaceLayoutSnapshot(current ?? node.layout ?? EMPTY_LAYOUT) === layout
+      )
+    })
+    if (match) {
+      open(match.id)
+      return { ok: true, message: `已回到 ${style} 的“${match.name}”。` }
+    }
+    const input = spaceSibling()
+    const created = await createFromLayout(input, currentLayout, style, open)
+    return created.ok
+      ? { ok: true, message: `已切换为 ${style}，另存空间“${input.name}”。` }
+      : { ok: false, message: `切换失败：${created.message}。` }
+  }
 
   /**
    * The SI switch on a plan (每个节点各自对应一个 SI):
@@ -139,6 +190,7 @@ export function useNodeActions({
    *   layout on screen; overlaps from the new sizes are only reported. The original stays.
    */
   async function switchSi(style: SiStyle): Promise<SwitchResult> {
+    if (stage === 'space') return switchSpaceSi(style)
     const parentId = stageParentId(nodes, baseNode)
     if (!parentId || stage !== 'plan') {
       return { ok: true, message: null }

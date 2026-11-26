@@ -9,7 +9,7 @@ import { formatDateTime } from '../../lib/format.ts'
 interface ProjectCardProps {
   project: Project
   space: Space | null
-  /** The SI style of the step on screen (each step has its own; the project's on a space). */
+  /** The SI style saved for the step on screen, or the project default. */
   siStyle: SiStyle
   /** Why the style cannot be switched here (a render keeps the style it was made in). */
   siLocked?: string | null
@@ -65,10 +65,7 @@ export function ProjectCard({
             type="button"
             aria-pressed={siStyle === style}
             disabled={siBusy || !!siLocked}
-            title={
-              siLocked ??
-              '当前节点的 SI 风格。在方案节点上切换时，另存一个换成该风格道具的兄弟节点，原节点保留；换款后没改过再切回，直接回到原节点'
-            }
+            title={siLocked ?? '切换空间或方案的 SI 时另存同层节点。没有改动时可切回原节点。'}
             onClick={() => {
               if (siStyle !== style) onSiSwitch?.(style)
             }}

@@ -40,7 +40,7 @@ import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './Workben
 import type { LeftTab } from './WorkbenchLayout.tsx'
 import { useUpdateProject } from '../projects/queries.ts'
 import { AgentDock, AgentSelectionProvider } from '../agent/AgentDock.tsx'
-import { ViewMemoryContext } from './view-memory.ts'
+import { useViewMemory, ViewMemoryContext } from './view-memory.ts'
 import type { ViewState } from './view-memory.ts'
 import type { SiSwitch } from './si-switch.ts'
 
@@ -157,15 +157,18 @@ export function Workbench({ project }: { project: Project }) {
     }
   }
 
-  // The SI style shown is the selected step's own (每个节点各自对应一个 SI); a space shows the
-  // project's, which new generations use.
+  // Read the tree's saved style as well, so a legacy space's first switch updates its cached header.
   const selected = useNode(selectedId).data
-  const shownSi =
-    selected && selected.kind !== 'space' ? nodeSiStyle(selected, project.siStyle) : project.siStyle
+  const savedSi = nodes.find((node) => node.id === selectedId)?.siStyle
+  const shownSi = savedSi ?? (selected ? nodeSiStyle(selected, project.siStyle) : project.siStyle)
   const siLocked =
     selected?.kind === 'render'
       ? `渲染节点的 SI（${shownSi}）在出图时已定；请回到方案节点切换。`
-      : null
+      : selectedId && !selected
+        ? '节点读取完成后可切换 SI。'
+        : activePanel === 'edit-space'
+          ? '请完成当前空间的修改后再切换 SI。'
+          : null
   const updateProject = useUpdateProject()
   const [siBusy, setSiBusy] = useState(false)
 
@@ -249,6 +252,12 @@ export function Workbench({ project }: { project: Project }) {
       setPanel={(kind) => setPanel({ nodeId: selectedId, kind })}
       onSelect={select}
       onSpaceCopied={openPlacement}
+      onSpaceSiSwitched={(id, manual) => {
+        const remembered = selectedId ? viewMemory.current.get(selectedId) : undefined
+        if (remembered && !viewMemory.current.has(id)) viewMemory.current.set(id, remembered)
+        if (manual) openPlacement(id)
+        else select(id)
+      }}
       registerSiSwitch={registerSiSwitch}
     />
   ) : null
@@ -420,6 +429,7 @@ interface NodePanelProps {
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
   onSpaceCopied: (nodeId: string) => void
+  onSpaceSiSwitched: (nodeId: string, manual: boolean) => void
   registerSiSwitch: (swap: SiSwitch | null) => void
   registerSave: (save: (() => Promise<boolean>) | null) => void
 }
@@ -435,6 +445,7 @@ function NodePanel({
   setPanel,
   onSelect,
   onSpaceCopied,
+  onSpaceSiSwitched,
   registerSiSwitch,
   registerSave,
 }: NodePanelProps) {
@@ -457,7 +468,10 @@ function NodePanel({
       />
     )
   }
-  const current = node.data
+  const current = {
+    ...node.data,
+    siStyle: nodes.find((summary) => summary.id === nodeId)?.siStyle ?? node.data.siStyle,
+  }
 
   if (panel === 'edit-space') {
     return (
@@ -505,6 +519,7 @@ function NodePanel({
       assets={assets}
       onNodeCreated={onSelect}
       onSpaceCopied={onSpaceCopied}
+      onSpaceSiSwitched={(id) => onSpaceSiSwitched(id, true)}
       onRegisterSiSwitch={registerSiSwitch}
       onRegisterSave={registerSave}
     />
@@ -523,6 +538,8 @@ function NodePanel({
       assets={assetMap}
       nodes={nodes}
       onSpaceCopied={onSpaceCopied}
+      onSpaceSiSwitched={(id) => onSpaceSiSwitched(id, false)}
+      registerSiSwitch={registerSiSwitch}
       existingSpaceNames={existingSpaceNames}
       existingNames={nodes.filter((n) => n.parentId === current.id).map((n) => n.name)}
       setPanel={setPanel}
@@ -541,6 +558,8 @@ function SpaceStage({
   existingSpaceNames,
   nodes,
   onSpaceCopied,
+  onSpaceSiSwitched,
+  registerSiSwitch,
   setPanel,
   onSelect,
 }: {
@@ -552,10 +571,13 @@ function SpaceStage({
   existingSpaceNames: readonly string[]
   nodes: NodeSummary[]
   onSpaceCopied: (nodeId: string) => void
+  onSpaceSiSwitched: (nodeId: string) => void
+  registerSiSwitch: (swap: SiSwitch | null) => void
   setPanel: (panel: Panel) => void
   onSelect: (nodeId: string) => void
 }) {
   const create = useCreateNode(project.id)
+  const siStyle = nodeSiStyle(spaceNode, project.siStyle)
   const copy = useNodeActions({
     baseNode: spaceNode,
     space: spaceNode.space,
@@ -563,18 +585,20 @@ function SpaceStage({
     stage: 'space',
     layout: spaceNode.layout ?? EMPTY_LAYOUT,
     assetMap: new Map(assets),
-    siStyle: nodeSiStyle(spaceNode, project.siStyle),
+    siStyle,
     projectSi: project.siStyle,
     create,
     flush: async () => true,
     onNodeCreated: onSelect,
     onSpaceCopied,
+    onSpaceSiSwitched,
+    onRegisterSiSwitch: registerSiSwitch,
   })
   const generation = usePlanGeneration({
     projectId: project.id,
     spaceNode,
     shopType: project.shopType,
-    siStyle: project.siStyle,
+    siStyle,
     existingNames,
     existingSpaceNames,
   })
@@ -612,7 +636,7 @@ function SpaceStage({
       <CandidateGallery
         generation={generation}
         shopType={project.shopType}
-        siStyle={project.siStyle}
+        siStyle={siStyle}
         assets={assets}
         onChosen={onSelect}
       />
@@ -642,13 +666,16 @@ function StagePreview({
   space: Space
   assets: ReadonlyMap<string, Asset>
 }) {
-  const [mode, setMode] = useState<'plan' | '3d'>('plan')
-  const [opened, setOpened] = useState(false)
+  const memory = useViewMemory(node.id)
+  const remembered = useRef(memory.get())
+  const [mode, setMode] = useState<'plan' | '3d'>(() => remembered.current.view.space ?? 'plan')
+  const [opened, setOpened] = useState(mode === '3d')
   const layout = node.layout ?? EMPTY_LAYOUT
 
-  function openViewer() {
-    setOpened(true)
-    setMode('3d')
+  function show(next: 'plan' | '3d') {
+    if (next === '3d') setOpened(true)
+    memory.update({ view: { space: next } })
+    setMode(next)
   }
 
   return (
@@ -660,10 +687,10 @@ function StagePreview({
           <NodeHeading node={node} />
           <div className="toolbar">
             <div className="tabs" role="group" aria-label="显示">
-              <button type="button" aria-pressed={mode === 'plan'} onClick={() => setMode('plan')}>
+              <button type="button" aria-pressed={mode === 'plan'} onClick={() => show('plan')}>
                 平面
               </button>
-              <button type="button" aria-pressed={mode === '3d'} onClick={openViewer}>
+              <button type="button" aria-pressed={mode === '3d'} onClick={() => show('3d')}>
                 三维
               </button>
             </div>
@@ -689,6 +716,8 @@ function StagePreview({
                   flaggedIds={NO_FLAGS}
                   look="material"
                   siStyle={nodeSiStyle(node, project.siStyle)}
+                  initialView={remembered.current.pose}
+                  onViewChange={(pose) => memory.update({ pose })}
                   market={project.market}
                   onSelect={() => undefined}
                   title={`${node.name} 三维预览`}
