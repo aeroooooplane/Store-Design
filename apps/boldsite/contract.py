@@ -1,4 +1,6 @@
 import re
+from email.message import Message
+from hmac import compare_digest
 from typing import Annotated
 from urllib.parse import parse_qsl, quote, urlencode
 from uuid import UUID, uuid4
@@ -71,8 +73,18 @@ ResourceId = Annotated[str, AfterValidator(validate_uuid)]
 class FullWorkbenchTransport:
     """Restore HTTP verbs and revisions carried through the site's GET/POST boundary."""
 
-    def __init__(self, app, origin):
-        self.app, self.origin = app, origin
+    def __init__(self, app, token):
+        self.app, self.token = app, token
+
+    def authorizes(self, request):
+        if request.headers.get("sec-fetch-site") == "cross-site":
+            return False
+        content_type = Message()
+        content_type["content-type"] = request.headers.get("content-type", "")
+        token = content_type.get_param("workbench-token")
+        return isinstance(token, str) and bool(
+            re.fullmatch(r"[A-Za-z0-9_-]{43}", token) and compare_digest(token, self.token)
+        )
 
     async def __call__(self, scope, receive, send):
         if scope["type"] != "http" or not scope["path"].startswith("/workbench/v1/"):
@@ -85,8 +97,8 @@ class FullWorkbenchTransport:
             if action and scope["method"] != "POST":
                 raise invalid("请求方法无效")
             method = action[1].upper() if action else scope["method"]
-            if method not in {"GET", "HEAD", "OPTIONS"} and request.headers.get("origin") != self.origin:
-                raise ApiError(403, "FORBIDDEN", "工作台写请求必须来自本站")
+            if method not in {"GET", "HEAD", "OPTIONS"} and not self.authorizes(request):
+                raise ApiError(403, "FORBIDDEN", "工作台写入令牌无效，请重试", {"writeToken": "refresh"})
             query = parse_qsl(scope["query_string"].decode("ascii"), keep_blank_values=True)
             revisions = [value for key, value in query if key == "__workbench_if_match"]
             headers = scope["headers"]

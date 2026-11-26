@@ -124,7 +124,7 @@ uv pip install --python-version 3.11 --python-platform x86_64-manylinux_2_28 \
   -r /path/to/new-release/requirements.txt -r /path/to/new-release/requirements-workbench.txt
 ```
 
-候选兼容空间和方案节点、自动排布、模型校验及带版本的平面草稿。FastAPI 将现有几何、校验及排布代码作为固定构建产物执行，输入为 JSON，运行时无需 Node.js 常驻服务。写请求校验浏览器来源，默认是 `https://sites.insta360.cn`，本地或其他获批试点域通过 `BOLDSITE_WORKBENCH_PUBLIC_ORIGIN` 配置。网关使用原 OpenAPI 的路径与数据，仅在 Bold Site 传输方式上通过 POST 承载其他写方法及 If-Match。
+候选兼容空间和方案节点、自动排布、模型校验及带版本的平面草稿。FastAPI 将现有几何、校验及排布代码作为固定构建产物执行，输入为 JSON，运行时无需 Node.js 常驻服务。实际平台会改写浏览器来源。完整包由同站受保护接口签发写入令牌，经 Content-Type 参数随写请求传输。旧实例退出后，客户端刷新令牌并重试被令牌检查拦下的请求。网关使用原 OpenAPI 的路径与数据，仅在 Bold Site 传输方式上通过 POST 承载其他写方法及 If-Match。
 
 候选在既有 SQLite 上增加独立表，沿用项目和图纸。完整三维及相机、独立展陈任务、归档交付、扫描识别和全站设置尚需继续适配。候选用独立目录和虚构项目验收，再按真实网关、权限、数据留存及对照流程决定切换。
 

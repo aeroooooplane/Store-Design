@@ -9,12 +9,12 @@ from storage import Database, timestamp
 
 
 class WorkbenchTransportTests(unittest.IsolatedAsyncioTestCase):
-    async def request(self, path, *, origin="https://sites.example", method="POST"):
+    async def request(self, path, *, token="a" * 43, method="POST"):
         target = urlsplit(path)
         scope = {
             "type": "http", "scheme": "https", "root_path": "",
             "method": method, "path": target.path, "query_string": target.query.encode("ascii"),
-            "headers": [(b"origin", origin.encode("ascii"))],
+            "headers": [(b"content-type", ("application/json; workbench-token=" + token).encode("ascii"))],
         }
         forwarded, output = [], []
 
@@ -27,7 +27,7 @@ class WorkbenchTransportTests(unittest.IsolatedAsyncioTestCase):
         async def downstream(accepted, receive, respond):
             forwarded.append(accepted)
 
-        gateway = ServicePrefix(FullWorkbenchTransport(downstream, "https://sites.example"))
+        gateway = ServicePrefix(FullWorkbenchTransport(downstream, "a" * 43))
         await gateway(scope, receiver, send)
         return forwarded, output
 
@@ -43,14 +43,14 @@ class WorkbenchTransportTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(scope["query_string"], b"from=plan")
         self.assertIn((b"if-match", b'"2"'), scope["headers"])
 
-    async def test_rejects_foreign_origin_and_ambiguous_revisions(self):
+    async def test_rejects_invalid_token_and_ambiguous_revisions(self):
         target = "/svc/app/workbench/v1/_write/delete/projects/p"
-        for query, origin, code in [
-            ("", "https://other.example", 403),
-            ("?__workbench_if_match=1&__workbench_if_match=2", "https://sites.example", 400),
+        for query, token, code in [
+            ("", "b" * 43, 403),
+            ("?__workbench_if_match=1&__workbench_if_match=2", "a" * 43, 400),
         ]:
             with self.subTest(code=code):
-                requests, output = await self.request(target + query, origin=origin)
+                requests, output = await self.request(target + query, token=token)
                 self.assertFalse(requests)
                 self.assertEqual(output[0]["status"], code)
 

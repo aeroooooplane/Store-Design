@@ -45,6 +45,14 @@ def resolve_space(db, parent):
     raise ApiError(409, "INVALID_STATE", "节点缺少所属空间")
 
 
+@router.get("/write-token")
+def write_token(request: Request):
+    return JSONResponse(
+        {"token": request.app.state.workbench_write_token},
+        headers={"Cache-Control": "no-store"},
+    )
+
+
 @router.get("/projects/{projectId}/nodes")
 def list_nodes(request: Request, projectId: ResourceId, includeHidden: Literal["true", "false"] = "false"):
     with request.app.state.db.connect() as db:

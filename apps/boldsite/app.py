@@ -4,6 +4,7 @@ import sqlite3
 import sys
 from contextlib import asynccontextmanager
 from pathlib import Path
+from secrets import token_urlsafe
 
 ROOT = Path(__file__).resolve().parent
 vendor = ROOT / "vendor"
@@ -52,10 +53,8 @@ async def lifespan(app):
 
 app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None, redirect_slashes=False)
 if FULL_WORKBENCH:
-    app.add_middleware(
-        FullWorkbenchTransport,
-        origin=os.environ.get("BOLDSITE_WORKBENCH_PUBLIC_ORIGIN", "https://sites.insta360.cn"),
-    )
+    app.state.workbench_write_token = token_urlsafe(32)
+    app.add_middleware(FullWorkbenchTransport, token=app.state.workbench_write_token)
     app.include_router(workbench)
 app.add_middleware(ServicePrefix)
 app.include_router(projects)
