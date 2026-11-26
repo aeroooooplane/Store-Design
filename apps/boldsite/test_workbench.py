@@ -1,3 +1,6 @@
+import json
+from types import SimpleNamespace
+from unittest.mock import Mock
 import tempfile
 import unittest
 from pathlib import Path
@@ -100,3 +103,39 @@ class WorkbenchStorageTests(unittest.TestCase):
             with db.connect() as conn:
                 row = conn.execute("SELECT name, sourceNodeId FROM workbench_nodes WHERE id = 'n'").fetchone()
                 self.assertEqual((row["name"], row["sourceNodeId"]), ("旧方案", None))
+
+
+class SpaceCopyTests(unittest.TestCase):
+    def test_space_copy_keeps_independent_views_including_deleted(self):
+        from workbench import create_node
+        with tempfile.TemporaryDirectory() as directory:
+            db = Database(Path(directory))
+            db.initialize()
+            db.initialize_workbench()
+            now = timestamp()
+            space = {"schemaVersion": 1}
+            with db.connect(write=True) as conn:
+                conn.execute("INSERT INTO projects (id,name,shopType,market,siStyle,createdAt,updatedAt) VALUES ('p','项目','side_hall','domestic','SI2.0',?,?)", (now, now))
+                conn.execute("INSERT INTO workbench_nodes (id,projectId,parentId,kind,name,origin,space,createdAt) VALUES ('s','p',NULL,'space','空间','user',?,?)", (json.dumps(space), now))
+                conn.execute("INSERT INTO stage_cameras (id,nodeId,camera,sort,deletedAt) VALUES ('c','s',?,0,NULL),('d','s',?,1,?)", (json.dumps({"name": "保留"}), json.dumps({"name": "已删除"}), now))
+            payload = {"parentId": None, "kind": "space", "name": "空间副本", "space": space, "layout": {"schemaVersion": 3, "items": [], "planning": None}, "sourceNodeId": "s", "siStyle": "SI2.0"}
+            request = SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(db=db, rules=Mock(run=Mock(return_value={"node": payload, "issues": []})))))
+            copied = create_node(request, 'p', payload)['node']
+            self.assertEqual(copied['sourceNodeId'], 's')
+            self.assertEqual(copied['space'], space)
+            with db.connect(write=True) as conn:
+                rows = conn.execute("SELECT * FROM stage_cameras WHERE nodeId=? ORDER BY sort", (copied['id'],)).fetchall()
+                self.assertEqual(len(rows), 2)
+                self.assertNotIn(rows[0]['id'], ['c', 'd'])
+                self.assertIsNone(rows[0]['deletedAt'])
+                self.assertEqual(rows[1]['deletedAt'], now)
+                conn.execute("UPDATE stage_cameras SET camera='{}' WHERE nodeId=?", (copied['id'],))
+                self.assertEqual(json.loads(conn.execute("SELECT camera FROM stage_cameras WHERE id='c'").fetchone()[0]), {"name": "保留"})
+            for parent_id, with_layout in [('s', False), ('s', True), (None, False)]:
+                revision = {**payload, "parentId": parent_id}
+                if not with_layout:
+                    revision.pop('layout')
+                request.app.state.rules.run.return_value = {"node": revision, "issues": []}
+                revised = create_node(request, 'p', revision)['node']
+                with db.connect() as conn:
+                    self.assertEqual(conn.execute("SELECT count(*) FROM stage_cameras WHERE nodeId=?", (revised['id'],)).fetchone()[0], 0)

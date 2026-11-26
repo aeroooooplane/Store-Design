@@ -262,6 +262,27 @@ export async function createNode(
         revision: 0,
       })
     }
+    if (
+      input.kind === 'space' &&
+      input.layout &&
+      source?.kind === 'space' &&
+      source.parentId === input.parentId
+    ) {
+      const sourceCameras = await tx
+        .select()
+        .from(nodeCameras)
+        .where(eq(nodeCameras.nodeId, source.id))
+      if (sourceCameras.length) {
+        await tx.insert(nodeCameras).values(
+          sourceCameras.map(({ camera, sort, deletedAt }) => ({
+            nodeId: inserted.id,
+            camera,
+            sort,
+            deletedAt,
+          })),
+        )
+      }
+    }
     await insertCameras(tx, inserted.id, cameras)
     await tx
       .update(projects)
