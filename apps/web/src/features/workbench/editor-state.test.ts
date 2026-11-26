@@ -791,6 +791,64 @@ describe('空心隔板', () => {
   })
 })
 
+describe('矮墙上的画面安装', () => {
+  const space = rectangleSpace(8, 6, 3)
+  const fixture = {
+    id: 'low',
+    kind: 'hollow_partition' as const,
+    cx: 4,
+    cz: 3,
+    w: 6,
+    d: 0.3,
+    h: 1.4,
+  }
+
+  it.each([
+    ['asset-11479197', 'screen', 0.958],
+    ['asset-90000003', 'signage', 0.98],
+  ] as const)('%s 自动居中后仍可改高度，撤回、重开和同面拖动保留数值', (assetId, fn, h) => {
+    const piece = item({
+      id: 'panel',
+      assetId,
+      function: fn,
+      name: fn === 'screen' ? '广告机' : '灯箱',
+      cx: 4,
+      cz: 2,
+      w: 1.7,
+      d: 0.08,
+      h,
+      mount: 'ceiling',
+      elevation: 1.4,
+    })
+    let s = initialEditorState({
+      schemaVersion: 3,
+      planning: null,
+      items: [piece],
+      fixtures: [fixture],
+    })
+    const move = {
+      type: 'move' as const,
+      id: piece.id,
+      cx: 4,
+      cz: 2.75,
+      snapTo: space,
+      front: '+Z' as const,
+    }
+    s = editorReducer(s, move)
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', rotation: 180 })
+    expect(s.layout.items[0]!.elevation! + h / 2).toBeCloseTo(0.7, 3)
+    const automatic = s.layout.items[0]!.elevation
+    s = editorReducer(s, { type: 'elevate', id: piece.id, elevation: 0.1 })
+    expect(s.layout.items[0]?.elevation).toBe(0.1)
+    s = editorReducer(s, { type: 'undo' })
+    expect(s.layout.items[0]?.elevation).toBe(automatic)
+    s = editorReducer(s, { type: 'redo' })
+    s = initialEditorState(LayoutSchema.parse(JSON.parse(JSON.stringify(s.layout))))
+    s = editorReducer(s, { ...move, cx: 4.2 })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', rotation: 180, elevation: 0.1 })
+  })
+})
+
 describe('内嵌', () => {
   const space = rectangleSpace(6, 4, 3)
   const screen = makeAsset({

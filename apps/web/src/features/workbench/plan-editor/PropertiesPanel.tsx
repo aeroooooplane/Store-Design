@@ -340,6 +340,9 @@ export function PropertiesPanel({
               />
             </label>
           )}
+          {automaticMount && (
+            <p className="hint">吸附到低于 1.6 米的墙时自动居中；可手动修改离地高度。</p>
+          )}
           <label className="field-row">
             水平位置
             <input
