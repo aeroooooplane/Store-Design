@@ -86,7 +86,7 @@ function FixtureFields({
       {field('高度', 'h')}
       {field('水平位置', 'cx')}
       {field('垂直位置', 'cz')}
-      <p className="hint">临时补丁：配件柜可以嵌在隔板里；拖动时边缘吸附墙体和配件柜。</p>
+      <p className="hint">拖动隔板可移动，沿边拖动可改尺寸。按住 Alt 暂停吸附。</p>
     </>
   )
 }

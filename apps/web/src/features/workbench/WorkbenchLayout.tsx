@@ -9,6 +9,7 @@ interface WorkbenchLayoutProps {
   /** Saved views of the current node. */
   cameras?: ReactNode
   background?: ReactNode
+  spaceFixtures?: ReactNode
   /** The plan / 3D canvas (or the page's main content). */
   center: ReactNode
   /** Stage actions, selected prop and checks. Without it the centre takes the room. */
@@ -19,7 +20,11 @@ interface WorkbenchLayoutProps {
 }
 
 /** Project details shown in the "空间信息" tab; the workbench provides them to every layout. */
-export const WorkbenchInfoContext = createContext<ReactNode>(null)
+export const WorkbenchInfoContext = createContext<{
+  currentSpace: ReactNode
+  details: ReactNode
+  drawings: ReactNode
+} | null>(null)
 export const CameraPanelVisibility = createContext(true)
 
 /** The open left tab lives in the workbench, so changing step (which remounts the layout) keeps it. */
@@ -48,6 +53,7 @@ function LeftTabs({
   models,
   cameras,
   background,
+  spaceFixtures,
   tabState,
   defaultTab = 'history',
 }: {
@@ -55,6 +61,7 @@ function LeftTabs({
   models?: ReactNode
   cameras?: ReactNode
   background?: ReactNode
+  spaceFixtures?: ReactNode
   tabState?: LeftTabState
   defaultTab?: LeftTab
 }) {
@@ -71,7 +78,30 @@ function LeftTabs({
   const { tab, setTab } = tabState ?? sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const current = tab && tabs.includes(tab) ? tab : fallback
-  const panels: Record<LeftTab, ReactNode> = { history, models, info, cameras, background }
+  const panels: Record<LeftTab, ReactNode> = {
+    history,
+    models,
+    cameras,
+    background,
+    info: (
+      <div className="space-info-cards">
+        {info?.currentSpace}
+        {spaceFixtures}
+        {info?.details && (
+          <details className="space-info-card">
+            <summary>项目资料</summary>
+            {info.details}
+          </details>
+        )}
+        {info?.drawings && (
+          <details className="space-info-card">
+            <summary>项目图纸</summary>
+            {info.drawings}
+          </details>
+        )}
+      </div>
+    ),
+  }
   return (
     <section className="wb-tabs-card">
       <div
@@ -121,6 +151,7 @@ export function WorkbenchLayout({
   models,
   cameras,
   background,
+  spaceFixtures,
   center,
   right,
   defaultTab,
@@ -134,6 +165,7 @@ export function WorkbenchLayout({
           models={models}
           cameras={cameras}
           background={background}
+          spaceFixtures={spaceFixtures}
           defaultTab={defaultTab}
           tabState={tabState}
         />

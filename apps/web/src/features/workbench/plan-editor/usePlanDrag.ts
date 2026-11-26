@@ -9,8 +9,23 @@ import {
   customLogoFootprint,
   DEFAULT_LOGO_TEXT,
   snapRotation,
+  fixtureRect,
+  fixtureSnapTargets,
+  previewDrawnFixture,
+  previewResizedFixture,
 } from '@store/shared'
-import type { Asset, Fixture, FrontAxis, LayoutItem, Point, Rect, Space } from '@store/shared'
+import type {
+  Asset,
+  Fixture,
+  FixtureDragPreview,
+  FixtureEdge,
+  FrontAxis,
+  Layout,
+  LayoutItem,
+  Point,
+  ShopType,
+  Space,
+} from '@store/shared'
 import type { EditorAction } from '../editor-state.ts'
 
 export function toWorld(
@@ -23,12 +38,12 @@ export function toWorld(
   return [point.x, point.y]
 }
 
-const rectOf = (a: Point, b: Point): Rect => ({
-  minX: Math.min(a[0], b[0]),
-  maxX: Math.max(a[0], b[0]),
-  minZ: Math.min(a[1], b[1]),
-  maxZ: Math.max(a[1], b[1]),
-})
+type FixtureGesture = {
+  point: Point
+  pointer: number
+  capture: Element
+  targets: ReturnType<typeof fixtureSnapTargets>
+} & ({ kind: 'draw' } | { kind: 'resize'; fixture: Fixture; edge: FixtureEdge })
 
 /**
  * Dragging props and partitions on the plan: one undo step per drag, magnetic snapping unless
@@ -38,6 +53,8 @@ const rectOf = (a: Point, b: Point): Rect => ({
  */
 export function usePlanDrag(
   space: Space,
+  shopType: ShopType,
+  layout: Layout,
   dispatch: Dispatch<EditorAction>,
   frontOf: (item: LayoutItem) => FrontAxis | null,
   drawing = false,
@@ -65,9 +82,10 @@ export function usePlanDrag(
   const turn = useRef<{ item: LayoutItem; group: string } | null>(null)
   /** The wall a turned prop has snapped parallel or square to, shown while turning. */
   const [guide, setGuide] = useState<{ a: Point; b: Point } | null>(null)
-  const drawStart = useRef<Point | null>(null)
-  /** The rectangle being drawn, shown on the plan until the pointer is released. */
-  const [draft, setDraft] = useState<Rect | null>(null)
+  const fixtureGesture = useRef<FixtureGesture | null>(null)
+  const [fixturePreview, setFixturePreview] = useState<
+    (FixtureDragPreview & { fixtureId?: string }) | null
+  >(null)
 
   function onItemPointerDown(item: LayoutItem, event: ReactPointerEvent<SVGGElement>) {
     event.stopPropagation()
@@ -125,22 +143,78 @@ export function usePlanDrag(
     svgRef.current?.setPointerCapture(event.pointerId)
   }
 
+  function onFixtureResize(
+    fixture: Fixture,
+    edge: FixtureEdge,
+    event: ReactPointerEvent<SVGLineElement>,
+  ) {
+    if (event.button !== 0 || fixtureGesture.current) return
+    const point = toWorld(svgRef.current, event)
+    if (!point) return
+    event.stopPropagation()
+    dispatch({ type: 'select', id: fixture.id })
+    const capture = svgRef.current ?? event.currentTarget
+    fixtureGesture.current = {
+      kind: 'resize',
+      fixture,
+      edge,
+      point,
+      capture,
+      pointer: event.pointerId,
+      targets: fixtureSnapTargets(
+        space,
+        shopType,
+        layout.items,
+        (layout.fixtures ?? []).filter((item) => item.id !== fixture.id),
+        true,
+      ),
+    }
+    capture.setPointerCapture(event.pointerId)
+  }
+
+  function getFixturePreview(gesture: FixtureGesture, point: Point, alt: boolean) {
+    const targets = alt ? [] : gesture.targets
+    if (gesture.kind === 'draw') return previewDrawnFixture(gesture.point, point, targets)
+    const axis = gesture.edge.endsWith('X') ? 0 : 1
+    return previewResizedFixture(
+      fixtureRect(gesture.fixture),
+      gesture.edge,
+      point[axis] - gesture.point[axis],
+      targets,
+    )
+  }
+
   /** In drawing mode a press anywhere on the plan (props included) starts a rectangle. */
   function onDrawPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
-    if (!drawing) return
-    const world = toWorld(svgRef.current, event)
-    if (!world) return
+    if (!drawing || event.button !== 0 || fixtureGesture.current) return
+    const point = toWorld(svgRef.current, event)
+    if (!point) return
     event.stopPropagation()
-    drawStart.current = world
-    setDraft(rectOf(world, world))
-    event.currentTarget.setPointerCapture(event.pointerId)
+    event.preventDefault()
+    const capture = event.currentTarget
+    fixtureGesture.current = {
+      kind: 'draw',
+      point,
+      capture,
+      pointer: event.pointerId,
+      targets: fixtureSnapTargets(space, shopType, layout.items, layout.fixtures ?? []),
+    }
+    capture.setPointerCapture(event.pointerId)
   }
 
   function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
     const world = toWorld(svgRef.current, event)
     if (!world) return
-    if (drawStart.current) {
-      setDraft(rectOf(drawStart.current, world))
+    const currentFixture = fixtureGesture.current
+    if (currentFixture) {
+      if (currentFixture.pointer === event.pointerId) {
+        const preview = getFixturePreview(currentFixture, world, event.altKey)
+        setFixturePreview(
+          currentFixture.kind === 'resize'
+            ? { ...preview, fixtureId: currentFixture.fixture.id }
+            : preview,
+        )
+      }
       return
     }
     if (turn.current) {
@@ -220,26 +294,35 @@ export function usePlanDrag(
     resize.current = null
     turn.current = null
     setGuide(null)
-    const start = drawStart.current
-    if (!start) return
-    drawStart.current = null
-    setDraft(null)
+    const current = fixtureGesture.current
+    if (!current || (event && current.pointer !== event.pointerId)) return
+    fixtureGesture.current = null
+    setFixturePreview(null)
+    if (current.capture.hasPointerCapture(current.pointer))
+      current.capture.releasePointerCapture(current.pointer)
     const world = event?.type === 'pointerup' ? toWorld(svgRef.current, event) : null
     if (!world) return
-    dispatch({ type: 'addFixture', rect: rectOf(start, world), space, snap: !event?.altKey })
-    onDrawn?.()
+    const preview = getFixturePreview(current, world, event?.altKey ?? false)
+    if (!preview.valid) return
+    if (current.kind === 'draw') {
+      dispatch({ type: 'addFixture', rect: preview.rect, space, snap: false })
+      onDrawn?.()
+    } else {
+      dispatch({ type: 'resizeFixture', id: current.fixture.id, rect: preview.rect })
+    }
   }
 
   return {
     svgRef,
     onItemPointerDown,
     onFixturePointerDown,
+    onFixtureResize,
     onResizeHandlePointerDown,
     onRotateHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
-    draft,
+    fixturePreview,
     guide,
   }
 }

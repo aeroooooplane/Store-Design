@@ -1,6 +1,9 @@
 import { edges } from '../geometry/polygon.ts'
 import { rectFromCenter, rectInsidePolygon, rectsOverlap } from '../geometry/rect.ts'
-import type { Rect } from '../geometry/types.ts'
+import type { Point, Rect } from '../geometry/types.ts'
+import type { ShopType } from '../enums.ts'
+import { wallSegments } from '../scene/walls.ts'
+import { openingPieces } from '../schemas/space.ts'
 import { itemMount } from '../mounting/index.ts'
 import type { Fixture, Layout, LayoutIssue, LayoutItem } from '../schemas/layout.ts'
 import type { Space } from '../schemas/space.ts'
@@ -78,6 +81,178 @@ export function snapFixtureRect(
     minZ: roundM(snapTo(rect.minZ, rect.minX, rect.maxX, zLines)),
     maxZ: roundM(snapTo(rect.maxZ, rect.minX, rect.maxX, zLines)),
   }
+}
+
+export type FixtureEdge = keyof Rect
+
+interface FixtureSnapTarget {
+  a: Point
+  b: Point
+}
+
+function outlineTargets(rect: Rect): FixtureSnapTarget[] {
+  return edges([
+    [rect.minX, rect.minZ],
+    [rect.maxX, rect.minZ],
+    [rect.maxX, rect.maxZ],
+    [rect.minX, rect.maxZ],
+  ]).map(([a, b]) => ({ a, b }))
+}
+
+/** Draw to real walls, cabinets and partitions. Resizing also uses the open boundary lines. */
+export function fixtureSnapTargets(
+  space: Space,
+  shopType: ShopType,
+  items: readonly LayoutItem[],
+  fixtures: readonly Fixture[],
+  resizing = false,
+): FixtureSnapTarget[] {
+  const boundary =
+    resizing && shopType === 'island'
+      ? edges(space.boundary).map(([a, b]) => ({ a, b }))
+      : wallSegments(space, shopType).map(({ a, b }) => ({ a, b }))
+  const openings = resizing
+    ? [...space.entrances, ...space.openEdges].flatMap(
+        (opening) => openingPieces(space, opening) ?? [],
+      )
+    : []
+  return [
+    ...boundary,
+    ...openings,
+    ...items
+      .filter(isAccessoryCabinet)
+      .flatMap((item) => outlineTargets(rectFromCenter(item.cx, item.cz, item.w, item.d))),
+    ...fixtures.flatMap((fixture) => outlineTargets(fixtureRect(fixture))),
+  ]
+}
+
+export interface FixtureDragPreview {
+  rect: Rect
+  guides: FixtureSnapTarget[]
+  valid: boolean
+}
+
+function rectBetween(a: Point, b: Point): Rect {
+  return {
+    minX: Math.min(a[0], b[0]),
+    maxX: Math.max(a[0], b[0]),
+    minZ: Math.min(a[1], b[1]),
+    maxZ: Math.max(a[1], b[1]),
+  }
+}
+
+function hasFixtureSize(rect: Rect): boolean {
+  return (
+    roundM(rect.maxX - rect.minX) >= MIN_FIXTURE_M && roundM(rect.maxZ - rect.minZ) >= MIN_FIXTURE_M
+  )
+}
+
+function nearestFixtureLine(
+  axis: 0 | 1,
+  value: number,
+  from: number,
+  to: number,
+  targets: readonly FixtureSnapTarget[],
+): FixtureSnapTarget | undefined {
+  const along = axis === 0 ? 1 : 0
+  let best: FixtureSnapTarget | undefined
+  let distance = FIXTURE_SNAP_M + EPSILON_M
+  for (const target of targets) {
+    const { a, b } = target
+    if (Math.abs(a[axis] - b[axis]) > EPSILON_M) continue
+    if (
+      Math.max(a[along], b[along]) < from - FIXTURE_SNAP_M ||
+      Math.min(a[along], b[along]) > to + FIXTURE_SNAP_M
+    )
+      continue
+    const gap = Math.abs(value - a[axis])
+    if (gap >= distance) continue
+    best = target
+    distance = gap
+  }
+  return best
+}
+
+function snapDrawPoint(point: Point, rect: Rect, targets: readonly FixtureSnapTarget[]) {
+  let corner: Point | undefined
+  let best = FIXTURE_SNAP_M + EPSILON_M
+  for (const { a, b } of targets) {
+    for (const end of [a, b]) {
+      const distance = Math.hypot(point[0] - end[0], point[1] - end[1])
+      if (distance >= best) continue
+      best = distance
+      corner = end
+    }
+  }
+  if (corner) {
+    return {
+      point: corner,
+      guides: targets.filter(
+        ({ a, b }) =>
+          a === corner ||
+          b === corner ||
+          (a[0] === corner[0] && a[1] === corner[1]) ||
+          (b[0] === corner[0] && b[1] === corner[1]),
+      ),
+    }
+  }
+  const x = nearestFixtureLine(0, point[0], rect.minZ, rect.maxZ, targets)
+  const z = nearestFixtureLine(1, point[1], rect.minX, rect.maxX, targets)
+  return {
+    point: [x?.a[0] ?? point[0], z?.a[1] ?? point[1]] as Point,
+    guides: [x, z].filter((target) => target !== undefined),
+  }
+}
+
+export function previewDrawnFixture(
+  start: Point,
+  end: Point,
+  targets: readonly FixtureSnapTarget[],
+): FixtureDragPreview {
+  const raw = rectBetween(start, end)
+  const a = snapDrawPoint(start, raw, targets)
+  const b = snapDrawPoint(end, raw, targets)
+  const rect = rectBetween(a.point, b.point)
+  return {
+    rect,
+    guides: [...new Set([...a.guides, ...b.guides])],
+    valid: hasFixtureSize(raw) && hasFixtureSize(rect),
+  }
+}
+
+/** Keep the opposite edge fixed. A free resize rounds the edited dimension to 10 mm. */
+export function previewResizedFixture(
+  start: Rect,
+  edge: FixtureEdge,
+  delta: number,
+  targets: readonly FixtureSnapTarget[],
+): FixtureDragPreview {
+  const alongX = edge.endsWith('X')
+  const axis = alongX ? 0 : 1
+  const min = edge.startsWith('min')
+  const fixed = alongX ? start[min ? 'maxX' : 'minX'] : start[min ? 'maxZ' : 'minZ']
+  const direction = min ? -1 : 1
+  const resized = (at: number) => ({ ...start, [edge]: roundM(at) })
+  if (delta === 0) return { rect: start, guides: [], valid: true }
+  const size = Math.max(
+    MIN_FIXTURE_M,
+    Math.round((start[edge] + delta - fixed) * direction * 100) / 100,
+  )
+  const free = fixed + direction * size
+  const available = targets.filter(
+    ({ a }) =>
+      (a[axis] - fixed) * direction >= MIN_FIXTURE_M - EPSILON_M &&
+      (Math.abs(a[axis] - start[edge]) > EPSILON_M || Math.abs(free - start[edge]) < EPSILON_M),
+  )
+  const guide = nearestFixtureLine(
+    axis,
+    free,
+    alongX ? start.minZ : start.minX,
+    alongX ? start.maxZ : start.maxX,
+    available,
+  )
+  const rect = resized(guide?.a[axis] ?? free)
+  return { rect, guides: guide ? [guide] : [], valid: hasFixtureSize(rect) }
 }
 
 /**

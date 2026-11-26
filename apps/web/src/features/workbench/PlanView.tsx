@@ -31,11 +31,12 @@ import {
 import type {
   Asset,
   Fixture,
+  FixtureDragPreview,
+  FixtureEdge,
   Issue,
   Layout,
   LayoutItem,
   Point,
-  Rect,
   ShopType,
   Space,
 } from '@store/shared'
@@ -83,8 +84,11 @@ export interface PlanViewProps {
     ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   /** The wall a prop being turned has snapped to, highlighted while turning. */
   guide?: { a: Point; b: Point } | null | undefined
-  /** A partition being drawn (画空心隔板), shown dashed until the pointer is released. */
-  drawingRect?: Rect | null | undefined
+  onFixtureResize?:
+    | ((fixture: Fixture, edge: FixtureEdge, event: ReactPointerEvent<SVGLineElement>) => void)
+    | undefined
+  /** The exact partition footprint that will be applied when the pointer is released. */
+  fixturePreview?: (FixtureDragPreview & { fixtureId?: string }) | null | undefined
   svgRef?: Ref<SVGSVGElement> | undefined
   /** Compact thumbnails hide labels and dimensions. */
   compact?: boolean | undefined
@@ -96,6 +100,32 @@ export interface PlanViewProps {
   /** Clear distances around the 软装 props (see plan-spacing.ts); off unless asked for. */
   spacing?: boolean | undefined
   title: string
+}
+
+function FixturePreview({ preview, fontSize }: { preview: FixtureDragPreview; fontSize: number }) {
+  const { minX, minZ, maxX, maxZ } = preview.rect
+  return (
+    <g className="plan-fixture-preview" aria-hidden="true">
+      <rect
+        className="plan-fixture-draft"
+        x={minX}
+        y={minZ}
+        width={maxX - minX}
+        height={maxZ - minZ}
+      />
+      {preview.guides.map(({ a, b }, index) => (
+        <line key={index} className="plan-fixture-guide" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />
+      ))}
+      <text
+        x={(minX + maxX) / 2}
+        y={minZ - fontSize * 0.4}
+        fontSize={fontSize * 0.85}
+        textAnchor="middle"
+      >
+        {mToMm(maxX - minX)} × {mToMm(maxZ - minZ)} mm
+      </text>
+    </g>
+  )
 }
 
 const points = (polygon: readonly Point[]) => polygon.map((p) => p.join(',')).join(' ')
@@ -340,7 +370,8 @@ export function PlanView({
   onResizeHandlePointerDown,
   onBackgroundPointerDown,
   onFixturePointerDown,
-  drawingRect,
+  onFixtureResize,
+  fixturePreview,
   svgRef,
   compact = false,
   numbers,
@@ -526,48 +557,41 @@ export function PlanView({
       )}
 
       {/* 空心隔板 under the props: the cabinets built into them stay visible. */}
-      {(layout?.fixtures ?? []).map((f) => (
-        <g
-          key={f.id}
-          className={['plan-fixture', f.id === selectedId ? 'selected' : '']
-            .filter(Boolean)
-            .join(' ')}
-          data-fixture-id={f.id}
-          onPointerDown={
-            onFixturePointerDown ? (event) => onFixturePointerDown(f, event) : undefined
-          }
-        >
-          <title>{`空心隔板（${mToMm(f.w)} × ${mToMm(f.d)} × ${mToMm(f.h)} mm）`}</title>
-          <rect
-            x={f.cx - f.w / 2}
-            y={f.cz - f.d / 2}
-            width={f.w}
-            height={f.d}
-            fill={`url(#${hatch})`}
-          />
-          {!compact && (
-            <text
-              className="plan-label"
-              x={f.cx}
-              y={f.cz + f.d / 2 + fontSize * 0.6}
-              fontSize={fontSize * 0.7}
-              textAnchor="middle"
-              dominantBaseline="middle"
-            >
-              空心隔板 {mToMm(f.w)}×{mToMm(f.d)}
-            </text>
-          )}
-        </g>
-      ))}
-      {drawingRect && (
-        <rect
-          className="plan-fixture-draft"
-          x={drawingRect.minX}
-          y={drawingRect.minZ}
-          width={drawingRect.maxX - drawingRect.minX}
-          height={drawingRect.maxZ - drawingRect.minZ}
-        />
-      )}
+      {(layout?.fixtures ?? [])
+        .filter((f) => f.id !== fixturePreview?.fixtureId)
+        .map((f) => (
+          <g
+            key={f.id}
+            className={['plan-fixture', f.id === selectedId ? 'selected' : '']
+              .filter(Boolean)
+              .join(' ')}
+            data-fixture-id={f.id}
+            onPointerDown={
+              onFixturePointerDown ? (event) => onFixturePointerDown(f, event) : undefined
+            }
+          >
+            <title>{`空心隔板（${mToMm(f.w)} × ${mToMm(f.d)} × ${mToMm(f.h)} mm）`}</title>
+            <rect
+              x={f.cx - f.w / 2}
+              y={f.cz - f.d / 2}
+              width={f.w}
+              height={f.d}
+              fill={`url(#${hatch})`}
+            />
+            {!compact && (
+              <text
+                className="plan-label"
+                x={f.cx}
+                y={f.cz + f.d / 2 + fontSize * 0.6}
+                fontSize={fontSize * 0.7}
+                textAnchor="middle"
+                dominantBaseline="middle"
+              >
+                空心隔板 {mToMm(f.w)}×{mToMm(f.d)}
+              </text>
+            )}
+          </g>
+        ))}
 
       {/* Floor props first, so the wall and ceiling pieces above them stay on top. */}
       {[...(layout?.items ?? [])]
@@ -707,6 +731,59 @@ export function PlanView({
           ))
         })}
 
+      {!compact &&
+        onFixtureResize &&
+        layout?.fixtures
+          ?.filter((f) => f.id === selectedId && f.id !== fixturePreview?.fixtureId)
+          .map((f) => {
+            const x1 = f.cx - f.w / 2
+            const x2 = f.cx + f.w / 2
+            const z1 = f.cz - f.d / 2
+            const z2 = f.cz + f.d / 2
+            const insetX = Math.min(f.w / 5, fontSize)
+            const insetZ = Math.min(f.d / 5, fontSize)
+            const guides: [FixtureEdge, Point, Point, number][] = [
+              ['minX', [x1, z1 + insetZ], [x1, z2 - insetZ], f.w],
+              ['maxX', [x2, z1 + insetZ], [x2, z2 - insetZ], f.w],
+              ['minZ', [x1 + insetX, z1], [x2 - insetX, z1], f.d],
+              ['maxZ', [x1 + insetX, z2], [x2 - insetX, z2], f.d],
+            ]
+            const cornerRadius = Math.min(fontSize * 0.23, f.w / 5, f.d / 5)
+            return (
+              <g key={f.id} data-fixture-handles={f.id}>
+                {(
+                  [
+                    [x1, z1],
+                    [x2, z1],
+                    [x1, z2],
+                    [x2, z2],
+                  ] as Point[]
+                ).map(([x, z]) => (
+                  <circle
+                    key={`${x},${z}`}
+                    className="plan-fixture-corner"
+                    cx={x}
+                    cy={z}
+                    r={cornerRadius}
+                  />
+                ))}
+                {guides.map(([edge, a, b, thickness]) => (
+                  <line
+                    key={edge}
+                    data-fixture-edge={edge}
+                    className="plan-fixture-edge"
+                    x1={a[0]}
+                    y1={a[1]}
+                    x2={b[0]}
+                    y2={b[1]}
+                    strokeWidth={Math.min(fontSize * 1.5, thickness / 2)}
+                    onPointerDown={(event) => onFixtureResize(f, edge, event)}
+                  />
+                ))}
+              </g>
+            )
+          })}
+      {fixturePreview && <FixturePreview preview={fixturePreview} fontSize={fontSize} />}
       {guide && (
         <line
           className="plan-rotate-guide"

@@ -8,6 +8,9 @@ import {
   fixtureSolids,
   nextFixtureId,
   snapFixtureRect,
+  fixtureSnapTargets,
+  previewDrawnFixture,
+  previewResizedFixture,
 } from './index.ts'
 
 // 6 m × 4 m, 3 m high; a 2.4 m accessory cabinet on the back wall (x 1.8–4.2, z 0–0.55).
@@ -42,6 +45,43 @@ const partition = (overrides: Partial<Fixture> = {}): Fixture => ({
   d: 0.6,
   h: 2.4,
   ...overrides,
+})
+
+describe('interactive partition snapping', () => {
+  const adjacent = partition({ cx: 2.75, cz: 1.5, w: 0.5, d: 1 })
+  const targets = fixtureSnapTargets(space, 'side_hall', [], [adjacent], true)
+
+  it('snaps the actual drawn corner without turning the open entrance into a wall', () => {
+    const drawingTargets = fixtureSnapTargets(space, 'side_hall', [], [adjacent])
+    expect(previewDrawnFixture([0.04, 0.05], [2.55, 0.95], drawingTargets).rect).toEqual({
+      minX: 0,
+      minZ: 0,
+      maxX: 2.5,
+      maxZ: 1,
+    })
+    expect(previewDrawnFixture([3, 3.4], [4, 3.95], drawingTargets).rect.maxZ).toBe(3.95)
+  })
+
+  it('adjusts the vertical edge to an adjacent partition, and can pull away again', () => {
+    const original = { minX: 3.3, maxX: 3.9, minZ: 0.2, maxZ: 2.4 }
+    const snapped = previewResizedFixture(original, 'minX', -0.24, targets)
+    expect(snapped.rect).toEqual({ ...original, minX: 3 })
+    expect(snapped.guides).toHaveLength(1)
+    expect(previewResizedFixture(snapped.rect, 'minX', 0.05, targets).rect.minX).toBe(3.05)
+  })
+
+  it('snaps to entrance and open edges while preserving 10 mm steps without magnets', () => {
+    const opened: typeof space = { ...space, openEdges: [{ a: [6, 1], b: [6, 2] }] }
+    const targets = fixtureSnapTargets(opened, 'side_hall', [], [], true)
+    const rect = { minX: 5.2, maxX: 5.8, minZ: 1.2, maxZ: 3.72 }
+    expect(previewResizedFixture(rect, 'maxZ', 0.23, targets).rect.maxZ).toBe(4)
+    expect(previewResizedFixture({ ...rect, maxZ: 1.8 }, 'maxX', 0.16, targets).guides).toEqual([
+      { a: [6, 1], b: [6, 2], edge: 1 },
+    ])
+    const free = { minX: 2, maxX: 2.4, minZ: 1, maxZ: 1.4 }
+    expect(previewResizedFixture(free, 'maxX', 0.009, []).rect.maxX).toBe(2.41)
+    expect(previewResizedFixture(free, 'maxZ', 0.003, []).rect.maxZ).toBe(1.4)
+  })
 })
 
 describe('snapFixtureRect', () => {
