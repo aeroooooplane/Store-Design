@@ -1,6 +1,6 @@
 import { useEffect, useImperativeHandle } from 'react'
 import type { Ref } from 'react'
-import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
+import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { rectangleSpace } from '@store/shared'
 import type { Delivery, NodeCamera, RenderImage, RenderBackground } from '@store/shared'
@@ -213,21 +213,28 @@ afterEach(() => {
   vi.unstubAllGlobals()
 })
 
+function openBackground() {
+  if (!screen.queryByRole('tab', { name: '背景编辑' }))
+    fireEvent.click(screen.getByRole('tab', { name: '视角' }))
+  fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+}
+
 describe('RenderStage', () => {
-  it('keeps background tools after views in the sidebar and enables image editing only on that tab', async () => {
+  it('keeps the ordered main tabs and enables image editing only in the background tools under views', async () => {
     const a = camera(0, '正面')
     const api = fakeApi([a], [image(a.id, 'material')])
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
+    const mainTabs = within(screen.getByRole('tablist', { name: '左栏' }))
+    expect(mainTabs.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       '历史',
       '空间信息',
+      '添加模型',
       '视角',
-      '背景编辑',
     ])
     expect(document.querySelector('.wb-center .background-tools')).toBeNull()
     for (const name of ['历史', '空间信息', '视角']) {
-      fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+      openBackground()
       expect(document.querySelector('.wb-left .background-tools')).toBeTruthy()
       expect(document.querySelector('.background-canvas')).toBeTruthy()
       fireEvent.click(screen.getByRole('tab', { name }))
@@ -247,7 +254,7 @@ describe('RenderStage', () => {
     const api = fakeApi([a], [image(a.id, 'material')])
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
     })
@@ -328,7 +335,7 @@ describe('RenderStage', () => {
     )
     show()
     await screen.findByText(/已渲染 2\/2 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     expect(shownViews.at(-1)).toEqual(a.camera)
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
@@ -353,12 +360,12 @@ describe('RenderStage', () => {
     )
     fireEvent.click(screen.getByRole('button', { name: '查看视角 背面' }))
     expect(document.querySelector('.background-canvas')).toBeNull()
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     expect(screen.getByRole('button', { name: '添加背景图片' })).toBeTruthy()
     expect(shownViews.at(-1)).toEqual(b.camera)
     fireEvent.click(screen.getByRole('tab', { name: '视角' }))
     fireEvent.click(screen.getByRole('button', { name: '查看视角 正面' }))
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     expect(screen.getByRole('button', { name: '替换背景图片' })).toBeTruthy()
   })
 
@@ -367,7 +374,7 @@ describe('RenderStage', () => {
     const api = fakeApi([a], [image(a.id, 'material')])
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     expect(screen.getByRole('tab', { name: '背景编辑' }).getAttribute('aria-selected')).toBe('true')
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['png'], '选择.png', { type: 'image/png' })] },
@@ -393,17 +400,17 @@ describe('RenderStage', () => {
     const api = fakeApi([a], [image(a.id, 'material')])
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent(screen.getByLabelText('选择背景图片'), new Event('cancel'))
     expect(screen.getByRole('button', { name: '三维查看' }).getAttribute('aria-pressed')).toBe(
       'true',
     )
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent(screen.getByLabelText('选择背景图片'), new Event('cancel'))
     expect(screen.getByRole('button', { name: '三维查看' }).getAttribute('aria-pressed')).toBe(
       'true',
     )
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['png'], '背景.png', { type: 'image/png' })] },
     })
@@ -420,7 +427,7 @@ describe('RenderStage', () => {
     const api = fakeApi([a], [image(a.id, 'material')])
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['png'], '竖图.png', { type: 'image/png' })] },
     })
@@ -449,7 +456,7 @@ describe('RenderStage', () => {
     api.setSaveFails(true)
     show()
     await screen.findByText(/已渲染 1\/1 张/)
-    fireEvent.click(screen.getByRole('tab', { name: '背景编辑' }))
+    openBackground()
     fireEvent.change(screen.getByLabelText('选择背景图片'), {
       target: { files: [new File(['bad'], 'bad.txt', { type: 'text/plain' })] },
     })

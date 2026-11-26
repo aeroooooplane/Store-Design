@@ -702,6 +702,28 @@ describe('Workbench', () => {
     )
   })
 
+  it('offers space information and partition drawing without any model controls', async () => {
+    server = fakeApi([designNode(S1, null, { name: '空间 A', layout: layout([table]) })], null)
+    const { container } = renderWorkbench('?node=' + S1)
+    const tabs = () =>
+      within(screen.getByRole('tablist', { name: '左栏' }))
+        .getAllByRole('tab')
+        .map((tab) => tab.textContent)
+    const editFixtures = await screen.findByRole('button', { name: '编辑空心隔板' })
+    expect(tabs()).toEqual(['历史', '空间信息'])
+    fireEvent.click(editFixtures)
+    expect(tabs()).toEqual(['历史', '空间信息'])
+    expect(screen.getByRole('button', { name: '画空心隔板' })).toBeTruthy()
+    expect(container.querySelector('.model-picker')).toBeNull()
+    const item = container.querySelector('[data-item-id="island_table-1"]') as Element
+    expect(item).toBeTruthy()
+    fireEvent.pointerDown(item)
+    fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'Delete' })
+    expect(container.querySelector('[data-item-id="island_table-1"]')).toBe(item)
+    fireEvent.click(screen.getByRole('tab', { name: '空间信息' }))
+    expect(screen.getByRole('button', { name: '画隔板' })).toBeTruthy()
+  })
+
   it('puts history, models and space info in left tabs, opening the models in the plan stage', async () => {
     server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
     renderWorkbench(`?node=${P1}`)
@@ -719,6 +741,24 @@ describe('Workbench', () => {
     expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
   })
 
+  it('returns from the render models tab to the associated editable plan', async () => {
+    server = fakeApi(
+      [
+        designNode(S1, null),
+        designNode(P1, S1, { name: '方案 A' }),
+        designNode(P2, P1, { kind: 'render', name: '渲染 A' }),
+      ],
+      null,
+    )
+    renderWorkbench('?node=' + P2)
+    await screen.findByRole('region', { name: '渲染' })
+    fireEvent.click(screen.getByRole('tab', { name: '添加模型' }))
+    expect(screen.queryByRole('region', { name: '添加模型' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: '返回方案添加模型' }))
+    await screen.findByRole('heading', { name: '方案 A' })
+    expect(screen.getByRole('region', { name: '添加模型' })).toBeTruthy()
+  })
+
   it('keeps legacy 3D views available in the plan editor', async () => {
     server = fakeApi(
       [
@@ -732,8 +772,8 @@ describe('Workbench', () => {
     await screen.findByRole('heading', { name: '三维效果' })
     expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       '历史',
-      '添加模型',
       '空间信息',
+      '添加模型',
       '视角',
     ])
     expect(screen.getByRole('tab', { name: '添加模型' }).getAttribute('aria-selected')).toBe('true')
