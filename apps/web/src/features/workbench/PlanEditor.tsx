@@ -28,7 +28,6 @@ import type {
   Draft,
   LayoutItem,
   NodeSummary,
-  Point,
   ShopType,
   SiStyle,
   Space,
@@ -49,17 +48,14 @@ import {
   catalogItem,
   editorReducer,
   initialEditorState,
-  newItemPoint,
-  snap,
+  needsWallPlacement,
+  placeCatalogItem,
 } from './editor-state.ts'
+import type { ModelPlacementClick } from './editor-state.ts'
 import { PlanView } from './PlanView.tsx'
 import { EditorToolbar } from './plan-editor/EditorToolbar.tsx'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
-import {
-  floorPlacementProblem,
-  nearbyFurniture,
-  pointPlacedAsset,
-} from './plan-editor/floor-placement.ts'
+import { floorPlacementProblem, nearbyFurniture } from './plan-editor/floor-placement.ts'
 import { IssuesPanel } from './plan-editor/IssuesPanel.tsx'
 import { PropertiesPanel } from './plan-editor/PropertiesPanel.tsx'
 import { useDraftAutosave } from './plan-editor/useDraftAutosave.ts'
@@ -343,29 +339,29 @@ export function PlanEditor({
   }
 
   function addAsset(asset: Asset) {
-    if (pointPlacedAsset(asset)) {
-      preparePlacement(catalogItem(state.layout, asset, 0, 0))
-      return
-    }
-    setPlacement(null)
-    const [cx, cz] = newItemPoint(space)
-    dispatch({ type: 'add', asset, cx, cz, space })
+    preparePlacement(catalogItem(state.layout, asset, 0, 0))
   }
 
-  function placeFurniture(point: Point | null) {
+  const placementAsset = placement?.item.assetId ? assetMap.get(placement.item.assetId) : undefined
+  const placementOnWall = placement && needsWallPlacement(placement.item, placementAsset)
+
+  function placeModel(click: ModelPlacementClick | null) {
     if (!placement) return
-    if (!point) {
-      setPlacement({ item: placement.item, error: '请在门店地面上选择位置。' })
-      return
-    }
-    const item = { ...placement.item, cx: snap(point[0]), cz: snap(point[1]) }
-    const asset = item.assetId ? assetMap.get(item.assetId) : undefined
-    const error = floorPlacementProblem(state.layout, space, item, 'point', asset)
-    if (error) {
+    const error = placementOnWall
+      ? '请选择能放下该模型的墙面或空心隔板。'
+      : '请在门店地面上选择位置。'
+    const item =
+      click && placeCatalogItem(placement.item, state.layout, space, click, placementAsset)
+    if (!item) {
       setPlacement({ item: placement.item, error })
       return
     }
-    dispatch({ type: 'placeFurniture', item, space, asset })
+    const problem = floorPlacementProblem(state.layout, space, item, 'point', placementAsset)
+    if (problem) {
+      setPlacement({ item: placement.item, error: problem })
+      return
+    }
+    dispatch({ type: 'placeFurniture', item, space, asset: placementAsset })
     setPlacement(null)
   }
 
@@ -411,7 +407,7 @@ export function PlanEditor({
           siStyle={siStyle}
           market={market}
           onPick={addAsset}
-          isPointPlaced={pointPlacedAsset}
+          isPointPlaced={() => true}
           pendingAssetId={placement?.item.assetId}
         />
       }
@@ -489,7 +485,10 @@ export function PlanEditor({
             {placement && (
               <div className="toolbar notice placement-controls">
                 <p className="hint" role="status">
-                  {placement.error ?? `在画布上点击放置「${placement.item.name}」。`}
+                  {placement.error ??
+                    (placementOnWall
+                      ? `点击墙面或空心隔板放置「${placement.item.name}」。`
+                      : `在画布上点击放置「${placement.item.name}」。`)}
                 </p>
                 <button type="button" onClick={() => setPlacement(null)}>
                   取消放置
@@ -510,7 +509,12 @@ export function PlanEditor({
                   onMove={move}
                   onResize={resize}
                   onRotate={rotate}
-                  onFloorPlace={!planMain && placement ? placeFurniture : undefined}
+                  onWallPlace={!planMain && placementOnWall ? placeModel : undefined}
+                  onFloorPlace={
+                    !planMain && placement && !placementOnWall
+                      ? (point) => placeModel(point && { point })
+                      : undefined
+                  }
                   onReady={onViewerReady}
                   look="material"
                   siStyle={siStyle}
@@ -539,7 +543,8 @@ export function PlanEditor({
                       if (!placement) return onDrawPointerDown(event)
                       if (event.button !== 0) return
                       event.stopPropagation()
-                      placeFurniture(toWorld(svgRef.current, event))
+                      const point = toWorld(svgRef.current, event)
+                      placeModel(point && { point })
                     }
                   : undefined
               }

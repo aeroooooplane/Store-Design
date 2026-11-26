@@ -16,6 +16,7 @@ import {
   editorReducer,
   initialEditorState,
   newItemPoint,
+  placeCatalogItem,
   nextItemId,
   snap,
 } from './editor-state.ts'
@@ -640,7 +641,7 @@ describe('wall pieces', () => {
     h: 2.4,
   })
 
-  it('goes onto the nearest wall above the cabinet there when added', () => {
+  it('goes onto the nearest full wall with its top at 2.4 m', () => {
     const added = editorReducer(state([cabinet]), {
       type: 'add',
       asset: logo,
@@ -653,12 +654,12 @@ describe('wall pieces', () => {
       cx: 3,
       cz: 0.025,
       rotation: 0,
-      elevation: 2.5,
+      elevation: 1.947,
       placeholder: true,
     })
   })
 
-  it('turns onto a side wall when dragged there and follows the props below', () => {
+  it('turns onto a side wall and uses its default top edge', () => {
     const start = editorReducer(state([cabinet]), {
       type: 'add',
       asset: logo,
@@ -680,11 +681,11 @@ describe('wall pieces', () => {
       rotation: 270,
       w: 0.05,
       d: 3.453,
-      elevation: 1.8,
+      elevation: 1.947,
     })
   })
 
-  it('follows the props below through every step of a drag across the room', () => {
+  it('reapplies the full-wall top edge when a drag reaches another wall', () => {
     let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
     for (const [cx, cz] of [
       [2.8, 0.3],
@@ -702,12 +703,12 @@ describe('wall pieces', () => {
         front: '+Z',
       })
     }
-    expect(s.layout.items[1]).toMatchObject({ cx: 0.025, rotation: 270, elevation: 1.8 })
+    expect(s.layout.items[1]).toMatchObject({ cx: 0.025, rotation: 270, elevation: 1.947 })
   })
 
   it('keeps a height typed in by hand when moved along the wall', () => {
     let s = editorReducer(state([cabinet]), { type: 'add', asset: logo, cx: 3, cz: 1, space })
-    s = editorReducer(s, { type: 'elevate', id: 'signage-1', elevation: 2.6 })
+    s = editorReducer(s, { type: 'elevate', id: 'signage-1', elevation: 2.5 })
     s = editorReducer(s, {
       type: 'move',
       id: 'signage-1',
@@ -716,7 +717,58 @@ describe('wall pieces', () => {
       snapTo: space,
       front: '+Z',
     })
-    expect(s.layout.items[1]).toMatchObject({ cx: 2.5, cz: 0.025, elevation: 2.6 })
+    expect(s.layout.items[1]).toMatchObject({ cx: 2.5, cz: 0.025, elevation: 2.5 })
+  })
+
+  it.each([
+    ['asset-11479197', '75寸广告机', 'screen', 'embedded'],
+    ['asset-90000003', '灯箱', 'signage', 'embedded'],
+    ['asset-20533337', '影石墙面LOGO', 'signage', 'wall'],
+  ] as const)('%s 点中墙面后使用它的隔板，其他墙面仍可选', (id, name, fn, installation) => {
+    const asset = makeAsset({
+      id,
+      name,
+      function: fn,
+      installation,
+      front: '+Z',
+      footprint: { w: 1, d: 0.08, h: 0.8 },
+    })
+    const layout: Layout = {
+      ...state([]).layout,
+      fixtures: [
+        { id: 'wall-cover', kind: 'hollow_partition', cx: 3, cz: 0.2, w: 4, d: 0.4, h: 3 },
+      ],
+    }
+    const pending = catalogItem(layout, asset, 0, 0)
+    expect(placeCatalogItem(pending, layout, space, { point: [3, 2] }, asset)).toBeNull()
+    const covered = placeCatalogItem(pending, layout, space, { point: [3, -0.01] }, asset)
+    expect(covered).toMatchObject({
+      cx: 3,
+      cz: installation === 'wall' ? 0.44 : 0.36,
+      rotation: 0,
+      elevation: 1.6,
+      mount: installation,
+    })
+    const other = placeCatalogItem(pending, layout, space, { point: [0, 2], normal: [1, 0] }, asset)
+    expect(other).toMatchObject({
+      cx: installation === 'wall' ? 0.04 : -0.04,
+      cz: 2,
+      rotation: 270,
+      elevation: 1.6,
+      mount: installation,
+    })
+    const lowLayout = {
+      ...layout,
+      fixtures: layout.fixtures!.map((fixture) => ({ ...fixture, h: 1.4 })),
+    }
+    const low = placeCatalogItem(
+      pending,
+      lowLayout,
+      space,
+      { point: [3, 0.4], normal: [0, 1] },
+      asset,
+    )
+    expect(low).toMatchObject({ elevation: 0.3 })
   })
 
   it('never gives a floor prop a height', () => {
@@ -862,14 +914,14 @@ describe('内嵌', () => {
     placeable: false,
   })
 
-  it('goes into the nearest wall with its front flush, the picture centred at 1.5 m', () => {
+  it('recesses flush into the nearest wall with its top at 2.4 m', () => {
     const s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
     expect(s.layout.items[0]).toMatchObject({
       mount: 'embedded',
       cx: 3,
       cz: -0.025,
       rotation: 0,
-      elevation: 1.021,
+      elevation: 1.442,
     })
   })
 
@@ -877,9 +929,9 @@ describe('内嵌', () => {
     let s = editorReducer(state([]), { type: 'add', asset: screen, cx: 3, cz: 1, space })
     const id = s.layout.items[0]?.id ?? ''
     s = editorReducer(s, { type: 'move', id, cx: 4, cz: 0.04, snapTo: space, front: '+Z' })
-    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.021 })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'wall', cz: 0.025, elevation: 1.442 })
     s = editorReducer(s, { type: 'move', id, cx: 4, cz: -0.04, snapTo: space, front: '+Z' })
-    expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.021 })
+    expect(s.layout.items[0]).toMatchObject({ mount: 'embedded', cz: -0.025, elevation: 1.442 })
   })
 })
 

@@ -27,6 +27,8 @@ export const STRAIGHT_WALL_DEG = 3
 export const DEFAULT_WALL_ELEVATION_M = 1.8
 /** Panels on a wall strictly below this height initially align with its vertical centre. */
 export const LOW_WALL_HEIGHT_M = 1.6
+/** Default top edge of display panels and wall logos on a full-height support. */
+export const DISPLAY_TOP_M = 2.4
 /** Clearance above the tallest prop standing below a wall piece. */
 export const ABOVE_PROP_GAP_M = 0.1
 /** Floor props this far from the wall (or nearer) count as standing below a wall piece. */
@@ -178,6 +180,74 @@ export function wallFaces(
   return faces
 }
 
+/** A click uses the visible, nearby wall skin rather than searching the whole room. */
+export function wallPlacementTarget(
+  point: Point,
+  space: Space,
+  fixtures: readonly Fixture[],
+  items: readonly FaceItem[],
+  normal?: Point,
+): WallFace | null {
+  let best: WallFace | null = null
+  let shortest = Infinity
+  const faces = wallFaces(space, fixtures, items)
+  for (const face of faces) {
+    const at = coord(point, face.along)
+    if (!hasWallAt(face, at)) continue
+    if (face.fixtureId && buriedPanelFace(face, at, 0, 0.01, 0.01, faces, fixtures)) continue
+    if (normal && normal[0] * face.inward[0] + normal[1] * face.inward[1] < 0.5) continue
+    const axis = face.along === 'x' ? 'z' : 'x'
+    const fixture = fixtures.find((entry) => entry.id === face.fixtureId)
+    const thickness = fixture ? (axis === 'z' ? fixture.d : fixture.w) : WALL_THICKNESS_M
+    const signed =
+      (coord(point, axis) - faceLineAt(face, at)) * (axis === 'x' ? face.inward[0] : face.inward[1])
+    const tolerance = 0.035
+    if (signed < -thickness - tolerance || signed > tolerance) continue
+    const distance = Math.abs(signed)
+    if (
+      distance < shortest - EPSILON_M ||
+      (Math.abs(distance - shortest) <= EPSILON_M && face.fixtureId && !best?.fixtureId)
+    ) {
+      best = face
+      shortest = distance
+    }
+  }
+  return best
+}
+
+interface WallSnapOptions {
+  target?: WallFace
+  defaultTop?: boolean
+  preferPartitions?: boolean
+  adding?: boolean
+}
+
+/** A partition fixed against the clicked wall replaces that wall's mounting face. */
+function onTarget(
+  face: WallFace,
+  target: WallFace | undefined,
+  at: number,
+  fixtures: readonly Fixture[],
+): boolean {
+  if (!target) return true
+  if (
+    face.along !== target.along ||
+    face.inward[0] !== target.inward[0] ||
+    face.inward[1] !== target.inward[1] ||
+    !hasWallAt(face, at)
+  )
+    return false
+  if (target.fixtureId) return face.fixtureId === target.fixtureId
+  if (!face.fixtureId) return face.edge === target.edge && hasWallAt(target, at)
+  const fixture = fixtures.find((candidate) => candidate.id === face.fixtureId)
+  if (!fixture) return false
+  const axis = face.along === 'x' ? 'z' : 'x'
+  const direction = axis === 'x' ? face.inward[0] : face.inward[1]
+  const depth = axis === 'x' ? fixture.w : fixture.d
+  const back = faceLineAt(face, at) - direction * depth
+  return Math.abs(back - faceLineAt(target, at)) <= ON_WALL_M + EPSILON_M
+}
+
 /** Partition support must cover the full width and installed height, including cabinet niches. */
 export function supportsPiece(
   face: WallFace,
@@ -266,9 +336,16 @@ export interface WallPlacement {
 type PanelForSnap = Pick<LayoutItem, 'w' | 'd' | 'h' | 'rotation' | 'elevation'> &
   Partial<Pick<LayoutItem, 'cx' | 'cz' | 'mount'>>
 
-/** A typed, supported height stays while sliding along the same face. A new low face centres it. */
-function panelElevation(item: PanelForSnap, face: WallFace, rotation: Rotation, adding: boolean) {
-  if (face.height === undefined || face.height >= LOW_WALL_HEIGHT_M) return undefined
+/** Preserve a supported height on the same face; new faces use their default. */
+function panelElevation(
+  item: PanelForSnap,
+  face: WallFace,
+  rotation: Rotation,
+  adding: boolean,
+  defaultTop = false,
+) {
+  const low = face.height !== undefined && face.height < LOW_WALL_HEIGHT_M
+  if (!low && !defaultTop) return undefined
   if (
     !adding &&
     item.cx !== undefined &&
@@ -288,7 +365,12 @@ function panelElevation(item: PanelForSnap, face: WallFace, rotation: Rotation, 
     )
       return item.elevation
   }
-  return roundM(Math.max(0, (face.height - item.h) / 2))
+  return roundM(
+    Math.max(
+      0,
+      low ? (face.height! - item.h) / 2 : Math.min(DISPLAY_TOP_M, face.height ?? Infinity) - item.h,
+    ),
+  )
 }
 
 /** Adjacent/overlapping walls must not offer a face buried in the other wall's solid body. */
@@ -336,6 +418,7 @@ export function displayPanelSnap(
   fixtures: readonly Fixture[] = [],
   items: readonly FaceItem[] = [],
   adding = false,
+  options: WallSnapOptions = {},
 ): (WallPlacement & { mount: 'embedded' | 'wall' }) | null {
   const facing = front && front !== 'any' ? front : '+Z'
   let best: {
@@ -349,6 +432,7 @@ export function displayPanelSnap(
     if (rotation === null) continue
     const alongX = face.along === 'x'
     const at = alongX ? cx : cz
+    if (!onTarget(face, options.target, at, fixtures)) continue
     const across = alongX ? cz : cx
     const inward = alongX ? face.inward[1] : face.inward[0]
     const size = turned(item, item.rotation, rotation)
@@ -378,12 +462,20 @@ export function displayPanelSnap(
       const target = line + inward * depth * (mount === 'embedded' ? -0.5 : 0.5)
       const distance = Math.hypot(centre - at, target - across)
       if (!adding && distance > WALL_SNAP_M) continue
-      const elevation = panelElevation(item, face, rotation, adding)
+      const elevation = panelElevation(item, face, rotation, adding, options.defaultTop)
       const bottom = elevation ?? item.elevation ?? 0
+      if (
+        options.defaultTop &&
+        face.height !== undefined &&
+        bottom + item.h > face.height + EPSILON_M
+      )
+        continue
       if (!supportsPiece(face, centre, length, bottom, item.h)) continue
       if (buriedPanelFace(face, centre, length, bottom, item.h, faces, fixtures)) continue
       // On add a usable partition outranks any perimeter wall. The nearest eligible face wins.
-      const score = (adding && !fixture ? 1000 : 0) + Math.hypot(centre - at, line - across)
+      const score =
+        ((adding || options.preferPartitions) && !fixture ? 1000 : 0) +
+        Math.hypot(centre - at, line - across)
       const side = signed >= 0 ? 0 : 1
       if (
         best &&
@@ -414,7 +506,8 @@ export function displayPanelSnap(
  * the wall. Null when no wall is near.
  */
 export function wallMountSnap(
-  item: Pick<LayoutItem, 'w' | 'd' | 'rotation'> & Partial<Pick<LayoutItem, 'h' | 'elevation'>>,
+  item: Pick<LayoutItem, 'w' | 'd' | 'rotation'> &
+    Partial<Pick<LayoutItem, 'h' | 'elevation' | 'cx' | 'cz' | 'mount'>>,
   cx: number,
   cz: number,
   space: Pick<Space, 'boundary' | 'openEdges'>,
@@ -423,12 +516,14 @@ export function wallMountSnap(
   fixtures: readonly Fixture[] = [],
   items: readonly FaceItem[] = [],
   elevationAt?: (placement: WallPlacement) => number,
+  options: WallSnapOptions = {},
 ): WallPlacement | null {
   const facing = front && front !== 'any' ? front : '+Z'
-  let best: (WallPlacement & { gap: number }) | null = null
-  for (const face of wallFaces(space, fixtures, items)) {
+  let best: (WallPlacement & { score: number }) | null = null
+  const faces = wallFaces(space, fixtures, items)
+  for (const face of faces) {
     const at = face.along === 'x' ? cx : cz
-    if (!hasWallAt(face, at)) continue
+    if (!hasWallAt(face, at) || !onTarget(face, options.target, at, fixtures)) continue
     const rotation = rotationFacing(facing, face.inward)
     if (rotation === null) continue
     const size = turned(item, item.rotation, rotation)
@@ -442,7 +537,9 @@ export function wallMountSnap(
     const inwardSign = face.along === 'x' ? face.inward[1] : face.inward[0]
     const target = faceLineAt(face, middle) + (inwardSign * depth) / 2
     const gap = Math.abs((face.along === 'x' ? cz : cx) - target)
-    if (gap > reach + depth / 2 || (best && gap >= best.gap)) continue
+    const preferPartition = options.preferPartitions || options.target !== undefined
+    const score = gap + (preferPartition && !face.fixtureId ? 1000 : 0)
+    if (gap > reach + depth / 2 || (best && score >= best.score)) continue
     const placement: WallPlacement = {
       cx: roundM(face.along === 'x' ? middle : target),
       cz: roundM(face.along === 'x' ? target : middle),
@@ -451,14 +548,34 @@ export function wallMountSnap(
     }
     const height = item.h ?? 0
     const bottom =
-      elevationAt?.(placement) ??
+      (options.defaultTop
+        ? panelElevation(
+            { ...item, h: height, elevation: item.elevation },
+            face,
+            rotation,
+            options.adding ?? false,
+            true,
+          )
+        : elevationAt?.(placement)) ??
       item.elevation ??
       Math.min(DEFAULT_WALL_ELEVATION_M, Math.max(0, (face.height ?? Infinity) - height))
+    if (
+      options.defaultTop &&
+      face.height !== undefined &&
+      bottom + height > face.height + EPSILON_M
+    )
+      continue
     if (!supportsPiece(face, middle, length, bottom, height)) continue
-    best = { ...placement, ...(face.fixtureId ? { elevation: bottom } : {}), gap }
+    if (preferPartition && buriedPanelFace(face, middle, length, bottom, height, faces, fixtures))
+      continue
+    best = {
+      ...placement,
+      ...(face.fixtureId || options.defaultTop ? { elevation: bottom } : {}),
+      score,
+    }
   }
   if (!best) return null
-  const { gap: _gap, ...placement } = best
+  const { score: _score, ...placement } = best
   return placement
 }
 

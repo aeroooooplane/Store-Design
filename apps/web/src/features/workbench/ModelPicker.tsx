@@ -10,6 +10,7 @@ import type { Asset, ItemFunction, Market, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
 import customLogoThumbnail from './signage-thumbnails/custom-logo.svg?url'
+import './model-picker-placement.css'
 
 /**
  * The picker lists one section per prop category, in this order (用户 2026-11-18). The jump
@@ -302,11 +303,13 @@ export function ModelPicker({
                     : (SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
                       (image && thumbnailUrl(image.url)))
                   const pointPlaced = isPointPlaced?.(asset) ?? false
+                  const pending = pendingAssetId === asset.id
                   return (
                     <li key={asset.id}>
                       <button
                         type="button"
                         className="model-row"
+                        aria-pressed={pointPlaced ? pending : undefined}
                         aria-label={`添加 ${asset.name}`}
                         title={pointPlaced ? '选款后在画布上点击放置' : '点击添加模型'}
                         onClick={() => {
@@ -334,7 +337,7 @@ export function ModelPicker({
                             {asset.productImageMatch === 'approximate' && (
                               <span className="tag">同类参考图</span>
                             )}
-                            {pendingAssetId === asset.id && <span className="tag">待放置</span>}
+                            {pending && <span className="tag model-placement-status">待放置</span>}
                             {lastPicked === asset.id && <span className="tag done">已添加</span>}
                           </span>
                         </span>

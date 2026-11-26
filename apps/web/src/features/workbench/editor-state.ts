@@ -34,6 +34,7 @@ import {
   snapFixtureRect,
   turnItem,
   wallMountSnap,
+  wallPlacementTarget,
 } from '@store/shared'
 import type {
   Asset,
@@ -270,6 +271,13 @@ function snapToWall(
   forceDefaultHeight = false,
 ) {
   if (mount === 'wall') {
+    if (wallLogo(item, mount)) {
+      return wallMountSnap(item, cx, cz, space, front, reach, fixtures, items, undefined, {
+        defaultTop: true,
+        preferPartitions: true,
+        adding: forceDefaultHeight,
+      })
+    }
     const autoHeight =
       forceDefaultHeight ||
       item.elevation === undefined ||
@@ -359,6 +367,66 @@ export function nextItemId(layout: Layout, fn: string): string {
   let n = layout.items.filter((i) => i.function === fn).length + 1
   while (used.has(`${fn}-${n}`)) n++
   return `${fn}-${n}`
+}
+
+export interface ModelPlacementClick {
+  point: Point
+  normal?: Point
+}
+
+function wallLogo(item: Pick<LayoutItem, 'function' | 'name' | 'assetId'>, mount: Installation) {
+  return mount === 'wall' && item.function === 'signage' && !isDisplayPanel(item)
+}
+
+export function needsWallPlacement(item: LayoutItem, asset?: Asset): boolean {
+  return isDisplayPanel(item) || wallLogo(item, asset?.installation ?? itemMount(item))
+}
+
+/** Existing auto-placement remains available to callers; canvas placement uses the clicked face. */
+export function placeCatalogItem(
+  item: LayoutItem,
+  layout: Layout,
+  space: Space,
+  click: ModelPlacementClick,
+  asset?: Asset,
+): LayoutItem | null {
+  const [x, z] = click.point
+  const mount = asset?.installation ?? itemMount(item)
+  const positioned = { ...item, cx: snap(x), cz: snap(z) }
+  if (!needsWallPlacement(item, asset))
+    return mountAs(positioned, mount, asset?.front ?? null, layout.items, space, layout.fixtures)
+
+  const target = wallPlacementTarget(
+    click.point,
+    space,
+    layout.fixtures ?? [],
+    layout.items,
+    click.normal,
+  )
+  if (!target) return null
+  const front = asset?.front ?? null
+  if (isDisplayPanel(item)) {
+    const panel = displayPanelSnap(item, x, z, space, front, layout.fixtures, layout.items, true, {
+      target,
+      defaultTop: true,
+      preferPartitions: item.function === 'screen',
+    })
+    return panel ? { ...item, ...panel } : null
+  }
+
+  const logo = wallMountSnap(
+    { ...item, mount: 'wall' },
+    x,
+    z,
+    space,
+    front,
+    Infinity,
+    layout.fixtures,
+    layout.items,
+    undefined,
+    { target, defaultTop: true, preferPartitions: true, adding: true },
+  )
+  return logo ? { ...item, ...logo, mount: 'wall' } : null
 }
 
 type ModelPosition = Pick<LayoutItem, 'cx' | 'cz'>
@@ -478,6 +546,8 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
                 action.front ?? null,
                 state.layout.fixtures,
                 state.layout.items,
+                false,
+                { defaultTop: true, preferPartitions: item.function === 'screen' },
               )
             if (placed && limitPosition(placed) === placed) return { ...item, ...placed }
             const position = limitPosition({ cx: snap(cx), cz: snap(cz) })
@@ -789,6 +859,7 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           state.layout.fixtures,
           state.layout.items,
           true,
+          { defaultTop: true, preferPartitions: item.function === 'screen' },
         )
         added = { ...item, elevation, mount: 'ceiling', ...placed }
       } else if (space) {
