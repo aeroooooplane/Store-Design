@@ -96,6 +96,86 @@ describe('history nodes', () => {
     expect(full.json<DesignNode>().layout?.items[0]).toMatchObject({ id: 'a', placeholder: false })
   })
 
+  it('updates only the chosen space, plan or render and rebases its draft', async () => {
+    const project = await newProject()
+    const root = await spaceNode(project.id)
+    const planLayout = layout(island('a', 7.5, 2))
+    const createPlan = async (name: string, sourceNodeId?: string) =>
+      (
+        await post(project.id, {
+          parentId: root.id,
+          kind: 'plan',
+          name,
+          layout: planLayout,
+          ...(sourceNodeId ? { sourceNodeId } : {}),
+        })
+      ).json<NodeCreated>().node
+    const plan = await createPlan('原方案')
+    const sibling = await createPlan('另一方案')
+    const render = (
+      await post(project.id, {
+        parentId: plan.id,
+        kind: 'render',
+        name: '原渲染',
+        siStyle: 'SI1.0',
+        layout: planLayout,
+      })
+    ).json<NodeCreated>().node
+    const node = async (id: string) =>
+      (await t.app.inject({ method: 'GET', url: `/api/v1/nodes/${id}` })).json<DesignNode>()
+    const save = (id: string, space: object, previousSpace: object) =>
+      t.app.inject({
+        method: 'PATCH',
+        url: `/api/v1/nodes/${id}/space`,
+        payload: { space, previousSpace },
+      })
+    const draft = await t.app.inject({
+      method: 'PUT',
+      url: `/api/v1/projects/${project.id}/draft`,
+      payload: { baseNodeId: plan.id, layout: layout(island('a', 7.5, 3)) },
+    })
+    expect(draft.statusCode).toBe(200)
+
+    const initial = root.space!
+    expect((await save(root.id, { ...initial, height: 4 }, initial)).statusCode).toBe(200)
+    expect((await node(plan.id)).space).toEqual(initial)
+    expect((await node(render.id)).space).toEqual(initial)
+    expect((await createPlan('新方案')).space?.height).toBe(4)
+
+    const wider = rectangleSpace(9, 6, 3.2)
+    const edited = await save(plan.id, wider, initial)
+    expect(edited.statusCode).toBe(200)
+    expect(edited.json<NodeCreated>().node).toMatchObject({
+      id: plan.id,
+      parentId: root.id,
+      space: wider,
+    })
+    expect((await node(plan.id)).layout?.items[0]?.cx).toBe(8.5)
+    expect((await node(sibling.id)).space).toEqual(initial)
+    expect((await node(render.id)).space).toEqual(initial)
+    expect((await createPlan('复制改墙方案', plan.id)).space).toEqual(wider)
+    const drafts = await t.app.inject({
+      method: 'GET',
+      url: `/api/v1/projects/${project.id}/drafts`,
+    })
+    expect(drafts.json<{ drafts: Draft[] }>().drafts).toMatchObject([
+      { revision: 2, layout: { items: [{ cx: 8.5, cz: 3 }] } },
+    ])
+    expect((await save(plan.id, wider, initial)).statusCode).toBe(200)
+    expect((await save(plan.id, { ...wider, height: 3.6 }, initial)).statusCode).toBe(409)
+
+    const renderUpdate = await save(render.id, { ...initial, height: 3.6 }, initial)
+    expect(renderUpdate.statusCode).toBe(200)
+    expect(renderUpdate.json<NodeCreated>().node).toMatchObject({
+      id: render.id,
+      parentId: plan.id,
+      kind: 'render',
+      siStyle: 'SI1.0',
+      space: { height: 3.6 },
+    })
+    expect((await node(plan.id)).space).toEqual(wider)
+  })
+
   it('normalises spaces and rejects invalid ones', async () => {
     const project = await newProject()
     const ccw = rectangleSpace(6, 4, 3)

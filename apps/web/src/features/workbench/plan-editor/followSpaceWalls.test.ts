@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
+import { followSpaceWalls, rectangleSpace } from '@store/shared'
 import type { Layout, LayoutItem } from '@store/shared'
-import { followWalls } from './useEditWalls.ts'
 
 function item(id: string, cx: number, cz: number, overrides: Partial<LayoutItem> = {}) {
   return {
@@ -21,7 +20,7 @@ function item(id: string, cx: number, cz: number, overrides: Partial<LayoutItem>
   }
 }
 
-describe('followWalls', () => {
+describe('followSpaceWalls', () => {
   const before = rectangleSpace(6, 4, 3)
   // The right wall moves 0.6 m in; the back wall (z = 0) stays.
   const after = rectangleSpace(5.4, 4, 3)
@@ -37,7 +36,7 @@ describe('followWalls', () => {
   }
 
   it('moves props on a moved wall with it and leaves the rest', () => {
-    const moved = followWalls(layout, before, after).items
+    const moved = followSpaceWalls(layout, before, after).items
     expect(moved.map((i) => [i.id, i.cx, i.cz])).toEqual([
       ['back', 3, 0.275],
       ['right', 5.125, 2],
@@ -47,7 +46,7 @@ describe('followWalls', () => {
   })
 
   it('returns the same items when no wall moved', () => {
-    const same = followWalls(layout, before, rectangleSpace(6, 4, 3.2))
+    const same = followSpaceWalls(layout, before, rectangleSpace(6, 4, 3.2))
     same.items.forEach((i, k) => expect(i).toBe(layout.items[k]))
   })
 })

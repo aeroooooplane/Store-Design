@@ -28,16 +28,16 @@ def summarize(row):
     return summary
 
 
-def node_detail(row):
+def node_detail(row, db=None):
     return {
         **summarize(row),
         "projectId": row["projectId"],
-        "space": json.loads(row["space"]) if row["space"] is not None else None,
+        "space": resolve_space(db, row, required=False) if db is not None else (json.loads(row["space"]) if row["space"] is not None else None),
         "layout": json.loads(row["layout"]) if row["layout"] is not None else None,
     }
 
 
-def resolve_space(db, parent):
+def resolve_space(db, parent, required=True):
     current = parent
     for _ in range(MAX_NODES):
         if current["space"] is not None:
@@ -45,7 +45,9 @@ def resolve_space(db, parent):
         if current["parentId"] is None:
             break
         current = node_row(db, current["parentId"])
-    raise ApiError(409, "INVALID_STATE", "节点缺少所属空间")
+    if required:
+        raise ApiError(409, "INVALID_STATE", "节点缺少所属空间")
+    return None
 
 
 @router.get("/write-token")
@@ -70,7 +72,7 @@ def list_nodes(request: Request, projectId: ResourceId, includeHidden: Literal["
 @router.get("/nodes/{nodeId}")
 def get_node(request: Request, nodeId: ResourceId):
     with request.app.state.db.connect() as db:
-        return node_detail(node_row(db, nodeId))
+        return node_detail(node_row(db, nodeId), db)
 
 
 @router.post("/projects/{projectId}/nodes", status_code=201)
@@ -99,6 +101,8 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
         source = node_row(db, node["sourceNodeId"]) if node.get("sourceNodeId") else None
         if source and source["projectId"] != projectId:
             raise missing("复制来源节点")
+        if node["kind"] != "space" and source and source["parentId"] == parent_id and source["space"] is not None:
+            space = json.loads(source["space"])
         if layout is not None:
             layout_space = space if space is not None else resolve_space(db, parent)
             issues += rules.run("layout", {"space": layout_space, "layout": layout})["issues"]
@@ -121,7 +125,7 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
         if node["kind"] in {"white", "render"} or (node["kind"] == "plan" and source):
             initialize_views(db, row, rules, source or parent)
         db.execute("UPDATE projects SET updatedAt = ? WHERE id = ?", (now, projectId))
-    return {"node": node_detail(row), "issues": issues}
+        return {"node": node_detail(row, db), "issues": issues}
 
 
 @router.patch("/nodes/{nodeId}")
@@ -131,7 +135,51 @@ def rename(request: Request, nodeId: ResourceId, payload: Annotated[dict, Body()
         row = node_row(db, nodeId)
         project_row(db, row["projectId"], active=True)
         changed = db.execute("UPDATE workbench_nodes SET name = ? WHERE id = ? RETURNING *", (name, nodeId)).fetchone()
-    return node_detail(changed)
+        return node_detail(changed, db)
+
+
+@router.patch("/nodes/{nodeId}/space")
+def update_node_space(request: Request, nodeId: ResourceId, payload: Annotated[dict, Body()]):
+    rules = request.app.state.rules
+    with request.app.state.db.connect(write=True) as db:
+        row = node_row(db, nodeId)
+        project_row(db, row["projectId"], active=True)
+        checked = rules.run("node-space", {"update": payload, "stored": resolve_space(db, row)})
+        space, prior = checked["space"], checked["previous"]
+        if prior == space:
+            return {"node": node_detail(row, db), "issues": checked["issues"]}
+        if prior != checked["expected"]:
+            raise ApiError(409, "REVISION_CONFLICT", "空间已在其他窗口修改，请重新打开后再编辑")
+
+        def moved_layout(raw):
+            if raw is None:
+                return None
+            result = rules.run("space-layout", {"layout": json.loads(raw), "before": prior, "after": space})
+            return json.dumps(result["layout"], ensure_ascii=False)
+
+        db.execute(
+            "UPDATE workbench_nodes SET space = ? WHERE parentId = ? AND space IS NULL",
+            (json.dumps(prior, ensure_ascii=False), nodeId),
+        )
+        changed = db.execute(
+            "UPDATE workbench_nodes SET space = ?, layout = ? WHERE id = ? RETURNING *",
+            (json.dumps(space, ensure_ascii=False), moved_layout(row["layout"]), nodeId),
+        ).fetchone()
+        if row["kind"] == "render":
+            db.execute("""
+                UPDATE stage_cameras SET camera = json_set(
+                    camera, '$.backgroundRevision', coalesce(json_extract(camera, '$.backgroundRevision'), 0) + 1
+                ) WHERE nodeId = ?
+            """, (nodeId,))
+        draft = db.execute("SELECT layout FROM workbench_drafts WHERE baseNodeId = ?", (nodeId,)).fetchone()
+        now = timestamp()
+        if draft:
+            db.execute(
+                "UPDATE workbench_drafts SET layout = ?, revision = revision + 1, updatedAt = ? WHERE baseNodeId = ?",
+                (moved_layout(draft["layout"]), now, nodeId),
+            )
+        db.execute("UPDATE projects SET updatedAt = ? WHERE id = ?", (now, row["projectId"]))
+        return {"node": node_detail(changed, db), "issues": checked["issues"]}
 
 
 @router.post("/nodes/{nodeId}/{action}")
@@ -141,7 +189,7 @@ def visibility(request: Request, nodeId: ResourceId, action: Literal["hide", "re
         project_row(db, row["projectId"], active=True)
         hidden_at = (row["hiddenAt"] or timestamp()) if action == "hide" else None
         changed = db.execute("UPDATE workbench_nodes SET hiddenAt = ? WHERE id = ? RETURNING *", (hidden_at, nodeId)).fetchone()
-    return node_detail(changed)
+        return node_detail(changed, db)
 
 
 @router.post("/layouts/generate")

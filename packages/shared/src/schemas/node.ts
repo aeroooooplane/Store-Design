@@ -82,6 +82,13 @@ export const NodeCreateSchema = z
 export type NodeCreate = z.output<typeof NodeCreateSchema>
 export type NodeCreateInput = z.input<typeof NodeCreateSchema>
 
+export const NodeSpaceUpdateSchema = z.strictObject({
+  space: SpaceSchema,
+  /** The space shown when editing began, used to detect changes from another window. */
+  previousSpace: SpaceSchema,
+})
+export type NodeSpaceUpdate = z.output<typeof NodeSpaceUpdateSchema>
+
 export const NodeRenameSchema = z.strictObject({ name: NameSchema })
 
 export const NodeCreatedSchema = z.object({ node: NodeSchema, issues: z.array(IssueSchema) })

@@ -47,7 +47,7 @@ export async function importProject(
 
     const ids = new Map<string, string>()
     for (const node of planned.nodes) {
-      const space = node.kind === 'space' && node.space ? checkSpace(node.space).space : null
+      const space = node.space ? checkSpace(node.space).space : null
       if (node.kind === 'space' && !space)
         throw new AppError('VALIDATION_FAILED', `节点“${node.name}”缺少空间`)
       if (node.kind !== 'space' && !node.layout)

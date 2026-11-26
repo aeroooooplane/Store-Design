@@ -1837,7 +1837,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** 重命名节点（节点内容不可修改） */
+        /** 重命名节点 */
         patch: {
             parameters: {
                 query?: never;
@@ -2020,6 +2020,428 @@ export interface paths {
                                     h: number;
                                 }[];
                             } | null;
+                        };
+                    };
+                };
+                /** @description Default Response */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+                /** @description Default Response */
+                409: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            error: {
+                                code: string;
+                                message: string;
+                                details?: unknown;
+                                requestId: string;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+        trace?: never;
+    };
+    "/api/v1/nodes/{nodeId}/space": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** 修改当前节点的空间，保留已有下游节点所用的空间 */
+        patch: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    nodeId: string;
+                };
+                cookie?: never;
+            };
+            requestBody: {
+                content: {
+                    "application/json": {
+                        space: {
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            height: number;
+                            /** @default [] */
+                            entrances?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            /** @default [] */
+                            openEdges?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                            }[];
+                            /** @default [] */
+                            obstacles?: {
+                                /** @enum {string} */
+                                kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                polygon: [
+                                    number,
+                                    number
+                                ][];
+                                /** @default null */
+                                height?: number | null;
+                                /** @default null */
+                                label?: string | null;
+                                addedLater?: boolean;
+                            }[];
+                            /** @default null */
+                            calibration?: {
+                                /** @enum {string} */
+                                method: "manual" | "dimension" | "item_label" | "area" | "llm";
+                                reference: string;
+                                verified: boolean;
+                            } | null;
+                        };
+                        previousSpace: {
+                            /** @enum {number} */
+                            schemaVersion: 1;
+                            demand?: {
+                                /** @enum {number} */
+                                schemaVersion: 1;
+                                sourceStoreId?: string;
+                                entities: {
+                                    id: string;
+                                    label: string;
+                                    roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                    quantity: number;
+                                    /** @default {} */
+                                    dimensions?: {
+                                        length?: number;
+                                        width?: number;
+                                        depth?: number;
+                                        height?: number;
+                                        attachedSeats?: number;
+                                    };
+                                    /** @default null */
+                                    placeholderFootprint?: {
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    } | null;
+                                    origin?: string;
+                                    sourceAnnotationHash?: string;
+                                }[];
+                            };
+                            boundary: [
+                                number,
+                                number
+                            ][];
+                            height: number;
+                            /** @default [] */
+                            entrances?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                /** @enum {string} */
+                                kind: "main" | "side";
+                            }[];
+                            /** @default [] */
+                            openEdges?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                            }[];
+                            /** @default [] */
+                            obstacles?: {
+                                /** @enum {string} */
+                                kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                polygon: [
+                                    number,
+                                    number
+                                ][];
+                                /** @default null */
+                                height?: number | null;
+                                /** @default null */
+                                label?: string | null;
+                                addedLater?: boolean;
+                            }[];
+                            /** @default null */
+                            calibration?: {
+                                /** @enum {string} */
+                                method: "manual" | "dimension" | "item_label" | "area" | "llm";
+                                reference: string;
+                                verified: boolean;
+                            } | null;
+                        };
+                    };
+                };
+            };
+            responses: {
+                /** @description Default Response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            node: {
+                                /** Format: uuid */
+                                id: string;
+                                parentId: string | null;
+                                /** @enum {string} */
+                                kind: "space" | "plan" | "edit" | "white" | "render";
+                                name: string;
+                                strategy: ("max" | "area" | "min" | "case") | null;
+                                siStyle: ("SI1.0" | "SI2.0") | null;
+                                /** @enum {string} */
+                                origin: "user" | "generator" | "agent" | "import" | "recognition";
+                                importedFrom: string | null;
+                                /** Format: uuid */
+                                sourceNodeId?: string;
+                                hidden: boolean;
+                                /** Format: date-time */
+                                createdAt: string;
+                                /** Format: uuid */
+                                projectId: string;
+                                space: {
+                                    /** @enum {number} */
+                                    schemaVersion: 1;
+                                    demand?: {
+                                        /** @enum {number} */
+                                        schemaVersion: 1;
+                                        sourceStoreId?: string;
+                                        entities: {
+                                            id: string;
+                                            label: string;
+                                            roles: ("island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other")[];
+                                            quantity: number;
+                                            /** @default {} */
+                                            dimensions: {
+                                                length?: number;
+                                                width?: number;
+                                                depth?: number;
+                                                height?: number;
+                                                attachedSeats?: number;
+                                            };
+                                            /** @default null */
+                                            placeholderFootprint: {
+                                                w: number;
+                                                d: number;
+                                                h: number;
+                                            } | null;
+                                            origin?: string;
+                                            sourceAnnotationHash?: string;
+                                        }[];
+                                    };
+                                    boundary: [
+                                        number,
+                                        number
+                                    ][];
+                                    height: number;
+                                    /** @default [] */
+                                    entrances: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        /** @enum {string} */
+                                        kind: "main" | "side";
+                                    }[];
+                                    /** @default [] */
+                                    openEdges: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                    }[];
+                                    /** @default [] */
+                                    obstacles: {
+                                        /** @enum {string} */
+                                        kind: "column" | "shaft" | "stair" | "fixed" | "other";
+                                        polygon: [
+                                            number,
+                                            number
+                                        ][];
+                                        /** @default null */
+                                        height: number | null;
+                                        /** @default null */
+                                        label: string | null;
+                                        addedLater?: boolean;
+                                    }[];
+                                    /** @default null */
+                                    calibration: {
+                                        /** @enum {string} */
+                                        method: "manual" | "dimension" | "item_label" | "area" | "llm";
+                                        reference: string;
+                                        verified: boolean;
+                                    } | null;
+                                } | null;
+                                layout: {
+                                    /** @enum {number} */
+                                    schemaVersion: 3;
+                                    items: {
+                                        id: string;
+                                        assetId: string | null;
+                                        /** @enum {string} */
+                                        function: "island_table" | "unboxing_table" | "cashier" | "accessory_cabinet" | "side_cabinet" | "display_stand" | "screen" | "signage" | "seating" | "storage" | "other";
+                                        name: string;
+                                        cx: number;
+                                        cz: number;
+                                        rotation: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                        /** @default false */
+                                        placeholder: boolean;
+                                        /** @default false */
+                                        locked: boolean;
+                                        /** @enum {string} */
+                                        mount?: "floor" | "wall" | "ceiling" | "embedded";
+                                        elevation?: number;
+                                        scale?: number;
+                                        logoText?: string;
+                                    }[];
+                                    /** @default null */
+                                    planning: {
+                                        demand?: {
+                                            id: string;
+                                            label: string;
+                                            required: number;
+                                            placed: number;
+                                            placeholders: number;
+                                            reason: string | null;
+                                        }[];
+                                        /** @enum {string} */
+                                        strategy: "max" | "area" | "min" | "case";
+                                        requested: number;
+                                        placed: number;
+                                        /** @default [] */
+                                        relaxations: {
+                                            rule: string;
+                                            target: number;
+                                            actual: number;
+                                        }[];
+                                        /** @default null */
+                                        note: string | null;
+                                    } | null;
+                                    fixtures?: {
+                                        id: string;
+                                        /** @enum {string} */
+                                        kind: "hollow_partition";
+                                        cx: number;
+                                        cz: number;
+                                        w: number;
+                                        d: number;
+                                        h: number;
+                                    }[];
+                                } | null;
+                            };
+                            issues: {
+                                code: string;
+                                /** @enum {string} */
+                                severity: "error" | "warning";
+                                message: string;
+                                itemIds?: string[];
+                                path?: (string | number)[];
+                            }[];
                         };
                     };
                 };
