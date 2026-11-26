@@ -288,7 +288,7 @@ describe('Workbench', () => {
     expect(post?.body).toMatchObject({
       parentId: null,
       kind: 'space',
-      name: '空间',
+      name: '空间 A',
       space: {
         boundary: [
           [0, 0],
@@ -354,13 +354,13 @@ describe('Workbench', () => {
     expect(generate?.body).toMatchObject({ shopType: 'side_hall', siStyle: 'SI1.0' })
     const created = server.calls.filter((c) => c.method === 'POST' && c.path.endsWith('/nodes'))
     expect(created.map((c) => c.body)).toMatchObject([
-      { parentId: S1, kind: 'plan', strategy: 'max', name: '方案 · 尽量多放' },
-      { parentId: S1, kind: 'plan', strategy: 'area', name: '方案 · 按面积推荐' },
-      { parentId: S1, kind: 'plan', strategy: 'min', name: '方案 · 尽量少放' },
+      { parentId: S1, kind: 'plan', strategy: 'max', name: '方案 A · 尽量多放' },
+      { parentId: S1, kind: 'plan', strategy: 'area', name: '方案 B · 按面积推荐' },
+      { parentId: S1, kind: 'plan', strategy: 'min', name: '方案 C · 尽量少放' },
     ])
 
     fireEvent.click(screen.getAllByRole('button', { name: '打开此方案' })[1] as HTMLElement)
-    expect(await screen.findByRole('heading', { name: '方案 · 按面积推荐' })).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: '方案 B · 按面积推荐' })).toBeTruthy()
     expect(screen.getByRole('region', { name: '方案阶段' })).toBeTruthy()
   })
 
@@ -397,6 +397,24 @@ describe('Workbench', () => {
     fireEvent.click(screen.getByRole('button', { name: '丢弃草稿' }))
     await waitFor(() => expect(server.state.drafts.has(P1)).toBe(false))
     expect(server.state.drafts.get(P2)?.layout.items[0]?.cx).toBe(4.1)
+  })
+
+  it('gives a copy the next plan letter and displays its source', async () => {
+    server = fakeApi(
+      [
+        designNode(S1, null),
+        designNode(P1, S1, { name: '方案 A' }),
+        designNode(P2, S1, { name: '方案 B', hidden: true }),
+      ],
+      null,
+    )
+    renderWorkbench(`?node=${P1}`)
+    fireEvent.click(await screen.findByRole('button', { name: '新建副本' }))
+    await screen.findByRole('heading', { name: '方案 C' })
+    const copy = server.state.nodes.at(-1)
+    expect(copy).toMatchObject({ name: '方案 C', sourceNodeId: P1 })
+    fireEvent.click(screen.getByRole('tab', { name: '历史' }))
+    expect(screen.getByText('来源：方案 A')).toBeTruthy()
   })
 
   it('switching SI saves a copy of the plan with its props swapped and keeps the original', async () => {

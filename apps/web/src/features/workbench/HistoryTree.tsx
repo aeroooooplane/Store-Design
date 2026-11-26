@@ -96,6 +96,12 @@ export function nodeLabel(node: NodeSummary): string {
   return node.name.startsWith(kind) ? node.name : `${kind} · ${node.name}`
 }
 
+function originLabel(node: NodeSummary | null | undefined): string | null {
+  if (node?.origin === 'recognition') return '图纸识别'
+  if (node?.origin === 'user' && node.kind === 'space' && !node.parentId) return '手动录入'
+  return null
+}
+
 /** Dragged positions are remembered per project in this browser (用户 2026-10-10). */
 const offsetsKey = (projectId: string) => `store-design:tree-offsets:${projectId}`
 
@@ -223,6 +229,11 @@ export function HistoryTree({
     descendants.push(...nodes.filter((n) => n.parentId === id).map((n) => n.id))
   }
   const hovered = layout.boxes.find((box) => box.id === tooltip?.id)
+  const selectedSource = nodes.find((n) => n.id === selected?.sourceNodeId)
+  const selectedOrigin = selectedSource ? nodeLabel(selectedSource) : originLabel(selected)
+  const hoveredSource = nodes.find(
+    (n) => n.id === (hovered?.node?.sourceNodeId ?? hovered?.node?.parentId),
+  )
   const pathLabel = [projectName, ...ancestors.map(nodeLabel)].join(' › ')
 
   function showTooltip(id: string, target: SVGGElement) {
@@ -481,6 +492,7 @@ export function HistoryTree({
             <p className="history-path" title={pathLabel}>
               {selected ? pathLabel : projectName}
             </p>
+            {selectedOrigin && <p>来源：{selectedOrigin}</p>}
             <p>悬浮看名称 · 点击看关联 · 拖动排位置</p>
           </div>
           {tooltip &&
@@ -495,7 +507,7 @@ export function HistoryTree({
                 <span>
                   {hovered.id === ROOT_ID
                     ? '项目起点'
-                    : `来源：${layout.boxes.find((box) => box.id === hovered.node?.parentId)?.fullLabel ?? projectName}`}
+                    : `来源：${hoveredSource ? nodeLabel(hoveredSource) : (originLabel(hovered.node) ?? projectName)}`}
                 </span>
                 {draftBaseIds.has(hovered.id) && <span>有草稿</span>}
                 {hovered.hiddenBranch && <span>已隐藏</span>}

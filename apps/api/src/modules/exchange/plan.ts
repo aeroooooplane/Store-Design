@@ -25,6 +25,7 @@ export interface PlannedNode {
   siStyle: SiStyle | null
   origin: NodeOrigin
   importedFrom: string | null
+  sourceRef?: string | undefined
   hidden: boolean
 }
 

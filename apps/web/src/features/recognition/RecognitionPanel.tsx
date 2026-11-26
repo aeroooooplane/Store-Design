@@ -42,6 +42,7 @@ interface PdfSource {
 interface RecognitionPanelProps {
   projectId: string
   assets: Asset[]
+  spaceName?: string
   onCreated: (nodeId: string) => void
   onCancel?: (() => void) | undefined
 }
@@ -154,6 +155,7 @@ function traceFromDraft(draft: RecognitionDraft | null): Trace | null {
 export function RecognitionPanel({
   projectId,
   assets,
+  spaceName = '空间 A',
   onCreated,
   onCancel,
 }: RecognitionPanelProps) {
@@ -401,7 +403,12 @@ export function RecognitionPanel({
         )}
       </div>
       {upload && fineMode && (
-        <FineGeometryPanel key={upload.id} upload={upload} onCreated={onCreated} />
+        <FineGeometryPanel
+          key={upload.id}
+          upload={upload}
+          spaceName={spaceName}
+          onCreated={onCreated}
+        />
       )}
       <ErrorMessage error={localError ?? uploadPlan.error ?? recognize.error ?? confirm.error} />
 
@@ -664,7 +671,7 @@ export function RecognitionPanel({
                   <SpaceEditor
                     key={`${run.id}-${heightMm}-${editorKey}`}
                     initial={initialSpace}
-                    initialName="空间（识别）"
+                    initialName={spaceName}
                     submitting={confirm.isPending}
                     onCancel={onCancel}
                     onSubmit={submit}

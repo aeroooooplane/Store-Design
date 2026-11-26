@@ -76,3 +76,27 @@ class WorkbenchStorageTests(unittest.TestCase):
                 self.assertEqual(conn.execute("SELECT name FROM projects").fetchone()[0], "虚构项目")
                 self.assertEqual(conn.execute("SELECT COUNT(*) FROM workbench_nodes").fetchone()[0], 0)
 
+    def test_source_column_is_added_to_an_existing_history(self):
+        with tempfile.TemporaryDirectory() as directory:
+            db = Database(Path(directory))
+            db.initialize()
+            with db.connect(write=True) as conn:
+                conn.execute("""
+                    CREATE TABLE workbench_nodes (
+                        seq INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id TEXT NOT NULL UNIQUE,
+                        projectId TEXT NOT NULL REFERENCES projects(id),
+                        name TEXT NOT NULL
+                    )
+                """)
+                now = timestamp()
+                conn.execute("""
+                    INSERT INTO projects (id, name, shopType, market, siStyle, createdAt, updatedAt)
+                    VALUES ('p', '虚构项目', 'side_hall', 'domestic', 'SI2.0', ?, ?)
+                """, (now, now))
+                conn.execute("INSERT INTO workbench_nodes (id, projectId, name) VALUES ('n', 'p', '旧方案')")
+            db.initialize_workbench()
+            db.initialize_workbench()
+            with db.connect() as conn:
+                row = conn.execute("SELECT name, sourceNodeId FROM workbench_nodes WHERE id = 'n'").fetchone()
+                self.assertEqual((row["name"], row["sourceNodeId"]), ("旧方案", None))

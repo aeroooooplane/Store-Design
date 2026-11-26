@@ -1,4 +1,5 @@
 import type { NodeKind } from '../enums.ts'
+export { nextHistoryName, nextRenderName, nextSpaceRevisionName } from './names.ts'
 
 /** History rules shared by the workbench and the design assistant (names, stages, ancestors). */
 
@@ -61,15 +62,6 @@ export function stageParentId(nodes: readonly HistoryNode[], node: HistoryNode):
     current = current.parentId ? byId.get(current.parentId) : undefined
   }
   return null
-}
-
-/** "方案 · 按面积推荐" → "方案 · 按面积推荐 副本2", then 副本3 … avoiding names already used. */
-export function copyName(name: string, taken: readonly string[]): string {
-  const base = name.replace(/ 副本\d+$/, '')
-  const used = new Set(taken)
-  let n = 2
-  while (used.has(`${base} 副本${n}`)) n++
-  return `${base} 副本${n}`
 }
 
 /** A name not used yet among siblings: "方案 · 尽量多放", then "方案 · 尽量多放（2）" … */

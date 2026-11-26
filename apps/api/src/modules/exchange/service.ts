@@ -9,7 +9,7 @@ import { AppError, notFound } from '../../lib/app-error.ts'
 import { catalogAssets } from '../assets/service.ts'
 import { recordAudit } from '../audit/record.ts'
 import { draftRows } from '../drafts/service.ts'
-import { checkSpace } from '../nodes/service.ts'
+import { checkSpace, sourceNodeId } from '../nodes/service.ts'
 import { toProject } from '../projects/service.ts'
 import { convertLegacy } from './legacy.ts'
 import { convertNative, isNativeExport } from './native.ts'
@@ -73,6 +73,15 @@ export async function importProject(
       ids.set(node.ref, row.id)
     }
 
+    for (const node of planned.nodes) {
+      if (!node.sourceRef || node.origin === 'recognition') continue
+      const id = ids.get(node.ref)
+      const source = ids.get(node.sourceRef)
+      if (id && source && source !== id) {
+        await tx.update(designNodes).set({ originRef: source }).where(eq(designNodes.id, id))
+      }
+    }
+
     let draftImported = false
     for (const draft of [planned.draft, ...(planned.additionalDrafts ?? [])]) {
       if (!draft) continue
@@ -132,19 +141,23 @@ export async function exportProject(
       market: project.market,
       siStyle: project.siStyle,
     },
-    nodes: nodes.map((n) => ({
-      id: n.id,
-      parentId: n.parentId,
-      kind: n.kind,
-      name: n.name,
-      space: n.space ?? null,
-      layout: n.layout ?? null,
-      strategy: n.strategy,
-      siStyle: n.siStyle,
-      origin: n.origin,
-      importedFrom: n.importedFrom,
-      hidden: n.hiddenAt !== null,
-    })),
+    nodes: nodes.map((n) => {
+      const source = sourceNodeId(n)
+      return {
+        id: n.id,
+        parentId: n.parentId,
+        kind: n.kind,
+        name: n.name,
+        space: n.space ?? null,
+        layout: n.layout ?? null,
+        strategy: n.strategy,
+        siStyle: n.siStyle,
+        origin: n.origin,
+        importedFrom: n.importedFrom,
+        hidden: n.hiddenAt !== null,
+        ...(source ? { sourceNodeId: source } : {}),
+      }
+    }),
     draft: drafts[0] ?? null,
     ...(drafts.length > 1 ? { drafts } : {}),
   }

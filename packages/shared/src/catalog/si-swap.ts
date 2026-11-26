@@ -172,8 +172,10 @@ export function swapLayoutSi(
 
 /** "方案 · 按面积推荐 · SI1.0" → "方案 · 按面积推荐 · SI2.0": the switched copy's name. */
 export function siSwapName(name: string, target: SiStyle): string {
-  const base = name.replace(/（\d+）$/, '').replace(/ · SI[12]\.0$/, '')
-  return `${base} · ${target}`
+  const suffix = ` · ${target}`
+  const base = name.replace(/(?:(?: · SI[12]\.0| · Agent| 副本\d+)(?:（\d+）)?)+$/, '')
+  // Reserve space for a collision number as well as the SI suffix.
+  return `${base.slice(0, 100 - suffix.length - 5).trimEnd() || '方案'}${suffix}`
 }
 
 /**

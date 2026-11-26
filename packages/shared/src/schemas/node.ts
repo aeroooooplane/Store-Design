@@ -25,6 +25,7 @@ export const NodeSummarySchema = z.object({
   siStyle: SiStyleSchema.nullable(),
   origin: NodeOriginSchema,
   importedFrom: z.string().nullable(),
+  sourceNodeId: z.uuid().optional(),
   hidden: z.boolean(),
   createdAt: z.iso.datetime({ offset: true }),
 })

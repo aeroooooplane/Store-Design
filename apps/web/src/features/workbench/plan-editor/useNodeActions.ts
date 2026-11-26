@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import {
-  copyName,
   freshName,
+  nextHistoryName,
+  nextRenderName,
   nodeSiStyle,
   sameLayoutProps,
   siSwapName,
@@ -88,7 +89,7 @@ export function useNodeActions({
     void createFromLayout({
       kind: 'plan',
       parentId,
-      name: copyName(baseNode.name, namesUnder(parentId)),
+      name: nextHistoryName('plan', namesUnder(parentId)),
       sourceNodeId: baseNode.id,
     })
   }
@@ -184,13 +185,13 @@ export function useNodeActions({
       void createFromLayout({
         kind: 'render',
         parentId: baseNode.id,
-        name: freshName('渲染', namesUnder(baseNode.id)),
+        name: nextRenderName(namesUnder(baseNode.id)),
       })
     } else if (stage === 'space') {
       void createFromLayout({
         kind: 'plan',
         parentId: baseNode.id,
-        name: freshName('方案 · 手动排布', namesUnder(baseNode.id)),
+        name: nextHistoryName('plan', namesUnder(baseNode.id)),
       })
     }
   }

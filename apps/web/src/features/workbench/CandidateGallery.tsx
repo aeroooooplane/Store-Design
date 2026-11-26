@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { PLAN_STRATEGY_LABELS, freshName } from '@store/shared'
+import { PLAN_STRATEGY_LABELS, nextHistoryName, nextSpaceRevisionName } from '@store/shared'
 import type {
   Asset,
   Demand,
@@ -31,6 +31,7 @@ interface PlanGenerationInput {
   siStyle: SiStyle
   /** Names already used under this space, so a new set gets numbered names. */
   existingNames: readonly string[]
+  existingSpaceNames: readonly string[]
 }
 
 /**
@@ -43,6 +44,7 @@ export function usePlanGeneration({
   shopType,
   siStyle,
   existingNames,
+  existingSpaceNames,
 }: PlanGenerationInput) {
   const generate = useGenerateLayouts()
   const create = useCreateNode(projectId)
@@ -56,7 +58,8 @@ export function usePlanGeneration({
     const created = await create.mutateAsync({
       parentId: spaceNode.parentId,
       kind: 'space',
-      name: `${spaceNode.name.slice(0, 80)} · 清单修订`,
+      name: nextSpaceRevisionName(spaceNode.name, existingSpaceNames),
+      sourceNodeId: spaceNode.id,
       space: { ...spaceNode.space, demand },
     })
     setDirtySpace(null)
@@ -69,7 +72,7 @@ export function usePlanGeneration({
     const ids: Partial<Record<string, string>> = {}
     try {
       for (const candidate of result.candidates) {
-        const name = freshName(`方案 · ${PLAN_STRATEGY_LABELS[candidate.strategy]}`, taken)
+        const name = nextHistoryName('plan', taken, PLAN_STRATEGY_LABELS[candidate.strategy])
         taken.push(name)
         const created = await create.mutateAsync({
           parentId: spaceNode.id,

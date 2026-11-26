@@ -22,7 +22,10 @@ def node_row(db, node_id):
 
 
 def summarize(row):
-    return {**{name: row[name] for name in SUMMARY}, "hidden": row["hiddenAt"] is not None}
+    summary = {**{name: row[name] for name in SUMMARY}, "hidden": row["hiddenAt"] is not None}
+    if row["sourceNodeId"] is not None:
+        summary["sourceNodeId"] = row["sourceNodeId"]
+    return summary
 
 
 def node_detail(row, db=None):
@@ -110,13 +113,14 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
         now = timestamp()
         row = db.execute("""
             INSERT INTO workbench_nodes (id, projectId, parentId, kind, name, strategy, siStyle, origin,
-                space, layout, createdAt)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *
+                space, layout, createdAt, sourceNodeId)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *
         """, (
             str(uuid4()), projectId, parent_id, node["kind"], node["name"], node.get("strategy"),
             node.get("siStyle"), "generator" if node["kind"] == "plan" else "user",
             json.dumps(space, ensure_ascii=False) if space is not None else None,
             json.dumps(layout, ensure_ascii=False) if layout is not None else None, now,
+            source["id"] if source else None,
         )).fetchone()
         if node["kind"] in {"white", "render"} or (node["kind"] == "plan" and source):
             initialize_views(db, row, rules, source or parent)
