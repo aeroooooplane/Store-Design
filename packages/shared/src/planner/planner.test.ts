@@ -947,6 +947,41 @@ describe('usableArea and fixtures added after the shell', () => {
     ...(addedLater ? { addedLater } : {}),
   })
 
+  it('subtracts only the part of a column inside a concave store', () => {
+    const concave = space({
+      ...shell(),
+      boundary: [
+        [0, 0],
+        [9, 0],
+        [9, 3],
+        [4, 3],
+        [4, 7],
+        [0, 7],
+      ],
+      obstacles: [
+        {
+          ...obstacle('column'),
+          polygon: [
+            [3, 2],
+            [5, 2],
+            [5, 4],
+            [3, 4],
+          ],
+        },
+        {
+          ...obstacle('column'),
+          polygon: [
+            [6, 5],
+            [7, 5],
+            [7, 6],
+            [6, 6],
+          ],
+        },
+      ],
+    })
+    expect(usableArea(concave)).toBe(40)
+  })
+
   it('takes columns and shafts off the floor but counts platforms added later as floor', () => {
     expect(usableArea(space({ ...shell(), obstacles: [obstacle('column')] }))).toBeCloseTo(62.75, 6)
     expect(usableArea(space({ ...shell(), obstacles: [obstacle('shaft')] }))).toBeCloseTo(62.75, 6)

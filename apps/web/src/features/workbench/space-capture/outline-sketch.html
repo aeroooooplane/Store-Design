@@ -1,0 +1,2893 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>空间画布</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"
+    />
+    <style>
+      html,
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: transparent;
+      }
+      * {
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="viz-dotted-background space-entry-demo">
+      <section id="space-entry-proposal" aria-label="空间录入">
+        <header>
+          <span data-shop-label></span>
+          <button type="button" data-action="redraw" disabled>重新描边</button>
+        </header>
+        <div class="workspace">
+          <div class="surface">
+            <svg tabindex="0" aria-label="店铺平面。闭合后双击空间内或空白处居中，双击边校正角度">
+              <defs>
+                <pattern id="space-entry-grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                  <path d="M 20 0 H 0 V 20" fill="none" class="grid-mark"></path>
+                </pattern>
+              </defs>
+              <rect
+                width="100%"
+                height="100%"
+                fill="url(#space-entry-grid)"
+                data-canvas-background
+                aria-hidden="true"
+              ></rect>
+              <g class="edge-hits"></g>
+              <g class="marks"></g>
+              <g class="column-placement" pointer-events="none"></g>
+            </svg>
+            <label class="gap-editor" data-gap-editor hidden>
+              <span data-gap-label></span>
+              <input type="number" step="1" data-gap-input title="负数表示柱边超出铺位边线" />
+            </label>
+            <div class="strip">
+              <span data-status aria-live="polite"></span>
+              <div class="button-row history-actions">
+                <button
+                  type="button"
+                  data-action="undo"
+                  title="Ctrl+Z"
+                  aria-keyshortcuts="Control+Z Meta+Z"
+                  disabled
+                >
+                  撤回
+                </button>
+                <button
+                  type="button"
+                  data-action="redo"
+                  title="Ctrl+Y 或 Ctrl+Shift+Z"
+                  aria-keyshortcuts="Control+Y Control+Shift+Z Meta+Shift+Z"
+                  disabled
+                >
+                  重做
+                </button>
+              </div>
+            </div>
+          </div>
+          <aside aria-label="属性面板">
+            <div class="inspector-scroll" tabindex="0" aria-label="属性设置">
+              <div data-outline>
+                <div class="button-row" data-trace-tools hidden>
+                  <button type="button" data-action="ortho" aria-pressed="false">正交</button>
+                  <small>按住 Shift 临时开启</small>
+                </div>
+                <div class="measurements">
+                  <label
+                    >层高
+                    <input
+                      type="number"
+                      min="1500"
+                      max="20000"
+                      step="any"
+                      value="3200"
+                      data-setting="height"
+                  /></label>
+                  <small>单位 mm</small>
+                </div>
+                <div class="button-row" data-node-actions hidden>
+                  <span data-node-label></span>
+                  <button
+                    type="button"
+                    data-action="remove-vertex"
+                    title="Delete"
+                    aria-keyshortcuts="Delete"
+                  >
+                    删除节点
+                  </button>
+                  <small data-node-limit hidden>至少保留 3 个节点</small>
+                </div>
+                <div class="edge-fields" data-edges>
+                  <label
+                    >选中边
+                    <select data-edge aria-label="选中边"></select
+                  ></label>
+                  <label
+                    >边长（mm）<input type="number" min="100" max="30000" step="1" data-edge-length
+                  /></label>
+                  <small data-edge-anchor></small>
+                  <div class="button-row">
+                    <button type="button" data-action="split-edge" aria-pressed="false">
+                      添加节点
+                    </button>
+                    <small data-edge-note>拖动每步 50 mm · 双击校正角度</small>
+                  </div>
+                  <div class="opening-fields">
+                    <span>开放方式</span>
+                    <div class="button-row" role="group" aria-label="开放方式">
+                      <button type="button" data-opening-mode="wall" aria-pressed="false">
+                        封闭
+                      </button>
+                      <button type="button" data-opening-mode="full" aria-pressed="true">
+                        整边开放
+                      </button>
+                      <button type="button" data-opening-mode="partial" aria-pressed="false" hidden>
+                        局部开放
+                      </button>
+                    </div>
+                    <small data-opening-hint hidden>拖动绿色端点，沿边调整开口</small>
+                    <div class="measurements" data-partial hidden>
+                      <label
+                        >距起点（mm）<input
+                          type="number"
+                          min="0"
+                          step="1"
+                          data-opening-value="start"
+                      /></label>
+                      <label
+                        >开口宽度（mm）<input
+                          type="number"
+                          min="1"
+                          step="1"
+                          data-opening-value="width"
+                      /></label>
+                    </div>
+                    <div class="button-row">
+                      <button type="button" data-action="opening" aria-pressed="false">
+                        设为主入口
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="column-fields" data-columns hidden>
+                  <span>柱子</span>
+                  <div class="button-row" role="group" aria-label="柱子">
+                    <button type="button" data-column-kind="square" aria-pressed="false">
+                      放方柱
+                    </button>
+                    <button type="button" data-column-kind="circle" aria-pressed="false">
+                      放圆柱
+                    </button>
+                  </div>
+                  <div class="measurements" data-column-size hidden>
+                    <label
+                      ><span data-column-width-label>宽（mm）</span
+                      ><input type="number" min="50" step="1" data-column-value="width"
+                    /></label>
+                    <label data-column-depth
+                      >深（mm）<input type="number" min="50" step="1" data-column-value="depth"
+                    /></label>
+                  </div>
+                  <button
+                    type="button"
+                    data-action="remove-column"
+                    title="Delete"
+                    aria-keyshortcuts="Delete"
+                    hidden
+                  >
+                    删除选中柱
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="inspector-footer">
+              <button class="primary" type="button" data-action="next">确认轮廓</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+
+    <style>
+      .space-entry-demo {
+        box-sizing: border-box;
+        height: 100vh;
+        height: 100dvh;
+        padding: 12px;
+        max-width: 1120px;
+        margin: 0 auto;
+      }
+      #space-entry-proposal {
+        color-scheme: light dark;
+        --entry-status-height: 50px;
+        --entry-surface: light-dark(#fffefa, #242725);
+        --entry-field: light-dark(#fff, #292d2a);
+        --entry-canvas: light-dark(#f5f6f0, #1d211f);
+        --entry-ink: light-dark(#252a27, #f0f2ec);
+        --entry-muted: light-dark(#56615a, #bbc5be);
+        --entry-line: light-dark(#d6ddd4, #48544c);
+        --entry-accent: light-dark(#f3d354, #f2d35d);
+        --entry-accent-ink: #25240f;
+        --entry-plan: light-dark(#f0f5ef, #303d35);
+        --entry-wall: light-dark(#3c5248, #bdcec3);
+        --entry-entry: light-dark(#0c6d52, #72d3ad);
+        --entry-error: light-dark(#a12825, #ffada8);
+        color: var(--entry-ink);
+        background: var(--entry-surface);
+        border: 1px solid var(--entry-line);
+        border-radius: 13px;
+        height: 100%;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        font:
+          14px system-ui,
+          'Microsoft YaHei',
+          sans-serif;
+      }
+      #space-entry-proposal [hidden] {
+        display: none !important;
+      }
+      #space-entry-proposal header {
+        flex: none;
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--entry-line);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+      #space-entry-proposal header strong {
+        font-size: 16px;
+        font-weight: 600;
+      }
+      #space-entry-proposal .button-row {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      #space-entry-proposal button,
+      #space-entry-proposal input,
+      #space-entry-proposal select {
+        font: inherit;
+        color: inherit;
+        margin: 0;
+        border-radius: 7px;
+        border: 1px solid var(--entry-line);
+        background: var(--entry-field);
+      }
+      #space-entry-proposal button {
+        min-height: 32px;
+        padding: 4px 8px;
+        white-space: nowrap;
+      }
+      #space-entry-proposal button[aria-pressed='true'],
+      #space-entry-proposal .primary {
+        color: var(--entry-accent-ink);
+        background: var(--entry-accent);
+        border-color: var(--entry-accent);
+      }
+      #space-entry-proposal button:disabled {
+        opacity: 0.52;
+      }
+      #space-entry-proposal .workspace {
+        flex: 1;
+        min-height: 0;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 27%);
+        grid-template-rows: minmax(0, 1fr);
+      }
+      #space-entry-proposal .surface {
+        position: relative;
+        min-width: 0;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) var(--entry-status-height);
+      }
+      #space-entry-proposal .history-actions {
+        flex-wrap: nowrap;
+      }
+      #space-entry-proposal svg:focus-visible {
+        outline: 2px solid var(--entry-entry);
+        outline-offset: -2px;
+      }
+      #space-entry-proposal .gap-editor {
+        position: absolute;
+        z-index: 1;
+        width: min(130px, 90%);
+        padding: 6px;
+        box-sizing: border-box;
+        border-radius: 7px;
+        border: 1px solid var(--entry-entry);
+        background: var(--entry-surface);
+        box-shadow: 0 2px 8px #0002;
+        font-size: 12px;
+      }
+      #space-entry-proposal .plan-dimension text[data-column-gap] {
+        pointer-events: bounding-box;
+        cursor: text;
+      }
+      #space-entry-proposal .plan-dimension text[data-column-gap]:is(:hover, :focus-visible) {
+        text-decoration: underline;
+        font-weight: 700;
+      }
+      #space-entry-proposal svg {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+        display: block;
+        background: var(--entry-canvas);
+        touch-action: none;
+        user-select: none;
+      }
+      #space-entry-proposal .grid-mark {
+        stroke: var(--entry-line);
+        stroke-width: 0.7;
+      }
+      #space-entry-proposal .strip {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 12px;
+        min-height: 0;
+        box-sizing: border-box;
+        color: var(--entry-muted);
+        border-top: 1px solid var(--entry-line);
+      }
+      #space-entry-proposal [data-status] {
+        min-width: 0;
+        max-height: 100%;
+        overflow: auto;
+        overflow-wrap: anywhere;
+      }
+      #space-entry-proposal [data-status][data-error='true'] {
+        color: var(--entry-error);
+      }
+      #space-entry-proposal aside {
+        min-width: 0;
+        min-height: 0;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) auto;
+        border-left: 1px solid var(--entry-line);
+      }
+      #space-entry-proposal .inspector-scroll {
+        min-height: 0;
+        overflow: hidden auto;
+        overscroll-behavior: contain;
+        scrollbar-gutter: stable;
+        padding: 13px;
+      }
+      #space-entry-proposal .inspector-scroll:focus-visible {
+        outline: 2px solid var(--entry-entry);
+        outline-offset: -2px;
+      }
+      #space-entry-proposal .inspector-scroll > div,
+      #space-entry-proposal .edge-fields {
+        display: grid;
+        gap: 10px;
+      }
+      #space-entry-proposal .inspector-footer {
+        display: flex;
+        padding: 8px 13px;
+        border-top: 1px solid var(--entry-line);
+      }
+      #space-entry-proposal .inspector-footer button {
+        width: 100%;
+      }
+      #space-entry-proposal .opening-fields,
+      #space-entry-proposal .column-fields {
+        display: grid;
+        gap: 6px;
+      }
+      #space-entry-proposal .column-fields {
+        border-top: 1px solid var(--entry-line);
+        padding-top: 8px;
+      }
+      #space-entry-proposal [data-action='remove-column'] {
+        justify-self: start;
+      }
+      #space-entry-proposal .measurements {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 7px;
+        align-items: end;
+      }
+      #space-entry-proposal label {
+        display: grid;
+        min-width: 0;
+        gap: 3px;
+      }
+      #space-entry-proposal input,
+      #space-entry-proposal select {
+        min-height: 32px;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 4px 5px;
+      }
+      #space-entry-proposal small {
+        color: var(--entry-muted);
+        font-size: 12px;
+      }
+      #space-entry-proposal .shape-mark {
+        fill: var(--entry-plan);
+        pointer-events: none;
+      }
+      #space-entry-proposal .open-mark {
+        fill: none;
+        stroke: var(--entry-wall);
+        stroke-width: 2;
+        pointer-events: none;
+      }
+      #space-entry-proposal .trace-preview {
+        stroke: var(--entry-entry);
+        stroke-width: 2;
+        stroke-dasharray: 5 4;
+        pointer-events: none;
+      }
+      #space-entry-proposal svg[data-placing-column='true'] {
+        cursor: crosshair;
+      }
+      #space-entry-proposal svg[data-column-preview='true'] {
+        cursor: none;
+      }
+      #space-entry-proposal .column-preview {
+        fill: var(--entry-entry);
+        fill-opacity: 0.22;
+        stroke: var(--entry-entry);
+        stroke-width: 1.5;
+      }
+      #space-entry-proposal .column-preview.invalid {
+        fill: var(--entry-error);
+        stroke: var(--entry-error);
+      }
+      #space-entry-proposal .plan-dimension {
+        pointer-events: none;
+        color: var(--entry-muted);
+        font-size: 11px;
+      }
+      #space-entry-proposal .plan-dimension line {
+        stroke: currentColor;
+        stroke-width: 0.8;
+      }
+      #space-entry-proposal .plan-dimension .dimension-extension {
+        opacity: 0.6;
+      }
+      #space-entry-proposal .plan-dimension .dimension-leader {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 0.8;
+      }
+      #space-entry-proposal .plan-dimension text {
+        fill: currentColor;
+        stroke: var(--entry-canvas);
+        stroke-width: 3px;
+        stroke-linejoin: round;
+        paint-order: stroke fill;
+      }
+      #space-entry-proposal .plan-dimension[data-dimension='overall'] {
+        color: var(--entry-ink);
+        font-weight: 600;
+      }
+      #space-entry-proposal .plan-dimension[data-dimension='column'] {
+        color: var(--entry-entry);
+      }
+      #space-entry-proposal .plan-dimension[data-dimension='column'] text {
+        stroke: var(--entry-plan);
+      }
+      #space-entry-proposal svg[data-placing-column='true'] .edge-mark,
+      #space-entry-proposal svg[data-placing-column='true'] .vertex-hit {
+        pointer-events: none;
+      }
+      #space-entry-proposal .edge-mark {
+        stroke: transparent;
+        stroke-width: 20;
+        cursor: grab;
+      }
+      #space-entry-proposal svg[data-adding-node='true'] .edge-mark {
+        cursor: crosshair;
+      }
+      #space-entry-proposal svg[data-adding-node='true'] .vertex-hit {
+        pointer-events: none;
+      }
+      #space-entry-proposal svg[data-edge-dragging='true'],
+      #space-entry-proposal svg[data-edge-dragging='true'] .edge-mark {
+        cursor: grabbing;
+      }
+      #space-entry-proposal .chosen-edge {
+        stroke: var(--entry-accent);
+        stroke-width: 10;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      #space-entry-proposal .wall-mark {
+        stroke: var(--entry-wall);
+        stroke-width: 2;
+        pointer-events: none;
+      }
+      #space-entry-proposal .opening-mark {
+        stroke: var(--entry-entry);
+        stroke-width: 5;
+        stroke-dasharray: 9 4;
+        pointer-events: none;
+      }
+      #space-entry-proposal .open-edge-mark {
+        stroke: var(--entry-entry);
+        stroke-width: 3;
+        stroke-dasharray: 8 4;
+        pointer-events: none;
+      }
+      #space-entry-proposal .opening-end {
+        fill: var(--entry-field);
+        stroke: var(--entry-entry);
+        stroke-width: 1.5;
+        pointer-events: none;
+      }
+      #space-entry-proposal .opening-handle {
+        fill: transparent;
+        cursor: grab;
+      }
+      #space-entry-proposal .opening-handle-tether {
+        stroke: var(--entry-entry);
+        stroke-width: 1;
+        pointer-events: none;
+      }
+      #space-entry-proposal .opening-end.active {
+        stroke-width: 2.5;
+      }
+      #space-entry-proposal .fixed-obstacle {
+        fill: var(--entry-wall);
+        opacity: 0.55;
+        pointer-events: none;
+      }
+      #space-entry-proposal .column-mark {
+        fill: var(--entry-wall);
+        stroke: var(--entry-field);
+        stroke-width: 1.5;
+      }
+      #space-entry-proposal .column-mark.selected {
+        stroke: var(--entry-accent);
+        stroke-width: 3;
+      }
+      #space-entry-proposal .column-mark[data-column] {
+        cursor: grab;
+      }
+      #space-entry-proposal svg[data-object-dragging='true'],
+      #space-entry-proposal svg[data-object-dragging='true'] :is(.opening-handle, .column-mark) {
+        cursor: grabbing;
+      }
+      #space-entry-proposal .vertex-mark {
+        fill: var(--entry-field);
+        stroke: var(--entry-wall);
+        stroke-width: 1.7;
+        pointer-events: none;
+      }
+      #space-entry-proposal .vertex-mark.selected {
+        fill: var(--entry-accent);
+        stroke-width: 2;
+      }
+      #space-entry-proposal .vertex-hit {
+        fill: transparent;
+      }
+      #space-entry-proposal .vertex-hit {
+        cursor: grab;
+      }
+      #space-entry-proposal .vertex-hit:active {
+        cursor: grabbing;
+      }
+      #space-entry-proposal .decor-label {
+        fill: var(--entry-muted);
+        font-size: 12px;
+        pointer-events: none;
+      }
+      @media (max-width: 560px) {
+        .space-entry-demo {
+          padding: 6px;
+        }
+        #space-entry-proposal {
+          --entry-status-height: 58px;
+        }
+        #space-entry-proposal header {
+          padding: 8px 10px;
+        }
+        #space-entry-proposal .workspace {
+          grid-template-columns: minmax(0, 1fr);
+          grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
+        }
+        #space-entry-proposal aside {
+          border-left: 0;
+          border-top: 1px solid var(--entry-line);
+        }
+      }
+      @media (pointer: coarse) {
+        #space-entry-proposal {
+          --entry-status-height: 62px;
+        }
+        #space-entry-proposal button,
+        #space-entry-proposal input,
+        #space-entry-proposal select {
+          min-height: 44px;
+        }
+      }
+    </style>
+
+    <script>
+      ;(() => {
+        const root = document.getElementById('space-entry-proposal')
+        const svg = root.querySelector('svg')
+        const marks = root.querySelector('.marks')
+        const edgeHits = root.querySelector('.edge-hits')
+        const columnPlacement = root.querySelector('.column-placement')
+        const status = root.querySelector('[data-status]')
+        const controls = (name) => root.querySelector('[data-action="' + name + '"]')
+        const setting = (name) => root.querySelector('[data-setting="' + name + '"]')
+        const edgeSelect = root.querySelector('[data-edge]')
+        const memory = []
+        const redo = []
+        const EDGE_STEP = 50
+        const MAX_VERTICES = 200
+        const MAX_OBSTACLES = 100
+        const openingLabels = { wall: '封闭', full: '整边开放', partial: '局部开放' }
+        const copy = (value) => structuredClone(value)
+        const initial = {
+          shop: 'island',
+          height: 3200,
+          points: [],
+          closed: false,
+          columns: [],
+          ortho: false,
+          ...shopDefaults('island', []),
+        }
+        let state = copy(initial)
+        let session = null
+        let fixedObstacles = []
+        let submitting = false
+        let drag = null
+        let justDragged = false
+        let addingNode = false
+        let placingColumn = null
+        let columnCursor = null
+        let selectedColumn = -1
+        let selectedVertex = -1
+        let gapEdit = null
+        let objectClipboard = null
+        let shiftHeld = false
+        let traceCursor = null
+        let error = ''
+        let projection
+        const edgeLength = root.querySelector('[data-edge-length]')
+        const edgeNote = root.querySelector('[data-edge-note]')
+        const edgeAnchorNote = root.querySelector('[data-edge-anchor]')
+        const offsetField = root.querySelector('[data-opening-value="start"]')
+        const widthField = root.querySelector('[data-opening-value="width"]')
+        const columnSize = root.querySelector('[data-column-size]')
+        const columnFields = [...columnSize.querySelectorAll('[data-column-value]')]
+        const gapEditor = root.querySelector('[data-gap-editor]')
+        const gapInput = root.querySelector('[data-gap-input]')
+        const gapDirections = [
+          ['左', 0, -1],
+          ['右', 0, 1],
+          ['上', 1, -1],
+          ['下', 1, 1],
+        ]
+
+        function shopDefaults(shop, points) {
+          const front = points.reduce((best, a, i) => {
+            const b = points[(i + 1) % points.length]
+            const far = points[best],
+              next = points[(best + 1) % points.length]
+            return a[1] + b[1] > far[1] + next[1] ||
+              (a[1] + b[1] === far[1] + next[1] && length(a, b) > length(far, next))
+              ? i
+              : best
+          }, 0)
+          return {
+            edge: front,
+            mainEdge: shop !== 'island' && points.length ? front : -1,
+            openings: points.map((_, i) =>
+              shop === 'island' || i === front ? { mode: 'full' } : null,
+            ),
+          }
+        }
+
+        function snapshot() {
+          return { state: copy(state), column: selectedColumn, vertex: selectedVertex }
+        }
+        function remember(entry = snapshot()) {
+          memory.push(entry)
+          redo.length = 0
+        }
+        function cancelTools() {
+          addingNode = false
+          placingColumn = null
+          traceCursor = null
+        }
+        function changeHistory(backward) {
+          if (drag) return false
+          const source = backward ? memory : redo,
+            destination = backward ? redo : memory
+          if (!source.length) return false
+          destination.push(snapshot())
+          const saved = source.pop()
+          state = { ...saved.state, ortho: state.ortho }
+          selectedColumn = saved.column
+          selectedVertex = saved.vertex
+          cancelTools()
+          error = ''
+          finish()
+          return true
+        }
+        function finish() {
+          render()
+        }
+
+        function midpoint(a, b) {
+          return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+        }
+        function length(a, b) {
+          return Math.hypot(a[0] - b[0], a[1] - b[1])
+        }
+        function signedArea(points) {
+          return (
+            points.reduce((sum, a, i) => {
+              const b = points[(i + 1) % points.length]
+              return sum + a[0] * b[1] - b[0] * a[1]
+            }, 0) / 2
+          )
+        }
+        function area(points) {
+          return Math.abs(signedArea(points))
+        }
+
+        function bounds(points) {
+          const x = points.map((p) => p[0]),
+            y = points.map((p) => p[1])
+          const left = Math.min(...x),
+            top = Math.min(...y)
+          return { left, top, width: Math.max(...x) - left, depth: Math.max(...y) - top }
+        }
+
+        function fitOpening(opening, edgeSize) {
+          if (!opening || opening.mode === 'full') return opening
+          const size = Math.floor(edgeSize + 0.00001)
+          const width = Math.min(size - 1, Math.max(1, opening.width))
+          const start = Math.min(size - width, Math.max(0, opening.start))
+          return { ...opening, mode: 'partial', start, width }
+        }
+
+        function updateOutline(points, openingSource = state.openings) {
+          state = {
+            ...state,
+            points,
+            openings: points.map((a, i) =>
+              fitOpening(openingSource[i] ?? null, length(a, points[(i + 1) % points.length])),
+            ),
+          }
+        }
+
+        function inside(point, points) {
+          let contains = false
+          for (let i = 0; i < points.length; i += 1) {
+            const a = points[i],
+              b = points[(i + 1) % points.length]
+            if (
+              a[1] > point[1] !== b[1] > point[1] &&
+              point[0] < a[0] + ((b[0] - a[0]) * (point[1] - a[1])) / (b[1] - a[1])
+            )
+              contains = !contains
+          }
+          return contains
+        }
+        const side = (a, b, c) =>
+          Math.sign((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]))
+        const on = (a, b, c) =>
+          !side(a, b, c) &&
+          c.every((v, i) => v >= Math.min(a[i], b[i]) && v <= Math.max(a[i], b[i]))
+        const intersects = (a, b, c, d) =>
+          (side(a, b, c) * side(a, b, d) < 0 && side(c, d, a) * side(c, d, b) < 0) ||
+          on(a, b, c) ||
+          on(a, b, d) ||
+          on(c, d, a) ||
+          on(c, d, b)
+        function isSimple(points, minEdge = EDGE_STEP) {
+          if (points.length < 3 || area(points) < 100000) return false
+          return points.every((a, i) => {
+            const b = points[(i + 1) % points.length]
+            const next = points[(i + 2) % points.length]
+            const folded = !side(a, b, next) && dot(subtract(a, b), subtract(next, b)) > 0
+            return (
+              !folded &&
+              length(a, b) + 0.00001 >= minEdge &&
+              points.every(
+                (c, j) =>
+                  j <= i + 1 ||
+                  (i === 0 && j === points.length - 1) ||
+                  !intersects(a, b, c, points[(j + 1) % points.length]),
+              )
+            )
+          })
+        }
+        function measure(centered = false) {
+          const w = svg.clientWidth || 460,
+            h = svg.clientHeight || 302
+          const points = state.closed
+            ? centered
+              ? state.points
+              : [...state.points, ...state.columns.flatMap(columnCorners), ...fixedObstacles.flat()]
+            : [[0, 0], [8000, 6000], ...state.points]
+          const { left, top, width, depth } = bounds(points)
+          const shortSide = Math.min(w, h)
+          const compact = shortSide < 330
+          const pad = state.closed
+            ? Math.min(compact ? 60 : 96, shortSide / 3)
+            : Math.min(42, shortSide / 4)
+          const fit = Math.min((w - 2 * pad) / width, (h - 2 * pad) / depth)
+          const scale = fit * (centered ? 0.86 : 1)
+          return {
+            w,
+            h,
+            scale,
+            pad,
+            compact,
+            centered,
+            closed: state.closed,
+            x: (w - width * scale) / 2 - left * scale,
+            y: (h - depth * scale) / 2 - top * scale,
+          }
+        }
+
+        function keepProjection() {
+          if (
+            !projection ||
+            projection.closed !== state.closed ||
+            (svg.clientWidth && projection.w !== svg.clientWidth) ||
+            (svg.clientHeight && projection.h !== svg.clientHeight)
+          )
+            return false
+          const inset = state.closed ? projection.pad - 4 : 22
+          return (
+            state.points.every((p) => inCanvas(toScreen(p), inset)) &&
+            (!state.closed ||
+              projection.centered ||
+              state.columns.every((column) =>
+                columnCorners(column).every((p) => inCanvas(toScreen(p), 8)),
+              ))
+          )
+        }
+        function inCanvas([x, y], inset = 0) {
+          return x >= inset && y >= inset && x <= projection.w - inset && y <= projection.h - inset
+        }
+        function includeEditedColumn(column) {
+          if (
+            projection?.centered &&
+            !columnCorners(column).every((p) => inCanvas(toScreen(p), 8))
+          ) {
+            projection = undefined
+          }
+        }
+        function node(tag, attrs, text, parent = marks) {
+          const e = document.createElementNS('http://www.w3.org/2000/svg', tag)
+          Object.entries(attrs).forEach(([k, v]) => e.setAttribute(k, v))
+          if (text !== undefined) e.textContent = text
+          parent.append(e)
+          return e
+        }
+        const pointList = (points) => points.map((p) => p.join(',')).join(' ')
+        function toScreen(p) {
+          return [projection.x + p[0] * projection.scale, projection.y + p[1] * projection.scale]
+        }
+        function fromScreen(event, step = 100) {
+          const box = svg.getBoundingClientRect()
+          const p = projection
+          const x = (event.clientX - box.left - p.x) / p.scale
+          const y = (event.clientY - box.top - p.y) / p.scale
+          return step ? [Math.round(x / step) * step, Math.round(y / step) * step] : [x, y]
+        }
+
+        const dot = (a, b) => a[0] * b[0] + a[1] * b[1]
+        const subtract = (a, b) => [a[0] - b[0], a[1] - b[1]]
+        const cross = (a, b) => a[0] * b[1] - a[1] * b[0]
+        const vectorLength = (v) => Math.hypot(...v)
+        const nearlyParallel = Math.sin(Math.PI / 180)
+        function closestEdgeDirection(edge) {
+          // 向量不分正反。同差时保留排在前面的横向或竖向。
+          const directions = [
+            [1, 0],
+            [0, 1],
+            [1, 1],
+            [1, -1],
+          ]
+          const score = (direction) => Math.abs(dot(edge, direction)) / vectorLength(direction)
+          return directions.reduce((best, direction) =>
+            score(direction) > score(best) + 1e-10 ? direction : best,
+          )
+        }
+        function correctedEdge(points, index) {
+          const count = points.length,
+            end = (index + 1) % count
+          const a = points[index],
+            b = points[end]
+          const previous = points[(index + count - 1) % count],
+            next = points[(end + 1) % count]
+          const edge = subtract(b, a),
+            target = closestEdgeDirection(edge)
+          if (Math.abs(cross(edge, target)) <= 1e-10 * vectorLength(edge) * vectorLength(target))
+            return {}
+          const center = midpoint(a, b)
+          function intersection(anchor, sideDirection) {
+            const denominator = cross(target, sideDirection)
+            if (
+              Math.abs(denominator) <=
+              nearlyParallel * vectorLength(target) * vectorLength(sideDirection)
+            )
+              return null
+            const t = cross(subtract(anchor, center), sideDirection) / denominator
+            return center.map((v, axis) => v + t * target[axis])
+          }
+          const left = subtract(a, previous),
+            right = subtract(next, b)
+          const first = intersection(previous, left),
+            last = intersection(next, right)
+          if (!first || !last) return { reason: '相邻边与目标方向平行或接近平行' }
+          if (
+            dot(subtract(first, previous), left) <= 0 ||
+            dot(subtract(next, last), right) <= 0 ||
+            dot(subtract(last, first), edge) <= 0
+          )
+            return { reason: '校正会让边反向或重合' }
+          const result = points.map((point, i) => (i === index ? first : i === end ? last : point))
+          if (
+            !isSimple(result) ||
+            Math.sign(signedArea(result)) !== Math.sign(signedArea(points))
+          ) {
+            return { reason: '校正会使轮廓交叉或产生过短的边' }
+          }
+          return { points: result }
+        }
+        const orthoActive = () => state.ortho || shiftHeld
+        const axisAligned = (a, b) => a[0] === b[0] || a[1] === b[1]
+        function tracePoint(point, enabled) {
+          const last = state.points.at(-1)
+          if (!enabled || !last) return point
+          const [dx, dy] = subtract(point, last)
+          return Math.abs(dx) >= Math.abs(dy) ? [point[0], last[1]] : [last[0], point[1]]
+        }
+        function parallelEdge(original, index, normal, offset) {
+          const { points, openings, mainEdge } = original
+          if (!offset) return { points, openings, mainEdge, edge: index }
+          const n = points.length,
+            end = (index + 1) % n,
+            previous = (index + n - 1) % n
+          function shiftEndpoint(point, neighbor) {
+            const direction = subtract(point, neighbor)
+            const toward = dot(direction, normal)
+            const needsConnector = Math.abs(toward) < 0.00001
+            return {
+              needsConnector,
+              point: needsConnector
+                ? point.map((v, axis) => v + normal[axis] * offset)
+                : point.map((v, axis) => v + (direction[axis] * offset) / toward),
+            }
+          }
+          const a = shiftEndpoint(points[index], points[previous])
+          const b = shiftEndpoint(points[end], points[(end + 1) % n])
+          const connector = (neighbor) =>
+            openings[index]?.mode === 'full' && openings[neighbor]?.mode === 'full'
+              ? { mode: 'full' }
+              : null
+          const outline = points.flatMap((point, i) => {
+            if (i === index) {
+              const edge = { point: a.point, opening: openings[i], source: i }
+              return a.needsConnector ? [{ point, opening: connector(previous) }, edge] : [edge]
+            }
+            if (i === end) {
+              return b.needsConnector
+                ? [
+                    { point: b.point, opening: connector(end) },
+                    { point, opening: openings[i], source: i },
+                  ]
+                : [{ point: b.point, opening: openings[i], source: i }]
+            }
+            return [{ point, opening: openings[i], source: i }]
+          })
+          const edges = outline.filter(
+            ({ point }, i) => length(point, outline[(i + 1) % outline.length].point) > 0.00001,
+          )
+          return {
+            points: edges.map((edge) => edge.point),
+            openings: edges.map((edge) => edge.opening),
+            edge: edges.findIndex((edge) => edge.source === index),
+            mainEdge: edges.findIndex((edge) => edge.source === mainEdge),
+          }
+        }
+
+        function slideEdge(original, index, direction, offset) {
+          const count = original.points.length,
+            end = (index + 1) % count
+          const points = original.points.map((point, i) =>
+            i === index || i === end ? moveAlong(point, direction, offset) : point,
+          )
+          // 共线相邻段不能反折，即使斜边的浮点坐标有舍入误差。
+          const keepsOrder = [
+            [(index + count - 1) % count, index],
+            [end, (end + 1) % count],
+          ].every(([a, b]) => {
+            const before = subtract(original.points[b], original.points[a])
+            return (
+              Math.abs(cross(direction, before)) > vectorLength(before) * 1e-7 ||
+              dot(subtract(points[b], points[a]), before) > 0
+            )
+          })
+          return {
+            points,
+            openings: openingsFromFixedEnds(original, points),
+            mainEdge: original.mainEdge,
+            edge: keepsOrder ? index : -1,
+          }
+        }
+        function edgeLengthAnchor(a, b) {
+          const [dx, dy] = subtract(b, a)
+          const moreHorizontal = Math.abs(dx) + 1e-8 >= Math.abs(dy)
+          return {
+            useStart: moreHorizontal ? dx >= 0 : dy <= 0,
+            label: moreHorizontal ? '左端' : '下端',
+          }
+        }
+        function openingsFromFixedEnds(original, points) {
+          return original.openings.map((opening, i) => {
+            if (opening?.mode !== 'partial') return opening
+            const end = (i + 1) % points.length
+            const a = original.points[i],
+              b = original.points[end]
+            if (length(a, points[i]) < 0.00001 || length(b, points[end]) >= 0.00001) return opening
+            // 起点移动、终点固定时，以距终点的距离保留局部开口位置。
+            const difference =
+              Math.floor(length(points[i], points[end]) + 0.00001) -
+              Math.floor(length(a, b) + 0.00001)
+            return { ...opening, start: opening.start + difference }
+          })
+        }
+        function openingsFit(points, openings) {
+          return openings.every((opening, i) => {
+            if (opening?.mode !== 'partial') return true
+            const size = Math.floor(length(points[i], points[(i + 1) % points.length]) + 0.00001)
+            return (
+              opening.start >= 0 &&
+              opening.start + opening.width <= size + 0.00001 &&
+              opening.width < size
+            )
+          })
+        }
+
+        function insertEdgeNode(event) {
+          const index = state.edge
+          const a = state.points[index],
+            b = state.points[(index + 1) % state.points.length]
+          const size = length(a, b),
+            direction = subtract(b, a).map((v) => v / size)
+          const distance =
+            Math.round(dot(subtract(fromScreen(event, 0), a), direction) / EDGE_STEP) * EDGE_STEP
+          if (
+            event.target.getAttribute('data-mark-edge') !== String(index) ||
+            distance < EDGE_STEP ||
+            size - distance < EDGE_STEP - 0.00001
+          ) {
+            error = '请点高亮边，离两端至少 50 mm'
+            render()
+            return
+          }
+          const opening = state.openings[index]
+          function openingWithin(start, end) {
+            if (opening?.mode !== 'partial') return opening
+            const lo = Math.max(start, opening.start),
+              hi = Math.min(end, opening.start + opening.width)
+            if (hi <= lo) return null
+            return lo === start && hi === end
+              ? { ...opening, mode: 'full' }
+              : { ...opening, mode: 'partial', start: lo - start, width: hi - lo }
+          }
+          const first = openingWithin(0, distance),
+            second = openingWithin(distance, size)
+          const point = a.map((v, axis) => v + distance * direction[axis])
+          const points = [...state.points],
+            openings = [...state.openings]
+          points.splice(index + 1, 0, point)
+          openings.splice(index, 1, first, second)
+
+          let main = state.mainEdge
+          if (main > index) main += 1
+          else if (main === index) {
+            const center = opening.mode === 'full' ? size / 2 : opening.start + opening.width / 2
+            if (!first || (second && center > distance)) main += 1
+          }
+          remember()
+          addingNode = false
+          selectedVertex = index + 1
+          selectedColumn = -1
+          state.mainEdge = main
+          updateOutline(points, openings)
+          finish()
+        }
+        function line(a, b, cls, extra = {}, parent = marks) {
+          node(
+            'line',
+            { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: cls, ...extra },
+            undefined,
+            parent,
+          )
+        }
+        const moveAlong = (p, direction, distance) =>
+          p.map((value, i) => value + direction[i] * distance)
+        const unit = (vector) => vector.map((value) => value / vectorLength(vector))
+        const outwardNormal = ([x, y], winding) => [y * winding, -x * winding]
+        function drawDimension(mark, parent, labels) {
+          const {
+            a,
+            b,
+            direction,
+            normal,
+            value,
+            type,
+            from,
+            to,
+            labelAttrs,
+            label,
+            chain,
+            totalScope,
+            labelClearance,
+          } = mark
+          const attrs = { class: 'plan-dimension', 'data-dimension': type }
+          if (chain !== undefined) attrs['data-dimension-chain'] = chain
+          if (totalScope) attrs['data-total-scope'] = totalScope
+          const group = node('g', attrs, undefined, parent)
+          if (type !== 'segment') line(a, b, 'dimension-line', {}, group)
+          const tick = [direction[0] + normal[0], direction[1] + normal[1]]
+          ;[
+            [from, a],
+            [to, b],
+          ].forEach(([source, point]) => {
+            if (source)
+              line(
+                moveAlong(source, normal, 4),
+                moveAlong(point, normal, 3),
+                'dimension-extension',
+                {},
+                group,
+              )
+            if (source || type === 'column')
+              line(
+                moveAlong(point, tick, -3),
+                moveAlong(point, tick, 3),
+                'dimension-tick',
+                {},
+                group,
+              )
+          })
+          const center = midpoint(a, b)
+          const text = String(Math.round(value))
+          const angle =
+            (((Math.atan2(direction[1], direction[0]) * 180) / Math.PI + 270) % 180) - 90
+          const w = Math.abs(direction[0]) * (text.length * 3.2 + 2) + Math.abs(direction[1]) * 7
+          const h = Math.abs(direction[1]) * (text.length * 3.2 + 2) + Math.abs(direction[0]) * 7
+          const offsets =
+            type === 'column' ? [8, -8, 19, -19, labelClearance, -labelClearance] : [8, 19]
+          const candidates = offsets.map((offset) => {
+            const [x, y] = moveAlong(center, normal, offset)
+            return { x, y, w, h }
+          })
+          const position =
+            label ??
+            candidates.find((p) => insideDrawing(p) && clearOfLabels(p, labels)) ??
+            candidates.find(insideDrawing) ??
+            candidates[0]
+          const { x, y } = position
+          if (label?.leader) {
+            const end = moveAlong([x, y], normal, -7)
+            const back = Math.sign(dot(subtract(center, end), direction))
+            const elbow = moveAlong(end, direction, back * 6)
+            node(
+              'polyline',
+              {
+                class: 'dimension-leader',
+                points: pointList(back ? [center, elbow, end] : [center, end]),
+              },
+              undefined,
+              group,
+            )
+          }
+          if (!label) labels.push(position)
+          node(
+            'text',
+            {
+              x,
+              y,
+              'text-anchor': 'middle',
+              'dominant-baseline': 'central',
+              transform: 'rotate(' + angle + ' ' + x + ' ' + y + ')',
+              ...labelAttrs,
+            },
+            text,
+            group,
+          )
+        }
+        function insideDrawing(p) {
+          return p.x >= p.w && p.x <= projection.w - p.w && p.y >= p.h && p.y <= projection.h - p.h
+        }
+        function clearOfLabels(p, labels) {
+          return labels.every(
+            (q) => Math.abs(p.x - q.x) >= p.w + q.w || Math.abs(p.y - q.y) >= p.h + q.h,
+          )
+        }
+        const sameDirection = (a, b) => dot(a, b) > 1 - 1e-9
+        function dimensionTextSide([x, y]) {
+          // 按读图方向放在标注线上方。竖线以向上的文字方向读取，数字在左侧。
+          const forward = x > 0.000001 || (Math.abs(x) <= 0.000001 && y < 0)
+          return forward ? [y, -x] : [-y, x]
+        }
+        function dimensionChains(points) {
+          const edges = points.map((from, i) => {
+            const to = points[(i + 1) % points.length]
+            return { from, to, index: i, direction: unit(subtract(to, from)) }
+          })
+          // 从真正的折角开始，跨过首尾编号的直边仍归到同一排。
+          const start = edges.findIndex(
+            (edge, i) =>
+              !sameDirection(
+                edge.direction,
+                edges[(i + edges.length - 1) % edges.length].direction,
+              ),
+          )
+          const runs = []
+          for (const edge of [...edges.slice(start), ...edges.slice(0, start)]) {
+            const run = runs.at(-1)
+            if (run && sameDirection(run[0].direction, edge.direction)) run.push(edge)
+            else runs.push([edge])
+          }
+          // 同向的两段可以隔着一个垂直转折接到同排。转折本身沿自己的方向标注。
+          const next = runs.map((run, i) => {
+            const at = (i + 2) % runs.length
+            const forward = run[0].direction,
+              turn = runs[(i + 1) % runs.length][0].direction
+            return sameDirection(forward, runs[at][0].direction) &&
+              Math.abs(dot(forward, turn)) < 1e-6
+              ? at
+              : -1
+          })
+          const starts = new Set(next)
+          const used = new Set(),
+            chains = []
+          function takeChain(start) {
+            if (used.has(start)) return
+            const edges = []
+            for (let i = start; i !== -1 && !used.has(i); i = next[i]) {
+              used.add(i)
+              edges.push(...runs[i])
+            }
+            chains.push(edges)
+          }
+          runs.forEach((_, i) => {
+            if (!starts.has(i)) takeChain(i)
+          })
+          runs.forEach((_, i) => takeChain(i))
+          return chains
+        }
+        function outlineDimensionMarks(points) {
+          const winding = Math.sign(signedArea(points))
+          const rows = [],
+            totals = []
+          const detailGaps = projection.compact ? [16, 12, 8, 3] : [24, 16, 8, 3]
+          const totalGap = projection.compact ? 26 : 28
+          const outside = (a, b) =>
+            !inside(midpoint(a, b), points) &&
+            !points.some((p, i) => {
+              const q = points[(i + 1) % points.length]
+              return side(a, b, p) * side(a, b, q) < 0 && side(p, q, a) * side(p, q, b) < 0
+            })
+          dimensionChains(points).forEach((edges, chain) => {
+            const direction = edges[0].direction,
+              normal = outwardNormal(direction, winding)
+            const alongZero = dot(edges[0].from, direction)
+            const stations = new Map()
+            const record = (point) => {
+              const mm = Math.round((dot(point, direction) - alongZero) / projection.scale)
+              const previous = stations.get(mm)
+              if (!previous || dot(point, normal) > dot(previous, normal)) stations.set(mm, point)
+            }
+            for (const edge of edges) {
+              record(edge.from)
+              record(edge.to)
+              const opening = state.openings[edge.index]
+              if (opening?.mode !== 'partial') continue
+              for (const distance of [opening.start, opening.start + opening.width]) {
+                const offset = distance * projection.scale
+                if (offset > 0 && offset < length(edge.from, edge.to)) {
+                  record(moveAlong(edge.from, edge.direction, offset))
+                }
+              }
+            }
+            const sorted = [...stations].sort(([a], [b]) => a - b)
+            if (sorted.length < 2) return
+            const [start, from] = sorted[0],
+              [end, to] = sorted.at(-1)
+            const outermost = Math.max(...sorted.map(([, p]) => dot(p, normal)))
+            const onRow = (p, row) => moveAlong(p, normal, row - dot(p, normal))
+            const offset = detailGaps.find((gap) =>
+              outside(onRow(from, outermost + gap), onRow(to, outermost + gap)),
+            )
+            const row =
+              offset === undefined
+                ? Math.max(...points.map((p) => dot(p, normal))) + detailGaps[0]
+                : outermost + offset
+            const labelSide = row - outermost >= 16 ? dimensionTextSide(direction) : normal
+            const segments = sorted.slice(1).map(([upper, q], i) => {
+              const [lower, p] = sorted[i]
+              return {
+                a: onRow(p, row),
+                b: onRow(q, row),
+                direction,
+                normal,
+                labelSide,
+                from: i === 0 ? p : undefined,
+                to: q,
+                value: upper - lower,
+                type: 'segment',
+                chain,
+              }
+            })
+            rows.push(segments)
+            if (segments.length > 1) {
+              totals.push({
+                a: onRow(from, row + totalGap),
+                b: onRow(to, row + totalGap),
+                direction,
+                normal,
+                from: onRow(from, row),
+                to: onRow(to, row),
+                value: end - start,
+                type: 'overall',
+                chain,
+                totalScope: 'side',
+              })
+            }
+          })
+          const { left, top, width, depth } = bounds(points)
+          function overall(a, b, normal, axis) {
+            const facing = totals.filter((total) => sameDirection(total.normal, normal))
+            // 外排已量出完整总宽或总深时，省掉重复的全局尺寸线。
+            if (
+              totals.some(
+                (total) =>
+                  Math.abs(total.direction[axis]) > 1 - 1e-9 &&
+                  Math.abs(Math.min(total.a[axis], total.b[axis]) - a[axis]) < 0.001 &&
+                  Math.abs(Math.max(total.a[axis], total.b[axis]) - b[axis]) < 0.001,
+              )
+            )
+              return
+            const base = dot(a, normal)
+            const row = Math.max(
+              base + detailGaps[0] + totalGap,
+              ...facing.map((total) => dot(total.a, normal) + 21),
+            )
+            const witness = (p) =>
+              points.some(
+                (point) =>
+                  Math.abs(point[axis] - p[axis]) < 0.001 &&
+                  Math.abs(dot(point, normal) - base) < 0.001,
+              )
+                ? p
+                : moveAlong(p, normal, row - base - 14)
+            totals.push({
+              a: moveAlong(a, normal, row - base),
+              b: moveAlong(b, normal, row - base),
+              direction: unit(subtract(b, a)),
+              normal,
+              from: witness(a),
+              to: witness(b),
+              value: length(a, b) / projection.scale,
+              type: 'overall',
+              totalScope: 'outline',
+            })
+          }
+          overall([left, top], [left + width, top], [0, -1], 0)
+          overall([left, top], [left, top + depth], [-1, 0], 1)
+          return { rows, totals }
+        }
+        function planLabel(mark, outward, along = 0, normal = mark.normal) {
+          const halfText = String(Math.round(mark.value)).length * 3.3 + 2
+          const [dx, dy] = mark.direction.map(Math.abs)
+          const [x, y] = moveAlong(
+            moveAlong(midpoint(mark.a, mark.b), normal, outward),
+            mark.direction,
+            along,
+          )
+          return { x, y, w: dx * halfText + dy * 7, h: dy * halfText + dx * 7, halfText }
+        }
+        function paintOutlineDimensions(points) {
+          const { rows, totals } = outlineDimensionMarks(points)
+          const segments = rows.flat()
+          const labels = []
+          const leaders = []
+          for (const mark of totals) {
+            mark.label = planLabel(mark, 8, 0, dimensionTextSide(mark.direction))
+            labels.push(mark.label)
+          }
+          for (const mark of segments) {
+            const label = planLabel(mark, 8, 0, mark.labelSide)
+            if (
+              length(mark.a, mark.b) < 2 * label.halfText + 5 ||
+              !insideDrawing(label) ||
+              !clearOfLabels(label, labels)
+            )
+              leaders.push(mark)
+            else {
+              mark.label = label
+              labels.push(label)
+            }
+          }
+          const all = [...segments, ...totals]
+          placeShortLabels(leaders, all, labels)
+          for (const row of rows) {
+            const first = row[0],
+              last = row.at(-1)
+            const group = node('g', { class: 'plan-dimension', 'data-dimension-row': first.chain })
+            line(first.a, last.b, 'dimension-line', {}, group)
+            for (const mark of row) drawDimension(mark, group, labels)
+          }
+          for (const mark of totals) drawDimension(mark, marks, labels)
+          return labels
+        }
+        function placeShortLabels(leaders, marks, labels) {
+          const groups = []
+          for (const mark of leaders) {
+            const previous = groups.at(-1)?.at(-1)
+            if (
+              previous?.chain === mark.chain &&
+              length(midpoint(previous.a, previous.b), midpoint(mark.a, mark.b)) < 35
+            ) {
+              groups.at(-1).push(mark)
+            } else groups.push([mark])
+          }
+          const shifts = [0, 12, -12, 24, -24, 36, -36, 48, -48, 60, -60, 84, -84, 120, -120]
+          const rows = projection.compact ? [18, 33, 42] : [19, 42, 58]
+          function available(p) {
+            return (
+              insideDrawing(p) &&
+              clearOfLabels(p, labels) &&
+              marks.every((mark) => {
+                const delta = subtract([p.x, p.y], mark.a)
+                const normalGap = Math.abs(dot(delta, mark.normal))
+                const along = dot(delta, mark.direction)
+                const normalHalf = Math.abs(mark.normal[0]) * p.w + Math.abs(mark.normal[1]) * p.h
+                const alongHalf =
+                  Math.abs(mark.direction[0]) * p.w + Math.abs(mark.direction[1]) * p.h
+                return (
+                  normalGap >= normalHalf ||
+                  along < -alongHalf ||
+                  along > length(mark.a, mark.b) + alongHalf
+                )
+              })
+            )
+          }
+          function assign(mark, position) {
+            mark.label = { ...position, leader: true }
+            labels.push(mark.label)
+          }
+          for (const group of groups) {
+            const dir = group[0].direction
+            const natural = group.map((mark) => dot(midpoint(mark.a, mark.b), dir))
+            const halfWidths = group.map((mark) => planLabel(mark, 0).halfText)
+            const packed = [natural[0]]
+            for (let i = 1; i < group.length; i += 1) {
+              packed.push(
+                Math.max(natural[i], packed[i - 1] + halfWidths[i - 1] + halfWidths[i] + 4),
+              )
+            }
+            // 同一簇按尺寸线上的先后顺序展开，避免引线互相穿过。
+            const overhang = (packed.at(-1) - natural.at(-1)) / 2
+            let fitting
+            for (const row of rows) {
+              for (const shift of shifts) {
+                const positions = group.map((mark, i) =>
+                  planLabel(mark, row, packed[i] - natural[i] - overhang + shift),
+                )
+                if (positions.every(available)) {
+                  fitting = positions
+                  break
+                }
+              }
+              if (fitting) break
+            }
+            if (fitting) {
+              group.forEach((mark, i) => assign(mark, fitting[i]))
+              continue
+            }
+            for (const mark of group) {
+              const candidates = rows.flatMap((row) =>
+                shifts.map((shift) => planLabel(mark, row, shift)),
+              )
+              assign(
+                mark,
+                candidates.find(available) ??
+                  candidates.find((p) => insideDrawing(p) && clearOfLabels(p, labels)) ??
+                  candidates.find(insideDrawing) ??
+                  candidates[0],
+              )
+            }
+          }
+        }
+        function drawColumn(column, attrs, parent = marks) {
+          const [x, y] = toScreen([column.x, column.y])
+          const w = column.width * projection.scale,
+            d = column.depth * projection.scale
+          if (column.kind === 'circle')
+            node('circle', { cx: x, cy: y, r: w / 2, ...attrs }, undefined, parent)
+          else
+            node(
+              'rect',
+              { x: x - w / 2, y: y - d / 2, width: w, height: d, ...attrs },
+              undefined,
+              parent,
+            )
+        }
+        function columnBoundaryGap(
+          column,
+          axis,
+          sign,
+          winding = Math.sign(signedArea(state.points)),
+        ) {
+          const { x, y, width, depth } = column
+          const center = [x, y],
+            size = [width, depth]
+          const across = 1 - axis,
+            v = center[across]
+          const half = column.kind === 'circle' ? 0 : size[across] / 2
+          const face = sign * center[axis] + size[axis] / 2
+          let best = null,
+            crossing = null,
+            behind = null
+          state.points.forEach((p, i) => {
+            const q = state.points[(i + 1) % state.points.length]
+            const v0 = p[across],
+              dv = q[across] - v0
+            const u0 = sign * p[axis],
+              du = sign * (q[axis] - p[axis])
+            let lo = 0,
+              hi = 1
+            if (Math.abs(dv) < 1e-7) return
+            {
+              const first = (v - half - v0) / dv,
+                last = (v + half - v0) / dv
+              lo = Math.max(lo, Math.min(first, last))
+              hi = Math.min(hi, Math.max(first, last))
+              if (lo > hi) return
+            }
+            const nearest = u0 + du * (du < 0 ? hi : lo),
+              farthest = u0 + du * (du < 0 ? lo : hi)
+            function measureAt(hit) {
+              // 斜边取柱边正对范围内的最近处，平行边尽量对准柱子中心。
+              let t = lo
+              if (Math.abs(du) >= 1e-7) t = (hit - u0) / du
+              else if (Math.abs(dv) >= 1e-7) t = (v - v0) / dv
+              const position = v0 + Math.max(lo, Math.min(hi, t)) * dv
+              const world = (along) =>
+                axis === 0 ? [sign * along, position] : [position, sign * along]
+              return { a: toScreen(world(face)), b: toScreen(world(hit)), distance: hit - face }
+            }
+            const facesOutward = sign * winding * dv * (axis === 0 ? 1 : -1) > 1e-7
+            if (facesOutward && nearest < face - 1e-7) {
+              if (farthest > face - size[axis] + 1e-7) {
+                // 边界穿过占地时，标出这个方向超出的距离。
+                if (!crossing || nearest - face < crossing.distance) crossing = measureAt(nearest)
+              } else if (!behind || nearest - face > behind.distance) {
+                behind = measureAt(nearest)
+              }
+            }
+            if (farthest >= face - 1e-7) {
+              const hit = Math.max(face, nearest)
+              if (!best || hit - face < best.distance) best = measureAt(hit)
+            }
+          })
+          const measured = crossing ?? best ?? behind
+          if (measured) return measured
+          // 整个柱子都在侧线之外时，用该方向的空间外包尺寸作为标注基准。
+          const limit = Math.max(...state.points.map((point) => sign * point[axis]))
+          const edge = [...center],
+            wall = [...center]
+          edge[axis] = sign * face
+          wall[axis] = sign * limit
+          return { a: toScreen(edge), b: toScreen(wall), distance: limit - face }
+        }
+        function columnLabelBox(column) {
+          const [x, y] = toScreen([column.x, column.y])
+          return {
+            x,
+            y,
+            w: (column.width * projection.scale) / 2 + 2,
+            h: (column.depth * projection.scale) / 2 + 2,
+          }
+        }
+        function paintColumnDimensions(column, parent, labels, columnIndex) {
+          const winding = Math.sign(signedArea(state.points))
+          for (const [side, axis, sign] of gapDirections) {
+            const gap = columnBoundaryGap(column, axis, sign, winding)
+            if (!gap) continue
+            const direction = axis === 0 ? [sign, 0] : [0, sign]
+            const normal = axis === 0 ? [0, -1] : [-1, 0]
+            const labelAttrs =
+              columnIndex === undefined
+                ? undefined
+                : {
+                    'data-column-gap': columnIndex,
+                    'data-gap-side': side,
+                    role: 'button',
+                    tabindex: 0,
+                    'aria-label':
+                      '柱子' +
+                      (columnIndex + 1) +
+                      ' ' +
+                      side +
+                      '侧距离 ' +
+                      Math.round(gap.distance) +
+                      ' 毫米，点击修改',
+                  }
+            const span = axis === 0 ? column.depth : column.width
+            const labelClearance = (span * projection.scale) / 2 + 12
+            drawDimension(
+              {
+                ...gap,
+                value: gap.distance,
+                direction,
+                normal,
+                type: 'column',
+                labelAttrs,
+                labelClearance,
+              },
+              parent,
+              labels,
+            )
+          }
+        }
+        function paintColumnPlacement() {
+          columnPlacement.replaceChildren()
+          const active = Boolean(placingColumn && columnCursor)
+          svg.dataset.columnPreview = String(active)
+          if (!active) return
+          const [x, y] = columnCursor,
+            column = { ...placingColumn, x, y }
+          const valid = columnFits(column)
+          if (valid) paintColumnDimensions(column, columnPlacement, [columnLabelBox(column)])
+          drawColumn(
+            column,
+            { class: 'column-preview' + (valid ? '' : ' invalid') },
+            columnPlacement,
+          )
+        }
+        function paintEdgeHits(points) {
+          const count = state.closed ? points.length : 0
+          // 选边和重绘时保留同一条边的点击目标，让浏览器识别两次点击。
+          while (edgeHits.childElementCount > count) edgeHits.lastElementChild.remove()
+          for (let i = 0; i < count; i += 1) {
+            let hit = edgeHits.children[i]
+            if (!hit) {
+              hit = document.createElementNS('http://www.w3.org/2000/svg', 'line')
+              hit.setAttribute('class', 'edge-mark')
+              hit.setAttribute('data-mark-edge', i)
+              edgeHits.append(hit)
+            }
+            const [x1, y1] = points[i],
+              [x2, y2] = points[(i + 1) % count]
+            Object.entries({ x1, y1, x2, y2 }).forEach(([key, value]) =>
+              hit.setAttribute(key, value),
+            )
+          }
+        }
+        function paint() {
+          if (!projection || (!drag && !keepProjection()))
+            projection = measure(state.closed && projection?.centered)
+          svg.dataset.edgeDragging = String(drag?.key === 'edge')
+          svg.dataset.addingNode = String(addingNode)
+          svg.dataset.placingColumn = String(Boolean(placingColumn))
+          svg.dataset.objectDragging = String(drag?.key === 'opening' || drag?.key === 'column')
+          svg.setAttribute('viewBox', '0 0 ' + projection.w + ' ' + projection.h)
+          marks.replaceChildren()
+          const points = state.points.map(toScreen)
+          paintEdgeHits(points)
+          if (points.length > 1)
+            node(state.closed ? 'polygon' : 'polyline', {
+              points: pointList(points),
+              class: state.closed ? 'shape-mark' : 'open-mark',
+            })
+          if (!state.closed && points.length && traceCursor) {
+            line(points.at(-1), toScreen(tracePoint(traceCursor, orthoActive())), 'trace-preview')
+          }
+          let openingHandles
+          const columnLabels = state.columns.map(columnLabelBox)
+          if (state.closed) {
+            fixedObstacles.forEach((polygon) =>
+              node('polygon', {
+                class: 'fixed-obstacle',
+                points: pointList(polygon.map(toScreen)),
+              }),
+            )
+            columnLabels.push(...paintOutlineDimensions(points))
+            const winding = Math.sign(signedArea(points))
+            points.forEach((a, i) => {
+              const b = points[(i + 1) % points.length]
+              const selected = selectedVertex < 0 && i === state.edge
+              const opening = state.openings[i]
+              const main = i === state.mainEdge
+              if (selected) line(a, b, 'chosen-edge')
+              if (!opening) line(a, b, 'wall-mark')
+              else {
+                let start = a,
+                  end = b
+                if (opening.mode === 'partial') {
+                  const size = length(a, b) / projection.scale
+                  const along = (distance) =>
+                    a.map((v, axis) => v + ((b[axis] - v) * distance) / size)
+                  start = along(opening.start)
+                  end = along(opening.start + opening.width)
+                  line(a, start, 'wall-mark')
+                  line(end, b, 'wall-mark')
+                  if (!addingNode && !placingColumn && selected) {
+                    openingHandles = {
+                      locations: [start, end],
+                      inward: outwardNormal(unit(subtract(b, a)), -winding),
+                    }
+                  } else
+                    [start, end].forEach(([cx, cy]) =>
+                      node('circle', { cx, cy, r: 3, class: 'opening-end' }),
+                    )
+                  if (selected)
+                    node('text', { x: a[0] + 7, y: a[1] - 9, class: 'decor-label' }, '起点')
+                }
+                line(start, end, main ? 'opening-mark' : 'open-edge-mark', {
+                  'data-open-segment': i,
+                })
+                if (selected) {
+                  const m = midpoint(start, end)
+                  const label = main
+                    ? '主入口 · ' + openingLabels[opening.mode]
+                    : openingLabels[opening.mode]
+                  const [x, y] = moveAlong(m, outwardNormal(unit(subtract(b, a)), winding), -15)
+                  node(
+                    'text',
+                    {
+                      x,
+                      y,
+                      'text-anchor': 'middle',
+                      'dominant-baseline': 'central',
+                      class: 'decor-label',
+                    },
+                    label,
+                  )
+                }
+              }
+            })
+          }
+          points.forEach((p, i) => {
+            const selected = i === selectedVertex
+            node('circle', {
+              cx: p[0],
+              cy: p[1],
+              r: selected ? 6 : 4,
+              class: 'vertex-mark' + (selected ? ' selected' : ''),
+              'data-node-mark': i,
+            })
+            const interactive = !addingNode && !placingColumn
+            node('circle', {
+              cx: p[0],
+              cy: p[1],
+              r: 12,
+              class: 'vertex-hit',
+              'data-vertex': i,
+              ...(interactive
+                ? {
+                    role: 'button',
+                    tabindex: 0,
+                    'aria-label': '节点 ' + (i + 1),
+                    'aria-pressed': String(selected),
+                  }
+                : { 'aria-hidden': 'true' }),
+            })
+          })
+          if (openingHandles) {
+            const { locations, inward } = openingHandles
+            const closeTogether = length(...locations) < 21
+            const overlapsVertex = locations.map((endpoint) =>
+              points.some((point) => length(point, endpoint) < 23),
+            )
+            locations.forEach((endpoint, i) => {
+              const offset = closeTogether
+                ? (overlapsVertex.some(Boolean) ? 24 : 0) + 24 * i
+                : overlapsVertex[i]
+                  ? 24
+                  : 0
+              const [cx, cy] = moveAlong(endpoint, inward, offset)
+              if (offset) {
+                line(endpoint, [cx, cy], 'opening-handle-tether')
+                node('circle', { cx: endpoint[0], cy: endpoint[1], r: 3, class: 'opening-end' })
+              }
+              node('circle', { cx, cy, r: 5, class: 'opening-end active' })
+              node('circle', {
+                cx,
+                cy,
+                r: 10,
+                class: 'opening-handle',
+                'data-opening-end': i ? 'end' : 'start',
+              })
+            })
+          }
+          if (state.closed)
+            state.columns.forEach((column, i) => {
+              if (!placingColumn && (!drag || drag.key !== 'column' || selectedColumn === i)) {
+                paintColumnDimensions(
+                  column,
+                  marks,
+                  columnLabels,
+                  !drag && !addingNode ? i : undefined,
+                )
+              }
+              drawColumn(column, {
+                class: 'column-mark' + (selectedColumn === i ? ' selected' : ''),
+                ...(!placingColumn && !addingNode ? { 'data-column': i } : {}),
+              })
+            })
+          if (!placingColumn) columnCursor = null
+          paintColumnPlacement()
+        }
+        function renderColumnControls() {
+          const active = placingColumn ?? state.columns[selectedColumn]
+          root.querySelector('[data-columns]').hidden = !state.closed
+          root
+            .querySelectorAll('[data-column-kind]')
+            .forEach((button) =>
+              button.setAttribute(
+                'aria-pressed',
+                String(button.dataset.columnKind === placingColumn?.kind),
+              ),
+            )
+          columnSize.hidden = !active
+          controls('remove-column').hidden = Boolean(placingColumn) || !active
+          if (!active) return
+          const round = active.kind === 'circle'
+          root.querySelector('[data-column-width-label]').textContent = round
+            ? '直径（mm）'
+            : '宽（mm）'
+          root.querySelector('[data-column-depth]').hidden = round
+          columnFields.forEach((field) => {
+            field.value = active[field.dataset.columnValue]
+          })
+        }
+        function render() {
+          const vertexSelected = selectedVertex >= 0
+          const minVertices = state.points.length <= 3
+          root.querySelector('[data-node-actions]').hidden = !vertexSelected
+          root.querySelector('[data-node-label]').textContent = vertexSelected
+            ? '节点 ' + (selectedVertex + 1)
+            : ''
+          root.querySelector('[data-node-limit]').hidden = !minVertices
+          controls('remove-vertex').disabled = !vertexSelected || minVertices
+          root.querySelector('[data-trace-tools]').hidden = state.closed
+          controls('ortho').setAttribute('aria-pressed', String(orthoActive()))
+          renderColumnControls()
+          root.querySelector('[data-shop-label]').textContent = state.shopLabel ?? '中岛店'
+          setting('height').value = state.height
+          root.querySelector('[data-edges]').hidden = !state.closed || vertexSelected
+          edgeSelect.replaceChildren(
+            ...state.points.map((a, i) => {
+              const opt = document.createElement('option')
+              opt.value = String(i)
+              const mode = state.openings[i]?.mode ?? 'wall'
+              opt.textContent =
+                '边 ' +
+                (i + 1) +
+                ' · ' +
+                Math.round(length(a, state.points[(i + 1) % state.points.length])).toLocaleString(
+                  'zh-CN',
+                ) +
+                ' mm · ' +
+                openingLabels[mode]
+              return opt
+            }),
+          )
+          edgeSelect.value = String(state.edge)
+          edgeLength.min = String(EDGE_STEP)
+          const opening = state.openings[state.edge]
+          const mode = opening?.mode ?? 'wall'
+          if (state.closed) {
+            const a = state.points[state.edge],
+              b = state.points[(state.edge + 1) % state.points.length]
+            const size = length(a, b)
+            edgeLength.value = Math.round(size)
+            edgeAnchorNote.textContent = '改边长固定' + edgeLengthAnchor(a, b).label
+            if (mode === 'partial') {
+              widthField.max = String(Math.floor(size + 0.00001) - 1)
+              offsetField.max = String(Math.floor(size + 0.00001) - opening.width)
+              widthField.value = opening.width
+              offsetField.value = opening.start
+            }
+          }
+          root.querySelector('[data-partial]').hidden = mode !== 'partial'
+          root.querySelector('[data-opening-hint]').hidden = mode !== 'partial'
+          root.querySelectorAll('[data-opening-mode]').forEach((button) => {
+            if (button.dataset.openingMode === 'partial')
+              button.hidden = state.shop === 'island' && mode !== 'partial'
+            button.setAttribute('aria-pressed', String(button.dataset.openingMode === mode))
+          })
+          const main = state.mainEdge === state.edge
+          controls('opening').textContent = main ? '取消主入口' : '设为主入口'
+          controls('opening').disabled = !opening
+          controls('opening').setAttribute('aria-pressed', String(main))
+          const offset = drag?.key === 'edge' ? drag.offset : 0
+          const towardInside = offset * Math.sign(signedArea(state.points)) > 0
+          controls('split-edge').textContent = addingNode ? '取消加点' : '添加节点'
+          controls('split-edge').setAttribute('aria-pressed', String(addingNode))
+          controls('split-edge').disabled =
+            !state.closed ||
+            state.points.length >= MAX_VERTICES ||
+            Number(edgeLength.value) < 2 * EDGE_STEP
+          const movement = drag?.axis === 'along' ? '沿边 ' : towardInside ? '向内 ' : '向外 '
+          edgeNote.textContent = addingNode
+            ? '在高亮边上点一下'
+            : offset
+              ? movement + Math.abs(offset) + ' mm'
+              : '沿边或垂直拖动，每步 50 mm · 双击校正'
+          controls('next').disabled =
+            !session || submitting || (!state.closed && state.points.length < 3)
+          controls('next').textContent = submitting
+            ? '正在保存…'
+            : state.closed
+              ? '确认轮廓并进入方案'
+              : '闭合轮廓'
+          controls('undo').disabled = !memory.length
+          controls('redo').disabled = !redo.length
+          controls('redraw').disabled = !state.points.length
+          const readout = (area(state.points) / 1000000).toFixed(1) + ' m²'
+          const full = state.openings.filter((side) => side?.mode === 'full').length
+          const partial = state.openings.filter((side) => side?.mode === 'partial').length
+          const openings =
+            [full && full + ' 条整边开放', partial && partial + ' 条局部开放']
+              .filter(Boolean)
+              .join(' · ') || '各边封闭'
+          status.textContent =
+            error ||
+            (addingNode
+              ? '点击高亮边的分割位置 · Esc 取消'
+              : placingColumn
+                ? '点击画布放置' +
+                  (placingColumn.kind === 'circle' ? '圆柱' : '方柱') +
+                  ' · Esc 取消'
+                : state.closed
+                  ? readout + ' · ' + openings + ' · 双击画布居中'
+                  : '点击画布加节点 · 点起点或按钮闭合')
+          status.dataset.error = String(Boolean(error))
+          paint()
+        }
+        function closeShape(enabled = orthoActive()) {
+          let points = state.points
+          if (enabled && points.length >= 3 && !axisAligned(points[0], points.at(-1))) {
+            const [x, y] = points[0],
+              [lastX, lastY] = points.at(-1)
+            const candidates = [
+              [lastX, y],
+              [x, lastY],
+            ]
+              .map((corner) => [...points, corner])
+              .filter((candidate) => isSimple(candidate))
+            if (candidates.length !== 1) {
+              error = '请先补一个直角转折，再闭合轮廓'
+              render()
+              return
+            }
+            ;[points] = candidates
+          }
+          if (!isSimple(points)) {
+            error = '轮廓需至少三个角点，且边线不能交叉'
+            render()
+            return
+          }
+          remember()
+          traceCursor = null
+          selectedVertex = -1
+          state = { ...state, points, closed: true, ...shopDefaults(state.shop, points) }
+          finish()
+        }
+        function rectangleCorners(center, w, d) {
+          const { x, y } = center
+          return [
+            [x - w, y - d],
+            [x + w, y - d],
+            [x + w, y + d],
+            [x - w, y + d],
+          ]
+        }
+        function boxesOverlap([a, , b], [c, , d]) {
+          return a[0] < d[0] && b[0] > c[0] && a[1] < d[1] && b[1] > c[1]
+        }
+        function columnCorners(column) {
+          return rectangleCorners(column, column.width / 2, column.depth / 2)
+        }
+        function columnOverlapsBox(column, corners) {
+          if (column.kind === 'square') return boxesOverlap(columnCorners(column), corners)
+          const [a, , b] = corners
+          const dx = Math.max(a[0] - column.x, 0, column.x - b[0])
+          const dy = Math.max(a[1] - column.y, 0, column.y - b[1])
+          return Math.hypot(dx, dy) < column.width / 2
+        }
+        function columnFits(column, except = -1) {
+          return state.columns.every((other, i) => {
+            if (i === except) return true
+            if (column.kind === 'square') return !columnOverlapsBox(other, columnCorners(column))
+            if (other.kind === 'square') return !columnOverlapsBox(column, columnCorners(other))
+            return (
+              Math.hypot(column.x - other.x, column.y - other.y) >= (column.width + other.width) / 2
+            )
+          })
+        }
+        function cancelGapEdit() {
+          gapEdit = null
+          gapEditor.hidden = true
+        }
+        function openGapEditor(label) {
+          const index = Number(label.getAttribute('data-column-gap'))
+          const [side, axis, sign] = gapDirections.find(
+            ([name]) => name === label.getAttribute('data-gap-side'),
+          )
+          const gap = columnBoundaryGap(state.columns[index], axis, sign)
+          if (!gap) return
+          const surface = gapEditor.parentElement.getBoundingClientRect(),
+            target = label.getBoundingClientRect()
+          selectedColumn = index
+          selectedVertex = -1
+          error = ''
+          gapEdit = { index, axis, sign, distance: gap.distance }
+          root.querySelector('[data-gap-label]').textContent = side + '侧距离（mm）'
+          gapInput.value = Math.round(gap.distance)
+          gapEditor.hidden = false
+          const { offsetWidth: width, offsetHeight: height } = gapEditor
+          const x = target.left + target.width / 2 - surface.left
+          const y = target.top + target.height / 2 - surface.top
+          gapEditor.style.left =
+            Math.max(4, Math.min(surface.width - width - 4, x - width / 2)) + 'px'
+          gapEditor.style.top =
+            Math.max(4, Math.min(svg.clientHeight - height - 4, y - height / 2)) + 'px'
+          gapInput.focus({ preventScroll: true })
+          gapInput.select()
+          render()
+        }
+        function commitGapEdit() {
+          if (!gapEdit) return
+          const { index, axis, sign, distance } = gapEdit
+          const value = gapInput.valueAsNumber
+          const valid = gapInput.checkValidity() && Number.isSafeInteger(value)
+          cancelGapEdit()
+          if (!valid) {
+            error = '请输入整数毫米数，负数表示超出边线'
+            render()
+            return
+          }
+          if (value === Math.round(distance)) return
+          const column = state.columns[index],
+            coordinate = axis === 0 ? 'x' : 'y'
+          const next = { ...column, [coordinate]: column[coordinate] + sign * (distance - value) }
+          const measured = columnBoundaryGap(next, axis, sign)
+          const matchesGap = measured && Math.abs(measured.distance - value) <= 0.001
+          if (!matchesGap || !columnFits(next, index)) {
+            error = matchesGap ? '移动后会与其他物件重叠' : '移动后无法沿这个方向量出该距离'
+            render()
+            return
+          }
+          remember()
+          state.columns[index] = next
+          error = ''
+          includeEditedColumn(next)
+          finish()
+        }
+        gapInput.addEventListener('blur', commitGapEdit)
+        gapInput.addEventListener('keydown', (event) => {
+          if (event.key !== 'Enter' && event.key !== 'Escape') return
+          event.preventDefault()
+          event.stopPropagation()
+          if (event.key === 'Enter') commitGapEdit()
+          else cancelGapEdit()
+          svg.focus({ preventScroll: true })
+        })
+        function selectedObject() {
+          return state.columns[selectedColumn]
+        }
+        function selectVertex(index) {
+          selectedVertex = index
+          selectedColumn = -1
+          error = ''
+          svg.focus({ preventScroll: true })
+          render()
+        }
+        function mergedVertexOpening(previous, index, chord) {
+          const a = state.points[previous],
+            b = state.points[index]
+          const c = state.points[(index + 1) % state.points.length]
+          const firstLength = length(a, b),
+            secondLength = length(b, c)
+          const total = firstLength + secondLength
+          function interval(opening, offset, size) {
+            if (!opening) return null
+            if (opening.mode === 'full') return [offset, offset + size]
+            return [offset + opening.start, offset + opening.start + opening.width]
+          }
+          const firstOpening = state.openings[previous],
+            lastOpening = state.openings[index]
+          const first = interval(firstOpening, 0, firstLength)
+          const last = interval(lastOpening, firstLength, secondLength)
+          // 每条边只存一段开口。中间仍有墙时保留原轮廓。
+          if (first && last && last[0] - first[1] > 0.00001) return { conflict: true }
+          if (!first && !last) return { opening: null }
+          if (firstOpening?.kind && lastOpening?.kind && firstOpening.kind !== lastOpening.kind)
+            return { conflict: true }
+          const source = firstOpening ?? lastOpening
+          const start = (first ?? last)[0],
+            end = (last ?? first)[1]
+          if (start < 0.00001 && end >= total - 0.00001)
+            return { opening: { ...source, mode: 'full' } }
+          // 直边恢复原开口位置。折边合并时按两段的累计长度比例映射到新边。
+          const at = Math.round((start * chord) / total)
+          return {
+            opening: fitOpening(
+              {
+                ...source,
+                mode: 'partial',
+                start: at,
+                width: Math.round((end * chord) / total) - at,
+              },
+              chord,
+            ),
+          }
+        }
+        function removeVertex() {
+          const index = selectedVertex
+          if (index < 0) return false
+          if (state.points.length <= 3) {
+            error = '轮廓至少保留 3 个节点'
+            render()
+            return true
+          }
+          const points = state.points.filter((_, i) => i !== index)
+          if (!state.closed) {
+            remember()
+            state.points = points
+            selectedVertex = -1
+            error = ''
+            finish()
+            return true
+          }
+          if (
+            !isSimple(points) ||
+            Math.sign(signedArea(points)) !== Math.sign(signedArea(state.points))
+          ) {
+            error = '删除后会导致轮廓交叉或边线过短'
+            render()
+            return true
+          }
+          const previous = (index + state.points.length - 1) % state.points.length
+          const next = (index + 1) % state.points.length
+          const { opening, conflict } = mergedVertexOpening(
+            previous,
+            index,
+            length(state.points[previous], state.points[next]),
+          )
+          if (conflict) {
+            error = '相邻边有两段独立开口，请先调整开口再删除节点'
+            render()
+            return true
+          }
+          const ids = state.points.map((_, i) => i).filter((i) => i !== index)
+          const joinedEdge = ids.indexOf(previous)
+          const oldMain = state.mainEdge
+          remember()
+          selectedVertex = -1
+          error = ''
+          state.edge = joinedEdge
+          state.mainEdge =
+            oldMain === previous || oldMain === index
+              ? opening
+                ? joinedEdge
+                : -1
+              : ids.indexOf(oldMain)
+          updateOutline(
+            points,
+            ids.map((i) => (i === previous ? opening : state.openings[i])),
+          )
+          finish()
+          return true
+        }
+        function removeSelected() {
+          if (selectedVertex >= 0) return removeVertex()
+          if (!selectedObject()) return false
+          remember()
+          error = ''
+          state.columns.splice(selectedColumn, 1)
+          selectedColumn = -1
+          finish()
+          return true
+        }
+        const editingText = (target) =>
+          Boolean(
+            target.closest?.(
+              'input, textarea, select, [contenteditable]:not([contenteditable="false"])',
+            ),
+          )
+        function copySelected(cut) {
+          const source = selectedObject()
+          if (!source || drag) return false
+          objectClipboard = copy(source)
+          if (cut) removeSelected()
+          status.textContent = cut ? '已剪切 · Ctrl+V 粘贴' : '已复制 · Ctrl+V 粘贴'
+          status.dataset.error = 'false'
+          return true
+        }
+        for (const action of ['copy', 'cut']) {
+          window.addEventListener(action, (event) => {
+            if (editingText(event.target) || !copySelected(action === 'cut')) return
+            event.preventDefault()
+            event.clipboardData?.setData(
+              'text/plain',
+              objectClipboard.kind === 'circle' ? '圆柱' : '方柱',
+            )
+          })
+        }
+        window.addEventListener('paste', (event) => {
+          if (editingText(event.target) || drag || !state.closed || !objectClipboard) return
+          event.preventDefault()
+          pasteObject(objectClipboard)
+        })
+        function pasteObject(source) {
+          if (!canAddColumn()) return
+          const column = { ...source }
+          delete column.source
+          const x = source.width + 200,
+            y = source.depth + 200
+          const target = [
+            [0, 0],
+            [x, 0],
+            [-x, 0],
+            [0, y],
+            [0, -y],
+          ]
+            .map(([dx, dy]) => ({ ...column, x: source.x + dx, y: source.y + dy }))
+            .find((candidate) => columnFits(candidate))
+          if (!target) {
+            error = '附近没有可放置的空位'
+            render()
+            return
+          }
+          remember()
+          cancelTools()
+          error = ''
+          state.columns.push(target)
+          selectedColumn = state.columns.length - 1
+          selectedVertex = -1
+          includeEditedColumn(target)
+          finish()
+        }
+        function canAddColumn() {
+          if (state.columns.length + fixedObstacles.length < MAX_OBSTACLES) return true
+          error = '最多可保留 100 个柱子及其他障碍物'
+          render()
+          return false
+        }
+        root.addEventListener('click', (event) => {
+          const button = event.target.closest('button')
+          if (!button || button.disabled) return
+          error = ''
+          if (button.dataset.action === 'split-edge') {
+            placingColumn = null
+            selectedVertex = -1
+            selectedColumn = -1
+            addingNode = !addingNode
+            render()
+            return
+          }
+          addingNode = false
+          const kind = button.dataset.columnKind
+          if (kind) {
+            if (!canAddColumn()) return
+            placingColumn = placingColumn?.kind === kind ? null : { kind, width: 600, depth: 600 }
+            selectedColumn = -1
+            selectedVertex = -1
+            render()
+            return
+          }
+          const action = button.dataset.action
+          if (action === 'next') {
+            if (!state.closed) closeShape()
+            else if (session && !submitting) {
+              cancelTools()
+              submitting = true
+              session.postMessage({ type: 'submit', state })
+              render()
+            }
+            return
+          }
+          if (action === 'ortho') {
+            state.ortho = !state.ortho
+            finish()
+            return
+          }
+          if (action === 'undo' || action === 'redo') {
+            changeHistory(action === 'undo')
+            return
+          }
+          if (action === 'redraw') {
+            remember()
+            state = { ...state, closed: false, points: [], ...shopDefaults(state.shop, []) }
+            projection = undefined
+            selectedColumn = -1
+            selectedVertex = -1
+            cancelTools()
+            finish()
+            return
+          }
+          if (action === 'remove-vertex') {
+            removeVertex()
+            svg.focus({ preventScroll: true })
+            return
+          }
+          if (action === 'remove-column') {
+            removeSelected()
+            return
+          }
+          const mode = button.dataset.openingMode
+          if (mode) {
+            if (mode === (state.openings[state.edge]?.mode ?? 'wall')) return
+            const size = length(
+              state.points[state.edge],
+              state.points[(state.edge + 1) % state.points.length],
+            )
+            const width = Math.min(2000, Math.floor(size + 0.00001) - 1)
+            const previous = state.openings[state.edge]
+            remember()
+            state.openings[state.edge] =
+              mode === 'partial'
+                ? { ...previous, mode, start: Math.floor((size - width) / 2), width }
+                : mode === 'full'
+                  ? { kind: previous?.kind, group: previous?.group, mode }
+                  : null
+            if (mode === 'wall' && state.mainEdge === state.edge) state.mainEdge = -1
+            finish()
+            return
+          }
+          if (action === 'opening') {
+            remember()
+            state.mainEdge = state.mainEdge === state.edge ? -1 : state.edge
+          }
+          finish()
+        })
+        edgeSelect.addEventListener('change', () => {
+          state.edge = Number(edgeSelect.value)
+          selectedVertex = -1
+          addingNode = false
+          error = ''
+          render()
+        })
+        function setShift(held) {
+          if (shiftHeld === held) return
+          shiftHeld = held
+          controls('ortho').setAttribute('aria-pressed', String(orthoActive()))
+          if (traceCursor) paint()
+        }
+        window.addEventListener('keydown', (event) => {
+          if (event.key === 'Shift') {
+            setShift(true)
+            return
+          }
+          if (event.isComposing || event.defaultPrevented || drag || editingText(event.target))
+            return
+          const vertex = event.target.getAttribute?.('data-vertex')
+          if (vertex != null && (event.key === 'Enter' || event.key === ' ')) {
+            event.preventDefault()
+            selectVertex(Number(vertex))
+            return
+          }
+          if (
+            event.target.hasAttribute?.('data-column-gap') &&
+            (event.key === 'Enter' || event.key === ' ')
+          ) {
+            event.preventDefault()
+            openGapEditor(event.target)
+            return
+          }
+          if (event.key === 'Escape' && (addingNode || placingColumn)) {
+            event.preventDefault()
+            cancelTools()
+            error = ''
+            render()
+            return
+          }
+          const key = event.key.toLowerCase()
+          if (event.ctrlKey || event.metaKey) {
+            if (event.altKey) return
+            if (key === 'z' || (key === 'y' && !event.shiftKey)) {
+              if (changeHistory(key === 'z' && !event.shiftKey)) event.preventDefault()
+              return
+            }
+            if (event.shiftKey) return
+            const source = selectedObject()
+            if (key === 'd' && source) {
+              event.preventDefault()
+              pasteObject(source)
+            }
+            return
+          }
+          if (!event.altKey && (key === 'delete' || key === 'backspace') && removeSelected())
+            event.preventDefault()
+        })
+        window.addEventListener('keyup', (event) => {
+          if (event.key === 'Shift') setShift(event.shiftKey)
+        })
+        window.addEventListener('blur', () => setShift(false))
+        function updateColumnSize(field, previewOnly = false) {
+          if (previewOnly && !placingColumn) return
+          const active = placingColumn ?? state.columns[selectedColumn]
+          const key = field.dataset.columnValue,
+            value = field.valueAsNumber
+          if (!active || !field.checkValidity() || !Number.isSafeInteger(value)) {
+            if (!previewOnly) render()
+            return
+          }
+          if (active[key] === value) return
+          const column = { ...active, [key]: value }
+          if (column.kind === 'circle') column.depth = column.width
+          if (placingColumn) {
+            placingColumn = column
+            paintColumnPlacement()
+            return
+          }
+          if (!columnFits(column, selectedColumn)) {
+            error = '这个尺寸会与其他物件重叠'
+            render()
+            return
+          }
+          remember()
+          state.columns[selectedColumn] = column
+          error = ''
+          includeEditedColumn(column)
+          finish()
+        }
+        columnFields.forEach((field) => {
+          field.addEventListener('input', () => updateColumnSize(field, true))
+          field.addEventListener('change', () => updateColumnSize(field))
+        })
+        function saveOpeningValue(field) {
+          const opening = state.openings[state.edge],
+            value = field.valueAsNumber
+          if (opening?.mode !== 'partial') return
+          if (!field.checkValidity() || !Number.isFinite(value)) {
+            error = '开口位置和宽度需在选中边内'
+            render()
+            return
+          }
+          const key = field.dataset.openingValue
+          if (opening[key] === value) return
+          const size = length(
+            state.points[state.edge],
+            state.points[(state.edge + 1) % state.points.length],
+          )
+          remember()
+          error = ''
+          state.openings[state.edge] = fitOpening({ ...opening, [key]: value }, size)
+          finish()
+        }
+        ;[offsetField, widthField].forEach((field) => {
+          field.addEventListener('change', () => saveOpeningValue(field))
+          field.addEventListener('blur', () => saveOpeningValue(field))
+          field.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') saveOpeningValue(field)
+          })
+        })
+        function saveEdgeLength() {
+          const size = edgeLength.valueAsNumber
+          if (!state.closed || !edgeLength.checkValidity() || !Number.isFinite(size)) {
+            render()
+            return
+          }
+          const end = (state.edge + 1) % state.points.length
+          const a = state.points[state.edge],
+            b = state.points[end]
+          if (size === Math.round(length(a, b))) return
+          const { useStart } = edgeLengthAnchor(a, b)
+          const [anchor, moving, movingIndex] = useStart ? [a, b, end] : [b, a, state.edge]
+          const resized = moveAlong(anchor, unit(subtract(moving, anchor)), size)
+          const points = state.points.map((p, i) => (i === movingIndex ? resized : p))
+          if (
+            !isSimple(points) ||
+            Math.sign(signedArea(points)) !== Math.sign(signedArea(state.points))
+          ) {
+            error = '该尺寸会使轮廓交叉或产生过短的边'
+            render()
+            return
+          }
+          const openings = openingsFromFixedEnds(state, points)
+          if (!openingsFit(points, openings)) {
+            error = '该尺寸会挤到局部开口'
+            render()
+            return
+          }
+          remember()
+          error = ''
+          updateOutline(points, openings)
+          finish()
+        }
+        edgeLength.addEventListener('change', saveEdgeLength)
+        edgeLength.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            saveEdgeLength()
+          }
+        })
+        setting('height').addEventListener('change', (event) => {
+          const field = event.target,
+            value = field.valueAsNumber
+          if (!field.checkValidity() || !Number.isFinite(value)) {
+            render()
+            return
+          }
+          if (state.height === value) return
+          remember()
+          state.height = value
+          error = ''
+          finish()
+        })
+        svg.addEventListener('click', (event) => {
+          if (justDragged) {
+            justDragged = false
+            return
+          }
+          if (event.target.hasAttribute('data-column-gap')) {
+            openGapEditor(event.target)
+            return
+          }
+          error = ''
+          if (addingNode) {
+            insertEdgeNode(event)
+            return
+          }
+          if (!state.closed) {
+            const enabled = state.ortho || event.shiftKey
+            const vertex = event.target.getAttribute('data-vertex')
+            if (vertex === '0') {
+              closeShape(enabled)
+              return
+            }
+            if (vertex !== null) {
+              selectVertex(Number(vertex))
+              return
+            }
+            if (state.points.length >= MAX_VERTICES) {
+              error = '轮廓最多可包含 200 个节点'
+              render()
+              return
+            }
+            const point = tracePoint(fromScreen(event), enabled)
+            if (state.points.some((existing) => length(existing, point) < 100)) return
+            remember()
+            state.points.push(point)
+            selectedVertex = -1
+            finish()
+            return
+          }
+          if (placingColumn) {
+            const [x, y] = fromScreen(event, 1)
+            const column = { ...placingColumn, x, y }
+            if (!columnFits(column)) {
+              error = '请选择未被占用的位置'
+              render()
+              return
+            }
+            remember()
+            state.columns.push(column)
+            selectedColumn = state.columns.length - 1
+            placingColumn = null
+            includeEditedColumn(column)
+            finish()
+            return
+          }
+        })
+        svg.addEventListener('dblclick', (event) => {
+          if (drag || addingNode || placingColumn || !state.closed) return
+          const edge = event.target.getAttribute('data-mark-edge')
+          if (edge === null) {
+            if (event.target === svg || event.target.hasAttribute('data-canvas-background')) {
+              projection = measure(true)
+              paint()
+            }
+            return
+          }
+          const correction = correctedEdge(state.points, Number(edge))
+          const { points } = correction
+          let reason = correction.reason
+          if (points && !reason && !openingsFit(points, state.openings))
+            reason = '校正后的边长容不下已有的局部开口'
+          if (reason) {
+            error = '无法校正，' + reason
+            render()
+            return
+          }
+          if (!points) return
+          remember()
+          error = ''
+          updateOutline(points)
+          finish()
+        })
+        svg.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0 || drag) return
+          justDragged = false
+          if (addingNode || placingColumn || event.target.hasAttribute('data-column-gap')) return
+          const vertex = event.target.getAttribute('data-vertex')
+          const edge = event.target.getAttribute('data-mark-edge')
+          const openingEnd = event.target.getAttribute('data-opening-end')
+          const column = event.target.getAttribute('data-column')
+          if (edge === null && vertex === null && openingEnd === null && column === null) {
+            if (selectedColumn >= 0 || (state.closed && selectedVertex >= 0)) {
+              selectedColumn = -1
+              selectedVertex = -1
+              render()
+            }
+            return
+          }
+          const base = {
+            before: copy(state),
+            column: selectedColumn,
+            vertex: selectedVertex,
+            moved: false,
+            pointer: event.pointerId,
+          }
+          if (openingEnd !== null) {
+            const index = state.edge
+            const a = state.points[index],
+              b = state.points[(index + 1) % state.points.length]
+            const size = length(a, b)
+            drag = {
+              ...base,
+              key: 'opening',
+              index,
+              openingEnd,
+              start: fromScreen(event, 0),
+              direction: subtract(b, a).map((v) => v / size),
+              size: Math.floor(size + 0.00001),
+            }
+            svg.setPointerCapture(event.pointerId)
+            return
+          }
+          if (column !== null) {
+            const index = Number(column)
+            drag = { ...base, key: 'column', index, start: fromScreen(event, 0) }
+            selectedColumn = index
+            selectedVertex = -1
+            error = ''
+            svg.focus({ preventScroll: true })
+            svg.setPointerCapture(event.pointerId)
+            render()
+            return
+          }
+          if (state.closed && edge !== null) {
+            const index = Number(edge)
+            const a = state.points[index],
+              b = state.points[(index + 1) % state.points.length]
+            const direction = unit(subtract(b, a))
+            drag = {
+              ...base,
+              key: 'edge',
+              index,
+              start: fromScreen(event, 0),
+              direction,
+              normal: [-direction[1], direction[0]],
+              axis: null,
+              offset: 0,
+            }
+            state.edge = index
+            selectedColumn = -1
+            selectedVertex = -1
+            error = ''
+            event.target.setPointerCapture(event.pointerId)
+            render()
+            return
+          }
+          if (vertex !== null && state.closed) {
+            const index = Number(vertex)
+            drag = { ...base, key: 'vertex', index }
+            svg.setPointerCapture(event.pointerId)
+            selectVertex(index)
+            return
+          }
+        })
+        function previewColumnAt(event) {
+          if (!placingColumn || event.pointerType === 'touch') return
+          columnCursor = fromScreen(event, 1)
+          paintColumnPlacement()
+        }
+        svg.addEventListener('pointerenter', previewColumnAt)
+        svg.addEventListener('pointermove', (event) => {
+          if (placingColumn) {
+            previewColumnAt(event)
+            return
+          }
+          if (!drag) {
+            if (!state.closed && state.points.length) {
+              shiftHeld = event.shiftKey
+              controls('ortho').setAttribute('aria-pressed', String(orthoActive()))
+              traceCursor = fromScreen(event)
+              paint()
+            }
+            return
+          }
+          if (event.pointerId !== drag.pointer) return
+          if (drag.key === 'opening') {
+            const along = dot(subtract(fromScreen(event, 0), drag.start), drag.direction)
+            const offset = Math.round(along / EDGE_STEP) * EDGE_STEP
+            const opening = drag.before.openings[drag.index],
+              end = opening.start + opening.width
+            let start = opening.start,
+              nextEnd = end
+            if (drag.openingEnd === 'start') {
+              start = Math.max(end === drag.size ? 1 : 0, Math.min(end - 1, start + offset))
+            } else {
+              nextEnd = Math.max(
+                start + 1,
+                Math.min(drag.size - (start === 0 ? 1 : 0), end + offset),
+              )
+            }
+            const width = nextEnd - start,
+              current = state.openings[drag.index]
+            if (start === current.start && width === current.width) return
+            state.openings[drag.index] = { ...opening, start, width }
+            drag.moved = start !== opening.start || width !== opening.width
+            error = ''
+            render()
+            return
+          }
+          if (drag.key === 'column') {
+            const original = drag.before.columns[drag.index]
+            const [dx, dy] = subtract(fromScreen(event, 0), drag.start).map(
+              (v) => Math.round(v / EDGE_STEP) * EDGE_STEP,
+            )
+            const candidate = { ...original, x: original.x + dx, y: original.y + dy }
+            if (
+              !inCanvas(toScreen([candidate.x, candidate.y])) ||
+              !columnFits(candidate, drag.index)
+            )
+              return
+            state.columns[drag.index] = candidate
+            drag.moved = dx !== 0 || dy !== 0
+            paint()
+            return
+          }
+          if (drag.key === 'edge') {
+            const delta = subtract(fromScreen(event, 0), drag.start)
+            const along = dot(delta, drag.direction),
+              across = dot(delta, drag.normal)
+            const axis = drag.axis ?? (Math.abs(along) > Math.abs(across) ? 'along' : 'across')
+            const offset = Math.round((axis === 'along' ? along : across) / EDGE_STEP) * EDGE_STEP
+            if (offset === drag.offset) {
+              if (error) {
+                error = ''
+                render()
+              }
+              return
+            }
+            drag.axis = axis
+            const original = drag.before
+            const candidate =
+              axis === 'along'
+                ? slideEdge(original, drag.index, drag.direction, offset)
+                : parallelEdge(original, drag.index, drag.normal, offset)
+            const { points } = candidate
+            if (
+              candidate.edge < 0 ||
+              points.length > Math.max(MAX_VERTICES, original.points.length) ||
+              !isSimple(points) ||
+              Math.sign(signedArea(points)) !== Math.sign(signedArea(original.points))
+            ) {
+              error = '该位置会让边线交叉、边线过短或尺寸超出范围'
+              render()
+              return
+            }
+            if (axis === 'along' && !openingsFit(points, candidate.openings)) {
+              error = '该位置会挤到局部开口'
+              render()
+              return
+            }
+            svg.setPointerCapture(event.pointerId)
+            state.edge = candidate.edge
+            state.mainEdge = candidate.mainEdge
+            updateOutline(points, candidate.openings)
+            drag.offset = offset
+            drag.moved = offset !== 0
+            error = ''
+            render()
+            return
+          }
+          const point = fromScreen(event)
+          const points = state.points.map((p, i) => (i === drag.index ? point : p))
+          if (!isSimple(points) || length(state.points[drag.index], point) < 50) return
+          updateOutline(points, drag.before.openings)
+          if (!drag.moved) {
+            svg.setPointerCapture(event.pointerId)
+            drag.moved = true
+          }
+          paint()
+        })
+        svg.addEventListener('pointerleave', () => {
+          if (columnCursor) {
+            columnCursor = null
+            paintColumnPlacement()
+          }
+          if (traceCursor) {
+            traceCursor = null
+            paint()
+          }
+        })
+        svg.addEventListener('pointerup', (event) => {
+          if (!drag || event.pointerId !== drag.pointer) return
+          const previous = drag
+          drag = null
+          if (!previous.moved) {
+            render()
+            return
+          }
+          justDragged = previous.key !== 'edge'
+          if (previous.key === 'column') includeEditedColumn(state.columns[previous.index])
+          error = ''
+          remember({ state: previous.before, column: previous.column, vertex: previous.vertex })
+          finish()
+        })
+        svg.addEventListener('pointercancel', (event) => {
+          if (!drag || event.pointerId !== drag.pointer) return
+          state = drag.before
+          selectedColumn = drag.column
+          selectedVertex = drag.vertex
+          drag = null
+          error = ''
+          render()
+        })
+        // Only the enclosing editor can initialize the isolated editing surface.
+        window.addEventListener('message', (event) => {
+          if (
+            session ||
+            event.source !== window.parent ||
+            event.data?.type !== 'store-space-capture' ||
+            !event.ports[0]
+          )
+            return
+          const incoming = event.data.state
+          if (!Array.isArray(incoming?.points) || !Array.isArray(incoming.openings)) return
+          session = event.ports[0]
+          session.onmessage = ({ data }) => {
+            if (data?.type !== 'submission-finished') return
+            submitting = false
+            error = typeof data.error === 'string' ? data.error : ''
+            render()
+          }
+          state = incoming
+          fixedObstacles = event.data.fixedObstacles
+          projection = undefined
+          render()
+        })
+        new ResizeObserver(paint).observe(svg)
+        render()
+      })()
+    </script>
+  </body>
+</html>
