@@ -24,6 +24,11 @@ import {
   mountedWall,
   roundM,
   scaleItem,
+  isCustomLogo,
+  customLogoAsset,
+  customLogoSize,
+  changeLogoText,
+  DEFAULT_LOGO_TEXT,
   nextFixtureId,
   rotatedFootprint,
   snapFixtureRect,
@@ -153,6 +158,7 @@ export type EditorAction =
     }
   /** Height of a wall or ceiling piece above the floor. */
   | { type: 'elevate'; id: string; elevation: number }
+  | { type: 'setLogoText'; id: string; text: string }
   /**
    * A LOGO resized uniformly (属性面板“宽度”, or dragged by an end or a corner: then `at` is
    * where it goes, see shared/scaling); a piece on a wall stays on it. `group` joins one drag.
@@ -434,6 +440,7 @@ export function catalogItem(layout: Layout, asset: Asset, cx: number, cz: number
     // Without a web model the item is a true-size placeholder (see assetFitProblem).
     placeholder: !asset.placeable,
     locked: false,
+    ...(isCustomLogo({ assetId: asset.id }) ? { logoText: DEFAULT_LOGO_TEXT } : {}),
   }
 }
 
@@ -550,6 +557,12 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         (item) => {
           if (item.locked) return item
           const rotation = (((item.rotation + (action.by ?? 90)) % 360) + 360) % 360
+          if (isCustomLogo(item))
+            return {
+              ...item,
+              rotation,
+              ...customLogoSize(item.logoText ?? DEFAULT_LOGO_TEXT, item.scale ?? 1, rotation),
+            }
           const native = isWallArt(item)
             ? rotatedFootprint({ footprint: wallArtSize(item) }, rotation)
             : action.asset
@@ -569,7 +582,10 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
             h: roundM(size.h),
           }
           // A resized LOGO keeps its scale through the turn.
-          return action.asset && item.scale ? scaleItem(turned, action.asset, item.scale) : turned
+          const actualAsset = isCustomLogo(item)
+            ? customLogoAsset(item.logoText ?? DEFAULT_LOGO_TEXT)
+            : action.asset
+          return actualAsset && item.scale ? scaleItem(turned, actualAsset, item.scale) : turned
         },
         null,
       )
@@ -640,13 +656,18 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         },
         action.group ?? null,
       )
+    case 'setLogoText':
+      return changeItem(state, action.id, (item) => changeLogoText(item, action.text), null)
     case 'scale':
       return changeItem(
         state,
         action.id,
         (item) => {
           if (item.locked || !Number.isFinite(action.scale)) return item
-          const resized = scaleItem(item, action.asset, action.scale)
+          const logoAsset = isCustomLogo(item)
+            ? customLogoAsset(item.logoText ?? DEFAULT_LOGO_TEXT)
+            : action.asset
+          const resized = scaleItem(item, logoAsset, action.scale)
           const at = action.at
           const scaled =
             at && resized !== item

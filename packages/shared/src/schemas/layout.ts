@@ -8,6 +8,12 @@ import {
   WALL_ART_ID,
 } from '../catalog/wall-art.ts'
 import { advertisingScreenName, portraitScreenFootprint } from '../catalog/advertising-screen.ts'
+import {
+  CustomLogoTextSchema,
+  customLogoSize,
+  isCustomLogo,
+  DEFAULT_LOGO_TEXT,
+} from '../catalog/custom-logo.ts'
 import { ItemFunctionSchema, PlanStrategySchema } from '../enums.ts'
 import {
   nearestQuarter,
@@ -85,6 +91,8 @@ export const LayoutItemSchema = z.object({
    * size. `w`/`d`/`h` already include it.
    */
   scale: z.number().finite().min(MIN_ITEM_SCALE).max(MAX_ITEM_SCALE).optional(),
+  /** The editable text of the built-in custom logo. Absent on other catalogue models. */
+  logoText: CustomLogoTextSchema.optional(),
 })
 
 export const RelaxationSchema = z.object({
@@ -155,6 +163,13 @@ export const LayoutSchema = z
         })
       }
       seen.add(item.id)
+      if (item.logoText !== undefined && !isCustomLogo(item)) {
+        ctx.addIssue({
+          code: 'custom',
+          message: '只有自定义LOGO可修改文字',
+          path: ['items', index, 'logoText'],
+        })
+      }
     })
   })
 
@@ -262,12 +277,19 @@ export type AssetFitProblem = 'unknown' | 'not_placeable' | 'size'
  */
 export function assetFitProblem(
   item: Pick<LayoutItem, 'placeholder' | 'rotation' | 'w' | 'd' | 'h'> &
-    Partial<Pick<LayoutItem, 'function' | 'scale' | 'assetId' | 'mount'>>,
+    Partial<Pick<LayoutItem, 'function' | 'scale' | 'assetId' | 'mount' | 'logoText'>>,
   asset: AssetFit | undefined,
 ): AssetFitProblem | null {
   if (!asset) return 'unknown'
   if (!asset.placeable && !item.placeholder) return 'not_placeable'
   const scale = item.scale ?? 1
+  if (isCustomLogo(item)) {
+    const expected = customLogoSize(item.logoText ?? DEFAULT_LOGO_TEXT, scale, item.rotation)
+    return item.function === 'signage' &&
+      (['w', 'd', 'h'] as const).every((k) => Math.abs(item[k] - expected[k]) <= EPSILON_M)
+      ? null
+      : 'size'
+  }
   if (asset.id === WALL_ART_ID && isWallArt(item)) {
     return (item.mount === 'wall' || item.mount === 'embedded' || item.mount === 'ceiling') &&
       item.function === 'signage' &&
