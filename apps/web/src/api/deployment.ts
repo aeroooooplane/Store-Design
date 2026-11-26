@@ -1,5 +1,6 @@
 export const isBoldSite = import.meta.env.MODE === 'boldsite'
 export const isProjectPilot = isBoldSite && import.meta.env.VITE_BOLDSITE_PROJECT_PILOT === '1'
+export const isFullWorkbench = isBoldSite && import.meta.env.VITE_BOLDSITE_FULL_WORKBENCH === '1'
 
 const contractPath = '/api/v1/'
 const gatewayPath = '/workbench/v1/'
@@ -17,7 +18,12 @@ export function mapGatewayPath(url: string, prefix: string): string {
     : url
 }
 
-export function gatewayRequest(prefix: string, projectPilot = false): typeof Request {
+const tunneledMethods = new Set(['PATCH', 'PUT', 'DELETE'])
+
+export function gatewayRequest(
+  prefix: string,
+  mode: 'standard' | 'pilot' | 'workbench' = 'standard',
+): typeof Request {
   return class extends Request {
     constructor(input: RequestInfo | URL, init?: RequestInit) {
       if (typeof input !== 'string') {
@@ -27,8 +33,26 @@ export function gatewayRequest(prefix: string, projectPilot = false): typeof Req
       const url = new URL(input)
       const project = /^\/api\/v1\/projects\/[^/]+(\/restore)?$/.exec(url.pathname)
       let options = init
-      if (projectPilot && project) {
-        const method = init?.method?.toUpperCase()
+      const method = init?.method?.toUpperCase()
+      if (mode === 'workbench' && method && url.pathname.startsWith(contractPath)) {
+        const headers = new Headers(init?.headers)
+        const revision = headers.get('if-match')
+        if (tunneledMethods.has(method)) {
+          url.pathname =
+            contractPath +
+            '_write/' +
+            method.toLowerCase() +
+            '/' +
+            url.pathname.slice(contractPath.length)
+          options = { ...init, method: 'POST', headers }
+        }
+        if (revision !== null && (method === 'POST' || tunneledMethods.has(method))) {
+          url.searchParams.set('__workbench_if_match', revision)
+          headers.delete('if-match')
+          options = { ...options, headers }
+        }
+      }
+      if (mode === 'pilot' && project) {
         const action = !project[1] && method === 'PATCH' ? '/save' : ''
         const trash = !project[1] && method === 'DELETE'
         if (action || trash || (project[1] && method === 'POST')) {

@@ -1,6 +1,6 @@
 import re
 from typing import Annotated
-from urllib.parse import quote
+from urllib.parse import parse_qsl, quote, urlencode
 from uuid import UUID, uuid4
 
 from fastapi import Request
@@ -66,6 +66,47 @@ def validate_uuid(value):
 
 
 ResourceId = Annotated[str, AfterValidator(validate_uuid)]
+
+
+class FullWorkbenchTransport:
+    """Restore HTTP verbs and revisions carried through the site's GET/POST boundary."""
+
+    def __init__(self, app, origin):
+        self.app, self.origin = app, origin
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] != "http" or not scope["path"].startswith("/workbench/v1/"):
+            await self.app(scope, receive, send)
+            return
+        request = Request(scope)
+        try:
+            prefix = "/workbench/v1/"
+            action = re.fullmatch(r"_write/(patch|put|delete)/(.+)", scope["path"][len(prefix):])
+            if action and scope["method"] != "POST":
+                raise invalid("请求方法无效")
+            method = action[1].upper() if action else scope["method"]
+            if method not in {"GET", "HEAD", "OPTIONS"} and request.headers.get("origin") != self.origin:
+                raise ApiError(403, "FORBIDDEN", "工作台写请求必须来自本站")
+            query = parse_qsl(scope["query_string"].decode("ascii"), keep_blank_values=True)
+            revisions = [value for key, value in query if key == "__workbench_if_match"]
+            headers = scope["headers"]
+            if revisions:
+                if (
+                    len(revisions) != 1 or scope["method"] != "POST" or "if-match" in request.headers
+                    or not re.fullmatch(r"[\x20-\x7e\t]{0,128}", revisions[0])
+                ):
+                    raise invalid("工作台版本参数无效")
+                headers = [*headers, (b"if-match", revisions[0].encode("ascii"))]
+                query = [(key, value) for key, value in query if key != "__workbench_if_match"]
+            scope = {
+                **scope, "method": method, "headers": headers, "query_string": urlencode(query).encode("ascii"),
+                "path": prefix + action[2] if action else scope["path"],
+            }
+        except ApiError as error:
+            await error_response(request, error)(scope, receive, send)
+            return
+        await self.app(scope, receive, send)
+
 
 
 class ServicePrefix:

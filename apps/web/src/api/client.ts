@@ -4,6 +4,7 @@ import type { paths } from './schema'
 import {
   gatewayRequest,
   isBoldSite,
+  isFullWorkbench,
   isProjectPilot,
   mapFileLinks,
   servicePrefix,
@@ -15,7 +16,12 @@ import {
  */
 export const api = createClient<paths>({
   baseUrl: window.location.origin,
-  Request: isBoldSite ? gatewayRequest(servicePrefix, isProjectPilot) : Request,
+  Request: isBoldSite
+    ? gatewayRequest(
+        servicePrefix,
+        isProjectPilot ? 'pilot' : isFullWorkbench ? 'workbench' : 'standard',
+      )
+    : Request,
   // Resolve fetch per call so tests can stub it.
   fetch: async (request) => {
     const response = await globalThis.fetch(request)

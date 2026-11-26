@@ -113,6 +113,21 @@ node tools/boldsite/package.mjs /path/to/new-release /path/to/new-catalog
 
 快照复用本机展陈入库器，按版本锁校验正式工作簿，只发布校核通过的规则、产品图、桌体和托盘配图。试排项目通过“展开展陈方案”从当前桌位按市场、SI 和正式规则生成展陈，可调整槽位后导出可编辑 PPTX。沿用原展陈幻灯片模板，保留设施标注和明细。当前入口在浏览器生成文件，展陈任务和服务端归档不参与试排。
 
+## 原版工作台兼容候选
+
+原试用包的界面入口由 `VITE_BOLDSITE_PROJECT_PILOT` 控制。原版兼容候选通过 `--workbench` 构建，复用线下 React 项目列表和项目工作台，路径仍使用服务子路径和 Hash 路由。旧试排书签跳至同一项目的原版编辑器。普通网页构建和现有试用包入口保持原有用法。
+
+```sh
+node tools/boldsite/package.mjs /path/to/new-release /path/to/catalog --workbench
+uv pip install --python-version 3.11 --python-platform x86_64-manylinux_2_28 \
+  --only-binary :all: --target /path/to/new-release/vendor \
+  -r /path/to/new-release/requirements.txt -r /path/to/new-release/requirements-workbench.txt
+```
+
+候选兼容空间和方案节点、自动排布、模型校验及带版本的平面草稿。FastAPI 将现有几何、校验及排布代码作为固定构建产物执行，输入为 JSON，运行时无需 Node.js 常驻服务。写请求校验浏览器来源，默认是 `https://sites.insta360.cn`，本地或其他获批试点域通过 `BOLDSITE_WORKBENCH_PUBLIC_ORIGIN` 配置。网关使用原 OpenAPI 的路径与数据，仅在 Bold Site 传输方式上通过 POST 承载其他写方法及 If-Match。
+
+候选在既有 SQLite 上增加独立表，沿用项目和图纸。完整三维及相机、独立展陈任务、归档交付、扫描识别和全站设置尚需继续适配。候选用独立目录和虚构项目验收，再按真实网关、权限、数据留存及对照流程决定切换。
+
 ## 后续迁移
 
 | 批次 | 接口与依赖 |

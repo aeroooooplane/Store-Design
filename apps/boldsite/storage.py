@@ -86,6 +86,41 @@ class Database:
             db.execute("PRAGMA user_version = 1")
 
 
+    def initialize_workbench(self):
+        # Additive tables keep this data directory readable by the previous trial release.
+        with self.connect(write=True) as db:
+            db.execute("""
+                CREATE TABLE IF NOT EXISTS workbench_nodes (
+                    seq INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id TEXT NOT NULL UNIQUE,
+                    projectId TEXT NOT NULL REFERENCES projects(id),
+                    parentId TEXT REFERENCES workbench_nodes(id),
+                    kind TEXT NOT NULL,
+                    name TEXT NOT NULL,
+                    strategy TEXT,
+                    siStyle TEXT,
+                    origin TEXT NOT NULL,
+                    importedFrom TEXT,
+                    space TEXT,
+                    layout TEXT,
+                    hiddenAt TEXT,
+                    createdAt TEXT NOT NULL
+                )
+            """)
+            db.execute("CREATE INDEX IF NOT EXISTS workbench_nodes_project ON workbench_nodes(projectId, seq)")
+            db.execute("""
+                CREATE TABLE IF NOT EXISTS workbench_drafts (
+                    projectId TEXT NOT NULL REFERENCES projects(id),
+                    baseNodeId TEXT NOT NULL REFERENCES workbench_nodes(id),
+                    layout TEXT NOT NULL,
+                    revision INTEGER NOT NULL,
+                    updatedAt TEXT NOT NULL,
+                    PRIMARY KEY(projectId, baseNodeId)
+                )
+            """)
+
+
+
 def configured_database():
     # An explicit path prevents a successful deploy silently writing into the release directory.
     return Database(Path(os.environ["DATA_DIR"]).resolve())

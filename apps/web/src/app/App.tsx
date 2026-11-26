@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState } from 'react'
-import { Link, createBrowserRouter, createHashRouter, RouterProvider } from 'react-router'
-import type { RouteObject } from 'react-router'
-import { isBoldSite, isProjectPilot } from '../api/deployment.ts'
+import { Link, createBrowserRouter, createHashRouter, redirect, RouterProvider } from 'react-router'
+import type { LoaderFunctionArgs, RouteObject } from 'react-router'
+import { isBoldSite, isFullWorkbench, isProjectPilot } from '../api/deployment.ts'
 import { AppLayout } from '../components/AppNav.tsx'
 import { DisplayTaskPage } from '../features/display/DisplayTaskPage.tsx'
 import { DisplayTasksPage } from '../features/display/DisplayTasksPage.tsx'
@@ -43,7 +43,15 @@ const pages: RouteObject[] = [
           }),
         },
       ]
-    : []),
+    : isFullWorkbench
+      ? [
+          {
+            path: '/projects/:projectId/design',
+            loader: ({ params }: LoaderFunctionArgs) =>
+              redirect(`/projects/${encodeURIComponent(params.projectId ?? '')}`),
+          },
+        ]
+      : []),
   { path: '/settings', element: isProjectPilot ? <PilotUnavailablePage /> : <SettingsPage /> },
   { path: '/display', element: isProjectPilot ? <PilotUnavailablePage /> : <DisplayTasksPage /> },
   {
