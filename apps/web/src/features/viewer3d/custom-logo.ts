@@ -32,7 +32,9 @@ function logoFont() {
 }
 
 /** Local, licensed outlines; a real extruded mesh, without a plate or online font service. */
-export async function customLogoMesh(item: LayoutItem): Promise<THREE.Mesh> {
+export async function customLogoMesh(
+  item: LayoutItem,
+): Promise<THREE.Mesh<THREE.ExtrudeGeometry, THREE.MeshStandardMaterial>> {
   const font = await logoFont()
   const size = wallArtSize(item)
   const geometry = new THREE.ExtrudeGeometry(
