@@ -34,7 +34,7 @@ import { PlanView } from './PlanView.tsx'
 import { useNodeActions } from './plan-editor/useNodeActions.ts'
 import { EMPTY_LAYOUT } from './plan-editor/empty-layout.ts'
 import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
-import { ProjectCard, ProjectDetails } from './ProjectCard.tsx'
+import { CurrentSpaceCard, ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
@@ -271,22 +271,27 @@ export function Workbench({ project }: { project: Project }) {
         />
       </ProjectNavSlot>
       <WorkbenchInfoContext.Provider
-        value={
-          <>
-            <ProjectDetails project={project} space={cardSpaceData} siStyle={shownSi} />
-            {!creatingSpace && cardSpaceData && (
-              <button
-                type="button"
-                disabled={openingSpace || activePanel === 'edit-space'}
-                onClick={() => void openEditSpace()}
-              >
-                修改空间
-              </button>
-            )}
-            {spaceOpenError && <p role="alert">请先完成当前节点的保存或渲染，再修改空间。</p>}
-            {isFullWorkbench && <ProjectDrawings projectId={project.id} />}
-          </>
-        }
+        value={{
+          currentSpace: cardSpaceData && (
+            <CurrentSpaceCard
+              space={cardSpaceData}
+              error={spaceOpenError}
+              action={
+                !creatingSpace && (
+                  <button
+                    type="button"
+                    disabled={openingSpace || activePanel === 'edit-space'}
+                    onClick={() => void openEditSpace()}
+                  >
+                    修改空间
+                  </button>
+                )
+              }
+            />
+          ),
+          details: <ProjectDetails project={project} siStyle={shownSi} />,
+          drawings: isFullWorkbench ? <ProjectDrawings projectId={project.id} /> : null,
+        }}
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
           <ViewMemoryContext.Provider value={viewMemory.current}>

@@ -15,6 +15,7 @@ import {
   WALL_ART_ID,
   fitBodyFootprints,
   itemMount,
+  mToMm,
   snapRotation,
   spaceAncestor,
   stageOf,
@@ -314,15 +315,18 @@ export function PlanEditor({
     svgRef,
     onItemPointerDown,
     onFixturePointerDown,
+    onFixtureResize,
     onResizeHandlePointerDown,
     onRotateHandlePointerDown,
     onDrawPointerDown,
     onPointerMove,
     endDrag,
-    draft: drawnRect,
+    fixturePreview,
     guide: rotationGuide,
   } = usePlanDrag(
     space,
+    shopType,
+    state.layout,
     dispatch,
     (item) => frontOf(item.id),
     drawingFixture,
@@ -332,8 +336,13 @@ export function PlanEditor({
   const selectedFixture = state.layout.fixtures?.find((f) => f.id === state.selectedId) ?? null
   const { onKeyDown, rotateSelected } = useEditorKeys(selected, assetMap, dispatch)
 
-  function preparePlacement(item: LayoutItem) {
+  function cancelFixtureDrawing() {
+    endDrag()
     setDrawingFixture(false)
+  }
+
+  function preparePlacement(item: LayoutItem) {
+    cancelFixtureDrawing()
     setPlacement({ item })
     canvasRef.current?.focus({ preventScroll: true })
   }
@@ -387,8 +396,17 @@ export function PlanEditor({
   })
 
   function switchView(next: 'plan' | '3d') {
+    if (next === '3d') cancelFixtureDrawing()
     setView(next)
     memory.update({ view: { [stage]: next } })
+  }
+
+  function toggleFixtureDrawing() {
+    if (drawingFixture) return cancelFixtureDrawing()
+    switchView('plan')
+    setPlacement(null)
+    setDrawingFixture(true)
+    canvasRef.current?.focus({ preventScroll: true })
   }
 
   function showCamera(camera: NodeCamera) {
@@ -401,6 +419,45 @@ export function PlanEditor({
   return (
     <WorkbenchLayout
       left={left}
+      spaceFixtures={
+        <section className="space-info-card">
+          <header className="space-info-heading">
+            <h3>
+              空心隔板 <small>{state.layout.fixtures?.length ?? 0} 件</small>
+            </h3>
+            <button
+              type="button"
+              aria-pressed={drawingFixture}
+              className="fixture-draw-button"
+              onClick={toggleFixtureDrawing}
+            >
+              画隔板
+            </button>
+          </header>
+          {state.layout.fixtures?.length ? (
+            <div className="space-fixture-list" aria-label="隔板列表">
+              {state.layout.fixtures.map((fixture, index) => (
+                <button
+                  type="button"
+                  key={fixture.id}
+                  aria-pressed={fixture.id === selectedFixture?.id}
+                  onClick={() => {
+                    select(fixture.id)
+                    canvasRef.current?.focus({ preventScroll: true })
+                  }}
+                >
+                  隔板 {String(index + 1).padStart(2, '0')}
+                  <small>
+                    {mToMm(fixture.w)} × {mToMm(fixture.d)} mm
+                  </small>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <p className="hint">暂无隔板</p>
+          )}
+        </section>
+      }
       models={
         <ModelPicker
           assets={assets}
@@ -436,10 +493,7 @@ export function PlanEditor({
             spacing={showSpacing}
             onToggleSpacing={() => setShowSpacing(!showSpacing)}
             drawingFixture={drawingFixture}
-            onToggleDrawFixture={() => {
-              setPlacement(null)
-              setDrawingFixture((on) => !on)
-            }}
+            onToggleDrawFixture={toggleFixtureDrawing}
           />
 
           {saveState === 'conflict' && (
@@ -476,12 +530,23 @@ export function PlanEditor({
                 if (event.key === 'Escape') setPlacement(null)
                 return
               }
-              if (event.key === 'Escape' && drawingFixture) setDrawingFixture(false)
+              if (event.key === 'Escape' && (drawingFixture || fixturePreview))
+                cancelFixtureDrawing()
               else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
                 dispatch({ type: 'remove', id: selectedFixture.id })
               else onKeyDown(event)
             }}
           >
+            {drawingFixture && (
+              <div className="toolbar notice placement-controls">
+                <p className="hint" role="status">
+                  从一个角拖到对角。按住 Alt 可关闭吸附。
+                </p>
+                <button type="button" onClick={cancelFixtureDrawing}>
+                  取消（Esc）
+                </button>
+              </div>
+            )}
             {placement && (
               <div className="toolbar notice placement-controls">
                 <p className="hint" role="status">
@@ -536,7 +601,9 @@ export function PlanEditor({
             </div>
             <div
               className={planMain ? 'view-main' : 'view-mini'}
-              style={planMain && placement ? { cursor: 'crosshair' } : undefined}
+              style={
+                planMain && (placement || drawingFixture) ? { cursor: 'crosshair' } : undefined
+              }
               onPointerDownCapture={
                 planMain
                   ? (event) => {
@@ -562,7 +629,10 @@ export function PlanEditor({
                 onResizeHandlePointerDown={onResizeHandlePointerDown}
                 onRotateHandlePointerDown={onRotateHandlePointerDown}
                 guide={rotationGuide}
-                drawingRect={drawnRect}
+                onFixtureResize={
+                  planMain && !drawingFixture && !placement ? onFixtureResize : undefined
+                }
+                fixturePreview={fixturePreview}
                 onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                 compact={!planMain}
                 spacing={showSpacing}

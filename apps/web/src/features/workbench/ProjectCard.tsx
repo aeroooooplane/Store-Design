@@ -2,6 +2,7 @@ import { MARKET_LABELS, SHOP_TYPE_LABELS, SI_STYLES, mToMm, polygonArea } from '
 import type { Project, SiStyle, Space } from '@store/shared'
 import { Info } from 'lucide-react'
 import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { formatDateTime } from '../../lib/format.ts'
 
@@ -103,15 +104,46 @@ export function ProjectCard({
   )
 }
 
-/** The "空间信息" tab of the left column. */
+export function CurrentSpaceCard({
+  space,
+  action,
+  error,
+}: {
+  space: Space
+  action: ReactNode
+  error: boolean
+}) {
+  const facts = spaceFacts(space)
+  return (
+    <section className="space-info-card current-space-card">
+      <header className="space-info-heading">
+        <h3>当前空间</h3>
+        {action}
+      </header>
+      <p className="space-info-size">{facts.size}</p>
+      <dl className="space-info-metrics">
+        <div>
+          <dt>面积</dt>
+          <dd>{facts.area}</dd>
+        </div>
+        <div>
+          <dt>层高</dt>
+          <dd>{facts.height}</dd>
+        </div>
+      </dl>
+      {error && <p role="alert">请先完成当前节点的保存或渲染，再修改空间。</p>}
+    </section>
+  )
+}
+
 export function ProjectDetails({
   project,
-  space,
   siStyle,
+  space,
 }: {
   project: Project
-  space: Space | null
   siStyle: SiStyle
+  space?: Space | null
 }) {
   const facts = space ? spaceFacts(space) : null
   const rows: [string, string][] = [

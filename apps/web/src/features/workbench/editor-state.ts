@@ -140,6 +140,7 @@ export type EditorAction =
       group?: string | undefined
       snapTo?: Space | null | undefined
     }
+  | { type: 'resizeFixture'; id: string; rect: Rect }
   /** Size, position or height typed into the properties panel. */
   | {
       type: 'updateFixture'
@@ -826,6 +827,27 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
         },
         action.group ?? null,
       )
+    case 'resizeFixture': {
+      const { minX, maxX, minZ, maxZ } = action.rect
+      const w = roundM(maxX - minX)
+      const d = roundM(maxZ - minZ)
+      if (
+        ![minX, maxX, minZ, maxZ].every(Number.isFinite) ||
+        w < MIN_FIXTURE_M ||
+        d < MIN_FIXTURE_M
+      )
+        return state
+      return changeFixture(
+        state,
+        action.id,
+        (f) => {
+          const cx = roundM((minX + maxX) / 2)
+          const cz = roundM((minZ + maxZ) / 2)
+          return w === f.w && d === f.d && cx === f.cx && cz === f.cz ? f : { ...f, w, d, cx, cz }
+        },
+        null,
+      )
+    }
     case 'updateFixture':
       return changeFixture(
         state,

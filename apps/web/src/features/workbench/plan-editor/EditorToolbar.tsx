@@ -74,18 +74,16 @@ export function EditorToolbar({
           显示间距
         </button>
       )}
-      {view === 'plan' && (
-        <button
-          type="button"
-          className="with-icon"
-          aria-pressed={drawingFixture}
-          title="在平面上拖出一个矩形，边缘吸附墙体和配件柜（按住 Alt 不吸附，Esc 取消）"
-          onClick={onToggleDrawFixture}
-        >
-          <PartitionIcon size={16} aria-hidden="true" />
-          画空心隔板
-        </button>
-      )}
+      <button
+        type="button"
+        className="with-icon fixture-draw-button"
+        aria-pressed={drawingFixture}
+        title={view === 'plan' ? '拖出矩形，按住 Alt 暂停吸附' : '切到平面并开始绘制'}
+        onClick={onToggleDrawFixture}
+      >
+        <PartitionIcon size={16} aria-hidden="true" />
+        画空心隔板
+      </button>
       <span className="history-buttons">
         <button
           type="button"

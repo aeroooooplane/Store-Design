@@ -369,15 +369,48 @@ svg.plan pattern * {
   stroke-width: 1px;
 }
 .plan-fixture.selected rect {
+  fill: #fff0b8;
+  stroke: #956f10;
   stroke-width: 2px;
-  stroke-dasharray: 5 3;
+}
+.plan-fixture-corner {
+  fill: #fffdf5;
+  stroke: #956f10;
+  stroke-width: 1px;
+  pointer-events: none;
+}
+svg.plan .plan-fixture-edge {
+  vector-effect: none;
+  stroke: transparent;
+  pointer-events: stroke;
+  cursor: ns-resize;
+}
+.plan-fixture-edge[data-fixture-edge$='X'] {
+  cursor: ew-resize;
+}
+svg.plan .plan-fixture-edge:hover {
+  stroke: rgb(201 143 25 / 24%);
+}
+.plan-fixture-preview {
+  pointer-events: none;
 }
 .plan-fixture-draft {
-  fill: rgb(37 99 235 / 8%);
-  stroke: #2563eb;
+  fill: rgb(243 197 72 / 32%);
+  stroke: #996800;
   stroke-width: 1px;
   stroke-dasharray: 4 3;
-  pointer-events: none;
+}
+.plan-fixture-guide {
+  stroke: #b47800;
+  stroke-width: 2px;
+  stroke-dasharray: 4 3;
+}
+.plan-fixture-preview text {
+  fill: #694800;
+  font-weight: 650;
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
 }
 /* Clear distances around 软装 props (plan-spacing.ts): thin blue lines and numbers. */
 .plan-spacing line {
@@ -1123,6 +1156,81 @@ ul.issues li.hint::before {
   margin: 0;
   font-weight: 500;
   overflow-wrap: anywhere;
+}
+
+.space-info-cards {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+}
+.space-info-card {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.current-space-card {
+  background: color-mix(in srgb, var(--paper), var(--border) 20%);
+}
+.space-info-heading,
+.space-fixture-list button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+}
+.space-info-heading h3 {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+.space-info-heading small,
+.space-fixture-list small,
+.space-info-metrics dt {
+  color: var(--muted);
+  font-size: var(--fs-xs);
+  font-weight: 400;
+}
+.space-info-size {
+  margin: 12px 0;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 580;
+}
+.space-info-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+.space-info-metrics div {
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: var(--paper);
+}
+.space-info-metrics dd {
+  margin: 2px 0 0;
+  font-variant-numeric: tabular-nums;
+}
+.space-info-card summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.space-fixture-list {
+  display: grid;
+  gap: 5px;
+  margin-top: 8px;
+}
+.space-fixture-list button {
+  min-height: 32px;
+}
+.fixture-draw-button,
+.space-fixture-list button[aria-pressed='true'] {
+  border-color: #d8b74c;
+  background: #fff4cf;
+}
+.fixture-draw-button[aria-pressed='true'] {
+  background: #ffe598;
 }
 
 /* Project bar above the three columns */
