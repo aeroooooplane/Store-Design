@@ -6,6 +6,24 @@ import { islandEdgingGeometry } from './island-platform.ts'
 import { buildRoom } from './room-builder.ts'
 
 describe('中岛30mm台地', () => {
+  it('SI2按手册30mm高/50mm坡段建模，SI1未标注时采用45度', () => {
+    for (const style of ['SI1.0', 'SI2.0'] as const) {
+      const geometry = islandEdgingGeometry(rectangleSpace(8, 6, 3).boundary, style)
+      const normals = geometry.attributes['normal']!,
+        expected =
+          (style === 'SI2.0' ? 0.05 : 0.03) / Math.hypot(style === 'SI2.0' ? 0.05 : 0.03, 0.03)
+      let found = false
+      for (let i = 0; i < normals.count; i++) {
+        const y = normals.getY(i)
+        if (y > 0.01 && y < 0.99) {
+          found = true
+          expect(y).toBeCloseTo(expected, 5)
+        }
+      }
+      expect(found).toBe(true)
+      geometry.dispose()
+    }
+  })
   it('台地顶面保持模型地面0，底面只有30mm，边厅不带收口', () => {
     for (const type of ['island', 'side_hall'] as const) {
       const room = new THREE.Group()
