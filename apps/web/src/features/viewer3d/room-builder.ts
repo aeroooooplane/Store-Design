@@ -53,13 +53,14 @@ export function buildRoom(
 
 /**
  * 中岛店: continuous stainless edging around the raised floor, following the real outline
- * 30 mm rise and an outward 45° silver slope, in either SI style.
+ * 30 mm rise; silver slope follows the SI manual (45° only where no slope is dimensioned).
  */
 export function addEdging(room: THREE.Group, boundary: readonly Point[], material: THREE.Material) {
   const mesh = new THREE.Mesh(islandEdgingGeometry(boundary), material)
   mesh.castShadow = true
   mesh.receiveShadow = true
   mesh.userData['surface'] = 'edging'
+  mesh.userData['edgingStyle'] = 'SI1.0'
   room.add(mesh)
 }
 

@@ -1,17 +1,26 @@
 import * as THREE from 'three'
 import { signedArea } from '@store/shared'
-import type { Point } from '@store/shared'
+import type { Point, SiStyle } from '@store/shared'
 import { RENDER_LOOK } from './render-look.ts'
 import { offsetOutline } from './outline-offset.ts'
 
 /** Model floor stays at y=0; public ground is 30 mm lower, preserving prop elevations. */
 export const ISLAND_PLATFORM_HEIGHT_M = RENDER_LOOK.edging.height
 
-/** 80 mm cap: 50 mm flat, then a 30 × 30 mm outward slope (45°). */
-export function islandEdgingGeometry(boundary: readonly Point[]): THREE.BufferGeometry {
+/** SI2 PDF p.142: 30 mm rise over 50 mm run; user also applies this profile to SI1. */
+export const ISLAND_MANUAL_SLOPE_RUN_M: Partial<Record<SiStyle, number>> = {
+  'SI1.0': 0.05,
+  'SI2.0': 0.05,
+}
+
+export function islandEdgingGeometry(
+  boundary: readonly Point[],
+  siStyle: SiStyle = 'SI1.0',
+): THREE.BufferGeometry {
   const height = ISLAND_PLATFORM_HEIGHT_M
   const ring = signedArea(boundary) > 0 ? [...boundary] : [...boundary].reverse()
-  const shoulder = offsetOutline(ring, RENDER_LOOK.edging.width - height)
+  const slopeRun = ISLAND_MANUAL_SLOPE_RUN_M[siStyle] ?? height
+  const shoulder = offsetOutline(ring, RENDER_LOOK.edging.width - slopeRun)
   const toe = offsetOutline(ring, RENDER_LOOK.edging.width)
   const positions: number[] = []
   type V = [number, number, number]
