@@ -4,6 +4,7 @@ import {
   freshName,
   nextHistoryName,
   nextRenderName,
+  nextSpaceRevisionName,
   nodeSiStyle,
   sameLayoutProps,
   siSwapName,
@@ -11,12 +12,22 @@ import {
   stageParentId,
   swapLayoutSi,
 } from '@store/shared'
-import type { Asset, DesignNode, Draft, Layout, NodeSummary, SiStyle, Stage } from '@store/shared'
+import type {
+  Asset,
+  DesignNode,
+  Draft,
+  Layout,
+  NodeSummary,
+  SiStyle,
+  Space,
+  Stage,
+} from '@store/shared'
 import { nodeQuery, workbenchKeys } from '../api.ts'
 import type { useCreateNode } from '../api.ts'
 import type { SiSwitch, SwitchResult } from '../si-switch.ts'
 
 interface NodeActionsOptions {
+  space: Space
   baseNode: DesignNode
   /** The project's history, to place copies next to their original. */
   nodes: NodeSummary[]
@@ -31,6 +42,7 @@ interface NodeActionsOptions {
   create: ReturnType<typeof useCreateNode>
   flush: () => Promise<boolean>
   onNodeCreated: (nodeId: string) => void
+  onSpaceCopied?: ((nodeId: string) => void) | undefined
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: ((swap: SiSwitch | null) => void) | undefined
 }
@@ -38,6 +50,7 @@ interface NodeActionsOptions {
 /** Creates history nodes from the current layout after saving the source node. */
 export function useNodeActions({
   baseNode,
+  space,
   nodes,
   stage,
   layout: currentLayout,
@@ -47,6 +60,7 @@ export function useNodeActions({
   create,
   flush,
   onNodeCreated,
+  onSpaceCopied,
   onRegisterSiSwitch,
 }: NodeActionsOptions) {
   const [busy, setBusy] = useState(false)
@@ -54,7 +68,13 @@ export function useNodeActions({
   const creating = useRef(false)
 
   async function createFromLayout(
-    input: { kind: 'plan' | 'render'; parentId: string; name: string; sourceNodeId?: string },
+    input: {
+      kind: 'space' | 'plan' | 'render'
+      parentId: string | null
+      name: string
+      sourceNodeId?: string
+      space?: Space
+    },
     layout: Layout = currentLayout,
     style: SiStyle = siStyle,
   ): Promise<{ ok: true; nodeId: string } | { ok: false; message: string }> {
@@ -65,7 +85,8 @@ export function useNodeActions({
     try {
       if (!(await flush())) return { ok: false, message: '当前节点的修改尚未保存' }
       const created = await create.mutateAsync({ ...input, layout, siStyle: style })
-      onNodeCreated(created.node.id)
+      if (input.kind === 'space' && onSpaceCopied) onSpaceCopied(created.node.id)
+      else onNodeCreated(created.node.id)
       return { ok: true, nodeId: created.node.id }
     } catch (caught) {
       setError(caught)
@@ -85,6 +106,19 @@ export function useNodeActions({
   /** 新建副本: a sibling in the same stage with the current layout; editing goes on there. */
   function copyNode() {
     const parentId = stageParentId(nodes, baseNode)
+    if (stage === 'space') {
+      void createFromLayout({
+        kind: 'space',
+        parentId: baseNode.parentId,
+        name: nextSpaceRevisionName(
+          baseNode.name,
+          nodes.filter((node) => node.kind === 'space').map((node) => node.name),
+        ),
+        sourceNodeId: baseNode.id,
+        space,
+      })
+      return
+    }
     if (!parentId || stage !== 'plan') return
     void createFromLayout({
       kind: 'plan',

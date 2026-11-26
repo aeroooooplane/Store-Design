@@ -399,6 +399,45 @@ describe('Workbench', () => {
     expect(server.state.drafts.get(P2)?.layout.items[0]?.cx).toBe(4.1)
   })
 
+  it.each(['', '&mode=placement'])(
+    'copies a space with its layout and enters placement: %s',
+    async (mode) => {
+      const source = designNode(S1, null, {
+        name: '空间 A',
+        layout: layout([table]),
+        siStyle: 'SI2.0',
+      })
+      server = fakeApi([source, designNode(P2, null, { name: '空间 A · v2', hidden: true })], null)
+      renderWorkbench(`?node=${S1}${mode}`)
+      fireEvent.click(await screen.findByRole('button', { name: '新建副本' }))
+      await screen.findByRole('heading', { name: '空间 A · v3' })
+      expect(server.state.nodes.at(-1)).toMatchObject({
+        kind: 'space',
+        parentId: null,
+        sourceNodeId: S1,
+        space: source.space,
+        layout: source.layout,
+        siStyle: 'SI2.0',
+      })
+      expect(server.state.nodes.find((node) => node.id === S1)).toEqual(source)
+      const copy = screen.getByRole('button', { name: '新建副本' })
+      const discard = screen.getByRole('button', { name: '丢弃草稿' })
+      const advance = screen.getByRole('button', { name: '保存为方案' })
+      expect(copy.parentElement).toBe(discard.parentElement)
+      expect(advance.parentElement).not.toBe(copy.parentElement)
+      expect(advance.parentElement?.className).toContain('single')
+    },
+  )
+
+  it('keeps the space selected when copying fails', async () => {
+    server = fakeApi([designNode(S1, null, { name: '空间 A' })], null, [], { failCreate: true })
+    renderWorkbench(`?node=${S1}&mode=placement`)
+    fireEvent.click(await screen.findByRole('button', { name: '新建副本' }))
+    await screen.findByRole('alert')
+    expect(screen.getByRole('heading', { name: '空间 A' })).toBeTruthy()
+    expect(server.state.nodes).toHaveLength(1)
+  })
+
   it('gives a copy the next plan letter and displays its source', async () => {
     server = fakeApi(
       [
