@@ -456,6 +456,83 @@ describe('Workbench', () => {
     expect(screen.getByText('来源：方案 A')).toBeTruthy()
   })
 
+  describe('空间 SI 切换', () => {
+    const space = rectangleSpace(8, 6, 3.2)
+    const partitionLayout: Layout = {
+      ...layout([]),
+      fixtures: [
+        { id: 'partition-a', kind: 'hollow_partition', cx: 3, cz: 2, w: 2, d: 0.2, h: 2.4 },
+      ],
+    }
+    const original = designNode(S1, null, {
+      name: '门店空间',
+      siStyle: 'SI1.0',
+      space,
+      layout: partitionLayout,
+    })
+
+    it('换版新建兄弟空间并保留隔板，原样往返复用两个节点', async () => {
+      const server = fakeApi([original], null)
+      renderWorkbench('?node=' + S1)
+      await screen.findByRole('heading', { name: '门店空间' })
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      await screen.findByRole('heading', { name: '门店空间 · v2' }, { timeout: 5000 })
+      expect(server.state.nodes[1]).toMatchObject({
+        kind: 'space',
+        parentId: null,
+        sourceNodeId: S1,
+        siStyle: 'SI2.0',
+        space,
+        layout: partitionLayout,
+      })
+      await screen.findByText(/已切换为 SI2.0，另存空间/)
+      fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
+      await screen.findByRole('heading', { name: '门店空间' }, { timeout: 5000 })
+      await screen.findByText(/已回到 SI1.0 的“门店空间”/)
+      fireEvent.click(screen.getByRole('button', { name: 'SI2.0' }))
+      await screen.findByRole('heading', { name: '门店空间 · v2' }, { timeout: 5000 })
+      expect(server.state.nodes).toHaveLength(2)
+    })
+
+    it.each(['轮廓', '隔板'])('修改%s后换回旧版会另存兄弟空间', async (edited) => {
+      const changedSpace = edited === '轮廓' ? rectangleSpace(9, 6, 3.2) : space
+      const changedLayout =
+        edited === '隔板' ? { ...partitionLayout, fixtures: [] } : partitionLayout
+      const sibling = designNode(P1, null, {
+        name: '门店空间 · v2',
+        kind: 'space',
+        sourceNodeId: S1,
+        siStyle: 'SI2.0',
+        space: changedSpace,
+        layout: partitionLayout,
+      })
+      const draft: Draft | null =
+        edited === '隔板'
+          ? {
+              projectId: PID,
+              baseNodeId: P1,
+              layout: changedLayout,
+              revision: 1,
+              updatedAt: '2026-10-09T04:00:00.000Z',
+            }
+          : null
+      const server = fakeApi([original, sibling], draft)
+      renderWorkbench('?node=' + P1 + '&mode=placement')
+      await screen.findByRole('heading', { name: '门店空间 · v2' })
+      fireEvent.click(screen.getByRole('button', { name: 'SI1.0' }))
+      await screen.findByRole('heading', { name: '门店空间 · v3' }, { timeout: 5000 })
+      expect(server.state.nodes[2]).toMatchObject({
+        kind: 'space',
+        parentId: null,
+        sourceNodeId: P1,
+        siStyle: 'SI1.0',
+        space: changedSpace,
+        layout: changedLayout,
+      })
+      expect(server.state.nodes[0]).toEqual(original)
+    })
+  })
+
   it('switching SI saves a copy of the plan with its props swapped and keeps the original', async () => {
     const cabinet: LayoutItem = {
       ...table,
@@ -702,6 +779,28 @@ describe('Workbench', () => {
     )
   })
 
+  it('offers space information and partition drawing without any model controls', async () => {
+    server = fakeApi([designNode(S1, null, { name: '空间 A', layout: layout([table]) })], null)
+    const { container } = renderWorkbench('?node=' + S1)
+    const tabs = () =>
+      within(screen.getByRole('tablist', { name: '左栏' }))
+        .getAllByRole('tab')
+        .map((tab) => tab.textContent)
+    const editFixtures = await screen.findByRole('button', { name: '编辑空心隔板' })
+    expect(tabs()).toEqual(['历史', '空间信息'])
+    fireEvent.click(editFixtures)
+    expect(tabs()).toEqual(['历史', '空间信息'])
+    expect(screen.getByRole('button', { name: '画空心隔板' })).toBeTruthy()
+    expect(container.querySelector('.model-picker')).toBeNull()
+    const item = container.querySelector('[data-item-id="island_table-1"]') as Element
+    expect(item).toBeTruthy()
+    fireEvent.pointerDown(item)
+    fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'Delete' })
+    expect(container.querySelector('[data-item-id="island_table-1"]')).toBe(item)
+    fireEvent.click(screen.getByRole('tab', { name: '空间信息' }))
+    expect(screen.getByRole('button', { name: '画隔板' })).toBeTruthy()
+  })
+
   it('puts history, models and space info in left tabs, opening the models in the plan stage', async () => {
     server = fakeApi([designNode(S1, null), designNode(P1, S1, { name: '方案 A' })], null)
     renderWorkbench(`?node=${P1}`)
@@ -719,6 +818,24 @@ describe('Workbench', () => {
     expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
   })
 
+  it('returns from the render models tab to the associated editable plan', async () => {
+    server = fakeApi(
+      [
+        designNode(S1, null),
+        designNode(P1, S1, { name: '方案 A' }),
+        designNode(P2, P1, { kind: 'render', name: '渲染 A' }),
+      ],
+      null,
+    )
+    renderWorkbench('?node=' + P2)
+    await screen.findByRole('region', { name: '渲染' })
+    fireEvent.click(screen.getByRole('tab', { name: '添加模型' }))
+    expect(screen.queryByRole('region', { name: '添加模型' })).toBeNull()
+    fireEvent.click(screen.getByRole('button', { name: '返回方案添加模型' }))
+    await screen.findByRole('heading', { name: '方案 A' })
+    expect(screen.getByRole('region', { name: '添加模型' })).toBeTruthy()
+  })
+
   it('keeps legacy 3D views available in the plan editor', async () => {
     server = fakeApi(
       [
@@ -732,8 +849,8 @@ describe('Workbench', () => {
     await screen.findByRole('heading', { name: '三维效果' })
     expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       '历史',
-      '添加模型',
       '空间信息',
+      '添加模型',
       '视角',
     ])
     expect(screen.getByRole('tab', { name: '添加模型' }).getAttribute('aria-selected')).toBe('true')

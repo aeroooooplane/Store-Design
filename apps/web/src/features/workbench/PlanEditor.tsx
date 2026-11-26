@@ -72,7 +72,7 @@ const Viewer3D = lazy(() =>
 )
 
 const STAGE_TITLES: Record<Stage, string> = {
-  space: '空间阶段 · 手动排布',
+  space: '空间阶段 · 隔板编辑',
   plan: '方案阶段',
   render: '渲染阶段',
 }
@@ -97,6 +97,7 @@ interface PlanEditorProps {
   assets: Asset[]
   onNodeCreated: (nodeId: string) => void
   onSpaceCopied?: ((nodeId: string) => void) | undefined
+  onSpaceSiSwitched?: ((nodeId: string) => void) | undefined
   onRegisterSave: (save: (() => Promise<boolean>) | null) => void
   /** Lets the SI switch on the project card swap the props of this step. */
   onRegisterSiSwitch?: (swap: SiSwitch | null) => void
@@ -119,6 +120,7 @@ export function PlanEditor({
   assets,
   onNodeCreated,
   onSpaceCopied,
+  onSpaceSiSwitched,
   onRegisterSave,
   onRegisterSiSwitch,
 }: PlanEditorProps) {
@@ -136,6 +138,7 @@ export function PlanEditor({
   }, [state.selectedId, setAgentSelection])
   const viewerRef = useRef<Viewer3DHandle>(null)
   const stage = stageOf(baseNode.kind)
+  const canEditModels = stage === 'plan'
   // The same space keeps its 3D view and plan/3D choice from step to step.
   const memory = useViewMemory(spaceAncestor(nodes, baseNode.id))
   const remembered = useRef(memory.get())
@@ -258,7 +261,9 @@ export function PlanEditor({
     },
     [space],
   )
-  const selected = state.layout.items.find((i) => i.id === state.selectedId) ?? null
+  const selected = canEditModels
+    ? (state.layout.items.find((i) => i.id === state.selectedId) ?? null)
+    : null
 
   // Fetch the 3D code while the user is still on the plan, so switching to 3D is quick.
   useEffect(() => {
@@ -309,6 +314,7 @@ export function PlanEditor({
     flush,
     onNodeCreated,
     onSpaceCopied,
+    onSpaceSiSwitched,
     onRegisterSiSwitch,
   })
   const {
@@ -384,7 +390,7 @@ export function PlanEditor({
     } else preparePlacement(copy)
   }
 
-  const furnitureKeysActive = !placement && !drawingFixture
+  const furnitureKeysActive = canEditModels && !placement && !drawingFixture
   const selection =
     furnitureKeysActive && selected && itemMount(selected) === 'floor' ? selected : null
   const duplicateFurniture = selection ? () => pasteFurniture(selection) : undefined
@@ -459,26 +465,30 @@ export function PlanEditor({
         </section>
       }
       models={
-        <ModelPicker
-          assets={assets}
-          siStyle={siStyle}
-          market={market}
-          onPick={addAsset}
-          isPointPlaced={() => true}
-          pendingAssetId={placement?.item.assetId}
-        />
+        canEditModels && (
+          <ModelPicker
+            assets={assets}
+            siStyle={siStyle}
+            market={market}
+            onPick={addAsset}
+            isPointPlaced={() => true}
+            pendingAssetId={placement?.item.assetId}
+          />
+        )
       }
-      defaultTab="models"
+      defaultTab={canEditModels ? 'models' : 'history'}
       cameras={
-        <CameraPanel
-          nodeId={baseNode.id}
-          viewer={viewerRef}
-          viewerReady={viewerReady}
-          layout={state.layout}
-          onShow={showCamera}
-          canCapture={!planMain}
-          onOpenViewer={() => switchView('3d')}
-        />
+        canEditModels && (
+          <CameraPanel
+            nodeId={baseNode.id}
+            viewer={viewerRef}
+            viewerReady={viewerReady}
+            layout={state.layout}
+            onShow={showCamera}
+            canCapture={!planMain}
+            onOpenViewer={() => switchView('3d')}
+          />
+        )
       }
       center={
         <section className="plan-editor wb-card" aria-label="平面编辑">
@@ -517,8 +527,12 @@ export function PlanEditor({
             tabIndex={0}
             aria-label={
               planMain
-                ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-                : '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+                ? canEditModels
+                  ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
+                  : '平面画布：绘制和调整隔板，Delete 删除选中的隔板'
+                : canEditModels
+                  ? '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
+                  : '三维视图：拖动旋转视角，滚轮缩放'
             }
             onPointerMove={onPointerMove}
             onPointerUp={endDrag}
@@ -570,10 +584,10 @@ export function PlanEditor({
                   assets={assetMap}
                   selectedId={state.selectedId}
                   flaggedIds={flaggedIds}
-                  onSelect={select}
-                  onMove={move}
-                  onResize={resize}
-                  onRotate={rotate}
+                  onSelect={(id) => select(canEditModels ? id : null)}
+                  onMove={canEditModels ? move : undefined}
+                  onResize={canEditModels ? resize : undefined}
+                  onRotate={canEditModels ? rotate : undefined}
                   onWallPlace={!planMain && placementOnWall ? placeModel : undefined}
                   onFloorPlace={
                     !planMain && placement && !placementOnWall
@@ -624,10 +638,10 @@ export function PlanEditor({
                 issues={issues}
                 assets={assetMap}
                 selectedId={state.selectedId}
-                onItemPointerDown={onItemPointerDown}
+                onItemPointerDown={canEditModels ? onItemPointerDown : undefined}
                 onFixturePointerDown={onFixturePointerDown}
-                onResizeHandlePointerDown={onResizeHandlePointerDown}
-                onRotateHandlePointerDown={onRotateHandlePointerDown}
+                onResizeHandlePointerDown={canEditModels ? onResizeHandlePointerDown : undefined}
+                onRotateHandlePointerDown={canEditModels ? onRotateHandlePointerDown : undefined}
                 guide={rotationGuide}
                 onFixtureResize={
                   planMain && !drawingFixture && !placement ? onFixtureResize : undefined
@@ -689,16 +703,18 @@ export function PlanEditor({
             <ErrorMessage error={actionError} />
           </div>
 
-          <PropertiesPanel
-            selected={selected}
-            fixture={selectedFixture}
-            assetMap={assetMap}
-            space={space}
-            dispatch={dispatch}
-            onRotate={rotateSelected}
-            onDuplicate={duplicateFurniture}
-            copiedFurnitureName={copiedFurniture?.name}
-          />
+          {(canEditModels || selectedFixture) && (
+            <PropertiesPanel
+              selected={selected}
+              fixture={selectedFixture}
+              assetMap={assetMap}
+              space={space}
+              dispatch={dispatch}
+              onRotate={rotateSelected}
+              onDuplicate={duplicateFurniture}
+              copiedFurnitureName={copiedFurniture?.name}
+            />
+          )}
 
           <IssuesPanel issues={issues} errorCount={errors.length} />
         </>

@@ -1,5 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { rectangleSpace } from '@store/shared'
+import { schema } from '@store/database'
+import { eq } from 'drizzle-orm'
 import type {
   DesignNode,
   Draft,
@@ -35,6 +37,44 @@ const post = (projectId: string, payload: object) => postNode(t, projectId, payl
 const spaceNode = (projectId: string) => createSpace(t, projectId)
 
 describe('history nodes', () => {
+  it('保留旧空间的原始 SI，切换后的兄弟空间使用独立 SI', async () => {
+    const project = await newProject()
+    const root = await spaceNode(project.id)
+    expect(root.siStyle).toBe('SI1.0')
+    await t.database.db
+      .update(schema.designNodes)
+      .set({ siStyle: null })
+      .where(eq(schema.designNodes.id, root.id))
+    const snapshot = { schemaVersion: 3, items: [], planning: null, fixtures: [] }
+    const response = await post(project.id, {
+      kind: 'space',
+      parentId: null,
+      sourceNodeId: root.id,
+      name: '空间换版',
+      space: root.space,
+      layout: snapshot,
+      siStyle: 'SI2.0',
+    })
+    expect(response.statusCode).toBe(201)
+    expect(response.json<NodeCreated>().node).toMatchObject({
+      parentId: null,
+      sourceNodeId: root.id,
+      siStyle: 'SI2.0',
+      space: root.space,
+      layout: snapshot,
+    })
+    await t.database.db
+      .update(schema.projects)
+      .set({ siStyle: 'SI2.0' })
+      .where(eq(schema.projects.id, project.id))
+    const original = await t.app.inject({ url: '/api/v1/nodes/' + root.id })
+    expect(original.json<DesignNode>()).toMatchObject({
+      siStyle: 'SI1.0',
+      space: root.space,
+      layout: null,
+    })
+  })
+
   it('边缘外扩一米内可开始渲染，超过一米的完整模型继续拦截', async () => {
     const project = await newProject()
     const root = await spaceNode(project.id)

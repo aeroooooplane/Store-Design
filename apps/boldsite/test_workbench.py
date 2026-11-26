@@ -115,7 +115,7 @@ class SpaceCopyTests(unittest.TestCase):
             now = timestamp()
             space = {"schemaVersion": 1}
             with db.connect(write=True) as conn:
-                conn.execute("INSERT INTO projects (id,name,shopType,market,siStyle,createdAt,updatedAt) VALUES ('p','项目','side_hall','domestic','SI2.0',?,?)", (now, now))
+                conn.execute("INSERT INTO projects (id,name,shopType,market,siStyle,createdAt,updatedAt) VALUES ('p','项目','side_hall','domestic','SI1.0',?,?)", (now, now))
                 conn.execute("INSERT INTO workbench_nodes (id,projectId,parentId,kind,name,origin,space,createdAt) VALUES ('s','p',NULL,'space','空间','user',?,?)", (json.dumps(space), now))
                 conn.execute("INSERT INTO stage_cameras (id,nodeId,camera,sort,deletedAt) VALUES ('c','s',?,0,NULL),('d','s',?,1,?)", (json.dumps({"name": "保留"}), json.dumps({"name": "已删除"}), now))
             payload = {"parentId": None, "kind": "space", "name": "空间副本", "space": space, "layout": {"schemaVersion": 3, "items": [], "planning": None}, "sourceNodeId": "s", "siStyle": "SI2.0"}
@@ -123,7 +123,9 @@ class SpaceCopyTests(unittest.TestCase):
             copied = create_node(request, 'p', payload)['node']
             self.assertEqual(copied['sourceNodeId'], 's')
             self.assertEqual(copied['space'], space)
+            self.assertEqual(copied['siStyle'], 'SI2.0')
             with db.connect(write=True) as conn:
+                self.assertEqual(conn.execute("SELECT siStyle FROM workbench_nodes WHERE id='s'").fetchone()[0], "SI1.0")
                 rows = conn.execute("SELECT * FROM stage_cameras WHERE nodeId=? ORDER BY sort", (copied['id'],)).fetchall()
                 self.assertEqual(len(rows), 2)
                 self.assertNotIn(rows[0]['id'], ['c', 'd'])

@@ -10,6 +10,7 @@ import {
   emptyDisplayEdits,
   followSpaceWalls,
   normalizeSpace,
+  nodeSiStyle,
   validateLayout,
   validateSpace,
 } from '@store/shared'
@@ -179,7 +180,7 @@ export async function createNode(
 ): Promise<NodeCreated> {
   authorize(ctx.actor, 'node:create', { projectId })
   return db.transaction(async (tx) => {
-    await requireActiveProject(tx, projectId, true)
+    const project = await requireActiveProject(tx, projectId, true)
     const [{ total } = { total: 0 }] = await tx
       .select({ total: count() })
       .from(designNodes)
@@ -200,6 +201,19 @@ export async function createNode(
     const source = input.sourceNodeId ? await findNode(tx, input.sourceNodeId) : null
     if (source && source.projectId !== projectId) throw notFound('复制来源节点')
 
+    const spaceCopy =
+      input.kind === 'space' &&
+      input.layout &&
+      source?.kind === 'space' &&
+      source.parentId === input.parentId
+        ? source
+        : null
+    const inheritedSi =
+      input.kind === 'space'
+        ? source?.kind === 'space'
+          ? nodeSiStyle(source, project.siStyle)
+          : project.siStyle
+        : null
     let space: Space | null = null
     /** The space the layout lives in (the node's own, or inherited). */
     let layoutSpace: Space | null = null
@@ -240,7 +254,7 @@ export async function createNode(
         space,
         layout: input.layout ?? null,
         strategy: input.strategy ?? null,
-        siStyle: input.siStyle ?? null,
+        siStyle: input.siStyle ?? inheritedSi,
         origin: meta.origin ?? (input.kind === 'plan' ? 'generator' : 'user'),
         originRef: meta.originRef ?? source?.id ?? null,
       })
@@ -262,16 +276,18 @@ export async function createNode(
         revision: 0,
       })
     }
-    if (
-      input.kind === 'space' &&
-      input.layout &&
-      source?.kind === 'space' &&
-      source.parentId === input.parentId
-    ) {
+    if (spaceCopy) {
+      // Freeze a legacy source before the project default can change to the copy's style.
+      if (spaceCopy.siStyle === null) {
+        await tx
+          .update(designNodes)
+          .set({ siStyle: inheritedSi })
+          .where(eq(designNodes.id, spaceCopy.id))
+      }
       const sourceCameras = await tx
         .select()
         .from(nodeCameras)
-        .where(eq(nodeCameras.nodeId, source.id))
+        .where(eq(nodeCameras.nodeId, spaceCopy.id))
       if (sourceCameras.length) {
         await tx.insert(nodeCameras).values(
           sourceCameras.map(({ camera, sort, deletedAt }) => ({

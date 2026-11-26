@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 interface WorkbenchLayoutProps {
   /** The history tree. */
   left: ReactNode
-  /** The model list: only where props can be added (plan stage); it becomes the default tab. */
+  /** Model controls for this stage, or a link from render to its editable plan. */
   models?: ReactNode
   /** Saved views of the current node. */
   cameras?: ReactNode
@@ -68,22 +68,25 @@ function LeftTabs({
   const info = useContext(WorkbenchInfoContext)
   const tabs: LeftTab[] = [
     'history',
-    ...(models ? (['models'] as const) : []),
     'info',
+    ...(models ? (['models'] as const) : []),
     ...(cameras ? (['cameras'] as const) : []),
-    ...(background ? (['background'] as const) : []),
   ]
   const sharedTab = useContext(LeftTabContext)
   const [localTab, setLocalTab] = useState<LeftTab | null>(null)
   const [drawingsOpened, setDrawingsOpened] = useState(false)
   const { tab, setTab } = tabState ?? sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
-  const current = tab && tabs.includes(tab) ? tab : fallback
-  const panels: Record<LeftTab, ReactNode> = {
+  const backgroundActive = tab === 'background' && !!cameras && !!background
+  const current = backgroundActive ? 'cameras' : tab && tabs.includes(tab) ? tab : fallback
+  const cameraPanel = (
+    <CameraPanelVisibility.Provider value={current === 'cameras' && !backgroundActive}>
+      {cameras}
+    </CameraPanelVisibility.Provider>
+  )
+  const panels: Partial<Record<LeftTab, ReactNode>> = {
     history,
     models,
-    cameras,
-    background,
     info: (
       <div className="space-info-cards">
         {info?.currentSpace}
@@ -139,9 +142,51 @@ function LeftTabs({
           hidden={current !== tab}
         >
           {tab === 'cameras' ? (
-            <CameraPanelVisibility.Provider value={current === 'cameras'}>
-              {cameras}
-            </CameraPanelVisibility.Provider>
+            background ? (
+              <>
+                <div className="wb-tabs" role="tablist" aria-label="视角工具">
+                  <button
+                    type="button"
+                    role="tab"
+                    id="wb-view-list-tab"
+                    aria-selected={!backgroundActive}
+                    aria-controls="wb-view-list"
+                    onClick={() => setTab('cameras')}
+                  >
+                    视角列表
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="wb-background-tab"
+                    aria-selected={backgroundActive}
+                    aria-controls="wb-background"
+                    onClick={() => setTab('background')}
+                  >
+                    {TAB_LABELS.background}
+                  </button>
+                </div>
+                <div
+                  id="wb-view-list"
+                  className="wb-tab-panel"
+                  role="tabpanel"
+                  aria-labelledby="wb-view-list-tab"
+                  hidden={backgroundActive}
+                >
+                  {cameraPanel}
+                </div>
+                <div
+                  id="wb-background"
+                  role="tabpanel"
+                  aria-labelledby="wb-background-tab"
+                  hidden={!backgroundActive}
+                >
+                  {background}
+                </div>
+              </>
+            ) : (
+              cameraPanel
+            )
           ) : (
             panels[tab]
           )}

@@ -76,6 +76,7 @@ interface RenderStageProps {
   space: Space
   assets: ReadonlyMap<string, Asset>
   onRegisterSave?: (save: (() => Promise<boolean>) | null) => void
+  onOpenPlan?: (() => void) | undefined
 }
 
 /**
@@ -91,6 +92,7 @@ export function RenderStage({
   space,
   assets,
   onRegisterSave,
+  onOpenPlan,
 }: RenderStageProps) {
   const cameras = useCameras(node.id)
   const renders = useRenders(node.id)
@@ -336,6 +338,23 @@ export function RenderStage({
     <WorkbenchLayout
       tabState={{ tab: currentTab, setTab: selectTab }}
       left={left}
+      models={
+        <div className="wb-card">
+          <p className="hint">在方案阶段添加模型。</p>
+          {onOpenPlan && (
+            <button
+              type="button"
+              disabled={busy || delivering || backgroundEditor.pending}
+              onClick={() => {
+                setLeftTab('models')
+                onOpenPlan()
+              }}
+            >
+              返回方案添加模型
+            </button>
+          )}
+        </div>
+      }
       cameras={
         <CameraPanel
           nodeId={node.id}

@@ -22,6 +22,7 @@ import {
   NodeRenameSchema,
   NodeSpaceUpdateSchema,
   LayoutSchema,
+  layoutSi,
   followSpaceWalls,
   checkAssetFit,
   generateRequired,
@@ -115,6 +116,9 @@ Object.assign(globalThis, {
         previous: SpaceSchema.parse(input.stored),
         expected: parsed.data.previousSpace,
       })
+    }
+    if (command === 'layout-si') {
+      return respond({ siStyle: layoutSi(LayoutSchema.parse(data)) })
     }
     if (command === 'space-layout') {
       const { layout, before, after } = data as { layout: unknown; before: unknown; after: unknown }

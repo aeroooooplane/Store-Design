@@ -85,7 +85,7 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
     space, layout = node.get("space"), node.get("layout")
     issues = checked["issues"]
     with request.app.state.db.connect(write=True) as db:
-        project_row(db, projectId, active=True)
+        project = project_row(db, projectId, active=True)
         total = db.execute("SELECT count(*) FROM workbench_nodes WHERE projectId = ?", (projectId,)).fetchone()[0]
         if total >= MAX_NODES:
             raise ApiError(409, "INVALID_STATE", "项目节点已达上限 500，请导出备份后新建项目")
@@ -110,6 +110,16 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
             node["kind"] == "white" and node.get("allowLayoutErrors")
         ) and any(issue["severity"] == "error" for issue in issues):
             raise ApiError(400, "VALIDATION_FAILED", "开始渲染前须先解决越界、重叠等问题", issues)
+        inherited_si = None
+        space_copy = node["kind"] == "space" and layout is not None and source and source["kind"] == "space" and source["parentId"] == parent_id
+        if node["kind"] == "space":
+            inherited_si = project["siStyle"]
+            if source and source["kind"] == "space":
+                if source["siStyle"]:
+                    inherited_si = source["siStyle"]
+                elif source["layout"] is not None:
+                    inferred = rules.run("layout-si", json.loads(source["layout"]))["siStyle"]
+                    inherited_si = inferred or inherited_si
         now = timestamp()
         row = db.execute("""
             INSERT INTO workbench_nodes (id, projectId, parentId, kind, name, strategy, siStyle, origin,
@@ -117,14 +127,16 @@ def create_node(request: Request, projectId: ResourceId, payload: Annotated[dict
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING *
         """, (
             str(uuid4()), projectId, parent_id, node["kind"], node["name"], node.get("strategy"),
-            node.get("siStyle"), "generator" if node["kind"] == "plan" else "user",
+            node.get("siStyle") or inherited_si, "generator" if node["kind"] == "plan" else "user",
             json.dumps(space, ensure_ascii=False) if space is not None else None,
             json.dumps(layout, ensure_ascii=False) if layout is not None else None, now,
             source["id"] if source else None,
         )).fetchone()
         if node["kind"] in {"white", "render"} or (node["kind"] == "plan" and source):
             initialize_views(db, row, rules, source or parent)
-        if node["kind"] == "space" and layout is not None and source and source["kind"] == "space" and source["parentId"] == parent_id:
+        if space_copy:
+            if source["siStyle"] is None:
+                db.execute("UPDATE workbench_nodes SET siStyle = ? WHERE id = ?", (inherited_si, source["id"]))
             for camera in db.execute("SELECT * FROM stage_cameras WHERE nodeId = ?", (source["id"],)).fetchall():
                 db.execute("INSERT INTO stage_cameras (id,nodeId,camera,sort,deletedAt) VALUES (?,?,?,?,?)",
                            (str(uuid4()), row["id"], camera["camera"], camera["sort"], camera["deletedAt"]))
