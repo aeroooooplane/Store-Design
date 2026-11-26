@@ -34,7 +34,7 @@ export const RENDER_LOOK = {
       tile: [0.8, 0.8],
       color: '#bfbbb8',
       shade: 0.02,
-      joint: '#a6a29f',
+      joint: '#777571',
       jointM: 0.004,
       bond: 'stack',
       chips: false,
@@ -45,7 +45,7 @@ export const RENDER_LOOK = {
       tile: [1.2, 0.6],
       color: '#e6e6e3',
       shade: 0.012,
-      joint: '#cbcbc7',
+      joint: '#92928b',
       jointM: 0.004,
       bond: 'stack',
       chips: true,
@@ -56,7 +56,7 @@ export const RENDER_LOOK = {
       tile: [0.6, 0.3],
       color: '#c8c6c3',
       shade: 0.025,
-      joint: '#adaba8',
+      joint: '#85827d',
       jointM: 0.003,
       bond: 'running',
       chips: false,
@@ -90,7 +90,7 @@ export const RENDER_LOOK = {
   [key: string]: unknown
 }
 
-export type RoomSurface = 'floor' | 'wall' | 'partition' | 'edging'
+export type RoomSurface = 'floor' | 'floorWhite' | 'wall' | 'partition' | 'edging'
 
 /** Island shops have their own floor whatever the SI style. */
 export function floorKind(siStyle: SiStyle, shopType: ShopType): FloorKind {
@@ -225,7 +225,16 @@ export function roomMaterials(
   const wall = RENDER_LOOK.walls[siStyle]
   const partition = siStyle === 'SI1.0' ? RENDER_LOOK.partition : wall
   const map = floorTexture(floor, floorLayout(space, shopType))
+  const whiteMap = floorTexture(
+    { ...floor, color: '#f7f7f5', shade: 0, chips: false, joint: '#a3a39e' },
+    floorLayout(space, shopType),
+  )
   return {
+    floorWhite: new THREE.MeshStandardMaterial({
+      color: whiteMap ? '#ffffff' : '#f7f7f5',
+      map: whiteMap,
+      roughness: 0.8,
+    }),
     floor: new THREE.MeshStandardMaterial({
       color: map ? '#ffffff' : floor.color,
       map,

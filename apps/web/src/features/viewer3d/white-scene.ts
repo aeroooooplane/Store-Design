@@ -297,7 +297,7 @@ export class WhiteScene {
 
   private paintRoom() {
     let materials: Record<RoomSurface, THREE.MeshStandardMaterial> | undefined
-    if (this.look === 'material' && this.space) {
+    if (this.space) {
       materials = this.roomLooks.get(this.siStyle)
       if (!materials) {
         materials = roomMaterials(this.siStyle, this.shopType, this.space)
@@ -309,9 +309,11 @@ export class WhiteScene {
       if (mesh instanceof THREE.Mesh && surfaceName) {
         mesh.material = mesh.userData['boundaryWall']
           ? this.boundaryMaterial
-          : materials
-            ? materials[surfaceName]
-            : this.roomWhite
+          : materials && this.look === 'white' && surfaceName === 'floor'
+            ? materials.floorWhite
+            : materials && this.look === 'material'
+              ? materials[surfaceName]
+              : this.roomWhite
       }
     }
   }
