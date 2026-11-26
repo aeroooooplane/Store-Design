@@ -1,3 +1,4 @@
+import { detectVectorTables } from '../../apps/api/src/modules/displays/detect-vector.ts'
 import {
   AssetListSchema,
   CameraCreateSchema,
@@ -5,6 +6,7 @@ import {
   SpaceSchema,
   defaultCameras,
   DisplayTaskCreateSchema,
+  DisplayDetectRequestSchema,
   DisplayTaskUpdateSchema,
   DisplayTaskStateSchema,
   emptyDisplayEdits,
@@ -72,6 +74,13 @@ Object.assign(globalThis, {
       const parsed = DisplayTaskCreateSchema.safeParse(data)
       if (!parsed.success) return respond(failure('请求参数或内容无效', parsed.error.issues))
       return respond({ ...parsed.data, state: DisplayTaskStateSchema.parse({ edits: emptyDisplayEdits(parsed.data.siStyle) }) })
+    }
+    if (command === 'display-task-detect') {
+      const { request, task } = data as { request: unknown; task: { plan: {width:number;height:number}; siStyle:'SI1.0'|'SI2.0'; render: unknown } }
+      const parsed = DisplayDetectRequestSchema.safeParse(request)
+      if (!parsed.success) return respond(failure('请求参数或内容无效', parsed.error.issues))
+      if (!parsed.data.vector) return respond(failure('请重新选择含文字和线条的 PDF 平面图页', []))
+      return respond(detectVectorTables(parsed.data.vector, task.plan, AssetListSchema.parse(JSON.parse(source)).items, task.siStyle, !!task.render))
     }
     if (command === 'display-task-update') {
       const parsed = DisplayTaskUpdateSchema.safeParse(data)

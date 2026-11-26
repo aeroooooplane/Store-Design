@@ -95,6 +95,36 @@ def update_task(request: Request, taskId: ResourceId, body: Annotated[dict,Body(
         return detail(db,save(db,row,values))
 
 
+@router.post("/display-tasks/{taskId}/detect")
+def detect_task(request: Request, taskId: ResourceId, body: Annotated[dict, Body()],
+    if_match: REVISION=None):
+    expected = current_revision(if_match)
+    # Compute outside the transaction, then check the revision again before saving.
+    with request.app.state.db.connect() as db:
+        row = task_row(db, taskId)
+        check_revision(row, expected)
+        task = detail(db, row)
+        if not task["plan"]:
+            raise ApiError(409, "INVALID_STATE", "请先上传平面图")
+        plan_id = task["plan"]["url"].rsplit("/", 1)[-1]
+        vector_name = "vector-" + plan_id + ".json"
+        saved_vector = db.execute("""SELECT data FROM display_task_files
+            WHERE taskId=? AND name=? ORDER BY rowid DESC LIMIT 1""",
+            (taskId, vector_name)).fetchone()
+    data = dict(body)
+    if "vector" not in data and saved_vector:
+        data["vector"] = json.loads(saved_vector["data"])
+    result = request.app.state.rules.run("display-task-detect", {"request": data, "task": task})
+    state = {**task["state"], **{key: result[key] for key in ("tables", "entrance", "recognition")},
+        "detection": {"method": result["method"], "notes": result["notes"], "at": timestamp()}}
+    with request.app.state.db.connect(write=True) as db:
+        row = task_row(db, taskId)
+        check_revision(row, expected)
+        if "vector" in data:
+            store_file(db, taskId, vector_name, "application/json", json_text(data["vector"]).encode("utf-8"))
+        return detail(db, save(db, row, {"state": json_text(state)}))
+
+
 @router.delete("/display-tasks/{taskId}",status_code=204)
 def delete_task(request: Request, taskId: ResourceId):
     with request.app.state.db.connect(write=True) as db:

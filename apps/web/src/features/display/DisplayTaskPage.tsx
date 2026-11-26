@@ -195,7 +195,7 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
         if (!pdf.plan) throw new Error('请在缩略图中选出平面图页')
         setBusy('正在上传平面图…')
         const planCanvas = await renderPage(pdf.doc, pdf.plan)
-        if (!isFullWorkbench) vector = await extractVector(pdf.doc, pdf.plan)
+        vector = await extractVector(pdf.doc, pdf.plan)
         await uploadPicture({
           which: 'plan',
           blob: await canvasToPng(planCanvas),
@@ -231,7 +231,7 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
       } else if (!task.plan) {
         throw new Error('请先选择门店图纸 PDF，或平面图与效果图')
       }
-      if (isFullWorkbench) {
+      if (isFullWorkbench && images) {
         setPdf(null)
         setImages(null)
         setSelected(null)
@@ -239,9 +239,18 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
         return
       }
       setBusy('正在识别中岛桌与边桌…')
-      const next = await detect.mutateAsync({ ...(vector ? { vector } : {}), useModel: true })
+      const next = await detect.mutateAsync({
+        ...(vector ? { vector } : {}),
+        useModel: !isFullWorkbench,
+      })
       setDraft(next.state)
       setDirty(false)
+      setSelected(null)
+      setTool(null)
+      if (isFullWorkbench) {
+        setPdf(null)
+        setImages(null)
+      }
     } catch (caught) {
       setError(caught)
     } finally {
@@ -306,7 +315,7 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
         <span className="page-header-end">
           <p>
             {isFullWorkbench
-              ? '上传图纸，标注桌位并生成 PPT'
+              ? '识别 PDF 桌位，校准后生成 PPT'
               : '先识别图纸，再校准平面图和效果图上的桌子编号，最后生成 PPT'}{' '}
             · 展陈规则 {ruleVersion}
           </p>
@@ -387,9 +396,9 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
                 type="button"
                 className="primary"
                 onClick={() => void recognise()}
-                disabled={working || (!pdf && !images && (isFullWorkbench || !task.plan))}
+                disabled={working || (!pdf && !images && !task.plan)}
               >
-                {busy ?? (isFullWorkbench ? '上传图纸' : '识别并校准')}
+                {busy ?? (isFullWorkbench && images ? '上传图纸' : '识别并校准')}
               </button>
               <input
                 ref={fileInput}
@@ -420,7 +429,8 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
             </p>
             {isFullWorkbench && (
               <p className="hint">
-                上传后可在平面图上手动添加和调整桌位。更换平面图会清除已标注的桌位。
+                PDF
+                平面图可本地识别文字和线条，识别后请核对入口并拖动编号校准。图片可上传后手动标注。更换平面图会清除已标注的桌位。
               </p>
             )}
             {pdf && (
@@ -494,7 +504,7 @@ function TaskEditor({ task, rulesView }: TaskEditorProps) {
                 {task.render
                   ? `，效果图 ${task.render.originalName ?? ''}${task.render.page ? ` 第 ${task.render.page} 页` : ''}`
                   : '，未上传效果图'}
-                {isFullWorkbench ? '。' : '。可重新选择文件后再次识别。'}
+                。可点击“识别并校准”重新识别 PDF，或重新选择图纸。
               </p>
             )}
           </section>
