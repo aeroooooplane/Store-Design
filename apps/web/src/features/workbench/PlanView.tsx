@@ -502,7 +502,13 @@ export function PlanView({
     >
       <title>{title}</title>
       <defs>
-        <pattern id={hatch} patternUnits="userSpaceOnUse" width={0.08} height={0.08}>
+        <pattern
+          id={hatch}
+          patternUnits="userSpaceOnUse"
+          width={0.08}
+          height={0.08}
+          patternTransform="rotate(45)"
+        >
           <path d="M0 0V0.08M0 0H0.08" className="plan-hatch-line" />
         </pattern>
       </defs>
