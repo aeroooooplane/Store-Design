@@ -1,6 +1,6 @@
-import { useContext, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { freshName, itemFootprint, roundM, spaceAncestor, wallShift } from '@store/shared'
-import type { DesignNode, Layout, NodeSummary, Space } from '@store/shared'
+import type { DesignNode, Layout, NodeSummary, SiStyle, Space } from '@store/shared'
 import type { useCreateNode } from '../api.ts'
 import { ViewMemoryContext } from '../view-memory.ts'
 
@@ -26,6 +26,7 @@ interface EditWallsOptions {
   baseNode: DesignNode
   nodes: NodeSummary[]
   space: Space
+  siStyle: SiStyle
   /** The layout on screen (draft included). */
   layout: Layout
   create: ReturnType<typeof useCreateNode>
@@ -43,6 +44,7 @@ export function useEditWalls({
   baseNode,
   nodes,
   space,
+  siStyle,
   layout,
   create,
   flush,
@@ -50,6 +52,7 @@ export function useEditWalls({
 }: EditWallsOptions) {
   const [editing, setEditing] = useState(false)
   const [error, setError] = useState<unknown>(null)
+  const savedSpace = useRef<{ input: string; id: string } | null>(null)
   const viewMemory = useContext(ViewMemoryContext)
   const spaceId = spaceAncestor(nodes, baseNode.id)
   const spaceNode = nodes.find((n) => n.id === spaceId)
@@ -60,38 +63,52 @@ export function useEditWalls({
     nodes.filter((n) => n.parentId === parentId).map((n) => n.name)
 
   async function submit(edited: Space, name: string) {
-    if (!spaceId) return
     setError(null)
     try {
-      if (!(await flush())) return
-      const newSpace = await create.mutateAsync({
-        parentId: siblingParent,
-        kind: 'space',
-        name,
-        space: edited,
-      })
+      if (!spaceId) throw new Error('找不到当前方案关联的空间')
+      if (!(await flush())) throw new Error('当前方案草稿尚未保存，请解决保存问题后重试')
+      const input = JSON.stringify([name, edited])
+      const prior = savedSpace.current
+      // A failed second request can be retried without creating the same space again.
+      const newSpaceId =
+        prior?.input === input
+          ? prior.id
+          : (
+              await create.mutateAsync({
+                parentId: siblingParent,
+                kind: 'space',
+                name,
+                space: edited,
+              })
+            ).node.id
+      savedSpace.current = { input, id: newSpaceId }
       const plan = await create.mutateAsync({
-        parentId: newSpace.node.id,
+        parentId: newSpaceId,
         kind: 'plan',
         name: baseNode.name,
         layout: followWalls(layout, space, edited),
+        siStyle,
       })
+      savedSpace.current = null
       const view = viewMemory?.get(spaceId)
-      if (view) viewMemory?.set(newSpace.node.id, view)
+      if (view) viewMemory?.set(newSpaceId, view)
       setEditing(false)
       onNodeCreated(plan.node.id)
     } catch (caught) {
       setError(caught)
+      throw caught
     }
   }
 
   return {
     editing,
-    start: () => setEditing(true),
+    start: () => {
+      setError(null)
+      setEditing(true)
+    },
     cancel: () => setEditing(false),
-    submit: (edited: Space, name: string) => void submit(edited, name),
+    submit,
     initialName: freshName(`${spaceName} · 改墙`, namesUnder(siblingParent)),
-    submitting: create.isPending,
     error,
   }
 }
