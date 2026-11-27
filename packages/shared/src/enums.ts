@@ -11,6 +11,15 @@ export const SHOP_TYPE_LABELS: Record<ShopType, string> = {
   zone: '专区',
 }
 
+export const STORE_TYPES = ['exclusive', 'camera_retailer', 'zone'] as const
+export const StoreTypeSchema = z.enum(STORE_TYPES)
+export type StoreType = z.infer<typeof StoreTypeSchema>
+export const STORE_TYPE_LABELS: Record<StoreType, string> = {
+  exclusive: '专卖店',
+  camera_retailer: '照材店',
+  zone: '专区店',
+}
+
 export const MARKETS = ['domestic', 'overseas'] as const
 export const MarketSchema = z.enum(MARKETS)
 export type Market = z.infer<typeof MarketSchema>

@@ -45,6 +45,8 @@ class Database:
         with self._connect(write=True) as db:
             version = db.execute("PRAGMA user_version").fetchone()[0]
             if version == 1:
+                if "storeType" not in {column["name"] for column in db.execute("PRAGMA table_info(projects)")}:
+                    db.execute("ALTER TABLE projects ADD COLUMN storeType TEXT")
                 return
             if version != 0:
                 raise RuntimeError(f"不支持的试点数据库版本：{version}")
@@ -53,6 +55,7 @@ class Database:
                     id TEXT PRIMARY KEY,
                     name TEXT NOT NULL,
                     shopType TEXT NOT NULL,
+                    storeType TEXT,
                     market TEXT NOT NULL,
                     siStyle TEXT NOT NULL,
                     revision INTEGER NOT NULL DEFAULT 1,

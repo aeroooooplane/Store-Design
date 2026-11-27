@@ -1,10 +1,18 @@
-import { MARKET_LABELS, SHOP_TYPE_LABELS, SI_STYLES, mToMm, polygonArea } from '@store/shared'
+import {
+  MARKET_LABELS,
+  SHOP_TYPE_LABELS,
+  SI_STYLES,
+  STORE_TYPE_LABELS,
+  mToMm,
+  polygonArea,
+} from '@store/shared'
 import type { Project, SiStyle, Space } from '@store/shared'
 import { Info } from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { formatDateTime } from '../../lib/format.ts'
+import { StoreTypeTag } from '../projects/StoreTypeTag.tsx'
 
 interface ProjectCardProps {
   project: Project
@@ -48,10 +56,9 @@ export function ProjectCard({
   return (
     <section className="project-bar" aria-label="项目信息">
       <h2 title={project.name}>{project.name}</h2>
+      <StoreTypeTag project={project} />
       <span className="project-bar-facts">
-        <span className="tag">
-          {SHOP_TYPE_LABELS[project.shopType]} · {MARKET_LABELS[project.market]}
-        </span>
+        <span className="tag">{MARKET_LABELS[project.market]}</span>
         {facts && (
           <span className="hint project-bar-size">
             面积 {facts.area} · {facts.size} · 层高 {facts.height}
@@ -145,6 +152,7 @@ export function ProjectDetails({
   const facts = space ? spaceFacts(space) : null
   const rows: [string, string][] = [
     ['项目', project.name],
+    ['店铺类型', project.storeType ? STORE_TYPE_LABELS[project.storeType] : '待设置'],
     ['铺位形态', SHOP_TYPE_LABELS[project.shopType]],
     ['市场', MARKET_LABELS[project.market]],
     ['当前节点 SI', siStyle],

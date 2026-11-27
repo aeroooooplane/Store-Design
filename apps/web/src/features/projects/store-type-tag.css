@@ -1,0 +1,17 @@
+.project-store-type {
+  position: relative;
+}
+
+.project-store-type select {
+  font-size: var(--fs-xs);
+  cursor: pointer;
+}
+
+.project-store-type-error {
+  position: absolute;
+  inset-block-start: 100%;
+  inset-inline-start: 0;
+  z-index: 20;
+  min-width: 14rem;
+  max-width: 22rem;
+}

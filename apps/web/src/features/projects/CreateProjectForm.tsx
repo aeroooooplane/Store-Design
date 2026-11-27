@@ -14,6 +14,7 @@ export function CreateProjectForm() {
       error={create.error}
       onSave={create.mutateAsync}
       clearNameOnSave
+      requireStoreType
     />
   )
 }

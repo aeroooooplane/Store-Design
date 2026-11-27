@@ -1,11 +1,12 @@
 import { z } from 'zod'
-import { MarketSchema, ShopTypeSchema, SiStyleSchema } from '../enums.ts'
+import { MarketSchema, ShopTypeSchema, SiStyleSchema, StoreTypeSchema } from '../enums.ts'
 import { NameSchema } from './common.ts'
 
 export const ProjectSchema = z.object({
   id: z.uuid(),
   name: z.string(),
   shopType: ShopTypeSchema,
+  storeType: StoreTypeSchema.nullable(),
   market: MarketSchema,
   siStyle: SiStyleSchema,
   revision: z.int().min(1),
@@ -17,7 +18,8 @@ export type Project = z.infer<typeof ProjectSchema>
 
 export const ProjectCreateSchema = z.strictObject({
   name: NameSchema,
-  shopType: ShopTypeSchema,
+  shopType: ShopTypeSchema.default('side_hall'),
+  storeType: StoreTypeSchema.optional(),
   market: MarketSchema.default('domestic'),
   siStyle: SiStyleSchema.default('SI1.0'),
 })
@@ -28,6 +30,7 @@ export const ProjectUpdateSchema = z
   .strictObject({
     name: NameSchema.optional(),
     shopType: ShopTypeSchema.optional(),
+    storeType: StoreTypeSchema.optional(),
     market: MarketSchema.optional(),
     siStyle: SiStyleSchema.optional(),
   })
