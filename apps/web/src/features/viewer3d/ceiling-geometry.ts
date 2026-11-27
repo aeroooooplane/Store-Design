@@ -1,8 +1,13 @@
 import {
   distance,
+  distanceToBoundary,
+  distanceToSegment,
   edges,
+  isSimplePolygon,
   effectiveCeiling,
   mainEntrance,
+  locatePoint,
+  polygonInsidePolygon,
   sceneFrame,
   signedArea,
   subtractPlanRegions,
@@ -11,6 +16,7 @@ import type { Point, ShopType, SiStyle, Space } from '@store/shared'
 
 const FILM_GAP = 0.2
 const TRACK_WIDTH = 0.055
+const FRAME_WIDTH = 0.12
 const EPS = 1e-6
 
 export type CeilingFinish = 'gypsum' | 'slot' | 'film' | 'frame' | 'track' | 'strip'
@@ -86,8 +92,184 @@ function edgeSetbacks(ring: readonly Point[], amount: number): Point[][] {
   })
 }
 
-function inset(ring: readonly Point[], amount: number) {
-  return subtractPlanRegions(ring, edgeSetbacks(ring, amount))
+function boundsCenter(ring: readonly Point[]): Point {
+  const { minX, maxX, minZ, maxZ } = bounds(ring)
+  return [(minX + maxX) / 2, (minZ + maxZ) / 2]
+}
+
+function rectangular(ring: readonly Point[]) {
+  const box = bounds(ring)
+  const area = (box.maxX - box.minX) * (box.maxZ - box.minZ)
+  return area > EPS && Math.abs(Math.abs(signedArea(ring)) - area) < EPS ? box : null
+}
+
+/** Clip a convex ring along an inward half-plane. Rounded convex shops stay on this fast path. */
+function clip(polygon: readonly Point[], side: (point: Point) => number): Point[] {
+  return edges(polygon).flatMap(([a, b]) => {
+    const d = side(a)
+    const e = side(b)
+    const inside = d >= -EPS
+    if (inside === e >= -EPS) return inside ? [a] : []
+    const t = Math.min(1, Math.max(0, d / (d - e)))
+    const crossing: Point = [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
+    return inside ? [a, crossing] : [crossing]
+  })
+}
+
+function convex(ring: readonly Point[]) {
+  const sign = Math.sign(signedArea(ring))
+  return edges(ring).every(([a, b], i) => {
+    const c = ring[(i + 2) % ring.length]!
+    return sign * ((b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0])) >= -EPS
+  })
+}
+
+function convexInset(ring: readonly Point[], amount: number) {
+  let kept = [...ring]
+  const winding = Math.sign(signedArea(ring))
+  for (const [a, b] of edges(ring)) {
+    const length = distance(a, b)
+    if (length < EPS) continue
+    const x = ((a[1] - b[1]) / length) * winding
+    const z = ((b[0] - a[0]) / length) * winding
+    kept = clip(kept, (p) => (p[0] - a[0]) * x + (p[1] - a[1]) * z - amount)
+    if (kept.length < 3) return []
+  }
+  return Math.abs(signedArea(kept)) > EPS ? [kept] : []
+}
+
+const repairedContours = new WeakMap<readonly Point[], { ring: Point[]; clearance: number }>()
+
+function cutCeiling(
+  original: readonly Point[],
+  cuts: (ring: readonly Point[], extra: number) => Point[][],
+): Point[][] {
+  const repaired = repairedContours.get(original)
+  const starting = repaired?.ring ?? original
+  const clearance = repaired?.clearance ?? 0
+  try {
+    const parts = subtractPlanRegions(starting, cuts(starting, clearance))
+    return repaired ? parts.filter((piece) => polygonInsidePolygon(piece, original)) : parts
+  } catch {
+    // Surveyed arcs can contain tiny zigzags. Retry a simpler contour with extra clearance;
+    // only use pieces that still fit the actual outline.
+    for (const tolerance of [0.01, 0.04, 0.06]) {
+      const ring = [...original]
+      let i = 0
+      while (i < ring.length && ring.length > 3) {
+        if (
+          distanceToSegment(
+            ring[i]!,
+            ring[(i - 1 + ring.length) % ring.length]!,
+            ring[(i + 1) % ring.length]!,
+          ) < tolerance
+        )
+          ring.splice(i, 1)
+        else i++
+      }
+      if (ring.length === original.length || !isSimplePolygon(ring)) continue
+      try {
+        const result = subtractPlanRegions(ring, cuts(ring, tolerance))
+        repairedContours.set(original, { ring, clearance: tolerance })
+        return result.filter((piece) => polygonInsidePolygon(piece, original))
+      } catch {
+        // Try the next survey tolerance.
+      }
+    }
+    return []
+  }
+}
+
+function inset(ring: readonly Point[], amount: number, box: ReturnType<typeof rectangular>) {
+  if (!box)
+    return convex(ring)
+      ? convexInset(ring, amount)
+      : cutCeiling(ring, (contour, extra) => edgeSetbacks(contour, amount + extra))
+  const { minX, maxX, minZ, maxZ } = box
+  return maxX - minX > 2 * amount && maxZ - minZ > 2 * amount
+    ? [rect(minX + amount, minZ + amount, maxX - amount, maxZ - amount)]
+    : []
+}
+
+function frameSupports(ring: readonly Point[], box: ReturnType<typeof rectangular>) {
+  if (box) {
+    const { minX, minZ, maxX, maxZ } = box
+    const size = Math.min(FRAME_WIDTH, (maxX - minX) / 3, (maxZ - minZ) / 3)
+    return [minX, maxX - size].flatMap((x) =>
+      [minZ, maxZ - size].map((z) => rect(x, z, x + size, z + size)),
+    )
+  }
+
+  const winding = Math.sign(signedArea(ring))
+  const corners = edges(ring).flatMap(([a, b], i) => {
+    const prev = ring[(i + ring.length - 1) % ring.length]!
+    const inLength = distance(prev, a)
+    const outLength = distance(a, b)
+    if (inLength < EPS || outLength < EPS) return []
+    const before: Point = [(a[0] - prev[0]) / inLength, (a[1] - prev[1]) / inLength]
+    const after: Point = [(b[0] - a[0]) / outLength, (b[1] - a[1]) / outLength]
+    const turn = Math.atan2(before[0] * after[1] - before[1] * after[0], dot(before, after))
+    const east = (-before[1] - after[1]) * winding
+    const south = (before[0] + after[0]) * winding
+    return [
+      {
+        point: a,
+        along: outLength >= inLength ? after : before,
+        inward: [east, south] as Point,
+        turn: turn * winding,
+      },
+    ]
+  })
+  const distanceBetweenPosts = 4 * FRAME_WIDTH
+  const chosen: typeof corners = []
+  const append = (candidate: (typeof corners)[number]) => {
+    if (!chosen.some(({ point }) => distance(point, candidate.point) < distanceBetweenPosts))
+      chosen.push(candidate)
+  }
+  corners
+    .filter(({ turn }) => turn > Math.PI / 5)
+    .sort((a, b) => b.turn - a.turn)
+    .forEach(append)
+  // Rounded footprints may have no sharp corners. Use an outer point in each diagonal direction.
+  if (chosen.length < 3) {
+    for (const corner of [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1],
+    ] as const) {
+      const outer = corners
+        .filter(({ turn }) => turn >= -EPS)
+        .reduce<(typeof corners)[number] | undefined>(
+          (best, next) =>
+            !best || dot(next.point, corner) > dot(best.point, corner) ? next : best,
+          undefined,
+        )
+      if (outer) append(outer)
+    }
+  }
+  return chosen.flatMap(({ point, along, inward }) => {
+    const length = Math.hypot(...inward)
+    if (length < EPS) return []
+    const axis: Point = [-along[1], along[0]]
+    const half = FRAME_WIDTH / 2
+    for (const offset of [0.51, 0.71, 0.85, 1, 1.25, 1.5, 2, 3]) {
+      const center: Point = [
+        point[0] + (inward[0] / length) * FRAME_WIDTH * offset,
+        point[1] + (inward[1] / length) * FRAME_WIDTH * offset,
+      ]
+      const footprint = rect(-half, -half, half, half).map(([x, z]): Point => [
+        center[0] + x * along[0] + z * axis[0],
+        center[1] + x * along[1] + z * axis[1],
+      ])
+      if (
+        footprint.some((p) => distanceToBoundary(p, ring) <= FRAME_WIDTH + EPS) &&
+        polygonInsidePolygon(footprint, ring)
+      )
+        return [footprint]
+    }
+    return []
+  })
 }
 
 function trace(rings: readonly (readonly Point[])[], x: number): [number, number][] {
@@ -105,7 +287,11 @@ function trace(rings: readonly (readonly Point[])[], x: number): [number, number
   )
 }
 
-function filmPanels(ring: readonly Point[], si: SiStyle): Point[][] {
+function filmPanels(
+  ring: readonly Point[],
+  si: SiStyle,
+  box: ReturnType<typeof rectangular>,
+): Point[][] {
   const { minX, maxX, minZ, maxZ } = bounds(ring)
   const width = maxX - minX - 2 * FILM_GAP
   if (width <= 0) return []
@@ -116,18 +302,39 @@ function filmPanels(ring: readonly Point[], si: SiStyle): Point[][] {
   const pane = Math.min(si === 'SI1.0' ? 1.8 : Infinity, (width - FILM_GAP * (count - 1)) / count)
   const extra = Math.max(0, (width - count * pane - (count - 1) * FILM_GAP) / 2)
   const first = minX + FILM_GAP + extra
-  const cuts = edgeSetbacks(ring, FILM_GAP)
+  if (box)
+    return maxZ - minZ > 2 * FILM_GAP
+      ? Array.from({ length: count }, (_, i) => {
+          const start = first + i * (pane + FILM_GAP)
+          return rect(start, minZ + FILM_GAP, start + pane, maxZ - FILM_GAP)
+        })
+      : []
+  if (convex(ring)) {
+    const inner = convexInset(ring, FILM_GAP)[0]
+    if (!inner) return []
+    return Array.from({ length: count }, (_, i) => {
+      const start = first + i * (pane + FILM_GAP)
+      return clip(
+        clip(inner, ([x]) => x - start),
+        ([x]) => start + pane - x,
+      )
+    }).filter((part) => part.length >= 3 && Math.abs(signedArea(part)) > EPS)
+  }
+  const slots: Point[][] = []
   if (extra > EPS) {
-    cuts.push(
+    slots.push(
       rect(minX - 1, minZ - 1, first, maxZ + 1),
       rect(maxX - FILM_GAP - extra, minZ - 1, maxX + 1, maxZ + 1),
     )
   }
   for (let i = 1; i < count; i++) {
     const start = first + (i - 1) * (pane + FILM_GAP) + pane
-    cuts.push(rect(start, minZ - 1, start + FILM_GAP, maxZ + 1))
+    slots.push(rect(start, minZ - 1, start + FILM_GAP, maxZ + 1))
   }
-  return subtractPlanRegions(ring, cuts)
+  return cutCeiling(ring, (contour, clearance) => [
+    ...edgeSetbacks(contour, FILM_GAP + clearance),
+    ...slots,
+  ])
 }
 
 function trackPositions(min: number, max: number) {
@@ -148,7 +355,8 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
   if (kind === 'none') return { kind, parts, dots }
   const { local, world } = axes(space)
   const ring = space.boundary.map(local)
-  const { minX, maxX, minZ, maxZ } = bounds(ring)
+  const box = rectangular(ring)
+  const { minX, maxX, minZ, maxZ } = box ?? bounds(ring)
   const top = space.height
   const add = (
     polygon: readonly Point[],
@@ -167,17 +375,28 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
 
   if (kind === 'film') {
     add(ring, top + 0.2, 0.018, 'slot')
-    for (const polygon of filmPanels(ring, si)) add(polygon, top, 0.022, 'film')
+    for (const polygon of filmPanels(ring, si, box)) add(polygon, top, 0.022, 'film')
     return { kind, parts, dots }
   }
 
   const frame = kind === 'frame'
-  const frameWidth = 0.12
-  if (frame) add(ring, top, 0.12, 'frame', inset(ring, frameWidth))
-  else add(ring, top + 0.004, 0.09, 'gypsum')
+  const interior = frame ? inset(ring, FRAME_WIDTH, box) : []
+  if (frame) {
+    add(ring, top, FRAME_WIDTH, 'frame', interior)
+    for (const post of frameSupports(ring, box)) {
+      const centre = world(boundsCenter(post))
+      const existing = space.obstacles.some(
+        (obstacle) =>
+          obstacle.kind === 'column' &&
+          (obstacle.height ?? top) >= top - EPS &&
+          locatePoint(centre, obstacle.polygon) !== 'outside',
+      )
+      if (!existing) add(post, 0, top, 'frame')
+    }
+  } else add(ring, top + 0.004, 0.09, 'gypsum')
   // The center line uses a slightly deeper setback so the full profile stays inside the outline.
   const wallClear = frame ? 0.24 : si === 'SI1.0' ? 0.6 : 0.68
-  const allowed = inset(ring, wallClear + TRACK_WIDTH / 2)
+  const allowed = inset(ring, wallClear + TRACK_WIDTH / 2, box)
   const {
     minX: x0,
     maxX: x1,
@@ -205,7 +424,6 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
     }
   }
   if (frame) {
-    const interior = inset(ring, frameWidth - 0.01)
     const width = x1 - x0
     const depth = z1 - z0
     if (width > 0.4 && depth > 1) {
@@ -214,7 +432,7 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
       for (let i = 1; i <= crossbars; i++) {
         const z = z0 + (i * depth) / (crossbars + 1)
         for (const [start, end] of trace(swapped, z)) {
-          add(rect(start, z - 0.035, end, z + 0.035), top, 0.066, 'frame')
+          add(rect(start - 0.01, z - 0.035, end + 0.01, z + 0.035), top, 0.066, 'frame')
         }
       }
     }
@@ -233,7 +451,7 @@ export function ceilingInspectionView(space: Space, shop: ShopType) {
   // An open island can be inspected from its aisle, with the frame and platform both in view.
   const outside =
     shop === 'island'
-      ? Math.max(1.5, 0.3 * depth, 0.43 * width, 1.45 * (space.height - eye))
+      ? Math.max(1.5, 0.3 * depth, 0.65 * width, 1.45 * (space.height - eye))
       : -depth * 0.12
   const [ex, ez] = world([axis + Math.min(0.35, width * 0.06), maxZ + outside])
   const [x, z] = world([axis, minZ + depth * 0.44])

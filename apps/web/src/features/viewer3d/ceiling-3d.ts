@@ -1,11 +1,23 @@
 import * as THREE from 'three'
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
 import type { ShopType, SiStyle, Space } from '@store/shared'
 import { ceilingModel } from './ceiling-geometry.ts'
 import type { CeilingFinish } from './ceiling-geometry.ts'
 import { prism } from './scene-geometry.ts'
 
+const modelCache = new WeakMap<Space, Map<string, ReturnType<typeof ceilingModel>>>()
+
 export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
-  const { kind, parts, dots } = ceilingModel(space, shop, si)
+  let options = modelCache.get(space)
+  if (!options) {
+    options = new Map()
+    modelCache.set(space, options)
+  }
+  const key = shop + ':' + si
+  const cached = options.get(key)
+  const model = cached ?? ceilingModel(space, shop, si)
+  if (!cached) options.set(key, model)
+  const { kind, parts, dots } = model
   const group = new THREE.Group()
   group.name = '天花'
   group.userData['ceilingKind'] = kind
@@ -38,31 +50,48 @@ export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
         }))
     }
   }
+  // Merge the fixed panels, frame and rails by finish so complex ceilings use a few draw calls.
+  const batches = new Map<CeilingFinish, THREE.BufferGeometry[]>()
   for (const part of parts) {
-    const mesh = new THREE.Mesh(
-      prism(part.polygon, part.bottom, part.thickness, part.holes),
-      material(part.finish),
-    )
-    mesh.userData['ceilingFinish'] = part.finish
-    // The preview fixtures show the SI layout. Existing scene lighting and shadows are shared.
+    const geometry = prism(part.polygon, part.bottom, part.thickness, part.holes)
+    const batch = batches.get(part.finish)
+    if (batch) batch.push(geometry)
+    else batches.set(part.finish, [geometry])
+  }
+  for (const [finish, batch] of batches) {
+    const geometry = batch.length === 1 ? batch[0]! : mergeGeometries(batch)
+    if (batch.length > 1) batch.forEach((part) => part.dispose())
+    const mesh = new THREE.Mesh(geometry, material(finish))
+    mesh.userData['ceilingFinish'] = finish
     group.add(mesh)
   }
   if (dots.length) {
-    const shell = paint('#f1efe8')
-    const warm = new THREE.MeshBasicMaterial({ color: '#fff1dc' })
-    for (const {
-      point: [x, z],
-      y,
-    } of dots) {
-      const light = new THREE.Group()
-      light.position.set(x, y, z)
-      light.add(new THREE.Mesh(new THREE.CylinderGeometry(0.026, 0.026, 0.06, 12), shell))
-      const lens = new THREE.Mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.003, 12), warm)
-      lens.position.y = -0.031
-      light.userData['ceilingFinish'] = 'spot'
-      light.add(lens)
-      group.add(light)
+    const shell = new THREE.InstancedMesh(
+      new THREE.CylinderGeometry(0.026, 0.026, 0.06, 12),
+      paint('#f1efe8'),
+      dots.length,
+    )
+    const lens = new THREE.InstancedMesh(
+      new THREE.CylinderGeometry(0.018, 0.018, 0.003, 12),
+      new THREE.MeshBasicMaterial({ color: '#fff1dc' }),
+      dots.length,
+    )
+    const transform = new THREE.Matrix4()
+    for (const [
+      index,
+      {
+        point: [x, z],
+        y,
+      },
+    ] of dots.entries()) {
+      shell.setMatrixAt(index, transform.makeTranslation(x, y, z))
+      lens.setMatrixAt(index, transform.makeTranslation(x, y - 0.031, z))
     }
+    shell.instanceMatrix.needsUpdate = true
+    lens.instanceMatrix.needsUpdate = true
+    shell.userData['ceilingFinish'] = 'spot'
+    lens.userData['ceilingFinish'] = 'spot'
+    group.add(shell, lens)
   }
   return group
 }
