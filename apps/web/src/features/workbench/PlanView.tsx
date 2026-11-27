@@ -17,6 +17,7 @@ import {
   itemTilt,
   fixtureCorners,
   facadePlanSpans,
+  exteriorFacadeSpan,
   mToMm,
   mainEntrance,
   modelBox,
@@ -419,6 +420,13 @@ export function PlanView({
     }
   }, [space])
   const walls = useMemo(() => wallContours(space, shopType), [space, shopType])
+  const facadeOutline = useMemo(
+    () =>
+      facadePlanSpans(space, shopType).map((span) =>
+        shopType === 'side_hall' ? exteriorFacadeSpan(space, span) : span,
+      ),
+    [space, shopType],
+  )
   const width = bounds.maxX - bounds.minX
   const depth = bounds.maxZ - bounds.minZ
   const span = Math.max(width, depth, 1)
@@ -558,7 +566,7 @@ export function PlanView({
       <polygon className="plan-lease" points={points(space.boundary)}>
         <title>租赁线</title>
       </polygon>
-      {facadePlanSpans(space, shopType).map(({ a, b }, index) => (
+      {facadeOutline.map(({ a, b }, index) => (
         <line
           key={index}
           className="facade-plan-span"

@@ -17,6 +17,16 @@ export function boundaryWallMaterial(): THREE.MeshStandardMaterial {
 }
 
 /** Extrude the merged footprint once: no intersecting boxes or internal transparent faces. */
+export function boundaryWallMesh(space: Space, shop: ShopType, material: THREE.Material) {
+  const geometry = boundaryWallGeometry(space, shop)
+  if (!geometry) return null
+  const mesh = new THREE.Mesh(geometry, material)
+  mesh.userData['surface'] = 'wall'
+  mesh.userData['boundaryWall'] = true
+  mesh.renderOrder = 1
+  return mesh
+}
+
 export function boundaryWallGeometry(
   space: Space,
   shopType: ShopType,

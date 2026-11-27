@@ -24,7 +24,6 @@ import { WhiteScene } from './white-scene.ts'
 import type { LoadStatus, Look, SceneHandlers, ViewPose } from './white-scene.ts'
 import type { ModelPlacementClick } from '../workbench/editor-state.ts'
 import { useCeilingPreview } from '../workbench/ceiling-preview.ts'
-import { ceilingInspectionView } from './ceiling-geometry.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
@@ -221,7 +220,6 @@ export function Viewer3D({
   const [facadeVisible, setFacadeVisible] = useState(true)
   const wantsCeiling = useCeilingPreview()
   const ceilingVisible = wantsCeiling && effectiveCeiling(space, shopType, siStyle) !== 'none'
-  const beforeCeiling = useRef<ViewPose | null>(null)
   const views = useMemo(
     () => facadeViews(space, shopType, siStyle, market),
     [space, shopType, siStyle, market],
@@ -252,7 +250,6 @@ export function Viewer3D({
       scene.dispose()
       sceneRef.current = null
       viewedSpace.current = null
-      beforeCeiling.current = null
     }
   }, [])
 
@@ -295,17 +292,7 @@ export function Viewer3D({
   }, [facadeVisible])
 
   useEffect(() => {
-    const scene = sceneRef.current
-    if (!scene) return
-    const previous = beforeCeiling.current
-    scene.setCeiling(space, shopType, siStyle, ceilingVisible)
-    if (ceilingVisible) {
-      beforeCeiling.current ??= scene.currentView()
-      scene.showView(ceilingInspectionView(space, shopType))
-    } else if (!ceilingVisible && previous) {
-      beforeCeiling.current = null
-      scene.showView(previous)
-    }
+    sceneRef.current?.setCeiling(space, shopType, siStyle, ceilingVisible)
   }, [space, shopType, siStyle, ceilingVisible])
 
   useEffect(() => {

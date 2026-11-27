@@ -23,6 +23,7 @@ export type CeilingFinish = 'gypsum' | 'slot' | 'film' | 'frame' | 'track' | 'st
 type Part = {
   polygon: readonly Point[]
   holes?: Point[][]
+  lining?: true
   bottom: number
   thickness: number
   finish: CeilingFinish
@@ -374,8 +375,21 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
     })
 
   if (kind === 'film') {
-    add(ring, top + 0.2, 0.018, 'slot')
-    for (const polygon of filmPanels(ring, si, box)) add(polygon, top, 0.022, 'film')
+    const recessDepth = 0.2
+    add(ring, top + recessDepth, 0.018, 'slot')
+    const line = (polygon: readonly Point[]) =>
+      parts.push({
+        polygon: polygon.map(world),
+        bottom: top,
+        thickness: recessDepth,
+        finish: 'slot',
+        lining: true,
+      })
+    line(ring)
+    for (const polygon of filmPanels(ring, si, box)) {
+      add(polygon, top, 0.022, 'film')
+      line(polygon)
+    }
     return { kind, parts, dots }
   }
 
@@ -438,26 +452,4 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
     }
   }
   return { kind, parts, dots }
-}
-
-/** Move below the head of the room so a solid top doesn't cover the interior on first display. */
-export function ceilingInspectionView(space: Space, shop: ShopType) {
-  const { local, world } = axes(space)
-  const { minX, maxX, minZ, maxZ } = bounds(space.boundary.map(local))
-  const axis = (minX + maxX) / 2
-  const depth = maxZ - minZ
-  const width = maxX - minX
-  const eye = Math.min(1.55, space.height * 0.6)
-  // An open island can be inspected from its aisle, with the frame and platform both in view.
-  const outside =
-    shop === 'island'
-      ? Math.max(1.5, 0.3 * depth, 0.65 * width, 1.45 * (space.height - eye))
-      : -depth * 0.12
-  const [ex, ez] = world([axis + Math.min(0.35, width * 0.06), maxZ + outside])
-  const [x, z] = world([axis, minZ + depth * 0.44])
-  return {
-    position: [ex, eye, ez] as [number, number, number],
-    target: [x, space.height * (shop === 'island' ? 0.62 : 0.81), z] as [number, number, number],
-    fovDeg: shop === 'island' ? 62 : 57,
-  }
 }

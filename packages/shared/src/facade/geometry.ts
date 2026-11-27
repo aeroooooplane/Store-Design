@@ -3,17 +3,18 @@ import type { Point, Polygon } from '../geometry/index.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { mainEntrance } from '../scene/frame.ts'
+import { WALL_THICKNESS_M } from '../scene/walls.ts'
 
 const SPAN_TOLERANCE = 0.003
 
-function edgeMetrics(boundary: Polygon, edge: number) {
+function edgeMetrics(boundary: Polygon, edge: number, minLength = 0.1) {
   const a = boundary[edge]
   const b = boundary[(edge + 1) % boundary.length]
   if (!a || !b) return null
   const dx = b[0] - a[0]
   const dz = b[1] - a[1]
   const length = Math.hypot(dx, dz)
-  if (length < 0.1) return null
+  if (length < minLength) return null
   const x = dx / length
   const z = dz / length
   return {
@@ -62,26 +63,80 @@ export function facadeSpan(boundary: Polygon, edge: number, offset: number, widt
   return { a: run.at(offset), b: run.at(Math.min(run.length, offset + width)) }
 }
 
-function entranceInterval(space: Space, edge: number) {
-  const entrance = mainEntrance(space)
-  const piece = entrance && openingPieces(space, entrance)?.find((part) => part.edge === edge)
-  const run = edgeMetrics(space.boundary, edge)
-  if (!piece || !run) return null
-  const values = [run.along(piece.a), run.along(piece.b)]
-  return { start: Math.min(...values), end: Math.max(...values) }
+type OpeningInterval = { start: number; end: number; openEdge: boolean; primary: boolean }
+const facadeOpenings = new WeakMap<Space, Map<number, OpeningInterval[]>>()
+
+function openingIntervals(space: Space) {
+  const cached = facadeOpenings.get(space)
+  if (cached) return cached
+  const main = mainEntrance(space)
+  const byEdge = new Map<number, OpeningInterval[]>()
+  for (const [openings, openEdge] of [
+    [space.openEdges, true],
+    [space.entrances, false],
+  ] as const) {
+    for (const opening of openings) {
+      for (const part of openingPieces(space, opening) ?? []) {
+        const run = edgeMetrics(space.boundary, part.edge)
+        if (!run) continue
+        const a = run.along(part.a)
+        const b = run.along(part.b)
+        const list = byEdge.get(part.edge) ?? []
+        list.push({
+          start: Math.max(0, Math.min(a, b)),
+          end: Math.min(run.length, Math.max(a, b)),
+          openEdge,
+          primary: opening === main,
+        })
+        byEdge.set(part.edge, list)
+      }
+    }
+  }
+  for (const [edge, intervals] of byEdge) {
+    const merged: OpeningInterval[] = []
+    for (const part of intervals.sort((a, b) => a.start - b.start)) {
+      const previous = merged.at(-1)
+      if (previous && part.start <= previous.end + SPAN_TOLERANCE) {
+        previous.end = Math.max(previous.end, part.end)
+        previous.openEdge ||= part.openEdge
+        previous.primary ||= part.primary
+      } else {
+        merged.push(part)
+      }
+    }
+    byEdge.set(
+      edge,
+      merged.filter((p) => p.end - p.start >= 0.099),
+    )
+  }
+  facadeOpenings.set(space, byEdge)
+  return byEdge
+}
+
+function facadeOpeningOrder(a: OpeningInterval, b: OpeningInterval) {
+  return (
+    Number(b.openEdge) - Number(a.openEdge) ||
+    Number(b.primary) - Number(a.primary) ||
+    b.end - b.start - (a.end - a.start)
+  )
+}
+
+function preferredOpening(space: Space, edge: number, subspan?: { start: number; end: number }) {
+  const candidates = openingIntervals(space).get(edge) ?? []
+  const relevant = subspan
+    ? candidates.filter((p) => p.start < subspan.end && p.end > subspan.start)
+    : candidates
+  return relevant.toSorted(facadeOpeningOrder)[0]
 }
 
 export function suggestedFacadeEdge(space: Space) {
-  const entrance = mainEntrance(space)
-  const pieces = entrance ? openingPieces(space, entrance) : null
-  const candidate = pieces
-    ?.slice()
-    .sort(
-      (a, b) =>
-        Math.hypot(b.a[0] - b.b[0], b.a[1] - b.b[1]) - Math.hypot(a.a[0] - a.b[0], a.a[1] - a.b[1]),
-    )[0]
+  const candidates = space.boundary.flatMap((_, edge) => {
+    const opening = preferredOpening(space, edge)
+    return opening ? [{ ...opening, edge }] : []
+  })
+  candidates.sort(facadeOpeningOrder)
   return (
-    candidate?.edge ??
+    candidates[0]?.edge ??
     space.boundary.reduce(
       (best, _, edge) =>
         (edgeMetrics(space.boundary, edge)?.length ?? 0) >
@@ -93,10 +148,34 @@ export function suggestedFacadeEdge(space: Space) {
   )
 }
 
+/** Outer face of facade cladding relative to the lease line. */
+export function facadeOuterDepth() {
+  return WALL_THICKNESS_M + 0.015
+}
+
+export function exteriorFacadeSpan(
+  space: Space,
+  span: { a: Point; b: Point },
+): { a: Point; b: Point } {
+  // The stored endpoints may be in either order. Use the boundary's winding and direction.
+  const run = facadeRun(space.boundary, span)
+  const chord = !run ? (openingPieces(space, span) ?? [])[0] : undefined
+  const direction = run ?? (chord && edgeMetrics(space.boundary, chord.edge, 1e-6))
+  if (!direction) return span
+  const sign = isClockwise(space.boundary) ? 1 : -1
+  const d = facadeOuterDepth() * sign
+  const outside = ([x, z]: Point): Point => [x + direction.z * d, z - direction.x * d]
+  return { a: outside(span.a), b: outside(span.b) }
+}
+
 export function facadeEdgeSize(space: Space, edge: number) {
   const length = edgeMetrics(space.boundary, edge)?.length ?? 0
-  const opening = entranceInterval(space, edge)
-  return { length, openingWidth: opening ? opening.end - opening.start : length }
+  const opening = preferredOpening(space, edge)
+  return {
+    length,
+    openingWidth: opening ? opening.end - opening.start : length,
+    hasOpening: !!opening,
+  }
 }
 
 /** Local X goes to a shopfront observer's right. Local +Z is outside the lease line. */
@@ -109,7 +188,10 @@ export function facadeGeometry(
   const reversed = isClockwise(space.boundary)
   const origin = run.at(reversed ? run.offset + run.width : run.offset)
   const direction: Point = [reversed ? -run.x : run.x, reversed ? -run.z : run.z]
-  const centre = entranceInterval(space, run.edge)
+  const centre = preferredOpening(space, run.edge, {
+    start: run.offset,
+    end: run.offset + run.width,
+  })
   const start = centre ? Math.max(0, centre.start - run.offset) : 0
   const end = centre ? Math.min(run.width, centre.end - run.offset) : 0
   const entryWidth = Math.max(0, end - start)

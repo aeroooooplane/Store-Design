@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import {
   defaultCameras,
   facadeKind,
+  facadeWallSpace,
   supportsFacade,
   advertisingScreenName,
   isWallArt,
@@ -52,7 +53,7 @@ import {
 } from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { displayPanelBody } from './display-panel-body.ts'
-import { boundaryWallMaterial } from './boundary-wall.ts'
+import { boundaryWallMaterial, boundaryWallMesh } from './boundary-wall.ts'
 import { customLogoMesh } from './custom-logo.ts'
 import { isCustomLogo, customLogoFootprint, DEFAULT_LOGO_TEXT } from '@store/shared'
 import {
@@ -161,6 +162,8 @@ export class WhiteScene {
   private hideBoundaryWalls = false
   private readonly room = new THREE.Group()
   private readonly facade = new THREE.Group()
+  private facadeWalls: THREE.Mesh | null = null
+  private replacesFacadeWalls = false
   private readonly ceiling = new THREE.Group()
   private ceilingSource: { space: Space; shop: ShopType; si: SiStyle } | null = null
   private readonly props = new THREE.Group()
@@ -266,7 +269,7 @@ export class WhiteScene {
     canvas.addEventListener('pointerup', this.endDrag)
     canvas.addEventListener('pointercancel', this.endDrag)
     this.controls = new OrbitControls(this.camera, canvas)
-    this.controls.maxPolarAngle = Math.PI * 0.49
+    this.controls.maxPolarAngle = Math.PI * 0.7
     this.controls.addEventListener('change', this.requestRender)
     this.controls.addEventListener('end', () => this.viewListener?.(this.currentView()))
   }
@@ -290,8 +293,11 @@ export class WhiteScene {
 
   /** Floor, walls and obstacles; also re-aims the sun and, on first use, the view. */
   setRoom(space: Space, shopType: ShopType, resetView: boolean) {
+    if (this.space === space && this.shopType === shopType && !resetView) return
     this.room.children.forEach(disposeGeometry)
     this.room.clear()
+    this.facadeWalls = null
+    this.replacesFacadeWalls = false
     this.roomLooks.forEach(disposeRoomMaterials)
     this.roomLooks.clear()
     this.shopType = shopType
@@ -316,6 +322,18 @@ export class WhiteScene {
         ? buildFacade3d(space, siStyle, market)
         : null
     if (model) this.facade.add(model)
+    if (this.facadeWalls) {
+      this.room.remove(this.facadeWalls)
+      this.facadeWalls.geometry.dispose()
+      this.facadeWalls = null
+    }
+    const walls = model ? facadeWallSpace(space, shopType) : space
+    this.replacesFacadeWalls = walls !== space
+    if (this.replacesFacadeWalls) {
+      this.facadeWalls = boundaryWallMesh(walls, shopType, this.boundaryMaterial)
+      if (this.facadeWalls) this.room.add(this.facadeWalls)
+    }
+    this.applyFacadeVisibility(this.facade.visible)
     this.sceneChanged()
   }
 
@@ -330,7 +348,6 @@ export class WhiteScene {
       this.ceilingSource = { space, shop: shopType, si: siStyle }
     }
     this.ceiling.visible = visible
-    this.controls.maxPolarAngle = Math.PI * (visible ? 0.7 : 0.49)
     // Ceiling previews don't cast shadows. Toggling only needs a redraw.
     if (visible || source) this.requestRender()
   }
@@ -343,8 +360,17 @@ export class WhiteScene {
     this.ceiling.clear()
   }
 
-  setFacadeVisible(visible: boolean) {
+  private applyFacadeVisibility(visible: boolean) {
     this.facade.visible = visible
+    for (const mesh of this.room.children) {
+      if (mesh.userData['boundaryWall']) {
+        mesh.visible = mesh === this.facadeWalls ? visible : !visible || !this.replacesFacadeWalls
+      }
+    }
+  }
+
+  setFacadeVisible(visible: boolean) {
+    this.applyFacadeVisibility(visible)
     this.sceneChanged()
   }
 
@@ -734,7 +760,7 @@ export class WhiteScene {
       const ratio = this.renderer.getPixelRatio()
       const facadeVisible = this.facade.visible
       try {
-        this.facade.visible = true
+        this.applyFacadeVisibility(true)
         this.renderer.setPixelRatio(1)
         this.renderer.setSize(width, height, false)
         shot.position.set(...view.position)
@@ -771,7 +797,7 @@ export class WhiteScene {
           images.push(this.canvas.toDataURL('image/png'))
         }
       } finally {
-        this.facade.visible = facadeVisible
+        this.applyFacadeVisibility(facadeVisible)
         this.renderer.setPixelRatio(ratio)
         this.renderer.setSize(size.x, size.y, false)
         this.renderLive()

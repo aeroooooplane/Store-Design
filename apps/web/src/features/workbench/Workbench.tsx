@@ -36,7 +36,7 @@ import { RenderStage } from './RenderStage.tsx'
 import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { FacadeCard, FacadeEditor } from '../facade/FacadeEditor.tsx'
 import { CeilingCard } from './CeilingCard.tsx'
-import { CeilingPreviewContext, useCeilingView } from './ceiling-preview.ts'
+import { CeilingPreviewContext } from './ceiling-preview.ts'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
 import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
@@ -92,13 +92,6 @@ export function Workbench({ project }: { project: Project }) {
   const viewMemory = useRef(new Map<string, ViewState>())
   const [siNotice, setSiNotice] = useState<string | null>(null)
   const [shownCeilings, setShownCeilings] = useState<ReadonlySet<string>>(() => new Set())
-  const openCeilingView = useRef<(() => void) | null>(null)
-  const registerCeilingView = useCallback((open: () => void) => {
-    openCeilingView.current = open
-    return () => {
-      if (openCeilingView.current === open) openCeilingView.current = null
-    }
-  }, [])
   // The left tab, kept while moving between steps; null means the stage decides.
   const [leftTab, setLeftTab] = useState<LeftTab | null>(null)
   const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
@@ -220,7 +213,6 @@ export function Workbench({ project }: { project: Project }) {
       else updated.delete(selectedId)
       return updated
     })
-    if (visible) openCeilingView.current?.()
   }
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
@@ -352,9 +344,7 @@ export function Workbench({ project }: { project: Project }) {
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
           <ViewMemoryContext.Provider value={viewMemory.current}>
-            <CeilingPreviewContext.Provider
-              value={{ visible: ceilingVisible, register: registerCeilingView }}
-            >
+            <CeilingPreviewContext.Provider value={ceilingVisible}>
               <HistoryViewProvider key={project.id}>{content}</HistoryViewProvider>
             </CeilingPreviewContext.Provider>
           </ViewMemoryContext.Provider>
@@ -762,8 +752,6 @@ function StagePreview({
     memory.update({ view: { space: next } })
     setMode(next)
   }
-
-  useCeilingView(() => show('3d'))
 
   return (
     <WorkbenchLayout

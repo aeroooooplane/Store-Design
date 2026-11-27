@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import type { Point, ShopType, Space } from '@store/shared'
 import { prism } from './scene-geometry.ts'
-import { boundaryWallGeometry } from './boundary-wall.ts'
+import { boundaryWallMesh } from './boundary-wall.ts'
 import { contextFloor } from './context-floor.ts'
 import { islandEdgingGeometry, ISLAND_PLATFORM_HEIGHT_M } from './island-platform.ts'
 
@@ -24,17 +24,8 @@ export function buildRoom(
   if (outside) room.add(outside)
   if (shopType === 'island') addEdging(room, space.boundary, material)
 
-  const geometry = boundaryWallGeometry(space, shopType)
-  if (geometry) {
-    const mesh = new THREE.Mesh(geometry, material)
-    mesh.userData['surface'] = 'wall'
-    mesh.userData['boundaryWall'] = true
-    mesh.renderOrder = 1
-    // 透明墙只提供空间轮廓，不投射原先实心墙的全黑遮挡。
-    mesh.castShadow = false
-    mesh.receiveShadow = false
-    room.add(mesh)
-  }
+  const boundary = boundaryWallMesh(space, shopType, material)
+  if (boundary) room.add(boundary)
 
   for (const obstacle of space.obstacles) {
     const height = obstacle.height ?? space.height

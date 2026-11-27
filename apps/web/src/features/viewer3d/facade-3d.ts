@@ -1,15 +1,37 @@
 import * as THREE from 'three'
 import { SVGLoader } from 'three/addons/loaders/SVGLoader.js'
-import { facadeWordmark, reviewFacadeConfig } from '@store/shared'
-import type { FacadeSection, Market, SiStyle, Space } from '@store/shared'
+import {
+  distance,
+  facadeOuterDepth,
+  facadePoint,
+  facadeWordmark,
+  locatePoint,
+  polygonArea,
+  reviewFacadeConfig,
+} from '@store/shared'
+import type { FacadeSection, Market, Point, SiStyle, Space } from '@store/shared'
 import { facadeColors, sectionPieces } from '../facade/appearance.ts'
+import { prism } from './scene-geometry.ts'
 
-function buildSection(section: FacadeSection, siStyle: SiStyle, market: Market) {
+function outsideFace(section: FacadeSection) {
+  return Math.max(facadeOuterDepth(), section.screens.length ? section.screenInset + 0.09 : 0)
+}
+
+function panelMaterial(siStyle: SiStyle) {
+  return new THREE.MeshStandardMaterial({
+    color: facadeColors(siStyle).panel,
+    roughness: 0.63,
+    metalness: siStyle === 'SI1.0' ? 0.32 : 0.12,
+  })
+}
+
+function buildSection(section: FacadeSection, siStyle: SiStyle, market: Market, outside: boolean) {
   const root = new THREE.Group()
   const { frame } = section
   root.position.set(frame.origin[0], 0, frame.origin[1])
   root.rotation.y = Math.atan2(-frame.direction[1], frame.direction[0])
   const colors = facadeColors(siStyle)
+  const offset = outside ? outsideFace(section) : 0
   for (const p of sectionPieces(section)) {
     const material =
       p.finish === 'screen' || p.finish === 'light'
@@ -19,8 +41,10 @@ function buildSection(section: FacadeSection, siStyle: SiStyle, market: Market) 
             roughness: p.finish === 'trim' ? 0.45 : 0.63,
             metalness: p.finish === 'trim' || siStyle === 'SI1.0' ? 0.32 : 0.12,
           })
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(p.w, p.h, p.depth), material)
-    mesh.position.set(p.x + p.w / 2, p.y + p.h / 2, p.front - p.depth / 2 + 0.002)
+    const face = offset + p.front + (outside ? 0 : 0.002)
+    const back = outside && p.finish !== 'light' ? 0 : face - p.depth
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(p.w, p.h, face - back), material)
+    mesh.position.set(p.x + p.w / 2, p.y + p.h / 2, (face + back) / 2)
     mesh.receiveShadow = true
     mesh.userData['facadeFinish'] = p.finish
     root.add(mesh)
@@ -59,7 +83,7 @@ function buildSection(section: FacadeSection, siStyle: SiStyle, market: Market) 
     })
     const logo = new THREE.Mesh(body, [face, sides])
     const width = art.width * scale
-    logo.position.set(spec.center - width / 2, spec.top, 0.008)
+    logo.position.set(spec.center - width / 2, spec.top, offset + 0.008)
     logo.rotation.x = spec.tilt ?? 0
     logo.userData['facadeFinish'] = 'logo'
     root.add(logo)
@@ -80,10 +104,51 @@ function buildSection(section: FacadeSection, siStyle: SiStyle, market: Market) 
   return root
 }
 
+/** Two sections that meet at a rounded or sharp exterior corner need a solid fascia return. */
+function addCornerReturns(
+  root: THREE.Group,
+  sections: FacadeSection[],
+  boundary: Space['boundary'],
+  si: SiStyle,
+) {
+  const ends = (section: FacadeSection) => [
+    section.frame.origin,
+    facadePoint(section.frame, section.frame.width),
+  ]
+  for (const [i, a] of sections.entries()) {
+    for (const b of sections.slice(i + 1)) {
+      const join = ends(a).find((point) => ends(b).some((end) => distance(point, end) <= 0.003))
+      if (!join) continue
+      const bottom = Math.max(a.fasciaBottom, b.fasciaBottom)
+      const top = Math.min(a.fasciaBottom + a.fasciaHeight, b.fasciaBottom + b.fasciaHeight)
+      if (top - bottom < 0.001) continue
+      const face = (section: FacadeSection): Point => {
+        const depth = outsideFace(section)
+        return [
+          join[0] + section.frame.outward[0] * depth,
+          join[1] + section.frame.outward[1] * depth,
+        ]
+      }
+      const p = face(a)
+      const q = face(b)
+      const wedge = [join, p, q]
+      const centre: Point = [(join[0] + p[0] + q[0]) / 3, (join[1] + p[1] + q[1]) / 3]
+      if (polygonArea(wedge) < 1e-5 || locatePoint(centre, boundary) !== 'outside') continue
+      const mesh = new THREE.Mesh(prism(wedge, bottom, top - bottom), panelMaterial(si))
+      mesh.userData['facadeFinish'] = 'panel'
+      root.add(mesh)
+    }
+  }
+}
+
 export function buildFacade3d(space: Space, siStyle: SiStyle, market: Market): THREE.Group | null {
-  const result = space.facade && reviewFacadeConfig(space, space.facade, siStyle, market)
-  if (!result) return null
+  const config = space.facade
+  const result = config && reviewFacadeConfig(space, config, siStyle, market)
+  if (!config || !result) return null
+  const outside = !('kind' in config) || config.kind !== 'island_hanging'
   const root = new THREE.Group()
-  root.add(...result.sections.map((section) => buildSection(section, siStyle, market)))
+  root.add(...result.sections.map((section) => buildSection(section, siStyle, market, outside)))
+  if ('kind' in config && config.kind === 'corner')
+    addCornerReturns(root, result.sections, space.boundary, siStyle)
   return root
 }

@@ -11,6 +11,8 @@ export {
   facadeEdgeSize,
   suggestedFacadeEdge,
   facadeGeometry,
+  facadeOuterDepth,
+  exteriorFacadeSpan,
 } from './geometry.ts'
 
 export * from './forms.ts'
@@ -131,11 +133,11 @@ export function reviewFacadeFrame(
     )
   }
   if (!frame.entryWidth) {
-    add('entry-link', '所选门头段没有覆盖主入口，请核对位置及现场入口。')
+    add('entry-link', '所选门头段没有覆盖现场开放段，请核对位置及入口。')
   } else if (Math.abs(frame.entryWidth - facade.openingWidth) > 0.02) {
     add(
       'entry-width',
-      `当前门头净宽与平面主入口重叠段宽度（${mToMm(frame.entryWidth)} mm）不同，请核对。`,
+      `当前门头净宽与平面实际开放段宽度（${mToMm(frame.entryWidth)} mm）不同，请核对。`,
     )
   }
   return {

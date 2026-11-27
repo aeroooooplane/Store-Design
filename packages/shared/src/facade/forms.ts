@@ -242,6 +242,20 @@ export function facadePlanSpans(space: Space, shop: ShopType): Span[] {
   return [config]
 }
 
+/** The facade replaces only the boundary runs it covers; the saved space still has its actual openings. */
+export function facadeWallSpace(space: Space, shop: ShopType) {
+  if (shop !== 'side_hall') return space
+  const spans = facadePlanSpans(space, shop)
+  if (!spans.length) return space
+  const config = space.facade
+  const cladded = config && 'kind' in config && config.kind === 'corner' ? config.faces : spans
+  const facadeOpenings = cladded.map(({ a, b }) => ({
+    a: [a[0], a[1]] as [number, number],
+    b: [b[0], b[1]] as [number, number],
+  }))
+  return { ...space, openEdges: [...space.openEdges, ...facadeOpenings] }
+}
+
 function standardSection(space: Space, facade: Facade, si: SiStyle, market: Market, logo = true) {
   const review = reviewFacade(space, facade, si, market)
   if (!review) return null

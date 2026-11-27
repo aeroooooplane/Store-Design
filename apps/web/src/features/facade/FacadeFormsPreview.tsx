@@ -1,4 +1,10 @@
-import { facadePlanSpans, facadePoint, facadeWordmark, openingPieces } from '@store/shared'
+import {
+  exteriorFacadeSpan,
+  facadePlanSpans,
+  facadePoint,
+  facadeWordmark,
+  openingPieces,
+} from '@store/shared'
 import type { FacadeConfig, FacadeSection, Market, SiStyle, Space } from '@store/shared'
 import { facadeColors, sectionPieces } from './appearance.ts'
 
@@ -15,10 +21,12 @@ export function FacadeFormsPlan({
   const zs = space.boundary.map(([, z]) => z)
   const width = Math.max(...xs) - Math.min(...xs)
   const depth = Math.max(...zs) - Math.min(...zs)
-  const pad = Math.max(width, depth) * 0.12
+  const pad = Math.max(0.28, Math.max(width, depth) * 0.12)
   const island = config && 'kind' in config && config.kind === 'island_hanging'
   const lines = config
-    ? facadePlanSpans({ ...space, facade: config }, island ? 'island' : 'side_hall')
+    ? facadePlanSpans({ ...space, facade: config }, island ? 'island' : 'side_hall').map((span) =>
+        island ? span : exteriorFacadeSpan(space, span),
+      )
     : []
   return (
     <svg
