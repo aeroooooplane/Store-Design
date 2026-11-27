@@ -42,7 +42,7 @@ export function FacadeCard({
       <div className="facade-card-body">
         {reviewed && space.facade ? (
           <>
-            <span>{FACADE_PRESET_LABELS[reviewed.preset]}</span>
+            <span>常规直边 · {FACADE_PRESET_LABELS[reviewed.preset]}</span>
             <small>
               总宽 {mToMm(reviewed.frame.width)} mm · 净高 {mToMm(space.facade.clearHeight)} mm
             </small>
@@ -373,7 +373,7 @@ export function FacadeEditor({
   return (
     <section className="wb-card facade-editor" aria-label="门头设置">
       <h2>设置门头</h2>
-      <p className="hint">先核对门头所在边，再录入实测门头和通行尺寸。</p>
+      <p className="hint">常规直边边厅 · {siStyle}。先核对所在边，再录入实测门头和通行尺寸。</p>
       <ErrorMessage error={mutation.error} />
       <form
         onSubmit={(event) => {
@@ -445,11 +445,26 @@ export function FacadeEditor({
                   onChange={(event) => setPreset(event.currentTarget.value)}
                 >
                   <option value="">自动推荐</option>
-                  {presets.map((item) => (
-                    <option key={item} value={item}>
-                      {FACADE_PRESET_LABELS[item]}
-                    </option>
-                  ))}
+                  <optgroup label="实体面板门头">
+                    {presets
+                      .filter((item) => item === 'steel' || item === 'aluminium')
+                      .map((item) => (
+                        <option key={item} value={item}>
+                          {FACADE_PRESET_LABELS[item]}
+                          {si1 ? '' : '（B/C 级）'}
+                        </option>
+                      ))}
+                  </optgroup>
+                  <optgroup label="LED 屏幕门头">
+                    {presets
+                      .filter((item) => item === 'led' || item === 'led_strip')
+                      .map((item) => (
+                        <option key={item} value={item}>
+                          {FACADE_PRESET_LABELS[item]}
+                          {si1 ? '' : item === 'led_strip' ? '（S 级）' : '（A 级）'}
+                        </option>
+                      ))}
+                  </optgroup>
                 </select>
               </label>
               {preview?.usesLed && (
