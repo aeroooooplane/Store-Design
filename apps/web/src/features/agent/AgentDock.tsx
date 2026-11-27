@@ -267,9 +267,7 @@ function AgentPanel({
           return (
             <div className="agent-turn" key={turn.id}>
               {turn.prompt !== null ? (
-                <div className="agent-prompt">
-                  <div className="agent-msg user agent-text">{turn.prompt}</div>
-                </div>
+                <div className="agent-msg user agent-text agent-prompt">{turn.prompt}</div>
               ) : null}
               {active ? (
                 active.reply ? (

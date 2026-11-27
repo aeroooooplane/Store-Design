@@ -1,0 +1,61 @@
+{
+  "passed": true,
+  "sourceSha256": "46ed38fb4e5a774e91e10264b20874a4c0a8584e655b5c680792c9b9e8700fef",
+  "sourceBytes": 22605008,
+  "embeddedBytesEqual": true,
+  "deliveredBytesEqual": true,
+  "dimensions": [
+    1,
+    0.532989501953125,
+    0.37982177734375
+  ],
+  "meshes": 1,
+  "triangles": 501846,
+  "vertices": 284680,
+  "materials": [
+    {
+      "roughness": 1,
+      "metalness": 1,
+      "normalScale": [
+        1,
+        -1
+      ],
+      "maps": [
+        {
+          "slot": "map",
+          "w": 4096,
+          "h": 4096,
+          "colorSpace": "srgb"
+        },
+        {
+          "slot": "normalMap",
+          "w": 4096,
+          "h": 4096,
+          "colorSpace": ""
+        },
+        {
+          "slot": "roughnessMap",
+          "w": 4096,
+          "h": 4096,
+          "colorSpace": ""
+        },
+        {
+          "slot": "metalnessMap",
+          "w": 4096,
+          "h": 4096,
+          "colorSpace": ""
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "external": [],
+  "checks": [
+    "Original GLB byte comparison",
+    "Original 4K maps and PBR values",
+    "Original mesh/index/vertex counts",
+    "Four view buttons",
+    "Drag and zoom",
+    "Offline local file"
+  ]
+}
