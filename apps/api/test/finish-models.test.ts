@@ -7,7 +7,11 @@ import type { Primitive } from '@gltf-transform/core'
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions'
 import { MeshoptDecoder } from 'meshoptimizer'
 import sharp from 'sharp'
-import { FRONT_ONLY, buildFinishModel } from '../src/modules/assets/finish-models.ts'
+import {
+  FRONT_ONLY,
+  PRESERVE_APPEARANCE,
+  buildFinishModel,
+} from '../src/modules/assets/finish-models.ts'
 
 let dir: string
 
@@ -121,6 +125,56 @@ afterAll(async () => {
 })
 
 describe('buildFinishModel', () => {
+  it('losslessly packs opted-in PBR assets without resizing images or removing normals', async () => {
+    const doc = new Document()
+    const buffer = doc.createBuffer()
+    const image = new Uint8Array(await png(190, 20, 10, 2048))
+    const texture = doc.createTexture().setMimeType('image/png').setImage(image)
+    const material = doc
+      .createMaterial('preserved')
+      .setExtras({ [PRESERVE_APPEARANCE]: true })
+      .setBaseColorTexture(texture)
+      .setNormalTexture(texture)
+      .setMetallicFactor(1)
+      .setRoughnessFactor(1)
+      .setDoubleSided(false)
+    const attr = (type: 'VEC3' | 'VEC2', array: Float32Array<ArrayBuffer>) =>
+      doc.createAccessor().setBuffer(buffer).setType(type).setArray(array)
+    const position = new Float32Array([0.1234567, 0, 0, 1, 0, 0, 0, 1, 0])
+    const normal = new Float32Array([0.12345, 0, 0.99235, 0, 0, 1, 0, 0, 1])
+    const uv = new Float32Array([0.123456, 0, 1, 0, 0, 1])
+    const primitive = doc
+      .createPrimitive()
+      .setMaterial(material)
+      .setAttribute('POSITION', attr('VEC3', position))
+      .setAttribute('NORMAL', attr('VEC3', normal))
+      .setAttribute('TEXCOORD_0', attr('VEC2', uv))
+    doc.createScene().addChild(doc.createNode().setMesh(doc.createMesh().addPrimitive(primitive)))
+    const source = path.join(dir, 'preserved.glb')
+    const target = path.join(dir, 'preserved-finish.glb')
+    await writeFile(source, await new NodeIO().writeBinary(doc))
+    const record = await buildFinishModel(source, target)
+    const io = new NodeIO()
+      .registerExtensions(ALL_EXTENSIONS)
+      .registerDependencies({ 'meshopt.decoder': MeshoptDecoder })
+    const result = await io.readBinary(new Uint8Array(await readFile(target)))
+    const out = result.getRoot().listMeshes()[0]!.listPrimitives()[0]!
+    expect(out.getAttribute('POSITION')!.getArray()).toEqual(position)
+    expect(out.getAttribute('NORMAL')!.getArray()).toEqual(normal)
+    expect(out.getAttribute('TEXCOORD_0')!.getArray()).toEqual(uv)
+    expect(result.getRoot().listTextures()[0]!.getImage()).toEqual(image)
+    expect(out.getMaterial()!.getRoughnessFactor()).toBe(1)
+    expect(out.getMaterial()!.getMetallicFactor()).toBe(1)
+    expect(out.getMaterial()!.getDoubleSided()).toBe(false)
+    expect(record.tool).toContain('lossless-preserved-pbr')
+    expect([
+      record.trianglesBefore,
+      record.trianglesAfter,
+      record.specks,
+      record.pairedTriangles,
+      record.driftM,
+    ]).toEqual([1, 1, 0, 0, 0])
+  })
   it('joins parts, flattens tiny patches and marks the two sides of SketchUp faces', async () => {
     const source = path.join(dir, 'model.glb')
     const target = path.join(dir, 'finish.glb')

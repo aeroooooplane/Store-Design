@@ -1,0 +1,97 @@
+{
+  "sourceSha256": "46ed38fb4e5a774e91e10264b20874a4c0a8584e655b5c680792c9b9e8700fef",
+  "sourceBytes": 22605008,
+  "finish": {
+    "tool": "@gltf-transform 4.5.1 + meshoptimizer 1.3.0 + sharp / lossless-preserved-pbr",
+    "sourceSha256": "33ca564006884f1fdfb968daecf564f30656e837786afaf112e141ed1e7aaca6",
+    "sha256": "77680abe44c9a073aaeaf75d4689c7fdcccb2f8fb7edc7aa9e2ba082d7960548",
+    "bytes": 13344172,
+    "sourceBytes": 22605036,
+    "trianglesBefore": 501846,
+    "trianglesAfter": 501846,
+    "drawsBefore": 1,
+    "drawsAfter": 1,
+    "specks": 0,
+    "pairedTriangles": 0,
+    "driftM": 0
+  },
+  "white": {
+    "tool": "@gltf-transform 4.5.1 + meshoptimizer 1.3.0",
+    "sourceSha256": "33ca564006884f1fdfb968daecf564f30656e837786afaf112e141ed1e7aaca6",
+    "sha256": "4af808e7f3bf4b63bb348cac9b433e2ee3f3bafbda476ec00118e6e4f8783a03",
+    "bytes": 139336,
+    "sourceBytes": 22605036,
+    "trianglesBefore": 501846,
+    "trianglesAfter": 39962,
+    "driftM": 0.0009
+  },
+  "exactFloatAttributes": true,
+  "sameTrianglesAndWinding": true,
+  "cyclicIndexRotations": 0,
+  "exactTextureBytesAndPbr": true,
+  "nodeTransformsUnchanged": true,
+  "appearance": [
+    {
+      "name": "tripo_material_7ac4d2d1-b9ec-4d7f-a6bd-1e487808fc53",
+      "color": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "roughness": 1,
+      "metallic": 1,
+      "doubleSided": false,
+      "alpha": "OPAQUE",
+      "alphaCutoff": 0.5,
+      "emissive": [
+        0,
+        0,
+        0
+      ],
+      "normalScale": 1,
+      "occlusion": 1,
+      "textures": [
+        {
+          "sha256": "86b5d36029ca67c3d2302da73fbcc5e98232b49b49c07e55586af75d3b7566e6",
+          "size": [
+            4096,
+            4096
+          ],
+          "texCoord": 0,
+          "min": null,
+          "mag": null,
+          "wrapS": 10497,
+          "wrapT": 10497
+        },
+        {
+          "sha256": "d4e7c64675fb1e24c8848601da0a963948548e85da6d4d0839697b840698a456",
+          "size": [
+            4096,
+            4096
+          ],
+          "texCoord": 0,
+          "min": null,
+          "mag": null,
+          "wrapS": 10497,
+          "wrapT": 10497
+        },
+        {
+          "sha256": "096336eec9d2ba905b4f1872d857066535d60991d942d681b88857aed8d179eb",
+          "size": [
+            4096,
+            4096
+          ],
+          "texCoord": 0,
+          "min": null,
+          "mag": null,
+          "wrapS": 10497,
+          "wrapT": 10497
+        },
+        null,
+        null
+      ]
+    }
+  ],
+  "productionPublished": false
+}

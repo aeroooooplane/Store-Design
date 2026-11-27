@@ -34,6 +34,7 @@ import type {
   Space,
 } from '@store/shared'
 import { finishModel } from './finish-model.ts'
+import { prepareModelTextures } from './prepare-textures.ts'
 import { loadRoomEnvironment } from './room-environment.ts'
 import { createRotateRing, placeRotateRing, rotationOnFloor } from './rotate-ring.ts'
 import { loadModel, loadSource } from './model-cache.ts'
@@ -955,6 +956,7 @@ export class WhiteScene {
    */
   private async prepare(object: THREE.Object3D): Promise<void> {
     try {
+      await prepareModelTextures(this.renderer, object, () => this.disposed)
       await this.renderer.compileAsync(object, this.camera, this.scene)
     } catch {
       // Compiling up front is an optimisation only; the first render compiles what is missing.
