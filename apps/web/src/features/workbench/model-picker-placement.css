@@ -1,14 +1,14 @@
 .model-row[aria-pressed='true'] {
-  background: #fff5cf;
-  border-color: #d9bd6c;
+  background: var(--accent-soft);
+  border-color: var(--brand);
 }
 
 .model-row[aria-pressed='true']:hover,
 .model-row[aria-pressed='true']:focus-visible {
-  background: #fff0b9;
-  border-color: #b79747;
+  background: var(--accent-soft);
+  border-color: var(--brand);
 }
 
 .model-placement-status {
-  color: #61470b;
+  color: var(--ink);
 }

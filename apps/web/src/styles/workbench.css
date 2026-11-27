@@ -1315,6 +1315,39 @@ ul.issues li.hint::before {
   color: var(--ink);
   font-weight: 600;
 }
+/* Four stable positions in every stage, independent of available panels. */
+.wb-tabs-main {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  height: 44px;
+  padding: 0;
+  gap: 0;
+}
+.wb-tabs-main button {
+  position: relative;
+  min-width: 0;
+  padding: 0 4px;
+  border: 0;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.wb-tabs-main button:hover:not(:disabled),
+.wb-tabs-main button[aria-selected='true'] {
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 500;
+}
+.wb-tabs-main button[aria-selected='true']::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 32px;
+  height: 3px;
+  border-radius: 2px 2px 0 0;
+  background: var(--ink);
+  transform: translateX(-50%);
+  content: '';
+}
 .wb-tab-panel {
   flex: 1;
   min-height: 0;
@@ -1483,12 +1516,14 @@ details.space-info-card {
   min-height: 32px;
 }
 .fixture-draw-button,
-.space-fixture-list button[aria-pressed='true'] {
-  border-color: #d8b74c;
-  background: #fff4cf;
+.fixture-draw-button:hover:not(:disabled),
+.space-fixture-list button[aria-pressed='true'],
+.space-fixture-list button[aria-pressed='true']:hover:not(:disabled) {
+  border-color: var(--brand);
+  background: var(--accent-soft);
 }
 .fixture-draw-button[aria-pressed='true'] {
-  background: #ffe598;
+  border-color: var(--ink);
 }
 
 /* Project bar above the three columns */
@@ -1609,7 +1644,8 @@ details.space-info-card {
   background: var(--surface);
   border-color: transparent;
 }
-.model-jump-cell[aria-current='true'] {
+.model-jump-cell[aria-current='true'],
+.model-jump-cell[aria-current='true']:hover:not(:disabled) {
   background: var(--accent-soft);
   border-color: var(--brand);
   color: var(--ink);
@@ -2532,15 +2568,6 @@ path.brand-face-eyes {
   }
 }
 
-/* Saved views share the left tabs and scroll within the existing panel. */
-.wb-tabs-with-cameras {
-  gap: 0;
-  padding-inline: 4px;
-}
-.wb-tabs-with-cameras button {
-  padding-inline: 6px;
-  white-space: nowrap;
-}
 .wb-tab-panel > .camera-panel {
   margin: 0;
   padding: 12px;

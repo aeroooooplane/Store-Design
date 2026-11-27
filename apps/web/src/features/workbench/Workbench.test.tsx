@@ -324,8 +324,8 @@ describe('Workbench', () => {
     )
     renderWorkbench(`?node=${nodeId}`)
 
-    fireEvent.click(await screen.findByRole('tab', { name: '空间信息' }))
-    const info = within(await screen.findByRole('tabpanel', { name: '空间信息' }))
+    fireEvent.click(await screen.findByRole('tab', { name: '空间' }))
+    const info = within(await screen.findByRole('tabpanel', { name: '空间' }))
     expect(await info.findByText('铺位形态')).toBeTruthy()
     expect(info.getByText(shopLabel)).toBeTruthy()
     fireEvent.click(await screen.findByRole('button', { name: '修改空间' }))
@@ -345,7 +345,7 @@ describe('Workbench', () => {
     })
 
     await waitFor(() => expect(screen.queryByTitle('空间画布')).toBeNull())
-    const updatedInfo = screen.getByRole('tabpanel', { name: '空间信息' })
+    const updatedInfo = screen.getByRole('tabpanel', { name: '空间' })
     expect(updatedInfo.textContent).toContain('3500 mm')
     expect(within(updatedInfo).getByText('边厅店')).toBeTruthy()
     expect(server.state.nodes).toHaveLength(3)
@@ -800,9 +800,9 @@ describe('Workbench', () => {
         .getAllByRole('tab')
         .map((tab) => tab.textContent)
     const editFixtures = await screen.findByRole('button', { name: '编辑空心隔板' })
-    expect(tabs()).toEqual(['历史', '空间信息'])
+    expect(tabs()).toEqual(['历史', '空间', '模型', '视角'])
     fireEvent.click(editFixtures)
-    expect(tabs()).toEqual(['历史', '空间信息'])
+    expect(tabs()).toEqual(['历史', '空间', '模型', '视角'])
     expect(screen.getByRole('button', { name: '画空心隔板' })).toBeTruthy()
     expect(container.querySelector('.model-picker')).toBeNull()
     const item = container.querySelector('[data-item-id="island_table-1"]') as Element
@@ -810,7 +810,7 @@ describe('Workbench', () => {
     fireEvent.pointerDown(item)
     fireEvent.keyDown(screen.getByLabelText(/平面画布/), { key: 'Delete' })
     expect(container.querySelector('[data-item-id="island_table-1"]')).toBe(item)
-    fireEvent.click(screen.getByRole('tab', { name: '空间信息' }))
+    fireEvent.click(screen.getByRole('tab', { name: '空间' }))
     expect(screen.getByRole('button', { name: '画隔板' })).toBeTruthy()
   })
 
@@ -820,13 +820,13 @@ describe('Workbench', () => {
 
     await screen.findByRole('heading', { name: '方案 A' }, { timeout: 5000 })
     const tab = (name: string) => screen.getByRole('tab', { name })
-    expect(tab('添加模型').getAttribute('aria-selected')).toBe('true')
+    expect(tab('模型').getAttribute('aria-selected')).toBe('true')
     expect(screen.getByRole('tab', { name: '历史' })).toBeTruthy()
     // The history tab is hidden, not unmounted.
     expect(screen.queryByRole('button', { name: '方案 A' })).toBeNull()
     fireEvent.click(tab('历史'))
     expect(screen.getByRole('button', { name: '方案 A' })).toBeTruthy()
-    fireEvent.click(tab('空间信息'))
+    fireEvent.click(tab('空间'))
     expect(screen.getByText('创建时间')).toBeTruthy()
     expect(screen.getByRole('group', { name: 'SI 风格' })).toBeTruthy()
   })
@@ -842,7 +842,7 @@ describe('Workbench', () => {
     )
     renderWorkbench('?node=' + P2)
     await screen.findByRole('region', { name: '渲染' })
-    fireEvent.click(screen.getByRole('tab', { name: '添加模型' }))
+    fireEvent.click(screen.getByRole('tab', { name: '模型' }))
     expect(screen.queryByRole('region', { name: '添加模型' })).toBeNull()
     fireEvent.click(screen.getByRole('button', { name: '返回方案添加模型' }))
     await screen.findByRole('heading', { name: '方案 A' })
@@ -862,11 +862,11 @@ describe('Workbench', () => {
     await screen.findByRole('heading', { name: '三维效果' })
     expect(screen.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       '历史',
-      '空间信息',
-      '添加模型',
+      '空间',
+      '模型',
       '视角',
     ])
-    expect(screen.getByRole('tab', { name: '添加模型' }).getAttribute('aria-selected')).toBe('true')
+    expect(screen.getByRole('tab', { name: '模型' }).getAttribute('aria-selected')).toBe('true')
     expect(screen.queryByRole('region', { name: '视角' })).toBeNull()
     expect(container.querySelectorAll('.camera-panel')).toHaveLength(1)
     expect(container.querySelector('.wb-right .camera-panel')).toBeNull()
@@ -874,7 +874,7 @@ describe('Workbench', () => {
     fireEvent.click(screen.getByRole('tab', { name: '视角' }))
     const panel = screen.getByRole('region', { name: '视角' })
     await within(panel).findByRole('button', { name: '查看视角 正面鸟瞰' })
-    fireEvent.click(screen.getByRole('tab', { name: '空间信息' }))
+    fireEvent.click(screen.getByRole('tab', { name: '空间' }))
     expect(screen.queryByRole('region', { name: '视角' })).toBeNull()
     fireEvent.click(screen.getByRole('tab', { name: '视角' }))
     expect(screen.getByRole('region', { name: '视角' })).toBe(panel)

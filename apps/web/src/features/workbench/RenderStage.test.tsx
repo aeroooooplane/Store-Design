@@ -228,12 +228,12 @@ describe('RenderStage', () => {
     const mainTabs = within(screen.getByRole('tablist', { name: '左栏' }))
     expect(mainTabs.getAllByRole('tab').map((tab) => tab.textContent)).toEqual([
       '历史',
-      '空间信息',
-      '添加模型',
+      '空间',
+      '模型',
       '视角',
     ])
     expect(document.querySelector('.wb-center .background-tools')).toBeNull()
-    for (const name of ['历史', '空间信息', '视角']) {
+    for (const name of ['历史', '空间', '视角']) {
       openBackground()
       expect(document.querySelector('.wb-left .background-tools')).toBeTruthy()
       expect(document.querySelector('.background-canvas')).toBeTruthy()
