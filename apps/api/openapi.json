@@ -2893,6 +2893,15 @@
                                       }
                                     ]
                                   },
+                                  "ceiling": {
+                                    "type": "string",
+                                    "enum": [
+                                      "film",
+                                      "linear",
+                                      "frame",
+                                      "none"
+                                    ]
+                                  },
                                   "obstacles": {
                                     "default": [],
                                     "maxItems": 100,
@@ -5586,6 +5595,15 @@
                           }
                         ]
                       },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -7200,6 +7218,15 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  ]
+                                },
+                                "ceiling": {
+                                  "type": "string",
+                                  "enum": [
+                                    "film",
+                                    "linear",
+                                    "frame",
+                                    "none"
                                   ]
                                 },
                                 "obstacles": {
@@ -9002,6 +9029,15 @@
                                 }
                               ]
                             },
+                            "ceiling": {
+                              "type": "string",
+                              "enum": [
+                                "film",
+                                "linear",
+                                "frame",
+                                "none"
+                              ]
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -10772,6 +10808,15 @@
                                 }
                               ]
                             },
+                            "ceiling": {
+                              "type": "string",
+                              "enum": [
+                                "film",
+                                "linear",
+                                "frame",
+                                "none"
+                              ]
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -12390,6 +12435,15 @@
                           }
                         ]
                       },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -13506,6 +13560,15 @@
                               "screenInset"
                             ]
                           }
+                        ]
+                      },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
                         ]
                       },
                       "obstacles": {
@@ -14777,6 +14840,15 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  ]
+                                },
+                                "ceiling": {
+                                  "type": "string",
+                                  "enum": [
+                                    "film",
+                                    "linear",
+                                    "frame",
+                                    "none"
                                   ]
                                 },
                                 "obstacles": {
@@ -16579,6 +16651,15 @@
                                 }
                               ]
                             },
+                            "ceiling": {
+                              "type": "string",
+                              "enum": [
+                                "film",
+                                "linear",
+                                "frame",
+                                "none"
+                              ]
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -18328,6 +18409,15 @@
                                   ],
                                   "additionalProperties": false
                                 }
+                              ]
+                            },
+                            "ceiling": {
+                              "type": "string",
+                              "enum": [
+                                "film",
+                                "linear",
+                                "frame",
+                                "none"
                               ]
                             },
                             "obstacles": {
@@ -27041,6 +27131,15 @@
                           }
                         ]
                       },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -28233,6 +28332,15 @@
                               ],
                               "additionalProperties": false
                             }
+                          ]
+                        },
+                        "ceiling": {
+                          "type": "string",
+                          "enum": [
+                            "film",
+                            "linear",
+                            "frame",
+                            "none"
                           ]
                         },
                         "obstacles": {
@@ -29825,6 +29933,15 @@
                               "screenInset"
                             ]
                           }
+                        ]
+                      },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
                         ]
                       },
                       "obstacles": {
@@ -36326,6 +36443,15 @@
                           }
                         ]
                       },
+                      "ceiling": {
+                        "type": "string",
+                        "enum": [
+                          "film",
+                          "linear",
+                          "frame",
+                          "none"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -37915,6 +38041,15 @@
                                       ],
                                       "additionalProperties": false
                                     }
+                                  ]
+                                },
+                                "ceiling": {
+                                  "type": "string",
+                                  "enum": [
+                                    "film",
+                                    "linear",
+                                    "frame",
+                                    "none"
                                   ]
                                 },
                                 "obstacles": {

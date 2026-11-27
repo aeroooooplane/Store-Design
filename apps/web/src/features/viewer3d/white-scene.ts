@@ -40,6 +40,7 @@ import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { buildFacade3d } from './facade-3d.ts'
+import { buildCeiling } from './ceiling-3d.ts'
 import { islandEdgingGeometry } from './island-platform.ts'
 import {
   disposeGeometry,
@@ -160,6 +161,7 @@ export class WhiteScene {
   private hideBoundaryWalls = false
   private readonly room = new THREE.Group()
   private readonly facade = new THREE.Group()
+  private readonly ceiling = new THREE.Group()
   private readonly props = new THREE.Group()
   /** 空心隔板: boxes in the wall material. */
   private readonly fixtures = new THREE.Group()
@@ -239,6 +241,7 @@ export class WhiteScene {
       this.sun.target,
       this.room,
       this.facade,
+      this.ceiling,
       this.fixtures,
       this.props,
       this.marks,
@@ -301,6 +304,14 @@ export class WhiteScene {
         ? buildFacade3d(space, siStyle, market)
         : null
     if (model) this.facade.add(model)
+    this.sceneChanged()
+  }
+
+  setCeiling(space: Space, shopType: ShopType, siStyle: SiStyle, visible: boolean) {
+    this.ceiling.children.forEach(disposeTree)
+    this.ceiling.clear()
+    if (visible) this.ceiling.add(buildCeiling(space, shopType, siStyle))
+    this.controls.maxPolarAngle = Math.PI * (visible ? 0.7 : 0.49)
     this.sceneChanged()
   }
 
@@ -841,6 +852,7 @@ export class WhiteScene {
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
     this.facade.children.forEach(disposeTree)
+    this.ceiling.children.forEach(disposeTree)
     this.roomWhite.dispose()
     this.boundaryMaterial.dispose()
     this.roomLooks.forEach(disposeRoomMaterials)

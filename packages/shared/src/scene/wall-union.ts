@@ -25,6 +25,21 @@ export function wallUnion(
   polygons: readonly (readonly Point[])[],
   exclude?: readonly Point[],
 ): Point[][] {
+  return regionBoundary(polygons, exclude ? [exclude] : [])
+}
+
+/** Cut boundary setbacks out of a simple room outline, including for re-entrant corners. */
+export function subtractPlanRegions(
+  outline: readonly Point[],
+  cuts: readonly (readonly Point[])[],
+) {
+  return regionBoundary([outline], cuts)
+}
+
+function regionBoundary(
+  polygons: readonly (readonly Point[])[],
+  exclusions: readonly (readonly Point[])[],
+): Point[][] {
   const rings = polygons
     .filter((p) => p.length >= 3 && polygonArea(p) > EPS * EPS)
     .map((ring) => ({
@@ -34,11 +49,17 @@ export function wallUnion(
       minZ: Math.min(...ring.map((p) => p[1])),
       maxZ: Math.max(...ring.map((p) => p[1])),
     }))
-  const segments: Edge[] = [...rings.map((r) => r.ring), ...(exclude ? [exclude] : [])].flatMap(
-    (ring) =>
-      edges(ring)
-        .filter(([a, b]) => distance(a, b) > EPS)
-        .map(([a, b]) => ({ a, b, cuts: [0, 1] })),
+  const masked = exclusions.map((ring) => ({
+    ring,
+    minX: Math.min(...ring.map((p) => p[0])),
+    maxX: Math.max(...ring.map((p) => p[0])),
+    minZ: Math.min(...ring.map((p) => p[1])),
+    maxZ: Math.max(...ring.map((p) => p[1])),
+  }))
+  const segments: Edge[] = [...rings.map((r) => r.ring), ...exclusions].flatMap((ring) =>
+    edges(ring)
+      .filter(([a, b]) => distance(a, b) > EPS)
+      .map(([a, b]) => ({ a, b, cuts: [0, 1] })),
   )
   const parameter = (p: Point, e: Edge) => {
     const r = sub(e.b, e.a),
@@ -77,16 +98,14 @@ export function wallUnion(
         cut(f, parameter(e.b, f))
       }
     }
+  const contains = (r: (typeof rings)[number], p: Point) =>
+    p[0] >= r.minX - EPS &&
+    p[0] <= r.maxX + EPS &&
+    p[1] >= r.minZ - EPS &&
+    p[1] <= r.maxZ + EPS &&
+    locatePoint(p, r.ring, EPS / 10) !== 'outside'
   const inside = (p: Point) =>
-    (!exclude || locatePoint(p, exclude, EPS / 10) === 'outside') &&
-    rings.some(
-      (r) =>
-        p[0] >= r.minX - EPS &&
-        p[0] <= r.maxX + EPS &&
-        p[1] >= r.minZ - EPS &&
-        p[1] <= r.maxZ + EPS &&
-        locatePoint(p, r.ring, EPS / 10) !== 'outside',
-    )
+    rings.some((r) => contains(r, p)) && !masked.some((r) => contains(r, p))
   const boundary = new Map<string, { a: Point; b: Point }>()
   // Intersections computed from two different edges can straddle a quantisation cell.
   // Snap nearby vertices to one representative before assigning boundary edge ids.
