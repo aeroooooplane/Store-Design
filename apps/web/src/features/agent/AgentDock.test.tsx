@@ -1,6 +1,7 @@
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import type { AgentAction, AgentMessage, AgentSession } from '@store/shared'
+import { AGENT_STREAM_MEDIA_TYPE } from '@store/shared'
+import type { AgentAction, AgentMessage, AgentSession, AgentStreamEvent } from '@store/shared'
 import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
 import { renderWithClient } from '../../test-utils/render.tsx'
 import { AgentDock, AgentSelectionProvider } from './AgentDock.tsx'
@@ -13,7 +14,9 @@ const AID = '55555555-5555-4555-8555-555555555555'
 const AT = '2026-10-12T04:00:00.000Z'
 
 /** In-memory stand-in for the AI overview and agent APIs. */
-function fakeApi(agentModel: string | null) {
+let fakeStream: { emit: (event: AgentStreamEvent) => void; finish: () => void } | undefined
+
+function fakeApi(agentModel: string | null, streaming = false) {
   const state = { sessions: [] as AgentSession[], messages: [] as AgentMessage[] }
   const message = (
     role: AgentMessage['role'],
@@ -79,7 +82,28 @@ function fakeApi(agentModel: string | null) {
         undoneAt: null,
         createdAt: AT,
       }
-      const reply = message('assistant', '已在后墙放了一张中岛桌。', [action])
+      const replyText = streaming ? '**布局建议**\n- 留出通道' : '已在后墙放了一张中岛桌。'
+      const reply = message('assistant', replyText, [action])
+      if (streaming) {
+        const stream = new ReadableStream<Uint8Array>({
+          start(controller) {
+            const encoder = new TextEncoder()
+            const emit = (event: AgentStreamEvent) => {
+              controller.enqueue(encoder.encode(JSON.stringify(event) + '\n'))
+            }
+            fakeStream = {
+              emit,
+              finish: () => {
+                state.messages.push(user, reply)
+                emit({ type: 'done', result: { userMessage: user, reply, currentNodeId: NEW } })
+                controller.close()
+              },
+            }
+            emit({ type: 'user', id: user.id })
+          },
+        })
+        return new Response(stream, { headers: { 'content-type': AGENT_STREAM_MEDIA_TYPE } })
+      }
       state.messages.push(user, reply)
       return json(200, { userMessage: user, reply, currentNodeId: NEW })
     }
@@ -109,6 +133,7 @@ function mount(onSelect: (id: string) => void) {
 describe('AgentDock', () => {
   afterEach(() => {
     cleanup()
+    fakeStream = undefined
     vi.unstubAllGlobals()
   })
 
@@ -138,6 +163,36 @@ describe('AgentDock', () => {
     await screen.findByText('已撤销')
     expect(calls.some((c) => c.path === `/api/v1/agent/actions/${AID}/undo`)).toBe(true)
     expect(screen.queryByRole('button', { name: '撤销' })).toBeNull()
+  })
+
+  it('pins the submitted prompt immediately and renders Markdown before the stream ends', async () => {
+    const { fetchMock } = fakeApi('deepseek-flash', true)
+    mount(vi.fn())
+    fireEvent.click(screen.getByRole('button', { name: '设计助理' }))
+    const input = await screen.findByLabelText<HTMLTextAreaElement>('给设计助理的话')
+    await waitFor(() => expect(input.disabled).toBe(false))
+    fireEvent.change(input, { target: { value: '帮我检查一下布局' } })
+    fireEvent.click(screen.getByRole('button', { name: '发送' }))
+    expect(screen.getByText('帮我检查一下布局').closest('.agent-prompt')).toBeTruthy()
+    await waitFor(() =>
+      expect(
+        fetchMock.mock.calls.some(
+          ([request]) => request.method === 'POST' && request.url.endsWith('/messages'),
+        ),
+      ).toBe(true),
+    )
+    const stream = fakeStream
+    if (!stream) throw new Error('缺少响应流')
+    stream.emit({ type: 'delta', round: 0, text: '**布局建议**\n- 留出通道' })
+    const bold = await screen.findByText('布局建议')
+    expect(bold.tagName).toBe('STRONG')
+    const bullet = await screen.findByText('留出通道')
+    expect(bullet.closest('li')?.parentElement?.tagName).toBe('UL')
+    expect(input.disabled).toBe(true)
+    stream.finish()
+    await waitFor(() => expect(input.disabled).toBe(false))
+    expect(screen.getAllByText('帮我检查一下布局')).toHaveLength(1)
+    expect(screen.getByText('布局建议').tagName).toBe('STRONG')
   })
 
   it('asks for a model before it can chat', async () => {

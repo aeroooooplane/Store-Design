@@ -1,7 +1,8 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useContext, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import type { KeyboardEvent, ReactNode } from 'react'
 import { X } from 'lucide-react'
 import { Link } from 'react-router'
+import { AGENT_MAX_TEXT } from '@store/shared'
 import type { AgentAction, AgentMessage, Asset } from '@store/shared'
 import { BrandFace } from '../../components/BrandFace.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
@@ -16,6 +17,7 @@ import {
   useSendMessage,
   useUndoAction,
 } from './queries.ts'
+import { AgentMarkdown } from './AgentMarkdown.tsx'
 import { AgentSelectionContext, useAgentSelection } from './selection.ts'
 
 const TOOL_LABELS: Record<string, string> = {
@@ -115,37 +117,76 @@ function AgentPanel({
   const [withPlan, setWithPlan] = useState(true)
   const listRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight
-  }, [messages.data, send.isPending])
+  const following = useRef(true)
+  const submitting = useRef(false)
+  const [pending, setPending] = useState<{
+    sessionId: string | null
+    userId: string | null
+    prompt: string
+    reply: string
+  } | null>(null)
+
+  useLayoutEffect(() => {
+    const list = listRef.current
+    if (list && following.current) list.scrollTop = list.scrollHeight
+  }, [messages.data, pending, sessionId])
+
+  function trackScroll() {
+    const list = listRef.current
+    if (list) following.current = list.scrollHeight - list.scrollTop - list.clientHeight < 24
+  }
 
   const agentModel = overview.data?.settings.agentModel ?? null
   // Only a vision model is shown the plan; the screenshot is kept with the message anyway.
   const canSee = overview.data?.models.find((m) => m.id === agentModel)?.vision ?? false
-  const busy = send.isPending || create.isPending
+  const busy = pending !== null
   const canSend = Boolean(agentModel) && !busy && text.trim().length > 0
 
   async function submit() {
     const trimmed = text.trim()
-    if (!trimmed || busy || !agentModel) return
-    let target = sessionId
-    if (!target) {
-      target = (await create.mutateAsync()).id
-      setChosen(target)
-      setFresh(false)
-    }
-    const planPng = withPlan && canSee ? await planScreenshot() : undefined
-    const reply = await send.mutateAsync({
-      sessionId: target,
-      input: {
-        text: trimmed,
-        ...(nodeId ? { nodeId } : {}),
-        ...(selection.ids.length ? { selectedItemIds: selection.ids } : {}),
-        ...(planPng ? { planPng } : {}),
-      },
-    })
+    if (!trimmed || submitting.current || !agentModel) return
+    submitting.current = true
+    following.current = true
+    send.reset()
+    create.reset()
+    setPending({ sessionId, userId: null, prompt: trimmed, reply: '' })
     setText('')
-    if (reply.currentNodeId && reply.currentNodeId !== nodeId) onSelect(reply.currentNodeId)
+    let accepted = false
+    try {
+      let target = sessionId
+      if (!target) {
+        target = (await create.mutateAsync()).id
+        setPending((current) => current && { ...current, sessionId: target })
+        setChosen(target)
+        setFresh(false)
+      }
+      const planPng = withPlan && canSee ? await planScreenshot() : undefined
+      const reply = await send.mutateAsync({
+        sessionId: target,
+        input: {
+          text: trimmed,
+          ...(nodeId ? { nodeId } : {}),
+          ...(selection.ids.length ? { selectedItemIds: selection.ids } : {}),
+          ...(planPng ? { planPng } : {}),
+        },
+        updates: {
+          onUser: (userId) => {
+            accepted = true
+            setPending((current) => current && { ...current, userId })
+          },
+          onText: (delta) => {
+            setPending((current) => current && { ...current, reply: current.reply + delta })
+          },
+        },
+      })
+      if (reply.currentNodeId && reply.currentNodeId !== nodeId) onSelect(reply.currentNodeId)
+    } catch (error) {
+      if (!accepted) setText(trimmed)
+      throw error
+    } finally {
+      setPending(null)
+      submitting.current = false
+    }
   }
   const trySubmit = () => {
     submit().catch(() => {
@@ -153,13 +194,18 @@ function AgentPanel({
     })
   }
   function onKeyDown(event: KeyboardEvent<HTMLTextAreaElement>) {
-    if (event.key === 'Enter' && !event.shiftKey) {
+    if (event.key === 'Enter' && !event.shiftKey && !event.nativeEvent.isComposing) {
       event.preventDefault()
       trySubmit()
     }
   }
 
-  const visible = (messages.data ?? []).filter((m) => m.role !== 'tool')
+  const live = pending && pending.sessionId === sessionId ? pending : null
+  const turns = groupTurns(messages.data ?? [])
+  if (live && !turns.some((turn) => turn.id === live.userId)) {
+    turns.push({ id: live.userId ?? 'sending', prompt: live.prompt, replies: [] })
+  }
+  const error = send.error ?? create.error ?? undo.error ?? messages.error
   return (
     <section className="agent-panel" aria-label="设计助理">
       <header className="agent-head">
@@ -169,7 +215,9 @@ function AgentPanel({
           <select
             aria-label="对话"
             value={sessionId ?? ''}
+            disabled={busy}
             onChange={(event) => {
+              following.current = true
               setChosen(event.target.value || null)
               setFresh(!event.target.value)
             }}
@@ -185,10 +233,11 @@ function AgentPanel({
         <button
           type="button"
           onClick={() => {
+            following.current = true
             setChosen(null)
             setFresh(true)
           }}
-          disabled={fresh || !sessionId}
+          disabled={busy || fresh || !sessionId}
         >
           新对话
         </button>
@@ -202,39 +251,62 @@ function AgentPanel({
           <X size={16} aria-hidden="true" />
         </button>
       </header>
-      <div className="agent-messages" ref={listRef}>
+      <div className="agent-messages" ref={listRef} onScroll={trackScroll}>
         {!agentModel && overview.data ? (
           <p className="hint">
             还没有可用的 Agent 模型，请先在 <Link to="/settings">设置</Link> 中配置模型密钥。
           </p>
         ) : null}
-        {visible.length === 0 && !messages.isLoading ? (
+        {turns.length === 0 && !messages.isLoading ? (
           <p className="hint">
             告诉我要怎么改，例如“在后墙放一张中岛桌”“生成三个方案”“检查一下布局”。每次修改都会生成新的历史节点，可以撤销。
           </p>
         ) : null}
-        {visible.map((m) => (
-          <Message
-            key={m.id}
-            message={m}
-            onSelect={onSelect}
-            onUndo={sessionId ? (actionId) => undo.mutate({ sessionId, actionId }) : undefined}
-            undoing={undo.isPending}
-          />
-        ))}
-        {busy ? (
-          <p className="hint agent-busy">
-            <BrandFace mood="think" size={22} />
-            助理正在处理…
-          </p>
-        ) : null}
-        <ErrorMessage error={send.error ?? create.error ?? undo.error ?? messages.error} />
+        {turns.map((turn, index) => {
+          const active = live && turn.id === (live.userId ?? 'sending') ? live : null
+          return (
+            <div className="agent-turn" key={turn.id}>
+              {turn.prompt !== null ? (
+                <div className="agent-prompt">
+                  <div className="agent-msg user agent-text">{turn.prompt}</div>
+                </div>
+              ) : null}
+              {active ? (
+                active.reply ? (
+                  <div className="agent-msg assistant" aria-busy="true">
+                    <AgentMarkdown text={active.reply} streaming />
+                  </div>
+                ) : (
+                  <p className="hint agent-busy" role="status">
+                    <BrandFace mood="think" size={22} />
+                    助理正在处理…
+                  </p>
+                )
+              ) : (
+                turn.replies.map((message) => (
+                  <Message
+                    key={message.id}
+                    message={message}
+                    onSelect={onSelect}
+                    onUndo={
+                      sessionId ? (actionId) => undo.mutate({ sessionId, actionId }) : undefined
+                    }
+                    undoing={undo.isPending || busy}
+                  />
+                ))
+              )}
+              {index === turns.length - 1 ? <ErrorMessage error={error} /> : null}
+            </div>
+          )
+        })}
+        {turns.length === 0 ? <ErrorMessage error={error} /> : null}
       </div>
       <div className="agent-compose">
         <textarea
           aria-label="给设计助理的话"
           placeholder="例如：把收银台挪到右墙中间"
           value={text}
+          maxLength={AGENT_MAX_TEXT}
           onChange={(event) => setText(event.target.value)}
           onKeyDown={onKeyDown}
           disabled={!agentModel || busy}
@@ -258,6 +330,20 @@ function AgentPanel({
   )
 }
 
+function groupTurns(messages: AgentMessage[]) {
+  const turns: { id: string; prompt: string | null; replies: AgentMessage[] }[] = []
+  for (const message of messages) {
+    if (message.role === 'user') {
+      turns.push({ id: message.id, prompt: message.content.text, replies: [] })
+    } else if (message.role === 'assistant' && (message.content.text || message.actions.length)) {
+      const turn = turns.at(-1)
+      if (turn) turn.replies.push(message)
+      else turns.push({ id: message.id, prompt: null, replies: [message] })
+    }
+  }
+  return turns
+}
+
 function Message({
   message,
   onSelect,
@@ -271,8 +357,8 @@ function Message({
 }) {
   const text = message.content.text
   return (
-    <div className={`agent-msg ${message.role}`}>
-      {text ? <div className="agent-text">{text}</div> : null}
+    <div className="agent-msg assistant">
+      {text ? <AgentMarkdown text={text} /> : null}
       {message.actions.length ? (
         <ul className="agent-actions">
           {message.actions.map((a) => (

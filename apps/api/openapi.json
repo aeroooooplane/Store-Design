@@ -41556,6 +41556,12 @@
                   ],
                   "additionalProperties": false
                 }
+              },
+              "application/x-ndjson": {
+                "schema": {
+                  "type": "string",
+                  "description": "逐行返回 JSON 事件：user、delta、done 或 error"
+                }
               }
             }
           },

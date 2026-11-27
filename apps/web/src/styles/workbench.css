@@ -2349,11 +2349,35 @@ path.brand-face-eyes {
 
 .agent-messages {
   flex: 1;
+  min-height: 0;
+  container-type: size;
+  overflow-anchor: none;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 12px;
   overflow: auto;
+}
+
+.agent-turn {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-turn:last-child {
+  min-height: 100cqh;
+}
+
+.agent-prompt {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-block: 4px;
+  background: var(--paper);
 }
 
 .agent-msg {
@@ -2365,7 +2389,8 @@ path.brand-face-eyes {
 }
 
 .agent-msg.user {
-  align-self: flex-end;
+  max-height: min(9rem, 35cqh);
+  overflow: auto;
   background: var(--accent-soft);
 }
 
@@ -2376,6 +2401,45 @@ path.brand-face-eyes {
 
 .agent-text {
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.agent-markdown {
+  overflow-wrap: anywhere;
+}
+
+.agent-markdown > * {
+  margin: 0;
+}
+
+.agent-markdown > * + * {
+  margin-top: 0.5em;
+}
+
+.agent-markdown :is(h3, h4, h5, h6) {
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.agent-markdown :is(ul, ol) {
+  padding-inline-start: 1.5em;
+}
+
+.agent-markdown code {
+  padding: 0.1em 0.25em;
+  border-radius: 3px;
+  background: var(--paper);
+}
+
+.agent-markdown pre {
+  overflow: auto;
+  padding: 0.5em;
+  border-radius: 4px;
+  background: var(--paper);
+}
+
+.agent-markdown pre code {
+  padding: 0;
 }
 
 .agent-actions {

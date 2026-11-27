@@ -1,7 +1,10 @@
+import { PassThrough } from 'node:stream'
+import type { FastifyReply } from 'fastify'
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod'
 import type { Database } from '@store/database'
 import {
+  AGENT_STREAM_MEDIA_TYPE,
   AgentActionSchema,
   AgentMessageSchema,
   AgentReplySchema,
@@ -10,7 +13,9 @@ import {
   AgentSessionSchema,
   ApiErrorSchema,
 } from '@store/shared'
+import type { AgentStreamEvent } from '@store/shared'
 import type { AppConfig } from '../../config/env.ts'
+import { AppError } from '../../lib/app-error.ts'
 import type { StorageRoots } from '../../lib/storage.ts'
 import * as service from './service.ts'
 
@@ -80,11 +85,70 @@ export const agentRoutes: FastifyPluginAsyncZod<{
         summary: '发一句话给设计助理；它可能调用工具修改项目，每次修改生成新节点',
         params: SessionParams,
         body: AgentSendSchema,
-        response: { 200: AgentReplySchema, ...errors, 402: ApiErrorSchema, 502: ApiErrorSchema },
+        response: {
+          200: {
+            content: {
+              'application/json': { schema: AgentReplySchema },
+              [AGENT_STREAM_MEDIA_TYPE]: {
+                schema: z.string().describe('逐行返回 JSON 事件：user、delta、done 或 error'),
+              },
+            },
+          },
+          ...errors,
+          402: ApiErrorSchema,
+          502: ApiErrorSchema,
+        },
       },
     },
-    async (request) =>
-      service.sendMessage(db, request.ctx, config, roots, request.params.sessionId, request.body),
+    async (request, reply) => {
+      const args = [db, request.ctx, config, roots, request.params.sessionId, request.body] as const
+      const acceptsStream = request.headers.accept
+        ?.split(',')
+        .some((value) => value.split(';')[0]?.trim() === AGENT_STREAM_MEDIA_TYPE)
+      if (!acceptsStream) return service.sendMessage(...args)
+
+      const stream = new PassThrough()
+      const write = (event: AgentStreamEvent) => {
+        if (!stream.destroyed) stream.write(JSON.stringify(event) + '\n')
+      }
+      let markStarted = () => {}
+      const started = new Promise<void>((resolve) => {
+        markStarted = resolve
+      })
+      const turn = service.sendMessage(...args, (event) => {
+        write(event)
+        markStarted()
+      })
+      // Before the user message is stored, errors still use the ordinary HTTP response.
+      await Promise.race([started, turn])
+      void turn.then(
+        (result) => {
+          write({ type: 'done', result })
+          stream.end()
+        },
+        (error: unknown) => {
+          if (!(error instanceof AppError)) request.log.error({ err: error }, 'agent turn failed')
+          write({
+            type: 'error',
+            error: {
+              code: error instanceof AppError ? error.code : 'INTERNAL',
+              message: error instanceof AppError ? error.message : '服务器内部错误',
+              requestId: request.id,
+              ...(error instanceof AppError && error.details !== undefined
+                ? { details: error.details }
+                : {}),
+            },
+          })
+          stream.end()
+        },
+      )
+      const streamReply: FastifyReply = reply
+      return streamReply
+        .header('Cache-Control', 'no-cache, no-transform')
+        .header('X-Accel-Buffering', 'no')
+        .type(AGENT_STREAM_MEDIA_TYPE + '; charset=utf-8')
+        .send(stream)
+    },
   )
 
   app.post(

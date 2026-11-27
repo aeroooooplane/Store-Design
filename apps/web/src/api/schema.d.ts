@@ -11149,6 +11149,7 @@ export interface paths {
                             };
                             currentNodeId: string | null;
                         };
+                        "application/x-ndjson": string;
                     };
                 };
                 /** @description Default Response */
