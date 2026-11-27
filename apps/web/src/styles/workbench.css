@@ -772,6 +772,165 @@ ul.issues li.hint::before {
 .viewer3d {
   position: relative;
 }
+.facade-card-body {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+
+.facade-editor form,
+.facade-editor-previews,
+.facade-editor-fields {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.facade-editor-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 1fr);
+  align-items: start;
+  gap: var(--space-3);
+}
+
+.facade-editor-previews section,
+.facade-fields {
+  margin: 0;
+  padding: var(--space-2);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.facade-editor-previews h3 {
+  margin: 0 0 var(--space-1);
+  font-size: 0.88rem;
+}
+
+.facade-position,
+.facade-elevation {
+  display: block;
+  width: 100%;
+  background: var(--field, #faf9f6);
+  border-radius: 6px;
+}
+
+.facade-position {
+  height: clamp(108px, 15vh, 168px);
+}
+
+.facade-elevation {
+  height: clamp(188px, 29vh, 315px);
+}
+
+.facade-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.facade-fields label {
+  display: grid;
+  align-content: start;
+  gap: var(--space-1);
+  color: var(--ink);
+  font-size: 0.8rem;
+}
+
+.facade-fields :is(input, select) {
+  min-width: 0;
+  width: 100%;
+}
+
+.facade-field-wide {
+  grid-column: 1 / -1;
+}
+
+.facade-position-boundary {
+  fill: #f3f1eb;
+  stroke: #8e8a81;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.facade-position-start {
+  fill: #906112;
+  stroke: #fffdfa;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.facade-position-entrance {
+  stroke: #3a785f;
+  stroke-width: 3px;
+  vector-effect: non-scaling-stroke;
+}
+
+.facade-plan-span {
+  stroke: #906112;
+  stroke-width: 2px;
+  stroke-dasharray: 7px 4px;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.facade-elevation-opening {
+  fill: #f1eee8;
+}
+
+.facade-elevation-dims path {
+  fill: none;
+  stroke: #868075;
+  stroke-width: 1px;
+  vector-effect: non-scaling-stroke;
+}
+
+.facade-elevation-dims text {
+  fill: var(--muted);
+}
+
+.facade-review-summary {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.facade-review {
+  background: #fff7e4;
+  color: #765113;
+  border: 1px solid #eed8a7;
+  border-radius: 8px;
+  padding: var(--space-2);
+  font-size: 0.83rem;
+}
+
+.facade-review ul {
+  margin: var(--space-1) 0 0;
+  padding-inline-start: 1.3em;
+}
+
+.facade-editor-actions {
+  margin: 0;
+}
+
+.facade-view-controls {
+  position: absolute;
+  z-index: 1;
+  right: var(--space-2);
+  top: var(--space-2);
+  display: flex;
+  gap: var(--space-1);
+}
+
+.facade-view-controls button {
+  background: var(--paper);
+}
+
+@media (max-width: 1050px) {
+  .facade-editor-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
 .viewer3d canvas {
   display: block;
   width: 100%;

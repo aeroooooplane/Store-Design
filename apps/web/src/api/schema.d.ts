@@ -814,6 +814,33 @@ export interface paths {
                                             number
                                         ];
                                     }[];
+                                    facade?: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                    };
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -1272,6 +1299,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -1450,6 +1504,33 @@ export interface paths {
                                             number
                                         ];
                                     }[];
+                                    facade?: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                    };
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -1703,6 +1784,33 @@ export interface paths {
                                         number
                                     ];
                                 }[];
+                                facade?: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    openingWidth: number;
+                                    clearHeight: number;
+                                    fasciaHeight: number;
+                                    screenWidth?: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                };
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -1945,6 +2053,33 @@ export interface paths {
                                         number
                                     ];
                                 }[];
+                                facade?: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    openingWidth: number;
+                                    clearHeight: number;
+                                    fasciaHeight: number;
+                                    screenWidth?: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                };
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -2167,6 +2302,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -2248,6 +2410,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -2359,6 +2548,33 @@ export interface paths {
                                             number
                                         ];
                                     }[];
+                                    facade?: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                    };
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -2610,6 +2826,33 @@ export interface paths {
                                         number
                                     ];
                                 }[];
+                                facade?: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    openingWidth: number;
+                                    clearHeight: number;
+                                    fasciaHeight: number;
+                                    screenWidth?: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                };
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -2856,6 +3099,33 @@ export interface paths {
                                         number
                                     ];
                                 }[];
+                                facade?: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    openingWidth: number;
+                                    clearHeight: number;
+                                    fasciaHeight: number;
+                                    screenWidth?: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                };
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -5402,6 +5672,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -5509,6 +5806,33 @@ export interface paths {
                                         number
                                     ];
                                 }[];
+                                facade?: {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    openingWidth: number;
+                                    clearHeight: number;
+                                    fasciaHeight: number;
+                                    screenWidth?: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                };
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -5710,6 +6034,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -7370,6 +7721,33 @@ export interface paths {
                                     number
                                 ];
                             }[];
+                            facade?: {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                openingWidth: number;
+                                clearHeight: number;
+                                fasciaHeight: number;
+                                screenWidth?: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                            };
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -7541,6 +7919,33 @@ export interface paths {
                                             number
                                         ];
                                     }[];
+                                    facade?: {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                    };
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */

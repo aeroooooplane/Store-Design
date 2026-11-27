@@ -610,6 +610,7 @@ export function PlanEditor({
                   }
                   onReady={onViewerReady}
                   look="material"
+                  facadeControls={!planMain}
                   siStyle={siStyle}
                   market={market}
                   initialView={remembered.current.pose}
