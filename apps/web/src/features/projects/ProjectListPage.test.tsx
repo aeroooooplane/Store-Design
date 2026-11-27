@@ -154,7 +154,7 @@ describe('ProjectListPage', () => {
     )
     const legacy = (await screen.findByText('南京德基')).closest('tr') as HTMLElement
     fireEvent.click(within(legacy).getByRole('link', { name: '打开' }))
-    const select = (await screen.findByRole('combobox', { name: '店铺类型' })) as HTMLSelectElement
+    const select = await screen.findByRole<HTMLSelectElement>('combobox', { name: '店铺类型' })
     expect(select.value).toBe('')
     fireEvent.change(select, { target: { value: 'exclusive' } })
     await waitFor(() => expect(select.value).toBe('exclusive'))
