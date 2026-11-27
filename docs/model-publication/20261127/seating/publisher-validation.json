@@ -1,0 +1,46 @@
+{
+  "resourceVersion": "models-20261127-seating",
+  "resourceLockPr": 305,
+  "planSha256": "f7355c2a78107ef36bec80c074577d0e52bc6bb35b4336752c62afd4ccb735ce",
+  "files": 11,
+  "allPublishedFileHashesMatch": true,
+  "finalManifestSha256": "b83c8e9fd57a2875ba80223c307522ac7916365d50a4cd28a6be996e538b1333",
+  "runtime": {
+    "asset": "asset-90000005",
+    "apiPid": 37564,
+    "database": "ok",
+    "webPid": 16516,
+    "elapsedSeconds": 87,
+    "watchPid": 56644,
+    "oldApiPid": 46928,
+    "main": "bd109f0df952045d14c341f271073e66e099d3b2",
+    "complete": "2026-11-27T08:21:06.0786766Z"
+  },
+  "comparison": {
+    "mode": "production",
+    "businessTables": 18,
+    "projects": 83,
+    "assetsBefore": 103,
+    "assetsAfter": 104,
+    "added": [
+      "asset-90000005"
+    ],
+    "oldAssetsUnchanged": true,
+    "existingFilesUnchanged": true
+  },
+  "stats": {
+    "before": "5a34fc50c62508398779307dc337e08ff336dd01e05571e2bdcbf15cae4931c9",
+    "after": "b83c8e9fd57a2875ba80223c307522ac7916365d50a4cd28a6be996e538b1333",
+    "assetRows": 102,
+    "assetEntriesPreserved": true,
+    "stats": {
+      "SI2": 37,
+      "matched": 33,
+      "furnishings": 48
+    }
+  },
+  "withdrawnDraft": {
+    "id": "asset-90000003",
+    "reason": "既有虚拟灯箱编号，最终使用90000005；旧包已禁止执行"
+  }
+}

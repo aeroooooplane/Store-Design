@@ -39,19 +39,19 @@ npm run review -- <输出目录> asset-2595882
 
 ## SI2.0 字母凳单张与坐凳缩略图
 
-`asset-90000003`从`asset-15903874`四件组合中保留未变形的`SketchUp_Instance_1`，完整凳体与软垫共2网格、576三角面。仅水平转正并移到底部中心，450×450×450mm，不缩放。源组合首张被压至421.875mm，因此不选它。保留原材质、两张贴图和源组合SKP，不生成独立SKP。
+`asset-90000005`从`asset-15903874`四件组合中保留未变形的`SketchUp_Instance_1`，完整凳体与软垫共2网格、576三角面。仅水平转正并移到底部中心，450×450×450mm，不缩放。源组合首张被压至421.875mm，因此不选它。保留原材质、两张贴图和源组合SKP，不生成独立SKP。
 
 所有工具现在支持与API一致的`RESOURCE_ROOT`（其下为`04_模型库`）。普通开发必须使用独立资源副本；新提取脚本会拒绝默认或共享资源根，且不会覆盖已有输出。先在副本manifest中登记目标条目，再执行：
 
 ```powershell
 $env:RESOURCE_ROOT = 'C:/隔离输出/资源库'
 node tools/su-convert/scripts/extract-letter-stool.mjs
-node tools/su-convert/scripts/compress-glb.mjs asset-90000003
+node tools/su-convert/scripts/compress-glb.mjs asset-90000005
 $env:SU_REVIEW_PORT = '5256'
-node tools/su-convert/scripts/render-glb-review.mjs 'C:/隔离输出/五向' asset-90000003
+node tools/su-convert/scripts/render-glb-review.mjs 'C:/隔离输出/五向' asset-90000005
 node tools/su-convert/scripts/render-seating-thumbnails.mjs 'C:/隔离输出/缩略图'
-pnpm catalog:white asset-90000003
-pnpm catalog:finish asset-90000003
+pnpm catalog:white asset-90000005
+pnpm catalog:finish asset-90000005
 # DATABASE_URL与STORAGE_ROOT也必须设置为隔离目录，再运行catalog:import。
 ```
 

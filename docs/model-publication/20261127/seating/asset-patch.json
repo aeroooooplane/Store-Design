@@ -1,11 +1,11 @@
 {
-  "id": "asset-90000003",
+  "id": "asset-90000005",
   "manifestBefore": null,
   "manifestAfter": {
-    "asset_id": "asset-90000003",
-    "folder": "软装道具/SI2.0/字母凳_单凳__asset-90000003",
-    "web_model": "软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型",
-    "preview": "软装道具/SI2.0/字母凳_单凳__asset-90000003/预览.png",
+    "asset_id": "asset-90000005",
+    "folder": "软装道具/SI2.0/字母凳_单凳__asset-90000005",
+    "web_model": "软装道具/SI2.0/字母凳_单凳__asset-90000005/网页模型",
+    "preview": "软装道具/SI2.0/字母凳_单凳__asset-90000005/预览.png",
     "n": 102,
     "si_family": "SI2.0",
     "standard_name": "字母凳",
@@ -30,11 +30,11 @@
     "plan_legend": null,
     "plan_legend_missing_reason": null,
     "type_name": "字母凳",
-    "product_image": "软装道具/SI2.0/字母凳_单凳__asset-90000003/效果图.png",
+    "product_image": "软装道具/SI2.0/字母凳_单凳__asset-90000005/效果图.png",
     "product_image_match": "exact",
     "plan_symbol": {
-      "svg": "软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.svg",
-      "png": "软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.png"
+      "svg": "软装道具/SI2.0/字母凳_单凳__asset-90000005/平面图.svg",
+      "png": "软装道具/SI2.0/字母凳_单凳__asset-90000005/平面图.png"
     },
     "category": "软装道具",
     "category_si": "SI2.0",
@@ -51,5 +51,5 @@
     "confidence": "high",
     "note": "由四张组合保留一只完整未变形450mm凳，属于可任意朝向的独立坐凳；五向复核后发布"
   },
-  "sourceManifestSha256": "cf41c66bbf8154adbd683aaa394f0a7ca28bcc0a0a8c60ea122ebbff20a94f04"
+  "retainedVirtualLightboxId": "asset-90000003"
 }

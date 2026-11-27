@@ -10,7 +10,7 @@ import {MeshoptDecoder} from 'meshoptimizer'
 import {readLibrary,webModelDirFor} from '../server/model-library-paths.mjs'
 
 const repo=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../..')
-const sourceId='asset-15903874',id='asset-90000003'
+const sourceId='asset-15903874',id='asset-90000005'
 const expected={w:.45,d:.45,h:.45}
 const expectedSourceSha='e73311a01e665cbf9f0e57b8e89aa7c6889b3a6ee8bdf82efc35356a019a76c6'
 const sha256=bytes=>createHash('sha256').update(bytes).digest('hex')

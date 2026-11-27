@@ -20,7 +20,7 @@ try{
  const page=await browser.newPage()
  await page.goto(`http://127.0.0.1:${port}/`)
  await page.evaluate(()=>{const s=document.createElement('script');s.type='importmap';s.textContent=JSON.stringify({imports:{three:'/node_modules/three/build/three.module.js'}});document.head.appendChild(s)})
- for(const id of ['asset-90000002','asset-569180','asset-90000003','asset-15903874']){
+ for(const id of ['asset-90000002','asset-569180','asset-90000005','asset-15903874']){
   const dir=library.webModels.get(id),conversion=JSON.parse(await readFile(path.join(dir,'conversion.json'),'utf8'))
   const bytes=(await readFile(path.join(dir,'model.glb'))).toString('base64')
   const result=await page.evaluate(async({id,bytes})=>{
@@ -41,7 +41,9 @@ try{
    scene.add(model)
    const box=new THREE.Box3().setFromObject(model,true),center=box.getCenter(new THREE.Vector3()),dims=box.getSize(new THREE.Vector3())
    const camera=new THREE.OrthographicCamera(-1,1,1,-1,.01,100)
-   camera.position.copy(center).add(new THREE.Vector3(1,1.05,1.4).normalize().multiplyScalar(5));camera.lookAt(center);camera.updateMatrixWorld()
+   // A higher group view keeps all four silhouettes separate at the 56×42 card size.
+   const viewDirection=id==='asset-569180'||id==='asset-15903874'?[1,6,1.4]:[1,1.05,1.4]
+   camera.position.copy(center).add(new THREE.Vector3(...viewDirection).normalize().multiplyScalar(5));camera.lookAt(center);camera.updateMatrixWorld()
    let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity
    for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){const p=new THREE.Vector3(x,y,z).applyMatrix4(camera.matrixWorldInverse);minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y)}
    const half=Math.max((maxY-minY)/2,(maxX-minX)/2/(4/3))*1.1,cx=(minX+maxX)/2,cy=(minY+maxY)/2
@@ -52,7 +54,7 @@ try{
    const png=renderer.domElement.toDataURL('image/png'),ctx=document.createElement('canvas').getContext('2d');ctx.canvas.width=640;ctx.canvas.height=480;ctx.drawImage(renderer.domElement,0,0)
    const alpha=ctx.getImageData(0,0,1,1).data[3]
    renderer.dispose();env.dispose()
-   return {id,png,dimensions:{w:dims.x,d:dims.z,h:dims.y},instances,grayThumbnailOnly:gray,cornerAlpha:alpha}
+   return {id,png,dimensions:{w:dims.x,d:dims.z,h:dims.y},instances,grayThumbnailOnly:gray,cornerAlpha:alpha,viewDirection}
   },{id,bytes})
   for(const key of ['w','d','h'])if(Math.abs(result.dimensions[key]-conversion.dimensions[key])>.001)throw Error(`${id}缩略图模型尺寸不一致`)
   if(result.cornerAlpha!==0||result.instances!==(id==='asset-569180'||id==='asset-15903874'?4:1))throw Error(`${id}背景或坐凳数量不正确`)
@@ -62,6 +64,6 @@ try{
  }
  // 单凳的平面真实外轮廓为450mm正方形，输出与SVG一致的透明PNG。
  const symbol=await page.evaluate(()=>{const c=document.createElement('canvas');c.width=450;c.height=450;const g=c.getContext('2d');g.strokeStyle='#333';g.lineWidth=2;g.strokeRect(1,1,448,448);return c.toDataURL('image/png')})
- await writeFile(path.join(out,'asset-90000003-plan.png'),Buffer.from(symbol.split(',')[1],'base64'))
+ await writeFile(path.join(out,'asset-90000005-plan.png'),Buffer.from(symbol.split(',')[1],'base64'))
  await writeFile(path.join(out,'render-results.json'),JSON.stringify(results,null,2)+'\n')
 }finally{await browser?.close();await server.close()}

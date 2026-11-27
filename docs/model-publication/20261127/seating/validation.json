@@ -1,5 +1,5 @@
 {
-  "id": "asset-90000003",
+  "id": "asset-90000005",
   "dimensionsMm": [
     450,
     450,
@@ -52,8 +52,8 @@
     "pairedTriangles": 576,
     "driftM": 0
   },
-  "fiveViews": "passed",
-  "catalogImport": "102 assets,75 GLB,62 white,75 finish; new asset imported; only two existing zero-extent warnings",
+  "fiveViews": "passed; final-number review at seating-models-20261127/review-final/asset-90000005.png",
+  "catalogImport": "正式及冷备副本导入后90000005为450mm seating；90000003仍为虚拟灯箱；持久化目录103→104",
   "thumbnailRender": [
     {
       "id": "asset-90000002",
@@ -78,7 +78,7 @@
       "cornerAlpha": 0
     },
     {
-      "id": "asset-90000003",
+      "id": "asset-90000005",
       "dimensions": {
         "w": 0.45000010032654136,
         "d": 0.45000010032654125,
@@ -86,7 +86,8 @@
       },
       "instances": 1,
       "grayThumbnailOnly": false,
-      "cornerAlpha": 0
+      "cornerAlpha": 0,
+      "sameGeometryFromDraft": true
     },
     {
       "id": "asset-15903874",
@@ -100,5 +101,6 @@
       "cornerAlpha": 0
     }
   ],
-  "formalPublished": false
+  "formalPublished": true,
+  "resourceVersion": "models-20261127-seating"
 }
