@@ -387,7 +387,7 @@ export function ceilingModel(space: Space, shop: ShopType, si: SiStyle) {
       })
     line(ring)
     for (const polygon of filmPanels(ring, si, box)) {
-      add(polygon, top, 0.022, 'film')
+      add(polygon, top, 0, 'film')
       line(polygon)
     }
     return { kind, parts, dots }

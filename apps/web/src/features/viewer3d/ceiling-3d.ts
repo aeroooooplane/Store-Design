@@ -6,6 +6,11 @@ import { ceilingModel } from './ceiling-geometry.ts'
 import type { CeilingFinish } from './ceiling-geometry.ts'
 import { prism } from './scene-geometry.ts'
 
+function membraneFace(polygon: readonly Point[], elevation: number) {
+  const shape = new THREE.Shape(polygon.map(([x, z]) => new THREE.Vector2(x, -z)))
+  return new THREE.ShapeGeometry(shape).rotateX(-Math.PI / 2).translate(0, elevation, 0)
+}
+
 /** Dark vertical lining closes the distance from the membrane to the recessed cap. */
 function filmLining(polygon: readonly Point[], bottom: number, height: number) {
   const positions: number[] = []
@@ -82,7 +87,10 @@ export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
       case 'track':
         return (materials[finish] = paint('#27282a'))
       case 'film':
-        return (materials[finish] = new THREE.MeshBasicMaterial({ color: '#fff5e7' }))
+        return (materials[finish] = new THREE.MeshBasicMaterial({
+          color: '#fff5e7',
+          side: THREE.DoubleSide,
+        }))
       case 'strip':
         return (materials[finish] = new THREE.MeshBasicMaterial({
           color: si === 'SI1.0' ? '#fff1dc' : '#fff7ec',
@@ -94,7 +102,9 @@ export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
   for (const part of parts) {
     const geometry = part.lining
       ? filmLining(part.polygon, part.bottom, part.thickness)
-      : prism(part.polygon, part.bottom, part.thickness, part.holes)
+      : part.finish === 'film'
+        ? membraneFace(part.polygon, part.bottom)
+        : prism(part.polygon, part.bottom, part.thickness, part.holes)
     const batch = batches.get(part.finish)
     if (batch) batch.push(geometry)
     else batches.set(part.finish, [geometry])

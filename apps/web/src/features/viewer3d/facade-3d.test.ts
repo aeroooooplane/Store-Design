@@ -18,6 +18,7 @@ const facade: Facade = {
 
 function meshes(space: Space, si: 'SI1.0' | 'SI2.0') {
   const root = buildFacade3d(space, si, 'domestic')!
+  root.updateMatrixWorld(true)
   const parts: Array<{ bounds: Box3; color: string }> = []
   root.traverse((node) => {
     if (node instanceof Mesh && node.material instanceof MeshStandardMaterial) {

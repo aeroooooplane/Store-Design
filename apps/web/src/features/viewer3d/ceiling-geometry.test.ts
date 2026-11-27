@@ -76,6 +76,10 @@ describe('SI ceilings', () => {
     const bounds = new Box3().setFromObject(slot)
     expect(bounds.min.y).toBeCloseTo(room.height)
     expect(bounds.max.y).toBeCloseTo(cap.bottom + cap.thickness)
+    const membrane = ceiling.children.find((mesh) => mesh.userData['ceilingFinish'] === 'film')!
+    const face = new Box3().setFromObject(membrane)
+    expect(face.min.y).toBeCloseTo(room.height)
+    expect(face.max.y).toBeCloseTo(room.height)
   })
 
   it('clips soft-film faces to the setbacks of an oblique concave boundary', () => {
