@@ -47,6 +47,7 @@ for (const file of [
   'render_stage.py',
   'stage_delivery.py',
   'display_tasks.py',
+  'agent_paused.py',
   'rules.py',
   'requirements.txt',
   'boldsite.json',

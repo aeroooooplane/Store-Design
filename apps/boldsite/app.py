@@ -27,6 +27,7 @@ from workbench import router as workbench
 from render_stage import router as render_stage
 from stage_delivery import router as stage_delivery
 from display_tasks import router as display_tasks
+from agent_paused import router as agent_paused
 
 FULL_WORKBENCH = (ROOT / "workbench-mode.txt").is_file()
 from storage import configured_database
@@ -62,6 +63,7 @@ if FULL_WORKBENCH:
     app.include_router(render_stage)
     app.include_router(stage_delivery)
     app.include_router(display_tasks)
+    app.include_router(agent_paused)
 app.add_middleware(ServicePrefix)
 app.include_router(projects)
 app.include_router(drawings)
