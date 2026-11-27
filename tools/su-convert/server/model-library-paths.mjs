@@ -6,9 +6,11 @@ import path from 'node:path'
 export const LIBRARY='资源库/04_模型库'
 
 export async function readLibrary(repo){
-  const text=await readFile(path.join(repo,LIBRARY,'manifest.json'),'utf8')
+  // Use the same RESOURCE_ROOT contract as catalog:white/finish/import for isolated builds.
+  const resource=process.env.RESOURCE_ROOT?path.resolve(repo,process.env.RESOURCE_ROOT):path.join(repo,'资源库')
+  const root=path.join(resource,'04_模型库')
+  const text=await readFile(path.join(root,'manifest.json'),'utf8')
   const manifest=JSON.parse(text.replace(/^\uFEFF/,''))
-  const root=path.join(repo,LIBRARY)
   return {
     root,
     manifest,

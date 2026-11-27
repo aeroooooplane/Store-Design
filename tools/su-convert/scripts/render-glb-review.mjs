@@ -19,14 +19,22 @@ const named=library.manifest
 const nameOf=new Map(named.assets.map(a=>[a.asset_id,`${a.standard_name} · ${a.variant}`]))
 
 await mkdir(output,{recursive:true})
-const server=await createServer({root:tool,logLevel:'error',server:{host:'127.0.0.1',port:5184,strictPort:true,fs:{allow:[repo]}}})
+const port=Number(process.env.SU_REVIEW_PORT||5184)
+if(!Number.isInteger(port)||port<1024||port>65535)throw Error('无效的 SU_REVIEW_PORT')
+const server=await createServer({root:tool,cacheDir:path.join(output,'.vite'),logLevel:'error',server:{host:'127.0.0.1',port,strictPort:true,fs:{allow:[repo,library.root]}}})
 let browser
 const rows=[]
 try{
   await server.listen()
   browser=await chromium.launch({channel:'msedge',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']})
   const page=await browser.newPage()
-  await page.goto('http://127.0.0.1:5184/')
+  await page.goto(`http://127.0.0.1:${port}/`)
+  // Addons may be served directly from a junction-backed node_modules directory.
+  await page.evaluate(()=>{
+    const map=document.createElement('script');map.type='importmap'
+    map.textContent=JSON.stringify({imports:{three:'/node_modules/three/build/three.module.js'}})
+    document.head.appendChild(map)
+  })
   for(const id of ids){
     const conversion=JSON.parse(await readFile(path.join(webModels.get(id),'conversion.json'),'utf8'))
     const url='/@fs/'+path.join(webModels.get(id),'model.glb').replaceAll('\\','/')
