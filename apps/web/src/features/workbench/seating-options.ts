@@ -4,14 +4,14 @@ import type { SiStyle } from '@store/shared'
 export const SEATING_NAMES: Record<string, string> = {
   'asset-90000002': '培训坐凳',
   'asset-569180': '培训坐凳组合',
-  'asset-90000003': '字母凳',
+  'asset-90000005': '字母凳',
   'asset-15903874': '字母凳组合',
   'asset-3356837': '双人沙发',
 }
 
 const SEATING_ORDER: Record<SiStyle, readonly string[]> = {
   'SI1.0': ['asset-90000002', 'asset-569180', 'asset-3356837'],
-  'SI2.0': ['asset-90000003', 'asset-15903874', 'asset-3356837'],
+  'SI2.0': ['asset-90000005', 'asset-15903874', 'asset-3356837'],
 }
 
 export function seatingOrder(id: string, si: SiStyle): number {

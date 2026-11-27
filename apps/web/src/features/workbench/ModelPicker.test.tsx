@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { CUSTOM_LOGO_ID, customLogoAsset } from '@store/shared'
+import { CUSTOM_LOGO_ID, customLogoAsset, wallArtAsset } from '@store/shared'
 import type { Asset, AssetCategory, Market, SiStyle } from '@store/shared'
 import { makeAsset } from '../../test-utils/factories.ts'
 import { ModelPicker, pickableSections } from './ModelPicker.tsx'
@@ -212,6 +212,7 @@ it.each([
   '坐凳在%s/%s按单凳、组合、沙发命名排序，保留尺寸和原目录',
   (si, market) => {
     const source = [
+      wallArtAsset(),
       asset('asset-3356837', '休闲沙发', '非标陈列', {
         name: '2米双人沙发',
         siFamily: '非标',
@@ -227,7 +228,7 @@ it.each([
         function: 'seating',
         footprint: { w: 1.301, d: 1.1, h: 0.45 },
       }),
-      asset('asset-90000003', '字母凳', '软装道具', {
+      asset('asset-90000005', '字母凳', '软装道具', {
         siFamily: 'SI2.0',
         function: 'seating',
         footprint: { w: 0.45, d: 0.45, h: 0.45 },
@@ -248,7 +249,7 @@ it.each([
             ['asset-3356837', '双人沙发'],
           ]
         : [
-            ['asset-90000003', '字母凳'],
+            ['asset-90000005', '字母凳'],
             ['asset-15903874', '字母凳组合'],
             ['asset-3356837', '双人沙发'],
           ],
@@ -257,6 +258,9 @@ it.each([
       seats.map((a) => source.find((s) => s.id === a.id)!.footprint),
     )
     expect(source).toEqual(before)
+    expect(
+      pickableSections(source, si, market).find((s) => s.key === 'lightbox')?.assets[0]?.name,
+    ).toBe('灯箱')
   },
 )
 
