@@ -774,6 +774,8 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    /** @enum {string} */
+                                    shopType?: "side_hall" | "island" | "zone";
                                     demand?: {
                                         /** @enum {number} */
                                         schemaVersion: 1;
@@ -1259,6 +1261,8 @@ export interface paths {
                         space?: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -1464,6 +1468,8 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    /** @enum {string} */
+                                    shopType?: "side_hall" | "island" | "zone";
                                     demand?: {
                                         /** @enum {number} */
                                         schemaVersion: 1;
@@ -1744,6 +1750,8 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                /** @enum {string} */
+                                shopType?: "side_hall" | "island" | "zone";
                                 demand?: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
@@ -2013,6 +2021,8 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                /** @enum {string} */
+                                shopType?: "side_hall" | "island" | "zone";
                                 demand?: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
@@ -2262,6 +2272,8 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -2370,6 +2382,8 @@ export interface paths {
                         previousSpace: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -2508,6 +2522,8 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    /** @enum {string} */
+                                    shopType?: "side_hall" | "island" | "zone";
                                     demand?: {
                                         /** @enum {number} */
                                         schemaVersion: 1;
@@ -2786,6 +2802,8 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                /** @enum {string} */
+                                shopType?: "side_hall" | "island" | "zone";
                                 demand?: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
@@ -3059,6 +3077,8 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                /** @enum {string} */
+                                shopType?: "side_hall" | "island" | "zone";
                                 demand?: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
@@ -5632,6 +5652,8 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -5766,6 +5788,8 @@ export interface paths {
                             space: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
+                                /** @enum {string} */
+                                shopType?: "side_hall" | "island" | "zone";
                                 demand?: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
@@ -5994,6 +6018,8 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -7681,6 +7707,8 @@ export interface paths {
                         space: {
                             /** @enum {number} */
                             schemaVersion: 1;
+                            /** @enum {string} */
+                            shopType?: "side_hall" | "island" | "zone";
                             demand?: {
                                 /** @enum {number} */
                                 schemaVersion: 1;
@@ -7879,6 +7907,8 @@ export interface paths {
                                 space: {
                                     /** @enum {number} */
                                     schemaVersion: 1;
+                                    /** @enum {string} */
+                                    shopType?: "side_hall" | "island" | "zone";
                                     demand?: {
                                         /** @enum {number} */
                                         schemaVersion: 1;
