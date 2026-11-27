@@ -547,6 +547,7 @@ export function RenderStage({
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
                   look="material"
+                  facadeControls={!editingBackground}
                   hideBoundaryWalls={editingBackground}
                   background={
                     selectedDraft ? selectedDraft.background : (selected?.camera.background ?? null)

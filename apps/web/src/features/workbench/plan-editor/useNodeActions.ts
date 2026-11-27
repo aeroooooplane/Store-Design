@@ -205,8 +205,14 @@ export function useNodeActions({
         .map((n) => client.fetchQuery(nodeQuery(n.id))),
     )
     const drafts = client.getQueryData<Draft[]>(workbenchKeys.drafts(baseNode.projectId)) ?? []
+    const originalFacade = JSON.stringify(SpaceSchema.parse(space).facade)
     const ofStyle = siblings
-      .filter((n) => nodeSiStyle(n, projectSi) === style)
+      .filter(
+        (n) =>
+          nodeSiStyle(n, projectSi) === style &&
+          JSON.stringify(n.space ? SpaceSchema.parse(n.space).facade : undefined) ===
+            originalFacade,
+      )
       .map((n) => ({
         ...n,
         layout: drafts.find((draft) => draft.baseNodeId === n.id)?.layout ?? n.layout,

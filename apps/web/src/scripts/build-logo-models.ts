@@ -790,4 +790,34 @@ async function updateCatalogue(
   }
 }
 
-await main()
+/** Emit the two official wordmarks for façade previews and metre-based logo clearance checks. */
+async function buildFacadeLogoArt() {
+  async function logo(file: string) {
+    const art = await artFromPdf(path.join(OFFICIAL, file), 4)
+    const box = bounds(art.paths)
+    const digits = (value: number) => Math.round(value * 100) / 100
+    const height = 1000
+    const scale = height / (box.maxY - box.minY)
+    const paths = art.paths.map((shape) => ({
+      d: shape.cmds
+        .map(
+          ([command, ...coords]) =>
+            command +
+            coords
+              .map((value, index) =>
+                digits((index % 2 ? box.maxY - value : value - box.minX) * scale),
+              )
+              .join(' '),
+        )
+        .join(''),
+      evenOdd: shape.evenOdd,
+    }))
+    return { height, width: digits((box.maxX - box.minX) * scale), paths }
+  }
+  const [domestic, overseas] = await Promise.all([logo('影石Insta360.ai'), logo('Insta360.ai')])
+  const file = path.join(ROOT, 'packages/shared/src/facade/logo-art.json')
+  await writeFile(file, JSON.stringify({ domestic, overseas }, null, 2) + '\n')
+}
+
+if (process.argv.includes('--facade-art')) await buildFacadeLogoArt()
+else await main()

@@ -34,6 +34,7 @@ import { RecognitionPanel } from '../recognition/RecognitionPanel.tsx'
 import { CurrentSpaceCard, ProjectCard, ProjectDetails } from './ProjectCard.tsx'
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
+import { FacadeCard, FacadeEditor } from '../facade/FacadeEditor.tsx'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
 import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
@@ -49,7 +50,7 @@ const Viewer3D = lazy(() =>
 )
 const NO_FLAGS: ReadonlySet<string> = new Set()
 
-type Panel = 'view' | 'new-space' | 'edit-space' | 'manual'
+type Panel = 'view' | 'new-space' | 'edit-space' | 'edit-facade' | 'manual'
 
 /** Where to land without an explicit choice: the draft's base, else the newest visible step. */
 export function defaultNodeId(nodes: NodeSummary[], draft: Draft | null): string | null {
@@ -141,7 +142,7 @@ export function Workbench({ project }: { project: Project }) {
     setPanel({ nodeId: selectedId, kind: 'new-space' })
   }
 
-  async function openEditSpace() {
+  async function openEditSpace(kind: 'edit-space' | 'edit-facade' = 'edit-space') {
     setOpeningSpace(true)
     setSpaceOpenError(false)
     try {
@@ -149,7 +150,7 @@ export function Workbench({ project }: { project: Project }) {
         setSpaceOpenError(true)
         return
       }
-      setPanel({ nodeId: selectedId, kind: 'edit-space' })
+      setPanel({ nodeId: selectedId, kind })
     } catch {
       setSpaceOpenError(true)
     } finally {
@@ -166,8 +167,8 @@ export function Workbench({ project }: { project: Project }) {
       ? `渲染节点的 SI（${shownSi}）在出图时已定；请回到方案节点切换。`
       : selectedId && !selected
         ? '节点读取完成后可切换 SI。'
-        : activePanel === 'edit-space'
-          ? '请完成当前空间的修改后再切换 SI。'
+        : activePanel === 'edit-space' || activePanel === 'edit-facade'
+          ? '请完成当前空间的设置后再切换 SI。'
           : null
   const updateProject = useUpdateProject()
   const [siBusy, setSiBusy] = useState(false)
@@ -203,6 +204,8 @@ export function Workbench({ project }: { project: Project }) {
 
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
   const cardSpaceData = selected?.space ?? null
+  const changingSpace =
+    openingSpace || activePanel === 'edit-space' || activePanel === 'edit-facade'
   const left = (
     <HistoryTree
       projectId={project.id}
@@ -285,13 +288,22 @@ export function Workbench({ project }: { project: Project }) {
                 !creatingSpace && (
                   <button
                     type="button"
-                    disabled={openingSpace || activePanel === 'edit-space'}
+                    disabled={changingSpace}
                     onClick={() => void openEditSpace()}
                   >
                     修改空间
                   </button>
                 )
               }
+            />
+          ),
+          facade: !creatingSpace && cardSpaceData && project.shopType === 'side_hall' && (
+            <FacadeCard
+              space={cardSpaceData}
+              siStyle={shownSi}
+              market={project.market}
+              onEdit={() => void openEditSpace('edit-facade')}
+              disabled={changingSpace}
             />
           ),
           details: <ProjectDetails project={project} siStyle={shownSi} />,
@@ -482,6 +494,24 @@ function NodePanel({
             project={project}
             nodeId={nodeId}
             space={space}
+            onClose={() => setPanel('view')}
+          />
+        }
+      />
+    )
+  }
+
+  if (panel === 'edit-facade' && project.shopType === 'side_hall') {
+    return (
+      <WorkbenchLayout
+        left={left}
+        center={
+          <FacadeEditor
+            space={space}
+            projectId={project.id}
+            nodeId={nodeId}
+            siStyle={nodeSiStyle(current, project.siStyle)}
+            market={project.market}
             onClose={() => setPanel('view')}
           />
         }
@@ -715,6 +745,8 @@ function StagePreview({
                   selectedId={null}
                   flaggedIds={NO_FLAGS}
                   look="material"
+                  facadeControls
+                  preferFacadeView
                   siStyle={nodeSiStyle(node, project.siStyle)}
                   initialView={remembered.current.pose}
                   onViewChange={(pose) => memory.update({ pose })}
