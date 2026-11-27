@@ -1,0 +1,189 @@
+{
+  "status": "isolated_review_candidate_not_published",
+  "source": {
+    "generator": "Tripo",
+    "bytes": 22605008,
+    "triangles": 501846,
+    "sha256": "46ed38fb4e5a774e91e10264b20874a4c0a8584e655b5c680792c9b9e8700fef",
+    "unchanged": true
+  },
+  "optimized": {
+    "before": {
+      "bytes": 22246732,
+      "sha256": "629c50e442fe1347744a05f72075ebad46d67ec3272d7b96a0934fcc48b81989",
+      "triangles": 548880,
+      "bounds": {
+        "min": [
+          -0.39881286621093753,
+          0,
+          -1.05
+        ],
+        "max": [
+          0.39881286621093753,
+          1.1192779541015625,
+          1.05
+        ]
+      }
+    },
+    "after": {
+      "bytes": 4129880,
+      "sha256": "cf2a137b50b94fa8b2ed9a6309f236cac424638714cfd54d716f095da7572c9d",
+      "triangles": 150643,
+      "bounds": {
+        "min": [
+          -0.39881160371809343,
+          7.257133537663663E-05,
+          -1.0494232177734377
+        ],
+        "max": [
+          0.3988116037180932,
+          1.1192694696802483,
+          1.05
+        ]
+      }
+    },
+    "operations": [
+      "weld",
+      "simplify ratio .25 error .0005",
+      "meshopt 16-bit position"
+    ],
+    "notes": [
+      "Lossy reduction is subject to visual review",
+      "Existing material textures retained",
+      "Display scale is provisional"
+    ]
+  },
+  "render": {
+    "dimensions": {
+      "w": 0.7976232074361866,
+      "d": 2.0994232177734378,
+      "h": 1.1191968983448717
+    },
+    "min": [
+      -0.39881160371809343,
+      7.257133537663663E-05,
+      -1.0494232177734377
+    ],
+    "max": [
+      0.3988116037180932,
+      1.1192694696802483,
+      1.05
+    ],
+    "triangles": 150643,
+    "vertices": 103866,
+    "meshes": 6,
+    "textures": [
+      {
+        "slot": "map",
+        "w": 2048,
+        "h": 2048,
+        "colorSpace": "srgb"
+      },
+      {
+        "slot": "normalMap",
+        "w": 2048,
+        "h": 2048,
+        "colorSpace": ""
+      },
+      {
+        "slot": "roughnessMap",
+        "w": 2048,
+        "h": 2048,
+        "colorSpace": ""
+      },
+      {
+        "slot": "metalnessMap",
+        "w": 2048,
+        "h": 2048,
+        "colorSpace": ""
+      },
+      {
+        "slot": "map",
+        "w": 2048,
+        "h": 700,
+        "colorSpace": "srgb"
+      },
+      {
+        "slot": "map",
+        "w": 512,
+        "h": 320,
+        "colorSpace": "srgb"
+      },
+      {
+        "slot": "map",
+        "w": 2048,
+        "h": 700,
+        "colorSpace": "srgb"
+      },
+      {
+        "slot": "map",
+        "w": 512,
+        "h": 320,
+        "colorSpace": "srgb"
+      },
+      {
+        "slot": "map",
+        "w": 512,
+        "h": 320,
+        "colorSpace": "srgb"
+      }
+    ],
+    "errors": []
+  },
+  "viewer": {
+    "pass": true,
+    "dimensions": [
+      0.7976232074361866,
+      1.1191968983448717,
+      2.0994232177734378
+    ],
+    "bounds": {
+      "min": [
+        -0.39881160371809343,
+        7.257133537663663E-05,
+        -1.0494232177734377
+      ],
+      "max": [
+        0.3988116037180932,
+        1.1192694696802483,
+        1.05
+      ]
+    },
+    "patches": [
+      "Insta360_left",
+      "93_tail_left",
+      "Insta360_right",
+      "93_tail_right",
+      "93_front"
+    ],
+    "errors": [],
+    "external": [],
+    "checks": [
+      "file URL offline load",
+      "four camera views",
+      "five decal visibility toggles",
+      "drag rotation",
+      "wheel zoom"
+    ]
+  },
+  "material": {
+    "normalScale": 0.3,
+    "roughness": 0.5,
+    "metalness": 0.2,
+    "generatedRoughnessMapRemoved": true
+  },
+  "checks": [
+    "pnpm check 1063 passed",
+    "pnpm format:check passed",
+    "node --check 3 scripts",
+    "wrong source rejected before output",
+    "existing output rejected",
+    "in-place overwrite rejected"
+  ],
+  "knownLimits": [
+    "AI body, mechanical details and some small graphics remain distorted",
+    "2100mm nominal overall display length has no measured reference",
+    "no independent SKP",
+    "not yet catalogued or published"
+  ]
+}
