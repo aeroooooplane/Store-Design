@@ -749,6 +749,14 @@ function StagePreview({
   const [opened, setOpened] = useState(mode === '3d')
   const layout = node.layout ?? EMPTY_LAYOUT
 
+  useEffect(() => {
+    if (opened || !('requestIdleCallback' in window)) return
+    const id = window.requestIdleCallback(
+      () => void import('../viewer3d/Viewer3D.tsx').catch(() => {}),
+    )
+    return () => window.cancelIdleCallback(id)
+  }, [opened])
+
   function show(next: 'plan' | '3d') {
     if (next === '3d') setOpened(true)
     memory.update({ view: { space: next } })

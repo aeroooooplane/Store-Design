@@ -261,6 +261,11 @@ export function Viewer3D({
     sceneRef.current?.setHandlers({ onSelect, onMove, onResize, onRotate, onFloorPlace })
   }, [onSelect, onMove, onResize, onRotate, onFloorPlace])
 
+  // Set the correct SI before building the room so the default SI's floor is never painted first.
+  useEffect(() => {
+    sceneRef.current?.setLook(look, siStyle)
+  }, [look, siStyle])
+
   useEffect(() => {
     // The view resets only when a different space is shown, not after every edit; the first
     // space opens at the view handed in, if any.
@@ -280,10 +285,6 @@ export function Viewer3D({
   useEffect(() => {
     sceneRef.current?.setFixtures(layout.fixtures ?? [], layout.items)
   }, [layout.fixtures, layout.items])
-
-  useEffect(() => {
-    sceneRef.current?.setLook(look, siStyle)
-  }, [look, siStyle])
 
   useEffect(() => {
     sceneRef.current?.setFacade(space, shopType, siStyle, market)

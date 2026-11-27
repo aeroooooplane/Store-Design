@@ -148,17 +148,24 @@ export function floorLayout(space: Space, shopType: ShopType): FloorLayout {
 }
 
 const TILES_PER_SIDE = 4
+const floorCanvases = new Map<string, HTMLCanvasElement>()
 
-/**
- * A 4 × 4 patch of tiles with joints, each tile a faint shade lighter or darker (fixed sequence,
- * so every render is the same), repeated over the floor. Floor UVs are plan metres (u = x,
- * v = −z), so the repeat sets the real tile size and the offset centres a tile on the origin.
- * Null where there is no 2D canvas (tests).
- */
-function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | null {
-  const [long, short] = spec.tile
-  const tw = layout.alongX ? long : short
-  const td = layout.alongX ? short : long
+/** The pixel pattern depends on the finish and axis. Viewer-specific tile origins use UVs. */
+function floorCanvas(spec: FloorSpec, tw: number, td: number): HTMLCanvasElement | null {
+  const key = JSON.stringify([
+    tw,
+    td,
+    spec.color,
+    spec.shade,
+    spec.joint,
+    spec.jointM,
+    spec.bond,
+    spec.chips,
+  ])
+  const cached = floorCanvases.get(key)
+  if (cached) return cached
+
+  const [long] = spec.tile
   const px = Math.min(400, 1600 / (TILES_PER_SIDE * long))
   const canvas = document.createElement('canvas')
   canvas.width = Math.round(TILES_PER_SIDE * tw * px)
@@ -193,6 +200,17 @@ function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | nul
       g.fill()
     }
   }
+  floorCanvases.set(key, canvas)
+  return canvas
+}
+
+/** Floor UVs are plan metres (u = x, v = −z); repeat and offset keep tiles at their SI size. */
+function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | null {
+  const [long, short] = spec.tile
+  const tw = layout.alongX ? long : short
+  const td = layout.alongX ? short : long
+  const canvas = floorCanvas(spec, tw, td)
+  if (!canvas) return null
   const texture = new THREE.CanvasTexture(canvas)
   texture.colorSpace = THREE.SRGBColorSpace
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping
@@ -224,10 +242,11 @@ export function roomMaterials(
   const floor = RENDER_LOOK.floors[floorKind(siStyle, shopType)]
   const wall = RENDER_LOOK.walls[siStyle]
   const partition = siStyle === 'SI1.0' ? RENDER_LOOK.partition : wall
-  const map = floorTexture(floor, floorLayout(space, shopType))
+  const layout = floorLayout(space, shopType)
+  const map = floorTexture(floor, layout)
   const whiteMap = floorTexture(
     { ...floor, color: '#f7f7f5', shade: 0, chips: false, joint: '#a3a39e' },
-    floorLayout(space, shopType),
+    layout,
   )
   return {
     floorWhite: new THREE.MeshStandardMaterial({

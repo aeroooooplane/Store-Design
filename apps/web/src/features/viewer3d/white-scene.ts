@@ -1,6 +1,5 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import {
   defaultCameras,
   facadeKind,
@@ -34,6 +33,7 @@ import type {
   Space,
 } from '@store/shared'
 import { finishModel } from './finish-model.ts'
+import { loadRoomEnvironment } from './room-environment.ts'
 import { createRotateRing, placeRotateRing, rotationOnFloor } from './rotate-ring.ts'
 import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
@@ -162,6 +162,7 @@ export class WhiteScene {
   private readonly room = new THREE.Group()
   private readonly facade = new THREE.Group()
   private readonly ceiling = new THREE.Group()
+  private ceilingSource: { space: Space; shop: ShopType; si: SiStyle } | null = null
   private readonly props = new THREE.Group()
   /** 空心隔板: boxes in the wall material. */
   private readonly fixtures = new THREE.Group()
@@ -195,6 +196,7 @@ export class WhiteScene {
   private displayLook: Look = 'white'
   private captureLook: Look | null = null
   private captureQueue: Promise<void> = Promise.resolve()
+  private readonly environmentReady: Promise<void>
   private siStyle: SiStyle = 'SI1.0'
   private shopType: ShopType = 'side_hall'
   private space: Space | null = null
@@ -227,10 +229,20 @@ export class WhiteScene {
     this.renderer.toneMappingExposure = 0.82
 
     this.scene.background = new THREE.Color(SCENE_BACKGROUND)
-    const pmrem = new THREE.PMREMGenerator(this.renderer)
-    this.scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture
-    pmrem.dispose()
     this.scene.environmentIntensity = 0.25
+    // Direct light can paint the first frame while the precomputed reflections load.
+    this.environmentReady = loadRoomEnvironment()
+      .then((texture) => {
+        if (this.disposed) {
+          texture.dispose()
+          return
+        }
+        this.scene.environment = texture
+        this.requestRender()
+      })
+      .catch(() => {
+        // Direct light remains usable if the static texture can't be fetched.
+      })
     this.scene.add(new THREE.HemisphereLight('#ffffff', '#7b7770', 1.1))
     this.sun.castShadow = true
     this.sun.shadow.mapSize.set(2048, 2048)
@@ -308,11 +320,27 @@ export class WhiteScene {
   }
 
   setCeiling(space: Space, shopType: ShopType, siStyle: SiStyle, visible: boolean) {
+    const source = this.ceilingSource
+    if (source && (source.space !== space || source.shop !== shopType || source.si !== siStyle)) {
+      this.disposeCeiling()
+      this.ceilingSource = null
+    }
+    if (visible && !this.ceilingSource) {
+      this.ceiling.add(buildCeiling(space, shopType, siStyle))
+      this.ceilingSource = { space, shop: shopType, si: siStyle }
+    }
+    this.ceiling.visible = visible
+    this.controls.maxPolarAngle = Math.PI * (visible ? 0.7 : 0.49)
+    // Ceiling previews don't cast shadows. Toggling only needs a redraw.
+    if (visible || source) this.requestRender()
+  }
+
+  private disposeCeiling() {
+    this.ceiling.traverse((object) => {
+      if (object instanceof THREE.InstancedMesh) object.dispose()
+    })
     this.ceiling.children.forEach(disposeTree)
     this.ceiling.clear()
-    if (visible) this.ceiling.add(buildCeiling(space, shopType, siStyle))
-    this.controls.maxPolarAngle = Math.PI * (visible ? 0.7 : 0.49)
-    this.sceneChanged()
   }
 
   setFacadeVisible(visible: boolean) {
@@ -672,6 +700,7 @@ export class WhiteScene {
       this.captureLook = look
       try {
         if (look !== this.look) this.applyLook(look)
+        await this.environmentReady
         await this.whenLoaded()
         return await this.shoot(views, width, height, backgrounds)
       } finally {
@@ -852,7 +881,7 @@ export class WhiteScene {
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
     this.facade.children.forEach(disposeTree)
-    this.ceiling.children.forEach(disposeTree)
+    this.disposeCeiling()
     this.roomWhite.dispose()
     this.boundaryMaterial.dispose()
     this.roomLooks.forEach(disposeRoomMaterials)
@@ -943,7 +972,7 @@ export class WhiteScene {
   private finished(url: string, prepared: boolean): Promise<THREE.Object3D> {
     let model = this.finishes.get(url)
     if (!model) {
-      model = loadSource(url).then((gltf) =>
+      model = Promise.all([loadSource(url), this.environmentReady]).then(([gltf]) =>
         finishModel(gltf, prepared, this.scene.environment, this.finishedMaterials, (material) =>
           this.frontSided(material),
         ),

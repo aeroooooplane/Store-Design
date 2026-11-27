@@ -2,12 +2,14 @@ import { describe, expect, it } from 'vitest'
 import {
   distanceToBoundary,
   effectiveCeiling,
+  polygonInsidePolygon,
   rectangleSpace,
   recommendedCeiling,
   SpaceSchema,
 } from '@store/shared'
 import type { Facade, Space } from '@store/shared'
 import { ceilingModel } from './ceiling-geometry.ts'
+import { buildCeiling } from './ceiling-3d.ts'
 
 const room = rectangleSpace(8, 6, 3.2)
 const fascia: Facade = {
@@ -78,6 +80,58 @@ describe('SI ceilings', () => {
         expect(distanceToBoundary(point, shape.boundary)).toBeGreaterThanOrEqual(0.1999),
       ),
     )
+  })
+
+  it('supports the island frame at four corners and reuses a full-height existing column', () => {
+    const posts = (space: Space) =>
+      ceilingModel(space, 'island', 'SI2.0').parts.filter(
+        (p) => p.finish === 'frame' && p.bottom === 0,
+      )
+    const parts = posts(room)
+    expect(parts).toHaveLength(4)
+    expect(
+      parts.every(
+        (p) => p.thickness === room.height && polygonInsidePolygon(p.polygon, room.boundary),
+      ),
+    ).toBe(true)
+    const existing: Space = {
+      ...room,
+      obstacles: [
+        {
+          kind: 'column',
+          polygon: [
+            [0, 0],
+            [0.2, 0],
+            [0.2, 0.2],
+            [0, 0.2],
+          ],
+          height: room.height,
+          label: null,
+        },
+      ],
+    }
+    expect(posts(existing)).toHaveLength(3)
+    expect(posts({ ...room, ceiling: 'none' })).toHaveLength(0)
+    expect(ceilingModel(room, 'side_hall', 'SI2.0').parts.some((p) => p.bottom === 0)).toBe(false)
+  })
+
+  it('keeps detailed outlines renderable and batches the ceiling by finish', () => {
+    const space: Space = {
+      ...room,
+      entrances: [],
+      boundary: Array.from({ length: 180 }, (_, i) => {
+        const t = (i * 2 * Math.PI) / 180
+        const radius = i % 2 === 0 ? 1 : 0.996
+        return [7 + 7 * radius * Math.cos(t), 5 + 5 * radius * Math.sin(t)]
+      }),
+    }
+    const model = ceilingModel(space, 'island', 'SI2.0')
+    const frame = model.parts.find((part) => part.finish === 'frame')
+    expect(frame?.holes?.length).toBeGreaterThan(0)
+    const supports = model.parts.filter((part) => part.finish === 'frame' && part.bottom === 0)
+    expect(supports).toHaveLength(4)
+    expect(model.parts.length).toBeGreaterThan(25)
+    expect(buildCeiling(space, 'island', 'SI2.0').children.length).toBeLessThanOrEqual(5)
   })
 
   it('lays out 1200 mm linear modules and leaves the island frame open', () => {
