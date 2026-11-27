@@ -822,6 +822,22 @@ describe('空心隔板', () => {
     expect(free.layout.fixtures?.[0]).toMatchObject({ cz: 0.34, d: 0.56 })
   })
 
+  it('turns in place without changing length, depth or height and can undo and redo', () => {
+    const base = editorReducer(state([cabinet]), {
+      type: 'addFixture',
+      rect: drawn,
+      space,
+      snap: true,
+    })
+    const turned = editorReducer(base, { type: 'turnFixture', id: 'partition-1', rotation: -234.6 })
+    expect(turned.layout.fixtures?.[0]).toEqual({ ...base.layout.fixtures?.[0], rotation: 125.4 })
+    const same = editorReducer(turned, { type: 'turnFixture', id: 'partition-1', rotation: 485.4 })
+    expect(same).toBe(turned)
+    const undone = editorReducer(turned, { type: 'undo' })
+    expect(undone.layout).toEqual(base.layout)
+    expect(editorReducer(undone, { type: 'redo' }).layout).toEqual(turned.layout)
+  })
+
   it('moves onto a cabinet edge, takes typed sizes, and is removed and undone', () => {
     let s = editorReducer(state([cabinet]), { type: 'addFixture', rect: drawn, space, snap: true })
     s = editorReducer(s, {

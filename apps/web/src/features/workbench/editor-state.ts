@@ -18,7 +18,7 @@ import {
   isDisplayPanel,
   embeddedSnap,
   defaultFixtureHeight,
-  fixtureRect,
+  fixtureSnapTargets,
   interiorPoint,
   itemMount,
   mountedWall,
@@ -30,7 +30,9 @@ import {
   changeLogoText,
   DEFAULT_LOGO_TEXT,
   nextFixtureId,
+  normalizeRotation,
   rotatedFootprint,
+  snapFixturePosition,
   snapFixtureRect,
   turnItem,
   wallMountSnap,
@@ -141,6 +143,7 @@ export type EditorAction =
       snapTo?: Space | null | undefined
     }
   | { type: 'resizeFixture'; id: string; rect: Rect }
+  | { type: 'turnFixture'; id: string; rotation: number }
   /** Size, position or height typed into the properties panel. */
   | {
       type: 'updateFixture'
@@ -341,10 +344,6 @@ function mountAs(
 
 const withFixtures = (layout: Layout, fixtures: Fixture[]): Layout =>
   fixtures.length ? { ...layout, fixtures } : { ...layout, fixtures: undefined }
-
-/** The smaller non-zero of two edge shifts (0 when neither edge snapped). */
-const nearestShift = (a: number, b: number) =>
-  a === 0 ? b : b === 0 ? a : Math.abs(a) <= Math.abs(b) ? a : b
 
 function changeFixture(
   state: EditorState,
@@ -818,10 +817,14 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           let cz = snap(action.cz)
           if (action.snapTo) {
             // Whichever edge comes near a wall or cabinet pulls the whole box onto it.
-            const moved = fixtureRect({ ...f, cx, cz })
-            const stuck = snapFixtureRect(moved, action.snapTo, state.layout.items)
-            cx = roundM(cx + nearestShift(stuck.minX - moved.minX, stuck.maxX - moved.maxX))
-            cz = roundM(cz + nearestShift(stuck.minZ - moved.minZ, stuck.maxZ - moved.maxZ))
+            const targets = fixtureSnapTargets(
+              action.snapTo,
+              'island',
+              state.layout.items,
+              state.layout.fixtures?.filter((fixture) => fixture.id !== f.id) ?? [],
+              true,
+            )
+            ;[cx, cz] = snapFixturePosition({ ...f, cx, cz }, targets)
           }
           return cx === f.cx && cz === f.cz ? f : { ...f, cx, cz }
         },
@@ -845,6 +848,16 @@ export function editorReducer(state: EditorState, action: EditorAction): EditorS
           const cz = roundM((minZ + maxZ) / 2)
           return w === f.w && d === f.d && cx === f.cx && cz === f.cz ? f : { ...f, w, d, cx, cz }
         },
+        null,
+      )
+    }
+    case 'turnFixture': {
+      if (!Number.isFinite(action.rotation)) return state
+      const rotation = normalizeRotation(action.rotation)
+      return changeFixture(
+        state,
+        action.id,
+        (fixture) => (rotation === (fixture.rotation ?? 0) ? fixture : { ...fixture, rotation }),
         null,
       )
     }

@@ -1,11 +1,17 @@
 import { describe, expect, it } from 'vitest'
+import { polygonArea, polygonIntersectionArea, rectCorners } from '../geometry/index.ts'
+import { turnPoint } from '../geometry/obb.ts'
 import { LayoutSchema, validateLayout } from '../schemas/layout.ts'
 import type { Fixture, LayoutItem } from '../schemas/layout.ts'
 import { rectangleSpace } from '../schemas/space.ts'
 import {
   defaultFixtureHeight,
   fixtureRect,
+  fixtureCorners,
   fixtureSolids,
+  fixtureStraightRect,
+  previewFixtureEdgeResize,
+  snapFixturePosition,
   nextFixtureId,
   snapFixtureRect,
   fixtureSnapTargets,
@@ -84,6 +90,51 @@ describe('interactive partition snapping', () => {
   })
 })
 
+describe('rotated partition geometry', () => {
+  const turned = partition({ cz: 2, rotation: 45 })
+  const world = (x: number, z: number): [number, number] => {
+    const [dx, dz] = turnPoint(x, z, 45)
+    return [turned.cx + dx, turned.cz + dz]
+  }
+  const guide = { a: world(-1.5, 0.51), b: world(1.5, 0.51) }
+
+  it('snaps the dragged edge parallel to a guide and keeps the opposite edge anchored', () => {
+    const preview = previewFixtureEdgeResize(turned, 'maxZ', world(0, 0.3), world(0, 0.47), [guide])
+    expect(preview.rotation).toBe(45)
+    expect(preview.valid).toBe(true)
+    expect(preview.guides[0]?.a[1]).toBeCloseTo(guide.a[1])
+    expect(preview.rect.maxZ - preview.rect.minZ).toBeCloseTo(0.81)
+    const resized = fixtureCorners({
+      ...turned,
+      d: 0.81,
+      cx: (preview.rect.minX + preview.rect.maxX) / 2,
+      cz: (preview.rect.minZ + preview.rect.maxZ) / 2,
+    })
+    expect(resized[0][0]).toBeCloseTo(fixtureCorners(turned)[0][0])
+    expect(resized[0][1]).toBeCloseTo(fixtureCorners(turned)[0][1])
+    const free = previewFixtureEdgeResize(turned, 'maxZ', world(0, 0.3), world(0, 0.409), [])
+    expect(free.rect.maxZ - free.rect.minZ).toBeCloseTo(0.71)
+  })
+
+  it('snaps new drawings to a turned corner and moves by actual faces', () => {
+    const targets = fixtureSnapTargets(space, 'side_hall', [], [turned])
+    const [x, z] = fixtureCorners(turned)[0]
+    const drawing = previewDrawnFixture([x + 0.03, z + 0.04], [5, 3.5], targets)
+    expect(drawing.rect).toMatchObject({ minX: x, minZ: z })
+    const [cx, cz] = world(0, 0.15)
+    const [sx, sz] = snapFixturePosition({ ...turned, cx, cz }, [guide])
+    const [expectedX, expectedZ] = world(0, 0.21)
+    expect(Math.abs(sx - expectedX)).toBeLessThan(0.001)
+    expect(Math.abs(sz - expectedZ)).toBeLessThan(0.001)
+    expect(fixtureStraightRect({ ...turned, rotation: 90 })).toEqual({
+      minX: 2.7,
+      maxX: 3.3,
+      minZ: 0.5,
+      maxZ: 3.5,
+    })
+  })
+})
+
 describe('snapFixtureRect', () => {
   it('sticks drawn edges to the back wall and to the cabinet front', () => {
     const drawn = { minX: 1.25, maxX: 4.75, minZ: 0.06, maxZ: 0.62 }
@@ -129,6 +180,17 @@ describe('partition checks', () => {
     expect(found([], [partition({ cx: 5.5 })])).toEqual([['fixture_outside_boundary', 'warning']])
   })
 
+  it('checks the turned footprint instead of its enclosing rectangle', () => {
+    const turned = partition({ cz: 2, rotation: 45, d: 0.4 })
+    const away = item('away', { function: 'island_table', cx: 3.9, cz: 1.3, w: 0.2, d: 0.2 })
+    expect(found([away], [turned])).toEqual([])
+    expect(found([island], [turned])).toContainEqual(['fixture_overlaps_item', 'warning'])
+    expect(found([], [{ ...turned, cz: 0.6 }])).toContainEqual([
+      'fixture_outside_boundary',
+      'warning',
+    ])
+  })
+
   it('keeps old layouts without partitions as they were', () => {
     expect(LayoutSchema.parse({ schemaVersion: 3, items: [] }).fixtures).toBeUndefined()
   })
@@ -150,6 +212,22 @@ describe('fixtureSolids', () => {
       [1.8, 4.2, 2.4, 3],
       [4.2, 4.75, 0, 3],
     ])
+  })
+
+  it('keeps an exact cabinet niche in an angled partition', () => {
+    const turned = partition({ cz: 2, w: 3, d: 0.8, h: 3, rotation: 35 })
+    const crossing = item('cabinet', { cx: 3.4, cz: 2.15, w: 0.9, d: 0.8 })
+    const cut = rectCorners(fixtureRect(crossing))
+    const solids = fixtureSolids(turned, [crossing])
+    const removed = polygonIntersectionArea(fixtureCorners(turned), cut)
+    expect(removed).toBeGreaterThan(0)
+    expect(solids.some((solid) => solid.bottom === crossing.h)).toBe(true)
+    const volume = solids.reduce((sum, solid) => {
+      const polygon = solid.polygon ?? rectCorners(solid.rect)
+      if (solid.bottom === 0) expect(polygonIntersectionArea(polygon, cut)).toBeCloseTo(0, 6)
+      return sum + polygonArea(polygon) * (solid.top - solid.bottom)
+    }, 0)
+    expect(volume).toBeCloseTo(turned.w * turned.d * turned.h - removed * crossing.h, 6)
   })
 
   it('is one block without cabinets, and nothing over a cabinet as tall as the box', () => {

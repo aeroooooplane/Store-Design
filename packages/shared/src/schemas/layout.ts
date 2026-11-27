@@ -131,7 +131,7 @@ export const MAX_FIXTURES = 50
 
 /**
  * A hard-finish piece drawn on the plan (硬装构件). For now only 空心隔板: a box built around
- * accessory cabinets, a stop-gap until cabinets can sit inside walls. Axis-aligned, by centre.
+ * accessory cabinets. Width and depth are local dimensions before rotation about the centre.
  */
 export const FixtureSchema = z.object({
   id: z.string().trim().min(1).max(64),
@@ -141,6 +141,8 @@ export const FixtureSchema = z.object({
   w: SizeSchema,
   d: SizeSchema,
   h: SizeSchema,
+  /** Plan angle in degrees. Existing partitions without an angle are at 0°. */
+  rotation: RotationSchema.optional(),
 })
 export type Fixture = z.output<typeof FixtureSchema>
 

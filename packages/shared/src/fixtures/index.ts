@@ -1,5 +1,6 @@
-import { edges } from '../geometry/polygon.ts'
-import { rectFromCenter, rectInsidePolygon, rectsOverlap } from '../geometry/rect.ts'
+import { cross, edges, polygonArea } from '../geometry/polygon.ts'
+import { obbCorners, obbInsidePolygon, obbsOverlap, placedBox, turnPoint } from '../geometry/obb.ts'
+import { rectFromCenter, rectsOverlap } from '../geometry/rect.ts'
 import type { Point, Rect } from '../geometry/types.ts'
 import type { ShopType } from '../enums.ts'
 import { wallSegments } from '../scene/walls.ts'
@@ -30,6 +31,25 @@ export function isAccessoryCabinet(item: Pick<LayoutItem, 'function' | 'mount'>)
 
 export const fixtureRect = (f: Pick<Fixture, 'cx' | 'cz' | 'w' | 'd'>): Rect =>
   rectFromCenter(f.cx, f.cz, f.w, f.d)
+
+type FixtureFootprint = Pick<Fixture, 'cx' | 'cz' | 'w' | 'd' | 'rotation'>
+const fixtureBox = (f: FixtureFootprint) => ({
+  cx: f.cx,
+  cz: f.cz,
+  w: f.w,
+  d: f.d,
+  angle: f.rotation ?? 0,
+})
+
+export const fixtureCorners = (f: FixtureFootprint) => obbCorners(fixtureBox(f))
+
+/** The real axis-aligned footprint when the partition has horizontal and vertical faces. */
+export function fixtureStraightRect(f: FixtureFootprint): Rect | undefined {
+  const angle = f.rotation ?? 0
+  if (angle % 180 === 0) return fixtureRect(f)
+  if (angle % 90 === 0) return rectFromCenter(f.cx, f.cz, f.d, f.w)
+  return undefined
+}
 
 interface Line {
   at: number
@@ -90,13 +110,8 @@ interface FixtureSnapTarget {
   b: Point
 }
 
-function outlineTargets(rect: Rect): FixtureSnapTarget[] {
-  return edges([
-    [rect.minX, rect.minZ],
-    [rect.maxX, rect.minZ],
-    [rect.maxX, rect.maxZ],
-    [rect.minX, rect.maxZ],
-  ]).map(([a, b]) => ({ a, b }))
+function outlineTargets(corners: readonly Point[]): FixtureSnapTarget[] {
+  return edges(corners).map(([a, b]) => ({ a, b }))
 }
 
 /** Draw to real walls, cabinets and partitions. Resizing also uses the open boundary lines. */
@@ -121,13 +136,15 @@ export function fixtureSnapTargets(
     ...openings,
     ...items
       .filter(isAccessoryCabinet)
-      .flatMap((item) => outlineTargets(rectFromCenter(item.cx, item.cz, item.w, item.d))),
-    ...fixtures.flatMap((fixture) => outlineTargets(fixtureRect(fixture))),
+      .flatMap((item) => outlineTargets(obbCorners(placedBox(item)))),
+    ...fixtures.flatMap((fixture) => outlineTargets(fixtureCorners(fixture))),
   ]
 }
 
 export interface FixtureDragPreview {
+  // Place the rectangle at its world centre, with these dimensions and this local angle.
   rect: Rect
+  rotation?: number
   guides: FixtureSnapTarget[]
   valid: boolean
 }
@@ -255,6 +272,67 @@ export function previewResizedFixture(
   return { rect, guides: guide ? [guide] : [], valid: hasFixtureSize(rect) }
 }
 
+function fixtureTargetsLocal(fixture: FixtureFootprint, targets: readonly FixtureSnapTarget[]) {
+  const angle = fixture.rotation ?? 0
+  const local = ([x, z]: Point) => turnPoint(x - fixture.cx, z - fixture.cz, -angle)
+  return targets.map(({ a, b }) => ({ a: local(a), b: local(b) }))
+}
+
+/** Resize along the selected side's normal, with the opposite side anchored in the plan. */
+export function previewFixtureEdgeResize(
+  fixture: FixtureFootprint,
+  edge: FixtureEdge,
+  start: Point,
+  end: Point,
+  targets: readonly FixtureSnapTarget[],
+): FixtureDragPreview {
+  const rotation = fixture.rotation ?? 0
+  const axis = edge.endsWith('X') ? 0 : 1
+  const delta = turnPoint(end[0] - start[0], end[1] - start[1], -rotation)[axis]
+  if (!rotation) return previewResizedFixture(fixtureRect(fixture), edge, delta, targets)
+  const local = previewResizedFixture(
+    rectFromCenter(0, 0, fixture.w, fixture.d),
+    edge,
+    delta,
+    fixtureTargetsLocal(fixture, targets),
+  )
+  const { minX, maxX, minZ, maxZ } = local.rect
+  const world = ([x, z]: Point): Point => {
+    const [dx, dz] = turnPoint(x, z, rotation)
+    return [fixture.cx + dx, fixture.cz + dz]
+  }
+  const [cx, cz] = world([(minX + maxX) / 2, (minZ + maxZ) / 2])
+  return {
+    rect: rectFromCenter(cx, cz, maxX - minX, maxZ - minZ),
+    rotation,
+    guides: local.guides.map(({ a, b }) => ({ a: world(a), b: world(b) })),
+    valid: local.valid,
+  }
+}
+
+/** Snap the actual faces to nearby parallel targets while moving, keeping both dimensions. */
+export function snapFixturePosition(
+  fixture: FixtureFootprint,
+  targets: readonly FixtureSnapTarget[],
+): Point {
+  const { w, d, cx, cz } = fixture
+  const nearby = fixtureTargetsLocal(fixture, targets)
+  const shift = (axis: 0 | 1, half: number, across: number) => {
+    const offsets = [-half, half].flatMap((face) => {
+      const at = nearestFixtureLine(axis, face, -across, across, nearby)?.a[axis]
+      return at === undefined ? [] : [at - face]
+    })
+    return (
+      offsets.reduce<number | undefined>(
+        (best, offset) => (best === undefined || Math.abs(offset) < Math.abs(best) ? offset : best),
+        undefined,
+      ) ?? 0
+    )
+  }
+  const [dx, dz] = turnPoint(shift(0, w / 2, d / 2), shift(1, d / 2, w / 2), fixture.rotation ?? 0)
+  return [roundM(cx + dx), roundM(cz + dz)]
+}
+
 /**
  * Default height: as tall as the tallest accessory cabinet it touches or encloses, so the box
  * finishes flush with the cabinets; up to the ceiling when there is none.
@@ -279,8 +357,8 @@ export function defaultFixtureHeight(
 export function fixtureIssues(space: Space, layout: Layout): LayoutIssue[] {
   const issues: LayoutIssue[] = []
   for (const fixture of layout.fixtures ?? []) {
-    const rect = fixtureRect(fixture)
-    if (!rectInsidePolygon(rect, space.boundary)) {
+    const box = fixtureBox(fixture)
+    if (!obbInsidePolygon(box, space.boundary)) {
       issues.push({
         code: 'fixture_outside_boundary',
         severity: 'warning',
@@ -290,7 +368,7 @@ export function fixtureIssues(space: Space, layout: Layout): LayoutIssue[] {
     }
     for (const item of layout.items) {
       if (itemMount(item) !== 'floor' || isAccessoryCabinet(item)) continue
-      if (rectsOverlap(rect, rectFromCenter(item.cx, item.cz, item.w, item.d))) {
+      if (obbsOverlap(box, placedBox(item))) {
         issues.push({
           code: 'fixture_overlaps_item',
           severity: 'warning',
@@ -306,6 +384,7 @@ export function fixtureIssues(space: Space, layout: Layout): LayoutIssue[] {
 /** One solid block of a partition: a footprint from `bottom` to `top` (metres). */
 export interface FixtureSolid {
   rect: Rect
+  polygon?: Point[]
   bottom: number
   top: number
 }
@@ -317,10 +396,11 @@ export interface FixtureSolid {
  * bottom are joined, so a partition around one cabinet is a handful of blocks.
  */
 export function fixtureSolids(
-  fixture: Pick<Fixture, 'cx' | 'cz' | 'w' | 'd' | 'h'>,
+  fixture: FixtureFootprint & Pick<Fixture, 'h'>,
   items: readonly LayoutItem[],
 ): FixtureSolid[] {
-  const outer = fixtureRect(fixture)
+  const outer = fixtureStraightRect(fixture)
+  if (!outer) return turnedFixtureSolids(fixture, items)
   const cabinets = items
     .filter(isAccessoryCabinet)
     .map((item) => ({ rect: rectFromCenter(item.cx, item.cz, item.w, item.d), h: item.h }))
@@ -368,6 +448,70 @@ export function fixtureSolids(
     }
   }
   return solids
+}
+
+/** Split a convex cell by a cabinet edge (cabinet interior is on the positive side). */
+function splitFixtureCell(cell: Point[], a: Point, b: Point): [Point[], Point[]] {
+  const inside: Point[] = []
+  const outside: Point[] = []
+  const side = (p: Point) => {
+    const value = cross(a, b, p)
+    return Math.abs(value) < 1e-10 ? 0 : value
+  }
+  for (const [p, q] of edges(cell)) {
+    const from = side(p)
+    const to = side(q)
+    if (from >= 0) inside.push(p)
+    if (from <= 0) outside.push(p)
+    if ((from < 0 && to > 0) || (from > 0 && to < 0)) {
+      const t = from / (from - to)
+      const intersection: Point = [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t]
+      inside.push(intersection)
+      outside.push(intersection)
+    }
+  }
+  return [inside, outside]
+}
+
+function turnedFixtureSolids(
+  fixture: FixtureFootprint & Pick<Fixture, 'h'>,
+  items: readonly LayoutItem[],
+): FixtureSolid[] {
+  const box = fixtureBox(fixture)
+  let cells: { polygon: Point[]; bottom: number }[] = [{ polygon: obbCorners(box), bottom: 0 }]
+  for (const cabinet of items.filter(isAccessoryCabinet)) {
+    const cut = placedBox(cabinet)
+    if (!obbsOverlap(box, cut)) continue
+    const sides = edges(obbCorners(cut))
+    cells = cells.flatMap((cell) => {
+      if (cell.bottom >= cabinet.h) return [cell]
+      let inside = cell.polygon
+      const remaining: typeof cells = []
+      for (const [a, b] of sides) {
+        const [clipped, outside] = splitFixtureCell(inside, a, b)
+        if (polygonArea(clipped) <= 1e-8) return [cell]
+        if (polygonArea(outside) > 1e-8) remaining.push({ polygon: outside, bottom: cell.bottom })
+        inside = clipped
+      }
+      if (cabinet.h < fixture.h - EPSILON_M) remaining.push({ polygon: inside, bottom: cabinet.h })
+      return remaining
+    })
+  }
+  return cells.map(({ polygon, bottom }) => {
+    const x = polygon.map((point) => point[0])
+    const z = polygon.map((point) => point[1])
+    return {
+      polygon,
+      bottom,
+      top: fixture.h,
+      rect: {
+        minX: Math.min(...x),
+        maxX: Math.max(...x),
+        minZ: Math.min(...z),
+        maxZ: Math.max(...z),
+      },
+    }
+  })
 }
 
 /** A fresh id for a new partition: partition-1, partition-2 … */

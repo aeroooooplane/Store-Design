@@ -1,4 +1,4 @@
-import { itemTilt, roundM, wallFlushSnap, wallLines } from '@store/shared'
+import { fixtureStraightRect, itemTilt, roundM, wallFlushSnap, wallLines } from '@store/shared'
 import type { Fixture, LayoutItem, Space } from '@store/shared'
 
 /** Dragged props stick to walls and neighbours within this distance (metres). */
@@ -89,7 +89,9 @@ export function magnetSnap(
   }
   // Partition faces only catch the outside edge, so snapping never pulls a prop inside.
   for (const f of fixtures) {
-    const [l, r, t, b] = [f.cx - f.w / 2, f.cx + f.w / 2, f.cz - f.d / 2, f.cz + f.d / 2]
+    const rect = fixtureStraightRect(f)
+    if (!rect) continue
+    const { minX: l, maxX: r, minZ: t, maxZ: b } = rect
     xLines.push(
       { at: l, from: t, to: b, edges: ['high'] },
       { at: r, from: t, to: b, edges: ['low'] },

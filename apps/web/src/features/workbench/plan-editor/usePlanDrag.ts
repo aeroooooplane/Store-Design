@@ -12,7 +12,7 @@ import {
   fixtureRect,
   fixtureSnapTargets,
   previewDrawnFixture,
-  previewResizedFixture,
+  previewFixtureEdgeResize,
 } from '@store/shared'
 import type {
   Asset,
@@ -43,7 +43,11 @@ type FixtureGesture = {
   pointer: number
   capture: Element
   targets: ReturnType<typeof fixtureSnapTargets>
-} & ({ kind: 'draw' } | { kind: 'resize'; fixture: Fixture; edge: FixtureEdge })
+} & (
+  | { kind: 'draw' }
+  | { kind: 'resize'; fixture: Fixture; edge: FixtureEdge }
+  | { kind: 'rotate'; fixture: Fixture }
+)
 
 /**
  * Dragging props and partitions on the plan: one undo step per drag, magnetic snapping unless
@@ -84,7 +88,7 @@ export function usePlanDrag(
   const [guide, setGuide] = useState<{ a: Point; b: Point } | null>(null)
   const fixtureGesture = useRef<FixtureGesture | null>(null)
   const [fixturePreview, setFixturePreview] = useState<
-    (FixtureDragPreview & { fixtureId?: string }) | null
+    (FixtureDragPreview & { fixtureId?: string; turning?: boolean }) | null
   >(null)
 
   function onItemPointerDown(item: LayoutItem, event: ReactPointerEvent<SVGGElement>) {
@@ -172,16 +176,55 @@ export function usePlanDrag(
     capture.setPointerCapture(event.pointerId)
   }
 
-  function getFixturePreview(gesture: FixtureGesture, point: Point, alt: boolean) {
+  function onFixtureRotate(fixture: Fixture, event: ReactPointerEvent<SVGGElement>) {
+    if (event.button !== 0 || fixtureGesture.current) return
+    const capture = svgRef.current
+    const point = toWorld(capture, event)
+    if (!capture || !point) return
+    event.stopPropagation()
+    fixtureGesture.current = {
+      kind: 'rotate',
+      fixture,
+      point,
+      capture,
+      pointer: event.pointerId,
+      targets: [],
+    }
+    capture.setPointerCapture(event.pointerId)
+    setFixturePreview({
+      ...getFixturePreview(fixtureGesture.current, point, false),
+      fixtureId: fixture.id,
+      turning: true,
+    })
+  }
+
+  function getFixturePreview(
+    gesture: FixtureGesture,
+    point: Point,
+    alt: boolean,
+  ): FixtureDragPreview {
     const targets = alt ? [] : gesture.targets
     if (gesture.kind === 'draw') return previewDrawnFixture(gesture.point, point, targets)
-    const axis = gesture.edge.endsWith('X') ? 0 : 1
-    return previewResizedFixture(
-      fixtureRect(gesture.fixture),
-      gesture.edge,
-      point[axis] - gesture.point[axis],
-      targets,
+    const { fixture } = gesture
+    if (gesture.kind === 'resize')
+      return previewFixtureEdgeResize(fixture, gesture.edge, gesture.point, point, targets)
+
+    const centre: Point = [fixture.cx, fixture.cz]
+    const initial = fixture.rotation ?? 0
+    const rect = fixtureRect(fixture)
+    if (
+      (gesture.point[0] === point[0] && gesture.point[1] === point[1]) ||
+      Math.hypot(point[0] - fixture.cx, point[1] - fixture.cz) < 0.01
     )
+      return { rect, rotation: initial, guides: [], valid: true }
+    const angle = initial + rotationTowards(centre, point) - rotationTowards(centre, gesture.point)
+    const snapped = snapRotation(angle, fixture, space, alt)
+    return {
+      rect,
+      rotation: snapped.rotation,
+      guides: snapped.wall ? [snapped.wall] : [],
+      valid: true,
+    }
   }
 
   /** In drawing mode a press anywhere on the plan (props included) starts a rectangle. */
@@ -210,9 +253,13 @@ export function usePlanDrag(
       if (currentFixture.pointer === event.pointerId) {
         const preview = getFixturePreview(currentFixture, world, event.altKey)
         setFixturePreview(
-          currentFixture.kind === 'resize'
-            ? { ...preview, fixtureId: currentFixture.fixture.id }
-            : preview,
+          currentFixture.kind === 'draw'
+            ? preview
+            : {
+                ...preview,
+                fixtureId: currentFixture.fixture.id,
+                turning: currentFixture.kind === 'rotate',
+              },
         )
       }
       return
@@ -307,8 +354,10 @@ export function usePlanDrag(
     if (current.kind === 'draw') {
       dispatch({ type: 'addFixture', rect: preview.rect, space, snap: false })
       onDrawn?.()
-    } else {
+    } else if (current.kind === 'resize') {
       dispatch({ type: 'resizeFixture', id: current.fixture.id, rect: preview.rect })
+    } else if (preview.rotation !== undefined) {
+      dispatch({ type: 'turnFixture', id: current.fixture.id, rotation: preview.rotation })
     }
   }
 
@@ -317,6 +366,7 @@ export function usePlanDrag(
     onItemPointerDown,
     onFixturePointerDown,
     onFixtureResize,
+    onFixtureRotate,
     onResizeHandlePointerDown,
     onRotateHandlePointerDown,
     onDrawPointerDown,
