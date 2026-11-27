@@ -17,13 +17,18 @@ export function finishModel(
   frontSided: (material: THREE.Material) => THREE.Material,
 ): THREE.Object3D {
   const root = gltf.scene.clone(true)
+  let preserveAppearance = true
   root.traverse((node) => {
     if (!isDrawable(node)) return
     const materials = Array.isArray(node.material) ? node.material : [node.material]
     const finished = materials.map((source) => {
+      const preserved = source.userData['storeDesignPreserveAppearance'] === true
+      preserveAppearance &&= preserved
       let material = finishedMaterials.get(source)
       if (!material) {
-        material = finishMaterial(source, environment)
+        // Reviewed AI/PBR assets keep their original normals, sidedness and finish values.
+        // Textures and geometry remain shared by every placement; the scene owns this clone.
+        material = preserved ? source.clone() : finishMaterial(source, environment)
         if (material !== source) finishedMaterials.set(source, material)
       }
       return material
@@ -32,7 +37,7 @@ export function finishModel(
     node.castShadow = true
     node.receiveShadow = true
   })
-  // A full model is searched for the two sides of its faces; the light copy has them marked.
-  if (!prepared) separateBackLayers(root, frontSided)
+  // Only unprepared SketchUp sources need the back-layer scan; reviewed PBR stays intact.
+  if (!prepared && !preserveAppearance) separateBackLayers(root, frontSided)
   return root
 }

@@ -20,6 +20,21 @@ npm run review -- <输出目录> asset-2595882
 
 之后回到仓库根目录运行 `pnpm catalog:white`、`pnpm catalog:finish`、`pnpm catalog:import`，网站才会使用新模型。
 
+### Tripo MM93 原材质与运行性能
+
+AI 原生 PBR 模型不沿用 SketchUp 的减面、去法线和缩贴图策略。MM93 原件先做 SHA256 校验，再生成仅追加材质 `extras.storeDesignPreserveAppearance=true` 的运行源；原始 BIN、UV、PBR 与三张 4K 图片不改。材质构建器对全材质明确标记的文件使用无损 Meshopt 编码，不量化或过滤浮点属性；普通模型继续原有构建规则。
+
+在仓库根目录装好 pnpm 依赖，且本工具依赖已安装后执行：
+
+```powershell
+node tools/su-convert/scripts/prepare-mm93-runtime.mjs <Tripo原始GLB> <新的外置运行目录>
+node tools/su-convert/scripts/benchmark-mm93-runtime.mjs <运行目录> <Tripo原始GLB> <新的外置实测目录>
+```
+
+第一个命令调用与 `catalog:white` / `catalog:finish` 相同的构建器，输出白模、材质版、记录与保真核验。第二个命令仅在 5268 端口运行真实 WhiteScene，检查冷加载、旋转、重复放置、移除重加、共享 GPU 纹理、原材质状态及页面错误，并复核预加载、两种导出、地面图形恢复和 X6。端口必须空闲，资源库需已接入并包含 X6 的两种运行模型；不会写数据库或共享资源。性能回执只代表该机与所测视口，不是所有设备的保证。
+
+此步骤不发布模型。正式入库仍按资源发布流程核对尺寸、朝向、五向图、manifest、资源锁与 `catalog:import`。4K 材质三张完整 RGBA8 mipmap 纹理约占 256 MiB 显存（估算），白模不加载这些图片；同一模型的多次放置共享几何和纹理。
+
 | 文件 | 作用 |
 |---|---|
 | `scripts/convert-su-assets.mjs` | DAE → GLB：统一米制、Y 向上、底部中心原点，核对尺寸，写 `conversion.json` |

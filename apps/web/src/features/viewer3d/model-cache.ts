@@ -13,12 +13,33 @@ if (typeof Worker !== 'undefined') MeshoptDecoder.useWorkers(2)
 const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 const sources = new Map<string, Promise<GLTF>>()
 const whiteModels = new Map<string, Promise<THREE.Object3D>>()
+// Limit fetch + decode together, so opening a dense shop cannot decode every asset at once.
+const waiting: Array<() => void> = []
+let active = 0
+const MAX_ACTIVE = 2
+
+function schedule<T>(load: () => Promise<T>): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const start = () => {
+      active++
+      Promise.resolve()
+        .then(load)
+        .then(resolve, reject)
+        .finally(() => {
+          active--
+          waiting.shift()?.()
+        })
+    }
+    if (active < MAX_ACTIVE) start()
+    else waiting.push(start)
+  })
+}
 
 /** The decoded GLB with its original materials (kept for the material renders). */
 export function loadSource(url: string): Promise<GLTF> {
   let source = sources.get(url)
   if (!source) {
-    source = loader.loadAsync(url)
+    source = schedule(() => loader.loadAsync(url))
     // A failed load is retried next time.
     source.catch(() => sources.delete(url))
     sources.set(url, source)
