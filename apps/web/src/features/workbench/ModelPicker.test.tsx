@@ -203,6 +203,63 @@ describe('pickableSections', () => {
   })
 })
 
+it.each([
+  ['SI1.0', 'domestic'],
+  ['SI1.0', 'overseas'],
+  ['SI2.0', 'domestic'],
+  ['SI2.0', 'overseas'],
+] as [SiStyle, Market][])(
+  '坐凳在%s/%s按单凳、组合、沙发命名排序，保留尺寸和原目录',
+  (si, market) => {
+    const source = [
+      asset('asset-3356837', '休闲沙发', '非标陈列', {
+        name: '2米双人沙发',
+        siFamily: '非标',
+        function: 'seating',
+        footprint: { w: 2, d: 0.971, h: 0.829 },
+      }),
+      asset('asset-569180', '培训坐凳', '软装道具', {
+        function: 'seating',
+        footprint: { w: 1.25, d: 1.261, h: 0.35 },
+      }),
+      asset('asset-15903874', '字母凳', '软装道具', {
+        siFamily: 'SI2.0',
+        function: 'seating',
+        footprint: { w: 1.301, d: 1.1, h: 0.45 },
+      }),
+      asset('asset-90000003', '字母凳', '软装道具', {
+        siFamily: 'SI2.0',
+        function: 'seating',
+        footprint: { w: 0.45, d: 0.45, h: 0.45 },
+      }),
+      asset('asset-90000002', '培训坐凳', '软装道具', {
+        name: '培训坐凳（单凳·H350）',
+        function: 'seating',
+        footprint: { w: 0.45, d: 0.45, h: 0.35 },
+      }),
+    ]
+    const before = structuredClone(source)
+    const seats = pickableSections(source, si, market).find((s) => s.key === 'seating')!.assets
+    expect(seats.map((a) => [a.id, a.name])).toEqual(
+      si === 'SI1.0'
+        ? [
+            ['asset-90000002', '培训坐凳'],
+            ['asset-569180', '培训坐凳组合'],
+            ['asset-3356837', '双人沙发'],
+          ]
+        : [
+            ['asset-90000003', '字母凳'],
+            ['asset-15903874', '字母凳组合'],
+            ['asset-3356837', '双人沙发'],
+          ],
+    )
+    expect(seats.map((a) => a.footprint)).toEqual(
+      seats.map((a) => source.find((s) => s.id === a.id)!.footprint),
+    )
+    expect(source).toEqual(before)
+  },
+)
+
 describe('ModelPicker', () => {
   it('只高亮当前待放置的型号，更换型号时清除上一项', () => {
     const logo = customLogoAsset()
