@@ -1,6 +1,5 @@
 import { isClockwise } from '../geometry/index.ts'
 import type { Point, Polygon } from '../geometry/index.ts'
-import type { Facade } from '../schemas/facade.ts'
 import { openingPieces } from '../schemas/space.ts'
 import type { Space } from '../schemas/space.ts'
 import { mainEntrance } from '../scene/frame.ts'
@@ -28,7 +27,7 @@ function edgeMetrics(boundary: Polygon, edge: number) {
   }
 }
 
-export function facadeRun(boundary: Polygon, span: Pick<Facade, 'a' | 'b'>) {
+export function facadeRun(boundary: Polygon, span: { a: Point; b: Point }) {
   for (const edge of boundary.keys()) {
     const run = edgeMetrics(boundary, edge)
     if (
@@ -101,7 +100,10 @@ export function facadeEdgeSize(space: Space, edge: number) {
 }
 
 /** Local X goes to a shopfront observer's right. Local +Z is outside the lease line. */
-export function facadeGeometry(space: Space, facade: Facade) {
+export function facadeGeometry(
+  space: Space,
+  facade: { a: Point; b: Point; openingWidth: number; openingOffset?: number | undefined },
+) {
   const run = facadeRun(space.boundary, facade)
   if (!run) return null
   const reversed = isClockwise(space.boundary)
@@ -124,7 +126,8 @@ export function facadeGeometry(space: Space, facade: Facade) {
     outward: [-direction[1], direction[0]] as Point,
     width: run.width,
     entryWidth,
-    openingStart: localCentre - half,
-    openingEnd: localCentre + half,
+    openingStart: facade.openingOffset ?? localCentre - half,
+    openingEnd:
+      facade.openingOffset === undefined ? localCentre + half : facade.openingOffset + width,
   }
 }

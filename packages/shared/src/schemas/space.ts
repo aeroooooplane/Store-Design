@@ -11,7 +11,9 @@ import {
 import type { BoundaryPiece, Point } from '../geometry/index.ts'
 import { roundM } from '../units.ts'
 import { PointSchema, SegmentSchema, SizeSchema } from './common.ts'
-import { FacadeSchema } from './facade.ts'
+import { FacadeConfigSchema, isStraightFacade } from './facade.ts'
+import type { DoubleFacade, Facade, FacadeConfig, FacadeFace } from './facade.ts'
+import { facadePlacementError } from '../facade/forms.ts'
 import { facadeRun } from '../facade/geometry.ts'
 
 export const OBSTACLE_KINDS = ['column', 'shaft', 'stair', 'fixed', 'other'] as const
@@ -55,7 +57,7 @@ export const SpaceSchema = z.object({
   height: z.number().finite().min(1.5).max(20),
   entrances: z.array(EntranceSchema).max(20).default([]),
   openEdges: z.array(SegmentSchema).max(50).default([]),
-  facade: FacadeSchema.optional(),
+  facade: FacadeConfigSchema.optional(),
   obstacles: z.array(ObstacleSchema).max(100).default([]),
   calibration: CalibrationSchema.nullable().default(null),
 })
@@ -179,15 +181,20 @@ export function validateSpace(space: Space): SpaceIssue[] {
     })
   }
   if (boundaryOk && space.facade) {
-    const run = facadeRun(space.boundary, space.facade)
-    if (!run) {
+    const placementError = facadePlacementError(space, space.facade)
+    const run = isStraightFacade(space.facade) && facadeRun(space.boundary, space.facade)
+    if (placementError) {
       issues.push({
         code: 'facade_not_on_boundary',
         severity: 'warning',
-        message: '门头需要重新定位到一条直边',
+        message: placementError,
         path: ['facade'],
       })
-    } else if (space.facade.openingWidth > run.width + 0.003) {
+    } else if (
+      run &&
+      isStraightFacade(space.facade) &&
+      space.facade.openingWidth > run.width + 0.003
+    ) {
       issues.push({
         code: 'facade_opening_too_wide',
         severity: 'warning',
@@ -201,6 +208,59 @@ export function validateSpace(space: Space): SpaceIssue[] {
 
 const roundPoint = (p: Point): [number, number] => [roundM(p[0]), roundM(p[1])]
 
+function roundFacade(facade: FacadeConfig): FacadeConfig {
+  const optional = (value: number | undefined) => (value === undefined ? undefined : roundM(value))
+  const span = (value: { a: Point; b: Point }) => ({
+    a: roundPoint(value.a),
+    b: roundPoint(value.b),
+  })
+  const straight = <T extends Facade>(value: T): T => ({
+    ...value,
+    ...span(value),
+    openingWidth: roundM(value.openingWidth),
+    clearHeight: roundM(value.clearHeight),
+    fasciaHeight: roundM(value.fasciaHeight),
+    screenInset: roundM(value.screenInset),
+    screenWidth: optional(value.screenWidth),
+  })
+  if (isStraightFacade(facade)) return straight(facade)
+  if (facade.kind === 'corner') {
+    const face = (value: FacadeFace) => ({
+      ...straight(value),
+      openingOffset: optional(value.openingOffset),
+    })
+    return { ...facade, faces: [face(facade.faces[0]), face(facade.faces[1])] }
+  }
+  if (facade.kind === 'double') {
+    function opening(value: DoubleFacade['openings'][number]) {
+      return {
+        ...value,
+        offset: roundM(value.offset),
+        width: roundM(value.width),
+        clearHeight: roundM(value.clearHeight),
+        screenWidth: optional(value.screenWidth),
+      }
+    }
+    return {
+      ...facade,
+      ...span(facade),
+      fasciaHeight: roundM(facade.fasciaHeight),
+      screenInset: roundM(facade.screenInset),
+      openings: [opening(facade.openings[0]), opening(facade.openings[1])],
+    }
+  }
+  return {
+    ...facade,
+    ...span(facade),
+    top: roundM(facade.top),
+    beamHeight: roundM(facade.beamHeight),
+    postWidth: optional(facade.postWidth),
+    si1LogoHeight: optional(facade.si1LogoHeight),
+    si1Drop: optional(facade.si1Drop),
+    si2LogoHeight: optional(facade.si2LogoHeight),
+  }
+}
+
 /** Clockwise rings; millimetre precision only when rounding preserves valid topology. */
 export function normalizeSpace(space: Space): Space {
   const rounded: Space = {
@@ -209,22 +269,7 @@ export function normalizeSpace(space: Space): Space {
     boundary: toClockwise(space.boundary).map(roundPoint),
     entrances: space.entrances.map((e) => ({ ...e, a: roundPoint(e.a), b: roundPoint(e.b) })),
     openEdges: space.openEdges.map((e) => ({ a: roundPoint(e.a), b: roundPoint(e.b) })),
-    ...(space.facade
-      ? {
-          facade: {
-            ...space.facade,
-            a: roundPoint(space.facade.a),
-            b: roundPoint(space.facade.b),
-            openingWidth: roundM(space.facade.openingWidth),
-            clearHeight: roundM(space.facade.clearHeight),
-            fasciaHeight: roundM(space.facade.fasciaHeight),
-            screenInset: roundM(space.facade.screenInset),
-            ...(space.facade.screenWidth === undefined
-              ? {}
-              : { screenWidth: roundM(space.facade.screenWidth) }),
-          },
-        }
-      : {}),
+    ...(space.facade ? { facade: roundFacade(space.facade) } : {}),
     obstacles: space.obstacles.map((o) => ({
       ...o,
       height: o.height === null ? null : roundM(o.height),

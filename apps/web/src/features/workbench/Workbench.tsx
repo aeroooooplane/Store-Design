@@ -1,7 +1,7 @@
 import { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useSearchParams } from 'react-router'
-import { nextHistoryName, nodeSiStyle, stageParentId } from '@store/shared'
+import { nextHistoryName, nodeSiStyle, stageParentId, supportsFacade } from '@store/shared'
 import type {
   Asset,
   DesignNode,
@@ -300,9 +300,10 @@ export function Workbench({ project }: { project: Project }) {
           ),
           facade: !creatingSpace &&
             cardSpaceData &&
-            (cardSpaceData.shopType ?? project.shopType) === 'side_hall' && (
+            supportsFacade(cardSpaceData.shopType ?? project.shopType) && (
               <FacadeCard
                 space={cardSpaceData}
+                shop={cardSpaceData.shopType ?? project.shopType}
                 siStyle={shownSi}
                 market={project.market}
                 onEdit={() => void openEditSpace('edit-facade')}
@@ -505,12 +506,14 @@ function NodePanel({
     )
   }
 
-  if (panel === 'edit-facade' && (space.shopType ?? project.shopType) === 'side_hall') {
+  if (panel === 'edit-facade' && supportsFacade(space.shopType ?? project.shopType)) {
     return (
       <WorkbenchLayout
         left={left}
         center={
           <FacadeEditor
+            key={nodeId}
+            shop={space.shopType ?? project.shopType}
             space={space}
             projectId={project.id}
             nodeId={nodeId}

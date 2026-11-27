@@ -1,11 +1,13 @@
 import { useId, useState } from 'react'
+import type { ReactNode } from 'react'
 import {
   FacadeSchema,
   FACADE_PRESET_LABELS,
-  SI1_FACADE_GRADES,
-  SI1_FACADE_PRESETS,
-  SI2_FACADE_GRADES,
-  SI2_FACADE_PRESETS,
+  FACADE_KIND_LABELS,
+  facadeKind,
+  isStraightFacade,
+  reviewFacadeConfig,
+  supportsFacade,
   facadeEdgeSize,
   facadeRun,
   facadeSpan,
@@ -16,40 +18,64 @@ import {
   roundM,
   suggestedFacadeEdge,
 } from '@store/shared'
-import type { Facade, Market, SiStyle, Space } from '@store/shared'
+import type { Facade, FacadeKind, Market, ShopType, SiStyle, Space } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { useUpdateNodeSpace } from '../workbench/api.ts'
 import { facadeColors, facadePieces } from './appearance.ts'
 import type { FacadePreview } from './appearance.ts'
+import { FacadeStyleFields } from './FacadeFields.tsx'
+import { FacadeFormsEditor } from './FacadeFormsEditor.tsx'
 
 export function FacadeCard({
   space,
+  shop,
   siStyle,
   market,
   onEdit,
   disabled,
 }: {
   space: Space
+  shop: ShopType
   siStyle: SiStyle
   market: Market
   onEdit: () => void
   disabled: boolean
 }) {
-  const reviewed = space.facade && reviewFacade(space, space.facade, siStyle, market)
+  const config =
+    space.facade && supportsFacade(shop, facadeKind(space.facade)) ? space.facade : undefined
+  const straight = config && isStraightFacade(config) ? config : undefined
+  const reviewed = straight && reviewFacade(space, straight, siStyle, market)
+  const other = config && !isStraightFacade(config) ? config : undefined
+  const reviewedForm = other && reviewFacadeConfig(space, other, siStyle, market)
   return (
     <details className="space-info-card">
       <summary>门头</summary>
       <div className="facade-card-body">
-        {reviewed && space.facade ? (
+        {reviewed && straight ? (
           <>
             <span>常规直边 · {FACADE_PRESET_LABELS[reviewed.preset]}</span>
             <small>
-              总宽 {mToMm(reviewed.frame.width)} mm · 净高 {mToMm(space.facade.clearHeight)} mm
+              总宽 {mToMm(reviewed.frame.width)} mm · 净高 {mToMm(straight.clearHeight)} mm
             </small>
             {reviewed.issues.length > 0 && <small>待复核 {reviewed.issues.length} 项</small>}
           </>
+        ) : other ? (
+          <>
+            <span>
+              {FACADE_KIND_LABELS[other.kind]} · {siStyle}
+            </span>
+            {other.kind === 'island_hanging' && siStyle === 'SI1.0' ? (
+              <small>手填预览 · 待复核</small>
+            ) : reviewedForm?.issues.length ? (
+              <small>待复核 {reviewedForm.issues.length} 项</small>
+            ) : null}
+            {!reviewedForm && <small>需要重新定位</small>}
+            {reviewedForm?.clearance !== undefined && (
+              <small>字标净空 {mToMm(reviewedForm.clearance)} mm</small>
+            )}
+          </>
         ) : (
-          <small>{space.facade ? '需要重新定位到直边' : '尚未设置'}</small>
+          <small>{straight ? '需要重新定位到直边' : '尚未设置'}</small>
         )}
         <button type="button" onClick={onEdit} disabled={disabled}>
           设置门头
@@ -72,7 +98,7 @@ type Dimensions = Record<
 type Settings = Pick<Facade, 'si1' | 'si2'>
 
 function initialDraft(space: Space) {
-  const facade = space.facade
+  const facade = space.facade && isStraightFacade(space.facade) ? space.facade : undefined
   const run = facade && facadeRun(space.boundary, facade)
   const edge = run ? run.edge : suggestedFacadeEdge(space)
   const info = facadeEdgeSize(space, edge)
@@ -271,21 +297,57 @@ function FacadeElevation({
   )
 }
 
-export function FacadeEditor({
-  space,
-  projectId,
-  nodeId,
-  siStyle,
-  market,
-  onClose,
-}: {
+interface EditorProps {
   space: Space
   projectId: string
   nodeId: string
   siStyle: SiStyle
   market: Market
   onClose: () => void
-}) {
+}
+const sideHallForms: FacadeKind[] = ['straight', 'corner', 'double']
+
+export function FacadeEditor({ shop, ...props }: EditorProps & { shop: ShopType }) {
+  const [kind, setKind] = useState<FacadeKind>(() => {
+    const saved = props.space.facade && facadeKind(props.space.facade)
+    if (saved && supportsFacade(shop, saved)) return saved
+    return shop === 'island' ? 'island_hanging' : 'straight'
+  })
+  const formPicker =
+    shop === 'side_hall' ? (
+      <label className="facade-form-picker">
+        门头形态
+        <select
+          value={kind}
+          onChange={(event) => {
+            const next = sideHallForms.find((value) => value === event.currentTarget.value)
+            if (next) setKind(next)
+          }}
+        >
+          {sideHallForms.map((value) => (
+            <option key={value} value={value}>
+              {FACADE_KIND_LABELS[value]}
+            </option>
+          ))}
+        </select>
+      </label>
+    ) : null
+  return kind === 'straight' ? (
+    <StraightFacadeEditor {...props} formPicker={formPicker} />
+  ) : (
+    <FacadeFormsEditor key={kind} {...props} kind={kind} formPicker={formPicker} />
+  )
+}
+
+function StraightFacadeEditor({
+  space,
+  projectId,
+  nodeId,
+  siStyle,
+  market,
+  onClose,
+  formPicker,
+}: EditorProps & { formPicker: ReactNode }) {
   const [initial] = useState(space)
   const [draft, setDraft] = useState(() => initialDraft(initial))
   const [remove, setRemove] = useState(false)
@@ -293,11 +355,6 @@ export function FacadeEditor({
   const result = parseFacade(initial, draft.edge, draft.dims, draft.settings)
   const facade = result.facade
   const preview = facade && reviewFacade(initial, facade, siStyle, market)
-  const si1 = siStyle === 'SI1.0'
-  const current = si1 ? draft.settings.si1 : draft.settings.si2
-  const presets = si1 ? SI1_FACADE_PRESETS : SI2_FACADE_PRESETS
-  const grades = si1 ? SI1_FACADE_GRADES : SI2_FACADE_GRADES
-
   function selectEdge(edge: number) {
     const s = facadeEdgeSize(initial, edge)
     setDraft((old) => ({
@@ -310,38 +367,6 @@ export function FacadeEditor({
         openingWidth: String(mToMm(s.openingWidth)),
       },
     }))
-  }
-
-  function setGrade(value: string) {
-    if (si1) {
-      const grade = SI1_FACADE_GRADES.find((option) => option === value)
-      setDraft((old) => ({
-        ...old,
-        settings: { ...old.settings, si1: { ...old.settings.si1, grade } },
-      }))
-    } else {
-      const grade = SI2_FACADE_GRADES.find((option) => option === value)
-      setDraft((old) => ({
-        ...old,
-        settings: { ...old.settings, si2: { ...old.settings.si2, grade } },
-      }))
-    }
-  }
-
-  function setPreset(value: string) {
-    if (si1) {
-      const preset = SI1_FACADE_PRESETS.find((option) => option === value)
-      setDraft((old) => ({
-        ...old,
-        settings: { ...old.settings, si1: { ...old.settings.si1, preset } },
-      }))
-    } else {
-      const preset = SI2_FACADE_PRESETS.find((option) => option === value)
-      setDraft((old) => ({
-        ...old,
-        settings: { ...old.settings, si2: { ...old.settings.si2, preset } },
-      }))
-    }
   }
 
   function save(value: Facade | undefined) {
@@ -373,6 +398,7 @@ export function FacadeEditor({
   return (
     <section className="wb-card facade-editor" aria-label="门头设置">
       <h2>设置门头</h2>
+      {formPicker}
       <p className="hint">常规直边边厅 · {siStyle}。先核对所在边，再录入实测门头和通行尺寸。</p>
       <ErrorMessage error={mutation.error} />
       <form
@@ -424,49 +450,11 @@ export function FacadeEditor({
               {field('门楣面高（mm）', 'fasciaHeight')}
             </div>
             <div className="facade-fields">
-              <label>
-                {siStyle} 门店等级
-                <select
-                  value={current?.grade ?? ''}
-                  onChange={(event) => setGrade(event.currentTarget.value)}
-                >
-                  <option value="">未指定</option>
-                  {grades.map((grade) => (
-                    <option key={grade} value={grade}>
-                      {grade} 级
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <label>
-                门头款式
-                <select
-                  value={current?.preset ?? ''}
-                  onChange={(event) => setPreset(event.currentTarget.value)}
-                >
-                  <option value="">自动推荐</option>
-                  <optgroup label="实体面板门头">
-                    {presets
-                      .filter((item) => item === 'steel' || item === 'aluminium')
-                      .map((item) => (
-                        <option key={item} value={item}>
-                          {FACADE_PRESET_LABELS[item]}
-                          {si1 ? '' : '（B/C 级）'}
-                        </option>
-                      ))}
-                  </optgroup>
-                  <optgroup label="LED 屏幕门头">
-                    {presets
-                      .filter((item) => item === 'led' || item === 'led_strip')
-                      .map((item) => (
-                        <option key={item} value={item}>
-                          {FACADE_PRESET_LABELS[item]}
-                          {si1 ? '' : item === 'led_strip' ? '（S 级）' : '（A 级）'}
-                        </option>
-                      ))}
-                  </optgroup>
-                </select>
-              </label>
+              <FacadeStyleFields
+                si={siStyle}
+                settings={draft.settings}
+                onChange={(settings) => setDraft((old) => ({ ...old, settings }))}
+              />
               {preview?.usesLed && (
                 <>
                   {field('LED 屏宽（mm）', 'screenWidth', '使用总宽')}

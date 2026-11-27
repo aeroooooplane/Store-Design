@@ -13,6 +13,8 @@ export {
   facadeGeometry,
 } from './geometry.ts'
 
+export * from './forms.ts'
+
 export const FACADE_PRESET_LABELS: Record<FacadePreset, string> = {
   steel: '不锈钢＋LOGO',
   aluminium: '星空灰铝板＋LOGO',
@@ -48,6 +50,15 @@ const LED_SI2_WIDTHS = [3520, 4800, 5440] as const
 export function reviewFacade(space: Space, facade: Facade, si: SiStyle, market: Market) {
   const frame = facadeGeometry(space, facade)
   if (!frame) return null
+  return reviewFacadeFrame(facade, frame, si, market)
+}
+
+export function reviewFacadeFrame(
+  facade: Facade,
+  frame: NonNullable<ReturnType<typeof facadeGeometry>>,
+  si: SiStyle,
+  market: Market,
+) {
   const recommended = recommendPreset(facade, si)
   const preset = (si === 'SI1.0' ? facade.si1?.preset : facade.si2?.preset) ?? recommended
   const usesLed = preset === 'led' || preset === 'led_strip'
