@@ -1,11 +1,13 @@
 import json
 import tempfile
+import threading
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import AsyncMock
 
 from app import ApiError
-from project_exchange import export_project, save_import
+from project_exchange import export_project, import_project, save_import
 from storage import Database
 
 
@@ -58,3 +60,22 @@ class ExchangeStorageTests(unittest.TestCase):
         with self.db.connect() as db:
             for table in ("projects", "workbench_nodes", "workbench_drafts"):
                 self.assertEqual(db.execute(f"SELECT count(*) FROM {table}").fetchone()[0], 0)
+
+
+class AsyncImportTests(unittest.IsolatedAsyncioTestCase):
+    async def test_rules_and_storage_run_outside_the_async_request_loop(self):
+        directory = self.enterContext(tempfile.TemporaryDirectory())
+        db = Database(Path(directory))
+        db.initialize()
+        db.initialize_workbench()
+        event_loop_thread = threading.get_ident()
+
+        def run(command, value):
+            self.assertNotEqual(threading.get_ident(), event_loop_thread)
+            self.assertEqual(command, "project-import")
+            return ExchangeStorageTests().plan()
+
+        request = SimpleNamespace(body=AsyncMock(return_value=b'{"data":{}}'),
+                                  app=SimpleNamespace(state=SimpleNamespace(db=db, rules=SimpleNamespace(run=run))))
+        imported = await import_project(request)
+        self.assertEqual(imported["nodesImported"], 2)
