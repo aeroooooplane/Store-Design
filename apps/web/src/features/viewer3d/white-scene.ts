@@ -268,6 +268,7 @@ export class WhiteScene {
     canvas.addEventListener('pointermove', this.onPointerMove)
     canvas.addEventListener('pointerup', this.endDrag)
     canvas.addEventListener('pointercancel', this.endDrag)
+    canvas.addEventListener('webglcontextrestored', this.onContextRestored)
     this.controls = new OrbitControls(this.camera, canvas)
     this.controls.maxPolarAngle = Math.PI * 0.7
     this.controls.addEventListener('change', this.requestRender)
@@ -887,6 +888,9 @@ export class WhiteScene {
     this.requestRender()
   }
 
+  // Three rebuilds GPU state on restoration, but this scene only draws on demand.
+  private readonly onContextRestored = () => this.sceneChanged()
+
   readonly requestRender = () => {
     if (this.frame || this.disposed) return
     this.frame = requestAnimationFrame(() => {
@@ -902,6 +906,7 @@ export class WhiteScene {
     this.canvas.removeEventListener('pointermove', this.onPointerMove)
     this.canvas.removeEventListener('pointerup', this.endDrag)
     this.canvas.removeEventListener('pointercancel', this.endDrag)
+    this.canvas.removeEventListener('webglcontextrestored', this.onContextRestored)
     this.controls.dispose()
     this.viewListener = null
     for (const id of [...this.items.keys()]) this.removeItem(id)

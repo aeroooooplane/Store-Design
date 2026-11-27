@@ -148,10 +148,16 @@ export function floorLayout(space: Space, shopType: ShopType): FloorLayout {
 }
 
 const TILES_PER_SIDE = 4
-const floorCanvases = new Map<string, HTMLCanvasElement>()
+interface FloorPixels {
+  data: Uint8Array
+  width: number
+  height: number
+}
 
-/** The pixel pattern depends on the finish and axis. Viewer-specific tile origins use UVs. */
-function floorCanvas(spec: FloorSpec, tw: number, td: number): HTMLCanvasElement | null {
+const floorPatterns = new Map<string, FloorPixels>()
+
+/** The pattern depends on the finish and axis. Cache pixels so the drawing canvas can be discarded. */
+function floorPixels(spec: FloorSpec, tw: number, td: number): FloorPixels | null {
   const key = JSON.stringify([
     tw,
     td,
@@ -162,7 +168,7 @@ function floorCanvas(spec: FloorSpec, tw: number, td: number): HTMLCanvasElement
     spec.bond,
     spec.chips,
   ])
-  const cached = floorCanvases.get(key)
+  const cached = floorPatterns.get(key)
   if (cached) return cached
 
   const [long] = spec.tile
@@ -170,7 +176,7 @@ function floorCanvas(spec: FloorSpec, tw: number, td: number): HTMLCanvasElement
   const canvas = document.createElement('canvas')
   canvas.width = Math.round(TILES_PER_SIDE * tw * px)
   canvas.height = Math.round(TILES_PER_SIDE * td * px)
-  const g = canvas.getContext('2d')
+  const g = canvas.getContext('2d', { willReadFrequently: true })
   if (!g) return null
   g.fillStyle = spec.joint
   g.fillRect(0, 0, canvas.width, canvas.height)
@@ -200,8 +206,26 @@ function floorCanvas(spec: FloorSpec, tw: number, td: number): HTMLCanvasElement
       g.fill()
     }
   }
-  floorCanvases.set(key, canvas)
-  return canvas
+  const { width, height } = canvas
+  let pixels: Uint8ClampedArray
+  try {
+    pixels = g.getImageData(0, 0, width, height).data
+  } catch {
+    return null
+  }
+  // A finished tile is opaque. A cleared backing store must fall back to the material colour.
+  if (pixels[3] !== 255 || pixels[pixels.length - 1] !== 255) return null
+
+  // Canvas rows start at the top. Keep the old CanvasTexture UV orientation for typed uploads.
+  const data = new Uint8Array(pixels.length)
+  const stride = width * 4
+  for (let row = 0; row < height; row++) {
+    const start = row * stride
+    data.set(pixels.subarray(start, start + stride), (height - 1 - row) * stride)
+  }
+  const pattern = { data, width, height }
+  floorPatterns.set(key, pattern)
+  return pattern
 }
 
 /** Floor UVs are plan metres (u = x, v = −z); repeat and offset keep tiles at their SI size. */
@@ -209,10 +233,13 @@ function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | nul
   const [long, short] = spec.tile
   const tw = layout.alongX ? long : short
   const td = layout.alongX ? short : long
-  const canvas = floorCanvas(spec, tw, td)
-  if (!canvas) return null
-  const texture = new THREE.CanvasTexture(canvas)
+  const pattern = floorPixels(spec, tw, td)
+  if (!pattern) return null
+  const texture = new THREE.DataTexture(pattern.data, pattern.width, pattern.height)
   texture.colorSpace = THREE.SRGBColorSpace
+  texture.magFilter = THREE.LinearFilter
+  texture.minFilter = THREE.LinearMipmapLinearFilter
+  texture.generateMipmaps = true
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping
   texture.repeat.set(1 / (TILES_PER_SIDE * tw), 1 / (TILES_PER_SIDE * td))
   const [ox, oz] = layout.origin
@@ -230,6 +257,7 @@ function floorTexture(spec: FloorSpec, layout: FloorLayout): THREE.Texture | nul
     )
   }
   texture.anisotropy = 8
+  texture.needsUpdate = true
   return texture
 }
 
