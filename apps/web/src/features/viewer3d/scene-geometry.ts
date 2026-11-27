@@ -18,8 +18,10 @@ export function prism(
   polygon: readonly Point[],
   bottom: number,
   height: number,
+  holes: readonly (readonly Point[])[] = [],
 ): THREE.BufferGeometry {
   const shape = new THREE.Shape(polygon.map(([x, z]) => new THREE.Vector2(x, -z)))
+  shape.holes = holes.map((hole) => new THREE.Path(hole.map(([x, z]) => new THREE.Vector2(x, -z))))
   const geometry = new THREE.ExtrudeGeometry(shape, { depth: height, bevelEnabled: false })
   geometry.rotateX(-Math.PI / 2)
   geometry.translate(0, bottom, 0)

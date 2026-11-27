@@ -205,13 +205,14 @@ export function useNodeActions({
         .map((n) => client.fetchQuery(nodeQuery(n.id))),
     )
     const drafts = client.getQueryData<Draft[]>(workbenchKeys.drafts(baseNode.projectId)) ?? []
-    const originalFacade = JSON.stringify(SpaceSchema.parse(space).facade)
+    const buildingChoices = (value: Space | null) => {
+      const saved = value ? SpaceSchema.parse(value) : null
+      return JSON.stringify([saved?.facade, saved?.ceiling])
+    }
+    const originalBuilding = buildingChoices(space)
     const ofStyle = siblings
       .filter(
-        (n) =>
-          nodeSiStyle(n, projectSi) === style &&
-          JSON.stringify(n.space ? SpaceSchema.parse(n.space).facade : undefined) ===
-            originalFacade,
+        (n) => nodeSiStyle(n, projectSi) === style && buildingChoices(n.space) === originalBuilding,
       )
       .map((n) => ({
         ...n,

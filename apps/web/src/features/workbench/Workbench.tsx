@@ -35,6 +35,8 @@ import { CurrentSpaceCard, ProjectCard, ProjectDetails } from './ProjectCard.tsx
 import { RenderStage } from './RenderStage.tsx'
 import { SpaceCaptureEditor } from './space-capture/SpaceCaptureEditor.tsx'
 import { FacadeCard, FacadeEditor } from '../facade/FacadeEditor.tsx'
+import { CeilingCard } from './CeilingCard.tsx'
+import { CeilingPreviewContext, useCeilingView } from './ceiling-preview.ts'
 import { StagePanel } from './StagePanel.tsx'
 import { flattenTree } from './tree.ts'
 import { LeftTabContext, WorkbenchInfoContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
@@ -89,6 +91,14 @@ export function Workbench({ project }: { project: Project }) {
   // The 3D view and plan/3D choice of each space, kept while moving between its steps.
   const viewMemory = useRef(new Map<string, ViewState>())
   const [siNotice, setSiNotice] = useState<string | null>(null)
+  const [shownCeilings, setShownCeilings] = useState<ReadonlySet<string>>(() => new Set())
+  const openCeilingView = useRef<(() => void) | null>(null)
+  const registerCeilingView = useCallback((open: () => void) => {
+    openCeilingView.current = open
+    return () => {
+      if (openCeilingView.current === open) openCeilingView.current = null
+    }
+  }, [])
   // The left tab, kept while moving between steps; null means the stage decides.
   const [leftTab, setLeftTab] = useState<LeftTab | null>(null)
   const registerSiSwitch = useCallback((swap: SiSwitch | null) => {
@@ -202,7 +212,19 @@ export function Workbench({ project }: { project: Project }) {
     return <p className="notice">正在加载工作台…</p>
   }
 
+  function toggleCeiling(visible: boolean) {
+    if (!selectedId) return
+    setShownCeilings((old) => {
+      const updated = new Set(old)
+      if (visible) updated.add(selectedId)
+      else updated.delete(selectedId)
+      return updated
+    })
+    if (visible) openCeilingView.current?.()
+  }
+
   const creatingSpace = nodes.length === 0 || activePanel === 'new-space'
+  const ceilingVisible = selectedId !== null && shownCeilings.has(selectedId)
   const cardSpaceData = selected?.space ?? null
   const changingSpace =
     openingSpace || activePanel === 'edit-space' || activePanel === 'edit-facade'
@@ -310,13 +332,31 @@ export function Workbench({ project }: { project: Project }) {
                 disabled={changingSpace}
               />
             ),
+          ceiling: !creatingSpace && selectedId && cardSpaceData && (
+            <CeilingCard
+              key={selectedId}
+              projectId={project.id}
+              nodeId={selectedId}
+              space={cardSpaceData}
+              shop={cardSpaceData.shopType ?? project.shopType}
+              si={shownSi}
+              visible={ceilingVisible}
+              disabled={changingSpace || siBusy}
+              flush={async () => (await saveCurrentNode.current?.()) ?? true}
+              onToggle={toggleCeiling}
+            />
+          ),
           details: <ProjectDetails project={project} siStyle={shownSi} />,
           drawings: <ProjectDrawings projectId={project.id} />,
         }}
       >
         <LeftTabContext.Provider value={{ tab: leftTab, setTab: setLeftTab }}>
           <ViewMemoryContext.Provider value={viewMemory.current}>
-            <HistoryViewProvider key={project.id}>{content}</HistoryViewProvider>
+            <CeilingPreviewContext.Provider
+              value={{ visible: ceilingVisible, register: registerCeilingView }}
+            >
+              <HistoryViewProvider key={project.id}>{content}</HistoryViewProvider>
+            </CeilingPreviewContext.Provider>
           </ViewMemoryContext.Provider>
         </LeftTabContext.Provider>
       </WorkbenchInfoContext.Provider>
@@ -714,6 +754,8 @@ function StagePreview({
     memory.update({ view: { space: next } })
     setMode(next)
   }
+
+  useCeilingView(() => show('3d'))
 
   return (
     <WorkbenchLayout

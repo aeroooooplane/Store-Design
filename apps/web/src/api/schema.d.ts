@@ -991,6 +991,8 @@ export interface paths {
                                             preset?: "aluminium" | "led" | "led_strip";
                                         };
                                     };
+                                    /** @enum {string} */
+                                    ceiling?: "film" | "linear" | "frame" | "none";
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -1610,6 +1612,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -1949,6 +1953,8 @@ export interface paths {
                                             preset?: "aluminium" | "led" | "led_strip";
                                         };
                                     };
+                                    /** @enum {string} */
+                                    ceiling?: "film" | "linear" | "frame" | "none";
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -2363,6 +2369,8 @@ export interface paths {
                                         preset?: "aluminium" | "led" | "led_strip";
                                     };
                                 };
+                                /** @enum {string} */
+                                ceiling?: "film" | "linear" | "frame" | "none";
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -2766,6 +2774,8 @@ export interface paths {
                                         preset?: "aluminium" | "led" | "led_strip";
                                     };
                                 };
+                                /** @enum {string} */
+                                ceiling?: "film" | "linear" | "frame" | "none";
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -3149,6 +3159,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -3391,6 +3403,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -3663,6 +3677,8 @@ export interface paths {
                                             preset?: "aluminium" | "led" | "led_strip";
                                         };
                                     };
+                                    /** @enum {string} */
+                                    ceiling?: "film" | "linear" | "frame" | "none";
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */
@@ -4075,6 +4091,8 @@ export interface paths {
                                         preset?: "aluminium" | "led" | "led_strip";
                                     };
                                 };
+                                /** @enum {string} */
+                                ceiling?: "film" | "linear" | "frame" | "none";
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -4482,6 +4500,8 @@ export interface paths {
                                         preset?: "aluminium" | "led" | "led_strip";
                                     };
                                 };
+                                /** @enum {string} */
+                                ceiling?: "film" | "linear" | "frame" | "none";
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -7189,6 +7209,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -7457,6 +7479,8 @@ export interface paths {
                                         preset?: "aluminium" | "led" | "led_strip";
                                     };
                                 };
+                                /** @enum {string} */
+                                ceiling?: "film" | "linear" | "frame" | "none";
                                 /** @default [] */
                                 obstacles: {
                                     /** @enum {string} */
@@ -7819,6 +7843,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -9640,6 +9666,8 @@ export interface paths {
                                     preset?: "aluminium" | "led" | "led_strip";
                                 };
                             };
+                            /** @enum {string} */
+                            ceiling?: "film" | "linear" | "frame" | "none";
                             /** @default [] */
                             obstacles?: {
                                 /** @enum {string} */
@@ -9972,6 +10000,8 @@ export interface paths {
                                             preset?: "aluminium" | "led" | "led_strip";
                                         };
                                     };
+                                    /** @enum {string} */
+                                    ceiling?: "film" | "linear" | "frame" | "none";
                                     /** @default [] */
                                     obstacles: {
                                         /** @enum {string} */

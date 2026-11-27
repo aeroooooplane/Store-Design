@@ -48,6 +48,9 @@ export const CalibrationSchema = z.object({
  * Columns can cross or stand outside the boundary.
  * Units are metres; x right, z down, y up.
  */
+export const CeilingKindSchema = z.enum(['film', 'linear', 'frame', 'none'])
+export type CeilingKind = z.output<typeof CeilingKindSchema>
+
 export const SpaceSchema = z.object({
   schemaVersion: z.literal(1),
   /** Old spaces use the project’s saved site form until edited. */
@@ -58,6 +61,8 @@ export const SpaceSchema = z.object({
   entrances: z.array(EntranceSchema).max(20).default([]),
   openEdges: z.array(SegmentSchema).max(50).default([]),
   facade: FacadeConfigSchema.optional(),
+  /** A saved construction choice. An omitted choice follows the current node's SI. */
+  ceiling: CeilingKindSchema.optional(),
   obstacles: z.array(ObstacleSchema).max(100).default([]),
   calibration: CalibrationSchema.nullable().default(null),
 })
