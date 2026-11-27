@@ -1,0 +1,55 @@
+{
+  "id": "asset-90000003",
+  "manifestBefore": null,
+  "manifestAfter": {
+    "asset_id": "asset-90000003",
+    "folder": "软装道具/SI2.0/字母凳_单凳__asset-90000003",
+    "web_model": "软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型",
+    "preview": "软装道具/SI2.0/字母凳_单凳__asset-90000003/预览.png",
+    "n": 102,
+    "si_family": "SI2.0",
+    "standard_name": "字母凳",
+    "variant": "单凳",
+    "display_name": "字母凳",
+    "match": "对应",
+    "confidence": "高（既有组合完整实例拆分）",
+    "reference_pages": "SI2:126",
+    "judgment": "从asset-15903874保留一只未变形的完整凳体及软垫，450×450×450mm，保留原材质和贴图；只旋转及居中，不缩放。",
+    "named_skp": null,
+    "source_skp": null,
+    "named_sha256": null,
+    "additional_views": [],
+    "tight_face_bounds_xyz_mm": [
+      450,
+      450,
+      450
+    ],
+    "material_category": "软装物料",
+    "material_si": "SI2.0",
+    "material_sort": 10,
+    "plan_legend": null,
+    "plan_legend_missing_reason": null,
+    "type_name": "字母凳",
+    "product_image": "软装道具/SI2.0/字母凳_单凳__asset-90000003/效果图.png",
+    "product_image_match": "exact",
+    "plan_symbol": {
+      "svg": "软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.svg",
+      "png": "软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.png"
+    },
+    "category": "软装道具",
+    "category_si": "SI2.0",
+    "derived_from": {
+      "asset_id": "asset-15903874",
+      "method": "完整凳体与软垫实例提取，水平转正并底部居中，无缩放",
+      "source_skp_sha256": "7e199016bb1216ed0a6406d83d86674c224497f1a589a620ac9de426afee8efa",
+      "native_skp_note": "本机无SketchUp，由已验证GLB完整实例拆分，未生成独立SKP，原组合SKP不变"
+    }
+  },
+  "facingBefore": null,
+  "facingAfter": {
+    "front": "any",
+    "confidence": "high",
+    "note": "由四张组合保留一只完整未变形450mm凳，属于可任意朝向的独立坐凳；五向复核后发布"
+  },
+  "sourceManifestSha256": "cf41c66bbf8154adbd683aaa394f0a7ca28bcc0a0a8c60ea122ebbff20a94f04"
+}

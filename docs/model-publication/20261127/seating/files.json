@@ -1,0 +1,79 @@
+[
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/conversion.json",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/conversion.json",
+    "sha256": "ec02527df8154fdec7a1b6c88de6dc7a122928fce04f2e3016247ec5e36b7134",
+    "bytes": 4765,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/finish.glb",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/finish.glb",
+    "sha256": "cecfad4a4b50681d931db5693853ade87bef5c3e52a4eab0dc8563e4ce3789dd",
+    "bytes": 364200,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/finish.json",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/finish.json",
+    "sha256": "090f9b1274c5c59d92a6b790637e7ce81a934b5f74b774c2fc04e32d847a1cf4",
+    "bytes": 425,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/model.glb",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/model.glb",
+    "sha256": "601d612d5fffa4c21132ee1beefffa3784a293b667a1ac42f91c109d96b790c7",
+    "bytes": 2134384,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/white.glb",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/white.glb",
+    "sha256": "b3381cb565fbef9640ce4dce28763e5b5f062fde84beec5a1fbbb5236c207566",
+    "bytes": 3956,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/white.json",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/网页模型/white.json",
+    "sha256": "f21b9eb0e4a01f78bbd0d1327c1d55f20cb2670ff6fec7e807cdd15180573e5e",
+    "bytes": 335,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/效果图.png",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/效果图.png",
+    "sha256": "0cdc89db140be6ed6a74a7ef908fb32d1a53c445324c8c5f903ff39f60a4ee0d",
+    "bytes": 154892,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/预览.png",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/预览.png",
+    "sha256": "0cdc89db140be6ed6a74a7ef908fb32d1a53c445324c8c5f903ff39f60a4ee0d",
+    "bytes": 154892,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.svg",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.svg",
+    "sha256": "5b1fbd8a2d43257cebb229cda5408a9d181bb0c3884d1fa4d91ca761cc6fa436",
+    "bytes": 139,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.png",
+    "stagedFile": "payload/04_模型库/软装道具/SI2.0/字母凳_单凳__asset-90000003/平面图.png",
+    "sha256": "3897ee8d1791f607a6d744366756cba41cff7e934a64d1ed17a576adfc2447ab",
+    "bytes": 5757,
+    "assetId": "asset-90000003"
+  },
+  {
+    "relativePath": "90_处理过程与审核/模型发布/20261127/seating/五向/asset-90000003.png",
+    "stagedFile": "payload/90_处理过程与审核/模型发布/20261127/seating/五向/asset-90000003.png",
+    "sha256": "81ab092a12b0473dd7594d8c3111d396be28b220af13906852aa1e91f214fce2",
+    "bytes": 558465,
+    "assetId": "asset-90000003"
+  }
+]

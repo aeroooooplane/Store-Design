@@ -36,3 +36,23 @@ npm run review -- <输出目录> asset-2595882
 `asset-90000002`从`asset-569180`四件组合保留一只完整白色空心H350实例，450×450×350mm。脚本`node scripts/extract-training-stool.mjs`校验源SHA、四实例、三网格/504三角面、底部中心和回读尺寸，不缩放；不生成独立SKP。它要求RESOURCE_ROOT中的manifest已登记目标条目，并会重建目标文件，仅由资源协调窗口在备份后执行。随后走既有compress/review、catalog:white、catalog:finish、catalog:import流程。
 
 本机发布版为`models-20261030-12`，资源及哈希见[发布记录](../../docs/model-publication/20261030/s2/README.md)。新增OneDrive同步及跨机使用未验证。
+
+## SI2.0 字母凳单张与坐凳缩略图
+
+`asset-90000003`从`asset-15903874`四件组合中保留未变形的`SketchUp_Instance_1`，完整凳体与软垫共2网格、576三角面。仅水平转正并移到底部中心，450×450×450mm，不缩放。源组合首张被压至421.875mm，因此不选它。保留原材质、两张贴图和源组合SKP，不生成独立SKP。
+
+所有工具现在支持与API一致的`RESOURCE_ROOT`（其下为`04_模型库`）。普通开发必须使用独立资源副本；新提取脚本会拒绝默认或共享资源根，且不会覆盖已有输出。先在副本manifest中登记目标条目，再执行：
+
+```powershell
+$env:RESOURCE_ROOT = 'C:/隔离输出/资源库'
+node tools/su-convert/scripts/extract-letter-stool.mjs
+node tools/su-convert/scripts/compress-glb.mjs asset-90000003
+$env:SU_REVIEW_PORT = '5256'
+node tools/su-convert/scripts/render-glb-review.mjs 'C:/隔离输出/五向' asset-90000003
+node tools/su-convert/scripts/render-seating-thumbnails.mjs 'C:/隔离输出/缩略图'
+pnpm catalog:white asset-90000003
+pnpm catalog:finish asset-90000003
+# DATABASE_URL与STORAGE_ROOT也必须设置为隔离目录，再运行catalog:import。
+```
+
+缩略图工具直接读取四款实际GLB，校验尺寸、组合四张和透明背景。SI1.0只在缩略图中使用较深灰色，模型材质不改；输出透明PNG，前端使用压缩WebP并沿用卡片背景。资源增量由发布负责人核对备份后统一发布，记录见[本轮清单](../../docs/model-publication/20261127/seating/README.md)。

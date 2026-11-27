@@ -1,0 +1,104 @@
+{
+  "id": "asset-90000003",
+  "dimensionsMm": [
+    450,
+    450,
+    450
+  ],
+  "sourceInstance": "SketchUp_Instance_1",
+  "meshes": 2,
+  "triangles": 576,
+  "sourceSkpUnchanged": true,
+  "newNativeSkp": false,
+  "compression": {
+    "tool": "@gltf-transform/core@4.5.1 + meshoptimizer@1.3.0",
+    "steps": [
+      "dedup",
+      "weld",
+      "prune",
+      "meshopt(level=medium, position=16bit)"
+    ],
+    "requires": "EXT_meshopt_compression, KHR_mesh_quantization",
+    "bytesBefore": 2152144,
+    "glbSha256Before": "aa6bbaccc63369b03cf5909ee5552cfeed48f0b74e51ec5ffeb5d48749a51485",
+    "dimensionsAfter": {
+      "w": 0.45000010032654136,
+      "h": 0.4500001003265411,
+      "d": 0.45000010032654125
+    },
+    "compressedAt": "2026-11-27T07:47:03.234Z"
+  },
+  "white": {
+    "tool": "@gltf-transform 4.5.1 + meshoptimizer 1.3.0",
+    "sourceSha256": "601d612d5fffa4c21132ee1beefffa3784a293b667a1ac42f91c109d96b790c7",
+    "sha256": "b3381cb565fbef9640ce4dce28763e5b5f062fde84beec5a1fbbb5236c207566",
+    "bytes": 3956,
+    "sourceBytes": 2134384,
+    "trianglesBefore": 576,
+    "trianglesAfter": 576,
+    "driftM": 0
+  },
+  "finish": {
+    "tool": "@gltf-transform 4.5.1 + meshoptimizer 1.3.0 + sharp",
+    "sourceSha256": "601d612d5fffa4c21132ee1beefffa3784a293b667a1ac42f91c109d96b790c7",
+    "sha256": "cecfad4a4b50681d931db5693853ade87bef5c3e52a4eab0dc8563e4ce3789dd",
+    "bytes": 364200,
+    "sourceBytes": 2134384,
+    "trianglesBefore": 576,
+    "trianglesAfter": 576,
+    "drawsBefore": 3,
+    "drawsAfter": 3,
+    "specks": 0,
+    "pairedTriangles": 576,
+    "driftM": 0
+  },
+  "fiveViews": "passed",
+  "catalogImport": "102 assets,75 GLB,62 white,75 finish; new asset imported; only two existing zero-extent warnings",
+  "thumbnailRender": [
+    {
+      "id": "asset-90000002",
+      "dimensions": {
+        "w": 0.4500001003265381,
+        "d": 0.4500001748810434,
+        "h": 0.34999397432849605
+      },
+      "instances": 1,
+      "grayThumbnailOnly": true,
+      "cornerAlpha": 0
+    },
+    {
+      "id": "asset-569180",
+      "dimensions": {
+        "w": 1.2500001576802802,
+        "d": 1.2610002546897459,
+        "h": 0.3499939743284962
+      },
+      "instances": 4,
+      "grayThumbnailOnly": true,
+      "cornerAlpha": 0
+    },
+    {
+      "id": "asset-90000003",
+      "dimensions": {
+        "w": 0.45000010032654136,
+        "d": 0.45000010032654125,
+        "h": 0.4500001003265411
+      },
+      "instances": 1,
+      "grayThumbnailOnly": false,
+      "cornerAlpha": 0
+    },
+    {
+      "id": "asset-15903874",
+      "dimensions": {
+        "w": 1.300851107672122,
+        "d": 1.1004001496721223,
+        "h": 0.45000010032654125
+      },
+      "instances": 4,
+      "grayThumbnailOnly": false,
+      "cornerAlpha": 0
+    }
+  ],
+  "formalPublished": false
+}
