@@ -298,8 +298,8 @@ export function RenderStage({
             ? { data: display.data, rules: displayRules.data, options: await displayExport() }
             : undefined
         await archiveDelivery(
-          { project, node, images: latest.data.images, cameras: views },
-          { ...plan, space, assets, ...(exhibit ? { exhibit } : {}) },
+          { project, node, space, images: latest.data.images, cameras: views },
+          { ...plan, assets, ...(exhibit ? { exhibit } : {}) },
         )
         await client.invalidateQueries({ queryKey: workbenchKeys.deliveries(node.id) })
         return
@@ -453,7 +453,7 @@ export function RenderStage({
             <PlanView
               svgRef={planRef}
               space={space}
-              shopType={project.shopType}
+              shopType={space.shopType ?? project.shopType}
               layout={layout}
               assets={assets}
               numbers={numbers}
@@ -463,7 +463,7 @@ export function RenderStage({
             <PlanView
               svgRef={displayPlanRef}
               space={space}
-              shopType={project.shopType}
+              shopType={space.shopType ?? project.shopType}
               layout={layout}
               assets={assets}
               numbers={NO_NUMBERS}
@@ -541,7 +541,7 @@ export function RenderStage({
                 <Viewer3D
                   ref={viewer}
                   space={space}
-                  shopType={project.shopType}
+                  shopType={space.shopType ?? project.shopType}
                   layout={layout}
                   assets={assets}
                   selectedId={null}

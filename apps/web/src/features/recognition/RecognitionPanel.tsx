@@ -5,6 +5,9 @@ import type { PDFDocumentProxy } from 'pdfjs-dist'
 import {
   ITEM_SOURCE_LABELS,
   RECOGNITION_MIN_CONFIDENCE,
+  SHOP_TYPES,
+  SHOP_TYPE_LABELS,
+  ShopTypeSchema,
   rotatedFootprint,
   settleNearQuarter,
 } from '@store/shared'
@@ -17,6 +20,7 @@ import type {
   RecognitionDraft,
   RecognitionRun,
   RecognizeRequest,
+  ShopType,
   Space,
   VectorContent,
 } from '@store/shared'
@@ -43,6 +47,7 @@ interface RecognitionPanelProps {
   projectId: string
   assets: Asset[]
   spaceName?: string
+  initialShopType?: ShopType
   onCreated: (nodeId: string) => void
   onCancel?: (() => void) | undefined
 }
@@ -156,9 +161,11 @@ export function RecognitionPanel({
   projectId,
   assets,
   spaceName = '空间 A',
+  initialShopType,
   onCreated,
   onCancel,
 }: RecognitionPanelProps) {
+  const [shopType, setShopType] = useState(initialShopType)
   const [fineMode, setFineMode] = useState(true)
   const [recentUploads, setRecentUploads] = useState<PlanUpload[]>([])
   useEffect(() => {
@@ -323,7 +330,12 @@ export function RecognitionPanel({
   function submit(space: Space, name: string) {
     if (!run) return
     confirm.mutate(
-      { runId: run.id, name, space, layout: toLayout(draft?.items ?? [], choices, assetMap) },
+      {
+        runId: run.id,
+        name,
+        space: shopType ? { ...space, shopType } : space,
+        layout: toLayout(draft?.items ?? [], choices, assetMap),
+      },
       { onSuccess: (created) => onCreated(created.node.id) },
     )
   }
@@ -647,6 +659,25 @@ export function RecognitionPanel({
                   )}
 
                   <h3>校对并确认空间</h3>
+                  {shopType && (
+                    <label className="field">
+                      铺位形态
+                      <select
+                        value={shopType}
+                        disabled={confirm.isPending}
+                        onChange={(event) => {
+                          const result = ShopTypeSchema.safeParse(event.target.value)
+                          if (result.success) setShopType(result.data)
+                        }}
+                      >
+                        {SHOP_TYPES.map((type) => (
+                          <option key={type} value={type}>
+                            {SHOP_TYPE_LABELS[type]}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  )}
                   {traced ? (
                     <p className="hint">已用原图上描出的边界；可在下面继续核对尺寸。</p>
                   ) : (

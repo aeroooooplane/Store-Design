@@ -105,7 +105,7 @@ function fitColumn(obstacle: Obstacle, source: number): SketchColumn | null {
 
 export function spaceToSketch(shop: ShopType, space?: Space) {
   const sketch: SpaceSketch = {
-    shop,
+    shop: space?.shopType ?? shop,
     closed: Boolean(space),
     height: space ? space.height * 1000 : 3200,
     points: [],
@@ -264,8 +264,8 @@ function polygonForColumn(column: SketchColumn): Obstacle['polygon'] {
   return corners.map(([u, v]) => metres([x + u * cos - v * sin, y + u * sin + v * cos]))
 }
 
-export function sketchToSpace(sketch: SpaceSketch, initial?: Space) {
-  const loaded = spaceToSketch(sketch.shop, initial)
+export function sketchToSpace(sketch: SpaceSketch, initial?: Space, initialShop = sketch.shop) {
+  const loaded = spaceToSketch(initialShop, initial)
   const original = loaded.sketch
   const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b)
   const samePoints = initial && same(sketch.points, original.points)
@@ -302,6 +302,9 @@ export function sketchToSpace(sketch: SpaceSketch, initial?: Space) {
   return SpaceSchema.safeParse({
     ...initial,
     ...converted.data,
+    ...(!initial || initial.shopType !== undefined || sketch.shop !== original.shop
+      ? { shopType: sketch.shop }
+      : {}),
     height: sketch.height / 1000,
     boundary: samePoints ? initial.boundary : sketch.points.map(metres),
     entrances: sameOpenings ? initial.entrances : converted.data.entrances,

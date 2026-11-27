@@ -131,8 +131,9 @@ def archive_compiled(request,node_id,kind,data,revision,expected_views,pages_ful
         date = now[:10]
         revision_no = db.execute("""SELECT count(*) FROM stage_exports e JOIN workbench_nodes n ON e.nodeId=n.id
             WHERE n.projectId=? AND e.kind='delivery' AND substr(e.createdAt,1,10)=?""",(node["projectId"],date)).fetchone()[0]+1
-        names = rules.run("delivery-names",{"name":project["name"],"shopType":project["shopType"],
-            "space":resolve_space(db,node),"date":date,"revision":revision_no})
+        space = resolve_space(db, node)
+        names = rules.run("delivery-names",{"name":project["name"],"shopType":space.get("shopType",project["shopType"]),
+            "space":space,"date":date,"revision":revision_no})
         folder = names["folder"]
         image_ids = [picture["url"].rsplit("/",1)[-1] for picture in images]
         marks = ",".join("?" for _ in image_ids)

@@ -28,7 +28,7 @@ export const generatePlansTool = tool({
     if (!tools.spaceNodeId) throw new AppError('INVALID_STATE', '没有空间节点')
     const result = await generateLayouts(tools.db, tools.ctx, {
       space,
-      shopType: tools.project.shopType,
+      shopType: space.shopType ?? tools.project.shopType,
       siStyle: tools.project.siStyle,
       strategies: ['max', 'area', 'min'],
     })
@@ -92,7 +92,9 @@ export const placeItemTool = tool({
       asset,
       input.along,
       input.position ?? 0.5,
-      mount === 'wall' || mount === 'embedded' ? 0 : wallGap(tools.project.shopType),
+      mount === 'wall' || mount === 'embedded'
+        ? 0
+        : wallGap(space.shopType ?? tools.project.shopType),
       input.rotation,
     )
     const item: LayoutItem = {
@@ -153,7 +155,7 @@ export const moveItemTool = tool({
         { name: item.name, footprint: unrotated(item), front },
         input.along,
         input.position ?? 0.5,
-        wallGap(tools.project.shopType),
+        wallGap(space.shopType ?? tools.project.shopType),
       )
       next = { ...item, ...placed }
     } else {

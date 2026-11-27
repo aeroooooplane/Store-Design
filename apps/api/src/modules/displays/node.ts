@@ -283,7 +283,7 @@ export async function nodeDisplayFiles(
     market: project.market,
     subtitle: [
       si,
-      SHOP_TYPE_LABELS[project.shopType],
+      SHOP_TYPE_LABELS[(await resolveSpace(db, nodeId)).shopType ?? project.shopType],
       `中岛桌 ${islands.length} 张${islands[0] ? `（${DISPLAY_ORIENTATION_LABELS[islands[0].orientation]}）` : ''}`,
       ...(display.tables.length > islands.length
         ? [`边桌 ${display.tables.length - islands.length} 张`]

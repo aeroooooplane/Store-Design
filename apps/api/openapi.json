@@ -1877,6 +1877,14 @@
                                       1
                                     ]
                                   },
+                                  "shopType": {
+                                    "type": "string",
+                                    "enum": [
+                                      "side_hall",
+                                      "island",
+                                      "zone"
+                                    ]
+                                  },
                                   "demand": {
                                     "type": "object",
                                     "properties": {
@@ -3984,6 +3992,14 @@
                           1
                         ]
                       },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
+                        ]
+                      },
                       "demand": {
                         "type": "object",
                         "properties": {
@@ -4977,6 +4993,14 @@
                                   "type": "number",
                                   "enum": [
                                     1
+                                  ]
+                                },
+                                "shopType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "side_hall",
+                                    "island",
+                                    "zone"
                                   ]
                                 },
                                 "demand": {
@@ -6169,6 +6193,14 @@
                                 1
                               ]
                             },
+                            "shopType": {
+                              "type": "string",
+                              "enum": [
+                                "side_hall",
+                                "island",
+                                "zone"
+                              ]
+                            },
                             "demand": {
                               "type": "object",
                               "properties": {
@@ -7329,6 +7361,14 @@
                                 1
                               ]
                             },
+                            "shopType": {
+                              "type": "string",
+                              "enum": [
+                                "side_hall",
+                                "island",
+                                "zone"
+                              ]
+                            },
                             "demand": {
                               "type": "object",
                               "properties": {
@@ -8361,6 +8401,14 @@
                           1
                         ]
                       },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
+                        ]
+                      },
                       "demand": {
                         "type": "object",
                         "properties": {
@@ -8880,6 +8928,14 @@
                         "type": "number",
                         "enum": [
                           1
+                        ]
+                      },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
                         ]
                       },
                       "demand": {
@@ -9530,6 +9586,14 @@
                                   "type": "number",
                                   "enum": [
                                     1
+                                  ]
+                                },
+                                "shopType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "side_hall",
+                                    "island",
+                                    "zone"
                                   ]
                                 },
                                 "demand": {
@@ -10722,6 +10786,14 @@
                                 1
                               ]
                             },
+                            "shopType": {
+                              "type": "string",
+                              "enum": [
+                                "side_hall",
+                                "island",
+                                "zone"
+                              ]
+                            },
                             "demand": {
                               "type": "object",
                               "properties": {
@@ -11861,6 +11933,14 @@
                               "type": "number",
                               "enum": [
                                 1
+                              ]
+                            },
+                            "shopType": {
+                              "type": "string",
+                              "enum": [
+                                "side_hall",
+                                "island",
+                                "zone"
                               ]
                             },
                             "demand": {
@@ -19988,6 +20068,14 @@
                           1
                         ]
                       },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
+                        ]
+                      },
                       "demand": {
                         "type": "object",
                         "properties": {
@@ -20559,6 +20647,14 @@
                           "type": "number",
                           "enum": [
                             1
+                          ]
+                        },
+                        "shopType": {
+                          "type": "string",
+                          "enum": [
+                            "side_hall",
+                            "island",
+                            "zone"
                           ]
                         },
                         "demand": {
@@ -21565,6 +21661,14 @@
                         "type": "number",
                         "enum": [
                           1
+                        ]
+                      },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
                         ]
                       },
                       "demand": {
@@ -27469,6 +27573,14 @@
                           1
                         ]
                       },
+                      "shopType": {
+                        "type": "string",
+                        "enum": [
+                          "side_hall",
+                          "island",
+                          "zone"
+                        ]
+                      },
                       "demand": {
                         "type": "object",
                         "properties": {
@@ -28437,6 +28549,14 @@
                                   "type": "number",
                                   "enum": [
                                     1
+                                  ]
+                                },
+                                "shopType": {
+                                  "type": "string",
+                                  "enum": [
+                                    "side_hall",
+                                    "island",
+                                    "zone"
                                   ]
                                 },
                                 "demand": {

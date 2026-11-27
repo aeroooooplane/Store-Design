@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { SHOP_TYPE_LABELS, validateSpace } from '@store/shared'
+import { validateSpace } from '@store/shared'
 import type { Space, ShopType } from '@store/shared'
 import outlineHtml from './outline-sketch.html?raw'
 import { sketchToSpace, spaceToSketch } from './space-sketch.ts'
@@ -58,7 +58,7 @@ export function SpaceCaptureEditor({
       const { name, onSubmit } = settings.current
       if (!name.trim()) return sendResult(port1, '请填写空间名称')
       if (!event.data.state.closed) return sendResult(port1, '请先闭合轮廓')
-      const parsed = sketchToSpace(event.data.state, initial)
+      const parsed = sketchToSpace(event.data.state, initial, source.sketch.shop)
       if (!parsed.success) {
         return sendResult(port1, '无法保存，请检查轮廓、层高或开口数量')
       }
@@ -80,7 +80,8 @@ export function SpaceCaptureEditor({
       {
         type: 'store-space-capture',
         submitLabel,
-        state: { ...source.sketch, shopLabel: SHOP_TYPE_LABELS[shop], ortho: false },
+        state: { ...source.sketch, ortho: false },
+        preserveOpenings: initial !== undefined,
         fixedObstacles: source.fixedObstacles.map(({ obstacle }) =>
           obstacle.polygon.map(([x, z]) => [x * 1000, z * 1000]),
         ),

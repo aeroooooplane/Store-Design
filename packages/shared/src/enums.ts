@@ -8,7 +8,7 @@ export type ShopType = z.infer<typeof ShopTypeSchema>
 export const SHOP_TYPE_LABELS: Record<ShopType, string> = {
   side_hall: '边厅店',
   island: '中岛店',
-  zone: '专区',
+  zone: '专区店',
 }
 
 export const STORE_TYPES = ['exclusive', 'camera_retailer', 'zone'] as const

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { DemandSchema } from './demand.ts'
+import { ShopTypeSchema } from '../enums.ts'
 import {
   boundaryPath,
   isSimplePolygon,
@@ -47,6 +48,8 @@ export const CalibrationSchema = z.object({
  */
 export const SpaceSchema = z.object({
   schemaVersion: z.literal(1),
+  /** Old spaces use the project’s saved site form until edited. */
+  shopType: ShopTypeSchema.optional(),
   demand: DemandSchema.optional(),
   boundary: z.array(PointSchema).min(3).max(200),
   height: z.number().finite().min(1.5).max(20),

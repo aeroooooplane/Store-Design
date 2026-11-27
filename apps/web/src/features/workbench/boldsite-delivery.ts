@@ -29,6 +29,7 @@ import { exportDisplaySlides } from '../projects/pilot-display-slides.ts'
 interface Scene {
   node: DesignNode
   project: Project
+  space: Space
   images: RenderImage[]
   cameras: NodeCamera[]
 }
@@ -104,7 +105,7 @@ async function compileDisplay(scene: Scene, exhibit: Exhibit) {
   const [pptx, xlsx] = await Promise.all([
     exportDisplaySlides({
       title,
-      subtitle: SHOP_TYPE_LABELS[scene.project.shopType],
+      subtitle: SHOP_TYPE_LABELS[scene.space.shopType ?? scene.project.shopType],
       strategy: scene.node.siStyle ?? scene.project.siStyle,
       market: scene.project.market,
       si: scene.node.siStyle ?? scene.project.siStyle,
@@ -140,7 +141,6 @@ export async function archiveDelivery(
   input: {
     png: string
     svg: string
-    space: Space
     assets: ReadonlyMap<string, Asset>
     exhibit?: Exhibit
   },
@@ -167,12 +167,12 @@ export async function archiveDelivery(
       }),
   )
   const mm = (metres: number) => Math.round(metres * 1000)
-  const xs = input.space.boundary.map((p) => p[0])
-  const zs = input.space.boundary.map((p) => p[1])
+  const xs = scene.space.boundary.map((p) => p[0])
+  const zs = scene.space.boundary.map((p) => p[1])
   const files = await exportDeliveryPdfs({
     title: storeTitle(scene.project.name),
     subtitle: [
-      SHOP_TYPE_LABELS[scene.project.shopType],
+      SHOP_TYPE_LABELS[scene.space.shopType ?? scene.project.shopType],
       MARKET_LABELS[scene.project.market],
       scene.node.siStyle,
     ].join(' · '),
@@ -181,7 +181,7 @@ export async function archiveDelivery(
     legend,
     views,
     facts: [
-      `面积 ${polygonArea(input.space.boundary).toFixed(1)} ㎡，外包尺寸 ${mm(Math.max(...xs) - Math.min(...xs))} × ${mm(Math.max(...zs) - Math.min(...zs))} mm，层高 ${mm(input.space.height)} mm`,
+      `面积 ${polygonArea(scene.space.boundary).toFixed(1)} ㎡，外包尺寸 ${mm(Math.max(...xs) - Math.min(...xs))} × ${mm(Math.max(...zs) - Math.min(...zs))} mm，层高 ${mm(scene.space.height)} mm`,
       `道具 ${layout.items.length} 件，${legend.length} 种（编号见图例）`,
       `方案：${scene.node.name}`,
       `效果图 ${views.length} 个视角`,

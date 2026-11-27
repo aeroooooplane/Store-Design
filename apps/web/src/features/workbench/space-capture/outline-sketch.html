@@ -24,7 +24,14 @@
     <div class="viz-dotted-background space-entry-demo">
       <section id="space-entry-proposal" aria-label="空间录入">
         <header>
-          <span data-shop-label></span>
+          <label>
+            铺位形态
+            <select data-shop>
+              <option value="side_hall">边厅店</option>
+              <option value="island">中岛店</option>
+              <option value="zone">专区店</option>
+            </select>
+          </label>
           <button type="button" data-action="redraw" disabled>重新描边</button>
         </header>
         <div class="workspace">
@@ -671,6 +678,8 @@
         const COLUMN_SNAP_MM = 100
         const MAX_VERTICES = 200
         const MAX_OBSTACLES = 100
+        const shopSelect = root.querySelector('[data-shop]')
+        let preserveOpenings = false
         const openingLabels = { wall: '封闭', full: '整边开放', partial: '局部开放' }
         const copy = (value) => structuredClone(value)
         const initial = {
@@ -727,12 +736,26 @@
               ? i
               : best
           }, 0)
+          const openings = points.map((_, i) =>
+            shop === 'island' || i === front ? { mode: 'full' } : null,
+          )
+          if (shop === 'zone' && points.length >= 3) {
+            const prev = (front + points.length - 1) % points.length
+            const next = (front + 1) % points.length
+            const previousLength = length(points[prev], points[front])
+            const nextLength = length(points[next], points[(next + 1) % points.length])
+            const side = nextLength >= previousLength ? next : prev
+            const size = Math.floor(Math.max(nextLength, previousLength))
+            const width = Math.min(
+              size - 1,
+              Math.max(1, Math.round(size / 2 / EDGE_STEP) * EDGE_STEP),
+            )
+            openings[side] = { mode: 'partial', start: side === next ? 0 : size - width, width }
+          }
           return {
             edge: front,
             mainEdge: shop !== 'island' && points.length ? front : -1,
-            openings: points.map((_, i) =>
-              shop === 'island' || i === front ? { mode: 'full' } : null,
-            ),
+            openings,
           }
         }
 
@@ -2079,7 +2102,8 @@
           root.querySelector('[data-trace-tools]').hidden = state.closed
           controls('ortho').setAttribute('aria-pressed', String(orthoActive()))
           renderColumnControls()
-          root.querySelector('[data-shop-label]').textContent = state.shopLabel ?? '中岛店'
+          shopSelect.value = state.shop
+          shopSelect.disabled = !session || submitting
           setting('height').value = state.height
           root.querySelector('[data-edges]').hidden = !state.closed || vertexSelected
           edgeSelect.replaceChildren(
@@ -2789,6 +2813,21 @@
             saveEdgeLength()
           }
         })
+        shopSelect.addEventListener('change', () => {
+          const shop = shopSelect.value
+          if (shop === state.shop) return
+          const defaults = shopDefaults(state.shop, state.points)
+          const followsDefaults =
+            state.mainEdge === defaults.mainEdge &&
+            JSON.stringify(state.openings) === JSON.stringify(defaults.openings)
+          remember()
+          state = { ...state, shop }
+          if (!preserveOpenings && followsDefaults) {
+            state = { ...state, ...shopDefaults(shop, state.points) }
+          }
+          error = ''
+          finish()
+        })
         setting('height').addEventListener('change', (event) => {
           const field = event.target,
             value = field.valueAsNumber
@@ -3169,6 +3208,7 @@
           )
             return
           const incoming = event.data.state
+          preserveOpenings = event.data.preserveOpenings === true
           if (!Array.isArray(incoming?.points) || !Array.isArray(incoming.openings)) return
           session = event.ports[0]
           session.onmessage = ({ data }) => {

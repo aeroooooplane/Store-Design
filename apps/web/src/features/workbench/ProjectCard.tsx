@@ -153,7 +153,7 @@ export function ProjectDetails({
   const rows: [string, string][] = [
     ['项目', project.name],
     ['店铺类型', project.storeType ? STORE_TYPE_LABELS[project.storeType] : '待设置'],
-    ['铺位形态', SHOP_TYPE_LABELS[project.shopType]],
+    ['铺位形态', SHOP_TYPE_LABELS[space?.shopType ?? project.shopType]],
     ['市场', MARKET_LABELS[project.market]],
     ['当前节点 SI', siStyle],
     ['创建时间', formatDateTime(project.createdAt)],

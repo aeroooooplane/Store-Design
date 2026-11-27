@@ -297,15 +297,17 @@ export function Workbench({ project }: { project: Project }) {
               }
             />
           ),
-          facade: !creatingSpace && cardSpaceData && project.shopType === 'side_hall' && (
-            <FacadeCard
-              space={cardSpaceData}
-              siStyle={shownSi}
-              market={project.market}
-              onEdit={() => void openEditSpace('edit-facade')}
-              disabled={changingSpace}
-            />
-          ),
+          facade: !creatingSpace &&
+            cardSpaceData &&
+            (cardSpaceData.shopType ?? project.shopType) === 'side_hall' && (
+              <FacadeCard
+                space={cardSpaceData}
+                siStyle={shownSi}
+                market={project.market}
+                onEdit={() => void openEditSpace('edit-facade')}
+                disabled={changingSpace}
+              />
+            ),
           details: <ProjectDetails project={project} siStyle={shownSi} />,
           drawings: <ProjectDrawings projectId={project.id} />,
         }}
@@ -370,6 +372,7 @@ function NewSpace({
         <RecognitionPanel
           projectId={projectId}
           assets={assets}
+          initialShopType={shop}
           spaceName={spaceName}
           onCreated={onCreated}
           onCancel={onCancel}
@@ -501,7 +504,7 @@ function NodePanel({
     )
   }
 
-  if (panel === 'edit-facade' && project.shopType === 'side_hall') {
+  if (panel === 'edit-facade' && (space.shopType ?? project.shopType) === 'side_hall') {
     return (
       <WorkbenchLayout
         left={left}
@@ -540,7 +543,7 @@ function NodePanel({
       projectId={project.id}
       baseNode={current}
       space={space}
-      shopType={project.shopType}
+      shopType={space.shopType ?? project.shopType}
       nodes={nodes}
       siStyle={nodeSiStyle(current, project.siStyle)}
       projectSi={project.siStyle}
@@ -627,7 +630,7 @@ function SpaceStage({
   const generation = usePlanGeneration({
     projectId: project.id,
     spaceNode,
-    shopType: project.shopType,
+    shopType: spaceNode.space.shopType ?? project.shopType,
     siStyle,
     existingNames,
     existingSpaceNames,
@@ -665,7 +668,7 @@ function SpaceStage({
     >
       <CandidateGallery
         generation={generation}
-        shopType={project.shopType}
+        shopType={spaceNode.space.shopType ?? project.shopType}
         siStyle={siStyle}
         assets={assets}
         onChosen={onSelect}
@@ -728,7 +731,7 @@ function StagePreview({
           <div className="space-summary" hidden={mode !== 'plan'}>
             <PlanView
               space={space}
-              shopType={project.shopType}
+              shopType={space.shopType ?? project.shopType}
               layout={node.layout}
               assets={assets}
               title={`${node.name} 平面`}
@@ -739,7 +742,7 @@ function StagePreview({
               <Suspense fallback={<p className="notice">正在载入三维…</p>}>
                 <Viewer3D
                   space={space}
-                  shopType={project.shopType}
+                  shopType={space.shopType ?? project.shopType}
                   layout={layout}
                   assets={assets}
                   selectedId={null}

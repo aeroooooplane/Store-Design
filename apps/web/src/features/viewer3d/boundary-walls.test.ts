@@ -1,6 +1,6 @@
 import * as THREE from 'three'
 import { expect, it } from 'vitest'
-import { rectangleSpace } from '@store/shared'
+import { rectangleSpace, wallSegments } from '@store/shared'
 import { buildRoom } from './room-builder.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
 
@@ -64,6 +64,15 @@ it('灰色透明墙不写深度；白模/材质共用它，避免遮住店内物
   expect(material.color.r).toBe(material.color.g)
   expect(material.color.g).toBe(material.color.b)
   material.dispose()
+})
+
+it('修改成中岛时按当前节点的实际开口生成墙体', () => {
+  const base = rectangleSpace(8, 6, 3.2)
+  const space = { ...base, shopType: 'island' as const }
+  expect(wallSegments(space, 'island')).toEqual(wallSegments(base, 'side_hall'))
+  const room = new THREE.Group()
+  buildRoom(room, space, 'island', new THREE.MeshStandardMaterial())
+  expect(room.children.some((mesh) => mesh.userData['boundaryWall'])).toBe(true)
 })
 
 it('中岛店原本没有实际边界墙，不凭空添加围墙', () => {
