@@ -136,7 +136,7 @@ export function DisplayPanel({
       if (isFullWorkbench) {
         const { archiveDisplay } = await import('../workbench/boldsite-delivery.ts')
         await archiveDisplay(
-          { project, node, cameras: cameras.data ?? [], images: renders.data?.images ?? [] },
+          { project, node, space, cameras: cameras.data ?? [], images: renders.data?.images ?? [] },
           { data, rules: rules.data, options },
         )
         await client.invalidateQueries({ queryKey: displayKeys.node(node.id) })

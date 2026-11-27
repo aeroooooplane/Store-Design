@@ -298,8 +298,8 @@ export function RenderStage({
             ? { data: display.data, rules: displayRules.data, options: await displayExport() }
             : undefined
         await archiveDelivery(
-          { project, node, images: latest.data.images, cameras: views },
-          { ...plan, space, assets, ...(exhibit ? { exhibit } : {}) },
+          { project, node, space, images: latest.data.images, cameras: views },
+          { ...plan, assets, ...(exhibit ? { exhibit } : {}) },
         )
         await client.invalidateQueries({ queryKey: workbenchKeys.deliveries(node.id) })
         return
