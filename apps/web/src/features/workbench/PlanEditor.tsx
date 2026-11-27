@@ -596,6 +596,7 @@ export function PlanEditor({
                   shopType={shopType}
                   layout={state.layout}
                   assets={assetMap}
+                  placementAsset={!planMain && !placementOnWall ? placementAsset : undefined}
                   selectedId={state.selectedId}
                   flaggedIds={flaggedIds}
                   onSelect={(id) => select(canEditModels ? id : null)}
