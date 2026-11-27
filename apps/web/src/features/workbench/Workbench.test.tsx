@@ -303,27 +303,38 @@ describe('Workbench', () => {
   })
 
   it.each([
-    ['空间', S1],
-    ['方案', P1],
-    ['渲染', P2],
-  ])('从%s阶段的空间信息保存到当前节点', async (_stage, nodeId) => {
+    ['空间', S1, '边厅店'],
+    ['方案', P1, '中岛店'],
+    ['渲染', P2, '专区店'],
+  ])('在%s阶段显示当前铺位形态并保存空间到当前节点', async (_stage, nodeId, shopLabel) => {
     server = fakeApi(
       [
         designNode(S1, null),
-        designNode(P1, S1, { layout: layout([{ ...table, cx: 7.1 }]) }),
-        designNode(P2, P1, { kind: 'render', siStyle: 'SI1.0' }),
+        designNode(P1, S1, {
+          space: { ...rectangleSpace(8, 6, 3.2), shopType: 'island' },
+          layout: layout([{ ...table, cx: 7.1 }]),
+        }),
+        designNode(P2, P1, {
+          kind: 'render',
+          siStyle: 'SI1.0',
+          space: { ...rectangleSpace(8, 6, 3.2), shopType: 'zone' },
+        }),
       ],
       null,
     )
     renderWorkbench(`?node=${nodeId}`)
 
     fireEvent.click(await screen.findByRole('tab', { name: '空间信息' }))
+    const info = within(await screen.findByRole('tabpanel', { name: '空间信息' }))
+    expect(await info.findByText('铺位形态')).toBeTruthy()
+    expect(info.getByText(shopLabel)).toBeTruthy()
     fireEvent.click(await screen.findByRole('button', { name: '修改空间' }))
     const canvas = await connectSpaceCanvas()
     expect(canvas.submitLabel).toBe('保存到当前节点')
     expect(canvas.state.points[1]).toEqual([8000, 0])
     canvas.confirm({
       ...canvas.state,
+      shop: 'side_hall',
       height: 3500,
       points: [
         [0, 0],
@@ -334,7 +345,9 @@ describe('Workbench', () => {
     })
 
     await waitFor(() => expect(screen.queryByTitle('空间画布')).toBeNull())
-    expect(screen.getByRole('tabpanel', { name: '空间信息' }).textContent).toContain('3500 mm')
+    const updatedInfo = screen.getByRole('tabpanel', { name: '空间信息' })
+    expect(updatedInfo.textContent).toContain('3500 mm')
+    expect(within(updatedInfo).getByText('边厅店')).toBeTruthy()
     expect(server.state.nodes).toHaveLength(3)
     expect(server.calls.filter((call) => call.method === 'PATCH').map((call) => call.path)).toEqual(
       [`/api/v1/nodes/${nodeId}/space`],

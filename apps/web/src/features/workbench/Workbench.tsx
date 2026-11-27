@@ -283,6 +283,7 @@ export function Workbench({ project }: { project: Project }) {
           currentSpace: cardSpaceData && (
             <CurrentSpaceCard
               space={cardSpaceData}
+              shopType={cardSpaceData.shopType ?? project.shopType}
               error={spaceOpenError}
               action={
                 !creatingSpace && (
