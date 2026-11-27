@@ -1,4 +1,4 @@
-import { facadePlanSpans, facadePoint, facadeWordmark } from '@store/shared'
+import { facadePlanSpans, facadePoint, facadeWordmark, openingPieces } from '@store/shared'
 import type { FacadeConfig, FacadeSection, Market, SiStyle, Space } from '@store/shared'
 import { facadeColors, sectionPieces } from './appearance.ts'
 
@@ -36,16 +36,18 @@ export function FacadeFormsPlan({
         className="facade-position-boundary"
         points={space.boundary.map((p) => p.join(',')).join(' ')}
       />
-      {[...space.entrances, ...space.openEdges].map(({ a, b }, i) => (
-        <line
-          key={i}
-          className="facade-position-entrance"
-          x1={a[0]}
-          y1={a[1]}
-          x2={b[0]}
-          y2={b[1]}
-        />
-      ))}
+      {[...space.entrances, ...space.openEdges].flatMap((opening, i) =>
+        (openingPieces(space, opening) ?? []).map(({ a, b, edge }) => (
+          <line
+            key={i + '-' + edge}
+            className="facade-position-entrance"
+            x1={a[0]}
+            y1={a[1]}
+            x2={b[0]}
+            y2={b[1]}
+          />
+        )),
+      )}
       {lines.map(({ a, b }, index) => (
         <line key={index} className="facade-plan-span" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />
       ))}
