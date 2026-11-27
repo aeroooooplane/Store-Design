@@ -23,6 +23,7 @@ interface WorkbenchLayoutProps {
 export const WorkbenchInfoContext = createContext<{
   currentSpace: ReactNode
   facade?: ReactNode
+  ceiling?: ReactNode
   details: ReactNode
   drawings: ReactNode
 } | null>(null)
@@ -93,6 +94,7 @@ function LeftTabs({
         {info?.currentSpace}
         {spaceFixtures}
         {info?.facade}
+        {info?.ceiling}
         {info?.details && (
           <details className="space-info-card">
             <summary>项目资料</summary>
