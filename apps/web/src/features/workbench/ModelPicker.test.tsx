@@ -273,6 +273,35 @@ describe('ModelPicker', () => {
     expect(thumbnail?.getAttribute('src')).toContain('asset-90000606.webp')
     expect(thumbnail?.style.background).toBe('transparent')
   })
+  it.each([
+    ['SI1.0', 'domestic'],
+    ['SI1.0', 'overseas'],
+    ['SI2.0', 'domestic'],
+    ['SI2.0', 'overseas'],
+  ] as const)(
+    'offers the MM93 racer under other for %s / %s with its transparent thumbnail',
+    (si, market) => {
+      const racer = asset('asset-90000607', '联名赛车橱窗模型', '非标陈列', {
+        name: 'MM93 × Insta360 赛车',
+        siFamily: '非标',
+        function: 'other',
+        front: '+Z',
+        installation: 'floor',
+        footprint: { w: 0.798, d: 2.1, h: 1.119 },
+      })
+      const onPick = vi.fn()
+      render(<ModelPicker assets={[racer]} siStyle={si} market={market} onPick={onPick} />)
+      const row = within(screen.getByRole('heading', { name: /^其他/ }).parentElement!).getByRole(
+        'button',
+        { name: '添加 MM93 × Insta360 赛车' },
+      )
+      expect(row.querySelector('img')?.getAttribute('src')).toContain('asset-90000607.webp')
+      expect(row.querySelector('img')?.style.background).toBe('transparent')
+      expect(row.textContent).toContain('798 × 2100 × 1119 mm')
+      fireEvent.click(row)
+      expect(onPick).toHaveBeenCalledWith(racer)
+    },
+  )
   it('只高亮当前待放置的型号，更换型号时清除上一项', () => {
     const logo = customLogoAsset()
     const models = [logo, catalog[1]!]

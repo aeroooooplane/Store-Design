@@ -11,8 +11,14 @@ import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
 import { SEATING_NAMES, SEATING_THUMBNAILS, seatingOrder } from './seating-options.ts'
 import x6Thumbnail from './other-thumbnails/asset-90000606.webp?url'
+import mm93Thumbnail from './other-thumbnails/asset-90000607.webp?url'
 import customLogoThumbnail from './signage-thumbnails/custom-logo.svg?url'
 import './model-picker-placement.css'
+
+const OTHER_THUMBNAILS: Record<string, string> = {
+  'asset-90000606': x6Thumbnail,
+  'asset-90000607': mm93Thumbnail,
+}
 
 /**
  * The picker lists one section per prop category, in this order (用户 2026-11-18). The jump
@@ -304,7 +310,7 @@ export function ModelPicker({
               <ul>
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
-                  const propThumbnail = asset.id === 'asset-90000606' ? x6Thumbnail : undefined
+                  const propThumbnail = OTHER_THUMBNAILS[asset.id]
                   const imageUrl = isCustomLogo({ assetId: asset.id })
                     ? customLogoThumbnail
                     : (propThumbnail ??

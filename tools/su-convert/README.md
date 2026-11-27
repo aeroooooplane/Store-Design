@@ -35,6 +35,8 @@ node tools/su-convert/scripts/benchmark-mm93-runtime.mjs <运行目录> <Tripo�
 
 此步骤不发布模型。正式入库仍按资源发布流程核对尺寸、朝向、五向图、manifest、资源锁与 `catalog:import`。4K 材质三张完整 RGBA8 mipmap 纹理约占 256 MiB 显存（估算），白模不加载这些图片；同一模型的多次放置共享几何和纹理。
 
+MM93 正式目录包使用 `package-mm93-catalog.mjs <原件> <新的外置目录> 2100`：原件另存，追加父级等比变换与 +Z 车头，不改原 BIN/UV/PBR。`verify-mm93-catalog.mjs <包目录> isolated` 验证独立工作台，`plan-mm93-publication.mjs <包目录>` 在隔离验收通过后生成增量与资源锁候选，交发布负责人统一写入。正式代码与资源就绪后使用 `verify-mm93-catalog.mjs <包目录> formal` 只读复核。完整步骤与尺寸说明见 [MM93 目录发布](../../docs/model-publication/20261127/mm93/catalog/README.md)。
+
 | 文件 | 作用 |
 |---|---|
 | `scripts/convert-su-assets.mjs` | DAE → GLB：统一米制、Y 向上、底部中心原点，核对尺寸，写 `conversion.json` |
