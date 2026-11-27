@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import {
   defaultCameras,
+  facadeKind,
+  supportsFacade,
   advertisingScreenName,
   isWallArt,
   isDisplayPanel,
@@ -294,7 +296,10 @@ export class WhiteScene {
   setFacade(space: Space, shopType: ShopType, siStyle: SiStyle, market: Market) {
     this.facade.children.forEach(disposeTree)
     this.facade.clear()
-    const model = shopType === 'side_hall' ? buildFacade3d(space, siStyle, market) : null
+    const model =
+      space.facade && supportsFacade(shopType, facadeKind(space.facade))
+        ? buildFacade3d(space, siStyle, market)
+        : null
     if (model) this.facade.add(model)
     this.sceneChanged()
   }

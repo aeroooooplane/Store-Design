@@ -16,7 +16,7 @@ import {
   itemMount,
   itemTilt,
   fixtureCorners,
-  facadeRun,
+  facadePlanSpans,
   mToMm,
   mainEntrance,
   modelBox,
@@ -558,18 +558,19 @@ export function PlanView({
       <polygon className="plan-lease" points={points(space.boundary)}>
         <title>租赁线</title>
       </polygon>
-      {shopType === 'side_hall' && space.facade && facadeRun(space.boundary, space.facade) && (
+      {facadePlanSpans(space, shopType).map(({ a, b }, index) => (
         <line
+          key={index}
           className="facade-plan-span"
           data-facade-span=""
-          x1={space.facade.a[0]}
-          y1={space.facade.a[1]}
-          x2={space.facade.b[0]}
-          y2={space.facade.b[1]}
+          x1={a[0]}
+          y1={a[1]}
+          x2={b[0]}
+          y2={b[1]}
         >
           <title>门楣投影</title>
         </line>
-      )}
+      ))}
       {space.obstacles.map((o, i) => (
         <polygon key={`o${i}`} className="plan-obstacle" fill="none" points={points(o.polygon)}>
           <title>{o.label ?? '障碍物'}</title>

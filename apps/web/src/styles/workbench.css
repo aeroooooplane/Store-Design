@@ -889,6 +889,65 @@ ul.issues li.hint::before {
   fill: var(--muted);
 }
 
+.facade-form-picker {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-block: 10px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.facade-form-picker select {
+  min-width: 160px;
+}
+
+.facade-form-group {
+  min-width: 0;
+  margin: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.facade-form-group legend {
+  padding-inline: 5px;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+
+.facade-fields .facade-checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.facade-fields .facade-checkbox input {
+  width: auto;
+  min-height: 0;
+  margin: 0;
+}
+
+.facade-plan-label {
+  fill: currentColor;
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+
+.facade-plan-label path,
+.facade-elevation-floor {
+  fill: none;
+  stroke: currentColor;
+  vector-effect: non-scaling-stroke;
+}
+
+.facade-hanging-wordmark {
+  stroke: #60636a;
+  stroke-width: 0.7;
+}
+
 .facade-review-summary {
   margin: 0;
   font-size: 0.85rem;
@@ -919,6 +978,13 @@ ul.issues li.hint::before {
   top: var(--space-2);
   display: flex;
   gap: var(--space-1);
+}
+
+.facade-view-review {
+  align-self: center;
+  padding-inline: 6px;
+  font-size: 0.75rem;
+  color: var(--muted);
 }
 
 .facade-view-controls button {

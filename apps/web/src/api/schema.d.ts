@@ -833,6 +833,138 @@ export interface paths {
                                         ];
                                     }[];
                                     facade?: {
+                                        /** @enum {string} */
+                                        kind: "corner";
+                                        faces: [
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            },
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            }
+                                        ];
+                                    } | {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        fasciaHeight: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        /** @enum {string} */
+                                        kind: "double";
+                                        /** @enum {string} */
+                                        joint: "continuous" | "display" | "break";
+                                        fireBreak?: boolean;
+                                        /** @enum {string} */
+                                        primary?: "auto" | "a" | "b";
+                                        openings: [
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            },
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            }
+                                        ];
+                                        /** @enum {string} */
+                                        si1Logos?: "auto" | "single" | "double";
+                                        /** @enum {string} */
+                                        si2Logos?: "auto" | "single" | "double";
+                                    } | {
+                                        /** @enum {string} */
+                                        kind: "island_hanging";
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        top: number;
+                                        beamHeight: number;
+                                        postWidth?: number;
+                                        /** @enum {string} */
+                                        face: "outward" | "inward";
+                                        si1LogoHeight?: number;
+                                        si1Drop?: number;
+                                        si2LogoHeight?: number;
+                                        corridorRestricted?: boolean;
+                                        tiltInward?: boolean;
+                                    } | {
                                         a: [
                                             number,
                                             number
@@ -1320,6 +1452,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -1527,6 +1791,138 @@ export interface paths {
                                         ];
                                     }[];
                                     facade?: {
+                                        /** @enum {string} */
+                                        kind: "corner";
+                                        faces: [
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            },
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            }
+                                        ];
+                                    } | {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        fasciaHeight: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        /** @enum {string} */
+                                        kind: "double";
+                                        /** @enum {string} */
+                                        joint: "continuous" | "display" | "break";
+                                        fireBreak?: boolean;
+                                        /** @enum {string} */
+                                        primary?: "auto" | "a" | "b";
+                                        openings: [
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            },
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            }
+                                        ];
+                                        /** @enum {string} */
+                                        si1Logos?: "auto" | "single" | "double";
+                                        /** @enum {string} */
+                                        si2Logos?: "auto" | "single" | "double";
+                                    } | {
+                                        /** @enum {string} */
+                                        kind: "island_hanging";
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        top: number;
+                                        beamHeight: number;
+                                        postWidth?: number;
+                                        /** @enum {string} */
+                                        face: "outward" | "inward";
+                                        si1LogoHeight?: number;
+                                        si1Drop?: number;
+                                        si2LogoHeight?: number;
+                                        corridorRestricted?: boolean;
+                                        tiltInward?: boolean;
+                                    } | {
                                         a: [
                                             number,
                                             number
@@ -1809,6 +2205,138 @@ export interface paths {
                                     ];
                                 }[];
                                 facade?: {
+                                    /** @enum {string} */
+                                    kind: "corner";
+                                    faces: [
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        },
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        }
+                                    ];
+                                } | {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    fasciaHeight: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                    /** @enum {string} */
+                                    kind: "double";
+                                    /** @enum {string} */
+                                    joint: "continuous" | "display" | "break";
+                                    fireBreak?: boolean;
+                                    /** @enum {string} */
+                                    primary?: "auto" | "a" | "b";
+                                    openings: [
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        },
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        }
+                                    ];
+                                    /** @enum {string} */
+                                    si1Logos?: "auto" | "single" | "double";
+                                    /** @enum {string} */
+                                    si2Logos?: "auto" | "single" | "double";
+                                } | {
+                                    /** @enum {string} */
+                                    kind: "island_hanging";
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    top: number;
+                                    beamHeight: number;
+                                    postWidth?: number;
+                                    /** @enum {string} */
+                                    face: "outward" | "inward";
+                                    si1LogoHeight?: number;
+                                    si1Drop?: number;
+                                    si2LogoHeight?: number;
+                                    corridorRestricted?: boolean;
+                                    tiltInward?: boolean;
+                                } | {
                                     a: [
                                         number,
                                         number
@@ -2080,6 +2608,138 @@ export interface paths {
                                     ];
                                 }[];
                                 facade?: {
+                                    /** @enum {string} */
+                                    kind: "corner";
+                                    faces: [
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        },
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        }
+                                    ];
+                                } | {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    fasciaHeight: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                    /** @enum {string} */
+                                    kind: "double";
+                                    /** @enum {string} */
+                                    joint: "continuous" | "display" | "break";
+                                    fireBreak?: boolean;
+                                    /** @enum {string} */
+                                    primary?: "auto" | "a" | "b";
+                                    openings: [
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        },
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        }
+                                    ];
+                                    /** @enum {string} */
+                                    si1Logos?: "auto" | "single" | "double";
+                                    /** @enum {string} */
+                                    si2Logos?: "auto" | "single" | "double";
+                                } | {
+                                    /** @enum {string} */
+                                    kind: "island_hanging";
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    top: number;
+                                    beamHeight: number;
+                                    postWidth?: number;
+                                    /** @enum {string} */
+                                    face: "outward" | "inward";
+                                    si1LogoHeight?: number;
+                                    si1Drop?: number;
+                                    si2LogoHeight?: number;
+                                    corridorRestricted?: boolean;
+                                    tiltInward?: boolean;
+                                } | {
                                     a: [
                                         number,
                                         number
@@ -2331,6 +2991,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -2441,6 +3233,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -2581,6 +3505,138 @@ export interface paths {
                                         ];
                                     }[];
                                     facade?: {
+                                        /** @enum {string} */
+                                        kind: "corner";
+                                        faces: [
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            },
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            }
+                                        ];
+                                    } | {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        fasciaHeight: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        /** @enum {string} */
+                                        kind: "double";
+                                        /** @enum {string} */
+                                        joint: "continuous" | "display" | "break";
+                                        fireBreak?: boolean;
+                                        /** @enum {string} */
+                                        primary?: "auto" | "a" | "b";
+                                        openings: [
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            },
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            }
+                                        ];
+                                        /** @enum {string} */
+                                        si1Logos?: "auto" | "single" | "double";
+                                        /** @enum {string} */
+                                        si2Logos?: "auto" | "single" | "double";
+                                    } | {
+                                        /** @enum {string} */
+                                        kind: "island_hanging";
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        top: number;
+                                        beamHeight: number;
+                                        postWidth?: number;
+                                        /** @enum {string} */
+                                        face: "outward" | "inward";
+                                        si1LogoHeight?: number;
+                                        si1Drop?: number;
+                                        si2LogoHeight?: number;
+                                        corridorRestricted?: boolean;
+                                        tiltInward?: boolean;
+                                    } | {
                                         a: [
                                             number,
                                             number
@@ -2861,6 +3917,138 @@ export interface paths {
                                     ];
                                 }[];
                                 facade?: {
+                                    /** @enum {string} */
+                                    kind: "corner";
+                                    faces: [
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        },
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        }
+                                    ];
+                                } | {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    fasciaHeight: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                    /** @enum {string} */
+                                    kind: "double";
+                                    /** @enum {string} */
+                                    joint: "continuous" | "display" | "break";
+                                    fireBreak?: boolean;
+                                    /** @enum {string} */
+                                    primary?: "auto" | "a" | "b";
+                                    openings: [
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        },
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        }
+                                    ];
+                                    /** @enum {string} */
+                                    si1Logos?: "auto" | "single" | "double";
+                                    /** @enum {string} */
+                                    si2Logos?: "auto" | "single" | "double";
+                                } | {
+                                    /** @enum {string} */
+                                    kind: "island_hanging";
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    top: number;
+                                    beamHeight: number;
+                                    postWidth?: number;
+                                    /** @enum {string} */
+                                    face: "outward" | "inward";
+                                    si1LogoHeight?: number;
+                                    si1Drop?: number;
+                                    si2LogoHeight?: number;
+                                    corridorRestricted?: boolean;
+                                    tiltInward?: boolean;
+                                } | {
                                     a: [
                                         number,
                                         number
@@ -3136,6 +4324,138 @@ export interface paths {
                                     ];
                                 }[];
                                 facade?: {
+                                    /** @enum {string} */
+                                    kind: "corner";
+                                    faces: [
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        },
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        }
+                                    ];
+                                } | {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    fasciaHeight: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                    /** @enum {string} */
+                                    kind: "double";
+                                    /** @enum {string} */
+                                    joint: "continuous" | "display" | "break";
+                                    fireBreak?: boolean;
+                                    /** @enum {string} */
+                                    primary?: "auto" | "a" | "b";
+                                    openings: [
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        },
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        }
+                                    ];
+                                    /** @enum {string} */
+                                    si1Logos?: "auto" | "single" | "double";
+                                    /** @enum {string} */
+                                    si2Logos?: "auto" | "single" | "double";
+                                } | {
+                                    /** @enum {string} */
+                                    kind: "island_hanging";
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    top: number;
+                                    beamHeight: number;
+                                    postWidth?: number;
+                                    /** @enum {string} */
+                                    face: "outward" | "inward";
+                                    si1LogoHeight?: number;
+                                    si1Drop?: number;
+                                    si2LogoHeight?: number;
+                                    corridorRestricted?: boolean;
+                                    tiltInward?: boolean;
+                                } | {
                                     a: [
                                         number,
                                         number
@@ -5711,6 +7031,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -5847,6 +7299,138 @@ export interface paths {
                                     ];
                                 }[];
                                 facade?: {
+                                    /** @enum {string} */
+                                    kind: "corner";
+                                    faces: [
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        },
+                                        {
+                                            a: [
+                                                number,
+                                                number
+                                            ];
+                                            b: [
+                                                number,
+                                                number
+                                            ];
+                                            openingWidth: number;
+                                            clearHeight: number;
+                                            fasciaHeight: number;
+                                            screenWidth?: number;
+                                            screenInset: number;
+                                            si1?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A1" | "A2" | "B";
+                                                /** @enum {string} */
+                                                preset?: "steel" | "led";
+                                            };
+                                            si2?: {
+                                                /** @enum {string} */
+                                                grade?: "S" | "A" | "B" | "C";
+                                                /** @enum {string} */
+                                                preset?: "aluminium" | "led" | "led_strip";
+                                            };
+                                            logo: boolean;
+                                            openingOffset?: number;
+                                        }
+                                    ];
+                                } | {
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    fasciaHeight: number;
+                                    screenInset: number;
+                                    si1?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A1" | "A2" | "B";
+                                        /** @enum {string} */
+                                        preset?: "steel" | "led";
+                                    };
+                                    si2?: {
+                                        /** @enum {string} */
+                                        grade?: "S" | "A" | "B" | "C";
+                                        /** @enum {string} */
+                                        preset?: "aluminium" | "led" | "led_strip";
+                                    };
+                                    /** @enum {string} */
+                                    kind: "double";
+                                    /** @enum {string} */
+                                    joint: "continuous" | "display" | "break";
+                                    fireBreak?: boolean;
+                                    /** @enum {string} */
+                                    primary?: "auto" | "a" | "b";
+                                    openings: [
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        },
+                                        {
+                                            offset: number;
+                                            width: number;
+                                            clearHeight: number;
+                                            screenWidth?: number;
+                                        }
+                                    ];
+                                    /** @enum {string} */
+                                    si1Logos?: "auto" | "single" | "double";
+                                    /** @enum {string} */
+                                    si2Logos?: "auto" | "single" | "double";
+                                } | {
+                                    /** @enum {string} */
+                                    kind: "island_hanging";
+                                    a: [
+                                        number,
+                                        number
+                                    ];
+                                    b: [
+                                        number,
+                                        number
+                                    ];
+                                    top: number;
+                                    beamHeight: number;
+                                    postWidth?: number;
+                                    /** @enum {string} */
+                                    face: "outward" | "inward";
+                                    si1LogoHeight?: number;
+                                    si1Drop?: number;
+                                    si2LogoHeight?: number;
+                                    corridorRestricted?: boolean;
+                                    tiltInward?: boolean;
+                                } | {
                                     a: [
                                         number,
                                         number
@@ -6077,6 +7661,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -7766,6 +9482,138 @@ export interface paths {
                                 ];
                             }[];
                             facade?: {
+                                /** @enum {string} */
+                                kind: "corner";
+                                faces: [
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    },
+                                    {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        openingWidth: number;
+                                        clearHeight: number;
+                                        fasciaHeight: number;
+                                        screenWidth?: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        logo: boolean;
+                                        openingOffset?: number;
+                                    }
+                                ];
+                            } | {
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                fasciaHeight: number;
+                                screenInset: number;
+                                si1?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A1" | "A2" | "B";
+                                    /** @enum {string} */
+                                    preset?: "steel" | "led";
+                                };
+                                si2?: {
+                                    /** @enum {string} */
+                                    grade?: "S" | "A" | "B" | "C";
+                                    /** @enum {string} */
+                                    preset?: "aluminium" | "led" | "led_strip";
+                                };
+                                /** @enum {string} */
+                                kind: "double";
+                                /** @enum {string} */
+                                joint: "continuous" | "display" | "break";
+                                fireBreak?: boolean;
+                                /** @enum {string} */
+                                primary?: "auto" | "a" | "b";
+                                openings: [
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    },
+                                    {
+                                        offset: number;
+                                        width: number;
+                                        clearHeight: number;
+                                        screenWidth?: number;
+                                    }
+                                ];
+                                /** @enum {string} */
+                                si1Logos?: "auto" | "single" | "double";
+                                /** @enum {string} */
+                                si2Logos?: "auto" | "single" | "double";
+                            } | {
+                                /** @enum {string} */
+                                kind: "island_hanging";
+                                a: [
+                                    number,
+                                    number
+                                ];
+                                b: [
+                                    number,
+                                    number
+                                ];
+                                top: number;
+                                beamHeight: number;
+                                postWidth?: number;
+                                /** @enum {string} */
+                                face: "outward" | "inward";
+                                si1LogoHeight?: number;
+                                si1Drop?: number;
+                                si2LogoHeight?: number;
+                                corridorRestricted?: boolean;
+                                tiltInward?: boolean;
+                            } | {
                                 a: [
                                     number,
                                     number
@@ -7966,6 +9814,138 @@ export interface paths {
                                         ];
                                     }[];
                                     facade?: {
+                                        /** @enum {string} */
+                                        kind: "corner";
+                                        faces: [
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            },
+                                            {
+                                                a: [
+                                                    number,
+                                                    number
+                                                ];
+                                                b: [
+                                                    number,
+                                                    number
+                                                ];
+                                                openingWidth: number;
+                                                clearHeight: number;
+                                                fasciaHeight: number;
+                                                screenWidth?: number;
+                                                screenInset: number;
+                                                si1?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A1" | "A2" | "B";
+                                                    /** @enum {string} */
+                                                    preset?: "steel" | "led";
+                                                };
+                                                si2?: {
+                                                    /** @enum {string} */
+                                                    grade?: "S" | "A" | "B" | "C";
+                                                    /** @enum {string} */
+                                                    preset?: "aluminium" | "led" | "led_strip";
+                                                };
+                                                logo: boolean;
+                                                openingOffset?: number;
+                                            }
+                                        ];
+                                    } | {
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        fasciaHeight: number;
+                                        screenInset: number;
+                                        si1?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A1" | "A2" | "B";
+                                            /** @enum {string} */
+                                            preset?: "steel" | "led";
+                                        };
+                                        si2?: {
+                                            /** @enum {string} */
+                                            grade?: "S" | "A" | "B" | "C";
+                                            /** @enum {string} */
+                                            preset?: "aluminium" | "led" | "led_strip";
+                                        };
+                                        /** @enum {string} */
+                                        kind: "double";
+                                        /** @enum {string} */
+                                        joint: "continuous" | "display" | "break";
+                                        fireBreak?: boolean;
+                                        /** @enum {string} */
+                                        primary?: "auto" | "a" | "b";
+                                        openings: [
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            },
+                                            {
+                                                offset: number;
+                                                width: number;
+                                                clearHeight: number;
+                                                screenWidth?: number;
+                                            }
+                                        ];
+                                        /** @enum {string} */
+                                        si1Logos?: "auto" | "single" | "double";
+                                        /** @enum {string} */
+                                        si2Logos?: "auto" | "single" | "double";
+                                    } | {
+                                        /** @enum {string} */
+                                        kind: "island_hanging";
+                                        a: [
+                                            number,
+                                            number
+                                        ];
+                                        b: [
+                                            number,
+                                            number
+                                        ];
+                                        top: number;
+                                        beamHeight: number;
+                                        postWidth?: number;
+                                        /** @enum {string} */
+                                        face: "outward" | "inward";
+                                        si1LogoHeight?: number;
+                                        si1Drop?: number;
+                                        si2LogoHeight?: number;
+                                        corridorRestricted?: boolean;
+                                        tiltInward?: boolean;
+                                    } | {
                                         a: [
                                             number,
                                             number

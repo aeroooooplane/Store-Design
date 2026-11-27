@@ -1,8 +1,14 @@
-import { useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { Raycaster, Vector2 } from 'three'
 import type { Object3D } from 'three'
-import { VIEW_ASPECT, facadeGeometry } from '@store/shared'
+import {
+  VIEW_ASPECT,
+  facadeGeometry,
+  facadeKind,
+  reviewFacadeConfig,
+  supportsFacade,
+} from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -19,11 +25,11 @@ import type { ModelPlacementClick } from '../workbench/editor-state.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
 
-function frontFacadeView(space: Space): View | null {
-  const geometry = space.facade && facadeGeometry(space, space.facade)
-  if (!geometry || !space.facade) return null
+function frontFacadeView(
+  geometry: NonNullable<ReturnType<typeof facadeGeometry>>,
+  height: number,
+): View {
   const { width, origin, direction, outward } = geometry
-  const height = space.facade.clearHeight + space.facade.fasciaHeight
   const fovDeg = 43
   const halfFov = Math.tan((fovDeg * Math.PI) / 360)
   const distance = (Math.max(height, width / VIEW_ASPECT) / (2 * halfFov)) * 1.22
@@ -35,6 +41,53 @@ function frontFacadeView(space: Space): View | null {
     position: [x + outward[0] * distance, y + distance * 0.045, z + outward[1] * distance],
     fovDeg,
   }
+}
+
+function facadeViews(space: Space, shop: ShopType, si: SiStyle, market: Market) {
+  const config = space.facade
+  if (!config || !supportsFacade(shop, facadeKind(config))) return []
+  const reviewed = reviewFacadeConfig(space, config, si, market)
+  if (!reviewed?.sections.length) return []
+  const height = (section: (typeof reviewed.sections)[number]) =>
+    section.fasciaBottom + section.fasciaHeight
+  const first = reviewed.sections[0]!
+  if (!('kind' in config) || config.kind === 'island_hanging')
+    return [{ label: '正看门头', view: frontFacadeView(first.frame, height(first)) }]
+  if (config.kind === 'double') {
+    const frame = facadeGeometry(space, { ...config, openingWidth: 0 })!
+    return [{ label: '正看门头', view: frontFacadeView(frame, height(first)) }]
+  }
+  const second = reviewed.sections[1]!
+  const a = frontFacadeView(first.frame, height(first))
+  const b = frontFacadeView(second.frame, height(second))
+  const target: View['target'] = [
+    (a.target[0] + b.target[0]) / 2,
+    (a.target[1] + b.target[1]) / 2,
+    (a.target[2] + b.target[2]) / 2,
+  ]
+  const x = first.frame.outward[0] + second.frame.outward[0]
+  const z = first.frame.outward[1] + second.frame.outward[1]
+  const distance = Math.max(
+    2.5,
+    Math.hypot(a.position[0] - a.target[0], a.position[2] - a.target[2]),
+    Math.hypot(b.position[0] - b.target[0], b.position[2] - b.target[2]),
+    (first.frame.width + second.frame.width) * 0.9,
+  )
+  const length = Math.hypot(x, z) || 1
+  const overview: View = {
+    target,
+    position: [
+      target[0] + (x / length) * distance,
+      target[1] + distance * 0.22,
+      target[2] + (z / length) * distance,
+    ],
+    fovDeg: 43,
+  }
+  return [
+    { label: '门头总览', view: overview },
+    { label: '正看 A', view: a },
+    { label: '正看 B', view: b },
+  ]
 }
 
 function visibleWallAt(
@@ -163,7 +216,10 @@ export function Viewer3D({
   const [error, setError] = useState<string | null>(null)
   const [backgroundError, setBackgroundError] = useState<string | null>(null)
   const [facadeVisible, setFacadeVisible] = useState(true)
-  const facadeView = shopType === 'side_hall' ? frontFacadeView(space) : null
+  const views = useMemo(
+    () => facadeViews(space, shopType, siStyle, market),
+    [space, shopType, siStyle, market],
+  )
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -203,13 +259,12 @@ export function Viewer3D({
     // space opens at the view handed in, if any.
     const start =
       viewedSpace.current === null
-        ? (startView.current ??
-          (shopType === 'side_hall' && preferFacadeView ? frontFacadeView(space) : null))
+        ? (startView.current ?? (preferFacadeView ? views[0]?.view : null))
         : null
     sceneRef.current?.setRoom(space, shopType, viewedSpace.current !== space && !start)
     if (start) sceneRef.current?.showView(start)
     viewedSpace.current = space
-  }, [space, shopType, preferFacadeView])
+  }, [space, shopType, preferFacadeView, views])
 
   useEffect(() => {
     sceneRef.current?.setItems(layout.items, assets, market)
@@ -292,17 +347,23 @@ export function Viewer3D({
           visibility: 'hidden',
         }}
       />
-      {facadeControls && facadeView && (
+      {facadeControls && views.length > 0 && (
         <div className="facade-view-controls">
-          <button
-            type="button"
-            onClick={() => {
-              setFacadeVisible(true)
-              sceneRef.current?.showView(facadeView)
-            }}
-          >
-            正看门头
-          </button>
+          {siStyle === 'SI1.0' && space.facade && facadeKind(space.facade) === 'island_hanging' && (
+            <span className="facade-view-review">手填预览 · 待复核</span>
+          )}
+          {views.map(({ label, view }) => (
+            <button
+              type="button"
+              key={label}
+              onClick={() => {
+                setFacadeVisible(true)
+                sceneRef.current?.showView(view)
+              }}
+            >
+              {label}
+            </button>
+          ))}
           <button type="button" onClick={() => setFacadeVisible((visible) => !visible)}>
             {facadeVisible ? '隐藏门头' : '显示门头'}
           </button>
