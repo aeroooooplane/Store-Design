@@ -177,6 +177,9 @@
                     <label data-column-depth
                       >深（mm）<input type="number" min="50" step="1" data-column-value="depth"
                     /></label>
+                    <label data-column-rotation hidden
+                      >角度（°）<input type="number" step="0.1" data-column-angle
+                    /></label>
                   </div>
                   <button
                     type="button"
@@ -572,8 +575,28 @@
       #space-entry-proposal .column-mark[data-column] {
         cursor: grab;
       }
+      #space-entry-proposal .column-rotate-stem {
+        stroke: var(--entry-accent);
+        stroke-width: 1.5;
+        pointer-events: none;
+      }
+      #space-entry-proposal .column-rotate {
+        fill: var(--entry-field);
+        stroke: var(--entry-accent);
+        stroke-width: 1.5;
+        cursor: grab;
+      }
+      #space-entry-proposal .column-rotate-label {
+        fill: var(--entry-wall);
+        font-size: 15px;
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
+      }
       #space-entry-proposal svg[data-object-dragging='true'],
-      #space-entry-proposal svg[data-object-dragging='true'] :is(.opening-handle, .column-mark) {
+      #space-entry-proposal
+        svg[data-object-dragging='true']
+        :is(.opening-handle, .column-mark, .column-rotate) {
         cursor: grabbing;
       }
       #space-entry-proposal .vertex-mark {
@@ -684,6 +707,7 @@
         const widthField = root.querySelector('[data-opening-value="width"]')
         const columnSize = root.querySelector('[data-column-size]')
         const columnFields = [...columnSize.querySelectorAll('[data-column-value]')]
+        const columnAngle = columnSize.querySelector('[data-column-angle]')
         const gapEditor = root.querySelector('[data-gap-editor]')
         const gapInput = root.querySelector('[data-gap-input]')
         const gapDirections = [
@@ -1539,17 +1563,37 @@
         }
         function drawColumn(column, attrs, parent = marks) {
           const [x, y] = toScreen([column.x, column.y])
-          const w = column.width * projection.scale,
-            d = column.depth * projection.scale
-          if (column.kind === 'circle')
-            node('circle', { cx: x, cy: y, r: w / 2, ...attrs }, undefined, parent)
-          else
+          if (column.kind === 'circle') {
             node(
-              'rect',
-              { x: x - w / 2, y: y - d / 2, width: w, height: d, ...attrs },
+              'circle',
+              { cx: x, cy: y, r: (column.width * projection.scale) / 2, ...attrs },
               undefined,
               parent,
             )
+          } else {
+            node(
+              'polygon',
+              { points: pointList(columnCorners(column).map(toScreen)), ...attrs },
+              undefined,
+              parent,
+            )
+          }
+        }
+        function paintColumnRotation(column, index) {
+          const [a, b] = columnCorners(column).map(toScreen)
+          const edge = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]
+          const direction = unit(subtract(edge, toScreen([column.x, column.y])))
+          const [cx, cy] = moveAlong(edge, direction, 19)
+          line(edge, [cx, cy], 'column-rotate-stem')
+          const handle = node('circle', {
+            cx,
+            cy,
+            r: 9,
+            class: 'column-rotate',
+            'data-column-rotate': index,
+          })
+          node('title', {}, '拖动旋转柱子', handle)
+          node('text', { x: cx, y: cy, class: 'column-rotate-label' }, '↻')
         }
         function columnBoundaryGap(
           column,
@@ -1557,6 +1601,8 @@
           sign,
           winding = Math.sign(signedArea(state.points)),
         ) {
+          if (column.kind === 'square' && column.rotation)
+            return rotatedColumnBoundaryGap(column, axis, sign, winding)
           const { x, y, width, depth } = column
           const center = [x, y],
             size = [width, depth]
@@ -1619,13 +1665,76 @@
           wall[axis] = sign * limit
           return { a: toScreen(edge), b: toScreen(wall), distance: limit - face }
         }
+        function rotatedColumnBoundaryGap(column, axis, sign, winding) {
+          const across = 1 - axis
+          const corners = columnCorners(column)
+          const middle = axis === 0 ? column.y : column.x
+          const acrossValues = corners.map((p) => p[across])
+          const low = Math.min(...acrossValues),
+            high = Math.max(...acrossValues)
+          const world = (u, v) => (axis === 0 ? [sign * u, v] : [v, sign * u])
+          const sample = (u, hit, v) => ({
+            a: toScreen(world(u, v)),
+            b: toScreen(world(hit, v)),
+            distance: hit - u,
+          })
+          let ahead, crossing, behind
+          state.points.forEach((p, i) => {
+            const q = state.points[(i + 1) % state.points.length]
+            const run = q[across] - p[across]
+            if (Math.abs(run) < 1e-7) return
+            const start = Math.max(low, Math.min(p[across], q[across]))
+            const end = Math.min(high, Math.max(p[across], q[across]))
+            if (start > end) return
+            const outward = sign * winding * run * (axis === 0 ? 1 : -1) > 0
+            // 每段柱边在横截面之间都是直线，最小间距落在端点。
+            const candidates = [
+              Math.max(start, Math.min(end, middle)),
+              start,
+              end,
+              ...acrossValues.filter((value) => value > start && value < end),
+            ]
+            for (const v of candidates) {
+              const section = []
+              corners.forEach((a, j) => {
+                const b = corners[(j + 1) % corners.length]
+                const span = b[across] - a[across]
+                if (Math.abs(span) < 1e-7) {
+                  if (Math.abs(a[across] - v) < 1e-7) section.push(sign * a[axis], sign * b[axis])
+                  return
+                }
+                const t = (v - a[across]) / span
+                if (t >= 0 && t <= 1) section.push(sign * (a[axis] + t * (b[axis] - a[axis])))
+              })
+              if (!section.length) continue
+              const face = Math.max(...section)
+              const hit = sign * (p[axis] + ((v - p[across]) / run) * (q[axis] - p[axis]))
+              const distance = hit - face
+              if (distance >= -1e-7) {
+                if (!ahead || distance < ahead.distance - 1e-7) ahead = sample(face, hit, v)
+              } else if (outward && hit >= Math.min(...section) - 1e-7) {
+                if (!crossing || distance < crossing.distance) crossing = sample(face, hit, v)
+              } else if (outward && (!behind || distance > behind.distance)) {
+                behind = sample(face, hit, v)
+              }
+            }
+          })
+          if (crossing || ahead || behind) return crossing ?? ahead ?? behind
+          const tip = corners.reduce((best, p) => (sign * (p[axis] - best[axis]) > 0 ? p : best))
+          return sample(
+            sign * tip[axis],
+            Math.max(...state.points.map((p) => sign * p[axis])),
+            tip[across],
+          )
+        }
         function columnLabelBox(column) {
           const [x, y] = toScreen([column.x, column.y])
+          const { width, depth } = bounds(columnCorners(column))
           return {
             x,
             y,
-            w: (column.width * projection.scale) / 2 + 2,
-            h: (column.depth * projection.scale) / 2 + 2,
+            w: (width * projection.scale) / 2 + 2,
+            h: (depth * projection.scale) / 2 + 2,
           }
         }
         function paintColumnDimensions(column, parent, labels, columnIndex) {
@@ -1685,6 +1794,19 @@
             gap: [start, end],
           }
         }
+        function columnContactOffset(column, normal, side) {
+          if (column.kind === 'circle')
+            return normal.map((axis) => (-side * axis * column.width) / 2)
+          const offsets = columnCorners(column).map((point) =>
+            subtract(point, [column.x, column.y]),
+          )
+          const distances = offsets.map((point) => side * dot(point, normal))
+          const nearest = Math.min(...distances)
+          const contacts = offsets.filter((_, i) => distances[i] - nearest < 1e-7)
+          return [0, 1].map(
+            (axis) => contacts.reduce((sum, point) => sum + point[axis], 0) / contacts.length,
+          )
+        }
         function snapColumnToWall(column, free, except = -1) {
           const original = { column }
           if (free) return original
@@ -1704,14 +1826,7 @@
               const signedGap = dot(subtract(center, a), normal)
               const side = signedGap < 0 ? -1 : 1
               // 圆柱取切点。方柱取迎墙的边中点，遇斜墙则取最靠墙的角点。
-              const contactOffset =
-                column.kind === 'circle'
-                  ? normal.map((axis) => (-side * axis * column.width) / 2)
-                  : normal.map((axis, i) =>
-                      Math.abs(axis) < 1e-7
-                        ? 0
-                        : (-side * Math.sign(axis) * (i === 0 ? column.width : column.depth)) / 2,
-                    )
+              const contactOffset = columnContactOffset(column, normal, side)
               const move = -dot(contactOffset, normal) - signedGap
               const distance = Math.abs(move)
               if (distance >= nearest) continue
@@ -1775,7 +1890,9 @@
           svg.dataset.edgeDragging = String(drag?.key === 'edge')
           svg.dataset.addingNode = String(addingNode)
           svg.dataset.placingColumn = String(Boolean(placingColumn))
-          svg.dataset.objectDragging = String(drag?.key === 'opening' || drag?.key === 'column')
+          svg.dataset.objectDragging = String(
+            ['opening', 'column', 'column-rotation'].includes(drag?.key),
+          )
           svg.setAttribute('viewBox', '0 0 ' + projection.w + ' ' + projection.h)
           marks.replaceChildren()
           const points = state.points.map(toScreen)
@@ -1902,7 +2019,10 @@
           }
           if (state.closed)
             state.columns.forEach((column, i) => {
-              if (!placingColumn && (!drag || drag.key !== 'column' || selectedColumn === i)) {
+              if (
+                !placingColumn &&
+                (!drag || !['column', 'column-rotation'].includes(drag.key) || selectedColumn === i)
+              ) {
                 paintColumnDimensions(
                   column,
                   marks,
@@ -1915,6 +2035,9 @@
                 ...(!placingColumn && !addingNode ? { 'data-column': i } : {}),
               })
             })
+          const selected = state.columns[selectedColumn]
+          if (state.closed && selected?.kind === 'square' && !placingColumn && !addingNode)
+            paintColumnRotation(selected, selectedColumn)
           if (!placingColumn) columnCursor = null
           paintColumnPlacement()
           if (drag?.key === 'column') paintWallSnap(drag.wall, columnPlacement)
@@ -1932,6 +2055,7 @@
             )
           columnSize.hidden = !active
           controls('remove-column').hidden = Boolean(placingColumn) || !active
+          columnAngle.closest('label').hidden = placingColumn || active?.kind !== 'square'
           if (!active) return
           const round = active.kind === 'circle'
           root.querySelector('[data-column-width-label]').textContent = round
@@ -1939,8 +2063,9 @@
             : '宽（mm）'
           root.querySelector('[data-column-depth]').hidden = round
           columnFields.forEach((field) => {
-            field.value = active[field.dataset.columnValue]
+            field.value = Math.round(active[field.dataset.columnValue])
           })
+          columnAngle.value = columnRotation(active.rotation ?? 0)
         }
         function render() {
           const vertexSelected = selectedVertex >= 0
@@ -2076,33 +2201,49 @@
           state = { ...state, points, closed: true, ...shopDefaults(state.shop, points) }
           finish()
         }
-        function rectangleCorners(center, w, d) {
-          const { x, y } = center
+        function columnAxes(column) {
+          const angle = ((column.rotation ?? 0) * Math.PI) / 180
+          const cos = Math.cos(angle),
+            sin = Math.sin(angle)
           return [
-            [x - w, y - d],
-            [x + w, y - d],
-            [x + w, y + d],
-            [x - w, y + d],
+            [cos, sin],
+            [-sin, cos],
           ]
         }
-        function boxesOverlap([a, , b], [c, , d]) {
-          return a[0] < d[0] && b[0] > c[0] && a[1] < d[1] && b[1] > c[1]
-        }
         function columnCorners(column) {
-          return rectangleCorners(column, column.width / 2, column.depth / 2)
+          const [u, v] = columnAxes(column)
+          const w = column.width / 2,
+            d = column.depth / 2
+          return [
+            [-w, -d],
+            [w, -d],
+            [w, d],
+            [-w, d],
+          ].map(([x, y]) => moveAlong(moveAlong([column.x, column.y], u, x), v, y))
         }
-        function columnOverlapsBox(column, corners) {
-          if (column.kind === 'square') return boxesOverlap(columnCorners(column), corners)
-          const [a, , b] = corners
-          const dx = Math.max(a[0] - column.x, 0, column.x - b[0])
-          const dy = Math.max(a[1] - column.y, 0, column.y - b[1])
-          return Math.hypot(dx, dy) < column.width / 2
+        function rectanglesOverlap(a, b) {
+          const first = columnCorners(a),
+            second = columnCorners(b)
+          return [...columnAxes(a), ...columnAxes(b)].every((axis) => {
+            const p = first.map((point) => dot(point, axis))
+            const q = second.map((point) => dot(point, axis))
+            return Math.max(...p) > Math.min(...q) + 1e-7 && Math.max(...q) > Math.min(...p) + 1e-7
+          })
+        }
+        function circleOverlapsRectangle(circle, rectangle) {
+          const [u, v] = columnAxes(rectangle)
+          const offset = [circle.x - rectangle.x, circle.y - rectangle.y]
+          const dx = Math.max(0, Math.abs(dot(offset, u)) - rectangle.width / 2)
+          const dy = Math.max(0, Math.abs(dot(offset, v)) - rectangle.depth / 2)
+          return Math.hypot(dx, dy) < circle.width / 2 - 1e-7
         }
         function columnFits(column, except = -1) {
           return state.columns.every((other, i) => {
             if (i === except) return true
-            if (column.kind === 'square') return !columnOverlapsBox(other, columnCorners(column))
-            if (other.kind === 'square') return !columnOverlapsBox(column, columnCorners(other))
+            if (column.kind === 'square' && other.kind === 'square')
+              return !rectanglesOverlap(column, other)
+            if (column.kind === 'square') return !circleOverlapsRectangle(other, column)
+            if (other.kind === 'square') return !circleOverlapsRectangle(column, other)
             return (
               Math.hypot(column.x - other.x, column.y - other.y) >= (column.width + other.width) / 2
             )
@@ -2517,7 +2658,7 @@
             if (!previewOnly) render()
             return
           }
-          if (active[key] === value) return
+          if (Math.round(active[key]) === value) return
           const column = { ...active, [key]: value }
           if (column.kind === 'circle') column.depth = column.width
           if (placingColumn) {
@@ -2539,6 +2680,47 @@
         columnFields.forEach((field) => {
           field.addEventListener('input', () => updateColumnSize(field, true))
           field.addEventListener('change', () => updateColumnSize(field))
+        })
+        function columnRotation(angle) {
+          return ((Math.round((angle % 360) * 10) + 3600) % 3600) / 10
+        }
+        function rotatedColumn(column, angle) {
+          const next = { ...column }
+          const rotation = columnRotation(angle)
+          if (rotation) next.rotation = rotation
+          else delete next.rotation
+          return next
+        }
+        function saveColumnRotation() {
+          const column = state.columns[selectedColumn]
+          const angle = columnAngle.valueAsNumber
+          if (placingColumn || column?.kind !== 'square') return
+          if (!Number.isFinite(angle)) {
+            render()
+            return
+          }
+          const next = rotatedColumn(column, angle)
+          if (columnRotation(column.rotation ?? 0) === (next.rotation ?? 0)) {
+            columnAngle.value = next.rotation ?? 0
+            return
+          }
+          if (!columnFits(next, selectedColumn)) {
+            error = '旋转后会与其他柱子重叠'
+            render()
+            return
+          }
+          remember()
+          state.columns[selectedColumn] = next
+          error = ''
+          includeEditedColumn(next)
+          finish()
+        }
+        columnAngle.addEventListener('change', saveColumnRotation)
+        columnAngle.addEventListener('keydown', (event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault()
+            saveColumnRotation()
+          }
         })
         function saveOpeningValue(field) {
           const opening = state.openings[state.edge],
@@ -2708,7 +2890,8 @@
           const edge = event.target.getAttribute('data-mark-edge')
           const openingEnd = event.target.getAttribute('data-opening-end')
           const column = event.target.getAttribute('data-column')
-          if (edge === null && vertex === null && openingEnd === null && column === null) {
+          const rotate = event.target.getAttribute('data-column-rotate')
+          if ([edge, vertex, openingEnd, column, rotate].every((value) => value === null)) {
             if (selectedColumn >= 0 || (state.closed && selectedVertex >= 0)) {
               selectedColumn = -1
               selectedVertex = -1
@@ -2737,6 +2920,16 @@
               direction: subtract(b, a).map((v) => v / size),
               size: Math.floor(size + 0.00001),
             }
+            svg.setPointerCapture(event.pointerId)
+            return
+          }
+          if (rotate !== null) {
+            const index = Number(rotate)
+            const center = [state.columns[index].x, state.columns[index].y]
+            const [x, y] = subtract(fromScreen(event, 0), center)
+            drag = { ...base, key: 'column-rotation', index, center, start: Math.atan2(y, x) }
+            error = ''
+            svg.focus({ preventScroll: true })
             svg.setPointerCapture(event.pointerId)
             return
           }
@@ -2854,6 +3047,24 @@
             render()
             return
           }
+          if (drag.key === 'column-rotation') {
+            const offset = subtract(fromScreen(event, 0), drag.center)
+            if (vectorLength(offset) * projection.scale < 4) return
+            const [x, y] = offset
+            const original = drag.before.columns[drag.index]
+            const angle =
+              (original.rotation ?? 0) + ((Math.atan2(y, x) - drag.start) * 180) / Math.PI
+            const next = rotatedColumn(original, angle)
+            if (!columnFits(next, drag.index)) {
+              error = '旋转后会与其他柱子重叠'
+            } else {
+              drag.moved = (next.rotation ?? 0) !== columnRotation(original.rotation ?? 0)
+              state.columns[drag.index] = drag.moved ? next : original
+              error = ''
+            }
+            render()
+            return
+          }
           if (drag.key === 'column') {
             drag.point = fromScreen(event, 0)
             updateDraggedColumn(drag.point, event.altKey)
@@ -2933,7 +3144,8 @@
             return
           }
           justDragged = previous.key !== 'edge'
-          if (previous.key === 'column') includeEditedColumn(state.columns[previous.index])
+          if (previous.key === 'column' || previous.key === 'column-rotation')
+            includeEditedColumn(state.columns[previous.index])
           error = ''
           remember({ state: previous.before, column: previous.column, vertex: previous.vertex })
           finish()

@@ -14,6 +14,7 @@ export interface SketchColumn {
   y: number
   width: number
   depth: number
+  rotation?: number
   source?: number
 }
 
@@ -59,15 +60,39 @@ function fitColumn(obstacle: Obstacle, source: number): SketchColumn | null {
     depth = maxZ - minZ
   const x = (maxX + minX) / 2,
     y = (maxZ + minZ) / 2
-  if (
-    polygon.length === 4 &&
-    polygon.every(
-      ([px, pz]) =>
-        (Math.abs(px - minX) < tolerance || Math.abs(px - maxX) < tolerance) &&
-        (Math.abs(pz - minZ) < tolerance || Math.abs(pz - maxZ) < tolerance),
-    )
-  )
-    return { kind: 'square', x, y, width, depth, source }
+  if (polygon.length === 4) {
+    const [a, b, c, d] = polygon
+    if (a && b && c && d) {
+      const ux = (b[0] - a[0] + c[0] - d[0]) / 2
+      const uy = (b[1] - a[1] + c[1] - d[1]) / 2
+      const vx = (c[0] - b[0] + d[0] - a[0]) / 2
+      const vy = (c[1] - b[1] + d[1] - a[1]) / 2
+      const width = Math.hypot(ux, uy)
+      const depth = Math.hypot(vx, vy)
+      const perpendicular = Math.abs(ux * vx + uy * vy) / Math.max(width, depth)
+      const closure = Math.hypot(a[0] + c[0] - b[0] - d[0], a[1] + c[1] - b[1] - d[1])
+      // 保存时各顶点分别取整到毫米，允许相对边产生轻微误差。
+      const rectangleTolerance = 2
+      if (
+        Math.min(width, depth) > rectangleTolerance &&
+        perpendicular <= rectangleTolerance &&
+        closure <= Math.SQRT2 * rectangleTolerance
+      ) {
+        const direction = Math.sign(ux * vy - uy * vx)
+        const angle = (Math.atan2(uy - direction * vx, ux + direction * vy) * 180) / Math.PI
+        const rotation = angle < 0 ? angle + 360 : angle
+        return {
+          kind: 'square',
+          x: (a[0] + b[0] + c[0] + d[0]) / 4,
+          y: (a[1] + b[1] + c[1] + d[1]) / 4,
+          width,
+          depth,
+          ...(rotation ? { rotation } : {}),
+          source,
+        }
+      }
+    }
+  }
   if (
     polygon.length === circleSides &&
     Math.abs(width - depth) <= 2 &&
@@ -227,14 +252,16 @@ function polygonForColumn(column: SketchColumn): Obstacle['polygon'] {
       return metres([x + (Math.cos(angle) * width) / 2, y + (Math.sin(angle) * width) / 2])
     })
   }
-  return (
-    [
-      [x - width / 2, y - depth / 2],
-      [x + width / 2, y - depth / 2],
-      [x + width / 2, y + depth / 2],
-      [x - width / 2, y + depth / 2],
-    ] satisfies Point[]
-  ).map(metres)
+  const angle = ((column.rotation ?? 0) * Math.PI) / 180
+  const cos = Math.cos(angle),
+    sin = Math.sin(angle)
+  const corners: Point[] = [
+    [-width / 2, -depth / 2],
+    [width / 2, -depth / 2],
+    [width / 2, depth / 2],
+    [-width / 2, depth / 2],
+  ]
+  return corners.map(([u, v]) => metres([x + u * cos - v * sin, y + u * sin + v * cos]))
 }
 
 export function sketchToSpace(sketch: SpaceSketch, initial?: Space) {
