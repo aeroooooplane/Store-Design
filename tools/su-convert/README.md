@@ -56,3 +56,15 @@ pnpm catalog:finish asset-90000005
 ```
 
 缩略图工具直接读取四款实际GLB，校验尺寸、组合四张和透明背景。SI1.0只在缩略图中使用较深灰色，模型材质不改；输出透明PNG，前端使用压缩WebP并沿用卡片背景。资源增量由发布负责人核对备份后统一发布，记录见[本轮清单](../../docs/model-publication/20261127/seating/README.md)。
+
+## MM93 赛车隔离修整
+
+用户提供的 Tripo GLB 已作为独立审核候选处理，尚未正式入库。工具只写显式指定的新输出，拒绝覆盖；模型、截图和离线预览不新增到 Git 或 LFS。
+
+```powershell
+node scripts/repair-mm93.mjs <原始GLB> <新输出目录>
+node scripts/optimize-mm93.mjs <新输出目录>/repaired-uncompressed.glb <新输出目录>/mm93-insta360.glb
+node scripts/build-mm93-viewer.mjs <新输出目录>/mm93-insta360.glb <新输出目录>/模型预览.html
+```
+
+修整脚本仅接受已核对的源 SHA：以现有官方矢量修整两侧 Insta360 及三处 93 号，柔化法线和反光，暂按全长 2100 mm 等比设置、底部居中、车头朝 +Z。尺寸不是实车测量值。减面与 meshopt 后回读，包围盒漂移超过 1 mm 则拒绝输出。离线 HTML 内嵌真实 GLB、运行库与解码器，支持转向、缩放和标识修整显隐。三维生成的壳体起伏、小字及部分尾部图案仍有失真，见[审核记录](../../docs/model-publication/20261127/mm93/README.md)。
