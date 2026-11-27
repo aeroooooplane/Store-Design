@@ -104,7 +104,7 @@ async function compileDisplay(scene: Scene, exhibit: Exhibit) {
   const [pptx, xlsx] = await Promise.all([
     exportDisplaySlides({
       title,
-      subtitle: SHOP_TYPE_LABELS[scene.project.shopType],
+      subtitle: SHOP_TYPE_LABELS[scene.space.shopType ?? scene.project.shopType],
       strategy: scene.node.siStyle ?? scene.project.siStyle,
       market: scene.project.market,
       si: scene.node.siStyle ?? scene.project.siStyle,
@@ -172,7 +172,7 @@ export async function archiveDelivery(
   const files = await exportDeliveryPdfs({
     title: storeTitle(scene.project.name),
     subtitle: [
-      SHOP_TYPE_LABELS[scene.project.shopType],
+      SHOP_TYPE_LABELS[scene.space.shopType ?? scene.project.shopType],
       MARKET_LABELS[scene.project.market],
       scene.node.siStyle,
     ].join(' · '),

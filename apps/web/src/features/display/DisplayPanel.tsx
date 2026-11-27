@@ -212,7 +212,7 @@ export function DisplayPanel({
             <PlanView
               svgRef={planRef}
               space={space}
-              shopType={project.shopType}
+              shopType={space.shopType ?? project.shopType}
               layout={layout}
               assets={assets}
               numbers={NO_NUMBERS}

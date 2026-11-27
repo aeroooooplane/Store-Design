@@ -107,7 +107,7 @@ export function stateSummary(tools: ToolContext): Record<string, unknown> {
   return {
     project: {
       name: tools.project.name,
-      shopType: SHOP_TYPE_LABELS[tools.project.shopType],
+      shopType: SHOP_TYPE_LABELS[tools.space?.shopType ?? tools.project.shopType],
       market: tools.project.market,
       siStyle: tools.project.siStyle,
     },

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { SHOP_TYPE_LABELS, validateSpace } from '@store/shared'
+import { validateSpace } from '@store/shared'
 import type { Space, ShopType } from '@store/shared'
 import outlineHtml from './outline-sketch.html?raw'
 import { sketchToSpace, spaceToSketch } from './space-sketch.ts'
@@ -80,7 +80,8 @@ export function SpaceCaptureEditor({
       {
         type: 'store-space-capture',
         submitLabel,
-        state: { ...source.sketch, shopLabel: SHOP_TYPE_LABELS[shop], ortho: false },
+        state: { ...source.sketch, ortho: false },
+        preserveOpenings: initial !== undefined,
         fixedObstacles: source.fixedObstacles.map(({ obstacle }) =>
           obstacle.polygon.map(([x, z]) => [x * 1000, z * 1000]),
         ),

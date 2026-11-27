@@ -146,7 +146,7 @@ Object.assign(globalThis, {
       const candidates = strategies.map((strategy) => {
         const result = space.demand
           ? generateRequired(space, space.demand.entities, placeable, siStyle, strategy)
-          : planLayout({ space, shopType, strategy, catalog })
+          : planLayout({ space, shopType: space.shopType ?? shopType, strategy, catalog })
         return { strategy, layout: result.layout, issues: [...issues, ...result.issues], notes: result.notes }
       })
       return respond({ space, candidates })

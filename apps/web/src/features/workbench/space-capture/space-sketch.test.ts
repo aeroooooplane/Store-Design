@@ -66,6 +66,21 @@ describe('space capture adapter', () => {
     )
   })
 
+  it('修改铺位形态保留旧空间的局部入口和开放边，重开使用空间自己的形态', () => {
+    const initial = SpaceSchema.parse({
+      ...rectangleSpace(8, 6, 3.2),
+      entrances: [{ a: [1, 0], b: [3, 0], kind: 'main' }],
+      openEdges: [{ a: [8, 1], b: [8, 3] }],
+    })
+    const { sketch } = spaceToSketch('side_hall', initial)
+    sketch.shop = 'zone'
+    const saved = sketchToSpace(sketch, initial)
+    if (!saved.success) throw saved.error
+    expect(saved.data).toEqual({ ...initial, shopType: 'zone' })
+    expect(spaceToSketch('island', saved.data).sketch.shop).toBe('zone')
+    expect(normalizeSpace(saved.data).shopType).toBe('zone')
+  })
+
   it.each([30, 90, 315])('reopens a rectangular column saved at %s degrees', (rotation) => {
     const initial = rectangleSpace(8, 6, 3.2)
     const { sketch } = spaceToSketch('side_hall', initial)

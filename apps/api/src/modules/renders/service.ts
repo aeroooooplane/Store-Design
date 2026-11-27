@@ -96,7 +96,7 @@ export async function renderContext(db: Database, node: NodeRow): Promise<Render
     })
   const layoutSignature = hash({
     space,
-    shopType: project.shopType,
+    shopType: space.shopType ?? project.shopType,
     layout: node.layout,
     siStyle: node.siStyle,
     market: project.market,

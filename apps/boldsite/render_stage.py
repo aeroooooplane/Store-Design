@@ -230,7 +230,8 @@ def layout_signature(request, db, node):
         if asset_id in assets:
             asset = assets[asset_id]
             models[asset_id] = [asset.get(key) for key in ("glb","whiteGlb","finishGlb","marketVariants")]
-    return digest([resolve_space(db, node), node["layout"], node["siStyle"], project["market"], project["shopType"], models])
+    space = resolve_space(db, node)
+    return digest([space, node["layout"], node["siStyle"], project["market"], (space or {}).get("shopType", project["shopType"]), models])
 
 
 def camera_signature(row):

@@ -177,12 +177,14 @@ describe('history nodes', () => {
     expect(draft.statusCode).toBe(200)
 
     const initial = root.space!
-    expect((await save(root.id, { ...initial, height: 4 }, initial)).statusCode).toBe(200)
+    expect(
+      (await save(root.id, { ...initial, height: 4, shopType: 'side_hall' }, initial)).statusCode,
+    ).toBe(200)
     expect((await node(plan.id)).space).toEqual(initial)
     expect((await node(render.id)).space).toEqual(initial)
-    expect((await createPlan('新方案')).space?.height).toBe(4)
+    expect((await createPlan('新方案')).space).toMatchObject({ height: 4, shopType: 'side_hall' })
 
-    const wider = rectangleSpace(9, 6, 3.2)
+    const wider = { ...rectangleSpace(9, 6, 3.2), shopType: 'zone' as const }
     const edited = await save(plan.id, wider, initial)
     expect(edited.statusCode).toBe(200)
     expect(edited.json<NodeCreated>().node).toMatchObject({

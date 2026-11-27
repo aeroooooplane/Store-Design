@@ -19,7 +19,7 @@ export async function generateLayouts(
   const candidates = input.strategies.map((strategy) => {
     const result = space.demand
       ? generateRequired(space, space.demand.entities, assets, input.siStyle, strategy)
-      : planLayout({ space, shopType: input.shopType, strategy, catalog })
+      : planLayout({ space, shopType: space.shopType ?? input.shopType, strategy, catalog })
     return {
       strategy,
       layout: result.layout,

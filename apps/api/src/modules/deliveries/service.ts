@@ -165,6 +165,7 @@ export async function createDelivery(
   if (!project) throw notFound('项目')
   const layout = node.layout as Layout
   const space = await resolveSpace(db, node.id)
+  const shopType = space.shopType ?? project.shopType
   const catalog = await catalogAssets(db)
   const legend = deliveryLegend(layout.items, catalog)
   const now = new Date()
@@ -196,7 +197,7 @@ export async function createDelivery(
   const steps = await stepNames(db, node.parentId)
   const content: DeliveryContent = {
     title,
-    subtitle: `${SHOP_TYPE_LABELS[project.shopType]} · ${MARKET_LABELS[project.market]} · ${node.siStyle}`,
+    subtitle: `${SHOP_TYPE_LABELS[shopType]} · ${MARKET_LABELS[project.market]} · ${node.siStyle}`,
     date,
     plan,
     legend: legend.entries,
@@ -230,7 +231,7 @@ export async function createDelivery(
     : null
 
   const folderName = await freeFolderName(db, dirs.archiveRoot, (revision) =>
-    deliveryFolderName(project.name, project.shopType, area, date, revision),
+    deliveryFolderName(project.name, shopType, area, date, revision),
   )
   const names = deliveryFileNames(project.name)
   const viewFile = (v: (typeof views)[number]) =>
@@ -245,7 +246,7 @@ export async function createDelivery(
     project: {
       id: project.id,
       name: project.name,
-      shopType: project.shopType,
+      shopType,
       market: project.market,
     },
     node: { id: node.id, name: node.name, siStyle: node.siStyle, steps },
