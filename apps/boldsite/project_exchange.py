@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
+from starlette.concurrency import run_in_threadpool
 
 from contract import ApiError, ResourceId, invalid, project_row
 from storage import timestamp
@@ -97,5 +98,9 @@ async def import_project(request: Request):
         payload = json.loads(raw, parse_constant=invalid_constant)
     except (ValueError, UnicodeDecodeError):
         raise invalid("这不是有效的项目文件") from None
+    return await run_in_threadpool(import_payload, request, payload)
+
+
+def import_payload(request, payload):
     plan = request.app.state.rules.run("project-import", payload)
     return save_import(request, plan)
