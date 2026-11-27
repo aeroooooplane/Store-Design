@@ -142,6 +142,7 @@ interface Viewer3DProps {
   shopType: ShopType
   layout: Layout
   assets: ReadonlyMap<string, Asset>
+  placementAsset?: Asset | undefined
   selectedId: string | null
   flaggedIds: ReadonlySet<string>
   /** White model (default) or the material look of the renders. */
@@ -184,6 +185,7 @@ export function Viewer3D({
   shopType,
   layout,
   assets,
+  placementAsset,
   selectedId,
   flaggedIds,
   look = 'white',
@@ -252,6 +254,11 @@ export function Viewer3D({
       viewedSpace.current = null
     }
   }, [])
+
+  useEffect(() => {
+    if (placementAsset && look === 'material')
+      sceneRef.current?.preparePlacement(placementAsset, market)
+  }, [placementAsset, look, market])
 
   // Latest callbacks without re-creating the scene.
   useEffect(() => {

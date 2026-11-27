@@ -265,6 +265,14 @@ it.each([
 )
 
 describe('ModelPicker', () => {
+  it('uses the transparent X6 thumbnail when the model is pending placement', () => {
+    const x6 = asset('asset-90000606', 'X6 橱窗模型', '非标陈列')
+    render(<ModelPicker assets={[x6]} siStyle="SI2.0" pendingAssetId={x6.id} onPick={vi.fn()} />)
+    const row = screen.getByRole('button', { name: /添加 X6 橱窗模型/ })
+    const thumbnail = row.querySelector('img')
+    expect(thumbnail?.getAttribute('src')).toContain('asset-90000606.webp')
+    expect(thumbnail?.style.background).toBe('transparent')
+  })
   it('只高亮当前待放置的型号，更换型号时清除上一项', () => {
     const logo = customLogoAsset()
     const models = [logo, catalog[1]!]

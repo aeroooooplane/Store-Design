@@ -10,6 +10,7 @@ import type { Asset, ItemFunction, Market, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
 import { SEATING_NAMES, SEATING_THUMBNAILS, seatingOrder } from './seating-options.ts'
+import x6Thumbnail from './other-thumbnails/asset-90000606.webp?url'
 import customLogoThumbnail from './signage-thumbnails/custom-logo.svg?url'
 import './model-picker-placement.css'
 
@@ -303,9 +304,11 @@ export function ModelPicker({
               <ul>
                 {section.assets.map((asset) => {
                   const image = asset.productImage ?? asset.preview
+                  const propThumbnail = asset.id === 'asset-90000606' ? x6Thumbnail : undefined
                   const imageUrl = isCustomLogo({ assetId: asset.id })
                     ? customLogoThumbnail
-                    : (SEATING_THUMBNAILS[`./seating-thumbnails/${asset.id}.webp`] ??
+                    : (propThumbnail ??
+                      SEATING_THUMBNAILS[`./seating-thumbnails/${asset.id}.webp`] ??
                       SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
                       (image && thumbnailUrl(image.url)))
                   const pointPlaced = isPointPlaced?.(asset) ?? false
@@ -324,7 +327,12 @@ export function ModelPicker({
                         }}
                       >
                         {imageUrl ? (
-                          <img src={imageUrl} alt="" loading="lazy" />
+                          <img
+                            src={imageUrl}
+                            alt=""
+                            loading="lazy"
+                            style={propThumbnail ? { background: 'transparent' } : undefined}
+                          />
                         ) : (
                           <span className="model-row-empty" />
                         )}

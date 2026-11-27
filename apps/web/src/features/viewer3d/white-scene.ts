@@ -123,6 +123,8 @@ interface PlacedItem {
   signature: string
   /** The white model (or box). */
   white: THREE.Group
+  /** Fetch on a switch to white or when the preloaded material model fails. */
+  deferredWhiteUrl: string | null
   /** The textured model for the material look, loaded the first time that look is used. */
   finishUrl: string | null
   /** The light material copy (finish.glb), whose two-sided faces are marked already. */
@@ -209,6 +211,7 @@ export class WhiteScene {
   private readonly roomLooks = new Map<SiStyle, Record<RoomSurface, THREE.MeshStandardMaterial>>()
   /** Textured models with adjusted finishes; per scene because metals use its environment. */
   private readonly finishes = new Map<string, Promise<THREE.Object3D>>()
+  private placementFinishUrl: string | null = null
   private readonly finishedMaterials = new Map<THREE.Material, THREE.Material>()
   /** Front-side-only copies of finished materials, for the two sides of SketchUp faces. */
   private readonly frontMaterials = new Map<THREE.Material, THREE.Material>()
@@ -387,6 +390,7 @@ export class WhiteScene {
     this.paintRoom()
     for (const placed of this.items.values()) {
       if (look === 'material') this.loadFinish(placed)
+      else this.loadDeferredWhite(placed)
       this.showLook(placed)
     }
     this.sceneChanged()
@@ -432,6 +436,16 @@ export class WhiteScene {
     const textured = this.look === 'material' && placed.finish !== null
     placed.white.visible = !textured
     if (placed.finish) placed.finish.visible = textured
+  }
+
+  /** Start the selected floor prop's material load while the user is choosing its position. */
+  preparePlacement(asset: Asset, market: Market) {
+    const url = asset.finishGlb?.url
+    if (!url || (asset.market && asset.market !== market)) return
+    this.placementFinishUrl = url
+    void this.finished(url, true).catch(() => {
+      if (this.placementFinishUrl === url) this.placementFinishUrl = null
+    })
   }
 
   /** Brings the props in line with the layout; models load in the background. */
@@ -488,6 +502,10 @@ export class WhiteScene {
           item,
           signature,
           white: new THREE.Group(),
+          deferredWhiteUrl:
+            this.look === 'material' && finishUrl && finishUrl === this.placementFinishUrl
+              ? url
+              : null,
           finishUrl,
           finishPrepared: Boolean(asset?.finishGlb),
           finish: null,
@@ -543,7 +561,7 @@ export class WhiteScene {
             this.pending.add(load)
             this.emitStatus()
           }
-        } else this.fill(placed, url)
+        } else if (!placed.deferredWhiteUrl) this.fill(placed, url)
         // A sign still without a web model shows its preview on both faces (双面侧招).
         if (!picture && !url && catalogued?.standardName.includes('侧招') && catalogued.preview)
           placed.white.add(signFaces(item, catalogued.preview.url, () => this.requestRender()))
@@ -973,23 +991,29 @@ export class WhiteScene {
     this.emitStatus()
   }
 
+  private loadDeferredWhite(placed: PlacedItem) {
+    const url = placed.deferredWhiteUrl
+    if (!url) return
+    placed.deferredWhiteUrl = null
+    this.fill(placed, url)
+  }
+
   /** Loads the textured model of a prop once; if it fails the white model stays in its place. */
   private loadFinish(placed: PlacedItem) {
     if (!placed.finishUrl || placed.finishState !== 'none') return
     placed.finishState = 'loading'
     const load = this.finished(placed.finishUrl, placed.finishPrepared)
-      .then(async (model) => {
+      .then((model) => {
         if (this.items.get(placed.item.id) !== placed) return
-        const copy = model.clone(true)
-        await this.prepare(copy)
-        if (this.items.get(placed.item.id) !== placed) return
-        placed.finish = copy
+        placed.finish = model.clone(true)
         placed.finishState = 'ready'
         placed.group.add(placed.finish)
         this.showLook(placed)
       })
       .catch(() => {
+        if (this.items.get(placed.item.id) !== placed) return
         placed.finishState = 'failed'
+        this.loadDeferredWhite(placed)
       })
       .finally(() => {
         this.pending.delete(load)
@@ -1003,11 +1027,18 @@ export class WhiteScene {
   private finished(url: string, prepared: boolean): Promise<THREE.Object3D> {
     let model = this.finishes.get(url)
     if (!model) {
-      model = Promise.all([loadSource(url), this.environmentReady]).then(([gltf]) =>
-        finishModel(gltf, prepared, this.scene.environment, this.finishedMaterials, (material) =>
-          this.frontSided(material),
-        ),
-      )
+      model = Promise.all([loadSource(url), this.environmentReady]).then(async ([gltf]) => {
+        if (this.disposed) throw new Error('三维视图已关闭')
+        const finished = finishModel(
+          gltf,
+          prepared,
+          this.scene.environment,
+          this.finishedMaterials,
+          (material) => this.frontSided(material),
+        )
+        await this.prepare(finished)
+        return finished
+      })
       model.catch(() => this.finishes.delete(url))
       this.finishes.set(url, model)
     }
