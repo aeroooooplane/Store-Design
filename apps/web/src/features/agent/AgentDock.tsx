@@ -7,6 +7,7 @@ import type { AgentAction, AgentMessage, Asset } from '@store/shared'
 import { BrandFace } from '../../components/BrandFace.tsx'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
+import { isFullWorkbench } from '../../api/deployment.ts'
 
 import { useAiOverview } from '../settings/queries.ts'
 import { exportPlan } from '../workbench/plan-export.ts'
@@ -254,7 +255,13 @@ function AgentPanel({
       <div className="agent-messages" ref={listRef} onScroll={trackScroll}>
         {!agentModel && overview.data ? (
           <p className="hint">
-            还没有可用的 Agent 模型，请先在 <Link to="/settings">设置</Link> 中配置模型密钥。
+            {isFullWorkbench ? (
+              '线上设计助理暂未接入模型服务，本轮不启用模型调用。'
+            ) : (
+              <>
+                还没有可用的 Agent 模型，请先在 <Link to="/settings">设置</Link> 中配置模型密钥。
+              </>
+            )}
           </p>
         ) : null}
         {turns.length === 0 && !messages.isLoading ? (
