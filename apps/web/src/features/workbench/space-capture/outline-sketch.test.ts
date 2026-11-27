@@ -76,6 +76,76 @@ function mountCanvas(overrides: Partial<SpaceSketch> = {}) {
   }
 }
 
+describe('column rotation in the captured space', () => {
+  const column = { kind: 'square' as const, x: 4000, y: 1600, width: 900, depth: 500 }
+  const angle = (canvas: ReturnType<typeof mountCanvas>) =>
+    canvas.doc.querySelector<HTMLInputElement>('[data-column-angle]')!
+  function select(canvas: ReturnType<typeof mountCanvas>) {
+    canvas.pointer(
+      'pointerdown',
+      column.x,
+      column.y,
+      canvas.doc.querySelector('[data-column="0"]')!,
+    )
+    canvas.pointer('pointerup', column.x, column.y)
+  }
+
+  it('rotates around the original center, with a single undo and redo for the drag', () => {
+    const canvas = mountCanvas({ columns: [column] })
+    select(canvas)
+    const shape = () => canvas.doc.querySelector('[data-column="0"]')!.getAttribute('points')
+    const before = shape()
+    canvas.pointer(
+      'pointerdown',
+      column.x,
+      1080,
+      canvas.doc.querySelector('[data-column-rotate="0"]')!,
+    )
+    canvas.pointer('pointermove', 4400, 1200)
+    expect(angle(canvas).value).toBe('45')
+    canvas.pointer('pointermove', 4500, column.y)
+    canvas.pointer('pointerup', 4500, column.y)
+    expect(angle(canvas).value).toBe('90')
+    expect(shape()).not.toBe(before)
+    canvas.click('[data-action="undo"]')
+    expect(angle(canvas).value).toBe('0')
+    expect(shape()).toBe(before)
+    canvas.click('[data-action="redo"]')
+    expect(angle(canvas).value).toBe('90')
+    expect(canvas.saved()).toEqual([{ ...column, rotation: 90 }])
+  })
+
+  it('rejects a colliding angle and normalizes a valid negative angle', () => {
+    const other = { kind: 'circle' as const, x: 4000, y: 2090, width: 180, depth: 180 }
+    const canvas = mountCanvas({ columns: [column, other] })
+    select(canvas)
+    angle(canvas).value = '90'
+    angle(canvas).dispatchEvent(new Event('change'))
+    expect(angle(canvas).value).toBe('0')
+    expect(canvas.doc.body.textContent).toContain('旋转后会与其他柱子重叠')
+    angle(canvas).value = '-15.5'
+    angle(canvas).dispatchEvent(new Event('change'))
+    expect(angle(canvas).value).toBe('344.5')
+    expect(canvas.saved()).toEqual([{ ...column, rotation: 344.5 }, other])
+  })
+
+  it('snaps the rotated corner to the wall when moving the column', () => {
+    const canvas = mountCanvas({ columns: [{ ...column, rotation: 45 }] })
+    canvas.pointer(
+      'pointerdown',
+      column.x,
+      column.y,
+      canvas.doc.querySelector('[data-column="0"]')!,
+    )
+    canvas.pointer('pointermove', column.x, 530)
+    expect(canvas.snap()).not.toBeNull()
+    canvas.pointer('pointerup', column.x, 530)
+    const [snapped] = canvas.saved()!
+    expect(snapped).toMatchObject({ x: column.x, rotation: 45 })
+    expect(snapped?.y).toBeCloseTo(700 / Math.SQRT2, 6)
+  })
+})
+
 describe('column wall snap in the captured space', () => {
   it('uses the same column edge position for the preview and the saved square column', () => {
     const canvas = mountCanvas()

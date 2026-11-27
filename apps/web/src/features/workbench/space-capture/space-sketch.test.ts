@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { SpaceSchema, rectangleSpace, validateSpace } from '@store/shared'
+import { SpaceSchema, normalizeSpace, rectangleSpace, validateSpace } from '@store/shared'
 import { sketchToSpace, spaceToSketch } from './space-sketch.ts'
 
 describe('space capture adapter', () => {
@@ -64,6 +64,51 @@ describe('space capture adapter', () => {
         severity: 'warning',
       }),
     )
+  })
+
+  it.each([30, 90, 315])('reopens a rectangular column saved at %s degrees', (rotation) => {
+    const initial = rectangleSpace(8, 6, 3.2)
+    const { sketch } = spaceToSketch('side_hall', initial)
+    sketch.columns.push({ kind: 'square', x: 3000, y: 2500, width: 900, depth: 450, rotation })
+    const saved = sketchToSpace(sketch, initial)
+    if (!saved.success) throw saved.error
+    const normalized = normalizeSpace(saved.data)
+    const [a, b] = normalized.obstacles[0]!.polygon
+    expect(a).toBeDefined()
+    expect(b).toBeDefined()
+    const projectedAngle = (Math.atan2(b![1] - a![1], b![0] - a![0]) * 180) / Math.PI
+    expect((projectedAngle + 360) % 360).toBeCloseTo(rotation, 1)
+    const { sketch: reopened, fixedObstacles } = spaceToSketch('side_hall', normalized)
+    expect(fixedObstacles).toEqual([])
+    const column = reopened.columns[0]!
+    expect(column).toMatchObject({ kind: 'square', x: 3000, y: 2500 })
+    expect(Math.abs(column.width - 900)).toBeLessThan(1)
+    expect(Math.abs(column.depth - 450)).toBeLessThan(1)
+    expect(column.rotation).toBeCloseTo(rotation, 1)
+    expect(sketchToSpace(reopened, normalized)).toMatchObject({ success: true, data: normalized })
+  })
+
+  it('retains an irregular column as a fixed obstacle', () => {
+    const base = rectangleSpace(8, 6, 3.2)
+    const space = SpaceSchema.parse({
+      ...base,
+      obstacles: [
+        {
+          kind: 'column',
+          label: '不规则柱',
+          height: null,
+          polygon: [
+            [2, 2],
+            [3, 2],
+            [3.2, 3],
+            [2, 3],
+          ],
+        },
+      ],
+    })
+    const { sketch, fixedObstacles } = spaceToSketch('side_hall', space)
+    expect(sketch.columns).toHaveLength(0)
+    expect(fixedObstacles).toEqual([{ source: 0, obstacle: space.obstacles[0] }])
   })
 
   it('saves edited partial ends and closes only the edges marked shut', () => {
