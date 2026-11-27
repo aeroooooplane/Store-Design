@@ -40,10 +40,10 @@ function remaining(length: number, gaps: [number, number][]): [number, number][]
 
 /**
  * White-model walls: every boundary edge except entrances and open edges. Walls facing away
- * from the entrance are full height; the others are cut away. Island shops have no walls.
+ * from the entrance are full height; the others are cut away. Legacy island nodes used all-open walls by default.
  */
 export function wallSegments(space: Space, shopType: ShopType): WallSegment[] {
-  if (shopType === 'island') return []
+  if (shopType === 'island' && space.shopType === undefined) return []
   const { front } = sceneFrame(space)
   // An opening may run along several edges; each edge only leaves out its own piece.
   const pieces = [...space.entrances, ...space.openEdges].flatMap(

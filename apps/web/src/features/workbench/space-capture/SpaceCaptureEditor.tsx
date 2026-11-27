@@ -58,7 +58,7 @@ export function SpaceCaptureEditor({
       const { name, onSubmit } = settings.current
       if (!name.trim()) return sendResult(port1, '请填写空间名称')
       if (!event.data.state.closed) return sendResult(port1, '请先闭合轮廓')
-      const parsed = sketchToSpace(event.data.state, initial)
+      const parsed = sketchToSpace(event.data.state, initial, source.sketch.shop)
       if (!parsed.success) {
         return sendResult(port1, '无法保存，请检查轮廓、层高或开口数量')
       }

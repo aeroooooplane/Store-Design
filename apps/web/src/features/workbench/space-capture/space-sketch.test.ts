@@ -74,11 +74,19 @@ describe('space capture adapter', () => {
     })
     const { sketch } = spaceToSketch('side_hall', initial)
     sketch.shop = 'zone'
-    const saved = sketchToSpace(sketch, initial)
+    const saved = sketchToSpace(sketch, initial, 'side_hall')
     if (!saved.success) throw saved.error
     expect(saved.data).toEqual({ ...initial, shopType: 'zone' })
     expect(spaceToSketch('island', saved.data).sketch.shop).toBe('zone')
     expect(normalizeSpace(saved.data).shopType).toBe('zone')
+  })
+
+  it('旧中岛只编辑层高时继续沿用原来的形态规则', () => {
+    const initial = rectangleSpace(8, 6, 3.2)
+    const { sketch } = spaceToSketch('island', initial)
+    const saved = sketchToSpace({ ...sketch, height: 3500 }, initial, 'island')
+    if (!saved.success) throw saved.error
+    expect(saved.data).toEqual({ ...initial, height: 3.5 })
   })
 
   it.each([30, 90, 315])('reopens a rectangular column saved at %s degrees', (rotation) => {
