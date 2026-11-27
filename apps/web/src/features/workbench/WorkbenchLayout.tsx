@@ -40,8 +40,8 @@ export type LeftTab = 'history' | 'models' | 'info' | 'cameras' | 'background'
 
 const TAB_LABELS: Record<LeftTab, string> = {
   history: '历史',
-  models: '添加模型',
-  info: '空间信息',
+  models: '模型',
+  info: '空间',
   cameras: '视角',
   background: '背景编辑',
 }
@@ -68,19 +68,25 @@ function LeftTabs({
   defaultTab?: LeftTab
 }) {
   const info = useContext(WorkbenchInfoContext)
-  const tabs: LeftTab[] = [
-    'history',
-    'info',
-    ...(models ? (['models'] as const) : []),
-    ...(cameras ? (['cameras'] as const) : []),
-  ]
+  const tabs: LeftTab[] = ['history', 'info', 'models', 'cameras']
+  const available = (tab: LeftTab) =>
+    tab === 'models' ? !!models : tab === 'cameras' ? !!cameras : tab !== 'background'
+  const unavailableReason = (tab: LeftTab) =>
+    tab === 'models' ? '当前阶段不提供模型操作' : '当前阶段不提供视角操作'
   const sharedTab = useContext(LeftTabContext)
   const [localTab, setLocalTab] = useState<LeftTab | null>(null)
   const [drawingsOpened, setDrawingsOpened] = useState(false)
   const { tab, setTab } = tabState ?? sharedTab ?? { tab: localTab, setTab: setLocalTab }
   const fallback: LeftTab = models && defaultTab === 'models' ? 'models' : 'history'
   const backgroundActive = tab === 'background' && !!cameras && !!background
-  const current = backgroundActive ? 'cameras' : tab && tabs.includes(tab) ? tab : fallback
+  const current =
+    backgroundActive || (tab === 'background' && cameras)
+      ? 'cameras'
+      : tab
+        ? available(tab)
+          ? tab
+          : 'history'
+        : fallback
   const cameraPanel = (
     <CameraPanelVisibility.Provider value={current === 'cameras' && !backgroundActive}>
       {cameras}
@@ -117,17 +123,15 @@ function LeftTabs({
   }
   return (
     <section className="wb-tabs-card">
-      <div
-        className={cameras ? 'wb-tabs wb-tabs-with-cameras' : 'wb-tabs'}
-        role="tablist"
-        aria-label="左栏"
-      >
+      <div className="wb-tabs wb-tabs-main" role="tablist" aria-label="左栏">
         {tabs.map((tab) => (
           <button
             key={tab}
             type="button"
             role="tab"
             id={`wb-tab-${tab}`}
+            disabled={!available(tab)}
+            title={available(tab) ? undefined : unavailableReason(tab)}
             aria-selected={current === tab}
             aria-controls={`wb-panel-${tab}`}
             onClick={() => setTab(tab)}
