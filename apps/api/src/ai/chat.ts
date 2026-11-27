@@ -2,6 +2,8 @@ import type { Database } from '@store/database'
 import type { AiPurpose } from '@store/shared'
 import type { AppConfig } from '../config/env.ts'
 import { AppError } from '../lib/app-error.ts'
+import { readAnthropicStream, readOpenAiStream } from './chat-stream.ts'
+import type { AnthropicResponse, OpenAiResponse } from './chat-stream.ts'
 import { assertBudget, recordUsage } from './budget.ts'
 import { costCny, findModel } from './models.ts'
 import type { ModelSpec } from './models.ts'
@@ -47,6 +49,7 @@ export interface ChatRequest {
   /** What this call belongs to, for the usage ledger. */
   ref?: { type: string; id: string }
   signal?: AbortSignal
+  onText?: (delta: string) => void
 }
 
 export interface ChatResult {
@@ -90,16 +93,19 @@ function parseArguments(raw: unknown): Record<string, unknown> {
   }
 }
 
-async function post(
+async function post<T>(
   url: string,
   headers: Record<string, string>,
   body: unknown,
   spec: ModelSpec,
   signal?: AbortSignal,
-) {
+  readStream?: (response: Response) => Promise<T>,
+): Promise<{ data: T; streamed: boolean }> {
   const controller = new AbortController()
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS)
-  signal?.addEventListener('abort', () => controller.abort(), { once: true })
+  const abort = () => controller.abort()
+  if (signal?.aborted) abort()
+  else signal?.addEventListener('abort', abort, { once: true })
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -107,13 +113,17 @@ async function post(
       body: JSON.stringify(body),
       signal: controller.signal,
     })
-    const text = await response.text()
     if (!response.ok) {
+      const text = await response.text()
       // Vendor error bodies can be long; keep enough to understand, not enough to leak much.
       throw upstream(spec, `HTTP ${response.status} ${text.slice(0, 300)}`)
     }
+    if (readStream && response.headers.get('content-type')?.includes('text/event-stream')) {
+      return { data: await readStream(response), streamed: true }
+    }
+    const text = await response.text()
     try {
-      return JSON.parse(text) as unknown
+      return { data: JSON.parse(text) as T, streamed: false }
     } catch {
       throw upstream(spec, '返回的不是 JSON')
     }
@@ -123,6 +133,7 @@ async function post(
     throw upstream(spec, error instanceof Error ? error.message : String(error))
   } finally {
     clearTimeout(timer)
+    signal?.removeEventListener('abort', abort)
   }
 }
 
@@ -164,12 +175,14 @@ async function openAiCompatible(
       ],
     }
   })
-  const data = (await post(
+  const onText = request.onText
+  const { data, streamed } = await post<OpenAiResponse>(
     `${spec.baseUrl}/chat/completions`,
     { authorization: `Bearer ${key}` },
     {
       model: spec.apiModel,
       messages,
+      ...(onText ? { stream: true, stream_options: { include_usage: true } } : {}),
       max_tokens: request.maxTokens ?? DEFAULT_MAX_TOKENS,
       temperature: request.temperature ?? 0,
       ...(request.json ? { response_format: { type: 'json_object' } } : {}),
@@ -184,15 +197,8 @@ async function openAiCompatible(
     },
     spec,
     request.signal,
-  )) as {
-    choices?: {
-      message?: {
-        content?: string | null
-        tool_calls?: { id?: string; function?: { name?: string; arguments?: unknown } }[]
-      }
-    }[]
-    usage?: { prompt_tokens?: number; completion_tokens?: number }
-  }
+    onText && ((response) => readOpenAiStream(response, onText)),
+  )
   const message = data.choices?.[0]?.message
   const text = typeof message?.content === 'string' ? message.content : ''
   const toolCalls: ToolCall[] = (message?.tool_calls ?? []).flatMap((c, i) =>
@@ -207,6 +213,7 @@ async function openAiCompatible(
       : [],
   )
   if (!text && !toolCalls.length) throw upstream(spec, '没有返回内容')
+  if (!streamed && text) onText?.(text)
   return {
     text,
     toolCalls,
@@ -252,11 +259,13 @@ async function anthropic(spec: ModelSpec, key: string, request: ChatRequest): Pr
     ]
     messages.push({ role: m.role, content })
   }
-  const data = (await post(
+  const onText = request.onText
+  const { data, streamed } = await post<AnthropicResponse>(
     'https://api.anthropic.com/v1/messages',
     { 'x-api-key': key, 'anthropic-version': '2023-06-01' },
     {
       model: spec.apiModel,
+      ...(onText ? { stream: true } : {}),
       max_tokens: request.maxTokens ?? DEFAULT_MAX_TOKENS,
       temperature: request.temperature ?? 0,
       ...(system ? { system } : {}),
@@ -273,10 +282,8 @@ async function anthropic(spec: ModelSpec, key: string, request: ChatRequest): Pr
     },
     spec,
     request.signal,
-  )) as {
-    content?: { type: string; text?: string; id?: string; name?: string; input?: unknown }[]
-    usage?: { input_tokens?: number; output_tokens?: number }
-  }
+    onText && ((response) => readAnthropicStream(response, onText)),
+  )
   const blocks = data.content ?? []
   const text = blocks
     .filter((c) => c.type === 'text')
@@ -290,6 +297,7 @@ async function anthropic(spec: ModelSpec, key: string, request: ChatRequest): Pr
       arguments: parseArguments(c.input),
     }))
   if (!text && !toolCalls.length) throw upstream(spec, '没有返回内容')
+  if (!streamed && text) onText?.(text)
   return {
     text,
     toolCalls,

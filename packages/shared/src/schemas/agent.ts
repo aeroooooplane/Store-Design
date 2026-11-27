@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { NameSchema } from './common.ts'
+import { ApiErrorSchema } from './errors.ts'
 
 /** Roles of a conversation turn as stored: the user, the model, or a tool result it was shown. */
 export const AGENT_ROLES = ['user', 'assistant', 'tool'] as const
@@ -87,3 +88,13 @@ export const AgentReplySchema = z.object({
   currentNodeId: z.uuid().nullable(),
 })
 export type AgentReply = z.infer<typeof AgentReplySchema>
+
+export const AGENT_STREAM_MEDIA_TYPE = 'application/x-ndjson'
+
+export const AgentStreamEventSchema = z.discriminatedUnion('type', [
+  z.object({ type: z.literal('user'), id: z.uuid() }),
+  z.object({ type: z.literal('delta'), round: z.int().nonnegative(), text: z.string() }),
+  z.object({ type: z.literal('done'), result: AgentReplySchema }),
+  ApiErrorSchema.extend({ type: z.literal('error') }),
+])
+export type AgentStreamEvent = z.infer<typeof AgentStreamEventSchema>

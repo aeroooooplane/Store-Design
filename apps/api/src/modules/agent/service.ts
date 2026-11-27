@@ -9,6 +9,7 @@ import type {
   AgentReply,
   AgentSend,
   AgentSession,
+  AgentStreamEvent,
 } from '@store/shared'
 import { chat } from '../../ai/chat.ts'
 import type { ChatMessage, ToolCall } from '../../ai/chat.ts'
@@ -269,6 +270,7 @@ export async function sendMessage(
   roots: StorageRoots,
   sessionId: string,
   input: AgentSend,
+  onEvent?: (event: Extract<AgentStreamEvent, { type: 'user' | 'delta' }>) => void,
 ): Promise<AgentReply> {
   const session = await findSession(db, sessionId)
   authorize(ctx.actor, 'agent:write', { projectId: session.projectId })
@@ -301,6 +303,7 @@ export async function sendMessage(
   const userMessage = await insertMessage(db, sessionId, 'user', userContent, {
     ...(imageFileId ? { imageFileId } : {}),
   })
+  onEvent?.({ type: 'user', id: userMessage.id })
   if (session.title === DEFAULT_TITLE && history.length === 0) {
     await db
       .update(agentSessions)
@@ -337,6 +340,7 @@ export async function sendMessage(
         : conversation,
       ...(wrapUp ? {} : { tools: toolSpecs }),
       ref: { type: 'agent_session', id: sessionId },
+      ...(onEvent ? { onText: (text) => onEvent({ type: 'delta', round, text }) } : {}),
     })
     const toolCalls = wrapUp ? [] : result.toolCalls
     const assistant = await insertMessage(

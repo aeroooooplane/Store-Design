@@ -1,6 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { eq } from 'drizzle-orm'
 import { schema } from '@store/database'
+import { AGENT_STREAM_MEDIA_TYPE, AgentStreamEventSchema } from '@store/shared'
 import type {
   AgentAction,
   AgentMessage,
@@ -147,6 +148,141 @@ describe('agent with DeepSeek', () => {
   })
   afterEach(() => {
     vi.unstubAllGlobals()
+  })
+
+  it('streams text before completion, assembles tool calls and stores the final response', async () => {
+    const { projectId, spaceNode } = await projectWithSpace(t)
+    const session = await newSession(t, projectId)
+    const listen = await t.app.listen({ host: '127.0.0.1', port: 0 })
+    const nativeFetch = globalThis.fetch
+    let finish = () => {}
+    const final = new Promise<void>((resolve) => {
+      finish = resolve
+    })
+    const encoder = new TextEncoder()
+    const frame = (payload: unknown) => 'data: ' + JSON.stringify(payload) + '\r\n\r\n'
+    const end = (reason: string) =>
+      frame({ choices: [{ delta: {}, finish_reason: reason }] }) +
+      frame({ choices: [], usage: { prompt_tokens: 100, completion_tokens: 20 } }) +
+      'data: [DONE]\r\n\r\n'
+    const sseHeaders = { 'content-type': 'text/event-stream' }
+    let calls = 0
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async (_url: string, init: { body: string }) => {
+        const request = JSON.parse(init.body)
+        expect(request).toMatchObject({ stream: true, stream_options: { include_usage: true } })
+        if (calls++ === 0) {
+          return new Response(
+            frame({
+              choices: [
+                {
+                  delta: {
+                    tool_calls: [
+                      {
+                        index: 0,
+                        id: 'call_1',
+                        function: {
+                          name: 'place_item',
+                          arguments: '{"modelId":"asset-1",',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            }) +
+              frame({
+                choices: [
+                  {
+                    delta: {
+                      tool_calls: [
+                        {
+                          index: 0,
+                          function: {
+                            arguments: '"along":"back"}',
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              }) +
+              end('tool_calls'),
+            { headers: sseHeaders },
+          )
+        }
+
+        expect(request.messages.at(-1)).toMatchObject({ role: 'tool', tool_call_id: 'call_1' })
+        const first = encoder.encode(frame({ choices: [{ delta: { content: '**已放置' } }] }))
+        const split = first.indexOf(0xe5) + 1
+        return new Response(
+          new ReadableStream({
+            async start(controller) {
+              controller.enqueue(first.slice(0, split))
+              controller.enqueue(first.slice(split))
+              await final
+              controller.enqueue(
+                encoder.encode(
+                  frame({ choices: [{ delta: { content: '中岛桌**' } }] }) + end('stop'),
+                ),
+              )
+              controller.close()
+            },
+          }),
+          { headers: sseHeaders },
+        )
+      }),
+    )
+    try {
+      const response = await nativeFetch(
+        listen + '/api/v1/agent/sessions/' + session.id + '/messages',
+        {
+          method: 'POST',
+          headers: { accept: AGENT_STREAM_MEDIA_TYPE, 'content-type': 'application/json' },
+          body: JSON.stringify({ text: '放一张中岛桌', nodeId: spaceNode.id }),
+          signal: AbortSignal.timeout(8000),
+        },
+      )
+      expect(response.headers.get('content-type')).toContain(AGENT_STREAM_MEDIA_TYPE)
+      const reader = response.body?.getReader()
+      if (!reader) throw new Error('缺少响应流')
+      const decoder = new TextDecoder()
+      let body = ''
+      while (!body.includes('**已放置')) {
+        const chunk = await reader.read()
+        if (chunk.done) throw new Error('回复提前结束')
+        body += decoder.decode(chunk.value, { stream: true })
+      }
+      expect(body).toContain('"type":"user"')
+      expect(body).toContain('"type":"delta"')
+      expect(body).not.toContain('"type":"done"')
+      finish()
+      for (let chunk = await reader.read(); !chunk.done; chunk = await reader.read()) {
+        body += decoder.decode(chunk.value, { stream: true })
+      }
+      body += decoder.decode()
+      const events = body
+        .trim()
+        .split('\n')
+        .map((line) => AgentStreamEventSchema.parse(JSON.parse(line)))
+      expect(events.at(-1)).toMatchObject({
+        type: 'done',
+        result: { reply: { content: { text: '**已放置中岛桌**' }, tokensIn: 100, tokensOut: 20 } },
+      })
+      const history = await t.app.inject({
+        url: '/api/v1/agent/sessions/' + session.id + '/messages',
+      })
+      expect(history.json<AgentMessage[]>().flatMap((message) => message.actions)).toMatchObject([
+        {
+          toolName: 'place_item',
+          status: 'succeeded',
+          input: { modelId: 'asset-1', along: 'back' },
+        },
+      ])
+    } finally {
+      finish()
+    }
   })
 
   it('answers through tools, makes a node per change and can undo it', async () => {

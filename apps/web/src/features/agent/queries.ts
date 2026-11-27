@@ -1,13 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import {
-  AgentActionSchema,
-  AgentMessageSchema,
-  AgentReplySchema,
-  AgentSessionSchema,
-} from '@store/shared'
-import type { AgentAction, AgentReply, AgentSend, AgentSession } from '@store/shared'
+import { AgentActionSchema, AgentMessageSchema, AgentSessionSchema } from '@store/shared'
+import type { AgentAction, AgentSession } from '@store/shared'
 import { api, unwrap } from '../../api/client.ts'
 import { workbenchKeys } from '../workbench/api.ts'
+import { sendAgentReply } from './reply-stream.ts'
 
 export const agentKeys = {
   sessions: (projectId: string) => ['agent', projectId, 'sessions'] as const,
@@ -63,25 +59,21 @@ export function useAgentMessages(sessionId: string | null) {
 export function useSendMessage(projectId: string) {
   const client = useQueryClient()
   return useMutation({
-    mutationFn: async ({
+    mutationFn: ({
       sessionId,
       input,
+      updates,
     }: {
       sessionId: string
-      input: AgentSend
-    }): Promise<AgentReply> =>
-      AgentReplySchema.parse(
-        unwrap(
-          await api.POST('/api/v1/agent/sessions/{sessionId}/messages', {
-            params: { path: { sessionId } },
-            body: input,
-          }),
-        ),
-      ),
+      input: Parameters<typeof sendAgentReply>[1]
+      updates: Parameters<typeof sendAgentReply>[2]
+    }) => sendAgentReply(sessionId, input, updates),
     onSettled: async (_reply, _error, { sessionId }) => {
-      await client.invalidateQueries({ queryKey: agentKeys.messages(sessionId) })
-      await client.invalidateQueries({ queryKey: agentKeys.sessions(projectId) })
-      await client.invalidateQueries({ queryKey: workbenchKeys.tree(projectId) })
+      await Promise.all([
+        client.invalidateQueries({ queryKey: agentKeys.messages(sessionId) }),
+        client.invalidateQueries({ queryKey: agentKeys.sessions(projectId) }),
+        client.invalidateQueries({ queryKey: workbenchKeys.tree(projectId) }),
+      ])
     },
   })
 }
