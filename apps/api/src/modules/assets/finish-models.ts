@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { Primitive } from '@gltf-transform/core'
+import { EXTMeshoptCompression } from '@gltf-transform/extensions'
 import type { Accessor, Document, Material, Mesh } from '@gltf-transform/core'
 import {
   dedup,
@@ -28,6 +29,7 @@ import type { FinishRecord } from './light-records.ts'
  * need not search for them.
  */
 export const FINISH_TOOL = '@gltf-transform 4.5.1 + meshoptimizer 1.3.0 + sharp'
+export const PRESERVE_APPEARANCE = 'storeDesignPreserveAppearance'
 /** Longest texture side; a prop seldom covers more than a third of a 1800 px render. */
 export const FINISH_TEXTURE_PX = 1024
 /** Triangle budget per model; denser models are simplified. */
@@ -278,6 +280,34 @@ export async function buildFinishModel(source: string, target: string): Promise<
   const before = bounds(document)
   const drawsBefore = draws(document)
   const trianglesBefore = triangles(document)
+
+  // Explicit opt-in only: reviewed textured assets must not pass through the SketchUp
+  // flattening, normal removal, simplification or texture resizing pipeline below.
+  const materials = document.getRoot().listMaterials()
+  if (materials.length && materials.every((m) => m.getExtras()[PRESERVE_APPEARANCE] === true)) {
+    // This selects filter NONE. No quantize() transform is applied: float attributes,
+    // UVs and image bytes survive exactly; only the buffer encoding changes.
+    document
+      .createExtension(EXTMeshoptCompression)
+      .setRequired(true)
+      .setEncoderOptions({ method: EXTMeshoptCompression.EncoderMethod.QUANTIZE })
+    const bytes = await io.writeBinary(document)
+    await writeFile(target, bytes)
+    return {
+      tool: `${FINISH_TOOL} / lossless-preserved-pbr`,
+      sourceSha256: await sha256File(source),
+      sha256: await sha256File(target),
+      bytes: bytes.byteLength,
+      sourceBytes: sourceBytes.byteLength,
+      trianglesBefore,
+      trianglesAfter: trianglesBefore,
+      drawsBefore,
+      drawsAfter: drawsBefore,
+      specks: 0,
+      pairedTriangles: 0,
+      driftM: 0,
+    }
+  }
 
   const { paired, areas } = analyse(document)
   const specks = await flattenSpecks(document, areas)

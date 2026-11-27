@@ -1,0 +1,344 @@
+{
+  "passed": true,
+  "viewport": [
+    1000,
+    720
+  ],
+  "results": [
+    {
+      "mode": "raw",
+      "white": {
+        "elapsedMs": 477.19999998807907,
+        "longTasks": [
+          {
+            "start": 2141.5,
+            "duration": 58
+          }
+        ],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "material": {
+        "elapsedMs": 930.8000000119209,
+        "longTasks": [
+          {
+            "start": 2876.9000000059605,
+            "duration": 346
+          }
+        ],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "repeated": {
+        "elapsedMs": 31.200000017881393,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "remove": {
+        "elapsedMs": 39.70000001788139,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "readd": {
+        "elapsedMs": 39.39999997615814,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "single": {
+        "sharing": {
+          "meshes": 1,
+          "geometries": 1,
+          "textures": 3,
+          "materials": 2,
+          "gpuTextures": 10
+        },
+        "material": {
+          "maps": [
+            {},
+            {},
+            {}
+          ]
+        },
+        "gpu": {
+          "renderer": "ANGLE (Intel, Intel(R) Graphics (0x0000A7AA) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "parallelShaders": true
+        }
+      },
+      "multiple": {
+        "meshes": 4,
+        "geometries": 1,
+        "textures": 3,
+        "materials": 2,
+        "gpuTextures": 10
+      },
+      "orbitSingle": {
+        "frames": 90,
+        "medianMs": 16.69999998807907,
+        "p95Ms": 16.900000005960464,
+        "maxMs": 17.30000001192093,
+        "approxFps": 61.25782738830971
+      },
+      "orbitFour": {
+        "frames": 90,
+        "medianMs": 20.700000017881393,
+        "p95Ms": 24.400000005960464,
+        "maxMs": 41.10000002384186,
+        "approxFps": 49.29346040140292
+      },
+      "whiteRequests": [
+        "original.glb"
+      ],
+      "requests": [
+        "original.glb"
+      ],
+      "errors": [],
+      "forbidden": [],
+      "calls": [
+        {
+          "method": "texSubImage2D",
+          "duration": 2,
+          "phase": "setup"
+        },
+        {
+          "method": "render",
+          "duration": 172.7000000178814,
+          "phase": "setup"
+        },
+        {
+          "method": "render",
+          "duration": 251.7000000178814,
+          "phase": "setup"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 65,
+          "phase": "material"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 85.90000000596046,
+          "phase": "material"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 151.80000001192093,
+          "phase": "material"
+        },
+        {
+          "method": "render",
+          "duration": 345.60000002384186,
+          "phase": "material"
+        }
+      ]
+    },
+    {
+      "mode": "prepared",
+      "white": {
+        "elapsedMs": 47.400000005960464,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "material": {
+        "elapsedMs": 565,
+        "longTasks": [
+          {
+            "start": 1188.0999999940395,
+            "duration": 66
+          },
+          {
+            "start": 1301.4000000059605,
+            "duration": 81
+          }
+        ],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "repeated": {
+        "elapsedMs": 31.799999982118607,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "remove": {
+        "elapsedMs": 30.5,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "readd": {
+        "elapsedMs": 31.80000001192093,
+        "longTasks": [],
+        "status": {
+          "loading": 0,
+          "failed": []
+        }
+      },
+      "single": {
+        "sharing": {
+          "meshes": 1,
+          "geometries": 1,
+          "textures": 3,
+          "materials": 1,
+          "gpuTextures": 10
+        },
+        "material": {
+          "roughness": 1,
+          "metalness": 1,
+          "side": 0,
+          "flatShading": false,
+          "normalScale": [
+            1,
+            -1
+          ],
+          "maps": [
+            {
+              "w": 4096,
+              "h": 4096
+            },
+            {
+              "w": 4096,
+              "h": 4096
+            },
+            {
+              "w": 4096,
+              "h": 4096
+            }
+          ]
+        },
+        "gpu": {
+          "renderer": "ANGLE (Intel, Intel(R) Graphics (0x0000A7AA) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "parallelShaders": true
+        }
+      },
+      "multiple": {
+        "meshes": 4,
+        "geometries": 1,
+        "textures": 3,
+        "materials": 1,
+        "gpuTextures": 10
+      },
+      "orbitSingle": {
+        "frames": 90,
+        "medianMs": 16.69999998807907,
+        "p95Ms": 17,
+        "maxMs": 17.5,
+        "approxFps": 60.26113157013726
+      },
+      "orbitFour": {
+        "frames": 90,
+        "medianMs": 16.69999998807907,
+        "p95Ms": 17.200000017881393,
+        "maxMs": 18.5,
+        "approxFps": 60.09615384639304
+      },
+      "whiteRequests": [
+        "white.glb"
+      ],
+      "requests": [
+        "white.glb",
+        "finish.glb"
+      ],
+      "errors": [],
+      "forbidden": [],
+      "calls": [
+        {
+          "method": "texSubImage2D",
+          "duration": 1.399999976158142,
+          "phase": "setup"
+        },
+        {
+          "method": "render",
+          "duration": 49.900000005960464,
+          "phase": "setup"
+        },
+        {
+          "method": "render",
+          "duration": 29.5,
+          "phase": "setup"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 65.5,
+          "phase": "material"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 47,
+          "phase": "material"
+        },
+        {
+          "method": "texSubImage2D",
+          "duration": 77.59999999403954,
+          "phase": "material"
+        }
+      ]
+    }
+  ],
+  "placement": {
+    "selectionMs": 449.59999999403954,
+    "placement": {
+      "elapsedMs": 31.700000017881393,
+      "longTasks": [],
+      "status": {
+        "loading": 0,
+        "failed": []
+      }
+    },
+    "requestsBeforeWhite": [
+      "finish.glb"
+    ]
+  },
+  "restored": {
+    "before": [
+      186,
+      184,
+      183,
+      255
+    ],
+    "after": [
+      186,
+      184,
+      183,
+      255
+    ]
+  },
+  "x6Compatibility": {
+    "selectionMs": 256.09999999403954,
+    "placed": {
+      "elapsedMs": 19.400000005960464,
+      "longTasks": [],
+      "status": {
+        "loading": 0,
+        "failed": []
+      }
+    }
+  },
+  "placementErrors": [],
+  "placementRequests": [
+    "finish.glb",
+    "white.glb",
+    "x6-finish.glb"
+  ]
+}
