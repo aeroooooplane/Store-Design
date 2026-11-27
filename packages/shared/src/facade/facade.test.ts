@@ -52,13 +52,11 @@ describe('straight side-hall facade', () => {
       openingWidth: 2.5,
       hasOpening: true,
     })
-    const saved: Space = {
-      ...partial,
-      facade: { ...facade, a: [8, 0], b: [8, 6], openingWidth: 2.5 },
-    }
-    const frame = facadeGeometry(saved, saved.facade!)!
+    const positioned: Facade = { ...facade, a: [8, 0], b: [8, 6], openingWidth: 2.5 }
+    const saved: Space = { ...partial, facade: positioned }
+    const frame = facadeGeometry(saved, positioned)!
     expect([frame.openingStart, frame.openingEnd]).toEqual([2.5, 5])
-    expect(exteriorFacadeSpan(saved, saved.facade!)).toEqual({ a: [8.215, 0], b: [8.215, 6] })
+    expect(exteriorFacadeSpan(saved, positioned)).toEqual({ a: [8.215, 0], b: [8.215, 6] })
 
     const onRight = (wall: ReturnType<typeof wallSegments>[number]) =>
       wall.a[0] === 8 && wall.b[0] === 8
