@@ -39,6 +39,7 @@ export async function importProject(
       .values({
         name: planned.name,
         shopType: planned.shopType,
+        storeType: planned.storeType,
         market: planned.market,
         siStyle: planned.siStyle,
       })
@@ -138,6 +139,7 @@ export async function exportProject(
     project: {
       name: project.name,
       shopType: project.shopType,
+      ...(project.storeType ? { storeType: project.storeType } : {}),
       market: project.market,
       siStyle: project.siStyle,
     },

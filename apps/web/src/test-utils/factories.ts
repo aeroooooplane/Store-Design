@@ -47,6 +47,7 @@ export function makeProject(overrides: Partial<Project> = {}): Project {
     id: PROJECT_ID,
     name: '南京德基',
     shopType: 'side_hall',
+    storeType: null,
     market: 'domestic',
     siStyle: 'SI1.0',
     revision: 1,

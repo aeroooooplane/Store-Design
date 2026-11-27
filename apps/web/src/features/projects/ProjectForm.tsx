@@ -4,15 +4,17 @@ import {
   MARKET_LABELS,
   MARKETS,
   ProjectCreateSchema,
-  SHOP_TYPE_LABELS,
-  SHOP_TYPES,
+  STORE_TYPE_LABELS,
+  STORE_TYPES,
+  StoreTypeSchema,
   SI_STYLES,
 } from '@store/shared'
-import type { Market, ProjectCreate, ShopType, SiStyle } from '@store/shared'
+import type { Market, ProjectCreate, SiStyle, StoreType } from '@store/shared'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 
 interface ProjectFormProps {
-  initial: ProjectCreate
+  initial: Omit<ProjectCreate, 'storeType'> & { storeType?: StoreType | null }
+  requireStoreType?: boolean
   label: string
   saving: boolean
   error: unknown
@@ -27,24 +29,38 @@ export function ProjectForm({
   error,
   onSave,
   clearNameOnSave,
+  requireStoreType,
 }: ProjectFormProps) {
   const [name, setName] = useState(initial.name)
-  const [shopType, setShopType] = useState(initial.shopType)
+  const [storeType, setStoreType] = useState<StoreType | ''>(initial.storeType ?? '')
   const [market, setMarket] = useState(initial.market)
   const [siStyle, setSiStyle] = useState(initial.siStyle)
   const [formError, setFormError] = useState<string | null>(null)
 
   function submit(event: FormEvent) {
     event.preventDefault()
-    const parsed = ProjectCreateSchema.safeParse({ name, shopType, market, siStyle })
+    const parsed = ProjectCreateSchema.safeParse({
+      name,
+      shopType: initial.shopType,
+      storeType: storeType || undefined,
+      market,
+      siStyle,
+    })
     if (!parsed.success) {
       setFormError('请填写项目名称（1–100 个字符）')
+      return
+    }
+    if (requireStoreType && !storeType) {
+      setFormError('请选择店铺类型')
       return
     }
     setFormError(null)
     void onSave(parsed.data).then(
       () => {
-        if (clearNameOnSave) setName('')
+        if (clearNameOnSave) {
+          setName('')
+          setStoreType('')
+        }
       },
       () => {
         // The owning mutation exposes the error to the form.
@@ -65,11 +81,20 @@ export function ProjectForm({
         />
       </label>
       <label>
-        铺位形态
-        <select value={shopType} onChange={(e) => setShopType(e.target.value as ShopType)}>
-          {SHOP_TYPES.map((value) => (
+        店铺类型
+        <select
+          value={storeType}
+          onChange={(event) => {
+            const next = StoreTypeSchema.safeParse(event.target.value)
+            if (next.success) setStoreType(next.data)
+          }}
+        >
+          <option value="" disabled>
+            请选择
+          </option>
+          {STORE_TYPES.map((value) => (
             <option key={value} value={value}>
-              {SHOP_TYPE_LABELS[value]}
+              {STORE_TYPE_LABELS[value]}
             </option>
           ))}
         </select>

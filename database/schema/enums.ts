@@ -11,11 +11,13 @@ import {
   RENDER_ENGINES,
   RENDER_MODES,
   SHOP_TYPES,
+  STORE_TYPES,
   SI_STYLES,
 } from '@store/shared'
 
 // Enum values come from @store/shared so the API, the UI and the database cannot drift apart.
 export const shopType = pgEnum('shop_type', SHOP_TYPES)
+export const storeType = pgEnum('store_type', STORE_TYPES)
 export const market = pgEnum('market', MARKETS)
 export const siStyle = pgEnum('si_style', SI_STYLES)
 export const nodeKind = pgEnum('node_kind', NODE_KINDS)

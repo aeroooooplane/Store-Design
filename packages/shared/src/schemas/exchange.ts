@@ -6,6 +6,7 @@ import {
   PlanStrategySchema,
   ShopTypeSchema,
   SiStyleSchema,
+  StoreTypeSchema,
 } from '../enums.ts'
 import { NameSchema } from './common.ts'
 import { LayoutSchema } from './layout.ts'
@@ -25,6 +26,7 @@ export const ProjectExportSchema = z.object({
   project: z.object({
     name: NameSchema,
     shopType: ShopTypeSchema,
+    storeType: StoreTypeSchema.optional(),
     market: MarketSchema,
     siStyle: SiStyleSchema,
   }),

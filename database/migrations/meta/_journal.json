@@ -134,6 +134,13 @@
       "when": 1795682264091,
       "tag": "0018_node_space_overrides",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1795752662244,
+      "tag": "0019_project_store_type",
+      "breakpoints": true
     }
   ]
 }

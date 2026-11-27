@@ -1,18 +1,20 @@
 import { cleanup, fireEvent, screen, waitFor, within } from '@testing-library/react'
-import { Route, Routes } from 'react-router'
+import { Link, Route, Routes, useParams } from 'react-router'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Project } from '@store/shared'
 import { makeProject as project } from '../../test-utils/factories.ts'
 import { json, notFound, stubFetch } from '../../test-utils/fake-api.ts'
 import { renderWithClient } from '../../test-utils/render.tsx'
 import { ProjectListPage } from './ProjectListPage.tsx'
+import { useProject } from './queries.ts'
+import { ProjectCard } from '../workbench/ProjectCard.tsx'
 
 /** In-memory stand-in for the API, recording every request the page makes. */
 function fakeApi(initial: Project[]) {
   const projects = [...initial]
   let failCreate: { status: number; body: object } | null = null
 
-  const { calls, fetchMock } = stubFetch(({ request, url, body }) => {
+  const { calls, fetchMock } = stubFetch(({ request, url, body, ifMatch }) => {
     if (request.method === 'GET' && url.pathname === '/api/v1/projects') {
       const deleted = url.searchParams.get('status') === 'deleted'
       const items = projects.filter((p) => (p.deletedAt !== null) === deleted)
@@ -37,6 +39,15 @@ function fakeApi(initial: Project[]) {
         format: 'legacy',
         warnings: ['道具「旧款柜」与当前模型不符，已改为占位'],
       })
+    }
+    const target = projects.find((p) => url.pathname === '/api/v1/projects/' + p.id)
+    if (target && request.method === 'GET') return json(200, target)
+    if (target && request.method === 'PATCH') {
+      if (ifMatch !== '"' + target.revision + '"')
+        return json(409, { error: { message: '版本已更新' } })
+      const updated = { ...target, ...(body as Partial<Project>), revision: target.revision + 1 }
+      projects[projects.indexOf(target)] = updated
+      return json(200, updated)
     }
     if (request.method === 'DELETE') {
       const target = projects.find((p) => url.pathname.endsWith(p.id))
@@ -70,6 +81,7 @@ beforeEach(() => {
       id: '22222222-2222-4222-8222-222222222222',
       name: '澳门威尼斯人',
       shopType: 'island',
+      storeType: 'camera_retailer',
       market: 'overseas',
       siStyle: 'SI2.0',
     }),
@@ -87,7 +99,8 @@ describe('ProjectListPage', () => {
     const row = (await screen.findByText('澳门威尼斯人')).closest('tr')
     expect(row).not.toBeNull()
     const cells = within(row as HTMLElement)
-    expect(cells.getByText('中岛店')).toBeTruthy()
+    expect(cells.getByText('照材店')).toBeTruthy()
+    expect(screen.getByText('待设置')).toBeTruthy()
     expect(cells.getByText('海外')).toBeTruthy()
     expect(cells.getByText('SI2.0')).toBeTruthy()
   })
@@ -104,17 +117,54 @@ describe('ProjectListPage', () => {
     renderPage()
     await screen.findByText('南京德基')
     fireEvent.change(screen.getByLabelText('项目名称'), { target: { value: '成都恒驰' } })
-    fireEvent.change(screen.getByLabelText('铺位形态'), { target: { value: 'zone' } })
+    fireEvent.change(screen.getByLabelText('店铺类型'), { target: { value: 'zone' } })
     fireEvent.click(screen.getByRole('button', { name: '新建项目' }))
 
     expect(await screen.findByText('成都恒驰')).toBeTruthy()
     const post = server.calls.find((c) => c.method === 'POST')
     expect(post?.body).toEqual({
       name: '成都恒驰',
-      shopType: 'zone',
+      shopType: 'side_hall',
+      storeType: 'zone',
       market: 'domestic',
       siStyle: 'SI1.0',
     })
+  })
+
+  it('通过项目标题旁修改旧项目的店铺类型，返回列表同步显示', async () => {
+    function ProjectHeader() {
+      const { id = '' } = useParams()
+      const detail = useProject(id)
+      return (
+        <>
+          {detail.data && (
+            <ProjectCard project={detail.data} space={null} siStyle={detail.data.siStyle} />
+          )}
+          <Link to="/">返回项目列表</Link>
+        </>
+      )
+    }
+
+    renderWithClient(
+      <Routes>
+        <Route path="/" element={<ProjectListPage />} />
+        <Route path="/projects/:id" element={<ProjectHeader />} />
+      </Routes>,
+      { router: true },
+    )
+    const legacy = (await screen.findByText('南京德基')).closest('tr') as HTMLElement
+    fireEvent.click(within(legacy).getByRole('link', { name: '打开' }))
+    const select = (await screen.findByRole('combobox', { name: '店铺类型' })) as HTMLSelectElement
+    expect(select.value).toBe('')
+    fireEvent.change(select, { target: { value: 'exclusive' } })
+    await waitFor(() => expect(select.value).toBe('exclusive'))
+    expect(server.calls.find((call) => call.method === 'PATCH')).toMatchObject({
+      ifMatch: '"1"',
+      body: { storeType: 'exclusive' },
+    })
+    fireEvent.click(screen.getByRole('link', { name: '返回项目列表' }))
+    const row = (await screen.findByText('南京德基')).closest('tr') as HTMLElement
+    expect(within(row).getByText('专卖店')).toBeTruthy()
   })
 
   it('shows the server message and request id when creation fails', async () => {
@@ -124,6 +174,7 @@ describe('ProjectListPage', () => {
     renderPage()
     await screen.findByText('南京德基')
     fireEvent.change(screen.getByLabelText('项目名称'), { target: { value: '任意' } })
+    fireEvent.change(screen.getByLabelText('店铺类型'), { target: { value: 'exclusive' } })
     fireEvent.click(screen.getByRole('button', { name: '新建项目' }))
     const alert = await screen.findByText(/请求过于频繁/)
     expect(alert.textContent).toContain('req-42')
@@ -190,7 +241,7 @@ describe('ProjectListPage', () => {
       { router: true },
     )
     const row = (await screen.findByText('澳门威尼斯人')).closest('tr') as HTMLElement
-    fireEvent.click(within(row).getByText('中岛店'))
+    fireEvent.click(within(row).getByText('照材店'))
     expect(await screen.findByText('工作台页面')).toBeTruthy()
   })
 })
