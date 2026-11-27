@@ -60,7 +60,15 @@ describe('floor tiles on a slanted entrance', () => {
 
   it('maps the entrance direction onto the long side of the tiles, centred on its midpoint', () => {
     // A 2D context that ignores drawing (jsdom has no canvas).
-    const context = new Proxy({}, { get: () => () => undefined, set: () => true })
+    const context = {
+      fillRect() {},
+      beginPath() {},
+      arc() {},
+      fill() {},
+      getImageData(_x: number, _y: number, width: number, height: number) {
+        return { data: new Uint8ClampedArray(width * height * 4).fill(255) }
+      },
+    }
     vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(
       context as unknown as CanvasRenderingContext2D,
     )

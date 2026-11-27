@@ -34,17 +34,29 @@ const sideHall = () => shop(8, 6, [{ a: [8, 6], b: [2, 6], kind: 'main' }])
 /** 4 × 10 m, only a side entrance, on the left edge from z = 1 to 9. */
 const leftEntrance = () => shop(4, 10, [{ a: [0, 1], b: [0, 9], kind: 'side' }])
 
+function opaquePixels(width: number, height: number) {
+  const data = new Uint8ClampedArray(width * height * 4).fill(255)
+  data[0] = 61
+  data[(height - 1) * width * 4] = 179
+  return data
+}
+
 /** A 2D context that records what is drawn (jsdom has no canvas). */
-function recordingContext() {
+function recordingContext(readPixels = opaquePixels) {
   const calls: { op: string; args: unknown[] }[] = []
   const context = new Proxy(
     {},
     {
-      get:
-        (_target, prop) =>
-        (...args: unknown[]) => {
+      get(_target, prop) {
+        if (prop === 'getImageData') {
+          return (_x: number, _y: number, width: number, height: number) => ({
+            data: readPixels(width, height),
+          })
+        }
+        return (...args: unknown[]) => {
           calls.push({ op: String(prop), args })
-        },
+        }
+      },
       set: (_target, prop, value) => {
         calls.push({ op: `${String(prop)}=`, args: [value] })
         return true
@@ -231,8 +243,8 @@ describe('floor texture (drawn on a recording 2D context)', () => {
   })
 
   const texture = (material: THREE.MeshStandardMaterial) => {
-    const map = material.map as THREE.CanvasTexture
-    return { map, canvas: map.image }
+    const map = material.map as THREE.DataTexture
+    return { map, pixels: map.image }
   }
   const tiles = () =>
     recorder.calls
@@ -240,17 +252,43 @@ describe('floor texture (drawn on a recording 2D context)', () => {
       .slice(1)
       .map((c) => round(c.args as number[], 3))
 
+  it('uses solid floor colours when drawing pixels were cleared or cannot be read', () => {
+    const blank = recordingContext((width, height) => new Uint8ClampedArray(width * height * 4))
+    const unreadable = recordingContext(() => {
+      throw new DOMException('Canvas unavailable', 'InvalidStateError')
+    })
+    for (const { context } of [blank, unreadable]) {
+      vi.mocked(HTMLCanvasElement.prototype.getContext).mockReturnValue(
+        context as unknown as CanvasRenderingContext2D,
+      )
+      const materials = roomMaterials('SI1.0', 'side_hall', sideHall())
+      expect(materials.floor.map).toBeNull()
+      expect(materials.floor.color.getHexString()).toBe('bfbbb8')
+      expect(materials.floorWhite.map).toBeNull()
+      expect(materials.floorWhite.color.getHexString()).toBe('f7f7f5')
+    }
+  })
+
   it('SI1.0: 4 × 4 stacked 800 mm tiles, centred on the entrance midpoint', () => {
     const floor = roomMaterials('SI1.0', 'side_hall', sideHall()).floor
-    const { map, canvas } = texture(floor)
+    const { map, pixels } = texture(floor)
     expect(floor.color.getHexString()).toBe('ffffff')
-    expect([canvas.width, canvas.height]).toEqual([1280, 1280])
+    expect([pixels.width, pixels.height]).toEqual([1280, 1280])
     expect(round(map.repeat.toArray())).toEqual([0.3125, 0.3125])
     // offset = ((tw / 2 − ox) / 4tw, (td / 2 + oz) / 4td) with origin (5, 6).
     expect(round(map.offset.toArray())).toEqual([-1.4375, 2])
     expect([map.wrapS, map.wrapT]).toEqual([THREE.RepeatWrapping, THREE.RepeatWrapping])
     expect(map.colorSpace).toBe(THREE.SRGBColorSpace)
     expect(map.anisotropy).toBe(8)
+    expect([map.magFilter, map.minFilter]).toEqual([
+      THREE.LinearFilter,
+      THREE.LinearMipmapLinearFilter,
+    ])
+    expect(map.generateMipmaps).toBe(true)
+    expect(map.flipY).toBe(false)
+    expect(map.version).toBeGreaterThan(0)
+    expect(pixels.data[0]).toBe(179)
+    expect(pixels.data[(pixels.height - 1) * pixels.width * 4]).toBe(61)
 
     // Joint colour fills the canvas first, then 16 tiles inset by half a joint (1.2 px minimum).
     expect(recorder.calls.slice(0, 2)).toEqual([
@@ -275,8 +313,8 @@ describe('floor texture (drawn on a recording 2D context)', () => {
   })
 
   it('SI2.0: 1200 × 600 tiles with the long side along an x entrance, plus terrazzo chips', () => {
-    const { map, canvas } = texture(roomMaterials('SI2.0', 'side_hall', sideHall()).floor)
-    expect([canvas.width, canvas.height]).toEqual([1600, 800])
+    const { map, pixels } = texture(roomMaterials('SI2.0', 'side_hall', sideHall()).floor)
+    expect([pixels.width, pixels.height]).toEqual([1600, 800])
     expect(round(map.repeat.toArray())).toEqual([0.2083, 0.4167])
     expect(round(map.offset.toArray())).toEqual([-0.9167, 2.625])
     expect(tiles().slice(0, 16)[0]).toEqual([0.667, 0.667, 398.667, 198.667])
@@ -287,15 +325,15 @@ describe('floor texture (drawn on a recording 2D context)', () => {
   })
 
   it('SI2.0: the long side turns with an entrance along z', () => {
-    const { map, canvas } = texture(roomMaterials('SI2.0', 'side_hall', leftEntrance()).floor)
-    expect([canvas.width, canvas.height]).toEqual([800, 1600])
+    const { map, pixels } = texture(roomMaterials('SI2.0', 'side_hall', leftEntrance()).floor)
+    expect([pixels.width, pixels.height]).toEqual([800, 1600])
     expect(round(map.repeat.toArray())).toEqual([0.4167, 0.2083])
     expect(round(map.offset.toArray())).toEqual([0.125, 1.1667])
   })
 
   it('island: 600 × 300 click floor, odd rows shifted half a tile', () => {
-    const { map, canvas } = texture(roomMaterials('SI2.0', 'island', sideHall()).floor)
-    expect([canvas.width, canvas.height]).toEqual([960, 480])
+    const { map, pixels } = texture(roomMaterials('SI2.0', 'island', sideHall()).floor)
+    expect([pixels.width, pixels.height]).toEqual([960, 480])
     expect(round(map.repeat.toArray())).toEqual([0.4167, 0.8333])
     // Island floors start from the shop centre (4, 3), not the entrance.
     expect(round(map.offset.toArray())).toEqual([-1.5417, 2.625])
@@ -309,12 +347,16 @@ describe('floor texture (drawn on a recording 2D context)', () => {
     expect(recorder.calls.some((c) => c.op === 'arc')).toBe(false)
   })
 
-  it('draws the same texture every time', () => {
-    roomMaterials('SI1.0', 'side_hall', sideHall())
-    const first = JSON.stringify(recorder.calls)
-    recorder.calls.length = 0
-    roomMaterials('SI1.0', 'side_hall', sideHall())
-    expect(JSON.stringify(recorder.calls)).toBe(first)
+  it('reuses drawn pixels across viewers with independent texture positions', () => {
+    const first = texture(roomMaterials('SI1.0', 'side_hall', sideHall()).floor)
+    const second = texture(
+      roomMaterials('SI1.0', 'side_hall', shop(8, 6, [{ a: [0, 0], b: [8, 0], kind: 'main' }]))
+        .floor,
+    )
+    expect(recorder.calls).toHaveLength(0)
+    expect(second.pixels.data).toBe(first.pixels.data)
+    expect(second.map).not.toBe(first.map)
+    expect(second.map.offset.toArray()).not.toEqual(first.map.offset.toArray())
   })
   it('keeps identical tile scale and entrance alignment in white and material looks', () => {
     for (const si of ['SI1.0', 'SI2.0'] as const) {
