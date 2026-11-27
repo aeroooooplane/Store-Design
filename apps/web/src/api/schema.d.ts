@@ -893,6 +893,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 } | null;
                                 strategy: ("max" | "area" | "min" | "case") | null;
@@ -962,6 +963,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 };
                             } | null;
@@ -1024,6 +1026,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 };
                             }[];
@@ -1348,6 +1351,7 @@ export interface paths {
                                 w: number;
                                 d: number;
                                 h: number;
+                                rotation?: number;
                             }[];
                         };
                         /** @enum {string} */
@@ -1525,6 +1529,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 } | null;
                             };
@@ -1777,6 +1782,7 @@ export interface paths {
                                     w: number;
                                     d: number;
                                     h: number;
+                                    rotation?: number;
                                 }[];
                             } | null;
                         };
@@ -2018,6 +2024,7 @@ export interface paths {
                                     w: number;
                                     d: number;
                                     h: number;
+                                    rotation?: number;
                                 }[];
                             } | null;
                         };
@@ -2431,6 +2438,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 } | null;
                             };
@@ -2681,6 +2689,7 @@ export interface paths {
                                     w: number;
                                     d: number;
                                     h: number;
+                                    rotation?: number;
                                 }[];
                             } | null;
                         };
@@ -2926,6 +2935,7 @@ export interface paths {
                                     w: number;
                                     d: number;
                                     h: number;
+                                    rotation?: number;
                                 }[];
                             } | null;
                         };
@@ -3075,6 +3085,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 };
                                 revision: number;
@@ -3245,6 +3256,7 @@ export interface paths {
                                     w: number;
                                     d: number;
                                     h: number;
+                                    rotation?: number;
                                 }[];
                             };
                             revision: number;
@@ -3394,6 +3406,7 @@ export interface paths {
                                 w: number;
                                 d: number;
                                 h: number;
+                                rotation?: number;
                             }[];
                         };
                     };
@@ -3469,6 +3482,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 };
                                 revision: number;
@@ -5577,6 +5591,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 };
                                 issues: {
@@ -5774,6 +5789,7 @@ export interface paths {
                                 w: number;
                                 d: number;
                                 h: number;
+                                rotation?: number;
                             }[];
                         };
                     };
@@ -7433,6 +7449,7 @@ export interface paths {
                                 w: number;
                                 d: number;
                                 h: number;
+                                rotation?: number;
                             }[];
                         };
                     };
@@ -7603,6 +7620,7 @@ export interface paths {
                                         w: number;
                                         d: number;
                                         h: number;
+                                        rotation?: number;
                                     }[];
                                 } | null;
                             };

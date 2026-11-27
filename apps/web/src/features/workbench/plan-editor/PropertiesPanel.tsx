@@ -10,6 +10,7 @@ import {
   itemMount,
   mmToM,
   mToMm,
+  normalizeRotation,
   isCustomLogo,
   customLogoAsset,
   customLogoProblem,
@@ -26,6 +27,7 @@ interface PropertiesPanelProps {
   selected: LayoutItem | null
   /** The selected 空心隔板, when a partition rather than a prop is selected. */
   fixture?: Fixture | null | undefined
+  fixtureRotationPreview?: number | undefined
   assetMap: Map<string, Asset>
   /** The space, to put a piece switched between 贴墙 and 内嵌 onto or into its wall. */
   space: Space
@@ -46,10 +48,13 @@ const ELEVATION_LABELS: Record<Installation, string> = {
 function FixtureFields({
   fixture,
   dispatch,
+  rotationPreview,
 }: {
   fixture: Fixture
   dispatch: Dispatch<EditorAction>
+  rotationPreview: number | undefined
 }) {
+  const rotation = fixture.rotation ?? 0
   const field = (label: string, key: 'w' | 'd' | 'h' | 'cx' | 'cz') => (
     <label className="field-row" key={key}>
       {label}
@@ -81,12 +86,41 @@ function FixtureFields({
           <Trash2 size={16} aria-hidden="true" />
         </button>
       </div>
-      {field('长（左右）', 'w')}
-      {field('宽（前后）', 'd')}
+      {field('长度', 'w')}
+      {field('进深', 'd')}
+      <label className="field-row">
+        旋转角度（度）
+        {rotationPreview !== undefined ? (
+          <input type="number" readOnly value={rotationPreview} />
+        ) : (
+          <input
+            key={fixture.id + ':' + rotation}
+            type="number"
+            step={0.1}
+            defaultValue={rotation}
+            onBlur={(event) => {
+              const input = event.currentTarget
+              if (!Number.isFinite(input.valueAsNumber)) {
+                input.value = String(rotation)
+                return
+              }
+              const next = normalizeRotation(input.valueAsNumber)
+              input.value = String(next)
+              dispatch({ type: 'turnFixture', id: fixture.id, rotation: next })
+            }}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault()
+                event.currentTarget.blur()
+              }
+            }}
+          />
+        )}
+      </label>
       {field('高度', 'h')}
       {field('水平位置', 'cx')}
       {field('垂直位置', 'cz')}
-      <p className="hint">拖动隔板可移动，沿边拖动可改尺寸。按住 Alt 暂停吸附。</p>
+      <p className="hint">拖动隔板可移动，拖边可改尺寸，拖圆形手柄可旋转。按住 Alt 暂停吸附。</p>
     </>
   )
 }
@@ -146,6 +180,7 @@ function WallArtFields({
 export function PropertiesPanel({
   selected,
   fixture,
+  fixtureRotationPreview,
   assetMap,
   space,
   dispatch,
@@ -173,7 +208,11 @@ export function PropertiesPanel({
   if (!selected && fixture)
     return (
       <div className="wb-card properties" aria-label="选中道具">
-        <FixtureFields fixture={fixture} dispatch={dispatch} />
+        <FixtureFields
+          fixture={fixture}
+          dispatch={dispatch}
+          rotationPreview={fixtureRotationPreview}
+        />
       </div>
     )
   return (

@@ -15,6 +15,7 @@ import {
   itemElevation,
   itemMount,
   itemTilt,
+  fixtureCorners,
   mToMm,
   mainEntrance,
   modelBox,
@@ -87,8 +88,10 @@ export interface PlanViewProps {
   onFixtureResize?:
     | ((fixture: Fixture, edge: FixtureEdge, event: ReactPointerEvent<SVGLineElement>) => void)
     | undefined
+  onFixtureRotate?: ((fixture: Fixture, event: ReactPointerEvent<SVGGElement>) => void) | undefined
   /** The exact partition footprint that will be applied when the pointer is released. */
-  fixturePreview?: (FixtureDragPreview & { fixtureId?: string }) | null | undefined
+  fixturePreview?:
+    (FixtureDragPreview & { fixtureId?: string; turning?: boolean }) | null | undefined
   svgRef?: Ref<SVGSVGElement> | undefined
   /** Compact thumbnails hide labels and dimensions. */
   compact?: boolean | undefined
@@ -102,27 +105,42 @@ export interface PlanViewProps {
   title: string
 }
 
-function FixturePreview({ preview, fontSize }: { preview: FixtureDragPreview; fontSize: number }) {
+type FixtureOutline = Pick<Fixture, 'cx' | 'cz' | 'w' | 'd' | 'rotation'>
+
+const fixtureTransform = ({ cx, cz, rotation }: FixtureOutline) =>
+  rotation ? `rotate(${rotation} ${cx} ${cz})` : undefined
+
+function FixturePreview({
+  preview,
+  fontSize,
+}: {
+  preview: FixtureDragPreview & { turning?: boolean }
+  fontSize: number
+}) {
   const { minX, minZ, maxX, maxZ } = preview.rect
+  const f = {
+    cx: (minX + maxX) / 2,
+    cz: (minZ + maxZ) / 2,
+    w: maxX - minX,
+    d: maxZ - minZ,
+    rotation: preview.rotation,
+  }
+  const top = Math.min(...fixtureCorners(f).map((point) => point[1]))
   return (
     <g className="plan-fixture-preview" aria-hidden="true">
       <rect
         className="plan-fixture-draft"
         x={minX}
         y={minZ}
-        width={maxX - minX}
-        height={maxZ - minZ}
+        width={f.w}
+        height={f.d}
+        transform={fixtureTransform(f)}
       />
       {preview.guides.map(({ a, b }, index) => (
         <line key={index} className="plan-fixture-guide" x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />
       ))}
-      <text
-        x={(minX + maxX) / 2}
-        y={minZ - fontSize * 0.4}
-        fontSize={fontSize * 0.85}
-        textAnchor="middle"
-      >
-        {mToMm(maxX - minX)} × {mToMm(maxZ - minZ)} mm
+      <text x={f.cx} y={top - fontSize * 0.4} fontSize={fontSize * 0.85} textAnchor="middle">
+        {preview.turning ? `${f.rotation ?? 0}°` : `${mToMm(f.w)} × ${mToMm(f.d)} mm`}
       </text>
     </g>
   )
@@ -336,15 +354,24 @@ function RotateHandle({
   item,
   size,
   onPointerDown,
+  partition = false,
 }: {
-  item: LayoutItem
+  item: FixtureOutline & { id: string }
   size: number
   onPointerDown: (event: ReactPointerEvent<SVGGElement>) => void
+  partition?: boolean
 }) {
-  const [hx, hz] = rotationHandle(item, size * 2.2)
-  const [bx, bz] = rotationHandle(item, 0)
+  const shape = { ...item, w: partition ? item.d : item.w, rotation: item.rotation ?? 0 }
+  const [hx, hz] = rotationHandle(shape, size * 2.2)
+  const [bx, bz] = rotationHandle(shape, 0)
   return (
-    <g className="plan-rotate-handle" data-rotate-handle={item.id} onPointerDown={onPointerDown}>
+    <g
+      className="plan-rotate-handle"
+      data-rotate-handle={partition ? undefined : item.id}
+      data-fixture-rotate={partition ? item.id : undefined}
+      onPointerDown={onPointerDown}
+    >
+      {partition && <title>拖动旋转空心隔板</title>}
       <line x1={bx} y1={bz} x2={hx} y2={hz} />
       <circle cx={hx} cy={hz} r={size * 0.55} />
     </g>
@@ -371,6 +398,7 @@ export function PlanView({
   onBackgroundPointerDown,
   onFixturePointerDown,
   onFixtureResize,
+  onFixtureRotate,
   fixturePreview,
   svgRef,
   compact = false,
@@ -582,13 +610,14 @@ export function PlanView({
               y={f.cz - f.d / 2}
               width={f.w}
               height={f.d}
+              transform={fixtureTransform(f)}
               fill={`url(#${hatch})`}
             />
             {!compact && (
               <text
                 className="plan-label"
                 x={f.cx}
-                y={f.cz + f.d / 2 + fontSize * 0.6}
+                y={Math.max(...fixtureCorners(f).map((point) => point[1])) + fontSize * 0.6}
                 fontSize={fontSize * 0.7}
                 textAnchor="middle"
                 dominantBaseline="middle"
@@ -756,7 +785,7 @@ export function PlanView({
             ]
             const cornerRadius = Math.min(fontSize * 0.23, f.w / 5, f.d / 5)
             return (
-              <g key={f.id} data-fixture-handles={f.id}>
+              <g key={f.id} data-fixture-handles={f.id} transform={fixtureTransform(f)}>
                 {(
                   [
                     [x1, z1],
@@ -778,6 +807,15 @@ export function PlanView({
                     key={edge}
                     data-fixture-edge={edge}
                     className="plan-fixture-edge"
+                    style={
+                      f.rotation
+                        ? {
+                            cursor: ['ew-resize', 'nwse-resize', 'ns-resize', 'nesw-resize'][
+                              Math.round((f.rotation + (edge.endsWith('Z') ? 90 : 0)) / 45) % 4
+                            ],
+                          }
+                        : undefined
+                    }
                     x1={a[0]}
                     y1={a[1]}
                     x2={b[0]}
@@ -789,6 +827,20 @@ export function PlanView({
               </g>
             )
           })}
+      {!compact &&
+        onFixtureRotate &&
+        !fixturePreview &&
+        layout?.fixtures
+          ?.filter((fixture) => fixture.id === selectedId)
+          .map((fixture) => (
+            <RotateHandle
+              key={fixture.id}
+              item={fixture}
+              partition
+              size={fontSize}
+              onPointerDown={(event) => onFixtureRotate(fixture, event)}
+            />
+          ))}
       {fixturePreview && <FixturePreview preview={fixturePreview} fontSize={fontSize} />}
       {guide && (
         <line

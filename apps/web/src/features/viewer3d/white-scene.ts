@@ -38,7 +38,14 @@ import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
 import { islandEdgingGeometry } from './island-platform.ts'
-import { disposeGeometry, disposeTree, placeholderBox, surface, toVec3 } from './scene-geometry.ts'
+import {
+  disposeGeometry,
+  disposeTree,
+  placeholderBox,
+  prism,
+  surface,
+  toVec3,
+} from './scene-geometry.ts'
 import { signFaces, wallPicture } from './wall-picture.ts'
 import { displayPanelBody } from './display-panel-body.ts'
 import { boundaryWallMaterial } from './boundary-wall.ts'
@@ -493,10 +500,14 @@ export class WhiteScene {
   setFixtures(fixtures: readonly Fixture[], items: readonly LayoutItem[]) {
     this.fixtures.children.forEach(disposeGeometry)
     this.fixtures.clear()
-    for (const { rect, bottom, top } of fixtures.flatMap((f) => fixtureSolids(f, items))) {
-      const [w, d, h] = [rect.maxX - rect.minX, rect.maxZ - rect.minZ, top - bottom]
-      const geometry = new THREE.BoxGeometry(w, h, d)
-      geometry.translate((rect.minX + rect.maxX) / 2, bottom + h / 2, (rect.minZ + rect.maxZ) / 2)
+    for (const { rect, polygon, bottom, top } of fixtures.flatMap((f) => fixtureSolids(f, items))) {
+      const h = top - bottom
+      const geometry = polygon
+        ? prism(polygon, bottom, h)
+        : new THREE.BoxGeometry(rect.maxX - rect.minX, h, rect.maxZ - rect.minZ)
+      if (!polygon) {
+        geometry.translate((rect.minX + rect.maxX) / 2, bottom + h / 2, (rect.minZ + rect.maxZ) / 2)
+      }
       const box = new THREE.Mesh(geometry, this.roomWhite)
       box.castShadow = true
       box.receiveShadow = true

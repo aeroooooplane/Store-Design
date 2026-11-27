@@ -2464,6 +2464,11 @@
                                           "type": "number",
                                           "exclusiveMinimum": 0,
                                           "maximum": 50
+                                        },
+                                        "rotation": {
+                                          "type": "number",
+                                          "minimum": 0,
+                                          "exclusiveMaximum": 360
                                         }
                                       },
                                       "required": [
@@ -2881,6 +2886,11 @@
                                         "type": "number",
                                         "exclusiveMinimum": 0,
                                         "maximum": 50
+                                      },
+                                      "rotation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       }
                                     },
                                     "required": [
@@ -3230,6 +3240,11 @@
                                       "type": "number",
                                       "exclusiveMinimum": 0,
                                       "maximum": 50
+                                    },
+                                    "rotation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
                                     }
                                   },
                                   "required": [
@@ -4404,6 +4419,11 @@
                               "type": "number",
                               "exclusiveMinimum": 0,
                               "maximum": 50
+                            },
+                            "rotation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             }
                           },
                           "required": [
@@ -5309,6 +5329,11 @@
                                         "type": "number",
                                         "exclusiveMinimum": 0,
                                         "maximum": 50
+                                      },
+                                      "rotation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       }
                                     },
                                     "required": [
@@ -6374,6 +6399,11 @@
                                     "type": "number",
                                     "exclusiveMinimum": 0,
                                     "maximum": 50
+                                  },
+                                  "rotation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   }
                                 },
                                 "required": [
@@ -7409,6 +7439,11 @@
                                     "type": "number",
                                     "exclusiveMinimum": 0,
                                     "maximum": 50
+                                  },
+                                  "rotation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   }
                                 },
                                 "required": [
@@ -9253,6 +9288,11 @@
                                         "type": "number",
                                         "exclusiveMinimum": 0,
                                         "maximum": 50
+                                      },
+                                      "rotation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       }
                                     },
                                     "required": [
@@ -10318,6 +10358,11 @@
                                     "type": "number",
                                     "exclusiveMinimum": 0,
                                     "maximum": 50
+                                  },
+                                  "rotation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   }
                                 },
                                 "required": [
@@ -11334,6 +11379,11 @@
                                     "type": "number",
                                     "exclusiveMinimum": 0,
                                     "maximum": 50
+                                  },
+                                  "rotation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   }
                                 },
                                 "required": [
@@ -11841,6 +11891,11 @@
                                       "type": "number",
                                       "exclusiveMinimum": 0,
                                       "maximum": 50
+                                    },
+                                    "rotation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
                                     }
                                   },
                                   "required": [
@@ -12384,6 +12439,11 @@
                                 "type": "number",
                                 "exclusiveMinimum": 0,
                                 "maximum": 50
+                              },
+                              "rotation": {
+                                "type": "number",
+                                "minimum": 0,
+                                "exclusiveMaximum": 360
                               }
                             },
                             "required": [
@@ -12892,6 +12952,11 @@
                               "type": "number",
                               "exclusiveMinimum": 0,
                               "maximum": 50
+                            },
+                            "rotation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             }
                           },
                           "required": [
@@ -13267,6 +13332,11 @@
                                     "type": "number",
                                     "exclusiveMinimum": 0,
                                     "maximum": 50
+                                  },
+                                  "rotation": {
+                                    "type": "number",
+                                    "minimum": 0,
+                                    "exclusiveMaximum": 360
                                   }
                                 },
                                 "required": [
@@ -19776,6 +19846,11 @@
                                       "type": "number",
                                       "exclusiveMinimum": 0,
                                       "maximum": 50
+                                    },
+                                    "rotation": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "exclusiveMaximum": 360
                                     }
                                   },
                                   "required": [
@@ -20619,6 +20694,11 @@
                               "type": "number",
                               "exclusiveMinimum": 0,
                               "maximum": 50
+                            },
+                            "rotation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             }
                           },
                           "required": [
@@ -26399,6 +26479,11 @@
                               "type": "number",
                               "exclusiveMinimum": 0,
                               "maximum": 50
+                            },
+                            "rotation": {
+                              "type": "number",
+                              "minimum": 0,
+                              "exclusiveMaximum": 360
                             }
                           },
                           "required": [
@@ -27279,6 +27364,11 @@
                                         "type": "number",
                                         "exclusiveMinimum": 0,
                                         "maximum": 50
+                                      },
+                                      "rotation": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "exclusiveMaximum": 360
                                       }
                                     },
                                     "required": [

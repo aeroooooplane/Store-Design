@@ -322,6 +322,7 @@ export function PlanEditor({
     onItemPointerDown,
     onFixturePointerDown,
     onFixtureResize,
+    onFixtureRotate,
     onResizeHandlePointerDown,
     onRotateHandlePointerDown,
     onDrawPointerDown,
@@ -529,7 +530,7 @@ export function PlanEditor({
               planMain
                 ? canEditModels
                   ? '平面画布：拖动移动，方向键微调，R 旋转，Delete 删除'
-                  : '平面画布：绘制和调整隔板，Delete 删除选中的隔板'
+                  : '平面画布：绘制和调整隔板，R 旋转，Delete 删除选中的隔板'
                 : canEditModels
                   ? '三维视图：拖动道具在地面移动，拖动空白处旋转视角，滚轮缩放'
                   : '三维视图：拖动旋转视角，滚轮缩放'
@@ -548,7 +549,20 @@ export function PlanEditor({
                 cancelFixtureDrawing()
               else if (selectedFixture && (event.key === 'Delete' || event.key === 'Backspace'))
                 dispatch({ type: 'remove', id: selectedFixture.id })
-              else onKeyDown(event)
+              else if (
+                planMain &&
+                selectedFixture &&
+                !drawingFixture &&
+                !fixturePreview &&
+                event.key.toLowerCase() === 'r'
+              ) {
+                event.preventDefault()
+                dispatch({
+                  type: 'turnFixture',
+                  id: selectedFixture.id,
+                  rotation: (selectedFixture.rotation ?? 0) + (event.shiftKey ? -90 : 90),
+                })
+              } else onKeyDown(event)
             }}
           >
             {drawingFixture && (
@@ -646,6 +660,9 @@ export function PlanEditor({
                 onFixtureResize={
                   planMain && !drawingFixture && !placement ? onFixtureResize : undefined
                 }
+                onFixtureRotate={
+                  planMain && !drawingFixture && !placement ? onFixtureRotate : undefined
+                }
                 fixturePreview={fixturePreview}
                 onBackgroundPointerDown={() => dispatch({ type: 'select', id: null })}
                 compact={!planMain}
@@ -707,6 +724,7 @@ export function PlanEditor({
             <PropertiesPanel
               selected={selected}
               fixture={selectedFixture}
+              fixtureRotationPreview={fixturePreview?.turning ? fixturePreview.rotation : undefined}
               assetMap={assetMap}
               space={space}
               dispatch={dispatch}

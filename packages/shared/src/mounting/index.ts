@@ -1,3 +1,4 @@
+import { fixtureStraightRect } from '../fixtures/index.ts'
 import { locatePoint } from '../geometry/polygon.ts'
 import { nearestQuarter, obbsOverlap, placedBox } from '../geometry/obb.ts'
 import { rectFromCenter, rectsOverlap } from '../geometry/rect.ts'
@@ -99,6 +100,11 @@ export interface WallFace {
   cutouts?: { from: number; to: number; top: number }[]
 }
 
+function fixtureFaceThickness(fixture: Fixture | undefined, along: 'x' | 'z'): number {
+  const rect = fixture && fixtureStraightRect(fixture)
+  return rect ? (along === 'x' ? rect.maxZ - rect.minZ : rect.maxX - rect.minX) : WALL_THICKNESS_M
+}
+
 type FaceItem = Pick<LayoutItem, 'cx' | 'cz' | 'w' | 'd' | 'h'> &
   Partial<Pick<LayoutItem, 'function' | 'mount'>>
 
@@ -142,10 +148,10 @@ export function wallFaces(
     })
   }
   for (const f of fixtures) {
-    const l = f.cx - f.w / 2
-    const r = f.cx + f.w / 2
-    const t = f.cz - f.d / 2
-    const b = f.cz + f.d / 2
+    // The mounting model describes horizontal or vertical faces only.
+    const rect = fixtureStraightRect(f)
+    if (!rect) continue
+    const { minX: l, maxX: r, minZ: t, maxZ: b } = rect
     const common = { edge: -1, open: [], fixtureId: f.id, height: f.h }
     const outer: WallFace[] = [
       { ...common, a: [l, t], b: [r, t], along: 'x', inward: [0, -1] },
@@ -158,10 +164,7 @@ export function wallFaces(
       (item) =>
         itemMount(item) === 'floor' &&
         (item.function === 'accessory_cabinet' || item.function === 'side_cabinet') &&
-        rectsOverlap(
-          rectFromCenter(f.cx, f.cz, f.w, f.d),
-          rectFromCenter(item.cx, item.cz, item.w, item.d),
-        ),
+        rectsOverlap(rect, rectFromCenter(item.cx, item.cz, item.w, item.d)),
     )
     for (const face of outer) {
       const across = face.along === 'x' ? 'z' : 'x'
@@ -198,7 +201,7 @@ export function wallPlacementTarget(
     if (normal && normal[0] * face.inward[0] + normal[1] * face.inward[1] < 0.5) continue
     const axis = face.along === 'x' ? 'z' : 'x'
     const fixture = fixtures.find((entry) => entry.id === face.fixtureId)
-    const thickness = fixture ? (axis === 'z' ? fixture.d : fixture.w) : WALL_THICKNESS_M
+    const thickness = fixtureFaceThickness(fixture, face.along)
     const signed =
       (coord(point, axis) - faceLineAt(face, at)) * (axis === 'x' ? face.inward[0] : face.inward[1])
     const tolerance = 0.035
@@ -243,7 +246,7 @@ function onTarget(
   if (!fixture) return false
   const axis = face.along === 'x' ? 'z' : 'x'
   const direction = axis === 'x' ? face.inward[0] : face.inward[1]
-  const depth = axis === 'x' ? fixture.w : fixture.d
+  const depth = fixtureFaceThickness(fixture, face.along)
   const back = faceLineAt(face, at) - direction * depth
   return Math.abs(back - faceLineAt(target, at)) <= ON_WALL_M + EPSILON_M
 }
@@ -391,7 +394,7 @@ function buriedPanelFace(
     )
       return false
     const fixture = fixtures.find((f) => f.id === other.fixtureId)
-    const thickness = fixture ? (other.along === 'x' ? fixture.d : fixture.w) : WALL_THICKNESS_M
+    const thickness = fixtureFaceThickness(fixture, other.along)
     return [at - length / 2 + EPSILON_M, at, at + length / 2 - EPSILON_M].some((s) => {
       const line = faceLineAt(face, s)
       const x = (face.along === 'x' ? s : line) + face.inward[0] * EPSILON_M * 2
@@ -457,7 +460,7 @@ export function displayPanelSnap(
       const line = faceLineAt(face, centre)
       const signed = (across - line) * inward
       const fixture = fixtures.find((f) => f.id === face.fixtureId)
-      const canRecess = !fixture || (alongX ? fixture.d : fixture.w) + EPSILON_M >= depth
+      const canRecess = !fixture || fixtureFaceThickness(fixture, face.along) + EPSILON_M >= depth
       const mount = (adding || signed < 0) && canRecess ? 'embedded' : 'wall'
       const target = line + inward * depth * (mount === 'embedded' ? -0.5 : 0.5)
       const distance = Math.hypot(centre - at, target - across)
