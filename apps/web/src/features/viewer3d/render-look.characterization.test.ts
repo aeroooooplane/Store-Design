@@ -287,8 +287,8 @@ describe('floor texture (drawn on a recording 2D context)', () => {
     expect(map.generateMipmaps).toBe(true)
     expect(map.flipY).toBe(false)
     expect(map.version).toBeGreaterThan(0)
-    expect(pixels.data[0]).toBe(179)
-    expect(pixels.data[(pixels.height - 1) * pixels.width * 4]).toBe(61)
+    expect(pixels.data?.[0]).toBe(179)
+    expect(pixels.data?.[(pixels.height - 1) * pixels.width * 4]).toBe(61)
 
     // Joint colour fills the canvas first, then 16 tiles inset by half a joint (1.2 px minimum).
     expect(recorder.calls.slice(0, 2)).toEqual([
