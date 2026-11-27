@@ -1,5 +1,5 @@
 {
-  "status": "isolated_review_candidate_not_published",
+  "status": "withdrawn_appearance_experiment_not_for_publish",
   "source": {
     "generator": "Tripo",
     "bytes": 22605008,
@@ -185,5 +185,6 @@
     "2100mm nominal overall display length has no measured reference",
     "no independent SKP",
     "not yet catalogued or published"
-  ]
+  ],
+  "withdrawnReason": "用户反馈修整版纹理与Tripo原版出入过大，改用原始GLB逐字节交付"
 }

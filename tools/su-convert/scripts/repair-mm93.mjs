@@ -1,4 +1,4 @@
-// Repair the approved MM93 draft without regenerating its body or changing the source file.
+// Retired appearance experiment. It changes the source's decals and PBR and is not a fidelity pass.
 import {readFile,mkdir,writeFile,access} from 'node:fs/promises'
 import {createHash} from 'node:crypto'
 import {fileURLToPath} from 'node:url'
@@ -7,6 +7,7 @@ import {createServer} from 'vite'
 import {chromium} from '@playwright/test'
 
 const [sourceArg,outArg]=process.argv.slice(2)
+if(!process.argv.includes('--allow-appearance-changes'))throw Error('旧外观实验已撤回：会改写贴花、PBR和贴图分辨率。保留原版请使用 build-mm93-viewer.mjs；实验复现必须显式传 --allow-appearance-changes。')
 if(!sourceArg||!outArg)throw Error('Usage: node repair-mm93.mjs source.glb output-directory')
 const source=path.resolve(sourceArg),out=path.resolve(outArg)
 const bytes=await readFile(source),sha=createHash('sha256').update(bytes).digest('hex')
