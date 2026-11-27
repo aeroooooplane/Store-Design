@@ -9,6 +9,7 @@ import {
 import type { Asset, ItemFunction, Market, SiStyle } from '@store/shared'
 import { ItemFunctionIcon } from '../../components/StoreIcons.tsx'
 import { SIGNAGE_OPTIONS, SIGNAGE_ORDER, SIGNAGE_THUMBNAILS } from './signage-options.ts'
+import { SEATING_NAMES, SEATING_THUMBNAILS, seatingOrder } from './seating-options.ts'
 import customLogoThumbnail from './signage-thumbnails/custom-logo.svg?url'
 import './model-picker-placement.css'
 
@@ -105,6 +106,7 @@ export function pickableSections(
       .map((asset) => {
         const name =
           SIGNAGE_OPTIONS[asset.id]?.[market] ??
+          SEATING_NAMES[asset.id] ??
           (si === 'SI2.0' ? SI2_OPTION_NAMES[asset.id] : undefined) ??
           advertisingScreenName(asset.id)
         return name ? { ...asset, name } : asset
@@ -114,7 +116,11 @@ export function pickableSections(
           ? SIGNAGE_ORDER.indexOf(a.id) - SIGNAGE_ORDER.indexOf(b.id)
           : si === 'SI2.0' && key === 'accessory_cabinet'
             ? SI2_ACCESSORY_ORDER.indexOf(a.id) - SI2_ACCESSORY_ORDER.indexOf(b.id)
-            : a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
+            : key === 'seating'
+              ? seatingOrder(a.id, si) - seatingOrder(b.id, si) ||
+                a.name.localeCompare(b.name, 'zh') ||
+                a.id.localeCompare(b.id)
+              : a.name.localeCompare(b.name, 'zh') || a.id.localeCompare(b.id),
       ),
   })).filter((section) => section.assets.length > 0)
 }
@@ -299,7 +305,8 @@ export function ModelPicker({
                   const image = asset.productImage ?? asset.preview
                   const imageUrl = isCustomLogo({ assetId: asset.id })
                     ? customLogoThumbnail
-                    : (SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
+                    : (SEATING_THUMBNAILS[`./seating-thumbnails/${asset.id}.webp`] ??
+                      SIGNAGE_THUMBNAILS[`./signage-thumbnails/${asset.id}-${market}.webp`] ??
                       (image && thumbnailUrl(image.url)))
                   const pointPlaced = isPointPlaced?.(asset) ?? false
                   const pending = pendingAssetId === asset.id
