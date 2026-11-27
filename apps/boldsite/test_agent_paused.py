@@ -2,8 +2,8 @@ import os
 import unittest
 from unittest.mock import patch
 
+from app import ApiError  # Load the packaged vendor path before importing route modules.
 from agent_paused import ai_budget, overview, update_settings
-from contract import ApiError
 
 
 class PausedAgentTests(unittest.TestCase):
