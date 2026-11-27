@@ -258,7 +258,7 @@ describe('floor texture (drawn on a recording 2D context)', () => {
       throw new DOMException('Canvas unavailable', 'InvalidStateError')
     })
     for (const { context } of [blank, unreadable]) {
-      vi.mocked(HTMLCanvasElement.prototype.getContext).mockReturnValue(
+      vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(
         context as unknown as CanvasRenderingContext2D,
       )
       const materials = roomMaterials('SI1.0', 'side_hall', sideHall())
