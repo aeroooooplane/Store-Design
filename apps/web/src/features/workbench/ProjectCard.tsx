@@ -6,7 +6,7 @@ import {
   mToMm,
   polygonArea,
 } from '@store/shared'
-import type { Project, SiStyle, Space } from '@store/shared'
+import type { Project, ShopType, SiStyle, Space } from '@store/shared'
 import { Info } from 'lucide-react'
 import { useState } from 'react'
 import type { ReactNode } from 'react'
@@ -110,10 +110,12 @@ export function ProjectCard({
 
 export function CurrentSpaceCard({
   space,
+  shopType,
   action,
   error,
 }: {
   space: Space
+  shopType: ShopType
   action: ReactNode
   error: boolean
 }) {
@@ -124,6 +126,9 @@ export function CurrentSpaceCard({
         <h3>当前空间</h3>
         {action}
       </header>
+      <p className="hint">
+        铺位形态 <strong>{SHOP_TYPE_LABELS[shopType]}</strong>
+      </p>
       <p className="space-info-size">{facts.size}</p>
       <dl className="space-info-metrics">
         <div>
@@ -153,12 +158,12 @@ export function ProjectDetails({
   const rows: [string, string][] = [
     ['项目', project.name],
     ['店铺类型', project.storeType ? STORE_TYPE_LABELS[project.storeType] : '待设置'],
-    ['铺位形态', SHOP_TYPE_LABELS[space?.shopType ?? project.shopType]],
     ['市场', MARKET_LABELS[project.market]],
     ['当前节点 SI', siStyle],
     ['创建时间', formatDateTime(project.createdAt)],
-    ...(facts
+    ...(space && facts
       ? ([
+          ['铺位形态', SHOP_TYPE_LABELS[space.shopType ?? project.shopType]],
           ['面积', facts.area],
           ['外框尺寸', facts.size],
           ['层高', facts.height],
