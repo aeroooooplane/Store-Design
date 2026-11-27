@@ -1,6 +1,11 @@
 import { detectVectorTables } from '../../apps/api/src/modules/displays/detect-vector.ts'
+import { convertNative, isNativeExport } from '../../apps/api/src/modules/exchange/native.ts'
+import { convertLegacy } from '../../apps/api/src/modules/exchange/legacy.ts'
+import { AppError } from '../../apps/api/src/lib/app-error.ts'
 import {
   AssetListSchema,
+  ProjectExportSchema,
+  ProjectImportSchema,
   CameraCreateSchema,
   CameraUpdateSchema,
   SpaceSchema,
@@ -59,6 +64,35 @@ Object.assign(globalThis, {
   workbenchRules(command: string, input: string, source: string) {
     const respond = (value: unknown) => JSON.stringify(value)
     const data: unknown = JSON.parse(input)
+    if (command === 'project-export') {
+      const parsed = ProjectExportSchema.safeParse(data)
+      return respond(parsed.success ? parsed.data : failure('项目备份内容无效', parsed.error.issues))
+    }
+    if (command === 'project-import') {
+      const parsed = ProjectImportSchema.safeParse(data)
+      if (!parsed.success) return respond(failure('项目文件格式无效', parsed.error.issues))
+      const assets = new Map(AssetListSchema.parse(JSON.parse(source)).items.map(a => [a.id, a]))
+      try {
+        const native = isNativeExport(parsed.data.data)
+        const plan = native
+          ? convertNative(parsed.data.data, assets, parsed.data.name)
+          : convertLegacy(parsed.data.data, assets, parsed.data.name)
+        for (const node of plan.nodes) {
+          if (node.space) {
+            const checked = spaceCheck(node.space)
+            if ('error' in checked) return respond(checked)
+            node.space = checked.space
+          }
+          if ((node.kind === 'space' && !node.space) || (node.kind !== 'space' && !node.layout)) {
+            return respond(failure(`节点“${node.name}”缺少空间或布局`, []))
+          }
+        }
+        return respond({ ...plan, format: native ? 'store-design-project' : 'legacy' })
+      } catch (error) {
+        if (error instanceof AppError) return respond(failure(error.message, error.details ?? [], error.statusCode))
+        throw error
+      }
+    }
     if (command === 'delivery-names') {
       const { name, shopType, space, date, revision } = data as {
         name: string; shopType: Parameters<typeof deliveryFolderName>[1]; space: Space; date: string; revision: number
