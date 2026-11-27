@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+import { Box3 } from 'three'
 import {
   distanceToBoundary,
   effectiveCeiling,
@@ -57,6 +58,28 @@ describe('SI ceilings', () => {
       expect(b! - a!).toBeCloseTo(1.36)
       if (index > 0) expect(a! - intervals[index - 1]![1]!).toBeCloseTo(0.2)
     })
+  })
+
+  it.each(['SI1.0', 'SI2.0'] as const)('closes the film and cap with black lining in %s', (si) => {
+    const { parts } = ceilingModel(room, 'side_hall', si)
+    const panelCount = parts.filter((part) => part.finish === 'film').length
+    const linings = parts.filter((part) => part.lining)
+    expect(linings).toHaveLength(panelCount + 1)
+    const cap = parts.find((part) => part.finish === 'slot' && !part.lining)!
+    for (const lining of linings) {
+      expect(lining.finish).toBe('slot')
+      expect(lining.bottom).toBe(room.height)
+      expect(lining.bottom + lining.thickness).toBeCloseTo(cap.bottom)
+    }
+    const ceiling = buildCeiling(room, 'side_hall', si)
+    const slot = ceiling.children.find((mesh) => mesh.userData['ceilingFinish'] === 'slot')!
+    const bounds = new Box3().setFromObject(slot)
+    expect(bounds.min.y).toBeCloseTo(room.height)
+    expect(bounds.max.y).toBeCloseTo(cap.bottom + cap.thickness)
+    const membrane = ceiling.children.find((mesh) => mesh.userData['ceilingFinish'] === 'film')!
+    const face = new Box3().setFromObject(membrane)
+    expect(face.min.y).toBeCloseTo(room.height)
+    expect(face.max.y).toBeCloseTo(room.height)
   })
 
   it('clips soft-film faces to the setbacks of an oblique concave boundary', () => {

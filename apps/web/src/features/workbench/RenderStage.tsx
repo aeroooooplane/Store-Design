@@ -46,7 +46,6 @@ import {
 import { useBackgroundEditor } from './render-background/useBackgroundEditor.ts'
 import { LeftTabContext, WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { CameraPanel } from './CameraPanel.tsx'
-import { useCeilingView } from './ceiling-preview.ts'
 
 import type { LeftTab } from './WorkbenchLayout.tsx'
 
@@ -101,7 +100,6 @@ export function RenderStage({
   const viewer = useRef<Viewer3DHandle>(null)
   const [viewerReady, setViewerReady] = useState(false)
   const [show, setShow] = useState<Show>('3d')
-  useCeilingView(() => setShow('3d'))
   const sharedTabs = useContext(LeftTabContext)
   const [localTab, setLocalTab] = useState<LeftTab | null>(null)
   const currentTab = sharedTabs ? sharedTabs.tab : localTab

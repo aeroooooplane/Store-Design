@@ -43,7 +43,6 @@ import { StagePanel } from './StagePanel.tsx'
 import type { SiSwitch } from './si-switch.ts'
 import { WorkbenchLayout } from './WorkbenchLayout.tsx'
 import { useViewMemory } from './view-memory.ts'
-import { useCeilingView } from './ceiling-preview.ts'
 import type { Market, Stage } from '@store/shared'
 import { ModelPicker } from './ModelPicker.tsx'
 import {
@@ -422,8 +421,6 @@ export function PlanEditor({
     if (viewerRef.current) viewerRef.current.showView(camera.camera)
     else pendingCamera.current = camera.camera
   }
-
-  useCeilingView(() => switchView('3d'))
 
   const planMain = view === 'plan'
   return (

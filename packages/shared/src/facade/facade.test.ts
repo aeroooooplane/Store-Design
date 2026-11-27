@@ -1,14 +1,18 @@
 import { describe, expect, it } from 'vitest'
 import {
+  exteriorFacadeSpan,
+  facadeEdgeSize,
   facadeGeometry,
   facadeRun,
   facadeSpan,
+  facadeWallSpace,
   reviewFacade,
   suggestedFacadeEdge,
 } from './index.ts'
 import { normalizeSpace, rectangleSpace, SpaceSchema, validateSpace } from '../schemas/space.ts'
 import type { Facade } from '../schemas/facade.ts'
 import type { Space } from '../schemas/space.ts'
+import { wallSegments } from '../scene/walls.ts'
 
 const room = rectangleSpace(8, 6, 3.2)
 const facade: Facade = {
@@ -34,6 +38,49 @@ describe('straight side-hall facade', () => {
     expect(frame.openingStart).toBe(2)
     expect(frame.openingEnd).toBe(5)
     expect(facadeRun(partial.boundary, { a: [0, 6], b: [8, 0] })).toBeNull()
+  })
+
+  it('places the default on the explicit opening, with its measured jambs outside the lease line', () => {
+    const partial: Space = {
+      ...room,
+      openEdges: [{ a: [8, 1], b: [8, 3.5] }],
+    }
+    const edge = suggestedFacadeEdge(partial)
+    expect(edge).toBe(1)
+    expect(facadeEdgeSize(partial, edge)).toEqual({
+      length: 6,
+      openingWidth: 2.5,
+      hasOpening: true,
+    })
+    const positioned: Facade = { ...facade, a: [8, 0], b: [8, 6], openingWidth: 2.5 }
+    const saved: Space = { ...partial, facade: positioned }
+    const frame = facadeGeometry(saved, positioned)!
+    expect([frame.openingStart, frame.openingEnd]).toEqual([2.5, 5])
+    expect(exteriorFacadeSpan(saved, positioned)).toEqual({ a: [8.215, 0], b: [8.215, 6] })
+
+    const onRight = (wall: ReturnType<typeof wallSegments>[number]) =>
+      wall.a[0] === 8 && wall.b[0] === 8
+    expect(wallSegments(saved, 'side_hall').filter(onRight)).toHaveLength(2)
+    const facadeWalls = facadeWallSpace(saved, 'side_hall')
+    expect(wallSegments(facadeWalls, 'side_hall').filter(onRight)).toHaveLength(0)
+    expect(saved.openEdges).toEqual(partial.openEdges)
+    expect(wallSegments(facadeWalls, 'side_hall').filter((wall) => !onRight(wall))).toEqual(
+      wallSegments(saved, 'side_hall').filter((wall) => !onRight(wall)),
+    )
+  })
+
+  it('joins contiguous open segments into a full-width facade without jambs', () => {
+    const full: Space = {
+      ...room,
+      openEdges: [
+        { a: [8, 0], b: [8, 2] },
+        { a: [8, 2], b: [8, 6] },
+      ],
+    }
+    expect(suggestedFacadeEdge(full)).toBe(1)
+    expect(facadeEdgeSize(full, 1).openingWidth).toBe(6)
+    const frame = facadeGeometry(full, { ...facade, a: [8, 0], b: [8, 6], openingWidth: 6 })!
+    expect([frame.openingStart, frame.openingEnd]).toEqual([0, 6])
   })
 
   it('selects the SI2.0 grade preset and checks actual LED width across all bands', () => {

@@ -6,6 +6,8 @@ import {
   FACADE_KIND_LABELS,
   facadeKind,
   isStraightFacade,
+  exteriorFacadeSpan,
+  openingPieces,
   reviewFacadeConfig,
   supportsFacade,
   facadeEdgeSize,
@@ -148,7 +150,8 @@ function FacadePlan({ space, facade }: { space: Space; facade?: Facade | undefin
   const zs = space.boundary.map((p) => p[1])
   const w = Math.max(...xs) - Math.min(...xs)
   const d = Math.max(...zs) - Math.min(...zs)
-  const pad = Math.max(w, d) * 0.08
+  const pad = Math.max(0.28, Math.max(w, d) * 0.08)
+  const outer = facade && exteriorFacadeSpan(space, facade)
   return (
     <svg
       className="facade-position"
@@ -160,24 +163,26 @@ function FacadePlan({ space, facade }: { space: Space; facade?: Facade | undefin
         className="facade-position-boundary"
         points={space.boundary.map((p) => p.join(',')).join(' ')}
       />
-      {space.entrances.map((e, i) => (
-        <line
-          key={i}
-          className="facade-position-entrance"
-          x1={e.a[0]}
-          y1={e.a[1]}
-          x2={e.b[0]}
-          y2={e.b[1]}
-        />
-      ))}
-      {facade && (
+      {[...space.openEdges, ...space.entrances].flatMap((opening, i) =>
+        (openingPieces(space, opening) ?? []).map(({ a, b, edge }) => (
+          <line
+            key={i + '-' + edge}
+            className="facade-position-entrance"
+            x1={a[0]}
+            y1={a[1]}
+            x2={b[0]}
+            y2={b[1]}
+          />
+        )),
+      )}
+      {facade && outer && (
         <>
           <line
             className="facade-plan-span"
-            x1={facade.a[0]}
-            y1={facade.a[1]}
-            x2={facade.b[0]}
-            y2={facade.b[1]}
+            x1={outer.a[0]}
+            y1={outer.a[1]}
+            x2={outer.b[0]}
+            y2={outer.b[1]}
           />
           <circle
             className="facade-position-start"
@@ -350,6 +355,8 @@ function StraightFacadeEditor({
 }: EditorProps & { formPicker: ReactNode }) {
   const [initial] = useState(space)
   const [draft, setDraft] = useState(() => initialDraft(initial))
+  const recommendedEdge = suggestedFacadeEdge(initial)
+  const hasRecommendedOpening = facadeEdgeSize(initial, recommendedEdge).hasOpening
   const [remove, setRemove] = useState(false)
   const mutation = useUpdateNodeSpace(projectId, nodeId)
   const result = parseFacade(initial, draft.edge, draft.dims, draft.settings)
@@ -438,11 +445,22 @@ function StraightFacadeEditor({
                   {initial.boundary.map((_, i) => (
                     <option key={i} value={i} disabled={facadeEdgeSize(initial, i).length < 0.1}>
                       第 {i + 1} 边 · {mToMm(facadeEdgeSize(initial, i).length)} mm
-                      {i === suggestedFacadeEdge(initial) ? '（建议）' : ''}
+                      {i === recommendedEdge
+                        ? hasRecommendedOpening
+                          ? '（开放段）'
+                          : '（建议）'
+                        : ''}
                     </option>
                   ))}
                 </select>
               </label>
+              {hasRecommendedOpening && (
+                <div className="facade-field-wide">
+                  <button type="button" onClick={() => selectEdge(recommendedEdge)}>
+                    按开放边定位
+                  </button>
+                </div>
+              )}
               {field('沿边起点（mm）', 'offset')}
               {field('门头总宽（mm）', 'width')}
               {field('入口净宽（mm）', 'openingWidth')}

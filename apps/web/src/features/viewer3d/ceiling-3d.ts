@@ -1,9 +1,50 @@
 import * as THREE from 'three'
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js'
-import type { ShopType, SiStyle, Space } from '@store/shared'
+import { edges } from '@store/shared'
+import type { Point, ShopType, SiStyle, Space } from '@store/shared'
 import { ceilingModel } from './ceiling-geometry.ts'
 import type { CeilingFinish } from './ceiling-geometry.ts'
 import { prism } from './scene-geometry.ts'
+
+function membraneFace(polygon: readonly Point[], elevation: number) {
+  const shape = new THREE.Shape(polygon.map(([x, z]) => new THREE.Vector2(x, -z)))
+  return new THREE.ShapeGeometry(shape).rotateX(-Math.PI / 2).translate(0, elevation, 0)
+}
+
+/** Dark vertical lining closes the distance from the membrane to the recessed cap. */
+function filmLining(polygon: readonly Point[], bottom: number, height: number) {
+  const positions: number[] = []
+  const uv: number[] = []
+  for (const [[ax, az], [bx, bz]] of edges(polygon)) {
+    const top = bottom + height
+    positions.push(
+      ax,
+      bottom,
+      az,
+      bx,
+      bottom,
+      bz,
+      bx,
+      top,
+      bz,
+      ax,
+      bottom,
+      az,
+      bx,
+      top,
+      bz,
+      ax,
+      top,
+      az,
+    )
+    uv.push(0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1)
+  }
+  const geometry = new THREE.BufferGeometry()
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+  geometry.computeVertexNormals()
+  return geometry
+}
 
 const modelCache = new WeakMap<Space, Map<string, ReturnType<typeof ceilingModel>>>()
 
@@ -36,14 +77,20 @@ export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
     switch (finish) {
       case 'gypsum':
         return (materials[finish] = paint('#eeede7', 0, 0.45))
-      case 'slot':
-        return (materials[finish] = paint('#232325'))
+      case 'slot': {
+        const dark = paint('#232325')
+        dark.side = THREE.DoubleSide
+        return (materials[finish] = dark)
+      }
       case 'frame':
         return (materials[finish] = paint(si === 'SI1.0' ? '#a2a5a9' : '#45464b', 0.34))
       case 'track':
         return (materials[finish] = paint('#27282a'))
       case 'film':
-        return (materials[finish] = new THREE.MeshBasicMaterial({ color: '#fff5e7' }))
+        return (materials[finish] = new THREE.MeshBasicMaterial({
+          color: '#fff5e7',
+          side: THREE.DoubleSide,
+        }))
       case 'strip':
         return (materials[finish] = new THREE.MeshBasicMaterial({
           color: si === 'SI1.0' ? '#fff1dc' : '#fff7ec',
@@ -53,7 +100,11 @@ export function buildCeiling(space: Space, shop: ShopType, si: SiStyle) {
   // Merge the fixed panels, frame and rails by finish so complex ceilings use a few draw calls.
   const batches = new Map<CeilingFinish, THREE.BufferGeometry[]>()
   for (const part of parts) {
-    const geometry = prism(part.polygon, part.bottom, part.thickness, part.holes)
+    const geometry = part.lining
+      ? filmLining(part.polygon, part.bottom, part.thickness)
+      : part.finish === 'film'
+        ? membraneFace(part.polygon, part.bottom)
+        : prism(part.polygon, part.bottom, part.thickness, part.holes)
     const batch = batches.get(part.finish)
     if (batch) batch.push(geometry)
     else batches.set(part.finish, [geometry])
