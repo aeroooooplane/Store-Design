@@ -10,6 +10,7 @@ import type {
   ShopType,
   SiStyle,
   Space,
+  StoreType,
 } from '@store/shared'
 import { AppError } from '../../lib/app-error.ts'
 
@@ -32,6 +33,7 @@ export interface PlannedNode {
 export interface PlannedProject {
   name: string
   shopType: ShopType
+  storeType?: StoreType | undefined
   market: 'domestic' | 'overseas'
   siStyle: SiStyle
   /** Parents always precede their children. */

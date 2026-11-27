@@ -1,6 +1,6 @@
 import { useDeferredValue, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { MARKET_LABELS, SHOP_TYPE_LABELS } from '@store/shared'
+import { MARKET_LABELS, STORE_TYPE_LABELS } from '@store/shared'
 import { isProjectPilot } from '../../api/deployment.ts'
 import { ErrorMessage } from '../../components/ErrorMessage.tsx'
 import { ArchiveRestore, Trash2, Upload } from 'lucide-react'
@@ -131,7 +131,7 @@ export function ProjectListPage() {
             <thead>
               <tr>
                 <th>项目名称</th>
-                <th>铺位形态</th>
+                <th>店铺类型</th>
                 <th>市场</th>
                 <th>SI 风格</th>
                 <th>更新时间</th>
@@ -151,7 +151,7 @@ export function ProjectListPage() {
                   }}
                 >
                   <td className="project-name">{project.name}</td>
-                  <td>{SHOP_TYPE_LABELS[project.shopType]}</td>
+                  <td>{project.storeType ? STORE_TYPE_LABELS[project.storeType] : '待设置'}</td>
                   <td>{MARKET_LABELS[project.market]}</td>
                   <td>
                     <span className={project.siStyle === 'SI2.0' ? 'tag si-2' : 'tag'}>

@@ -688,6 +688,14 @@ describe('project import and export', () => {
       await t.app.inject({ method: 'GET', url: `/api/v1/projects/${source.project.id}/nodes` })
     ).json<NodeTree>()
     await t.app.inject({ method: 'POST', url: `/api/v1/nodes/${tree.nodes[3]?.id}/hide` })
+    expect(source.project.storeType).toBeNull()
+    const classified = await t.app.inject({
+      method: 'PATCH',
+      url: '/api/v1/projects/' + source.project.id,
+      headers: { 'if-match': '"' + source.project.revision + '"' },
+      payload: { storeType: 'camera_retailer' },
+    })
+    expect(classified.statusCode).toBe(200)
 
     const exported = await t.app.inject({
       method: 'GET',
@@ -708,7 +716,7 @@ describe('project import and export', () => {
       nodesImported: 4,
       draftImported: true,
       warnings: [],
-      project: { name: '副本' },
+      project: { name: '副本', storeType: 'camera_retailer' },
     })
     const copyTree = (
       await t.app.inject({

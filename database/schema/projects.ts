@@ -14,7 +14,15 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core'
 import type { Camera, Layout, Space } from '@store/shared'
-import { market, nodeKind, nodeOrigin, planStrategy, shopType, siStyle } from './enums.ts'
+import {
+  market,
+  nodeKind,
+  nodeOrigin,
+  planStrategy,
+  shopType,
+  siStyle,
+  storeType,
+} from './enums.ts'
 
 const timestamps = {
   createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
@@ -27,6 +35,7 @@ export const projects = pgTable(
     id: uuid('id').primaryKey().defaultRandom(),
     name: text('name').notNull(),
     shopType: shopType('shop_type').notNull(),
+    storeType: storeType('store_type'),
     market: market('market').notNull().default('domestic'),
     siStyle: siStyle('si_style').notNull().default('SI1.0'),
     revision: integer('revision').notNull().default(1),

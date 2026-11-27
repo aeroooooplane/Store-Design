@@ -18,6 +18,7 @@ export function toProject(row: ProjectRow): Project {
     id: row.id,
     name: row.name,
     shopType: row.shopType,
+    storeType: row.storeType,
     market: row.market,
     siStyle: row.siStyle,
     revision: row.revision,

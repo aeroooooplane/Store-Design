@@ -81,6 +81,7 @@ export interface paths {
                                 name: string;
                                 /** @enum {string} */
                                 shopType: "side_hall" | "island" | "zone";
+                                storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                                 /** @enum {string} */
                                 market: "domestic" | "overseas";
                                 /** @enum {string} */
@@ -129,8 +130,13 @@ export interface paths {
                 content: {
                     "application/json": {
                         name: string;
+                        /**
+                         * @default side_hall
+                         * @enum {string}
+                         */
+                        shopType?: "side_hall" | "island" | "zone";
                         /** @enum {string} */
-                        shopType: "side_hall" | "island" | "zone";
+                        storeType?: "exclusive" | "camera_retailer" | "zone";
                         /**
                          * @default domestic
                          * @enum {string}
@@ -157,6 +163,7 @@ export interface paths {
                             name: string;
                             /** @enum {string} */
                             shopType: "side_hall" | "island" | "zone";
+                            storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                             /** @enum {string} */
                             market: "domestic" | "overseas";
                             /** @enum {string} */
@@ -225,6 +232,7 @@ export interface paths {
                             name: string;
                             /** @enum {string} */
                             shopType: "side_hall" | "island" | "zone";
+                            storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                             /** @enum {string} */
                             market: "domestic" | "overseas";
                             /** @enum {string} */
@@ -301,6 +309,7 @@ export interface paths {
                             name: string;
                             /** @enum {string} */
                             shopType: "side_hall" | "island" | "zone";
+                            storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                             /** @enum {string} */
                             market: "domestic" | "overseas";
                             /** @enum {string} */
@@ -402,6 +411,8 @@ export interface paths {
                         /** @enum {string} */
                         shopType?: "side_hall" | "island" | "zone";
                         /** @enum {string} */
+                        storeType?: "exclusive" | "camera_retailer" | "zone";
+                        /** @enum {string} */
                         market?: "domestic" | "overseas";
                         /** @enum {string} */
                         siStyle?: "SI1.0" | "SI2.0";
@@ -421,6 +432,7 @@ export interface paths {
                             name: string;
                             /** @enum {string} */
                             shopType: "side_hall" | "island" | "zone";
+                            storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                             /** @enum {string} */
                             market: "domestic" | "overseas";
                             /** @enum {string} */
@@ -538,6 +550,7 @@ export interface paths {
                             name: string;
                             /** @enum {string} */
                             shopType: "side_hall" | "island" | "zone";
+                            storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                             /** @enum {string} */
                             market: "domestic" | "overseas";
                             /** @enum {string} */
@@ -665,6 +678,7 @@ export interface paths {
                                 name: string;
                                 /** @enum {string} */
                                 shopType: "side_hall" | "island" | "zone";
+                                storeType: ("exclusive" | "camera_retailer" | "zone") | null;
                                 /** @enum {string} */
                                 market: "domestic" | "overseas";
                                 /** @enum {string} */
@@ -744,6 +758,8 @@ export interface paths {
                                 name: string;
                                 /** @enum {string} */
                                 shopType: "side_hall" | "island" | "zone";
+                                /** @enum {string} */
+                                storeType?: "exclusive" | "camera_retailer" | "zone";
                                 /** @enum {string} */
                                 market: "domestic" | "overseas";
                                 /** @enum {string} */

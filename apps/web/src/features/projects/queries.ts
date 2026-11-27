@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import type { Project, ProjectCreate, ProjectUpdate } from '@store/shared'
+import type { Project, ProjectCreate, ProjectList, ProjectUpdate } from '@store/shared'
 import { api, ifMatch, unwrap } from '../../api/client.ts'
 import { apiHref } from '../../api/deployment.ts'
 
@@ -66,7 +66,14 @@ export function useUpdateProject() {
           body: patch,
         }),
       ),
-    onSuccess: (updated) => client.setQueryData(keys.detail(updated.id), updated),
+    onSuccess: (updated) => {
+      client.setQueryData(keys.detail(updated.id), updated)
+      client.setQueriesData<ProjectList>({ queryKey: ['projects', 'list'] }, (list) =>
+        list
+          ? { ...list, items: list.items.map((item) => (item.id === updated.id ? updated : item)) }
+          : list,
+      )
+    },
     onSettled: () => client.invalidateQueries({ queryKey: keys.all }),
   })
 }

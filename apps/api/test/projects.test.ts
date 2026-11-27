@@ -51,6 +51,29 @@ describe('POST /projects', () => {
     })
   })
 
+  it('项目分类与原铺位独立保存，旧项目未分类并由列表同步返回', async () => {
+    const legacy = await create({ name: '旧版分类验收', shopType: 'island' })
+    const modern = await create({ name: '新版分类验收', storeType: 'exclusive' })
+    expect(legacy).toMatchObject({ shopType: 'island', storeType: null })
+    expect(modern).toMatchObject({ shopType: 'side_hall', storeType: 'exclusive' })
+    const updated = await write('PATCH', '/api/v1/projects/' + legacy.id, legacy.revision, {
+      storeType: 'camera_retailer',
+    })
+    expect(updated.statusCode).toBe(200)
+    expect(updated.json()).toMatchObject({ storeType: 'camera_retailer', shopType: 'island' })
+    const list = await t.app.inject({ url: '/api/v1/projects?q=' + encodeURIComponent('分类验收') })
+    expect(list.json().items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: legacy.id,
+          storeType: 'camera_retailer',
+          shopType: 'island',
+        }),
+        expect.objectContaining({ id: modern.id, storeType: 'exclusive', shopType: 'side_hall' }),
+      ]),
+    )
+  })
+
   it('explains validation failures field by field', async () => {
     const response = await t.app.inject({
       method: 'POST',

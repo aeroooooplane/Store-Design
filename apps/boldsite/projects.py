@@ -10,6 +10,7 @@ from storage import timestamp
 router = APIRouter(prefix="/workbench/v1")
 
 ShopType = Literal["side_hall", "island", "zone"]
+StoreType = Literal["exclusive", "camera_retailer", "zone"]
 Market = Literal["domestic", "overseas"]
 SiStyle = Literal["SI1.0", "SI2.0"]
 
@@ -28,7 +29,8 @@ Search = Annotated[str, AfterValidator(lambda value: normalized_text(value, 0, 1
 class ProjectCreate(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: Name
-    shopType: ShopType
+    shopType: ShopType = "side_hall"
+    storeType: StoreType | None = None
     market: Market = "domestic"
     siStyle: SiStyle = "SI1.0"
 
@@ -37,6 +39,7 @@ class ProjectUpdate(BaseModel):
     model_config = ConfigDict(extra="forbid")
     name: Name | None = None
     shopType: ShopType | None = None
+    storeType: StoreType | None = None
     market: Market | None = None
     siStyle: SiStyle | None = None
 
@@ -74,8 +77,8 @@ def create_project(request: Request, payload: ProjectCreate):
     params = {**payload.model_dump(), "id": str(uuid4()), "now": now}
     with request.app.state.db.connect(write=True) as db:
         row = db.execute("""
-            INSERT INTO projects (id, name, shopType, market, siStyle, createdAt, updatedAt)
-            VALUES (:id, :name, :shopType, :market, :siStyle, :now, :now) RETURNING *
+            INSERT INTO projects (id, name, shopType, storeType, market, siStyle, createdAt, updatedAt)
+            VALUES (:id, :name, :shopType, :storeType, :market, :siStyle, :now, :now) RETURNING *
         """, params).fetchone()
     return with_revision(row, 201)
 

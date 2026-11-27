@@ -78,6 +78,20 @@ class PilotContractTests(unittest.IsolatedAsyncioTestCase):
         self.response_keys(road, "post", 201, project)
         return "/workbench/v1/projects/" + project["id"], project
 
+    async def test_project_store_type_is_independent_from_premises(self):
+        road, legacy = await self.create()
+        self.assertIsNone(legacy["storeType"])
+        status, _, current = await self.request(
+            "PATCH", road, payload={"storeType": "camera_retailer"}, headers={"if-match": '"1"'}
+        )
+        self.assertEqual(status, 200)
+        self.assertEqual((current["storeType"], current["shopType"]), ("camera_retailer", "zone"))
+        status, _, new_project = await self.request(
+            "POST", "/workbench/v1/projects", payload={"name": "新项目", "storeType": "exclusive"}
+        )
+        self.assertEqual(status, 201)
+        self.assertEqual((new_project["storeType"], new_project["shopType"]), ("exclusive", "side_hall"))
+
     async def test_proxy_paths_and_health(self):
         health = "/workbench/v1/health"
         for path, root in [(health, ""), (PREFIX + health, ""), (PREFIX + health, PREFIX), (health, PREFIX)]:
