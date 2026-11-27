@@ -173,7 +173,7 @@ describe('AgentDock', () => {
     await waitFor(() => expect(input.disabled).toBe(false))
     fireEvent.change(input, { target: { value: '帮我检查一下布局' } })
     fireEvent.click(screen.getByRole('button', { name: '发送' }))
-    expect(screen.getByText('帮我检查一下布局').closest('.agent-prompt')).toBeTruthy()
+    expect(screen.getByText('帮我检查一下布局').matches('.agent-prompt.agent-msg.user')).toBe(true)
     await waitFor(() =>
       expect(
         fetchMock.mock.calls.some(

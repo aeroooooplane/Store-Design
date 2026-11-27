@@ -2374,10 +2374,7 @@ path.brand-face-eyes {
   position: sticky;
   top: 0;
   z-index: 1;
-  display: flex;
-  justify-content: flex-end;
-  padding-block: 4px;
-  background: var(--paper);
+  align-self: flex-end;
 }
 
 .agent-msg {
