@@ -120,16 +120,20 @@ describe('pickableSections', () => {
     expect(cabinets).toEqual(before)
   })
 
-  it('只在 SI2.0 隐藏中岛陈列柜组合，保留 SI1.0 清单与其他中岛桌', () => {
+  it('两版SI都隐藏中岛陈列柜组合，保留其他中岛桌和SI1.0配件柜', () => {
     const combo = asset('asset-28034994', '中岛陈列柜组合', '非标陈列', {
       function: 'island_table',
       siFamily: '非标',
     })
     const ordinary = catalog.find((a) => a.id === 'asset-3')!
+    const si1Table = catalog.find((a) => a.id === 'asset-2')!
     const si1Cabinet = catalog[0]!
-    const source = [combo, ordinary, si1Cabinet]
+    const source = [combo, ordinary, si1Cabinet, si1Table]
     expect(pickableSections(source, 'SI2.0').flatMap((s) => s.assets)).toEqual([ordinary])
-    expect(pickableSections(source, 'SI1.0').flatMap((s) => s.assets)).toEqual([combo, si1Cabinet])
+    expect(pickableSections(source, 'SI1.0').flatMap((s) => s.assets)).toEqual([
+      si1Table,
+      si1Cabinet,
+    ])
   })
 
   it.each([

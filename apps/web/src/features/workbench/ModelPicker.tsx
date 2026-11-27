@@ -93,11 +93,10 @@ export function pickableSections(
         (a) =>
           canSelectCatalogAsset(a) &&
           !LEGACY_PORTRAIT_SCREENS.has(a.id) &&
+          a.id !== 'asset-28034994' &&
           PLACEABLE_CATEGORIES.has(a.category) &&
           match(a) &&
-          (si !== 'SI2.0' ||
-            (a.id !== 'asset-28034994' &&
-              (key !== 'accessory_cabinet' || SI2_ACCESSORY_ORDER.includes(a.id)))) &&
+          (si !== 'SI2.0' || key !== 'accessory_cabinet' || SI2_ACCESSORY_ORDER.includes(a.id)) &&
           (key !== 'signage' || Boolean(SIGNAGE_OPTIONS[a.id])) &&
           (a.category !== '软装道具' ||
             a.siFamily === si ||
