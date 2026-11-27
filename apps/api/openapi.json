@@ -2027,6 +2027,126 @@
                                       "additionalProperties": false
                                     }
                                   },
+                                  "facade": {
+                                    "type": "object",
+                                    "properties": {
+                                      "a": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      },
+                                      "b": {
+                                        "type": "array",
+                                        "prefixItems": [
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          },
+                                          {
+                                            "type": "number",
+                                            "minimum": -1000,
+                                            "maximum": 1000
+                                          }
+                                        ],
+                                        "items": false,
+                                        "minItems": 2,
+                                        "maxItems": 2
+                                      },
+                                      "openingWidth": {
+                                        "type": "number",
+                                        "minimum": 0.1,
+                                        "maximum": 200
+                                      },
+                                      "clearHeight": {
+                                        "type": "number",
+                                        "minimum": 0.1,
+                                        "maximum": 20
+                                      },
+                                      "fasciaHeight": {
+                                        "type": "number",
+                                        "minimum": 0.05,
+                                        "maximum": 5
+                                      },
+                                      "screenWidth": {
+                                        "type": "number",
+                                        "minimum": 0.05,
+                                        "maximum": 200
+                                      },
+                                      "screenInset": {
+                                        "type": "number",
+                                        "minimum": 0,
+                                        "maximum": 2
+                                      },
+                                      "si1": {
+                                        "type": "object",
+                                        "properties": {
+                                          "grade": {
+                                            "type": "string",
+                                            "enum": [
+                                              "S",
+                                              "A1",
+                                              "A2",
+                                              "B"
+                                            ]
+                                          },
+                                          "preset": {
+                                            "type": "string",
+                                            "enum": [
+                                              "steel",
+                                              "led"
+                                            ]
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      },
+                                      "si2": {
+                                        "type": "object",
+                                        "properties": {
+                                          "grade": {
+                                            "type": "string",
+                                            "enum": [
+                                              "S",
+                                              "A",
+                                              "B",
+                                              "C"
+                                            ]
+                                          },
+                                          "preset": {
+                                            "type": "string",
+                                            "enum": [
+                                              "aluminium",
+                                              "led",
+                                              "led_strip"
+                                            ]
+                                          }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    },
+                                    "required": [
+                                      "a",
+                                      "b",
+                                      "openingWidth",
+                                      "clearHeight",
+                                      "fasciaHeight",
+                                      "screenInset"
+                                    ],
+                                    "additionalProperties": false
+                                  },
                                   "obstacles": {
                                     "default": [],
                                     "maxItems": 100,
@@ -4006,6 +4126,123 @@
                           ]
                         }
                       },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -4891,6 +5128,126 @@
                                     ],
                                     "additionalProperties": false
                                   }
+                                },
+                                "facade": {
+                                  "type": "object",
+                                  "properties": {
+                                    "a": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "b": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "openingWidth": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 200
+                                    },
+                                    "clearHeight": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 20
+                                    },
+                                    "fasciaHeight": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 5
+                                    },
+                                    "screenWidth": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 200
+                                    },
+                                    "screenInset": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 2
+                                    },
+                                    "si1": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A1",
+                                            "A2",
+                                            "B"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "steel",
+                                            "led"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "si2": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A",
+                                            "B",
+                                            "C"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "aluminium",
+                                            "led",
+                                            "led_strip"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "a",
+                                    "b",
+                                    "openingWidth",
+                                    "clearHeight",
+                                    "fasciaHeight",
+                                    "screenInset"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "obstacles": {
                                   "default": [],
@@ -5962,6 +6319,126 @@
                                 "additionalProperties": false
                               }
                             },
+                            "facade": {
+                              "type": "object",
+                              "properties": {
+                                "a": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "b": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "openingWidth": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 200
+                                },
+                                "clearHeight": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 20
+                                },
+                                "fasciaHeight": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 5
+                                },
+                                "screenWidth": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 200
+                                },
+                                "screenInset": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 2
+                                },
+                                "si1": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A1",
+                                        "A2",
+                                        "B"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "steel",
+                                        "led"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "si2": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A",
+                                        "B",
+                                        "C"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "aluminium",
+                                        "led",
+                                        "led_strip"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "a",
+                                "b",
+                                "openingWidth",
+                                "clearHeight",
+                                "fasciaHeight",
+                                "screenInset"
+                              ],
+                              "additionalProperties": false
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -7002,6 +7479,126 @@
                                 "additionalProperties": false
                               }
                             },
+                            "facade": {
+                              "type": "object",
+                              "properties": {
+                                "a": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "b": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "openingWidth": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 200
+                                },
+                                "clearHeight": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 20
+                                },
+                                "fasciaHeight": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 5
+                                },
+                                "screenWidth": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 200
+                                },
+                                "screenInset": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 2
+                                },
+                                "si1": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A1",
+                                        "A2",
+                                        "B"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "steel",
+                                        "led"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "si2": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A",
+                                        "B",
+                                        "C"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "aluminium",
+                                        "led",
+                                        "led_strip"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "a",
+                                "b",
+                                "openingWidth",
+                                "clearHeight",
+                                "fasciaHeight",
+                                "screenInset"
+                              ],
+                              "additionalProperties": false
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -7906,6 +8503,123 @@
                           ]
                         }
                       },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -8309,6 +9023,123 @@
                             "b"
                           ]
                         }
+                      },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
                       },
                       "obstacles": {
                         "default": [],
@@ -8850,6 +9681,126 @@
                                     ],
                                     "additionalProperties": false
                                   }
+                                },
+                                "facade": {
+                                  "type": "object",
+                                  "properties": {
+                                    "a": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "b": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "openingWidth": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 200
+                                    },
+                                    "clearHeight": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 20
+                                    },
+                                    "fasciaHeight": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 5
+                                    },
+                                    "screenWidth": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 200
+                                    },
+                                    "screenInset": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 2
+                                    },
+                                    "si1": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A1",
+                                            "A2",
+                                            "B"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "steel",
+                                            "led"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "si2": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A",
+                                            "B",
+                                            "C"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "aluminium",
+                                            "led",
+                                            "led_strip"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "a",
+                                    "b",
+                                    "openingWidth",
+                                    "clearHeight",
+                                    "fasciaHeight",
+                                    "screenInset"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "obstacles": {
                                   "default": [],
@@ -9921,6 +10872,126 @@
                                 "additionalProperties": false
                               }
                             },
+                            "facade": {
+                              "type": "object",
+                              "properties": {
+                                "a": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "b": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "openingWidth": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 200
+                                },
+                                "clearHeight": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 20
+                                },
+                                "fasciaHeight": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 5
+                                },
+                                "screenWidth": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 200
+                                },
+                                "screenInset": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 2
+                                },
+                                "si1": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A1",
+                                        "A2",
+                                        "B"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "steel",
+                                        "led"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "si2": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A",
+                                        "B",
+                                        "C"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "aluminium",
+                                        "led",
+                                        "led_strip"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "a",
+                                "b",
+                                "openingWidth",
+                                "clearHeight",
+                                "fasciaHeight",
+                                "screenInset"
+                              ],
+                              "additionalProperties": false
+                            },
                             "obstacles": {
                               "default": [],
                               "maxItems": 100,
@@ -10941,6 +12012,126 @@
                                 ],
                                 "additionalProperties": false
                               }
+                            },
+                            "facade": {
+                              "type": "object",
+                              "properties": {
+                                "a": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "b": {
+                                  "type": "array",
+                                  "prefixItems": [
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    },
+                                    {
+                                      "type": "number",
+                                      "minimum": -1000,
+                                      "maximum": 1000
+                                    }
+                                  ],
+                                  "items": false,
+                                  "minItems": 2,
+                                  "maxItems": 2
+                                },
+                                "openingWidth": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 200
+                                },
+                                "clearHeight": {
+                                  "type": "number",
+                                  "minimum": 0.1,
+                                  "maximum": 20
+                                },
+                                "fasciaHeight": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 5
+                                },
+                                "screenWidth": {
+                                  "type": "number",
+                                  "minimum": 0.05,
+                                  "maximum": 200
+                                },
+                                "screenInset": {
+                                  "type": "number",
+                                  "minimum": 0,
+                                  "maximum": 2
+                                },
+                                "si1": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A1",
+                                        "A2",
+                                        "B"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "steel",
+                                        "led"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                },
+                                "si2": {
+                                  "type": "object",
+                                  "properties": {
+                                    "grade": {
+                                      "type": "string",
+                                      "enum": [
+                                        "S",
+                                        "A",
+                                        "B",
+                                        "C"
+                                      ]
+                                    },
+                                    "preset": {
+                                      "type": "string",
+                                      "enum": [
+                                        "aluminium",
+                                        "led",
+                                        "led_strip"
+                                      ]
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              },
+                              "required": [
+                                "a",
+                                "b",
+                                "openingWidth",
+                                "clearHeight",
+                                "fasciaHeight",
+                                "screenInset"
+                              ],
+                              "additionalProperties": false
                             },
                             "obstacles": {
                               "default": [],
@@ -18939,6 +20130,123 @@
                           ]
                         }
                       },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -19402,6 +20710,126 @@
                             ],
                             "additionalProperties": false
                           }
+                        },
+                        "facade": {
+                          "type": "object",
+                          "properties": {
+                            "a": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "b": {
+                              "type": "array",
+                              "prefixItems": [
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                },
+                                {
+                                  "type": "number",
+                                  "minimum": -1000,
+                                  "maximum": 1000
+                                }
+                              ],
+                              "items": false,
+                              "minItems": 2,
+                              "maxItems": 2
+                            },
+                            "openingWidth": {
+                              "type": "number",
+                              "minimum": 0.1,
+                              "maximum": 200
+                            },
+                            "clearHeight": {
+                              "type": "number",
+                              "minimum": 0.1,
+                              "maximum": 20
+                            },
+                            "fasciaHeight": {
+                              "type": "number",
+                              "minimum": 0.05,
+                              "maximum": 5
+                            },
+                            "screenWidth": {
+                              "type": "number",
+                              "minimum": 0.05,
+                              "maximum": 200
+                            },
+                            "screenInset": {
+                              "type": "number",
+                              "minimum": 0,
+                              "maximum": 2
+                            },
+                            "si1": {
+                              "type": "object",
+                              "properties": {
+                                "grade": {
+                                  "type": "string",
+                                  "enum": [
+                                    "S",
+                                    "A1",
+                                    "A2",
+                                    "B"
+                                  ]
+                                },
+                                "preset": {
+                                  "type": "string",
+                                  "enum": [
+                                    "steel",
+                                    "led"
+                                  ]
+                                }
+                              },
+                              "additionalProperties": false
+                            },
+                            "si2": {
+                              "type": "object",
+                              "properties": {
+                                "grade": {
+                                  "type": "string",
+                                  "enum": [
+                                    "S",
+                                    "A",
+                                    "B",
+                                    "C"
+                                  ]
+                                },
+                                "preset": {
+                                  "type": "string",
+                                  "enum": [
+                                    "aluminium",
+                                    "led",
+                                    "led_strip"
+                                  ]
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          },
+                          "required": [
+                            "a",
+                            "b",
+                            "openingWidth",
+                            "clearHeight",
+                            "fasciaHeight",
+                            "screenInset"
+                          ],
+                          "additionalProperties": false
                         },
                         "obstacles": {
                           "default": [],
@@ -20280,6 +21708,123 @@
                             "b"
                           ]
                         }
+                      },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
                       },
                       "obstacles": {
                         "default": [],
@@ -26066,6 +27611,123 @@
                           ]
                         }
                       },
+                      "facade": {
+                        "type": "object",
+                        "properties": {
+                          "a": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "b": {
+                            "type": "array",
+                            "prefixItems": [
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              },
+                              {
+                                "type": "number",
+                                "minimum": -1000,
+                                "maximum": 1000
+                              }
+                            ],
+                            "items": false,
+                            "minItems": 2,
+                            "maxItems": 2
+                          },
+                          "openingWidth": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 200
+                          },
+                          "clearHeight": {
+                            "type": "number",
+                            "minimum": 0.1,
+                            "maximum": 20
+                          },
+                          "fasciaHeight": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 5
+                          },
+                          "screenWidth": {
+                            "type": "number",
+                            "minimum": 0.05,
+                            "maximum": 200
+                          },
+                          "screenInset": {
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 2
+                          },
+                          "si1": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A1",
+                                  "A2",
+                                  "B"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "steel",
+                                  "led"
+                                ]
+                              }
+                            }
+                          },
+                          "si2": {
+                            "type": "object",
+                            "properties": {
+                              "grade": {
+                                "type": "string",
+                                "enum": [
+                                  "S",
+                                  "A",
+                                  "B",
+                                  "C"
+                                ]
+                              },
+                              "preset": {
+                                "type": "string",
+                                "enum": [
+                                  "aluminium",
+                                  "led",
+                                  "led_strip"
+                                ]
+                              }
+                            }
+                          }
+                        },
+                        "required": [
+                          "a",
+                          "b",
+                          "openingWidth",
+                          "clearHeight",
+                          "fasciaHeight",
+                          "screenInset"
+                        ]
+                      },
                       "obstacles": {
                         "default": [],
                         "maxItems": 100,
@@ -26926,6 +28588,126 @@
                                     ],
                                     "additionalProperties": false
                                   }
+                                },
+                                "facade": {
+                                  "type": "object",
+                                  "properties": {
+                                    "a": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "b": {
+                                      "type": "array",
+                                      "prefixItems": [
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        },
+                                        {
+                                          "type": "number",
+                                          "minimum": -1000,
+                                          "maximum": 1000
+                                        }
+                                      ],
+                                      "items": false,
+                                      "minItems": 2,
+                                      "maxItems": 2
+                                    },
+                                    "openingWidth": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 200
+                                    },
+                                    "clearHeight": {
+                                      "type": "number",
+                                      "minimum": 0.1,
+                                      "maximum": 20
+                                    },
+                                    "fasciaHeight": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 5
+                                    },
+                                    "screenWidth": {
+                                      "type": "number",
+                                      "minimum": 0.05,
+                                      "maximum": 200
+                                    },
+                                    "screenInset": {
+                                      "type": "number",
+                                      "minimum": 0,
+                                      "maximum": 2
+                                    },
+                                    "si1": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A1",
+                                            "A2",
+                                            "B"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "steel",
+                                            "led"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    },
+                                    "si2": {
+                                      "type": "object",
+                                      "properties": {
+                                        "grade": {
+                                          "type": "string",
+                                          "enum": [
+                                            "S",
+                                            "A",
+                                            "B",
+                                            "C"
+                                          ]
+                                        },
+                                        "preset": {
+                                          "type": "string",
+                                          "enum": [
+                                            "aluminium",
+                                            "led",
+                                            "led_strip"
+                                          ]
+                                        }
+                                      },
+                                      "additionalProperties": false
+                                    }
+                                  },
+                                  "required": [
+                                    "a",
+                                    "b",
+                                    "openingWidth",
+                                    "clearHeight",
+                                    "fasciaHeight",
+                                    "screenInset"
+                                  ],
+                                  "additionalProperties": false
                                 },
                                 "obstacles": {
                                   "default": [],

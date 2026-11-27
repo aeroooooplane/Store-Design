@@ -22,6 +22,7 @@ interface WorkbenchLayoutProps {
 /** Project details shown in the "空间信息" tab; the workbench provides them to every layout. */
 export const WorkbenchInfoContext = createContext<{
   currentSpace: ReactNode
+  facade?: ReactNode
   details: ReactNode
   drawings: ReactNode
 } | null>(null)
@@ -91,6 +92,7 @@ function LeftTabs({
       <div className="space-info-cards">
         {info?.currentSpace}
         {spaceFixtures}
+        {info?.facade}
         {info?.details && (
           <details className="space-info-card">
             <summary>项目资料</summary>

@@ -37,6 +37,7 @@ import { loadModel, loadSource } from './model-cache.ts'
 import { disposeRoomMaterials, roomMaterials } from './render-look.ts'
 import type { RoomSurface } from './render-look.ts'
 import { aimSun, buildRoom } from './room-builder.ts'
+import { buildFacade3d } from './facade-3d.ts'
 import { islandEdgingGeometry } from './island-platform.ts'
 import {
   disposeGeometry,
@@ -156,6 +157,7 @@ export class WhiteScene {
   private backgroundRevision = 0
   private hideBoundaryWalls = false
   private readonly room = new THREE.Group()
+  private readonly facade = new THREE.Group()
   private readonly props = new THREE.Group()
   /** 空心隔板: boxes in the wall material. */
   private readonly fixtures = new THREE.Group()
@@ -234,6 +236,7 @@ export class WhiteScene {
       this.sun,
       this.sun.target,
       this.room,
+      this.facade,
       this.fixtures,
       this.props,
       this.marks,
@@ -285,6 +288,19 @@ export class WhiteScene {
       if (front) this.showView(front)
     }
     this.paintRoom()
+    this.sceneChanged()
+  }
+
+  setFacade(space: Space, shopType: ShopType, siStyle: SiStyle, market: Market) {
+    this.facade.children.forEach(disposeTree)
+    this.facade.clear()
+    const model = shopType === 'side_hall' ? buildFacade3d(space, siStyle, market) : null
+    if (model) this.facade.add(model)
+    this.sceneChanged()
+  }
+
+  setFacadeVisible(visible: boolean) {
+    this.facade.visible = visible
     this.sceneChanged()
   }
 
@@ -671,7 +687,9 @@ export class WhiteScene {
       if (this.disposed) break
       const size = this.renderer.getSize(new THREE.Vector2())
       const ratio = this.renderer.getPixelRatio()
+      const facadeVisible = this.facade.visible
       try {
+        this.facade.visible = true
         this.renderer.setPixelRatio(1)
         this.renderer.setSize(width, height, false)
         shot.position.set(...view.position)
@@ -708,6 +726,7 @@ export class WhiteScene {
           images.push(this.canvas.toDataURL('image/png'))
         }
       } finally {
+        this.facade.visible = facadeVisible
         this.renderer.setPixelRatio(ratio)
         this.renderer.setSize(size.x, size.y, false)
         this.renderLive()
@@ -816,6 +835,7 @@ export class WhiteScene {
     this.viewListener = null
     for (const id of [...this.items.keys()]) this.removeItem(id)
     this.room.children.forEach(disposeGeometry)
+    this.facade.children.forEach(disposeTree)
     this.roomWhite.dispose()
     this.boundaryMaterial.dispose()
     this.roomLooks.forEach(disposeRoomMaterials)

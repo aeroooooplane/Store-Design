@@ -2,7 +2,7 @@ import { useEffect, useImperativeHandle, useRef, useState } from 'react'
 import type { Ref } from 'react'
 import { Raycaster, Vector2 } from 'three'
 import type { Object3D } from 'three'
-import { VIEW_ASPECT } from '@store/shared'
+import { VIEW_ASPECT, facadeGeometry } from '@store/shared'
 import type {
   Asset,
   Camera,
@@ -18,6 +18,24 @@ import type { LoadStatus, Look, SceneHandlers, ViewPose } from './white-scene.ts
 import type { ModelPlacementClick } from '../workbench/editor-state.ts'
 
 type View = Pick<Camera, 'position' | 'target' | 'fovDeg'>
+
+function frontFacadeView(space: Space): View | null {
+  const geometry = space.facade && facadeGeometry(space, space.facade)
+  if (!geometry || !space.facade) return null
+  const { width, origin, direction, outward } = geometry
+  const height = space.facade.clearHeight + space.facade.fasciaHeight
+  const fovDeg = 43
+  const halfFov = Math.tan((fovDeg * Math.PI) / 360)
+  const distance = (Math.max(height, width / VIEW_ASPECT) / (2 * halfFov)) * 1.22
+  const x = origin[0] + (direction[0] * width) / 2
+  const z = origin[1] + (direction[1] * width) / 2
+  const y = height * 0.5
+  return {
+    target: [x, y, z],
+    position: [x + outward[0] * distance, y + distance * 0.045, z + outward[1] * distance],
+    fovDeg,
+  }
+}
 
 function visibleWallAt(
   scene: WhiteScene,
@@ -76,6 +94,8 @@ interface Viewer3DProps {
   background?: RenderBackground | null | undefined
   /** Hide the gray boundary walls during background editing before the first photo is added. */
   hideBoundaryWalls?: boolean | undefined
+  facadeControls?: boolean | undefined
+  preferFacadeView?: boolean | undefined
   siStyle?: SiStyle | undefined
   /** The project's market: LOGO models with a version per market show that one. */
   market?: Market | undefined
@@ -114,6 +134,8 @@ export function Viewer3D({
   look = 'white',
   background,
   hideBoundaryWalls = false,
+  facadeControls = false,
+  preferFacadeView = false,
   siStyle = 'SI1.0',
   market = 'domestic',
   onSelect,
@@ -140,6 +162,8 @@ export function Viewer3D({
   const [status, setStatus] = useState<LoadStatus>({ loading: 0, failed: [] })
   const [error, setError] = useState<string | null>(null)
   const [backgroundError, setBackgroundError] = useState<string | null>(null)
+  const [facadeVisible, setFacadeVisible] = useState(true)
+  const facadeView = shopType === 'side_hall' ? frontFacadeView(space) : null
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -177,11 +201,15 @@ export function Viewer3D({
   useEffect(() => {
     // The view resets only when a different space is shown, not after every edit; the first
     // space opens at the view handed in, if any.
-    const start = viewedSpace.current === null ? startView.current : null
+    const start =
+      viewedSpace.current === null
+        ? (startView.current ??
+          (shopType === 'side_hall' && preferFacadeView ? frontFacadeView(space) : null))
+        : null
     sceneRef.current?.setRoom(space, shopType, viewedSpace.current !== space && !start)
     if (start) sceneRef.current?.showView(start)
     viewedSpace.current = space
-  }, [space, shopType])
+  }, [space, shopType, preferFacadeView])
 
   useEffect(() => {
     sceneRef.current?.setItems(layout.items, assets, market)
@@ -194,6 +222,14 @@ export function Viewer3D({
   useEffect(() => {
     sceneRef.current?.setLook(look, siStyle)
   }, [look, siStyle])
+
+  useEffect(() => {
+    sceneRef.current?.setFacade(space, shopType, siStyle, market)
+  }, [space, shopType, siStyle, market])
+
+  useEffect(() => {
+    sceneRef.current?.setFacadeVisible(facadeVisible)
+  }, [facadeVisible])
 
   useEffect(() => {
     let active = true
@@ -256,6 +292,22 @@ export function Viewer3D({
           visibility: 'hidden',
         }}
       />
+      {facadeControls && facadeView && (
+        <div className="facade-view-controls">
+          <button
+            type="button"
+            onClick={() => {
+              setFacadeVisible(true)
+              sceneRef.current?.showView(facadeView)
+            }}
+          >
+            正看门头
+          </button>
+          <button type="button" onClick={() => setFacadeVisible((visible) => !visible)}>
+            {facadeVisible ? '隐藏门头' : '显示门头'}
+          </button>
+        </div>
+      )}
       {(backgroundError || status.loading > 0 || status.failed.length > 0) && (
         <p className="viewer3d-status hint" role={backgroundError ? 'alert' : 'status'}>
           {backgroundError ? `${backgroundError}。` : null}
